@@ -88,7 +88,7 @@ public class PokemonNPC : ModNPC
         var texture = ModContent.Request<Texture2D>($"Terramon/Assets/Pokemon/{path}").Value;
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var frameHeight = texture.Height / Main.npcFrameCount[NPC.type];
-        spriteBatch.Draw(texture, NPC.position - screenPos + new Vector2(texture.Width / 2f, texture.Height / 2f + 2),
+        spriteBatch.Draw(texture, NPC.Bottom - screenPos + new Vector2(0, 2),
             new Rectangle(0, NPC.frame.Y, texture.Width, frameHeight), drawColor, NPC.rotation,
             new Vector2(texture.Width / 2f, frameHeight), NPC.scale, effects, 0f);
     }

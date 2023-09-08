@@ -1,3 +1,15 @@
+Configs: {
+	GameplayConfig: {
+		ShinySpawnRate: {
+			Label: Shiny Spawn Rate
+			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x).
+		}
+
+		DisplayName: Gameplay Config
+		Headers.Miscellaneous: Miscellaneous
+	}
+}
+
 Items: {
 	RegularBallItem: {
 		DisplayName: Poké Ball

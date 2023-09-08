@@ -1,4 +1,5 @@
 global using Terraria.ModLoader;
+using Terramon.Content.Configs;
 using Terramon.Content.Databases;
 using Terraria;
 
@@ -17,7 +18,7 @@ public class Terramon : Mod
 
     public static bool RollShiny()
     {
-        return Main.rand.NextBool(1, 4096);
+        return Main.rand.NextBool(1, ModContent.GetInstance<GameplayConfig>().ShinySpawnRate);
     }
 
     public override void Load()
