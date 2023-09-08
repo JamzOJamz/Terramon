@@ -1,0 +1,226 @@
+Items: {
+	RegularBallItem: {
+		DisplayName: Poké Ball
+		Tooltip:
+			'''
+			A device for catching wild Pokémon.
+			It's thrown like a ball at a Pokémon, comfortably encapsulating its target.
+			'''
+	}
+
+	GreatBallItem: {
+		DisplayName: Great Ball
+		Tooltip:
+			'''
+			A good, high-performance Poké Ball.
+			Provides a higher success rate for catching Pokémon than a standard Poké Ball.
+			'''
+	}
+
+	MasterBallItem: {
+		DisplayName: Master Ball
+		Tooltip:
+			'''
+			The very best Poké Ball with the ultimate level of performance.
+			It's thrown like a ball at a Pokémon, comfortably encapsulating its target.
+			'''
+	}
+
+	UltraBallItem: {
+		DisplayName: Ultra Ball
+		Tooltip:
+			'''
+			An ultra-high-performance Poké Ball.
+			Provides a higher success rate for catching Pokémon than a Great Ball.
+			'''
+	}
+
+	RegularBallHeldProp: {
+		DisplayName: Poké Ball Prop
+		Tooltip: ""
+	}
+
+	RareCandy: {
+		DisplayName: Rare Candy
+		Tooltip:
+			'''
+			A candy that is packed with energy.
+			If consumed, it raises a Pokémon's level by one.
+			'''
+	}
+}
+
+NPCs: {
+	HoppipNPC.DisplayName: Hoppip
+	MarillNPC.DisplayName: Marill
+	GolbatNPC.DisplayName: Golbat
+	AbraNPC.DisplayName: Abra
+	AerodactylNPC.DisplayName: Aerodactyl
+	BulbasaurNPC.DisplayName: Bulbasaur
+	IvysaurNPC.DisplayName: Ivysaur
+	VenusaurNPC.DisplayName: Venusaur
+	CharmanderNPC.DisplayName: Charmander
+	CharmeleonNPC.DisplayName: Charmeleon
+	CharizardNPC.DisplayName: Charizard
+	SquirtleNPC.DisplayName: Squirtle
+	WartortleNPC.DisplayName: Wartortle
+	BlastoiseNPC.DisplayName: Blastoise
+	CaterpieNPC.DisplayName: Caterpie
+	MetapodNPC.DisplayName: Metapod
+	ButterfreeNPC.DisplayName: Butterfree
+	WeedleNPC.DisplayName: Weedle
+	KakunaNPC.DisplayName: Kakuna
+	BeedrillNPC.DisplayName: Beedrill
+	PidgeyNPC.DisplayName: Pidgey
+	PidgeottoNPC.DisplayName: Pidgeotto
+	PidgeotNPC.DisplayName: Pidgeot
+	MissingNPC.DisplayName: ???
+	ChikoritaNPC.DisplayName: Chikorita
+	CyndaquilNPC.DisplayName: Cyndaquil
+	TotodileNPC.DisplayName: Totodile
+	TreeckoNPC.DisplayName: Treecko
+	TorchicNPC.DisplayName: Torchic
+	MudkipNPC.DisplayName: Mudkip
+	TurtwigNPC.DisplayName: Turtwig
+	ChimcharNPC.DisplayName: Chimchar
+	PiplupNPC.DisplayName: Piplup
+	SnivyNPC.DisplayName: Snivy
+	TepigNPC.DisplayName: Tepig
+	OshawottNPC.DisplayName: Oshawott
+	ChespinNPC.DisplayName: Chespin
+	FennekinNPC.DisplayName: Fennekin
+	FroakieNPC.DisplayName: Froakie
+	RowletNPC.DisplayName: Rowlet
+	LittenNPC.DisplayName: Litten
+	PopplioNPC.DisplayName: Popplio
+	RattataNPC.DisplayName: Rattata
+	RaticateNPC.DisplayName: Raticate
+	SpearowNPC.DisplayName: Spearow
+	FearowNPC.DisplayName: Fearow
+	EkansNPC.DisplayName: Ekans
+	ArbokNPC.DisplayName: Arbok
+	PikachuNPC.DisplayName: Pikachu
+	RaichuNPC.DisplayName: Raichu
+	SandshrewNPC.DisplayName: Sandshrew
+	SandslashNPC.DisplayName: Sandslash
+	NidoranFNPC.DisplayName: Nidoran♀
+	NidorinaNPC.DisplayName: Nidorina
+	NidoqueenNPC.DisplayName: Nidoqueen
+	NidoranMNPC.DisplayName: Nidoran♂
+	NidorinoNPC.DisplayName: Nidorino
+	NidokingNPC.DisplayName: Nidoking
+	ClefairyNPC.DisplayName: Clefairy
+	ClefableNPC.DisplayName: Clefable
+	VulpixNPC.DisplayName: Vulpix
+	NinetalesNPC.DisplayName: Ninetales
+	JigglypuffNPC.DisplayName: Jigglypuff
+	WigglytuffNPC.DisplayName: Wigglytuff
+	ZubatNPC.DisplayName: Zubat
+	OddishNPC.DisplayName: Oddish
+	GloomNPC.DisplayName: Gloom
+	VileplumeNPC.DisplayName: Vileplume
+	ParasNPC.DisplayName: Paras
+	ParasectNPC.DisplayName: Parasect
+	VenonatNPC.DisplayName: Venonat
+	VenomothNPC.DisplayName: Venomoth
+	DiglettNPC.DisplayName: Diglett
+	DugtrioNPC.DisplayName: Dugtrio
+	MeowthNPC.DisplayName: Meowth
+	PersianNPC.DisplayName: Persian
+	PsyduckNPC.DisplayName: Psyduck
+	GolduckNPC.DisplayName: Golduck
+	MankeyNPC.DisplayName: Mankey
+	PrimeapeNPC.DisplayName: Primeape
+	GrowlitheNPC.DisplayName: Growlithe
+	ArcanineNPC.DisplayName: Arcanine
+	PoliwagNPC.DisplayName: Poliwag
+	PoliwhirlNPC.DisplayName: Poliwhirl
+	PoliwrathNPC.DisplayName: Poliwrath
+	KadabraNPC.DisplayName: Kadabra
+	AlakazamNPC.DisplayName: Alakazam
+	MachopNPC.DisplayName: Machop
+	MachokeNPC.DisplayName: Machoke
+	MachampNPC.DisplayName: Machamp
+	BellsproutNPC.DisplayName: Bellsprout
+	WeepinbellNPC.DisplayName: Weepinbell
+	VictreebelNPC.DisplayName: Victreebel
+	TentacoolNPC.DisplayName: Tentacool
+	TentacruelNPC.DisplayName: Tentacruel
+	GeodudeNPC.DisplayName: Geodude
+	GravelerNPC.DisplayName: Graveler
+	GolemNPC.DisplayName: Golem
+	PonytaNPC.DisplayName: Ponyta
+	RapidashNPC.DisplayName: Rapidash
+	SlowpokeNPC.DisplayName: Slowpoke
+	SlowbroNPC.DisplayName: Slowbro
+	MagnemiteNPC.DisplayName: Magnemite
+	MagnetonNPC.DisplayName: Magneton
+	FarfetchdNPC.DisplayName: Farfetch’d
+	DoduoNPC.DisplayName: Doduo
+	DodrioNPC.DisplayName: Dodrio
+	SeelNPC.DisplayName: Seel
+	DewgongNPC.DisplayName: Dewgong
+	GrimerNPC.DisplayName: Grimer
+	MukNPC.DisplayName: Muk
+	ShellderNPC.DisplayName: Shellder
+	CloysterNPC.DisplayName: Cloyster
+	GastlyNPC.DisplayName: Gastly
+	HaunterNPC.DisplayName: Haunter
+	GengarNPC.DisplayName: Gengar
+	OnixNPC.DisplayName: Onix
+	DrowzeeNPC.DisplayName: Drowzee
+	HypnoNPC.DisplayName: Hypno
+	KrabbyNPC.DisplayName: Krabby
+	KinglerNPC.DisplayName: Kingler
+	VoltorbNPC.DisplayName: Voltorb
+	ElectrodeNPC.DisplayName: Electrode
+	ExeggcuteNPC.DisplayName: Exeggcute
+	ExeggutorNPC.DisplayName: Exeggutor
+	CuboneNPC.DisplayName: Cubone
+	MarowakNPC.DisplayName: Marowak
+	HitmonleeNPC.DisplayName: Hitmonlee
+	HitmonchanNPC.DisplayName: Hitmonchan
+	LickitungNPC.DisplayName: Lickitung
+	KoffingNPC.DisplayName: Koffing
+	WeezingNPC.DisplayName: Weezing
+	RhyhornNPC.DisplayName: Rhyhorn
+	RhydonNPC.DisplayName: Rhydon
+	ChanseyNPC.DisplayName: Chansey
+	TangelaNPC.DisplayName: Tangela
+	KangaskhanNPC.DisplayName: Kangaskhan
+	HorseaNPC.DisplayName: Horsea
+	SeadraNPC.DisplayName: Seadra
+	GoldeenNPC.DisplayName: Goldeen
+	SeakingNPC.DisplayName: Seaking
+	StaryuNPC.DisplayName: Staryu
+	StarmieNPC.DisplayName: Starmie
+	MrMimeNPC.DisplayName: Mr. Mime
+	ScytherNPC.DisplayName: Scyther
+	JynxNPC.DisplayName: Jynx
+	ElectabuzzNPC.DisplayName: Electabuzz
+	MagmarNPC.DisplayName: Magmar
+	PinsirNPC.DisplayName: Pinsir
+	TaurosNPC.DisplayName: Tauros
+	MagikarpNPC.DisplayName: Magikarp
+	GyaradosNPC.DisplayName: Gyarados
+	LaprasNPC.DisplayName: Lapras
+	DittoNPC.DisplayName: Ditto
+	EeveeNPC.DisplayName: Eevee
+	VaporeonNPC.DisplayName: Vaporeon
+	JolteonNPC.DisplayName: Jolteon
+	FlareonNPC.DisplayName: Flareon
+	PorygonNPC.DisplayName: Porygon
+	OmanyteNPC.DisplayName: Omanyte
+	OmastarNPC.DisplayName: Omastar
+	KabutoNPC.DisplayName: Kabuto
+	KabutopsNPC.DisplayName: Kabutops
+	SnorlaxNPC.DisplayName: Snorlax
+	ArticunoNPC.DisplayName: Articuno
+	ZapdosNPC.DisplayName: Zapdos
+	MoltresNPC.DisplayName: Moltres
+	DratiniNPC.DisplayName: Dratini
+	DragonairNPC.DisplayName: Dragonair
+	DragoniteNPC.DisplayName: Dragonite
+	MewtwoNPC.DisplayName: Mewtwo
+	MewNPC.DisplayName: Mew
+}

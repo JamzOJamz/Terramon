@@ -1,0 +1,3 @@
+displayName = Terramon Mod
+author = Jamz
+version = 1.0.0
