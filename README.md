@@ -1,2 +1,2 @@
 # Terramon
- The definitive Pokémon mod for Terraria
+ The definitive Pokémon mod for Terraria.
