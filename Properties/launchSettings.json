@@ -11,6 +11,9 @@
       "executablePath": "dotnet",
       "commandLineArgs": "$(tMLServerPath)",
       "workingDirectory": "$(tMLSteamPath)"
+    },
+    "Terramon": {
+      "commandName": "Project"
     }
   }
 }

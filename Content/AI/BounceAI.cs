@@ -68,7 +68,7 @@ public class BounceAI : AIController
         {
             if (Main.rand.NextFloat() <= changeDirectionChance || !hasFirstDir)
             {
-                AI_JumpDirection = Main.rand.NextBool(2) ? 1 : -1;
+                AI_JumpDirection = Main.rand.NextBool() ? 1 : -1;
                 if (!hasFirstDir) hasFirstDir = true;
             }
 

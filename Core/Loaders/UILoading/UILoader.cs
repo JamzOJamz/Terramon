@@ -23,6 +23,12 @@ internal class UILoader : ModSystem
     /// </summary>
     private static List<SmartUIState> UIStates = new();
 
+    public static void UpdateApplication(Type[] changedTypes)
+    {
+        Main.NewText("Reloading UI...");
+        Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "1");
+    }
+
     /// <summary>
     ///     Uses reflection to scan through and find all types extending SmartUIState that arent abstract, and loads an
     ///     instance of them.
@@ -74,14 +80,14 @@ internal class UILoader : ModSystem
         InterfaceScaleType scale)
     {
         var name = state == null ? "Unknown" : state.ToString();
-        layers.Insert(index, new LegacyGameInterfaceLayer("StarlightRiver: " + name,
+        layers.Insert(index, new LegacyGameInterfaceLayer($"{nameof(Terramon)}: " + name,
             delegate
             {
                 if (visible)
                     state?.Draw(Main.spriteBatch);
 
                 return true;
-            }, scale));
+            }, InterfaceScaleType.UI));
     }
 
     /// <summary>
@@ -112,6 +118,13 @@ internal class UILoader : ModSystem
     /// <param name="layers"></param>
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
     {
+        if (Environment.GetEnvironmentVariable("TERRAMON_UIUPDATE") is "1")
+        {
+            Unload();
+            OnModLoad();
+            Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "0");
+        }
+
         foreach (var state in UIStates)
             AddLayer(layers, state, state.InsertionIndex(layers), state.Visible, state.Scale);
     }

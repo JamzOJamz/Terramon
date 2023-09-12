@@ -13,7 +13,6 @@ public abstract class PokeBallHeldProp : TerramonItem
         base.SetDefaults();
         Item.width = 16;
         Item.height = 16;
-        Item.maxStack = 99;
         Item.value = 1000;
         Item.useTurn = true;
         Item.autoReuse = true;

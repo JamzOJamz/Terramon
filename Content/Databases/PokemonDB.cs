@@ -15,12 +15,6 @@ public class PokemonDB
     public const int FileVersion = 1;
     private const uint FileMagic = 0x6e6f6d74;
 
-    private static readonly PokemonSchema MissingPokemon = new()
-    {
-        ID = 0,
-        Name = "Missing"
-    };
-
     public Dictionary<ushort, PokemonSchema> Pokemon { get; private init; }
 
     private ushort StarterMax { get; init; }
@@ -42,6 +36,7 @@ public class PokemonDB
             {
                 ID = (ushort)reader.Read7BitEncodedInt(),
                 Name = reader.ReadString(),
+                GenderRate = reader.ReadSByte(),
                 Types = new List<byte>()
             };
             var typesCount = reader.ReadByte();
@@ -109,16 +104,24 @@ public class PokemonDB
         return database;
     }
 
-    public PokemonSchema TryGetPokemon(ushort id)
+    public PokemonSchema GetPokemon(ushort id)
     {
-        return Pokemon.TryGetValue(id, out var pokemon) ? pokemon : MissingPokemon;
+        return Pokemon.TryGetValue(id, out var pokemon) ? pokemon : null;
     }
 
-    public string TryGetPokemonName(ushort id, bool localized = false)
+    public string GetPokemonName(ushort id)
     {
-        return localized
-            ? Language.GetTextValue($"Mods.Terramon.NPCs.{TryGetPokemon(id).Name}NPC.DisplayName")
-            : TryGetPokemon(id).Name;
+        return GetPokemon(id)?.Name;
+    }
+
+    public LocalizedText GetLocalizedPokemonName(ushort id)
+    {
+        return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Name}.DisplayName");
+    }
+
+    public LocalizedText GetPokemonSpecies(ushort id)
+    {
+        return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Name}.Species");
     }
 
     public bool IsAvailableStarter(ushort id)
@@ -130,6 +133,7 @@ public class PokemonDB
     {
         public ushort ID { get; init; }
         public string Name { get; init; }
+        public sbyte GenderRate { get; init; }
         public List<byte> Types { get; init; }
         public StatsSchema Stats { get; set; }
         public EvolutionSchema Evolution { get; set; }

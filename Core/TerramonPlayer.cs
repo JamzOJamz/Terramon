@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using Terramon.Content.GUI;
+using Terramon.Content.Items.Mechanical;
+using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria;
 using Terraria.ModLoader.IO;
@@ -12,23 +16,36 @@ public class TerramonPlayer : ModPlayer
 
     public override void OnEnterWorld()
     {
-        Main.NewText(Terramon.Database.TryGetPokemon(NationalDexID.Bulbasaur).Stats.HP);
+        UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
+        Main.NewText(Terramon.Database.GetPokemon(NationalDexID.Bulbasaur).Stats.HP);
         if (!HasChosenStarter) return;
         Main.NewText(Party[0].ID);
     }
-    
+
+    public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+    {
+        if (mediumCoreDeath) yield break;
+        yield return new Item(ModContent.ItemType<RegularBallItem>(), 5);
+    }
+
     /// <summary>
-    /// Adds a Pokémon to the player's party. Returns false if their party is full; otherwise returns true.
+    ///     Adds a Pokémon to the player's party. Returns false if their party is full; otherwise returns true.
     /// </summary>
     public bool AddPartyPokemon(PokemonData data)
     {
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == -1) return false;
         Party[nextIndex] = data;
+        UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, nextIndex);
         return true;
     }
 
-    private int NextFreePartyIndex()
+    public void SwapParty(int first, int second)
+    {
+        (Party[first], Party[second]) = (Party[second], Party[first]);
+    }
+
+    public int NextFreePartyIndex()
     {
         for (var i = 0; i < Party.Length; i++)
             if (Party[i] == null)

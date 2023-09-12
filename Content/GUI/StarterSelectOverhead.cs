@@ -11,9 +11,10 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.UI;
 
-namespace Terramon.Content.GUI.Starter;
+namespace Terramon.Content.GUI;
 
 public class StarterSelectOverhead : SmartUIState
 {
@@ -48,7 +49,8 @@ public class StarterSelectOverhead : SmartUIState
     private bool starterPanelShowing = true;
     private UIText titleText;
 
-    public override bool Visible => !Main.playerInventory && !TerramonPlayer.LocalPlayer.HasChosenStarter;
+    public override bool Visible =>
+        !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -90,7 +92,7 @@ public class StarterSelectOverhead : SmartUIState
         {
             HAlign = 0.5f,
             VAlign = 0.4025f,
-            TextColor = new Color(188, 188, 188)
+            TextColor = new Color(173, 173, 198)
         };
         Append(hintText);
         background.Width.Set(626, 0);
@@ -101,7 +103,7 @@ public class StarterSelectOverhead : SmartUIState
         {
             var starter = Starters[i];
             var item = new StarterButton(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.Database.TryGetPokemonName(starter)}_Mini",
+                $"Terramon/Assets/Pokemon/{Terramon.Database.GetPokemonName(starter)}_Mini",
                 AssetRequestMode.ImmediateLoad), starter);
             item.Width.Set(80, 0);
             item.Height.Set(60, 0);
@@ -137,7 +139,7 @@ public class StarterSelectOverhead : SmartUIState
             starterPanelShowing = false;
         }
 
-        UILoader.GetUIState<StarterSelectOverhead>().Recalculate();
+        Recalculate();
     }
 }
 
@@ -145,12 +147,12 @@ public class StarterButton : UIHoverImage
 {
     public StarterButton(Asset<Texture2D> texture, ushort pokemon) : base(texture,
         Terramon.Database.IsAvailableStarter(pokemon)
-            ? Terramon.Database.TryGetPokemonName(pokemon, true)
+            ? Terramon.Database.GetLocalizedPokemonName(pokemon).Value
             : "Coming soon...")
     {
         if (!Terramon.Database.IsAvailableStarter(pokemon)) return;
         var cacheHoverTexture = ModContent.Request<Texture2D>(
-            $"Terramon/Assets/Pokemon/{Terramon.Database.TryGetPokemonName(pokemon)}_Mini_Highlighted",
+            $"Terramon/Assets/Pokemon/{Terramon.Database.GetPokemonName(pokemon)}_Mini_Highlighted",
             AssetRequestMode.ImmediateLoad);
         OnMouseOver += (_, _) =>
         {
@@ -161,11 +163,15 @@ public class StarterButton : UIHoverImage
         OnLeftClick += (_, _) =>
         {
             var player = TerramonPlayer.LocalPlayer;
-            player.AddPartyPokemon(new PokemonData(pokemon));
+            player.AddPartyPokemon(new PokemonData(pokemon, 5));
             player.HasChosenStarter = true;
+            var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").WithFormatArgs(
+                TypeID.GetColor(Terramon.Database.GetPokemon(pokemon).Types[0]),
+                Terramon.Database.GetLocalizedPokemonName(pokemon).Value,
+                Terramon.Database.GetPokemonSpecies(pokemon).Value
+            ).Value;
+            Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
-            Main.NewText(
-                $"You chose [c/{TypeID.GetColor(Terramon.Database.TryGetPokemon(pokemon).Types[0])}:{Terramon.Database.TryGetPokemonName(pokemon, true)}] as your starter Pokémon!");
         };
     }
 }

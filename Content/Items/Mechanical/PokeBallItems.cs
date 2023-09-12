@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
@@ -8,12 +9,23 @@ public abstract class PokeBallItem : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
+    protected virtual float CatchRate => 1f;
+
     public override void SetDefaults()
     {
         base.SetDefaults();
         Item.width = 32;
         Item.height = 32;
         Item.value = 1;
+    }
+
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
+    {
+        var catchRateText = CatchRate < float.MaxValue ? $"{CatchRate}x catch rate" : "100% catch rate";
+        tooltips.Add(new TooltipLine(Mod, nameof(CatchRate), catchRateText)
+        {
+            OverrideColor = new Color(173, 173, 198)
+        });
     }
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor,
@@ -33,12 +45,13 @@ public class RegularBallItem : PokeBallItem
 
 public class RegularBallRarity : ModRarity
 {
-    public override Color RarityColor => new(209, 55, 77);
+    public override Color RarityColor => new(214, 74, 86);
 }
 
 public class GreatBallItem : PokeBallItem
 {
     protected override int UseRarity => ModContent.RarityType<GreatBallRarity>();
+    protected override float CatchRate => 1.5f;
 }
 
 public class GreatBallRarity : ModRarity
@@ -49,6 +62,7 @@ public class GreatBallRarity : ModRarity
 public class UltraBallItem : PokeBallItem
 {
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
+    protected override float CatchRate => 2f;
 }
 
 public class UltraBallRarity : ModRarity
@@ -59,6 +73,7 @@ public class UltraBallRarity : ModRarity
 public class MasterBallItem : PokeBallItem
 {
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
+    protected override float CatchRate => float.MaxValue;
 }
 
 public class MasterBallRarity : ModRarity

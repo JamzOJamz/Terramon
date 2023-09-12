@@ -14,7 +14,7 @@ public class PokemonNPCLoader : ModSystem
             var aiInfo = npcSchema.AIInfo;
             var aiType = Mod.Code.GetType($"Terramon.Content.AI.{aiInfo.Type}AI");
             var aiParams = aiInfo.Parameters.ToArray();
-            var npc = new PokemonNPC(pokemon.Name, npcSchema.Width, npcSchema.Height, aiType, aiParams,
+            var npc = new PokemonNPC(pokemon.ID, pokemon.Name, npcSchema.Width, npcSchema.Height, aiType, aiParams,
                 npcSchema.SpawnInfo?.Conditions, npcSchema.SpawnInfo?.Chance ?? 0f);
             Mod.AddContent(npc);
         }

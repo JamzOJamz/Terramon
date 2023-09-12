@@ -53,7 +53,7 @@ public class WalkingAI : AIController
             switch (AI_Timer)
             {
                 case 1:
-                    AI_WalkDir = Main.rand.NextBool(2) ? 1 : -1;
+                    AI_WalkDir = Main.rand.NextBool() ? 1 : -1;
                     NPC.netUpdate = true;
                     break;
                 case >= 120 when Main.rand.NextBool(stopFrequency):

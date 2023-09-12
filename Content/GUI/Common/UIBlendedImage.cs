@@ -3,7 +3,7 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 
-namespace Terramon.Content.GUI.Starter;
+namespace Terramon.Content.GUI.Common;
 
 public class UIBlendedImage : UIImage
 {
@@ -17,5 +17,8 @@ public class UIBlendedImage : UIImage
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState,
             DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
         base.Draw(spriteBatch);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
+            DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
     }
 }

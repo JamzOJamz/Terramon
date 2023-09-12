@@ -9,5 +9,6 @@ public abstract class TerramonItem : ModItem
     public override void SetDefaults()
     {
         Item.rare = UseRarity;
+        Item.maxStack = 9999;
     }
 }

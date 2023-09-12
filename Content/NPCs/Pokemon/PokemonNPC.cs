@@ -10,6 +10,7 @@ using Terramon.ID;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader.Utilities;
 
 namespace Terramon.Content.NPCs.Pokemon;
@@ -19,6 +20,7 @@ public class PokemonNPC : ModNPC
     private readonly object[] useAiParams;
     private readonly Type useAiType;
     private readonly int useHeight;
+    private readonly ushort useId;
     private readonly string useName;
     private readonly float useSpawnChance;
     private readonly byte[] useSpawnConditions;
@@ -26,9 +28,10 @@ public class PokemonNPC : ModNPC
     private bool isShiny;
     private int shinySparkleTimer;
 
-    public PokemonNPC(string useName, int useWidth, int useHeight, Type useAiType, object[] useAiParams,
+    public PokemonNPC(ushort useId, string useName, int useWidth, int useHeight, Type useAiType, object[] useAiParams,
         byte[] useSpawnConditions, float useSpawnChance)
     {
+        this.useId = useId;
         this.useName = useName;
         this.useWidth = useWidth;
         this.useHeight = useHeight;
@@ -42,6 +45,8 @@ public class PokemonNPC : ModNPC
 
     // ReSharper disable once ConvertToAutoProperty
     public override string Name => useName + "NPC";
+
+    public override LocalizedText DisplayName => Terramon.Database.GetLocalizedPokemonName(useId);
 
     private AIController Behaviour { get; set; }
 
