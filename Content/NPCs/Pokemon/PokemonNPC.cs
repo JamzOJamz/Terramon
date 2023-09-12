@@ -6,14 +6,13 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terramon.Content.AI;
+using Terramon.Content.Items.Mechanical;
 using Terramon.ID;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.Utilities;
-using Terramon.Content.Dusts;
-using Terramon.Content.Items.Mechanical;
 
 namespace Terramon.Content.NPCs.Pokemon;
 
@@ -188,7 +187,7 @@ public class PokemonNPC : ModNPC
         NPC.netUpdate = true;
 
         //TODO: Add shader animation (I already made this shader in my mod source but I couldn't figure out how to apply it properly)
-        
+
         NPC.active = false;
     }
 }

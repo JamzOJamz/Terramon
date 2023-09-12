@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Terramon.Content.GUI;
-using Terramon.Content.Items.Mechanical;
 using Terramon.Core.Loaders.UILoading;
-using Terramon.ID;
 using Terraria;
 using Terraria.ModLoader.IO;
 
@@ -17,9 +14,6 @@ public class TerramonPlayer : ModPlayer
     public override void OnEnterWorld()
     {
         UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
-        Main.NewText(Terramon.Database.GetPokemon(NationalDexID.Bulbasaur).Stats.HP);
-        if (!HasChosenStarter) return;
-        Main.NewText(Party[0].ID);
     }
 
     /// <summary>

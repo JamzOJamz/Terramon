@@ -1,35 +1,28 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria.GameContent.Creative;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
-using Terraria;
-using Terraria.ID;
 
+namespace Terramon.Content.Items.Mechanical;
 
-namespace Terramon.Content.Items.Mechanical
+internal class PokeBallProjectile : BasePkballProjectile
 {
-    class PokeBallProjectile : BasePkballProjectile
-    {
-        public override int pokeballCapture => ModContent.ItemType<PokeBallItem>();
-        public override float catchModifier => 1;
-    }
+    public override int pokeballCapture => ModContent.ItemType<PokeBallItem>();
+    public override float catchModifier => 1;
+}
 
-    class PokeBallItem : BasePkballItem
+internal class PokeBallItem : BasePkballItem
+{
+    protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
+    protected override int pokeballThrow => ModContent.ProjectileType<PokeBallProjectile>();
+    protected override int igPrice => 200;
+
+    public override void SetStaticDefaults()
     {
-        protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
-        public override int pokeballThrow => ModContent.ProjectileType<PokeBallProjectile>();
-        public override int igPrice => 200;
-        public override void SetStaticDefaults()
-        {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = igPrice / 2; //Amount needed to duplicate them in Journey Mode
-        }
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
+            igPrice / 2; //Amount needed to duplicate them in Journey Mode
     }
-    public class PokeBallRarity : ModRarity
-    {
-        public override Color RarityColor => new(214, 74, 86);
-    }
+}
+
+public class PokeBallRarity : ModRarity
+{
+    public override Color RarityColor => new(214, 74, 86);
 }
