@@ -33,7 +33,7 @@ namespace Terramon.Content.Items.Mechanical
 			Item.CloneDefaults(ItemID.Shuriken);
 			Item.shoot = pokeballThrow;
 			Item.shootSpeed = 6.5f;
-			Item.UseSound = new SoundStyle("Terramon/Content/Audio/Sounds/pkball_throw");
+			Item.UseSound = new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_throw");
 			Item.width = 32;
 			Item.height = 32;
 			Item.maxStack = 99;

@@ -1,16 +1,26 @@
 Configs: {
 	GameplayConfig: {
+		DisplayName: Gameplay Settings
+		Headers.Miscellaneous: Miscellaneous
+
 		ShinySpawnRate: {
 			Label: Shiny Spawn Rate
 			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x).
 		}
 
-		DisplayName: Gameplay Config
-		Headers.Miscellaneous: Miscellaneous
-
 		FastAnimations: {
 			Label: Fast Animations
 			Tooltip: Whether to skip animations for certain events (e.g. catching a pokemon)
+		}
+	}
+
+	ClientConfig: {
+		DisplayName: Preference Settings
+		Headers.Miscellaneous: Miscellaneous
+
+		ReducedAudio: {
+			Label: Reduced Audio
+			Tooltip: Disables certain sounds (e.g. musical tones when re-arranging sidebar)
 		}
 	}
 }
