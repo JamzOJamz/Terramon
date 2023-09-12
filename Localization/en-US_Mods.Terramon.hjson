@@ -7,49 +7,43 @@ Configs: {
 
 		DisplayName: Gameplay Config
 		Headers.Miscellaneous: Miscellaneous
+
+		FastAnimations: {
+			Label: Fast Animations
+			Tooltip: Whether to skip animations for certain events (e.g. catching a pokemon)
+		}
 	}
 }
 
 GUI.Starter.ChosenMessage: You chose [c/{0}:{1}], the {2} as your starter Pokémon!
 
 Items: {
-	RegularBallItem: {
-		DisplayName: Poké Ball
-		Tooltip:
-			'''
-			A device for catching wild Pokémon.
-			It's thrown like a ball at a Pokémon, comfortably encapsulating its target.
-			'''
+	PokeBallItem: {
+		DisplayName: Poke Ball
+		Tooltip: A device for catching wild Pokemon. It is thrown like a ball at the target.
 	}
 
 	GreatBallItem: {
 		DisplayName: Great Ball
-		Tooltip:
-			'''
-			A good, high-performance Poké Ball.
-			Provides a higher success rate for catching Pokémon than a standard Poké Ball.
-			'''
-	}
-
-	MasterBallItem: {
-		DisplayName: Master Ball
-		Tooltip:
-			'''
-			The very best Poké Ball with the ultimate level of performance.
-			It's thrown like a ball at a Pokémon, comfortably encapsulating its target.
-			'''
+		Tooltip: A good, high-performance Ball that provides a higher Pokemon catch rate than a standard Poke Ball.
 	}
 
 	UltraBallItem: {
 		DisplayName: Ultra Ball
-		Tooltip:
-			'''
-			An ultra-high-performance Poké Ball.
-			Provides a higher success rate for catching Pokémon than a Great Ball.
-			'''
+		Tooltip: An ultra-performance Ball that provides a higher Pokemon catch rate than a Great Ball.
 	}
 
-	RegularBallHeldProp: {
+	MasterBallItem: {
+		DisplayName: Master Ball
+		Tooltip: The best Ball with the ultimate level of performance. It will catch any wild Pokemon without fail.
+	}
+
+	PremierBallItem: {
+		DisplayName: Premier Ball Item
+		Tooltip: ""
+	}
+
+	PokeBallHeldProp: {
 		DisplayName: Poké Ball Prop
 		Tooltip: ""
 	}
@@ -61,6 +55,11 @@ Items: {
 			A candy that is packed with energy.
 			If consumed, it raises a Pokémon's level by one.
 			'''
+	}
+
+	RegularBallHeldProp: {
+		Tooltip: ""
+		DisplayName: Regular Ball Held Prop
 	}
 }
 
@@ -916,4 +915,12 @@ Pokemon: {
 		DisplayName: Mew
 		Species: New Species Pokémon
 	}
+}
+
+Projectiles: {
+	GreatBallProjectile.DisplayName: Great Ball Projectile
+	MasterBallProjectile.DisplayName: Master Ball Projectile
+	PokeBallProjectile.DisplayName: Poke Ball Projectile
+	PremierBallProjectile.DisplayName: Premier Ball Projectile
+	UltraBallProjectile.DisplayName: Ultra Ball Projectile
 }

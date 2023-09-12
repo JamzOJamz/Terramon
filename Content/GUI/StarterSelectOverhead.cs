@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Terramon.Content.Items.Mechanical;
 using Terramon.Content.GUI.Common;
 using Terramon.Core;
 using Terramon.Core.Loaders.UILoading;
@@ -172,6 +173,9 @@ public class StarterButton : UIHoverImage
             ).Value;
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
+
+            Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_GiftOrReward(), ModContent.ItemType<PokeBallItem>(), 5);
+            Main.NewText($"You got 5 Poke Balls to start you on your journey!", Color.Yellow);
         };
     }
 }

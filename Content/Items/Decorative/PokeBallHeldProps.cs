@@ -30,7 +30,7 @@ public abstract class PokeBallHeldProp : TerramonItem
 
 public class RegularBallHeldProp : PokeBallHeldProp
 {
-    protected override int UseRarity => ModContent.RarityType<RegularBallRarity>();
+    protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
 
     public override void SetDefaults()
     {

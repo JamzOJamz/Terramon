@@ -22,12 +22,6 @@ public class TerramonPlayer : ModPlayer
         Main.NewText(Party[0].ID);
     }
 
-    public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
-    {
-        if (mediumCoreDeath) yield break;
-        yield return new Item(ModContent.ItemType<RegularBallItem>(), 5);
-    }
-
     /// <summary>
     ///     Adds a Pokémon to the player's party. Returns false if their party is full; otherwise returns true.
     /// </summary>
