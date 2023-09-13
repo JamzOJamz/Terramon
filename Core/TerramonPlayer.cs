@@ -39,7 +39,7 @@ public class TerramonPlayer : ModPlayer
             if (Party[i] == null)
                 return i;
 
-        return -1;
+        return 6;
     }
 
     public override void SaveData(TagCompound tag)
