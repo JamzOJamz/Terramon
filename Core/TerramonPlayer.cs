@@ -7,7 +7,7 @@ namespace Terramon.Core;
 
 public class TerramonPlayer : ModPlayer
 {
-    private readonly PokemonData[] Party = new PokemonData[6];
+    public readonly PokemonData[] Party = new PokemonData[6];
     public bool HasChosenStarter;
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 
@@ -22,7 +22,7 @@ public class TerramonPlayer : ModPlayer
     public bool AddPartyPokemon(PokemonData data)
     {
         var nextIndex = NextFreePartyIndex();
-        if (nextIndex == -1) return false;
+        if (nextIndex == 6) return false;
         Party[nextIndex] = data;
         UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, nextIndex);
         return true;
