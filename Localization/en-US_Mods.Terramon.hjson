@@ -83,7 +83,14 @@ Items: {
 		DisplayName: Pokemon Trainer Jeans
 		Tooltip: ""
 	}
+
+	MusicItemCenter: {
+		DisplayName: Music Box (Pokemon Center)
+		Tooltip: ""
+	}
 }
+
+Tiles.MusicBoxCenter.MapEntry: Music Box
 
 Projectiles: {
 	GreatBallProjectile.DisplayName: Great Ball
