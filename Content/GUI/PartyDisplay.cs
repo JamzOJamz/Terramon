@@ -104,7 +104,7 @@ public class PartySidebar : UIContainer
                 KeyUp = false;
                 if (IsToggled)
                 {
-                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, -120, 0.5f).SetEase(Ease.OutExpo);
+                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
                     IsToggled = false;
                 }
                 else
