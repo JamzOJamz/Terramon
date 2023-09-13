@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
@@ -85,8 +86,39 @@ public class PartyDisplay : SmartUIState
 
 public class PartySidebar : UIContainer
 {
+    private bool IsToggled = true;
+    private bool KeyUp = true;
+
     public PartySidebar(Vector2 size) : base(size)
     {
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        var openKey = Main.keyState.IsKeyDown(Keys.F);
+        switch (openKey)
+        {
+            case true when KeyUp:
+            {
+                KeyUp = false;
+                if (IsToggled)
+                {
+                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, -120, 0.5f).SetEase(Ease.OutExpo);
+                    IsToggled = false;
+                }
+                else
+                {
+                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
+                    IsToggled = true;
+                }
+
+                break;
+            }
+            case false:
+                KeyUp = true;
+                break;
+        }
     }
 
     public void BringSlotToTop(PartySidebarSlot slot)
@@ -142,8 +174,11 @@ public class PartySidebarSlot : UIImage
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        if (IsMouseHovering && Data != null && !PartyDisplay.IsDraggingSlot)
-            Main.hoverItemName = "Left click to send out\nRight click and drag to reorder";
+        if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
+        var hoverText = "Left click to send out";
+        if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
+            hoverText += "\nRight click and drag to reorder";
+        Main.hoverItemName = hoverText;
     }
 
     public void PlayIndexSound()
@@ -182,7 +217,7 @@ public class PartySidebarSlot : UIImage
 
     private void DragStart(UIMouseEvent evt)
     {
-        if (Data == null) return;
+        if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
         PartyDisplay.Sidebar.BringSlotToTop(this);
         Offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
         Dragging = true;
@@ -192,7 +227,7 @@ public class PartySidebarSlot : UIImage
 
     private void DragEnd()
     {
-        if (Data == null) return;
+        if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
         if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
             SoundEngine.PlaySound(SoundID.Tink);
         Dragging = false;
