@@ -15,7 +15,14 @@ Configs: {
 	}
 }
 
-GUI.Starter.ChosenMessage: You chose [c/{0}:{1}], the {2} as your starter Pokémon!
+GUI: {
+	Starter.ChosenMessage: You chose [c/{0}:{1}], the {2} as your starter Pokémon!
+
+	Shop: {
+		PremierBonus: You got a Premier Ball as an added bonus!
+		PremierBonusPlural: You got {0} Premier Balls as an added bonus!
+	}
+}
 
 Items: {
 	PokeBallItem: {
@@ -39,8 +46,8 @@ Items: {
 	}
 
 	PremierBallItem: {
-		DisplayName: Premier Ball Item
-		Tooltip: ""
+		DisplayName: Premier Ball
+		Tooltip: A somewhat rare Poke Ball that has been specially made to commemorate an event of some sort.
 	}
 
 	PokeBallHeldProp: {
@@ -61,866 +68,76 @@ Items: {
 		Tooltip: ""
 		DisplayName: Regular Ball Held Prop
 	}
-}
 
-Pokemon: {
-	Hoppip: {
-		DisplayName: Hoppip
-		Species: Cottonweed Pokémon
+	TrainerCap: {
+		DisplayName: Pokemon Trainer Cap
+		Tooltip: ""
 	}
 
-	Marill: {
-		DisplayName: Marill
-		Species: Aqua Mouse Pokémon
+	TrainerTorso: {
+		DisplayName: Pokemon Trainer Jacket
+		Tooltip: ""
 	}
 
-	Golbat: {
-		DisplayName: Golbat
-		Species: Bat Pokémon
-	}
-
-	Abra: {
-		DisplayName: Abra
-		Species: Psi Pokémon
-	}
-
-	Aerodactyl: {
-		DisplayName: Aerodactyl
-		Species: Fossil Pokémon
-	}
-
-	Bulbasaur: {
-		DisplayName: Bulbasaur
-		Species: Seed Pokémon
-	}
-
-	Ivysaur: {
-		DisplayName: Ivysaur
-		Species: Seed Pokémon
-	}
-
-	Venusaur: {
-		DisplayName: Venusaur
-		Species: Seed Pokémon
-	}
-
-	Charmander: {
-		DisplayName: Charmander
-		Species: Lizard Pokémon
-	}
-
-	Charmeleon: {
-		DisplayName: Charmeleon
-		Species: Flame Pokémon
-	}
-
-	Charizard: {
-		DisplayName: Charizard
-		Species: Flame Pokémon
-	}
-
-	Squirtle: {
-		DisplayName: Squirtle
-		Species: Tiny Turtle Pokémon
-	}
-
-	Wartortle: {
-		DisplayName: Wartortle
-		Species: Turtle Pokémon
-	}
-
-	Blastoise: {
-		DisplayName: Blastoise
-		Species: Shellfish Pokémon
-	}
-
-	Caterpie: {
-		DisplayName: Caterpie
-		Species: Worm Pokémon
-	}
-
-	Metapod: {
-		DisplayName: Metapod
-		Species: Cocoon Pokémon
-	}
-
-	Butterfree: {
-		DisplayName: Butterfree
-		Species: Butterfly Pokémon
-	}
-
-	Weedle: {
-		DisplayName: Weedle
-		Species: Hairy Bug Pokémon
-	}
-
-	Kakuna: {
-		DisplayName: Kakuna
-		Species: Cocoon Pokémon
-	}
-
-	Beedrill: {
-		DisplayName: Beedrill
-		Species: Poison Bee Pokémon
-	}
-
-	Pidgey: {
-		DisplayName: Pidgey
-		Species: Tiny Bird Pokémon
-	}
-
-	Pidgeotto: {
-		DisplayName: Pidgeotto
-		Species: Bird Pokémon
-	}
-
-	Pidgeot: {
-		DisplayName: Pidgeot
-		Species: Bird Pokémon
-	}
-
-	Chikorita: {
-		DisplayName: Chikorita
-		Species: Leaf Pokémon
-	}
-
-	Cyndaquil: {
-		DisplayName: Cyndaquil
-		Species: Fire Mouse Pokémon
-	}
-
-	Totodile: {
-		DisplayName: Totodile
-		Species: Big Jaw Pokémon
-	}
-
-	Treecko: {
-		DisplayName: Treecko
-		Species: Wood Gecko Pokémon
-	}
-
-	Torchic: {
-		DisplayName: Torchic
-		Species: Chick Pokémon
-	}
-
-	Mudkip: {
-		DisplayName: Mudkip
-		Species: Mud Fish Pokémon
-	}
-
-	Turtwig: {
-		DisplayName: Turtwig
-		Species: Tiny Leaf Pokémon
-	}
-
-	Chimchar: {
-		DisplayName: Chimchar
-		Species: Chimp Pokémon
-	}
-
-	Piplup: {
-		DisplayName: Piplup
-		Species: Penguin Pokémon
-	}
-
-	Snivy: {
-		DisplayName: Snivy
-		Species: Grass Snake Pokémon
-	}
-
-	Tepig: {
-		DisplayName: Tepig
-		Species: Fire Pig Pokémon
-	}
-
-	Oshawott: {
-		DisplayName: Oshawott
-		Species: Sea Otter Pokémon
-	}
-
-	Chespin: {
-		DisplayName: Chespin
-		Species: Spiny Nut Pokémon
-	}
-
-	Fennekin: {
-		DisplayName: Fennekin
-		Species: Fox Pokémon
-	}
-
-	Froakie: {
-		DisplayName: Froakie
-		Species: Bubble Frog Pokémon
-	}
-
-	Rowlet: {
-		DisplayName: Rowlet
-		Species: Grass Quill Pokémon
-	}
-
-	Litten: {
-		DisplayName: Litten
-		Species: Fire Cat Pokémon
-	}
-
-	Popplio: {
-		DisplayName: Popplio
-		Species: Sea Lion Pokémon
-	}
-
-	Rattata: {
-		DisplayName: Rattata
-		Species: Mouse Pokémon
-	}
-
-	Raticate: {
-		DisplayName: Raticate
-		Species: Mouse Pokémon
-	}
-
-	Spearow: {
-		DisplayName: Spearow
-		Species: Tiny Bird Pokémon
-	}
-
-	Fearow: {
-		DisplayName: Fearow
-		Species: Beak Pokémon
-	}
-
-	Ekans: {
-		DisplayName: Ekans
-		Species: Snake Pokémon
-	}
-
-	Arbok: {
-		DisplayName: Arbok
-		Species: Cobra Pokémon
-	}
-
-	Pikachu: {
-		DisplayName: Pikachu
-		Species: Mouse Pokémon
-	}
-
-	Raichu: {
-		DisplayName: Raichu
-		Species: Mouse Pokémon
-	}
-
-	Sandshrew: {
-		DisplayName: Sandshrew
-		Species: Mouse Pokémon
-	}
-
-	Sandslash: {
-		DisplayName: Sandslash
-		Species: Mouse Pokémon
-	}
-
-	NidoranF: {
-		DisplayName: Nidoran♀
-		Species: Poison Pin Pokémon
-	}
-
-	Nidorina: {
-		DisplayName: Nidorina
-		Species: Poison Pin Pokémon
-	}
-
-	Nidoqueen: {
-		DisplayName: Nidoqueen
-		Species: Drill Pokémon
-	}
-
-	NidoranM: {
-		DisplayName: Nidoran♂
-		Species: Poison Pin Pokémon
-	}
-
-	Nidorino: {
-		DisplayName: Nidorino
-		Species: Poison Pin Pokémon
-	}
-
-	Nidoking: {
-		DisplayName: Nidoking
-		Species: Drill Pokémon
-	}
-
-	Clefairy: {
-		DisplayName: Clefairy
-		Species: Fairy Pokémon
-	}
-
-	Clefable: {
-		DisplayName: Clefable
-		Species: Fairy Pokémon
-	}
-
-	Vulpix: {
-		DisplayName: Vulpix
-		Species: Fox Pokémon
-	}
-
-	Ninetales: {
-		DisplayName: Ninetales
-		Species: Fox Pokémon
-	}
-
-	Jigglypuff: {
-		DisplayName: Jigglypuff
-		Species: Balloon Pokémon
-	}
-
-	Wigglytuff: {
-		DisplayName: Wigglytuff
-		Species: Balloon Pokémon
-	}
-
-	Zubat: {
-		DisplayName: Zubat
-		Species: Bat Pokémon
-	}
-
-	Oddish: {
-		DisplayName: Oddish
-		Species: Weed Pokémon
-	}
-
-	Gloom: {
-		DisplayName: Gloom
-		Species: Weed Pokémon
-	}
-
-	Vileplume: {
-		DisplayName: Vileplume
-		Species: Flower Pokémon
-	}
-
-	Paras: {
-		DisplayName: Paras
-		Species: Mushroom Pokémon
-	}
-
-	Parasect: {
-		DisplayName: Parasect
-		Species: Mushroom Pokémon
-	}
-
-	Venonat: {
-		DisplayName: Venonat
-		Species: Insect Pokémon
-	}
-
-	Venomoth: {
-		DisplayName: Venomoth
-		Species: Poison Moth Pokémon
-	}
-
-	Diglett: {
-		DisplayName: Diglett
-		Species: Mole Pokémon
-	}
-
-	Dugtrio: {
-		DisplayName: Dugtrio
-		Species: Mole Pokémon
-	}
-
-	Meowth: {
-		DisplayName: Meowth
-		Species: Scratch Cat Pokémon
-	}
-
-	Persian: {
-		DisplayName: Persian
-		Species: Classy Cat Pokémon
-	}
-
-	Psyduck: {
-		DisplayName: Psyduck
-		Species: Duck Pokémon
-	}
-
-	Golduck: {
-		DisplayName: Golduck
-		Species: Duck Pokémon
-	}
-
-	Mankey: {
-		DisplayName: Mankey
-		Species: Pig Monkey Pokémon
-	}
-
-	Primeape: {
-		DisplayName: Primeape
-		Species: Pig Monkey Pokémon
-	}
-
-	Growlithe: {
-		DisplayName: Growlithe
-		Species: Puppy Pokémon
-	}
-
-	Arcanine: {
-		DisplayName: Arcanine
-		Species: Legendary Pokémon
-	}
-
-	Poliwag: {
-		DisplayName: Poliwag
-		Species: Tadpole Pokémon
-	}
-
-	Poliwhirl: {
-		DisplayName: Poliwhirl
-		Species: Tadpole Pokémon
-	}
-
-	Poliwrath: {
-		DisplayName: Poliwrath
-		Species: Tadpole Pokémon
-	}
-
-	Kadabra: {
-		DisplayName: Kadabra
-		Species: Psi Pokémon
-	}
-
-	Alakazam: {
-		DisplayName: Alakazam
-		Species: Psi Pokémon
-	}
-
-	Machop: {
-		DisplayName: Machop
-		Species: Superpower Pokémon
-	}
-
-	Machoke: {
-		DisplayName: Machoke
-		Species: Superpower Pokémon
-	}
-
-	Machamp: {
-		DisplayName: Machamp
-		Species: Superpower Pokémon
-	}
-
-	Bellsprout: {
-		DisplayName: Bellsprout
-		Species: Flower Pokémon
-	}
-
-	Weepinbell: {
-		DisplayName: Weepinbell
-		Species: Flycatcher Pokémon
-	}
-
-	Victreebel: {
-		DisplayName: Victreebel
-		Species: Flycatcher Pokémon
-	}
-
-	Tentacool: {
-		DisplayName: Tentacool
-		Species: Jellyfish Pokémon
-	}
-
-	Tentacruel: {
-		DisplayName: Tentacruel
-		Species: Jellyfish Pokémon
-	}
-
-	Geodude: {
-		DisplayName: Geodude
-		Species: Rock Pokémon
-	}
-
-	Graveler: {
-		DisplayName: Graveler
-		Species: Rock Pokémon
-	}
-
-	Golem: {
-		DisplayName: Golem
-		Species: Megaton Pokémon
-	}
-
-	Ponyta: {
-		DisplayName: Ponyta
-		Species: Fire Horse Pokémon
-	}
-
-	Rapidash: {
-		DisplayName: Rapidash
-		Species: Fire Horse Pokémon
-	}
-
-	Slowpoke: {
-		DisplayName: Slowpoke
-		Species: Dopey Pokémon
-	}
-
-	Slowbro: {
-		DisplayName: Slowbro
-		Species: Hermit Crab Pokémon
-	}
-
-	Magnemite: {
-		DisplayName: Magnemite
-		Species: Magnet Pokémon
-	}
-
-	Magneton: {
-		DisplayName: Magneton
-		Species: Magnet Pokémon
-	}
-
-	Farfetchd.DisplayName: Farfetch’d
-
-	Doduo: {
-		DisplayName: Doduo
-		Species: Twin Bird Pokémon
-	}
-
-	Dodrio: {
-		DisplayName: Dodrio
-		Species: Triple Bird Pokémon
-	}
-
-	Seel: {
-		DisplayName: Seel
-		Species: Sea Lion Pokémon
-	}
-
-	Dewgong: {
-		DisplayName: Dewgong
-		Species: Sea Lion Pokémon
-	}
-
-	Grimer: {
-		DisplayName: Grimer
-		Species: Sludge Pokémon
-	}
-
-	Muk: {
-		DisplayName: Muk
-		Species: Sludge Pokémon
-	}
-
-	Shellder: {
-		DisplayName: Shellder
-		Species: Bivalve Pokémon
-	}
-
-	Cloyster: {
-		DisplayName: Cloyster
-		Species: Bivalve Pokémon
-	}
-
-	Gastly: {
-		DisplayName: Gastly
-		Species: Gas Pokémon
-	}
-
-	Haunter: {
-		DisplayName: Haunter
-		Species: Gas Pokémon
-	}
-
-	Gengar: {
-		DisplayName: Gengar
-		Species: Shadow Pokémon
-	}
-
-	Onix: {
-		DisplayName: Onix
-		Species: Rock Snake Pokémon
-	}
-
-	Drowzee: {
-		DisplayName: Drowzee
-		Species: Hypnosis Pokémon
-	}
-
-	Hypno: {
-		DisplayName: Hypno
-		Species: Hypnosis Pokémon
-	}
-
-	Krabby: {
-		DisplayName: Krabby
-		Species: River Crab Pokémon
-	}
-
-	Kingler: {
-		DisplayName: Kingler
-		Species: Pincer Pokémon
-	}
-
-	Voltorb: {
-		DisplayName: Voltorb
-		Species: Ball Pokémon
-	}
-
-	Electrode: {
-		DisplayName: Electrode
-		Species: Ball Pokémon
-	}
-
-	Exeggcute: {
-		DisplayName: Exeggcute
-		Species: Egg Pokémon
-	}
-
-	Exeggutor: {
-		DisplayName: Exeggutor
-		Species: Coconut Pokémon
-	}
-
-	Cubone: {
-		DisplayName: Cubone
-		Species: Lonely Pokémon
-	}
-
-	Marowak: {
-		DisplayName: Marowak
-		Species: Bone Keeper Pokémon
-	}
-
-	Hitmonlee: {
-		DisplayName: Hitmonlee
-		Species: Kicking Pokémon
-	}
-
-	Hitmonchan: {
-		DisplayName: Hitmonchan
-		Species: Punching Pokémon
-	}
-
-	Lickitung: {
-		DisplayName: Lickitung
-		Species: Licking Pokémon
-	}
-
-	Koffing: {
-		DisplayName: Koffing
-		Species: Poison Gas Pokémon
-	}
-
-	Weezing: {
-		DisplayName: Weezing
-		Species: Poison Gas Pokémon
-	}
-
-	Rhyhorn: {
-		DisplayName: Rhyhorn
-		Species: Spikes Pokémon
-	}
-
-	Rhydon: {
-		DisplayName: Rhydon
-		Species: Drill Pokémon
-	}
-
-	Chansey: {
-		DisplayName: Chansey
-		Species: Egg Pokémon
-	}
-
-	Tangela: {
-		DisplayName: Tangela
-		Species: Vine Pokémon
-	}
-
-	Kangaskhan: {
-		DisplayName: Kangaskhan
-		Species: Parent Pokémon
-	}
-
-	Horsea: {
-		DisplayName: Horsea
-		Species: Dragon Pokémon
-	}
-
-	Seadra: {
-		DisplayName: Seadra
-		Species: Dragon Pokémon
-	}
-
-	Goldeen: {
-		DisplayName: Goldeen
-		Species: Goldfish Pokémon
-	}
-
-	Seaking: {
-		DisplayName: Seaking
-		Species: Goldfish Pokémon
-	}
-
-	Staryu: {
-		DisplayName: Staryu
-		Species: Star Shape Pokémon
-	}
-
-	Starmie: {
-		DisplayName: Starmie
-		Species: Mysterious Pokémon
-	}
-
-	MrMime: {
-		DisplayName: Mr. Mime
-		Species: Barrier Pokémon
-	}
-
-	Scyther: {
-		DisplayName: Scyther
-		Species: Mantis Pokémon
-	}
-
-	Jynx: {
-		DisplayName: Jynx
-		Species: Human Shape Pokémon
-	}
-
-	Electabuzz: {
-		DisplayName: Electabuzz
-		Species: Electric Pokémon
-	}
-
-	Magmar: {
-		DisplayName: Magmar
-		Species: Spitfire Pokémon
-	}
-
-	Pinsir: {
-		DisplayName: Pinsir
-		Species: Stag Beetle Pokémon
-	}
-
-	Tauros: {
-		DisplayName: Tauros
-		Species: Wild Bull Pokémon
-	}
-
-	Magikarp: {
-		DisplayName: Magikarp
-		Species: Fish Pokémon
-	}
-
-	Gyarados: {
-		DisplayName: Gyarados
-		Species: Atrocious Pokémon
-	}
-
-	Lapras: {
-		DisplayName: Lapras
-		Species: Transport Pokémon
-	}
-
-	Ditto: {
-		DisplayName: Ditto
-		Species: Transform Pokémon
-	}
-
-	Eevee: {
-		DisplayName: Eevee
-		Species: Evolution Pokémon
-	}
-
-	Vaporeon: {
-		DisplayName: Vaporeon
-		Species: Bubble Jet Pokémon
-	}
-
-	Jolteon: {
-		DisplayName: Jolteon
-		Species: Lightning Pokémon
-	}
-
-	Flareon: {
-		DisplayName: Flareon
-		Species: Flame Pokémon
-	}
-
-	Porygon: {
-		DisplayName: Porygon
-		Species: Virtual Pokémon
-	}
-
-	Omanyte: {
-		DisplayName: Omanyte
-		Species: Spiral Pokémon
-	}
-
-	Omastar: {
-		DisplayName: Omastar
-		Species: Spiral Pokémon
-	}
-
-	Kabuto: {
-		DisplayName: Kabuto
-		Species: Shellfish Pokémon
-	}
-
-	Kabutops: {
-		DisplayName: Kabutops
-		Species: Shellfish Pokémon
-	}
-
-	Snorlax: {
-		DisplayName: Snorlax
-		Species: Sleeping Pokémon
-	}
-
-	Articuno: {
-		DisplayName: Articuno
-		Species: Freeze Pokémon
-	}
-
-	Zapdos: {
-		DisplayName: Zapdos
-		Species: Electric Pokémon
-	}
-
-	Moltres: {
-		DisplayName: Moltres
-		Species: Flame Pokémon
-	}
-
-	Dratini: {
-		DisplayName: Dratini
-		Species: Dragon Pokémon
-	}
-
-	Dragonair: {
-		DisplayName: Dragonair
-		Species: Dragon Pokémon
-	}
-
-	Dragonite: {
-		DisplayName: Dragonite
-		Species: Dragon Pokémon
-	}
-
-	Mewtwo: {
-		DisplayName: Mewtwo
-		Species: Genetic Pokémon
-	}
-
-	Mew: {
-		DisplayName: Mew
-		Species: New Species Pokémon
+	TrainerLegs: {
+		DisplayName: Pokemon Trainer Jeans
+		Tooltip: ""
 	}
 }
 
 Projectiles: {
-	GreatBallProjectile.DisplayName: Great Ball Projectile
-	MasterBallProjectile.DisplayName: Master Ball Projectile
-	PokeBallProjectile.DisplayName: Poke Ball Projectile
-	PremierBallProjectile.DisplayName: Premier Ball Projectile
-	UltraBallProjectile.DisplayName: Ultra Ball Projectile
+	GreatBallProjectile.DisplayName: Great Ball
+	MasterBallProjectile.DisplayName: Master Ball
+	PokeBallProjectile.DisplayName: Poke Ball
+	PremierBallProjectile.DisplayName: Premier Ball
+	UltraBallProjectile.DisplayName: Ultra Ball
+}
+
+NPCs: {
+	PokemartClerk: {
+		DisplayName: PokeMart Clerk
+		BestiaryText: The Poke Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokemon training needs.
+
+		TownNPCMood: {
+			Content: I rather enjoy my living space.
+			NoHome: I wish I had somewhere to live.
+			FarFromHome: I miss being back at my home.
+			LoveSpace: I love how much space there is for wild Pokemon to appear!
+			DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
+			HateCrowded: There are way too many people living here!
+			LikeBiome: There are so many Pokemon to see in {BiomeName}!
+			DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
+			LikeNPC: I like {NPCName}. They've helped me out a ton.
+			DislikeNPC: I find {NPCName} a bit too loud.
+			HateNPC: I hate {NPCName}. He just doesn't respect Pokemon.
+			LikeNPC_Princess: I like {NPCName}. Who doesn't?
+			Princess_LovesNPC: I like {NPCName}.
+		}
+
+		Dialogue: {
+			Catchem: There's a lot of Pokemon out there, but you'll need Poke Balls to catch them! Luckily for you, I have some in stock.
+			Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
+			CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
+			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokemon!
+			Regions: There are many different regions in the world. One day I hope to visit all of them!
+			Crafting: I conveniently sell Pokéballs for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
+			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
+			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
+			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
+			BadName: Now, I know what you're thinking. "That's such a creative name!"
+			Shimmer: Like my outfit? I look just like a real Pokemon Trainer!
+			ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
+			PokemonHello: Is that your {0}? Hi, {1}!
+			PokemonGrass: Is that a grass-type Pokemon? Those are my favourite!
+			PokemonIce: An ice-type Pokemon! I've always loved seeing those.
+			PokemonShiny: Is that a shiny Pokemon? That's incredible! I wish I had one myself.
+			PokemonShimmer: Interesting... Your Pokemon has the same colors as a shiny Pokemon, but none of the... well- shine.
+			PokemonNicknameHowto: Did you know you can give your Pokemon a nickname? Type "/nickname" in the chat alongside the name of your choice.
+			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokemon very much."
+			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
+			MechanicComment: "{0} knows a lot about Poke Balls. Maybe one day I could start selling more of them!"
+			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
+			ArmsDealerComment: Can you tell  {0} to stop shooting at the Pokemon??
+		}
+	}
 }
