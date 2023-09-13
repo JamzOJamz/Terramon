@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Core;
 using Terramon.Core.Loaders.UILoading;
@@ -73,6 +74,8 @@ public class PartyDisplay : SmartUIState
         var slot2 = PartySlots[index2];
         PartySlots[index1] = slot2;
         PartySlots[index2] = slot1;
+
+        PartySlots[index2].PlayIndexSound();
     }
 
     public override void SafeUpdate(GameTime gameTime)
@@ -101,7 +104,7 @@ public class PartySidebar : UIContainer
                 KeyUp = false;
                 if (IsToggled)
                 {
-                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, -120, 0.5f).SetEase(Ease.OutExpo);
+                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
                     IsToggled = false;
                 }
                 else
@@ -178,9 +181,25 @@ public class PartySidebarSlot : UIImage
         Main.hoverItemName = hoverText;
     }
 
+    public void PlayIndexSound()
+    {
+        if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
+            return;
+
+        //float[] pitchTable = new float[] { -0.16f, 0, 0.16f, 0.416f, 0.583f, 0.75f };
+        var s = new SoundStyle
+        {
+            SoundPath = "Terramon/Assets/Audio/Sounds/button_smm",
+            Pitch = ((float)_index / -15) + 0.6f,
+            Volume = 0.25f
+        };
+        SoundEngine.PlaySound(s);
+    }
+
     public override void RightMouseDown(UIMouseEvent evt)
     {
         base.RightMouseDown(evt);
+        PlayIndexSound();
         DragStart(evt);
     }
 
@@ -209,7 +228,8 @@ public class PartySidebarSlot : UIImage
     private void DragEnd()
     {
         if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
-        SoundEngine.PlaySound(SoundID.Tink);
+        if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
+            SoundEngine.PlaySound(SoundID.Tink);
         Dragging = false;
         JustEndedDragging = true;
         PartyDisplay.IsDraggingSlot = false;
@@ -293,17 +313,28 @@ public class PartySidebarSlot : UIImage
             if (IsHovered) return;
             IsHovered = true;
             if (!JustEndedDragging) SoundEngine.PlaySound(SoundID.MenuTick);
-            SetImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SidebarOpen_Selected",
-                AssetRequestMode.ImmediateLoad));
+            UpdateSprite(true);
         }
         else
         {
             if (Data == null || !IsHovered) return;
             IsHovered = false;
             JustEndedDragging = false;
-            SetImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SidebarOpen",
-                AssetRequestMode.ImmediateLoad));
+            UpdateSprite();
         }
+    }
+
+    public void UpdateSprite(bool selected = false)
+    {
+        string spritePath = "Terramon/Assets/GUI/Party/SidebarOpen";
+        if (Data != null)
+        {
+            if (selected)
+                spritePath += "_Selected";
+        }
+
+        SetImage(ModContent.Request<Texture2D>(spritePath,
+        AssetRequestMode.ImmediateLoad));
     }
 
     public void SetData(PokemonData data)
@@ -311,8 +342,7 @@ public class PartySidebarSlot : UIImage
         Data = data;
         if (data == null)
         {
-            SetImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SidebarClosed",
-                AssetRequestMode.ImmediateLoad));
+            
             HeldItemBox?.Remove();
             SpriteBox?.Remove();
             GenderIcon?.Remove();
@@ -321,8 +351,7 @@ public class PartySidebarSlot : UIImage
         }
         else
         {
-            SetImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SidebarOpen",
-                AssetRequestMode.ImmediateLoad));
+            UpdateSprite();
             NameText.SetText(Terramon.Database.GetLocalizedPokemonName(data.ID).Value);
             LevelText.SetText("Lv. " + data.Level);
             HeldItemBox = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",
