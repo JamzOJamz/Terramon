@@ -11,7 +11,7 @@ public class PokemonData : TagSerializable
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
     public byte Gender = GenderID.Unknown;
     public ushort ID;
-    private bool IsShiny;
+    public bool IsShiny;
     public byte Level = 1;
     private string OT;
 
