@@ -179,23 +179,27 @@ public class BasePkballEntity : ModTileEntity
     {
         item.Serialize(writer, ItemSerializationContext.Syncing);
         writer.Write(open);
+        writer.Write(disposable);
     }
 
     public override void NetReceive(BinaryReader reader)
     {
         item.DeserializeFrom(reader, ItemSerializationContext.Syncing);
         open = reader.ReadBoolean();
+        disposable = reader.ReadBoolean();
     }
 
     public override void SaveData(TagCompound tag)
     {
         tag.Set("pkballTile", item.SerializeData());
         tag.Set("pkballOpen", open);
+        tag.Set("pkballDisposable", disposable);
     }
 
     public override void LoadData(TagCompound tag)
     {
         item = tag.Get<Item>("pkballTile");
         open = tag.GetBool("pkballOpen");
+        disposable = tag.GetBool("pkballDisposable");
     }
 }
