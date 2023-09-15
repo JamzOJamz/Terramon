@@ -29,7 +29,7 @@ public class MusicBoxCenter : ModTile
         var name = CreateMapEntryName();
         AddMapEntry(new Color(200, 200, 200), name);
     }
-    
+
     public override IEnumerable<Item> GetItemDrops(int i, int j)
     {
         yield return new Item(ModContent.ItemType<MusicItemCenter>());
@@ -81,6 +81,9 @@ public class MusicItemCenter : TerramonItem
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
     }
-    
-    public override bool? PrefixChance(int pre, UnifiedRandom rand) => false;
+
+    public override bool? PrefixChance(int pre, UnifiedRandom rand)
+    {
+        return false;
+    }
 }
