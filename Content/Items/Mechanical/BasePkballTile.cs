@@ -25,7 +25,7 @@ public abstract class BasePkballTile : ModTile
 
     protected virtual int dropItem => -1;
 
-    static int maxInteractDistance = 64;
+    static int maxInteractDistance = 80;
 
 	public override void SetStaticDefaults()
 	{
