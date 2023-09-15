@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.UI;
 
 namespace Terramon.Content.GUI;
@@ -175,9 +176,9 @@ public class PartySidebarSlot : UIImage
     {
         base.DrawSelf(spriteBatch);
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
-        var hoverText = "Left click to send out";
+        var hoverText = Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover");
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
-            hoverText += "\nRight click and drag to reorder";
+            hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
         Main.hoverItemName = hoverText;
     }
 
@@ -190,7 +191,7 @@ public class PartySidebarSlot : UIImage
         var s = new SoundStyle
         {
             SoundPath = "Terramon/Assets/Audio/Sounds/button_smm",
-            Pitch = ((float)_index / -15) + 0.6f,
+            Pitch = (float)_index / -15 + 0.6f,
             Volume = 0.25f
         };
         SoundEngine.PlaySound(s);
@@ -326,15 +327,13 @@ public class PartySidebarSlot : UIImage
 
     public void UpdateSprite(bool selected = false)
     {
-        string spritePath = "Terramon/Assets/GUI/Party/SidebarOpen";
+        var spritePath = "Terramon/Assets/GUI/Party/SidebarOpen";
         if (Data != null)
-        {
             if (selected)
                 spritePath += "_Selected";
-        }
 
         SetImage(ModContent.Request<Texture2D>(spritePath,
-        AssetRequestMode.ImmediateLoad));
+            AssetRequestMode.ImmediateLoad));
     }
 
     public void SetData(PokemonData data)
@@ -342,7 +341,6 @@ public class PartySidebarSlot : UIImage
         Data = data;
         if (data == null)
         {
-            
             HeldItemBox?.Remove();
             SpriteBox?.Remove();
             GenderIcon?.Remove();

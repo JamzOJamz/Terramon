@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Content.Items.Vanity;
 using Terramon.Core;
@@ -16,11 +15,14 @@ using static Terraria.GameContent.Profiles;
 namespace TerramonMod.NPCs;
 
 [AutoloadHead]
-
 public class PokemartClerk : ModNPC
 {
     private static int ShimmerHeadIndex;
     private static StackedNPCProfile NPCProfile;
+
+    public static Condition TrainerSetCondition =
+        new("ClerkTrainerSale", () => Condition.IsNpcShimmered.IsMet() || Main.halloween);
+
     public override string Texture => "Terramon/Assets/NPCs/" + GetType().Name;
 
 
@@ -29,27 +31,31 @@ public class PokemartClerk : ModNPC
         // Adds our Shimmer Head to the NPCHeadLoader.
         ShimmerHeadIndex = Mod.AddNPCHeadTexture(Type, Texture + "_Shimmer_Head");
     }
+
     public override void SetStaticDefaults()
     {
         // DisplayName.SetDefault("Poke Mart Clerk");
 
         Main.npcFrameCount[Type] = 26; // The amount of frames the NPC has
-        NPCID.Sets.ExtraFramesCount[Type] = 9; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
+        NPCID.Sets.ExtraFramesCount[Type] =
+            9; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
         NPCID.Sets.AttackFrameCount[Type] = 4;
-        NPCID.Sets.DangerDetectRange[Type] = 700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
+        NPCID.Sets.DangerDetectRange[Type] =
+            700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
         NPCID.Sets.AttackType[Type] = 0;
-        NPCID.Sets.AttackTime[Type] = 90; // The amount of time it takes for the NPC's attack animation to be over once it starts.
+        NPCID.Sets.AttackTime[Type] =
+            90; // The amount of time it takes for the NPC's attack animation to be over once it starts.
         NPCID.Sets.AttackAverageChance[Type] = 30;
         NPCID.Sets.HatOffsetY[Type] = 2; // For when a party is active, the party hat spawns at a Y offset.
         NPCID.Sets.ShimmerTownTransform[Type] = true;
 
         // Influences how the NPC looks in the Bestiary
-        NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        var drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
         {
             Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
             Direction = 1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
-                          // Rotation = MathHelper.ToRadians(180) // You can also change the rotation of an NPC. Rotation is measured in radians
-                          // If you want to see an example of manually modifying these when the NPC is drawn, see PreDraw
+            // Rotation = MathHelper.ToRadians(180) // You can also change the rotation of an NPC. Rotation is measured in radians
+            // If you want to see an example of manually modifying these when the NPC is drawn, see PreDraw
         };
 
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
@@ -63,7 +69,7 @@ public class PokemartClerk : ModNPC
             .SetNPCAffection(NPCID.Merchant, AffectionLevel.Like)
             .SetNPCAffection(NPCID.Pirate, AffectionLevel.Dislike)
             .SetNPCAffection(NPCID.ArmsDealer, AffectionLevel.Hate)
-        ; // < Mind the semicolon!
+            ; // < Mind the semicolon!
 
         //breeder - bestiarygirl, nurse    stylist, partygirl
 
@@ -95,22 +101,31 @@ public class PokemartClerk : ModNPC
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {
         // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
-        bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				// Sets the preferred biomes of this town NPC listed in the bestiary.
-				// With Town NPCs, you usually set this to what biome it likes the most in regards to NPC happiness.
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
+        bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
+        {
+            // Sets the preferred biomes of this town NPC listed in the bestiary.
+            // With Town NPCs, you usually set this to what biome it likes the most in regards to NPC happiness.
+            BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 
-				// Sets your NPC's flavor text in the bestiary.
-				new FlavorTextBestiaryInfoElement("Mods.Terramon.NPCs.PokemartClerk.BestiaryText")
+            // Sets your NPC's flavor text in the bestiary.
+            new FlavorTextBestiaryInfoElement("Mods.Terramon.NPCs.PokemartClerk.BestiaryText")
         });
     }
-    public override bool CanTownNPCSpawn(int numTownNPCs) => true;
 
-    public override ITownNPCProfile TownNPCProfile() => NPCProfile;
+    public override bool CanTownNPCSpawn(int numTownNPCs)
+    {
+        return true;
+    }
+
+    public override ITownNPCProfile TownNPCProfile()
+    {
+        return NPCProfile;
+    }
 
     public override List<string> SetNPCNameList()
     {
-        return new List<string>() {
+        return new List<string>
+        {
             "Martin",
             "Tom",
             "Dave",
@@ -133,15 +148,15 @@ public class PokemartClerk : ModNPC
         PokemonData pokemon = null;
         if (player.NextFreePartyIndex() > 0)
         {
-            int partyIndex = Main.rand.Next(0, player.NextFreePartyIndex());
+            var partyIndex = Main.rand.Next(0, player.NextFreePartyIndex());
             pokemon = player.Party[partyIndex];
         }
 
         //if (pokemon != null && pokemon.data.IsEvolveReady())
-            //return $"Oh? It look's like {pokemon.data.GetName()} is ready to evolve.";
+        //return $"Oh? It look's like {pokemon.data.GetName()} is ready to evolve.";
 
         //TODO: Re-enable dialogue CheckBack when he's given more sales and Crafting when Poke Balls are craftable
-        WeightedRandom<string> chat = new WeightedRandom<string>();
+        var chat = new WeightedRandom<string>();
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Catchem"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Furret"));
         //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.CheckBack"));
@@ -157,9 +172,11 @@ public class PokemartClerk : ModNPC
 
         //only add chat about Pokemon if it exists
         if (pokemon != null)
-        { 
+        {
             //TODO: Add Pokemon nickname here + later text (nickname would replace second GetLocalizedPokemonName)
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello", Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID), Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID)));
+            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello",
+                Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID),
+                Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID)));
 
             /*if (pokemon.data.Nickname == null)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNicknameHowto"));
@@ -175,7 +192,7 @@ public class PokemartClerk : ModNPC
             if (pokemon.IsShiny)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonShiny"));
             //else if (player.usePokeIsShimmer)
-                //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonShimmer"));
+            //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonShimmer"));
         }
 
         if (NPC.IsShimmerVariant)
@@ -185,19 +202,23 @@ public class PokemartClerk : ModNPC
 
         var merchant = NPC.FindFirstNPC(NPCID.Merchant);
         if (merchant >= 0)
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.MerchantComment", Main.npc[merchant].GivenName));
+            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.MerchantComment",
+                Main.npc[merchant].GivenName));
 
         var mechanic = NPC.FindFirstNPC(NPCID.Mechanic);
         if (mechanic >= 0)
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.MechanicComment", Main.npc[mechanic].GivenName));
+            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.MechanicComment",
+                Main.npc[mechanic].GivenName));
 
         var pirate = NPC.FindFirstNPC(NPCID.Pirate);
         if (pirate >= 0)
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PirateComment", Main.npc[pirate].GivenName));
+            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PirateComment",
+                Main.npc[pirate].GivenName));
 
         var armsDealer = NPC.FindFirstNPC(NPCID.ArmsDealer);
         if (armsDealer >= 0)
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.ArmsDealerComment", Main.npc[armsDealer].GivenName));
+            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.ArmsDealerComment",
+                Main.npc[armsDealer].GivenName));
 
         return chat; // chat is implicitly cast to a string.
     }
@@ -205,7 +226,8 @@ public class PokemartClerk : ModNPC
     //TODO: Add optional evolution function back (Fast Evolution config = false) in case players want to level up Pokemon without evolving
 
     public override void SetChatButtons(ref string button, ref string button2)
-    { // What the chat buttons are when you open up the chat UI
+    {
+        // What the chat buttons are when you open up the chat UI
         button = Language.GetTextValue("LegacyInterface.28");
 
         /*var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
@@ -230,11 +252,9 @@ public class PokemartClerk : ModNPC
         }*/
     }
 
-    public static Condition TrainerSetCondition = new Condition("ClerkTrainerSale", () => Condition.IsNpcShimmered.IsMet() || Main.halloween);
-
     public override void AddShops()
     {
-        var npcShop = new NPCShop(Type, "Shop")
+        var npcShop = new NPCShop(Type)
             .Add<PokeBallItem>()
             .Add<GreatBallItem>()
             .Add<UltraBallItem>()
@@ -247,7 +267,10 @@ public class PokemartClerk : ModNPC
 
 
     // Make this Town NPC teleport to the King and/or Queen statue when triggered.
-    public override bool CanGoToStatue(bool toKingStatue) => true;
+    public override bool CanGoToStatue(bool toKingStatue)
+    {
+        return true;
+    }
 
     public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
     {

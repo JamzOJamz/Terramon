@@ -7,10 +7,17 @@ namespace Terramon.Content.Configs;
 
 public class ClientConfig : ModConfig
 {
-    [Header("Miscellaneous")]
+    [Header("Graphics")] public ModIconType ModIconType;
 
-    [DefaultValue(false)]
+    [Header("Miscellaneous")] [DefaultValue(false)]
     public bool ReducedAudio;
 
     public override ConfigScope Mode => ConfigScope.ClientSide;
+}
+
+public enum ModIconType
+{
+    Main,
+    Alternate,
+    Classic
 }

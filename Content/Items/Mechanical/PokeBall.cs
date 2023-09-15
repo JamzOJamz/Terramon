@@ -22,6 +22,7 @@ internal class PokeBallItem : BasePkballItem
             igPrice / 2; //Amount needed to duplicate them in Journey Mode
     }
 }
+
 public class PokeBallTile : BasePkballTile
 {
     protected override int dropItem => ModContent.ItemType<PokeBallItem>();

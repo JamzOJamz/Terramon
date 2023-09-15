@@ -10,18 +10,34 @@ Configs: {
 
 		FastAnimations: {
 			Label: Fast Animations
-			Tooltip: Whether to skip animations for certain events (e.g. catching a pokemon)
+			Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
 		}
 	}
 
 	ClientConfig: {
-		DisplayName: Preference Settings
-		Headers.Miscellaneous: Miscellaneous
+		DisplayName: Preferences
+
+		Headers: {
+			Miscellaneous: Miscellaneous
+			Graphics: Graphics
+		}
 
 		ReducedAudio: {
 			Label: Reduced Audio
 			Tooltip: Disables certain sounds (e.g. musical tones when re-arranging sidebar)
 		}
+
+		ModIconType: {
+			Label: Mod Icon Type
+			Tooltip: Changes the mod icon
+		}
+	}
+
+	ModIconType: {
+		Tooltip: ""
+		Main.Label: Main
+		Alternate.Label: Alternate
+		Classic.Label: Classic
 	}
 }
 
@@ -32,37 +48,66 @@ GUI: {
 		PremierBonus: You got a Premier Ball as an added bonus!
 		PremierBonusPlural: You got {0} Premier Balls as an added bonus!
 	}
+
+	Party: {
+		SlotHover: Left click to send out
+		SlotHoverExtra:
+			'''
+
+			Right click and drag to reorder
+			'''
+	}
 }
 
 Items: {
 	PokeBallItem: {
-		DisplayName: Poke Ball
-		Tooltip: A device for catching wild Pokemon. It is thrown like a ball at the target.
+		DisplayName: Poké Ball
+		Tooltip:
+			'''
+			A device for catching wild Pokémon.
+			It is thrown like a ball at the target.
+			'''
+		CatchRate: 1x catch rate
 	}
 
 	GreatBallItem: {
 		DisplayName: Great Ball
-		Tooltip: A good, high-performance Ball that provides a higher Pokemon catch rate than a standard Poke Ball.
+		Tooltip:
+			'''
+			A good, high-performance Poké Ball.
+			Provides a higher Pokémon catch rate than a standard Poké Ball.
+			'''
+		CatchRate: 1.5x catch rate
 	}
 
 	UltraBallItem: {
 		DisplayName: Ultra Ball
-		Tooltip: An ultra-performance Ball that provides a higher Pokemon catch rate than a Great Ball.
+		Tooltip:
+			'''
+			An ultra-high-performance Poké Ball.
+			Provides a higher Pokémon catch rate than a Great Ball.
+			'''
+		CatchRate: 2x catch rate
 	}
 
 	MasterBallItem: {
 		DisplayName: Master Ball
-		Tooltip: The best Ball with the ultimate level of performance. It will catch any wild Pokemon without fail.
+		Tooltip:
+			'''
+			The best Poké Ball with the ultimate level of performance.
+			It will catch any wild Pokémon without fail.
+			'''
+		CatchRate: 100% catch rate
 	}
 
 	PremierBallItem: {
 		DisplayName: Premier Ball
-		Tooltip: A somewhat rare Poke Ball that has been specially made to commemorate an event of some sort.
-	}
-
-	PokeBallHeldProp: {
-		DisplayName: Poké Ball Prop
-		Tooltip: ""
+		Tooltip:
+			'''
+			A somewhat rare Poké Ball.
+			It was made as a commemorative item used to celebrate an event of some sort.
+			'''
+		CatchRate: 1x catch rate
 	}
 
 	RareCandy: {
@@ -75,27 +120,27 @@ Items: {
 	}
 
 	RegularBallHeldProp: {
+		DisplayName: Poké Ball Prop
 		Tooltip: ""
-		DisplayName: Regular Ball Held Prop
 	}
 
 	TrainerCap: {
-		DisplayName: Pokemon Trainer Cap
+		DisplayName: Pokémon Trainer Cap
 		Tooltip: ""
 	}
 
 	TrainerTorso: {
-		DisplayName: Pokemon Trainer Jacket
+		DisplayName: Pokémon Trainer Jacket
 		Tooltip: ""
 	}
 
 	TrainerLegs: {
-		DisplayName: Pokemon Trainer Jeans
+		DisplayName: Pokémon Trainer Jeans
 		Tooltip: ""
 	}
 
 	MusicItemCenter: {
-		DisplayName: Music Box (Pokemon Center)
+		DisplayName: Music Box (Pokémon Center)
 		Tooltip: ""
 	}
 }
@@ -104,49 +149,49 @@ Tiles.MusicBoxCenter.MapEntry: Music Box
 
 NPCs: {
 	PokemartClerk: {
-		DisplayName: PokeMart Clerk
-		BestiaryText: The Poke Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokemon training needs.
+		DisplayName: Poké Mart Clerk
+		BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
 
 		TownNPCMood: {
 			Content: I rather enjoy my living space.
 			NoHome: I wish I had somewhere to live.
 			FarFromHome: I miss being back at my home.
-			LoveSpace: I love how much space there is for wild Pokemon to appear!
+			LoveSpace: I love how much space there is for wild Pokémon to appear!
 			DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
 			HateCrowded: There are way too many people living here!
-			LikeBiome: There are so many Pokemon to see in {BiomeName}!
+			LikeBiome: There are so many Pokémon to see in {BiomeName}!
 			DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
 			LikeNPC: I like {NPCName}. They've helped me out a ton.
 			DislikeNPC: I find {NPCName} a bit too loud.
-			HateNPC: I hate {NPCName}. He just doesn't respect Pokemon.
+			HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
 			LikeNPC_Princess: I like {NPCName}. Who doesn't?
 			Princess_LovesNPC: I like {NPCName}.
 		}
 
 		Dialogue: {
-			Catchem: There's a lot of Pokemon out there, but you'll need Poke Balls to catch them! Luckily for you, I have some in stock.
+			Catchem: There's a lot of Pokémon out there, but you'll need Poke Balls to catch them! Luckily for you, I have some in stock.
 			Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
 			CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
-			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokemon!
+			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
 			Regions: There are many different regions in the world. One day I hope to visit all of them!
 			Crafting: I conveniently sell Pokéballs for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
 			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
 			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
 			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
 			BadName: Now, I know what you're thinking. "That's such a creative name!"
-			Shimmer: Like my outfit? I look just like a real Pokemon Trainer!
+			Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
 			ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
 			PokemonHello: Is that your {0}? Hi, {1}!
-			PokemonGrass: Is that a grass-type Pokemon? Those are my favourite!
-			PokemonIce: An ice-type Pokemon! I've always loved seeing those.
-			PokemonShiny: Is that a shiny Pokemon? That's incredible! I wish I had one myself.
-			PokemonShimmer: Interesting... Your Pokemon has the same colors as a shiny Pokemon, but none of the... well- shine.
-			PokemonNicknameHowto: Did you know you can give your Pokemon a nickname? Type "/nickname" in the chat alongside the name of your choice.
-			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokemon very much."
+			PokemonGrass: Is that a grass-type Pokémon? Those are my favourite!
+			PokemonIce: An ice-type Pokémon! I've always loved seeing those.
+			PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
+			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well- shine.
+			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
+			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
 			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
 			MechanicComment: "{0} knows a lot about Poke Balls. Maybe one day I could start selling more of them!"
 			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
-			ArmsDealerComment: Can you tell  {0} to stop shooting at the Pokemon??
+			ArmsDealerComment: Can you tell  {0} to stop shooting at the Pokémon??
 		}
 	}
 }

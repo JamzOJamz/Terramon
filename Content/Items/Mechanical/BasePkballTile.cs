@@ -1,52 +1,49 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terramon.Core;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.UI;
 
 namespace Terramon.Content.Items.Mechanical;
 
 public abstract class BasePkballTile : ModTile
 {
+    private static readonly int maxInteractDistance = 80;
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
     public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/PokeBallTile_Highlight";
 
     protected virtual int dropItem => -1;
 
-    static int maxInteractDistance = 80;
+    public override void SetStaticDefaults()
+    {
+        Main.tileShine[Type] = 1100;
+        Main.tileSolid[Type] = false;
+        Main.tileSolidTop[Type] = false;
+        Main.tileFrameImportant[Type] = true;
 
-	public override void SetStaticDefaults()
-	{
-		Main.tileShine[Type] = 1100;
-		Main.tileSolid[Type] = false;
-		Main.tileSolidTop[Type] = false;
-		Main.tileFrameImportant[Type] = true;
-
-		TileID.Sets.HasOutlines[Type] = true;
+        TileID.Sets.HasOutlines[Type] = true;
         TileObjectData.newTile.StyleHorizontal = true;
 
         TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-        TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<BasePkballEntity>().Hook_AfterPlacement, -1, 0, false);
+        TileObjectData.newTile.HookPostPlaceMyPlayer =
+            new PlacementHook(ModContent.GetInstance<BasePkballEntity>().Hook_AfterPlacement, -1, 0, false);
         TileObjectData.newTile.UsesCustomCanPlace = true;
         TileObjectData.newTile.LavaDeath = false;
         TileObjectData.addTile(Type);
 
         HitSound = SoundID.Tink;
-		DustType = DustID.Marble;
+        DustType = DustID.Marble;
 
-		AddMapEntry(Color.LightGray, Language.GetText($"Terramon.Items.{GetType().Name.Replace("Tile", "Item")}.DisplayName"));
+        AddMapEntry(Color.LightGray,
+            Language.GetText($"Terramon.Items.{GetType().Name.Replace("Tile", "Item")}.DisplayName"));
     }
 
     //TODO: Make chest data persist after world exit / make this a tile entity
@@ -64,13 +61,17 @@ public abstract class BasePkballTile : ModTile
         return base.PreDraw(i, j, spriteBatch);
     }
 
-    public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+    public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+    {
+        return true;
+    }
 
     public override void MouseOver(int i, int j)
     {
-        Player player = Main.LocalPlayer;
+        var player = Main.LocalPlayer;
 
-        if (!player.IsWithinSnappngRangeToTile(i, j, maxInteractDistance)) // Match condition in RightClick. Interaction should only show if clicking it does something
+        if (!player.IsWithinSnappngRangeToTile(i, j,
+                maxInteractDistance)) // Match condition in RightClick. Interaction should only show if clicking it does something
             return;
 
         player.noThrow = 2;
@@ -83,9 +84,10 @@ public abstract class BasePkballTile : ModTile
 
     public override bool RightClick(int i, int j)
     {
-        Player player = Main.LocalPlayer;
+        var player = Main.LocalPlayer;
 
-        if (player.IsWithinSnappngRangeToTile(i, j, maxInteractDistance)) // Avoid being able to trigger it from long range
+        if (player.IsWithinSnappngRangeToTile(i, j,
+                maxInteractDistance)) // Avoid being able to trigger it from long range
         {
             if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
             {
@@ -97,6 +99,7 @@ public abstract class BasePkballTile : ModTile
                         e.item = player.HeldItem.Clone();
                         player.HeldItem.stack -= 1;
                     }
+
                     e.open = false;
                 }
                 else //when opening
@@ -106,12 +109,14 @@ public abstract class BasePkballTile : ModTile
                         player.QuickSpawnItem(Entity.GetSource_None(), e.item);
                         e.item.stack = 0;
                     }
+
                     e.open = true;
 
                     if (e.disposable)
                         WorldGen.KillTile(i, j);
                 }
             }
+
             return true;
         }
 
@@ -129,7 +134,9 @@ public abstract class BasePkballTile : ModTile
                 yield return new Item(dropItem);
         }
         else
+        {
             yield return new Item(dropItem);
+        }
 
 
         ModContent.GetInstance<BasePkballEntity>().Kill(i, j);
@@ -138,13 +145,13 @@ public abstract class BasePkballTile : ModTile
 
 public class BasePkballEntity : ModTileEntity
 {
-    public Item item = new Item();
-    public bool open = false;
-    public bool disposable = false;
+    public bool disposable;
+    public Item item = new();
+    public bool open;
 
     public override bool IsTileValidForEntity(int x, int y)
     {
-        Tile tile = Main.tile[x, y];
+        var tile = Main.tile[x, y];
         return tile.HasTile && ModContent.GetModTile(tile.TileType) is BasePkballTile;
     }
 
@@ -163,16 +170,14 @@ public class BasePkballEntity : ModTileEntity
         // ModTileEntity.Place() handles checking if the entity can be placed, then places it for you
         // Set "tileOrigin" to the same value you set TileObjectData.newTile.Origin to in the ModTile
         Point16 tileOrigin = new(0, 0);
-        int placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
+        var placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
         return placedEntity;
     }
 
     public override void OnNetPlace()
     {
         if (Main.netMode == NetmodeID.Server)
-        {
             NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
-        }
     }
 
     public override void NetSend(BinaryWriter writer)

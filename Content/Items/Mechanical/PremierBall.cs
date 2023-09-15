@@ -11,7 +11,7 @@ internal class PremierBallProjectile : BasePkballProjectile
 
 internal class PremierBallItem : BasePkballItem
 {
-    protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
+    protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
     protected override int pokeballThrow => ModContent.ProjectileType<PremierBallProjectile>();
     protected override int pokeballTile => ModContent.TileType<PremierBallTile>();
     protected override int igPrice => 200;
@@ -32,5 +32,5 @@ public class PremierBallTile : BasePkballTile
 
 public class PremierBallRarity : ModRarity
 {
-    public override Color RarityColor => new(249, 163, 27);
+    public override Color RarityColor => new(201, 201, 229);
 }

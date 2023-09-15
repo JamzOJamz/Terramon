@@ -30,7 +30,7 @@ internal class MasterBallItem : BasePkballItem
 
 public class MasterBallTile : BasePkballTile
 {
-    public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name +"_Highlight";
+    public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name + "_Highlight";
     protected override int dropItem => ModContent.ItemType<MasterBallItem>();
 }
 

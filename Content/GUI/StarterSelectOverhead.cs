@@ -173,10 +173,8 @@ public class StarterButton : UIHoverImage
             ).Value;
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
-
             Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_GiftOrReward(),
                 ModContent.ItemType<PokeBallItem>(), 5);
-            Main.NewText("You got 5 Poke Balls to start you on your journey!", Color.Yellow);
         };
     }
 }

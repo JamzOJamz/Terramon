@@ -31,7 +31,8 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
-    public override LocalizedText DisplayName => Language.GetText($"Terramon.Items.{GetType().Name.Replace("Projectile", "Item")}.DisplayName");
+    public override LocalizedText DisplayName =>
+        Language.GetText($"Terramon.Items.{GetType().Name.Replace("Projectile", "Item")}.DisplayName");
 
     public override void SetStaticDefaults()
     {
@@ -127,8 +128,8 @@ internal abstract class BasePkballProjectile : ModProjectile
             {
                 Projectile.shimmerWet = false;
                 Projectile.velocity.Y *= -0.8f;
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_bounce"), 
-					Projectile.position);
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_bounce"),
+                    Projectile.position);
                 bounces -= 1;
             }
         }
@@ -198,8 +199,8 @@ internal abstract class BasePkballProjectile : ModProjectile
                     if (caught)
                     {
                         Projectile.frame = (int)Frame.CaptureComplete;
-                        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch"), 
-							Projectile.position);
+                        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch"),
+                            Projectile.position);
                         Projectile.ai[1] = 3;
                         Projectile.ai[0] = 0;
                     }
@@ -213,8 +214,8 @@ internal abstract class BasePkballProjectile : ModProjectile
                 {
                     catchTries -= 1;
                     rotationVelocity = 0.2f;
-                    SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_shake"), 
-						Projectile.position);
+                    SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_shake"),
+                        Projectile.position);
                 }
 
                 Projectile.ai[0] = 0;

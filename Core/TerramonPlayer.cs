@@ -11,8 +11,8 @@ public class TerramonPlayer : ModPlayer
 {
     public readonly PokemonData[] Party = new PokemonData[6];
     public bool HasChosenStarter;
+    public int premierBonusCount;
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
-    public int premierBonusCount = 0;
 
     public override void OnEnterWorld()
     {
@@ -21,20 +21,19 @@ public class TerramonPlayer : ModPlayer
 
     public override void PreUpdate()
     {
-        if (premierBonusCount > 0 && Main.npcShop == 0)
+        if (premierBonusCount <= 0 || Main.npcShop != 0) return;
+        var premierBonus = premierBonusCount / 10;
+        if (premierBonus > 0)
         {
-            int premierBonus = premierBonusCount / 10;
-            if (premierBonus > 0)
-            {
-                if (premierBonus == 1)
-                    Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Shop.PremierBonus"));
-                else
-                    Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Shop.PremierBonusPlural", premierBonus));
+            Main.NewText(premierBonus == 1
+                ? Language.GetTextValue("Mods.Terramon.GUI.Shop.PremierBonus")
+                : Language.GetTextValue("Mods.Terramon.GUI.Shop.PremierBonusPlural", premierBonus));
 
-                Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), ModContent.ItemType<PremierBallItem>(), premierBonus);
-            }
-            premierBonusCount = 0;
+            Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), ModContent.ItemType<PremierBallItem>(),
+                premierBonus);
         }
+
+        premierBonusCount = 0;
     }
 
     public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item)
@@ -43,10 +42,7 @@ public class TerramonPlayer : ModPlayer
         if (item.type == ModContent.ItemType<PokeBallItem>())
             premierBonusCount -= item.stack;
 
-        if (item.type == ModContent.ItemType<MasterBallItem>())
-            return false;
-        else
-            return base.CanSellItem(vendor,shopInventory, item);
+        return item.type != ModContent.ItemType<MasterBallItem>() && base.CanSellItem(vendor, shopInventory, item);
     }
 
     public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)

@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Terramon.Content.Items.Mechanical;
 
@@ -31,47 +32,44 @@ public abstract class BasePkballItem : TerramonItem
         Item.UseSound = new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_throw");
         Item.width = 32;
         Item.height = 32;
-        Item.maxStack = 99;
+        Item.maxStack = 9999;
         Item.damage = 0;
         Item.autoReuse = false;
-        Item.useStyle = ItemUseStyleID.Swing;
+        Item.useStyle = ItemUseStyleID.Rapier;
         Item.value = igPrice * 3;
         Item.useTime = 15;
         Item.consumable = true;
     }
 
-    public override bool CanUseItem(Player player) => (player.altFunctionUse != 2); //Don't execute this code if the alternate function is being executed
+    public override bool CanUseItem(Player player)
+    {
+        return player.altFunctionUse != 2;
+        //Don't execute this code if the alternate function is being executed
+    }
 
     public override bool AltFunctionUse(Player player)
     {
         base.AltFunctionUse(player);
-        int mouseTileX = (int)(Main.mouseX + Main.screenPosition.X) / 16;
-        int mouseTileY = (int)(Main.mouseY + Main.screenPosition.Y) / 16;
+        var mouseTileX = (int)(Main.mouseX + Main.screenPosition.X) / 16;
+        var mouseTileY = (int)(Main.mouseY + Main.screenPosition.Y) / 16;
         mouseTileX = Math.Clamp(mouseTileX, 0, Main.maxTilesX);
         mouseTileY = Math.Clamp(mouseTileY, 0, Main.maxTilesY);
 
-        if (!Main.tile[mouseTileX, mouseTileY].HasTile && Vector2.Distance(player.position, new Vector2(mouseTileX, mouseTileY) * 16) < 96)
-        {
-            WorldGen.PlaceTile(mouseTileX, mouseTileY, pokeballTile);
-            TileEntity.PlaceEntityNet(mouseTileX, mouseTileY, ModContent.TileEntityType<BasePkballEntity>());
-            player.ConsumeItem(Type);
-        }
+        if (Main.tile[mouseTileX, mouseTileY].HasTile ||
+            !(Vector2.Distance(player.position, new Vector2(mouseTileX, mouseTileY) * 16) < 96)) return false;
+        WorldGen.PlaceTile(mouseTileX, mouseTileY, pokeballTile);
+        TileEntity.PlaceEntityNet(mouseTileX, mouseTileY, ModContent.TileEntityType<BasePkballEntity>());
+        player.ConsumeItem(Type);
         //Item.shoot = 0;
         //Item.createTile = pokeballTile;
 
         return false;
     }
 
-    public override bool? UseItem(Player player)
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
-        Main.NewText($"{player.altFunctionUse}, {Item.createTile}");
-        return base.UseItem(player);
+        if (Main.npcShop > 0) return;
+        var catchRate = $"[c/ADADC6:{Language.GetTextValue($"Mods.Terramon.Items.{GetType().Name}.CatchRate")}]";
+        tooltips.Add(new TooltipLine(Mod, "CatchRate", catchRate));
     }
-
-    /*public override bool? UseItem(Player player) //Manage what happens when the player uses the item
-    {
-        Item.consumable = true;
-        SoundEngine.PlaySound(new SoundStyle("TerramonMod/Sounds/pkball_throw"), player.position);
-        return true;
-    }*/
 }
