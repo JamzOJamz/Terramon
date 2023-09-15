@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terramon.Content.Items;
+using Terramon.Content.Items.Mechanical;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
@@ -31,7 +33,7 @@ public class MusicBoxCenter : ModTile
 		Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<MusicItemCenter>());
 	}
 
-	public override void MouseOver(int i, int j) {
+    public override void MouseOver(int i, int j) {
 		Player player = Main.LocalPlayer;
 		player.noThrow = 2;
 		player.cursorItemIconEnabled = true;
@@ -77,6 +79,7 @@ public class MusicItemCenter : TerramonItem
 	{
 		CreateRecipe()
 			.AddIngredient(ItemID.MusicBox)
+			.AddIngredient(ModContent.ItemType<PokeBallItem>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 	}

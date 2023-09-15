@@ -1,4 +1,5 @@
-﻿using Terraria.GameContent.Creative;
+﻿using Microsoft.Xna.Framework;
+using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.Mechanical;
 
@@ -10,7 +11,9 @@ internal class PremierBallProjectile : BasePkballProjectile
 
 internal class PremierBallItem : BasePkballItem
 {
+    protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
     protected override int pokeballThrow => ModContent.ProjectileType<PremierBallProjectile>();
+    protected override int pokeballTile => ModContent.TileType<PremierBallTile>();
     protected override int igPrice => 200;
 
     public override void SetStaticDefaults()
@@ -20,4 +23,14 @@ internal class PremierBallItem : BasePkballItem
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
             igPrice / 2; //Amount needed to duplicate them in Journey Mode
     }
+}
+
+public class PremierBallTile : BasePkballTile
+{
+    protected override int dropItem => ModContent.ItemType<PremierBallItem>();
+}
+
+public class PremierBallRarity : ModRarity
+{
+    public override Color RarityColor => new(249, 163, 27);
 }

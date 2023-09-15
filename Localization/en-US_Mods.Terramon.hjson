@@ -102,14 +102,6 @@ Items: {
 
 Tiles.MusicBoxCenter.MapEntry: Music Box
 
-Projectiles: {
-	GreatBallProjectile.DisplayName: Great Ball
-	MasterBallProjectile.DisplayName: Master Ball
-	PokeBallProjectile.DisplayName: Poke Ball
-	PremierBallProjectile.DisplayName: Premier Ball
-	UltraBallProjectile.DisplayName: Ultra Ball
-}
-
 NPCs: {
 	PokemartClerk: {
 		DisplayName: PokeMart Clerk

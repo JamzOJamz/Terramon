@@ -19,12 +19,19 @@ internal class MasterBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
     protected override int pokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
+    protected override int pokeballTile => ModContent.TileType<MasterBallTile>();
 
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
             igPrice / 2; //Amount needed to duplicate them in Journey Mode
     }
+}
+
+public class MasterBallTile : BasePkballTile
+{
+    public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name +"_Highlight";
+    protected override int dropItem => ModContent.ItemType<MasterBallItem>();
 }
 
 public class MasterBallRarity : ModRarity

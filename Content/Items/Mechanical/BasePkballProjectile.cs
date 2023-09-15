@@ -9,6 +9,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Terramon.Content.Items.Mechanical;
 
@@ -29,6 +30,8 @@ internal abstract class BasePkballProjectile : ModProjectile
     public virtual float catchModifier { get; set; }
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
+
+    public override LocalizedText DisplayName => Language.GetText($"Terramon.Items.{GetType().Name.Replace("Projectile", "Item")}.DisplayName");
 
     public override void SetStaticDefaults()
     {
@@ -354,37 +357,4 @@ internal abstract class BasePkballProjectile : ModProjectile
         Capture,
         CaptureComplete
     }
-
-    //public override bool? CanDamage() => false;
-
-    // Finding the closest NPC to attack within maxDetectDistance range
-    // If not found then returns null
-    /*public NPC FindValidPokemon(float maxDetectDistance)
-    {
-        //Main.NewText($"NPC count: {Main.maxNPCs}");
-        NPC closestNPC = null;
-
-        // Using squared values in distance checks will let us skip square root calculations, drastically improving this method's speed.
-        float sqrMaxDetectDistance = maxDetectDistance * maxDetectDistance;
-
-        // Loop through all NPCs(max always 200)
-        for (int k = 0; k < Main.maxNPCs; k++)
-        {
-            NPC target = Main.npc[k];
-            if (target.ModNPC != null && target.ModNPC.GetType().BaseType == typeof(PokemonNPC))
-            {
-                Main.NewText($"Found {target.ModNPC.GetType().BaseType}", Color.Orange);
-
-                float sqrDistanceToTarget = Vector2.DistanceSquared(target.Center, Projectile.Center);
-                if (sqrDistanceToTarget < sqrMaxDetectDistance)
-                {
-                    sqrMaxDetectDistance = sqrDistanceToTarget;
-                    closestNPC = target;
-                }
-            }
-            //Main.NewText(target.FullName, Color.Orange);
-        }
-
-        return closestNPC;
-    }*/
 }
