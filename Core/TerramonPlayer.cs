@@ -53,7 +53,6 @@ public class TerramonPlayer : ModPlayer
     {
         if (item.type == ModContent.ItemType<PokeBallItem>())
             premierBonusCount++;
-        Main.NewText($"{premierBonusCount}");
     }
 
     /// <summary>
