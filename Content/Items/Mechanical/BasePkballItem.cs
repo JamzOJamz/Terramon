@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Terramon.Core;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -57,9 +58,13 @@ public abstract class BasePkballItem : TerramonItem
         var tile = Main.tile[mouseTileX, mouseTileY];
         if ((tile.HasTile && !Main.tileCut[tile.TileType]) ||
             !(Vector2.Distance(player.position, new Vector2(mouseTileX, mouseTileY) * 16) < 96)) return false;
+
         WorldGen.PlaceTile(mouseTileX, mouseTileY, pokeballTile);
         TileEntity.PlaceEntityNet(mouseTileX, mouseTileY, ModContent.TileEntityType<BasePkballEntity>());
+        TileUtils.TryGetTileEntityAs<BasePkballEntity>(mouseTileX, mouseTileY, out var e);
+        e.Hook_AfterPlacement(mouseTileX, mouseTileY, pokeballTile, 0, 0, 0);
         player.ConsumeItem(Type);
+
         //Item.shoot = 0;
         //Item.createTile = pokeballTile;
 
