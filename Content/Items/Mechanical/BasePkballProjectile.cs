@@ -66,8 +66,11 @@ internal abstract class BasePkballProjectile : ModProjectile
         else if (Projectile.ai[1] == 0)
         {
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-            for (var i = 0; i < 6; i++)
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
+            for (var i = 0; i < 14; i++)
+            {
+                var d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Marble);
+                d.noGravity = true;
+            }
             return true;
         }
         else if (Projectile.ai[1] == 1 && bounces == 0) //only randomise catch number and play sound once

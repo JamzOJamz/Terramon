@@ -43,20 +43,13 @@ public abstract class BasePkballTile : ModTile
         DustType = DustID.Marble;
 
         AddMapEntry(Color.LightGray,
-            Language.GetText($"Terramon.Items.{GetType().Name.Replace("Tile", "Item")}.DisplayName"));
+            Language.GetText($"Mods.Terramon.Items.{GetType().Name.Replace("Tile", "Item")}.DisplayName"));
     }
-
-    //TODO: Make chest data persist after world exit / make this a tile entity
 
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
     {
-        if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
-        {
-            if (e.open)
-                Main.tile[i, j].TileFrameX = 18;
-            else
-                Main.tile[i, j].TileFrameX = 0;
-        }
+        if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return base.PreDraw(i, j, spriteBatch);
+        Main.tile[i, j].TileFrameX = e.open ? (short)18 : (short)0;
 
         return base.PreDraw(i, j, spriteBatch);
     }
@@ -86,41 +79,37 @@ public abstract class BasePkballTile : ModTile
     {
         var player = Main.LocalPlayer;
 
-        if (player.IsWithinSnappngRangeToTile(i, j,
-                maxInteractDistance)) // Avoid being able to trigger it from long range
+        if (!player.IsWithinSnappngRangeToTile(i, j,
+                maxInteractDistance)) return false; // Avoid being able to trigger it from long range
+        if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return false;
+        SoundEngine.PlaySound(SoundID.Unlock);
+        if (e.open) //when closing
         {
-            if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
+            if (!player.HeldItem.IsAir && player.HeldItem.ModItem is not BasePkballItem)
             {
-                SoundEngine.PlaySound(SoundID.MenuTick);
-                if (e.open) //when closing
-                {
-                    if (!player.HeldItem.IsAir && player.HeldItem.ModItem is not BasePkballItem)
-                    {
-                        e.item = player.HeldItem.Clone();
-                        player.HeldItem.stack -= 1;
-                    }
-
-                    e.open = false;
-                }
-                else //when opening
-                {
-                    if (!e.item.IsAir)
-                    {
-                        player.QuickSpawnItem(Entity.GetSource_None(), e.item);
-                        e.item.stack = 0;
-                    }
-
-                    e.open = true;
-
-                    if (e.disposable)
-                        WorldGen.KillTile(i, j);
-                }
+                e.item = player.HeldItem.Clone();
+                e.item.stack = player.HeldItem.stack;
+                player.HeldItem.stack -= player.HeldItem.stack;
             }
 
-            return true;
+            e.open = false;
+        }
+        else //when opening
+        {
+            if (!e.item.IsAir)
+            {
+                player.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
+                e.item = new Item();
+            }
+
+            e.open = true;
+
+            if (e.disposable)
+                WorldGen.KillTile(i, j);
         }
 
-        return false;
+        return true;
+
     }
 
     public override IEnumerable<Item> GetItemDrops(int i, int j)
@@ -128,7 +117,9 @@ public abstract class BasePkballTile : ModTile
         if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
         {
             if (!e.item.IsAir)
-                yield return e.item;
+            {
+                Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
+            }
 
             if (!e.disposable)
                 yield return new Item(dropItem);
@@ -155,7 +146,7 @@ public class BasePkballEntity : ModTileEntity
         return tile.HasTile && ModContent.GetModTile(tile.TileType) is BasePkballTile;
     }
 
-    public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+    public override int Hook_AfterPlacement(int i, int j, int t, int style, int direction, int alternate)
     {
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {

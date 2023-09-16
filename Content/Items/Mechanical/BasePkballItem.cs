@@ -44,7 +44,6 @@ public abstract class BasePkballItem : TerramonItem
     public override bool CanUseItem(Player player)
     {
         return player.altFunctionUse != 2;
-        //Don't execute this code if the alternate function is being executed
     }
 
     public override bool AltFunctionUse(Player player)
@@ -55,7 +54,8 @@ public abstract class BasePkballItem : TerramonItem
         mouseTileX = Math.Clamp(mouseTileX, 0, Main.maxTilesX);
         mouseTileY = Math.Clamp(mouseTileY, 0, Main.maxTilesY);
 
-        if (Main.tile[mouseTileX, mouseTileY].HasTile ||
+        var tile = Main.tile[mouseTileX, mouseTileY];
+        if ((tile.HasTile && !Main.tileCut[tile.TileType]) ||
             !(Vector2.Distance(player.position, new Vector2(mouseTileX, mouseTileY) * 16) < 96)) return false;
         WorldGen.PlaceTile(mouseTileX, mouseTileY, pokeballTile);
         TileEntity.PlaceEntityNet(mouseTileX, mouseTileY, ModContent.TileEntityType<BasePkballEntity>());
@@ -68,6 +68,8 @@ public abstract class BasePkballItem : TerramonItem
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
+        tooltips.Insert(tooltips.FindIndex(t => t.Name == "Tooltip0"),
+            new TooltipLine(Mod, "RightClickPlace", Language.GetTextValue("Mods.Terramon.Items.RightClickPlace")));
         if (Main.npcShop > 0) return;
         var catchRate = $"[c/ADADC6:{Language.GetTextValue($"Mods.Terramon.Items.{GetType().Name}.CatchRate")}]";
         tooltips.Add(new TooltipLine(Mod, "CatchRate", catchRate));

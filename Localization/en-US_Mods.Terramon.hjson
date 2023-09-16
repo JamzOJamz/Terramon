@@ -60,6 +60,8 @@ GUI: {
 }
 
 Items: {
+	RightClickPlace: Can be placed using right click
+
 	PokeBallItem: {
 		DisplayName: Poké Ball
 		Tooltip:
