@@ -109,17 +109,13 @@ public abstract class BasePkballTile : ModTile
         }
 
         return true;
-
     }
 
     public override IEnumerable<Item> GetItemDrops(int i, int j)
     {
         if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
         {
-            if (!e.item.IsAir)
-            {
-                Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
-            }
+            if (!e.item.IsAir) Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
 
             if (!e.disposable)
                 yield return new Item(dropItem);

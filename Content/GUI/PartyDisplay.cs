@@ -325,12 +325,18 @@ public class PartySidebarSlot : UIImage
         }
     }
 
-    public void UpdateSprite(bool selected = false)
+    private void UpdateSprite(bool selected = false)
     {
         var spritePath = "Terramon/Assets/GUI/Party/SidebarOpen";
         if (Data != null)
+        {
             if (selected)
                 spritePath += "_Selected";
+        }
+        else
+        {
+            spritePath = "Terramon/Assets/GUI/Party/SidebarClosed";
+        }
 
         SetImage(ModContent.Request<Texture2D>(spritePath,
             AssetRequestMode.ImmediateLoad));
@@ -339,6 +345,7 @@ public class PartySidebarSlot : UIImage
     public void SetData(PokemonData data)
     {
         Data = data;
+        UpdateSprite();
         if (data == null)
         {
             HeldItemBox?.Remove();
@@ -349,7 +356,6 @@ public class PartySidebarSlot : UIImage
         }
         else
         {
-            UpdateSprite();
             NameText.SetText(Terramon.Database.GetLocalizedPokemonName(data.ID).Value);
             LevelText.SetText("Lv. " + data.Level);
             HeldItemBox = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",

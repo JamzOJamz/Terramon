@@ -42,8 +42,8 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 24; //Set to size of spritesheet
-        Projectile.height = 24;
+        Projectile.width = 18; //Set to size of spritesheet
+        Projectile.height = 18;
         //Projectile.damage = 1;
         Projectile.aiStyle = -1; //aiStyle -1 so no vanilla styles interfere with custom ai
         Projectile.penetrate = -1; //How many npcs to collide before being deleted (-1 makes this infinite)
@@ -71,6 +71,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                 var d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Marble);
                 d.noGravity = true;
             }
+
             return true;
         }
         else if (Projectile.ai[1] == 1 && bounces == 0) //only randomise catch number and play sound once
@@ -171,9 +172,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         }
         else if (Projectile.ai[1] == 1)
         {
-            if (capture != null)
-                //SoundEngine.PlaySound(new SoundStyle("TerramonMod/Sounds/pkball_consume"));
-                capture.Destroy(); //Destroy Pokemon NPC
+            capture?.Destroy(); //Destroy Pokemon NPC
 
             if (Projectile.ai[0] <
                 35 * animSpeedMultiplier) //Stay still (no velocity) if 50 frames havent passed yet (60fps)
@@ -286,17 +285,18 @@ internal abstract class BasePkballProjectile : ModProjectile
         return catchModifier;
     }
 
-    public void PokemonCatchSuccess()
+    private void PokemonCatchSuccess()
     {
-        byte level = 5;
+        const byte level = 5;
 
         //TODO: add level from pokemonnpc
-        TerramonPlayer.LocalPlayer.AddPartyPokemon(new PokemonData(capture.useId, level));
+        TerramonPlayer.LocalPlayer.AddPartyPokemon(new PokemonData(capture.useId, level)
+        {
+            IsShiny = capture.isShiny
+        });
 
         SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch_pla"));
-        Main.NewText(
-            $"Congratulations! You caught a {(capture.isShiny ? "shiny" : null)} level {level} {capture.DisplayName}",
-            Color.Orange);
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess", level, capture.DisplayName));
         Projectile.Kill();
     }
 

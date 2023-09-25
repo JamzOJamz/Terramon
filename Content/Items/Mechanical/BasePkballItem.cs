@@ -69,7 +69,7 @@ public abstract class BasePkballItem : TerramonItem
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
         tooltips.Insert(tooltips.FindIndex(t => t.Name == "Tooltip0"),
-            new TooltipLine(Mod, "RightClickPlace", Language.GetTextValue("Mods.Terramon.Items.RightClickPlace")));
+            new TooltipLine(Mod, "RightClickPlace", Language.GetTextValue("Mods.Terramon.CommonTooltips.RightClickPlace")));
         if (Main.npcShop > 0) return;
         var catchRate = $"[c/ADADC6:{Language.GetTextValue($"Mods.Terramon.Items.{GetType().Name}.CatchRate")}]";
         tooltips.Add(new TooltipLine(Mod, "CatchRate", catchRate));

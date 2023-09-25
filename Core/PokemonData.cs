@@ -25,7 +25,7 @@ public class PokemonData : TagSerializable
         Level = level;
         OT = Main.LocalPlayer.name;
         Gender = Terramon.RollGender(id);
-        IsShiny = !shinyLocked && Terramon.RollShiny();
+        IsShiny = !shinyLocked && Terramon.RollShiny(Main.LocalPlayer);
     }
 
     public TagCompound SerializeData()

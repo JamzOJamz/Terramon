@@ -59,9 +59,13 @@ GUI: {
 	}
 }
 
-Items: {
+CommonTooltips: {
+	KeyItem: Key Item
+	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
+}
 
+Items: {
 	PokeBallItem: {
 		DisplayName: Poké Ball
 		Tooltip:
@@ -121,11 +125,6 @@ Items: {
 			'''
 	}
 
-	RegularBallHeldProp: {
-		DisplayName: Poké Ball Prop
-		Tooltip: ""
-	}
-
 	TrainerCap: {
 		DisplayName: Pokémon Trainer Cap
 		Tooltip: ""
@@ -144,6 +143,11 @@ Items: {
 	MusicItemCenter: {
 		DisplayName: Music Box (Pokémon Center)
 		Tooltip: ""
+	}
+
+	ShinyCharm: {
+		DisplayName: Shiny Charm
+		Tooltip: A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
 	}
 }
 
@@ -197,3 +201,5 @@ NPCs: {
 		}
 	}
 }
+
+Misc.CatchSuccess: Congratulations! You caught a Lv. {0} {1}!

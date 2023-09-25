@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Databases;
+using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -21,9 +22,11 @@ public class Terramon : Mod
 
     public static PokemonDB Database { get; private set; }
 
-    public static bool RollShiny()
+    public static bool RollShiny(Player player)
     {
-        return Main.rand.NextBool(ModContent.GetInstance<GameplayConfig>().ShinySpawnRate);
+        var shinyChance = ModContent.GetInstance<GameplayConfig>().ShinySpawnRate;
+        if (player.HasItemInInventoryOrOpenVoidBag(ModContent.ItemType<ShinyCharm>())) shinyChance /= 2;
+        return Main.rand.NextBool(shinyChance);
     }
 
     public static byte RollGender(ushort id)

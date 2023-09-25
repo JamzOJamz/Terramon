@@ -3,12 +3,9 @@ using Terraria.ID;
 
 namespace Terramon.Content.Items.Vanity;
 
-// The AutoloadEquip attribute automatically attaches an equip texture to this item.
 [AutoloadEquip(EquipType.Head)]
-public class TrainerCap : TerramonItem
+public class TrainerCap : BaseVanityItem
 {
-    public override string Texture => "Terramon/Assets/Items/Vanity/" + GetType().Name;
-
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -22,6 +19,7 @@ public class TrainerCap : TerramonItem
         Item.width = 18;
         Item.height = 18;
         Item.value = 3000;
+        Item.maxStack = 1;
         Item.rare = ItemRarityID.White;
         Item.vanity = true;
     }
