@@ -10,8 +10,8 @@ public class LeafStone : EvolutionaryItem
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.width = 20;
-        Item.height = 22;
+        Item.width = 24;
+        Item.height = 28;
     }
 }
 

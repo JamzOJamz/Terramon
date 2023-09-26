@@ -10,16 +10,16 @@ public class WaterStone : EvolutionaryItem
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.width = 22;
-        Item.height = 20;
+        Item.width = 24;
+        Item.height = 26;
     }
 }
 
 public class WaterStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } = {
-        new(25, 185, 229),
-        new(30, 150, 255)
+        new(112, 178, 215),
+        new(83, 115, 208)
     };
 
     protected override float Time => 2f;

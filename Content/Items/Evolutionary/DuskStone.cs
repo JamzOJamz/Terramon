@@ -10,8 +10,8 @@ public class DuskStone : EvolutionaryItem
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.width = 20;
-        Item.height = 20;
+        Item.width = 24;
+        Item.height = 24;
     }
 }
 

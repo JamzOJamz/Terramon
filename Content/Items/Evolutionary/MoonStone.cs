@@ -10,8 +10,8 @@ public class MoonStone : EvolutionaryItem
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.width = 22;
-        Item.height = 20;
+        Item.width = 28;
+        Item.height = 28;
     }
 }
 
