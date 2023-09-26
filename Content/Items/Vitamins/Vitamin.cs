@@ -3,7 +3,7 @@ using Terraria.Localization;
 
 namespace Terramon.Content.Items.Vitamins;
 
-public abstract class BaseVitamin : TerramonItem
+public abstract class Vitamin : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/Vitamins/" + GetType().Name;
     

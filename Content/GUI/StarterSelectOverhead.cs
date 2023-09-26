@@ -130,7 +130,7 @@ public class StarterSelectOverhead : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
-        if (starterPanelShowing && Main.keyState.IsKeyDown(Keys.Back))
+        if (starterPanelShowing && !Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
         {
             showButton.SetIsActive(true);
             SoundEngine.PlaySound(SoundID.MenuClose);

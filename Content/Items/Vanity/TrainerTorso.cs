@@ -4,7 +4,7 @@ using Terraria.ID;
 namespace Terramon.Content.Items.Vanity;
 
 [AutoloadEquip(EquipType.Body)]
-public class TrainerTorso : BaseVanityItem
+public class TrainerTorso : VanityItem
 {
     public override void SetStaticDefaults()
     {

@@ -11,6 +11,8 @@ public class TerramonPlayer : ModPlayer
 {
     public readonly PokemonData[] Party = new PokemonData[6];
     public bool HasChosenStarter;
+
+    private bool lastPlayerInventory;
     public int premierBonusCount;
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 
@@ -21,6 +23,13 @@ public class TerramonPlayer : ModPlayer
 
     public override void PreUpdate()
     {
+        if (Main.playerInventory && !lastPlayerInventory)
+        {
+            UILoader.GetUIState<PartyDisplay>().Sidebar.ForceKillAnimation();
+        }
+
+        lastPlayerInventory = Main.playerInventory;
+
         if (premierBonusCount <= 0 || Main.npcShop != 0) return;
         var premierBonus = premierBonusCount / 10;
         if (premierBonus > 0)

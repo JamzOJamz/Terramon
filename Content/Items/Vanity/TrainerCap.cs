@@ -4,7 +4,7 @@ using Terraria.ID;
 namespace Terramon.Content.Items.Vanity;
 
 [AutoloadEquip(EquipType.Head)]
-public class TrainerCap : BaseVanityItem
+public class TrainerCap : VanityItem
 {
     public override void SetStaticDefaults()
     {

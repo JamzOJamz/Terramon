@@ -60,6 +60,7 @@ GUI: {
 }
 
 CommonTooltips: {
+	EvolutionaryItem: Evolutionary Item
 	KeyItem: Key Item
 	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
@@ -148,6 +149,60 @@ Items: {
 	ShinyCharm: {
 		DisplayName: Shiny Charm
 		Tooltip: A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
+	}
+
+	FireStone: {
+		DisplayName: Fire Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			The stone has a fiery orange heart.
+			'''
+	}
+
+	WaterStone: {
+		DisplayName: Water Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It is the blue of a pool of clear water.
+			'''
+	}
+
+	ThunderStone: {
+		DisplayName: Thunder Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			The stone is inscribed with a thunderbolt pattern.
+			'''
+	}
+
+	LeafStone: {
+		DisplayName: Leaf Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It has an unmistakable leaf pattern.
+			'''
+	}
+
+	MoonStone: {
+		DisplayName: Moon Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It is as black as the night sky.
+			'''
+	}
+
+	DuskStone: {
+		DisplayName: Dusk Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It holds shadows as dark as can be.
+			'''
 	}
 }
 

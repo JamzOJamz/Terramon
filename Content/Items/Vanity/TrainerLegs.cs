@@ -4,7 +4,7 @@ using Terraria.ID;
 namespace Terramon.Content.Items.Vanity;
 
 [AutoloadEquip(EquipType.Legs)]
-public class TrainerLegs : BaseVanityItem
+public class TrainerLegs : VanityItem
 {
     public override void SetStaticDefaults()
     {
