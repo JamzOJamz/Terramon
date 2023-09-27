@@ -17,7 +17,8 @@ public class ShinyCharm : KeyItem
 
 public class ShinyCharmRarity : DiscoRarity
 {
-    protected override Color[] Colors { get; } = {
+    protected override Color[] Colors { get; } =
+    {
         new(122, 255, 255),
         new(255, 86, 232),
         new(255, 192, 35)

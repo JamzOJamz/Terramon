@@ -17,7 +17,8 @@ public class DuskStone : EvolutionaryItem
 
 public class DuskStoneRarity : DiscoRarity
 {
-    protected override Color[] Colors { get; } = {
+    protected override Color[] Colors { get; } =
+    {
         new(219, 161, 221),
         new(152, 99, 183)
     };

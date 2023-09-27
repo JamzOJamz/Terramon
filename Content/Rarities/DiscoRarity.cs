@@ -5,17 +5,17 @@ using Terraria;
 namespace Terramon.Content.Rarities;
 
 /// <summary>
-/// A ModRarity that supports transitioning between different colors.
+///     A ModRarity that supports transitioning between different colors.
 /// </summary>
 public abstract class DiscoRarity : ModRarity
 {
     /// <summary>
-    /// The colors to transition through.
+    ///     The colors to transition through.
     /// </summary>
     protected virtual Color[] Colors => Array.Empty<Color>();
-    
+
     /// <summary>
-    /// The time it should take to complete one cycle of the animation, in seconds.
+    ///     The time it should take to complete one cycle of the animation, in seconds.
     /// </summary>
     protected virtual float Time => 1f;
 

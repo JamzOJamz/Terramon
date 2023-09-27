@@ -17,7 +17,8 @@ public class FireStone : EvolutionaryItem
 
 public class FireStoneRarity : DiscoRarity
 {
-    protected override Color[] Colors { get; } = {
+    protected override Color[] Colors { get; } =
+    {
         new(255, 202, 99),
         new(234, 132, 53)
     };

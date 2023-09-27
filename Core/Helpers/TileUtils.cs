@@ -4,7 +4,6 @@ using Terraria.ObjectData;
 
 namespace Terramon.Core;
 
-//taken from tmodloader github wiki
 public static class TileUtils
 {
     /// <summary>
@@ -16,7 +15,7 @@ public static class TileUtils
     ///     The tile location of the multitile's top-left corner, or the input location if no tile is present or the tile
     ///     is not part of a multitile
     /// </returns>
-    public static Point16 GetTopLeftTileInMultitile(int x, int y)
+    private static Point16 GetTopLeftTileInMultitile(int x, int y)
     {
         var tile = Main.tile[x, y];
 

@@ -7,7 +7,7 @@ namespace Terramon.Content.Items.KeyItems;
 public abstract class KeyItem : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/KeyItems/" + GetType().Name;
-    
+
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

@@ -17,7 +17,8 @@ public class MoonStone : EvolutionaryItem
 
 public class MoonStoneRarity : DiscoRarity
 {
-    protected override Color[] Colors { get; } = {
+    protected override Color[] Colors { get; } =
+    {
         new(154, 170, 124),
         new(97, 110, 74)
     };

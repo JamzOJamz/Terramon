@@ -9,7 +9,7 @@ public class PokemonNPCLoader : ModSystem
         foreach (var kv in Terramon.Database.Pokemon)
         {
             var pokemon = kv.Value;
-            if (pokemon.ID > 151) continue;
+            if (pokemon.ID > Terramon.MaxPokemonID) continue;
             var npcSchema = pokemon.NPC;
             var aiInfo = npcSchema.AIInfo;
             var aiType = Mod.Code.GetType($"Terramon.Content.AI.{aiInfo.Type}AI");

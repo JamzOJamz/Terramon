@@ -17,7 +17,8 @@ public class WaterStone : EvolutionaryItem
 
 public class WaterStoneRarity : DiscoRarity
 {
-    protected override Color[] Colors { get; } = {
+    protected override Color[] Colors { get; } =
+    {
         new(112, 178, 215),
         new(83, 115, 208)
     };

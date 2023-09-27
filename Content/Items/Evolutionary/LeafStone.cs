@@ -17,7 +17,8 @@ public class LeafStone : EvolutionaryItem
 
 public class LeafStoneRarity : DiscoRarity
 {
-    protected override Color[] Colors { get; } = {
+    protected override Color[] Colors { get; } =
+    {
         new(172, 204, 125),
         new(119, 153, 68)
     };

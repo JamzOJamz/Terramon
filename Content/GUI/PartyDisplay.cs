@@ -196,7 +196,7 @@ public class PartySidebarSlot : UIImage
     {
         if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
             return;
-        
+
         var s = new SoundStyle
         {
             SoundPath = "Terramon/Assets/Audio/Sounds/button_smm",
