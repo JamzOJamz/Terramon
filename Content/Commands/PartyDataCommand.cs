@@ -43,7 +43,6 @@ public class PartyDataCommand : DebugCommand
             caller.Reply($"No Pokémon data available for slot {slot}");
             return;
         }
-
-        caller.Reply(PrettyPrint.Format(data));
+        caller.Reply(PrettySharp.Print(data, 1));
     }
 }
