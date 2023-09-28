@@ -64,12 +64,16 @@ public class TerramonPlayer : ModPlayer
     /// <summary>
     ///     Adds a Pokémon to the player's party. Returns false if their party is full; otherwise returns true.
     /// </summary>
-    public bool AddPartyPokemon(PokemonData data)
+    public bool AddPartyPokemon(PokemonData data, bool addToPokedex = true)
     {
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == 6) return false;
         Party[nextIndex] = data;
         UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, nextIndex);
+
+        if (addToPokedex)
+            UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
+
         return true;
     }
 
