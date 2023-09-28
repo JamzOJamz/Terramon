@@ -82,7 +82,7 @@ public abstract class BasePkballTile : ModTile
         if (!player.IsWithinSnappngRangeToTile(i, j,
                 maxInteractDistance)) return false; // Avoid being able to trigger it from long range
         if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return false;
-        SoundEngine.PlaySound(SoundID.Unlock);
+        SoundEngine.PlaySound(SoundID.Mech);
         if (e.open) //when closing
         {
             if (!player.HeldItem.IsAir && player.HeldItem.ModItem is not BasePkballItem)
@@ -109,17 +109,13 @@ public abstract class BasePkballTile : ModTile
         }
 
         return true;
-
     }
 
     public override IEnumerable<Item> GetItemDrops(int i, int j)
     {
         if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
         {
-            if (!e.item.IsAir)
-            {
-                Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
-            }
+            if (!e.item.IsAir) Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
 
             if (!e.disposable)
                 yield return new Item(dropItem);

@@ -1,16 +1,25 @@
 Configs: {
 	GameplayConfig: {
 		DisplayName: Gameplay Settings
-		Headers.Miscellaneous: Miscellaneous
+
+		Headers: {
+			Miscellaneous: Miscellaneous
+			Advanced: Advanced
+		}
 
 		ShinySpawnRate: {
 			Label: Shiny Spawn Rate
-			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x).
+			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)
 		}
 
 		FastAnimations: {
 			Label: Fast Animations
 			Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
+		}
+
+		DebugMode: {
+			Label: Debug Mode
+			Tooltip: Allows the use of certain debug commands that can also be used to cheat
 		}
 	}
 
@@ -59,9 +68,14 @@ GUI: {
 	}
 }
 
-Items: {
+CommonTooltips: {
+	EvolutionaryItem: Evolutionary Item
+	KeyItem: Key Item
+	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
+}
 
+Items: {
 	PokeBallItem: {
 		DisplayName: Poké Ball
 		Tooltip:
@@ -121,11 +135,6 @@ Items: {
 			'''
 	}
 
-	RegularBallHeldProp: {
-		DisplayName: Poké Ball Prop
-		Tooltip: ""
-	}
-
 	TrainerCap: {
 		DisplayName: Pokémon Trainer Cap
 		Tooltip: ""
@@ -144,6 +153,65 @@ Items: {
 	MusicItemCenter: {
 		DisplayName: Music Box (Pokémon Center)
 		Tooltip: ""
+	}
+
+	ShinyCharm: {
+		DisplayName: Shiny Charm
+		Tooltip: A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
+	}
+
+	FireStone: {
+		DisplayName: Fire Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			The stone has a fiery orange heart.
+			'''
+	}
+
+	WaterStone: {
+		DisplayName: Water Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It is the blue of a pool of clear water.
+			'''
+	}
+
+	ThunderStone: {
+		DisplayName: Thunder Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			The stone is inscribed with a thunderbolt pattern.
+			'''
+	}
+
+	LeafStone: {
+		DisplayName: Leaf Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It has an unmistakable leaf pattern.
+			'''
+	}
+
+	MoonStone: {
+		DisplayName: Moon Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It is as black as the night sky.
+			'''
+	}
+
+	DuskStone: {
+		DisplayName: Dusk Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It holds shadows as dark as can be.
+			'''
 	}
 }
 
@@ -197,3 +265,5 @@ NPCs: {
 		}
 	}
 }
+
+Misc.CatchSuccess: Congratulations! You caught a Lv. {0} {1}!

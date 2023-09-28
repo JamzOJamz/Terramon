@@ -110,15 +110,11 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
         {
             case Ease.None:
                 break;
-            case Ease.InOut:
-                break;
             default:
                 return time;
 
-            case Ease.In:
             case Ease.InQuad:
                 return time * time;
-            case Ease.Out:
             case Ease.OutQuad:
                 return time * (2 - time);
             case Ease.InOutQuad:
@@ -227,9 +223,6 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
 public enum Ease
 {
     None,
-    Out,
-    In,
-    InOut,
     InQuad,
     OutQuad,
     InOutQuad,

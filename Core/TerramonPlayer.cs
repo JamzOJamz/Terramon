@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Core.Loaders.UILoading;
@@ -10,7 +12,10 @@ namespace Terramon.Core;
 public class TerramonPlayer : ModPlayer
 {
     public readonly PokemonData[] Party = new PokemonData[6];
+    private readonly PokedexService Pokedex = new();
     public bool HasChosenStarter;
+
+    private bool lastPlayerInventory;
     public int premierBonusCount;
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 
@@ -21,6 +26,11 @@ public class TerramonPlayer : ModPlayer
 
     public override void PreUpdate()
     {
+        if (Main.playerInventory && !lastPlayerInventory)
+            UILoader.GetUIState<PartyDisplay>().Sidebar.ForceKillAnimation();
+
+        lastPlayerInventory = Main.playerInventory;
+
         if (premierBonusCount <= 0 || Main.npcShop != 0) return;
         var premierBonus = premierBonusCount / 10;
         if (premierBonus > 0)
@@ -77,16 +87,26 @@ public class TerramonPlayer : ModPlayer
         return 6;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public bool UpdatePokedex(ushort id, byte status)
+    {
+        var containsId = Pokedex.Entries.ContainsKey(id);
+        if (containsId) Pokedex.Entries[id] = status;
+        return containsId;
+    }
+
     public override void SaveData(TagCompound tag)
     {
         tag["starterChosen"] = HasChosenStarter;
         SaveParty(tag);
+        SavePokedex(tag);
     }
 
     public override void LoadData(TagCompound tag)
     {
         HasChosenStarter = tag.GetBool("starterChosen");
         LoadParty(tag);
+        LoadPokedex(tag);
     }
 
     private void SaveParty(TagCompound tag)
@@ -105,5 +125,18 @@ public class TerramonPlayer : ModPlayer
             var tagName = $"p{i}";
             if (tag.ContainsKey(tagName)) Party[i] = tag.Get<PokemonData>(tagName);
         }
+    }
+
+    private void SavePokedex(TagCompound tag)
+    {
+        tag["pokedex"] = Pokedex.Entries.Select(entry => new int[] { entry.Key, entry.Value }).ToList();
+    }
+
+    private void LoadPokedex(TagCompound tag)
+    {
+        const string tagName = "pokedex";
+        if (!tag.ContainsKey(tagName)) return;
+        var entries = tag.GetList<int[]>(tagName);
+        foreach (var entry in entries) UpdatePokedex((ushort)entry[0], (byte)entry[1]);
     }
 }

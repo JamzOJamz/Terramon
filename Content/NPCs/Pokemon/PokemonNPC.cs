@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terramon.Content.AI;
+using Terramon.Content.Dusts;
 using Terramon.Content.Items.Mechanical;
 using Terramon.ID;
 using Terraria;
@@ -26,8 +27,10 @@ public class PokemonNPC : ModNPC
     private readonly float useSpawnChance;
     private readonly byte[] useSpawnConditions;
     private readonly int useWidth;
+    private bool isDestroyed;
     public bool isShiny;
     private int shinySparkleTimer;
+    private Player spawningPlayer;
 
     public PokemonNPC(ushort useId, string useName, int useWidth, int useHeight, Type useAiType, object[] useAiParams,
         byte[] useSpawnConditions, float useSpawnChance)
@@ -79,7 +82,7 @@ public class PokemonNPC : ModNPC
     public override void OnSpawn(IEntitySource source)
     {
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
-        isShiny = Terramon.RollShiny();
+        isShiny = Terramon.RollShiny(spawningPlayer ?? Main.LocalPlayer);
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -102,6 +105,7 @@ public class PokemonNPC : ModNPC
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
         if (useSpawnConditions == null) return 0f;
+        spawningPlayer = spawnInfo.Player;
         var chance = 1f;
         foreach (var c in useSpawnConditions)
             switch (c)
@@ -184,10 +188,21 @@ public class PokemonNPC : ModNPC
 
     public void Destroy()
     {
-        NPC.netUpdate = true;
+        if (isDestroyed) return;
 
         //TODO: Add shader animation (I already made this shader in my mod source but I couldn't figure out how to apply it properly)
+        var dust = ModContent.DustType<SummonCloud>();
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0, 1);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0, -1);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 1);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, -1);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0.5f, 0.5f);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0.5f, -0.5f);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, -0.5f, 0.5f);
+        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, -0.5f, -0.5f);
 
+        NPC.netUpdate = true;
         NPC.active = false;
+        isDestroyed = true;
     }
 }

@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ID;
 
 namespace Terramon.Content.Items;
@@ -9,6 +10,6 @@ public abstract class TerramonItem : ModItem
     public override void SetDefaults()
     {
         Item.rare = UseRarity;
-        Item.maxStack = 9999;
+        Item.maxStack = Item.CommonMaxStack;
     }
 }

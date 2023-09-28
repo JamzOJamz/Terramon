@@ -30,5 +30,5 @@ public class UltraBallTile : BasePkballTile
 
 public class UltraBallRarity : ModRarity
 {
-    public override Color RarityColor => new(249, 163, 27);
+    public override Color RarityColor => new(249, 182, 27);
 }

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace Terramon.Content.Items.Vitamins;
 
-public class RareCandy : BaseVitamin
+public class RareCandy : Vitamin
 {
     protected override int UseRarity => ModContent.RarityType<RareCandyRarity>();
 

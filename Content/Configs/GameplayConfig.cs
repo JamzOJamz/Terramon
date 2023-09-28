@@ -12,6 +12,9 @@ public class GameplayConfig : ModConfig
 
     [DefaultValue(4096)] [Range(1, int.MaxValue)]
     public int ShinySpawnRate;
+    
+    [Header("Advanced")] [DefaultValue(false)]
+    public bool DebugMode;
 
     public override ConfigScope Mode => ConfigScope.ServerSide;
 }

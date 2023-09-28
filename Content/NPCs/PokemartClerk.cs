@@ -12,7 +12,7 @@ using Terraria.Localization;
 using Terraria.Utilities;
 using static Terraria.GameContent.Profiles;
 
-namespace TerramonMod.NPCs;
+namespace Terramon.Content.NPCs;
 
 [AutoloadHead]
 public class PokemartClerk : ModNPC
@@ -175,15 +175,15 @@ public class PokemartClerk : ModNPC
         {
             //TODO: Add Pokemon nickname here + later text (nickname would replace second GetLocalizedPokemonName)
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello",
-                Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID),
-                Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID)));
+                global::Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID),
+                global::Terramon.Terramon.Database.GetLocalizedPokemonName(pokemon.ID)));
 
             /*if (pokemon.data.Nickname == null)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNicknameHowto"));
             else
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNickname", pokemon.));*/
 
-            var pokemonType = Terramon.Terramon.Database.GetPokemon(pokemon.ID).Types[0];
+            var pokemonType = global::Terramon.Terramon.Database.GetPokemon(pokemon.ID).Types[0];
             if (pokemonType == TypeID.Grass)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonGrass"));
             else if (pokemonType == TypeID.Ice)

@@ -89,6 +89,7 @@ public class PartySidebar : UIContainer
 {
     private bool IsToggled = true;
     private bool KeyUp = true;
+    private ITweener ToggleTween;
 
     public PartySidebar(Vector2 size) : base(size)
     {
@@ -103,14 +104,16 @@ public class PartySidebar : UIContainer
             case true when KeyUp:
             {
                 KeyUp = false;
+                if (Main.drawingPlayerChat) break;
+                ToggleTween?.Kill();
                 if (IsToggled)
                 {
-                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
+                    ToggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
                     IsToggled = false;
                 }
                 else
                 {
-                    Tween.To(() => Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
+                    ToggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
                     IsToggled = true;
                 }
 
@@ -120,6 +123,13 @@ public class PartySidebar : UIContainer
                 KeyUp = true;
                 break;
         }
+    }
+
+    public void ForceKillAnimation()
+    {
+        ToggleTween?.Kill();
+        Left.Pixels = IsToggled ? 0 : -125;
+        Recalculate();
     }
 
     public void BringSlotToTop(PartySidebarSlot slot)
@@ -187,7 +197,6 @@ public class PartySidebarSlot : UIImage
         if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
             return;
 
-        //float[] pitchTable = new float[] { -0.16f, 0, 0.16f, 0.416f, 0.583f, 0.75f };
         var s = new SoundStyle
         {
             SoundPath = "Terramon/Assets/Audio/Sounds/button_smm",
@@ -325,12 +334,18 @@ public class PartySidebarSlot : UIImage
         }
     }
 
-    public void UpdateSprite(bool selected = false)
+    private void UpdateSprite(bool selected = false)
     {
         var spritePath = "Terramon/Assets/GUI/Party/SidebarOpen";
         if (Data != null)
+        {
             if (selected)
                 spritePath += "_Selected";
+        }
+        else
+        {
+            spritePath = "Terramon/Assets/GUI/Party/SidebarClosed";
+        }
 
         SetImage(ModContent.Request<Texture2D>(spritePath,
             AssetRequestMode.ImmediateLoad));
@@ -339,6 +354,7 @@ public class PartySidebarSlot : UIImage
     public void SetData(PokemonData data)
     {
         Data = data;
+        UpdateSprite();
         if (data == null)
         {
             HeldItemBox?.Remove();
@@ -349,7 +365,6 @@ public class PartySidebarSlot : UIImage
         }
         else
         {
-            UpdateSprite();
             NameText.SetText(Terramon.Database.GetLocalizedPokemonName(data.ID).Value);
             LevelText.SetText("Lv. " + data.Level);
             HeldItemBox = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",

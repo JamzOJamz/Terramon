@@ -3,12 +3,9 @@ using Terraria.ID;
 
 namespace Terramon.Content.Items.Vanity;
 
-// The AutoloadEquip attribute automatically attaches an equip texture to this item.
 [AutoloadEquip(EquipType.Legs)]
-public class TrainerLegs : TerramonItem
+public class TrainerLegs : VanityItem
 {
-    public override string Texture => "Terramon/Assets/Items/Vanity/" + GetType().Name;
-
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -21,6 +18,7 @@ public class TrainerLegs : TerramonItem
         Item.width = 18;
         Item.height = 18;
         Item.value = 3000;
+        Item.maxStack = 1;
         Item.rare = ItemRarityID.White;
         Item.vanity = true;
     }
