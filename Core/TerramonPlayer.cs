@@ -66,13 +66,13 @@ public class TerramonPlayer : ModPlayer
     /// </summary>
     public bool AddPartyPokemon(PokemonData data, bool addToPokedex = true)
     {
+        if (addToPokedex)
+            UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
+
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == 6) return false;
         Party[nextIndex] = data;
         UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, nextIndex);
-
-        if (addToPokedex)
-            UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
 
         return true;
     }
