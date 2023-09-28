@@ -91,6 +91,8 @@ public class TerramonPlayer : ModPlayer
         return 6;
     }
 
+    public PokedexService GetPokedex() => Pokedex; //it private so i get
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool UpdatePokedex(ushort id, byte status)
     {
