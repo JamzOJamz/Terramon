@@ -165,7 +165,6 @@ public class StarterButton : UIHoverImage
         {
             var player = TerramonPlayer.LocalPlayer;
             player.AddPartyPokemon(new PokemonData(pokemon, 5));
-            player.UpdatePokedex(pokemon, PokedexEntryStatus.Registered);
             player.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").WithFormatArgs(
                 TypeID.GetColor(Terramon.Database.GetPokemon(pokemon).Types[0]),

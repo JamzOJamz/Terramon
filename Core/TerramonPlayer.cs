@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Core.Loaders.UILoading;
@@ -18,6 +17,11 @@ public class TerramonPlayer : ModPlayer
     private bool lastPlayerInventory;
     public int premierBonusCount;
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
+
+    public PokedexService GetPokedex()
+    {
+        return Pokedex;
+    }
 
     public override void OnEnterWorld()
     {
@@ -91,9 +95,6 @@ public class TerramonPlayer : ModPlayer
         return 6;
     }
 
-    public PokedexService GetPokedex() => Pokedex; //it private so i get
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool UpdatePokedex(ushort id, byte status)
     {
         var containsId = Pokedex.Entries.ContainsKey(id);

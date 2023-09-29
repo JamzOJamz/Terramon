@@ -2,7 +2,7 @@ using Terramon.Core;
 
 namespace Terramon.Content.Commands;
 
-public class DexStatusCommand : DebugCommand
+public class DexStatusCommand : TerramonCommand
 {
     public override CommandType Type
         => CommandType.World;
@@ -33,7 +33,7 @@ public class DexStatusCommand : DebugCommand
         var player = caller.Player.GetModPlayer<TerramonPlayer>();
         var dex = player.GetPokedex();
 
-        var hasValidId2 = new PokedexService().Entries.ContainsKey((ushort)id);
+        var hasValidId2 = dex.Entries.ContainsKey((ushort)id);
         if (!hasValidId2)
         {
             caller.Reply($"Pokédex entry {id} is out of range");

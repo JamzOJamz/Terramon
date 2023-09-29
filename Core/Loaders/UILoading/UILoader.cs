@@ -23,9 +23,8 @@ internal class UILoader : ModSystem
     /// </summary>
     private static List<SmartUIState> UIStates = new();
 
-    public static void UpdateApplication(Type[] changedTypes)
+    public static void UpdateApplication(IEnumerable<Type> changedTypes)
     {
-        Main.NewText("Reloading UI...");
         Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "1");
     }
 

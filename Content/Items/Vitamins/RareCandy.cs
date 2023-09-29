@@ -16,8 +16,8 @@ public class RareCandy : Vitamin
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.width = 30;
-        Item.height = 30;
+        Item.width = 28;
+        Item.height = 28;
         Item.value = 1;
     }
 }

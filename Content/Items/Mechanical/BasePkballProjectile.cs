@@ -300,13 +300,17 @@ internal abstract class BasePkballProjectile : ModProjectile
         Projectile.Kill();
     }
 
-    public void HitPkmn(NPC target)
+    private void HitPkmn(NPC target)
     {
         hasContainedLocal = true;
         //Main.NewText($"Contain success", Color.Orange);
         capture = (PokemonNPC)target.ModNPC;
-
-        Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>().UpdatePokedex(capture.useId, PokedexEntryStatus.Seen);
+        
+        // Register as seen in the player's Pokedex
+        var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
+        var pokedex = ownerPlayer.GetPokedex();
+        if (pokedex.Entries.TryGetValue(capture.useId, out var status) && status == PokedexEntryStatus.Undiscovered)
+            ownerPlayer.UpdatePokedex(capture.useId, PokedexEntryStatus.Seen);
 
         Projectile.ai[1] = 1;
         Projectile.ai[0] = 0;

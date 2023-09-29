@@ -1,23 +1,19 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using System.Collections.Generic;
 using Terraria.GameContent.ItemDropRules;
 using Terramon.Content.Items.Vitamins;
 
 namespace Terramon.Content.Items
 {
-    class NPCLoot : GlobalNPC
+    internal class NPCLoot : GlobalNPC
     {
+        /* TODO: Add this back once link cable item exists
         public override void ModifyShop(NPCShop shop)
         {
-            //TODO: Add this back once link cable item exists
-
-            //if (shop.NpcType == NPCID.Mechanic)
-                //shop.Add<LinkCable>();
+            if (shop.NpcType == NPCID.Mechanic)
+                shop.Add<LinkCable>();
         }
+        */
 
         public override void ModifyNPCLoot(NPC npc, Terraria.ModLoader.NPCLoot npcLoot)
         {
@@ -25,7 +21,7 @@ namespace Terramon.Content.Items
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RareCandy>(), 32));
             else
             {
-                int amount = 0;
+                var amount = 0;
                 switch (npc.type)
                 {
                     case NPCID.KingSlime:
@@ -45,6 +41,7 @@ namespace Terramon.Content.Items
                     case NPCID.WallofFlesh:
                     case NPCID.QueenSlimeBoss:
                     case NPCID.SkeletronPrime:
+                    case NPCID.TheDestroyer:
                         amount = 7;
                         break;
 

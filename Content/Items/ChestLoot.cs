@@ -35,11 +35,11 @@ namespace Terramon.Content.Items
         }
     }
 
-    class ChestLoot : ModSystem
+    internal class ChestLoot : ModSystem
     {
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int potsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
+            var potsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
             if (potsIndex != -1)
                 tasks.Insert(potsIndex + 1, new TerramonItemPass("Terramon Items", 237.4298f));
         }
