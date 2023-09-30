@@ -1,6 +1,3 @@
-using Microsoft.Xna.Framework;
-using Terraria;
-
 namespace Terramon.Content.Dusts;
 
 public class SummonCloud : ModDust

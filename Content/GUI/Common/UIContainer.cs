@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria.UI;
 
 namespace Terramon.Content.GUI.Common;

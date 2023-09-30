@@ -1,6 +1,5 @@
 using System;
 using Terramon.ID;
-using Terraria;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;

@@ -1,4 +1,3 @@
-using Terramon.Core;
 using Terramon.Core.Helpers;
 
 namespace Terramon.Content.Commands;
@@ -43,6 +42,7 @@ public class PartyDataCommand : DebugCommand
             caller.Reply($"No Pokémon data available for slot {slot}");
             return;
         }
+
         caller.Reply(PrettySharp.Print(data, 1));
     }
 }

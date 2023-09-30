@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terramon.Content.Items;
 using Terramon.Content.Items.Mechanical;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;

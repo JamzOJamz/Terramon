@@ -69,6 +69,11 @@ GUI: {
 }
 
 CommonTooltips: {
+	Apricorn:
+		'''
+		A special fruit seemingly related to berries.
+		Can be used to craft assorted Poké Balls.
+		'''
 	EvolutionaryItem: Evolutionary Item
 	KeyItem: Key Item
 	Vitamin: Vitamin
@@ -213,6 +218,18 @@ Items: {
 			It holds shadows as dark as can be.
 			'''
 	}
+
+	BlackApricorn: {
+		DisplayName: Black Apricorn
+		Tooltip: ""
+	}
+
+	BlueApricorn.DisplayName: Blue Apricorn
+	GreenApricorn.DisplayName: Green Apricorn
+	PinkApricorn.DisplayName: Pink Apricorn
+	RedApricorn.DisplayName: Red Apricorn
+	WhiteApricorn.DisplayName: White Apricorn
+	YellowApricorn.DisplayName: Yellow Apricorn
 }
 
 Tiles.MusicBoxCenter.MapEntry: Music Box

@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terramon.Content.Rarities;
 
 namespace Terramon.Content.Items.Evolutionary;

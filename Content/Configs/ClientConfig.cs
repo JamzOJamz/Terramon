@@ -17,6 +17,7 @@ public class ClientConfig : ModConfig
 
 public enum ModIconType
 {
+    // ReSharper disable once UnusedMember.Global
     Main,
     Alternate,
     Classic

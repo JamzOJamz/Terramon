@@ -1,6 +1,4 @@
 using System;
-using Microsoft.Xna.Framework;
-using Terraria;
 
 namespace Terramon.Content.Rarities;
 

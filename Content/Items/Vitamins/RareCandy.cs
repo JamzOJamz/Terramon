@@ -1,11 +1,11 @@
-using Microsoft.Xna.Framework;
+using Terramon.Core.Helpers;
 using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.Vitamins;
 
 public class RareCandy : Vitamin
 {
-    protected override int UseRarity => ModContent.RarityType<RareCandyRarity>();
+    protected override int UseRarity { get; } = ModContent.RarityType<RareCandyRarity>();
 
     public override void SetStaticDefaults()
     {
@@ -24,5 +24,5 @@ public class RareCandy : Vitamin
 
 public class RareCandyRarity : ModRarity
 {
-    public override Color RarityColor => new(98, 153, 229);
+    public override Color RarityColor { get; } = ColorUtils.FromHex(0x6299E5);
 }

@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-
 namespace Terramon.Content.Commands;
 
 public abstract class TerramonCommand : ModCommand

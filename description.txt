@@ -7,9 +7,9 @@ Features:
 - Custom user interface (UI) elements
 - Vanity and other decorative items
 
+Make sure to check out the mod's homepage for additional information.
+
 Note: Pokémon battling is coming in version 1.0!
 
 The source code of the mod is available at
 https://github.com/nsfury/Terramon
-
-Make sure to check out the mod's homepage for additional information.

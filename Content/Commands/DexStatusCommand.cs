@@ -1,5 +1,3 @@
-using Terramon.Core;
-
 namespace Terramon.Content.Commands;
 
 public class DexStatusCommand : TerramonCommand

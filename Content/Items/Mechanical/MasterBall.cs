@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terramon.Content.NPCs.Pokemon;
+﻿using Terramon.Content.NPCs.Pokemon;
 using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.Mechanical;

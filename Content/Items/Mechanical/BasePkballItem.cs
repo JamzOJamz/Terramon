@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Terramon.Core;
-using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;

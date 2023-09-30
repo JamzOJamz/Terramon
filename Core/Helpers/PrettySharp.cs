@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Terraria;
 
 namespace Terramon.Core.Helpers;
 
@@ -18,7 +17,7 @@ public static class PrettySharp
     {
         var type = obj.GetType();
         if (currentDepth >= maxDepth) return $"[{type.Name}]";
-        
+
         var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
         var sb = new StringBuilder();

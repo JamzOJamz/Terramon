@@ -1,12 +1,14 @@
+global using Microsoft.Xna.Framework;
+global using Microsoft.Xna.Framework.Graphics;
+global using Terramon.Core;
+global using Terraria;
 global using Terraria.ModLoader;
 using System.Reflection;
-using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Databases;
 using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
-using Terraria;
 using Terraria.GameContent.UI.Elements;
 
 namespace Terramon;

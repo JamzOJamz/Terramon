@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.GameContent.Creative;
+﻿using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.Mechanical;
 

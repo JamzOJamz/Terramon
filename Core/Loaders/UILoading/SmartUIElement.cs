@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria.UI;
 
 namespace Terramon.Core.Loaders.UILoading;

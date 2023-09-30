@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
-using Microsoft.Xna.Framework;
 using Terramon.Content.Configs;
 using Terramon.Content.NPCs.Pokemon;
-using Terramon.Core;
-using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
@@ -305,7 +302,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         hasContainedLocal = true;
         //Main.NewText($"Contain success", Color.Orange);
         capture = (PokemonNPC)target.ModNPC;
-        
+
         // Register as seen in the player's Pokedex
         var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
         var pokedex = ownerPlayer.GetPokedex();

@@ -1,14 +1,10 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items.Mechanical;
-using Terramon.Core;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;

@@ -2,7 +2,6 @@ using System.Linq;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Core.Loaders.UILoading;
-using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
