@@ -10,7 +10,7 @@ public abstract class DiscoRarity : ModRarity
     /// <summary>
     ///     The colors to transition through.
     /// </summary>
-    protected virtual Color[] Colors => Array.Empty<Color>();
+    protected virtual Color[] Colors { get; } = Array.Empty<Color>();
 
     /// <summary>
     ///     The time it should take to complete one cycle of the animation, in seconds.

@@ -1,4 +1,5 @@
-﻿using Terraria.GameContent.Creative;
+﻿using Terramon.Core.Helpers;
+using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.Mechanical;
 
@@ -29,5 +30,5 @@ public class PokeBallTile : BasePkballTile
 
 public class PokeBallRarity : ModRarity
 {
-    public override Color RarityColor => new(214, 74, 86);
+    public override Color RarityColor { get; } = ColorUtils.FromHex(0xD64A56);
 }

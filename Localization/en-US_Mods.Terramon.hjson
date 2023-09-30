@@ -219,11 +219,7 @@ Items: {
 			'''
 	}
 
-	BlackApricorn: {
-		DisplayName: Black Apricorn
-		Tooltip: ""
-	}
-
+	BlackApricorn.DisplayName: Black Apricorn
 	BlueApricorn.DisplayName: Blue Apricorn
 	GreenApricorn.DisplayName: Green Apricorn
 	PinkApricorn.DisplayName: Pink Apricorn

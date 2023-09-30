@@ -1,4 +1,5 @@
 ﻿using Terramon.Content.NPCs.Pokemon;
+using Terramon.Core.Helpers;
 using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.Mechanical;
@@ -22,8 +23,7 @@ internal class MasterBallItem : BasePkballItem
 
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            igPrice / 2; //Amount needed to duplicate them in Journey Mode
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 }
 
@@ -35,5 +35,5 @@ public class MasterBallTile : BasePkballTile
 
 public class MasterBallRarity : ModRarity
 {
-    public override Color RarityColor => new(164, 96, 178);
+    public override Color RarityColor { get; } = ColorUtils.FromHex(0xA460B2);
 }
