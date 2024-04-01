@@ -45,9 +45,10 @@ public class StarterSelectOverhead : SmartUIState
     private UIHoverImageButton showButton;
     private bool starterPanelShowing = true;
     private UIText titleText;
+    private UIContainer starterPanel;
 
     public override bool Visible =>
-        !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter;
+        !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter && Main.LocalPlayer.talkNPC < 0;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -69,33 +70,39 @@ public class StarterSelectOverhead : SmartUIState
         {
             showButton.SetIsActive(false);
             SoundEngine.PlaySound(SoundID.MenuOpen);
-            background.VAlign = 0.235f;
-            titleText.VAlign = 0.14f;
-            hintText.VAlign = 0.4025f;
+            starterPanel.VAlign = 0.19f;
             starterPanelShowing = true;
         };
         Append(showButton);
+
+        starterPanel = new UIContainer(new Vector2(660, 330))
+        {
+            HAlign = 0.5f,
+            VAlign = 0.19f,
+        };
+
         titleText = new UIText("Welcome to the world of Pokémon! Thank you for installing the Terramon mod!");
         var subText = new UIText("Now, please choose your starter Pokémon!");
         titleText.HAlign = 0.5f;
-        titleText.VAlign = 0.14f;
         subText.Top.Set(26, 0);
         subText.HAlign = 0.5f;
         titleText.Append(subText);
-        Append(titleText);
+        starterPanel.Append(titleText);
+        
         background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background",
             AssetRequestMode.ImmediateLoad));
         hintText = new UIText("(Press Backspace to Close)", 0.85f)
         {
             HAlign = 0.5f,
-            VAlign = 0.4025f,
+            Top = {Pixels = 281},
             TextColor = new Color(173, 173, 198)
         };
-        Append(hintText);
+        starterPanel.Append(hintText);
+        
         background.Width.Set(626, 0);
         background.Height.Set(221, 0);
         background.HAlign = 0.5f;
-        background.VAlign = 0.235f;
+        background.Top.Set(53, 0);
         for (var i = 0; i < Starters.Length; i++)
         {
             var starter = Starters[i];
@@ -120,8 +127,9 @@ public class StarterSelectOverhead : SmartUIState
 
             background.Append(item);
         }
-
-        Append(background);
+        
+        starterPanel.Append(background);
+        Append(starterPanel);
     }
 
     public override void SafeUpdate(GameTime gameTime)
@@ -130,9 +138,7 @@ public class StarterSelectOverhead : SmartUIState
         {
             showButton.SetIsActive(true);
             SoundEngine.PlaySound(SoundID.MenuClose);
-            background.VAlign = -2f;
-            titleText.VAlign = -2f;
-            hintText.VAlign = -2f;
+            starterPanel.VAlign = -2f;
             starterPanelShowing = false;
         }
 

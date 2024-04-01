@@ -205,7 +205,6 @@ public class PartySidebarSlot : UIImage
     public override void RightMouseDown(UIMouseEvent evt)
     {
         base.RightMouseDown(evt);
-        PlayIndexSound();
         DragStart(evt);
     }
 
@@ -224,6 +223,7 @@ public class PartySidebarSlot : UIImage
     private void DragStart(UIMouseEvent evt)
     {
         if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
+        PlayIndexSound();
         PartyDisplay.Sidebar.BringSlotToTop(this);
         Offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
         Dragging = true;

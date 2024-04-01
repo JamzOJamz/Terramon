@@ -5,7 +5,7 @@ namespace Terramon.Content.AI;
 public abstract class AIController
 {
     protected readonly NPC NPC;
-    public int FrameSpeed = 10;
+    protected const int FrameSpeed = 10;
 
     protected AIController(NPC npc)
     {

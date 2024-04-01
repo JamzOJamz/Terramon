@@ -49,7 +49,7 @@ public class MusicItemCenter : TerramonItem
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Audio/Music/PokeCenter"),
+        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Audio/Music/poke_center"),
             ModContent.ItemType<MusicItemCenter>(), ModContent.TileType<MusicBoxCenter>());
     }
 

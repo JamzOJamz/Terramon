@@ -178,9 +178,7 @@ public class PokemonNPC : ModNPC
 
     public override bool? CanBeHitByProjectile(Projectile projectile)
     {
-        if (projectile.ModProjectile is BasePkballProjectile)
-            return true;
-        return false;
+        return projectile.ModProjectile is BasePkballProjectile;
     }
 
     public void Destroy()

@@ -4,6 +4,7 @@ using Terramon.Content.Configs;
 using Terramon.Content.NPCs.Pokemon;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
@@ -23,6 +24,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private bool hasContainedLocal;
     private float rotation;
     private float rotationVelocity;
+    private bool rotationDirection;
     public virtual int pokeballCapture => ModContent.ItemType<BasePkballItem>();
     public virtual float catchModifier { get; set; }
 
@@ -44,6 +46,18 @@ internal abstract class BasePkballProjectile : ModProjectile
         //Projectile.damage = 1;
         Projectile.aiStyle = -1; //aiStyle -1 so no vanilla styles interfere with custom ai
         Projectile.penetrate = -1; //How many npcs to collide before being deleted (-1 makes this infinite)
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        var texture = TextureAssets.Projectile[Type].Value;
+
+        var drawOrigin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
+        var drawPos = Projectile.position - Main.screenPosition + drawOrigin + new Vector2(Projectile.gfxOffY);
+        Main.EntitySpriteDraw(texture, drawPos - new Vector2(3, 0), new Rectangle(0, Projectile.frame * 24, 24, 24), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale,
+            SpriteEffects.None);
+        
+        return false;
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)
@@ -138,12 +152,11 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         //Main.NewText(catchRandom, Color.Pink);
         if (ModContent.GetInstance<GameplayConfig>().FastAnimations)
-            animSpeedMultiplier = 0.65f;
+            animSpeedMultiplier = 0.7f;
 
-        Projectile.damage = 1;
+        Projectile.damage = Projectile.ai[1] == 0 ? 1 : 0;
         Projectile.ai[0]++;
-        ///Projectile.spriteDirection = Projectile.direction;
-        ///
+        //Projectile.spriteDirection = Projectile.direction;
         if (hasContainedLocal == false && capture != null)
             HitPkmn(capture.NPC);
         if (catchRandom > -1 && !hasCalculatedCapture)
@@ -154,88 +167,111 @@ internal abstract class BasePkballProjectile : ModProjectile
             Projectile.ai[1] = 2;
         }
 
-        if (Projectile.ai[1] == 0)
+        switch (Projectile.ai[1])
         {
-            Projectile.frame = (int)Frame.Throw; //At state 1 should use throw sprite
-            Projectile.rotation +=
-                Projectile.velocity.X *
-                0.05f; //Spin in air (feels better than static) based on current velocity so it slows down once it hits the ground
-            if (Projectile.ai[0] >= 10f)
+            case 0:
             {
-                Projectile.ai[0] =
-                    10f; //Wait 10 frames before apply gravity, then keep timer at 10 so it gets constantly applied
-                Projectile.velocity.Y = Projectile.velocity.Y + 0.25f; //(positive Y value makes projectile go down)
-            }
-        }
-        else if (Projectile.ai[1] == 1)
-        {
-            capture?.Destroy(); //Destroy Pokemon NPC
-
-            if (Projectile.ai[0] <
-                35 * animSpeedMultiplier) //Stay still (no velocity) if 50 frames havent passed yet (60fps)
-            {
-                Projectile.frame = (int)Frame.Catch;
-                Projectile.rotation = rotation;
-                Projectile.velocity.X = 0;
-                Projectile.velocity.Y = 0;
-            }
-            else
-            {
-                Projectile.frame = (int)Frame.Capture;
-                Projectile.rotation = 0;
-                Projectile.velocity.Y +=
-                    0.25f; //Add to Y velocity so projectile moves downwards (i subtracted this in testing - the pokeball flew into the sky and disappeared)
-            }
-        }
-        else if (Projectile.ai[1] == 2)
-        {
-            Projectile.rotation += rotationVelocity;
-            if (Projectile.ai[0] >= 75 * animSpeedMultiplier)
-            {
-                //Main.NewText(catchTries, Color.CornflowerBlue);
-                if (catchTries == 0 || ModContent.GetInstance<GameplayConfig>().FastAnimations)
+                Projectile.frame = (int)Frame.Throw; //At state 1 should use throw sprite
+                Projectile.rotation +=
+                    Projectile.velocity.X *
+                    0.05f; //Spin in air (feels better than static) based on current velocity so it slows down once it hits the ground
+                if (Projectile.ai[0] >= 10f)
                 {
-                    if (caught)
-                    {
-                        Projectile.frame = (int)Frame.CaptureComplete;
-                        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch"),
-                            Projectile.position);
-                        Projectile.ai[1] = 3;
-                        Projectile.ai[0] = 0;
-                    }
-                    else
-                    {
-                        ReleasePokemon();
-                        Projectile.Kill();
-                    }
+                    Projectile.ai[0] =
+                        10f; //Wait 10 frames before apply gravity, then keep timer at 10 so it gets constantly applied
+                    Projectile.velocity.Y = Projectile.velocity.Y + 0.25f; //(positive Y value makes projectile go down)
+                }
+
+                break;
+            }
+            case 1:
+            {
+                capture?.Destroy(); //Destroy Pokemon NPC
+
+                if (Projectile.ai[0] <
+                    35 * animSpeedMultiplier) //Stay still (no velocity) if 50 frames havent passed yet (60fps)
+                {
+                    Projectile.frame = (int)Frame.Catch;
+                    Projectile.rotation = rotation;
+                    Projectile.velocity.X = 0;
+                    Projectile.velocity.Y = 0;
                 }
                 else
                 {
-                    catchTries -= 1;
-                    rotationVelocity = 0.2f;
-                    SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_shake"),
-                        Projectile.position);
+                    Projectile.frame = (int)Frame.Capture;
+                    Projectile.rotation = 0;
+                    Projectile.velocity.Y +=
+                        0.25f; //Add to Y velocity so projectile moves downwards (i subtracted this in testing - the pokeball flew into the sky and disappeared)
                 }
 
-                Projectile.ai[0] = 0;
+                break;
             }
-            else if (Math.Abs(Projectile.rotation) < 0.1f)
+            case 2:
             {
-                Projectile.rotation = 0;
-                rotationVelocity = 0;
+                const float shakeIntensity = 0.15f;
+                var shakeAtTick = 75 * animSpeedMultiplier;
+                Projectile.rotation += rotationVelocity;
+                if (Projectile.ai[0] >= shakeAtTick)
+                {
+                    //Main.NewText(catchTries, Color.CornflowerBlue);
+                    if (catchTries == 0 || ModContent.GetInstance<GameplayConfig>().FastAnimations)
+                    {
+                        if (caught)
+                        {
+                            Projectile.frame = (int)Frame.CaptureComplete;
+                            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch"),
+                                Projectile.position);
+                            Projectile.ai[1] = 3;
+                            Projectile.ai[0] = 0;
+                        }
+                        else
+                        {
+                            ReleasePokemon();
+                            Projectile.Kill();
+                        }
+                    }
+                    else
+                    {
+                        catchTries -= 1;
+                        rotationDirection = !rotationDirection;
+                        rotationVelocity = rotationDirection ? shakeIntensity : -shakeIntensity;
+                        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_shake"),
+                            Projectile.position);
+                    }
+
+                    Projectile.ai[0] = 0;
+                    Projectile.rotation = 0;
+                }
+                else if (Projectile.ai[0] > shakeAtTick * 0.2 && rotationVelocity != 0)
+                {
+                    rotationVelocity = 0;
+                    Projectile.rotation = 0;
+                }
+                else if (Projectile.ai[0] > shakeAtTick * 0.15 && rotationVelocity != 0)
+                {
+                    rotationVelocity = rotationDirection ? shakeIntensity : -shakeIntensity;
+                }
+                else if (Projectile.ai[0] > shakeAtTick * 0.05 && rotationVelocity != 0)
+                {
+                    rotationVelocity = rotationDirection ? -shakeIntensity : shakeIntensity;
+                }
+
+                break;
             }
-            else if (rotationVelocity > -0.2f)
+            case 3:
             {
-                rotationVelocity -= 0.05f;
+                var catchSuccessAtTick = 90f * animSpeedMultiplier;
+                if (Projectile.ai[0] == 1)
+                    for (var i = 0; i < 3; i++)
+                        Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust);
+                if (Projectile.ai[0] > catchSuccessAtTick / 2)
+                {
+                    Projectile.alpha += 18;
+                }
+                if (Projectile.ai[0] >= catchSuccessAtTick)
+                    PokemonCatchSuccess();
+                break;
             }
-        }
-        else if (Projectile.ai[1] == 3)
-        {
-            if (Projectile.ai[0] == 1)
-                for (var i = 0; i < 3; i++)
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust);
-            if (Projectile.ai[0] >= 90f * animSpeedMultiplier)
-                PokemonCatchSuccess();
         }
     }
 

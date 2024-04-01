@@ -1,4 +1,4 @@
-namespace Terramon.Content.Commands;
+/*namespace Terramon.Content.Commands;
 
 public class DexStatusCommand : TerramonCommand
 {
@@ -40,4 +40,4 @@ public class DexStatusCommand : TerramonCommand
 
         caller.Reply($"Status of Pokédex entry {id} is {PokedexEntryStatus.Search.GetName(dex.Entries[(ushort)id])}");
     }
-}
+}*/

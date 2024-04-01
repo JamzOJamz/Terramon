@@ -7,7 +7,8 @@ namespace Terramon.Content.Configs;
 
 public class ClientConfig : ModConfig
 {
-    [Header("Graphics")] public ModIconType ModIconType;
+    // TODO: Add this back once alternate mod icons are redesigned to fit the new style
+    //[Header("Graphics")] public ModIconType ModIconType;
 
     [Header("Miscellaneous")] [DefaultValue(false)]
     public bool ReducedAudio;

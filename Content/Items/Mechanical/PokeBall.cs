@@ -19,7 +19,7 @@ internal class PokeBallItem : BasePkballItem
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            igPrice / 2; //Amount needed to duplicate them in Journey Mode
+            igPrice / 2; // Amount needed to duplicate them in Journey Mode
     }
 }
 

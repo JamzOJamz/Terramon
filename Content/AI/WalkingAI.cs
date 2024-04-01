@@ -87,7 +87,7 @@ public class WalkingAI : AIController
 
     public override void FindFrame(int frameHeight)
     {
-        if (AI_State == (float)ActionState.Idle)
+        if (AI_State == (float)ActionState.Idle && !NPC.IsABestiaryIconDummy)
         {
             NPC.frameCounter = 0;
             NPC.frame.Y = (int)Frame.Two * frameHeight;
@@ -95,12 +95,18 @@ public class WalkingAI : AIController
         }
 
         NPC.frameCounter++;
-        if (NPC.frameCounter < FrameSpeed)
-            NPC.frame.Y = (int)Frame.One * frameHeight;
-        else if (NPC.frameCounter < FrameSpeed * 2)
-            NPC.frame.Y = (int)Frame.Two * frameHeight;
-        else
-            NPC.frameCounter = 0;
+        switch (NPC.frameCounter)
+        {
+            case < FrameSpeed:
+                NPC.frame.Y = (int)Frame.One * frameHeight;
+                break;
+            case < FrameSpeed * 2:
+                NPC.frame.Y = (int)Frame.Two * frameHeight;
+                break;
+            default:
+                NPC.frameCounter = 0;
+                break;
+        }
     }
 
     private enum ActionState
