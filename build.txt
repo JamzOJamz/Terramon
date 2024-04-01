@@ -1,4 +1,4 @@
 displayName = Terramon Mod
 homepage = https://terramon.carrd.co
-author = Jamz, InfinaMii
+author = The Terramon Team
 version = 1.0.0
