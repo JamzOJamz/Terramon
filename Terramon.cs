@@ -3,13 +3,10 @@ global using Microsoft.Xna.Framework.Graphics;
 global using Terramon.Core;
 global using Terraria;
 global using Terraria.ModLoader;
-using System.Reflection;
-using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Databases;
 using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
-using Terraria.GameContent.UI.Elements;
 
 namespace Terramon;
 
@@ -48,14 +45,14 @@ public class Terramon : Mod
 
     public override void Load()
     {
-        var modLoaderAssembly = typeof(ModContent).Assembly;
+        /*var modLoaderAssembly = typeof(ModContent).Assembly;
         var uiModItemInitialize = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
             ?.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
-        MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);
+        MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);*/
         Database = LoadPokemonDatabase();
     }
 
-    private static void UIModItemInitialize_Detour(orig_UIModItemInitialize orig, object self)
+    /*private static void UIModItemInitialize_Detour(orig_UIModItemInitialize orig, object self)
     {
         orig(self);
         var modLoaderAssembly = typeof(ModContent).Assembly;
@@ -73,7 +70,7 @@ public class Terramon : Mod
             _ => "icon"
         };
         modIcon?.SetImage(ModContent.Request<Texture2D>("Terramon/" + iconPath, AssetRequestMode.ImmediateLoad));
-    }
+    }*/
 
     private PokemonDB LoadPokemonDatabase()
     {
@@ -87,5 +84,5 @@ public class Terramon : Mod
         //Instance = null;
     }
 
-    private delegate void orig_UIModItemInitialize(object self);
+    //private delegate void orig_UIModItemInitialize(object self);
 }
