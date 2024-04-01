@@ -4,8 +4,6 @@
 
 ----
 
-Immerse yourself in the captivating crossover of Terraria and Pokémon with the Terramon Mod. Now remastered for 1.4!
-
 > [!NOTE]  
 > Pokémon battling is coming in a future update. Stay tuned!
 
