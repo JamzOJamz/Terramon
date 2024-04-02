@@ -21,4 +21,4 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 
 ## Contributing
 
-Anyone is free to contribute! View a list of planned features [here](), and view issues [here](https://github.com/nsfury/Terramon/issues).
+Anyone is free to contribute! View all open issues [here](https://github.com/nsfury/Terramon/issues).
