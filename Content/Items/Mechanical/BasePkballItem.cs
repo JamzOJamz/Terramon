@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
@@ -41,31 +39,23 @@ public abstract class BasePkballItem : TerramonItem
 
     public override bool CanUseItem(Player player)
     {
-        return player.altFunctionUse != 2;
+        if (player.altFunctionUse == 2)
+        {
+            Item.shoot = ProjectileID.None;
+            Item.createTile = pokeballTile;
+            Item.UseSound = null;
+        }
+        else
+        {
+            Item.shoot = pokeballThrow;
+            Item.createTile = -1;
+            Item.UseSound = new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_throw");
+        }
+        return base.CanUseItem(player);
     }
 
-    public override bool AltFunctionUse(Player player)
-    {
-        base.AltFunctionUse(player);
-        var mouseTileX = (int)(Main.mouseX + Main.screenPosition.X) / 16;
-        var mouseTileY = (int)(Main.mouseY + Main.screenPosition.Y) / 16;
-        mouseTileX = Math.Clamp(mouseTileX, 0, Main.maxTilesX);
-        mouseTileY = Math.Clamp(mouseTileY, 0, Main.maxTilesY);
-
-        var tile = Main.tile[mouseTileX, mouseTileY];
-        if ((tile.HasTile && !Main.tileCut[tile.TileType]) ||
-            !(Vector2.Distance(player.position, new Vector2(mouseTileX, mouseTileY) * 16) < 96)) return false;
-
-        WorldGen.PlaceTile(mouseTileX, mouseTileY, pokeballTile);
-        TileEntity.PlaceEntityNet(mouseTileX, mouseTileY, ModContent.TileEntityType<BasePkballEntity>());
-        TileUtils.TryGetTileEntityAs<BasePkballEntity>(mouseTileX, mouseTileY, out var e);
-        e.Hook_AfterPlacement(mouseTileX, mouseTileY, pokeballTile, 0, 0, 0);
-        player.ConsumeItem(Type);
-
-        //Item.shoot = 0;
-        //Item.createTile = pokeballTile;
-
-        return false;
+    public override bool AltFunctionUse(Player player) {
+        return true;
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
