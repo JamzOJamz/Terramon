@@ -70,7 +70,6 @@ public class PokemonNPC : ModNPC
         NPC.knockBackResist = 1f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
-        NPC.gfxOffY = -2;
         var npcArg = new object[] { NPC };
         Behaviour = (AIController)Activator.CreateInstance(useAiType, BindingFlags.OptionalParamBinding, null,
             npcArg.Concat(useAiParams).ToArray(), CultureInfo.CurrentCulture);
