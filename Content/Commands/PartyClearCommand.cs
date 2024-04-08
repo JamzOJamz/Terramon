@@ -62,7 +62,6 @@ public class PartyClearCommand : DebugCommand
             player.SwapParty(i + 1, i);
             UILoader.GetUIState<PartyDisplay>().UpdateSlot(player.Party[i], i);
         }
-        if (slot == 6)
-            UILoader.GetUIState<PartyDisplay>().UpdateSlot(null, 5);
+        UILoader.GetUIState<PartyDisplay>().UpdateSlot(player.Party[5], 5);
     }
 }
