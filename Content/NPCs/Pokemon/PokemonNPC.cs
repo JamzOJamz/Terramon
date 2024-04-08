@@ -16,13 +16,13 @@ namespace Terramon.Content.NPCs.Pokemon;
 [Autoload(false)]
 public class PokemonNPC : ModNPC
 {
+    private static Dictionary<ushort, JToken> SchemaCache;
     public readonly ushort useId;
     private readonly string useName;
     private bool isDestroyed;
     public bool isShiny;
     private int shinySparkleTimer;
     private Player spawningPlayer;
-    private static Dictionary<ushort, JToken> SchemaCache;
 
     public PokemonNPC(ushort useId, string useName)
     {
@@ -49,7 +49,7 @@ public class PokemonNPC : ModNPC
         NPC.knockBackResist = 1f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
-        
+
         // TODO: Optimize.
         if (!SchemaCache.TryGetValue(useId, out var npcSchema))
         {
@@ -62,6 +62,7 @@ public class PokemonNPC : ModNPC
             npcSchema = schema["NPC"];
             SchemaCache.Add(useId, npcSchema);
         }
+
         var mi = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
         foreach (var component in npcSchema!.Children<JProperty>())
         {
@@ -95,10 +96,9 @@ public class PokemonNPC : ModNPC
         var path = useName + "_S";
         var texture = ModContent.Request<Texture2D>($"Terramon/Assets/Pokemon/{path}").Value;
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        var frameHeight = texture.Height / Main.npcFrameCount[NPC.type];
-        spriteBatch.Draw(texture, NPC.Bottom - screenPos + new Vector2(0, 2),
-            new Rectangle(0, NPC.frame.Y, texture.Width, frameHeight), drawColor, NPC.rotation,
-            new Vector2(texture.Width / 2f, frameHeight), NPC.scale, effects, 0f);
+        spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY),
+            NPC.frame, drawColor, NPC.rotation,
+            NPC.frame.Size() / 2f, NPC.scale, effects, 0f);
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnRate)
@@ -174,7 +174,7 @@ public class PokemonNPC : ModNPC
         NPC.active = false;
         isDestroyed = true;
     }
-    
+
     public override void Load()
     {
         SchemaCache = new Dictionary<ushort, JToken>();
