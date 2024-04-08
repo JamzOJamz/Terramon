@@ -1,0 +1,28 @@
+NPC:
+{
+  Transform:
+  {
+    Width: 28
+    Height: 29
+  }
+  
+  WalkingBehaviour: {
+    FrameCount: 2
+  }
+  
+  SpawnController:
+  {
+    Condition: OverworldDaySlime
+    Chance: 0.2
+  }
+
+  Variants:
+  {
+    FileName: Christmas
+    Chance: 0.3
+    Condition: Christmas
+  }
+  
+}
+
+Projectile: {}

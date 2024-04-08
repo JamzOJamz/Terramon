@@ -11,6 +11,7 @@ public class PokemonData : TagSerializable
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
+    public string Variant;
     private string OT;
 
     private PokemonData()
@@ -34,6 +35,7 @@ public class PokemonData : TagSerializable
             ["isShiny"] = IsShiny,
             ["gender"] = (byte)Gender,
             ["lvl"] = Level,
+            ["variant"] = Variant,
             ["ot"] = OT
         };
     }
@@ -46,6 +48,7 @@ public class PokemonData : TagSerializable
             IsShiny = tag.GetBool("isShiny"),
             Gender = (Gender)tag.GetByte("gender"),
             Level = tag.GetByte("lvl"),
+            Variant = tag.GetString("variant"),
             OT = tag.GetString("ot")
         };
     }

@@ -21,6 +21,7 @@ public class PokemonNPC : ModNPC
     private bool isDestroyed;
     public bool isShiny;
     private int shinySparkleTimer;
+    public string variant = null;
     private Player spawningPlayer;
     private static Dictionary<ushort, JToken> SchemaCache;
 
@@ -86,14 +87,20 @@ public class PokemonNPC : ModNPC
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        return !isShiny;
+        return !isShiny && variant == null;
     }
 
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (!isShiny) return;
-        var path = useName + "_S";
-        var texture = ModContent.Request<Texture2D>($"Terramon/Assets/Pokemon/{path}").Value;
+        if (!isShiny && variant == null) return;
+
+        var path = Texture;
+        if (variant != null)
+            path += variant;
+        if (isShiny)
+            path += "_S";
+
+        var texture = ModContent.Request<Texture2D>(path).Value;
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var frameHeight = texture.Height / Main.npcFrameCount[NPC.type];
         spriteBatch.Draw(texture, NPC.Bottom - screenPos + new Vector2(0, 2),
