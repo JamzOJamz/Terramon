@@ -22,7 +22,6 @@ public class PokemonNPC : ModNPC
     private bool isDestroyed;
     public bool isShiny;
     private int shinySparkleTimer;
-    private Player spawningPlayer;
 
     public PokemonNPC(ushort useId, string useName)
     {
@@ -82,7 +81,9 @@ public class PokemonNPC : ModNPC
     public override void OnSpawn(IEntitySource source)
     {
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
-        isShiny = Terramon.RollShiny(spawningPlayer ?? Main.LocalPlayer);
+        var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
+        isShiny = Terramon.RollShiny(Main.player[spawningPlayer]);
+        NPC.netUpdate = true;
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -99,12 +100,6 @@ public class PokemonNPC : ModNPC
         spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY),
             NPC.frame, drawColor, NPC.rotation,
             NPC.frame.Size() / 2f, NPC.scale, effects, 0f);
-    }
-
-    public override float SpawnChance(NPCSpawnInfo spawnRate)
-    {
-        spawningPlayer = spawnRate.Player;
-        return 0f;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
