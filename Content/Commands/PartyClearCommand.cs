@@ -1,3 +1,4 @@
+using System;
 using Terramon.Content.GUI;
 using Terramon.Core.Helpers;
 using Terramon.Core.Loaders.UILoading;
@@ -16,7 +17,7 @@ public class PartyClearCommand : DebugCommand
         => "/partyclear slot";
 
     public override string Description
-        => "Displays info for the specified Pokémon in your party";
+        => "Removes the specified Pokémon from your party";
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
@@ -26,10 +27,7 @@ public class PartyClearCommand : DebugCommand
 
         if (args[0] == "all")
         {
-            for (int i = 0; i < 6; i++)
-            {
-                player.Party[i] = null;
-            }
+            Array.Clear(player.Party, 0, player.Party.Length);
             UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
             caller.Reply("Removed all Pokemon from the party");
             return;
@@ -48,20 +46,16 @@ public class PartyClearCommand : DebugCommand
             caller.Reply("Slot argument is out of range");
             return;
         }
-
-        if (player.Party[slot - 1] == null)
+        
+        var slotIndex = slot - 1;
+        if (player.Party[slotIndex] == null)
         {
             caller.Reply($"No Pokemon found in slot {slot}");
             return;
         }
-
-        caller.Reply($"Removed {Terramon.DatabaseV2.GetLocalizedPokemonName(player.Party[slot - 1].ID)} from the party");
-        player.Party[slot - 1] = null;
-        for (int i = slot - 1; i < 5; i++)
-        {
-            player.SwapParty(i + 1, i);
-            UILoader.GetUIState<PartyDisplay>().UpdateSlot(player.Party[i], i);
-        }
-        UILoader.GetUIState<PartyDisplay>().UpdateSlot(player.Party[5], 5);
+        
+        caller.Reply($"Removed {Terramon.DatabaseV2.GetLocalizedPokemonName(player.Party[slotIndex].ID)} from the party");
+        player.Party[slotIndex] = null;
+        UILoader.GetUIState<PartyDisplay>().UpdateSlot(player.Party[slotIndex], slotIndex);
     }
 }

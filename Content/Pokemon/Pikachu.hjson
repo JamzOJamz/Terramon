@@ -3,7 +3,7 @@ NPC:
   Transform:
   {
     Width: 28
-    Height: 29
+    Height: 28
   }
   
   WalkingBehaviour: {
