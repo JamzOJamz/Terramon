@@ -325,7 +325,8 @@ internal abstract class BasePkballProjectile : ModProjectile
         //TODO: add level from pokemonnpc
         TerramonPlayer.LocalPlayer.AddPartyPokemon(new PokemonData(capture.useId, level)
         {
-            IsShiny = capture.isShiny
+            IsShiny = capture.isShiny,
+            Variant = capture.variant
         });
 
         SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch_pla"));
