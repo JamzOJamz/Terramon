@@ -1,6 +1,6 @@
 <div align="center">
 <img src="https://raw.githubusercontent.com/nsfury/Terramon/main/logo.png"><br><br>
-<a href="" target="_blank">Steam Workshop</a> | <a href="https://discord.gg/U8skDEA" target="_blank">Discord</a> | <a href="https://www.youtube.com/@TerramonMod" target="_blank">YouTube</a> | <a href="https://terrariamods.fandom.com/wiki/Terramon_Mod" target="_blank">Official Wiki</a>
+<a href="" target="_blank">Steam Workshop</a> | <a href="https://discord.gg/U8skDEA" target="_blank">Discord</a> | <a href="https://www.youtube.com/@TerramonMod" target="_blank">YouTube</a> | <a href="https://terrariamods.wiki.gg/wiki/Terramon" target="_blank">Official Wiki</a>
 </div>
 
 ---

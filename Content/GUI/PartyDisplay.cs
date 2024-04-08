@@ -92,7 +92,17 @@ public class PartySidebar : UIContainer
 
     public override void Update(GameTime gameTime)
     {
-        base.Update(gameTime);
+        //base.Update(gameTime);
+
+        //below code is a modification of code in UIElement.Update()
+        //create a static version of Elements so modification in BringSlotToTop doesn't cause errors
+        var elements_static = new UIElement[Elements.Count];
+        Elements.CopyTo(elements_static);
+        foreach (UIElement element in elements_static)
+        {
+            element.Update(gameTime);
+        }
+        
         var openKey = Main.keyState.IsKeyDown(Keys.F);
         switch (openKey)
         {
@@ -150,6 +160,8 @@ public class PartySidebarSlot : UIImage
     private Vector2 Offset;
     private ITweener SnapTween;
     private UIImage SpriteBox;
+    public bool MonitorCursor;
+    public UIMouseEvent MonitorEvent;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
         "Terramon/Assets/GUI/Party/SidebarClosed",
@@ -201,6 +213,24 @@ public class PartySidebarSlot : UIImage
         SoundEngine.PlaySound(s);
     }
 
+    public override void LeftMouseDown(UIMouseEvent evt)
+    {
+        base.LeftMouseDown(evt);
+        MonitorEvent = evt;
+        MonitorCursor = true;
+    }
+
+    public override void LeftMouseUp(UIMouseEvent evt)
+    {
+        base.LeftMouseUp(evt);
+        MonitorCursor = false;
+        if (Dragging)
+            DragEnd();
+        else
+            Main.NewText("Clicked on slot containing " + NameText.Text, Color.SeaGreen);
+            //replace with whatever code to summon pokemon
+    }
+
     public override void RightMouseDown(UIMouseEvent evt)
     {
         base.RightMouseDown(evt);
@@ -244,6 +274,17 @@ public class PartySidebarSlot : UIImage
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+
+        if (MonitorCursor)
+        {
+            //check if mouse has travelled minimum distance in order to enter drag
+            if (MathF.Abs(MonitorEvent.MousePosition.Length() - Main.MouseScreen.Length()) > 8)
+            {
+                MonitorCursor = false;
+                DragStart(MonitorEvent);
+            }
+        }
+
         var transparentColor = Color.White * 0.45f;
         if (PartyDisplay.IsDraggingSlot)
         {
