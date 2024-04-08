@@ -1,78 +1,81 @@
-using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
+using Hjson;
+using Newtonsoft.Json.Linq;
 using Terramon.Content.AI;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.Mechanical;
-using Terramon.ID;
+using Terramon.Core.NPCComponents;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader.Utilities;
 
 namespace Terramon.Content.NPCs.Pokemon;
 
+[Autoload(false)]
 public class PokemonNPC : ModNPC
 {
-    private readonly object[] useAiParams;
-    private readonly Type useAiType;
-    private readonly int useHeight;
     public readonly ushort useId;
     private readonly string useName;
-    private readonly float useSpawnChance;
-    private readonly byte[] useSpawnConditions;
-    private readonly int useWidth;
     private bool isDestroyed;
     public bool isShiny;
     private int shinySparkleTimer;
     private Player spawningPlayer;
+    private static Dictionary<ushort, JToken> SchemaCache;
 
-    public PokemonNPC(ushort useId, string useName, int useWidth, int useHeight, Type useAiType, object[] useAiParams,
-        byte[] useSpawnConditions, float useSpawnChance)
+    public PokemonNPC(ushort useId, string useName)
     {
         this.useId = useId;
         this.useName = useName;
-        this.useWidth = useWidth;
-        this.useHeight = useHeight;
-        this.useAiType = useAiType;
-        this.useAiParams = useAiParams;
-        this.useSpawnConditions = useSpawnConditions;
-        this.useSpawnChance = useSpawnChance;
     }
 
     protected override bool CloneNewInstances => true;
 
-    // ReSharper disable once ConvertToAutoProperty
     public override string Name => useName + "NPC";
 
-    public override LocalizedText DisplayName => Terramon.Database.GetLocalizedPokemonName(useId);
+    public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(useId);
 
     private AIController Behaviour { get; set; }
 
     public override string Texture => "Terramon/Assets/Pokemon/" + useName;
 
-    public override void SetStaticDefaults()
-    {
-        Main.npcFrameCount[Type] = 2;
-    }
-
     public override void SetDefaults()
     {
-        NPC.width = useWidth;
-        NPC.height = useHeight;
         NPC.defense = int.MaxValue;
         NPC.lifeMax = 100;
-        NPC.aiStyle = -1;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.value = 0f;
         NPC.knockBackResist = 1f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
-        var npcArg = new object[] { NPC };
-        Behaviour = (AIController)Activator.CreateInstance(useAiType, BindingFlags.OptionalParamBinding, null,
-            npcArg.Concat(useAiParams).ToArray(), CultureInfo.CurrentCulture);
+        
+        // TODO: Optimize.
+        if (!SchemaCache.TryGetValue(useId, out var npcSchema))
+        {
+            var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{useName}.hjson");
+            using var hjsonReader = new StreamReader(hjsonStream);
+            var jsonText = HjsonValue.Load(hjsonReader).ToString();
+            hjsonReader.Close();
+            var schema = JObject.Parse(jsonText);
+            if (!schema.ContainsKey("NPC")) return;
+            npcSchema = schema["NPC"];
+            SchemaCache.Add(useId, npcSchema);
+        }
+        var mi = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
+        foreach (var component in npcSchema!.Children<JProperty>())
+        {
+            var componentType = Mod.Code.GetType($"Terramon.Content.NPCs.NPC{component.Name}");
+            if (componentType == null) continue;
+            var enableComponentRef = mi!.MakeGenericMethod(componentType);
+            var instancedComponent = enableComponentRef.Invoke(null, new object[] { NPC, null });
+            foreach (var prop in component.Value.Children<JProperty>())
+            {
+                var fieldInfo = componentType.GetRuntimeField(prop.Name);
+                if (fieldInfo == null) continue;
+                fieldInfo.SetValue(instancedComponent, prop.Value.ToObject(fieldInfo.FieldType));
+            }
+        }
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -98,38 +101,10 @@ public class PokemonNPC : ModNPC
             new Vector2(texture.Width / 2f, frameHeight), NPC.scale, effects, 0f);
     }
 
-    public override float SpawnChance(NPCSpawnInfo spawnInfo)
+    public override float SpawnChance(NPCSpawnInfo spawnRate)
     {
-        if (useSpawnConditions == null) return 0f;
-        spawningPlayer = spawnInfo.Player;
-        var chance = 1f;
-        foreach (var c in useSpawnConditions)
-            switch (c)
-            {
-                case SpawnConditionID.SurfaceJungle:
-                    chance *= SpawnCondition.SurfaceJungle.Chance;
-                    break;
-                case SpawnConditionID.Cavern:
-                    chance *= SpawnCondition.Cavern.Chance;
-                    break;
-                case SpawnConditionID.ZoneBeach:
-                    chance *= spawnInfo.Player.ZoneBeach ? 1f : 0f;
-                    break;
-                case SpawnConditionID.ZoneForest:
-                    chance *= spawnInfo.Player.ZoneForest ? 1f : 0f;
-                    break;
-                case SpawnConditionID.ZoneSnow:
-                    chance *= spawnInfo.Player.ZoneSnow ? 1f : 0f;
-                    break;
-                case SpawnConditionID.DayTime:
-                    chance *= Main.dayTime ? 1f : 0f;
-                    break;
-                case SpawnConditionID.NightTime:
-                    chance *= Main.dayTime ? 0f : 1f;
-                    break;
-            }
-
-        return chance * useSpawnChance;
+        spawningPlayer = spawnRate.Player;
+        return 0f;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -198,5 +173,15 @@ public class PokemonNPC : ModNPC
         NPC.netUpdate = true;
         NPC.active = false;
         isDestroyed = true;
+    }
+    
+    public override void Load()
+    {
+        SchemaCache = new Dictionary<ushort, JToken>();
+    }
+
+    public override void Unload()
+    {
+        SchemaCache = null;
     }
 }

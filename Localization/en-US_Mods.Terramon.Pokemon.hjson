@@ -513,7 +513,10 @@ Magneton: {
 	Species: Magnet Pokémon
 }
 
-Farfetchd.DisplayName: Farfetch’d
+Farfetchd: {
+	DisplayName: Farfetch’d
+	Species: Wild Duck Pokémon
+}
 
 Doduo: {
 	DisplayName: Doduo

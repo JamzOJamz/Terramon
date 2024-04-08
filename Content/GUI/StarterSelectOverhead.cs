@@ -107,7 +107,7 @@ public class StarterSelectOverhead : SmartUIState
         {
             var starter = Starters[i];
             var item = new StarterButton(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.Database.GetPokemonName(starter)}_Mini",
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(starter)}_Mini",
                 AssetRequestMode.ImmediateLoad), starter);
             item.Width.Set(80, 0);
             item.Height.Set(60, 0);
@@ -149,13 +149,13 @@ public class StarterSelectOverhead : SmartUIState
 public class StarterButton : UIHoverImage
 {
     public StarterButton(Asset<Texture2D> texture, ushort pokemon) : base(texture,
-        Terramon.Database.IsAvailableStarter(pokemon)
-            ? Terramon.Database.GetLocalizedPokemonName(pokemon).Value
+        Terramon.DatabaseV2.IsAvailableStarter(pokemon)
+            ? Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
             : "Coming soon...")
     {
-        if (!Terramon.Database.IsAvailableStarter(pokemon)) return;
+        if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon)) return;
         var cacheHoverTexture = ModContent.Request<Texture2D>(
-            $"Terramon/Assets/Pokemon/{Terramon.Database.GetPokemonName(pokemon)}_Mini_Highlighted",
+            $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini_Highlighted",
             AssetRequestMode.ImmediateLoad);
         OnMouseOver += (_, _) =>
         {
@@ -169,9 +169,9 @@ public class StarterButton : UIHoverImage
             player.AddPartyPokemon(new PokemonData(pokemon, 5));
             player.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").WithFormatArgs(
-                TypeID.GetColor(Terramon.Database.GetPokemon(pokemon).Types[0]),
-                Terramon.Database.GetLocalizedPokemonName(pokemon).Value,
-                Terramon.Database.GetPokemonSpecies(pokemon).Value
+                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(pokemon).Types[0]),
+                Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value,
+                Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value
             ).Value;
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);

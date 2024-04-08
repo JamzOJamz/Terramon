@@ -1,0 +1,18 @@
+NPC:
+{
+  Transform:
+  {
+    Width: 24
+    Height: 22
+  }
+  
+  WalkingBehaviour: {}
+  
+  SpawnController:
+  {
+    Condition: OverworldDaySlime
+    Chance: 0.2
+  }
+}
+
+Projectile: {}

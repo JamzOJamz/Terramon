@@ -13,6 +13,5 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Assets\Items\Evolutionary" />
-        <Folder Include="Content\NPCs" />
     </ItemGroup>
 </Project>

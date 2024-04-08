@@ -1,5 +1,4 @@
 using System;
-using Terramon.ID;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
@@ -8,7 +7,7 @@ public class PokemonData : TagSerializable
 {
     // ReSharper disable once UnusedMember.Global
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
-    public byte Gender = GenderID.Unknown;
+    public Gender Gender = Gender.Unspecified;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
@@ -33,7 +32,7 @@ public class PokemonData : TagSerializable
         {
             ["id"] = ID,
             ["isShiny"] = IsShiny,
-            ["gender"] = Gender,
+            ["gender"] = (byte)Gender,
             ["lvl"] = Level,
             ["ot"] = OT
         };
@@ -45,7 +44,7 @@ public class PokemonData : TagSerializable
         {
             ID = (ushort)tag.GetShort("id"),
             IsShiny = tag.GetBool("isShiny"),
-            Gender = tag.GetByte("gender"),
+            Gender = (Gender)tag.GetByte("gender"),
             Level = tag.GetByte("lvl"),
             OT = tag.GetString("ot")
         };

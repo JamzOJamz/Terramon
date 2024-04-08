@@ -4,29 +4,27 @@ global using Terramon.Core;
 global using Terraria;
 global using Terraria.ModLoader;
 using Terramon.Content.Configs;
-using Terramon.Content.Databases;
 using Terramon.Content.Items.KeyItems;
-using Terramon.ID;
 
 namespace Terramon;
 
 public class Terramon : Mod
 {
+    public static Terramon Instance { get; private set; }
+
+    public Terramon()
+    {
+        Instance = this;
+    }
+    
+    public static DatabaseV2 DatabaseV2 { get; private set; }
+    
     /*
      * TODO:
      * This will be removed at a later date.
      * It exists because there are Pokémon in the DB that shouldn't be loaded as mod content (yet).
      */
     public const ushort MaxPokemonID = 151;
-
-    /*public static Terramon Instance { get; private set; }
-
-    public Terramon()
-    {
-        Instance = this;
-    }*/
-
-    public static PokemonDB Database { get; private set; }
 
     public static bool RollShiny(Player player)
     {
@@ -35,12 +33,12 @@ public class Terramon : Mod
         return Main.rand.NextBool(shinyChance);
     }
 
-    public static byte RollGender(ushort id)
+    public static Gender RollGender(ushort id)
     {
-        var genderRate = Database.GetPokemon(id).GenderRate;
+        var genderRate = DatabaseV2.GetPokemon(id).GenderRate;
         return genderRate >= 0
-            ? Main.rand.NextBool(genderRate, 8) ? GenderID.Female : GenderID.Male
-            : GenderID.Unknown;
+            ? Main.rand.NextBool(genderRate, 8) ? Gender.Female : Gender.Male
+            : Gender.Unspecified;
     }
 
     public override void Load()
@@ -49,7 +47,10 @@ public class Terramon : Mod
         var uiModItemInitialize = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
             ?.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);*/
-        Database = LoadPokemonDatabase();
+        
+        // Load the database
+        var dbStream = GetFileStream("Assets/Data/PokemonDB.json");
+        DatabaseV2 = DatabaseV2.Parse(dbStream);
     }
 
     /*private static void UIModItemInitialize_Detour(orig_UIModItemInitialize orig, object self)
@@ -72,16 +73,10 @@ public class Terramon : Mod
         modIcon?.SetImage(ModContent.Request<Texture2D>("Terramon/" + iconPath, AssetRequestMode.ImmediateLoad));
     }*/
 
-    private PokemonDB LoadPokemonDatabase()
-    {
-        var stream = GetFileStream("Content/Databases/pokemon-db.tmon");
-        return PokemonDB.Deserialize(stream);
-    }
-
     public override void Unload()
     {
-        Database = null;
-        //Instance = null;
+        DatabaseV2 = null;
+        Instance = null;
     }
 
     //private delegate void orig_UIModItemInitialize(object self);

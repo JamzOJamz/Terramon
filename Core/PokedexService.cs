@@ -5,12 +5,12 @@ namespace Terramon.Core;
 
 public class PokedexService
 {
-    public readonly Dictionary<ushort, byte> Entries = new();
+    public readonly Dictionary<int, byte> Entries = new();
 
     public PokedexService()
     {
-        if (Terramon.Database == null) return;
-        foreach (var id in Terramon.Database.Pokemon.Keys)
+        if (Terramon.DatabaseV2 == null) return;
+        foreach (var id in Terramon.DatabaseV2.Pokemon.Keys)
         {
             if (id > Terramon.MaxPokemonID) break;
             Entries.Add(id, PokedexEntryStatus.Undiscovered);

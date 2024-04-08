@@ -6,7 +6,6 @@ using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Core.Loaders.UILoading;
-using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -361,7 +360,7 @@ public class PartySidebarSlot : UIImage
         }
         else
         {
-            NameText.SetText(Terramon.Database.GetLocalizedPokemonName(data.ID).Value);
+            NameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID).Value);
             LevelText.SetText("Lv. " + data.Level);
             HeldItemBox = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",
                 AssetRequestMode.ImmediateLoad));
@@ -372,7 +371,7 @@ public class PartySidebarSlot : UIImage
             SpriteBox.Top.Set(10, 0f);
             SpriteBox.Left.Set(59, 0f);
             var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.Database.GetPokemonName(data.ID)}_Mini",
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}_Mini",
                 AssetRequestMode.ImmediateLoad))
             {
                 ImageScale = 0.7f
@@ -380,8 +379,8 @@ public class PartySidebarSlot : UIImage
             sprite.Top.Set(-12, 0f);
             sprite.Left.Set(-20, 0f);
             SpriteBox.Append(sprite);
-            var genderIconPath = data.Gender != GenderID.Unknown
-                ? $"Terramon/Assets/GUI/Party/Icon{(data.Gender == GenderID.Male ? "Male" : "Female")}"
+            var genderIconPath = data.Gender != Gender.Unspecified
+                ? $"Terramon/Assets/GUI/Party/Icon{(data.Gender == Gender.Male ? "Male" : "Female")}"
                 : "Terramon/Assets/Empty";
             GenderIcon = new UIBlendedImage(ModContent.Request<Texture2D>(genderIconPath,
                 AssetRequestMode.ImmediateLoad));

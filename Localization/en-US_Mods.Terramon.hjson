@@ -265,8 +265,8 @@ NPCs: {
 			Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
 			ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
 			PokemonHello: Is that your {0}? Hi, {1}!
-			PokemonGrass: Is that a grass-type Pokémon? Those are my favourite!
-			PokemonIce: An ice-type Pokémon! I've always loved seeing those.
+			PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
+			PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
 			PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
 			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well- shine.
 			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
