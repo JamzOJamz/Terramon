@@ -7,9 +7,9 @@ NPC:
   }
   
   WalkingBehaviour: {
-    FrameCount: 5
+    FrameCount: 4
     FrameTime: 5
-    AnimationType: IdleForward
+    AnimationType: StraightForward
     IsClassic: false
   }
   
