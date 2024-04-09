@@ -25,7 +25,6 @@ public class NPCVisualBehaviour : NPCComponent
     public Vector2 DustPosition;
 
     float dustTimer;
-    Vector3 lightColor = Vector3.Zero;
 
     public override void AI(NPC npc)
     {
