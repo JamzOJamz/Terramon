@@ -1,6 +1,5 @@
 using System;
 using Terramon.Content.GUI;
-using Terramon.Core.Helpers;
 using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon.Content.Commands;
@@ -46,16 +45,19 @@ public class PartyClearCommand : DebugCommand
             caller.Reply("Slot argument is out of range");
             return;
         }
-        
+
         var slotIndex = slot - 1;
         if (player.Party[slotIndex] == null)
         {
             caller.Reply($"No Pokemon found in slot {slot}");
             return;
         }
-        
-        caller.Reply($"Removed {Terramon.DatabaseV2.GetLocalizedPokemonName(player.Party[slotIndex].ID)} from the party");
+
+        caller.Reply(
+            $"Removed {Terramon.DatabaseV2.GetLocalizedPokemonName(player.Party[slotIndex].ID)} from the party");
         player.Party[slotIndex] = null;
-        UILoader.GetUIState<PartyDisplay>().UpdateSlot(player.Party[slotIndex], slotIndex);
+        for (var i = slotIndex + 1; i < player.Party.Length; i++) player.Party[i - 1] = player.Party[i];
+        player.Party[5] = null;
+        UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
     }
 }

@@ -58,11 +58,14 @@ GUI: {
 		PremierBonusPlural: You got {0} Premier Balls as an added bonus!
 	}
 
-	Party.SlotHover:
-		'''
-		Left click to send out
-		Click and drag to reorder
-		'''
+	Party: {
+		SlotHover: Left click to send out
+		SlotHoverExtra:
+			'''
+
+			Right click and drag to reorder
+			'''
+	}
 }
 
 CommonTooltips: {

@@ -193,7 +193,10 @@ public class PartySidebarSlot : UIImage
     {
         base.DrawSelf(spriteBatch);
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
-        Main.hoverItemName = Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover");
+        var hoverText = Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover");
+        if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
+            hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
+        Main.hoverItemName = hoverText;
     }
 
     public void PlayIndexSound()
@@ -242,13 +245,13 @@ public class PartySidebarSlot : UIImage
 
     private void SnapPosition(int index)
     {
-        if (Dragging) return;
+        if (Data == null || Dragging) return;
         SnapTween = Tween.To(() => Top.Pixels, x => Top.Pixels = x, -2 + 83 * index, 0.15f).SetEase(Ease.OutExpo);
     }
 
     private void DragStart(UIMouseEvent evt)
     {
-        if (Data == null) return;
+        if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
         PlayIndexSound();
         PartyDisplay.Sidebar.BringSlotToTop(this);
         Offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
@@ -259,7 +262,7 @@ public class PartySidebarSlot : UIImage
 
     private void DragEnd()
     {
-        if (Data == null) return;
+        if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
         if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
             SoundEngine.PlaySound(SoundID.Tink);
         Dragging = false;
@@ -287,8 +290,8 @@ public class PartySidebarSlot : UIImage
         {
             if (!Dragging)
             {
-                Color = transparentColor;
                 if (Data == null) return;
+                Color = transparentColor;
                 NameText.TextColor = transparentColor;
                 LevelText.TextColor = transparentColor;
                 HeldItemBox.Color = transparentColor;
@@ -298,8 +301,9 @@ public class PartySidebarSlot : UIImage
                 return;
             }
 
-            const int i = 5;
-            const int bottomScrollMax = 71 * i + 12 * i - 2;
+            var i = TerramonPlayer.LocalPlayer.NextFreePartyIndex() - 1;
+            if (i == -2) i = 6;
+            var bottomScrollMax = 71 * i + 12 * i - 2;
             var yOff = Math.Max(Math.Min(Main.mouseY - Offset.Y, bottomScrollMax), -2);
             switch (yOff)
             {
@@ -337,18 +341,15 @@ public class PartySidebarSlot : UIImage
 
             Top.Set(yOff, 0f);
         }
-        else
+        else if (Data != null)
         {
             Color = Color.White;
-            if (Data != null)
-            {
-                NameText.TextColor = Color.White;
-                LevelText.TextColor = Color.White;
-                HeldItemBox.Color = Color.White;
-                SpriteBox.Color = Color.White;
-                ((UIImage)SpriteBox.Children.ElementAt(0)).Color = Color.White;
-                GenderIcon.Color = Color.White;
-            }
+            NameText.TextColor = Color.White;
+            LevelText.TextColor = Color.White;
+            HeldItemBox.Color = Color.White;
+            SpriteBox.Color = Color.White;
+            ((UIImage)SpriteBox.Children.ElementAt(0)).Color = Color.White;
+            GenderIcon.Color = Color.White;
         }
 
         if (IsMouseHovering && !PartyDisplay.IsDraggingSlot)
@@ -390,11 +391,11 @@ public class PartySidebarSlot : UIImage
     {
         Data = data;
         UpdateSprite();
+        HeldItemBox?.Remove();
+        SpriteBox?.Remove();
+        GenderIcon?.Remove();
         if (data == null)
         {
-            HeldItemBox?.Remove();
-            SpriteBox?.Remove();
-            GenderIcon?.Remove();
             NameText.SetText(string.Empty);
             LevelText.SetText(string.Empty);
         }
