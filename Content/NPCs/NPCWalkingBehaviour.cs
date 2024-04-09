@@ -1,3 +1,4 @@
+using System;
 using Terramon.Core.NPCComponents;
 using Terraria.ID;
 
@@ -12,12 +13,14 @@ namespace Terramon.Content.NPCs;
 /// </summary>
 public class NPCWalkingBehaviour : NPCComponent
 {
-    private const int FrameSpeed = 10;
+    public int FrameTime = 10;
     private int collideTimer;
     public int FrameCount = 2;
     private NPC NPC;
     public int StopFrequency = 200;
     public float WalkSpeed = 1f;
+    public string AnimationType = "StraightForward";
+    public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
 
     private ref float AI_State => ref NPC.ai[0];
     private ref float AI_Timer => ref NPC.ai[1];
@@ -112,50 +115,40 @@ public class NPCWalkingBehaviour : NPCComponent
 
         if (AI_State == (float)ActionState.Idle && !NPC.IsABestiaryIconDummy)
         {
-            NPC.frameCounter = 0;
-            NPC.frame.Y = (int)Frame.One * frameHeight;
+            NPC.frameCounter = IsClassic ? FrameTime : 0;
+            NPC.frame.Y = IsClassic ? frameHeight : 0;
             return;
         }
 
         NPC.frameCounter++;
 
-        switch (FrameCount)
+        switch (AnimationType)
         {
-            case 2:
-                switch (NPC.frameCounter)
-                {
-                    case < FrameSpeed:
-                        NPC.frame.Y = (int)Frame.Two * frameHeight;
-                        break;
-                    case < FrameSpeed * 2:
-                        NPC.frame.Y = (int)Frame.One * frameHeight;
-                        break;
-                    default:
-                        NPC.frameCounter = 0;
-                        break;
-                }
-
+            case "StraightForward":
+                if (NPC.frameCounter < FrameTime * FrameCount)
+                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+                else
+                    NPC.frameCounter = 0;
                 break;
-            case 3:
-                switch (NPC.frameCounter)
+            case "IdleForward": //same as StraightForward but it skips the first frame (which is idle only)
+                if (NPC.frameCounter < FrameTime * FrameCount)
+                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+                else
+                    NPC.frameCounter = FrameTime;
+                break;
+            case "Alternate":
+                if (NPC.frameCounter >= FrameTime * 2 && NPC.frameCounter < FrameTime * (FrameCount * 2))
                 {
-                    case < FrameSpeed:
-                        NPC.frame.Y = (int)Frame.Two * frameHeight;
-                        break;
-                    case < FrameSpeed * 2:
-                        NPC.frame.Y = (int)Frame.One * frameHeight;
-                        break;
-                    case < FrameSpeed * 3:
-                        NPC.frame.Y = (int)Frame.Three * frameHeight;
-                        break;
-                    case < FrameSpeed * 4:
-                        NPC.frame.Y = (int)Frame.One * frameHeight;
-                        break;
-                    default:
-                        NPC.frameCounter = 0;
-                        break;
+                    if (Math.Floor(NPC.frameCounter / FrameTime) % 2 > 0)
+                        NPC.frame.Y = ((int)Math.Floor(NPC.frameCounter / FrameTime) / 2) * frameHeight;
+                    else
+                        NPC.frame.Y = 0;
                 }
-
+                else                                   //set it to FrameTime so it skips the first frame
+                    NPC.frameCounter = FrameTime * 2; //(since each frame gets a first frame this would play the first frame 3 times in a row)
+                break;
+            default:
+                NPC.frame.Y = 0;
                 break;
         }
     }
@@ -164,12 +157,5 @@ public class NPCWalkingBehaviour : NPCComponent
     {
         Idle,
         Walking
-    }
-
-    private enum Frame
-    {
-        One,
-        Two,
-        Three
     }
 }
