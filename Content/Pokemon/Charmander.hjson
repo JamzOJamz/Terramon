@@ -17,6 +17,13 @@ NPC:
     Condition: OverworldDaySlime
     Chance: 0.1
   }
+
+  VisualBehaviour:
+  {
+    LightStrength: 0.4
+    DamperAmount: 0.5
+    DustID: 6
+  }
 }
 
 Projectile: {}
