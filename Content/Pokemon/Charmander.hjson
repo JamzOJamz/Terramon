@@ -8,6 +8,8 @@ NPC:
   
   WalkingBehaviour: {
     FrameCount: 3
+    AnimationType: Alternate
+    IsClassic: false
   }
   
   SpawnController:

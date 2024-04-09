@@ -6,7 +6,10 @@ NPC:
     Height: 22
   }
   
-  WalkingBehaviour: {}
+  WalkingBehaviour: 
+  {
+    IsClassic: false
+  }
   
   SpawnController:
   {

@@ -7,7 +7,10 @@ NPC:
   }
   
   WalkingBehaviour: {
-    FrameCount: 3
+    FrameCount: 5
+    FrameTime: 5
+    AnimationType: IdleForward
+    IsClassic: false
   }
   
   SpawnController:
