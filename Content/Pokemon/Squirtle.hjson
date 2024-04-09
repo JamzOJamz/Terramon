@@ -11,7 +11,7 @@ NPC:
   SpawnController:
   {
     Condition: OverworldDaySlime
-    Chance: 0.2
+    Chance: 0.1
   }
 }
 

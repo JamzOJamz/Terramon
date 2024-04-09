@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Terramon.Content.NPCs.Pokemon;
+﻿using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
 using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader.Utilities;
 
 // ReSharper disable UnassignedField.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
@@ -14,23 +10,23 @@ using Terraria.ModLoader.Utilities;
 namespace Terramon.Content.NPCs;
 
 /// <summary>
-///     A <see cref="NPCComponent" /> to debug because idk how these things work.
+///     A <see cref="NPCComponent" /> to add variants to Pokemon NPCs.
 /// </summary>
 public class NPCVariants : NPCComponent
 {
-    public string FileName;
+    public string Kind;
     public float Chance;
     public string Condition;
 
     public override void OnSpawn(NPC npc, IEntitySource source)
     {
         base.OnSpawn(npc, source);
-        if (!(npc.ModNPC is PokemonNPC)) return;
+        var modNpc = (PokemonNPC)npc.ModNPC;
 
         //TODO: add array, iterate through each variant, etc.
         //also probably mp sync
 
-        if (FileName == null) return;
+        if (Kind == null) return;
 
         var condition = Condition switch
         {
@@ -41,7 +37,12 @@ public class NPCVariants : NPCComponent
         var random = Main.rand.NextFloat(0, 1);
         if (random > Chance * condition) return;
 
-        var modNpc = npc.ModNPC as PokemonNPC;
-        modNpc.variant = FileName;
+        modNpc.variant = Kind;
+        npc.netUpdate = true;
+    }
+    
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.ModNPC is PokemonNPC;
     }
 }

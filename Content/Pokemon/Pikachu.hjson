@@ -6,21 +6,19 @@ NPC:
     Height: 28
   }
   
-  WalkingBehaviour: {
-    FrameCount: 2
-  }
+  WalkingBehaviour: {}
   
   SpawnController:
   {
     Condition: OverworldDaySlime
-    Chance: 0.2
+    Chance: 0.1
   }
 
   Variants:
   {
-    FileName: Christmas
-    Chance: 0.3
+    Kind: Christmas
     Condition: Christmas
+    Chance: 0.3
   }
   
 }

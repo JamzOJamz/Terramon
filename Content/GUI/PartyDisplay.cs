@@ -412,7 +412,7 @@ public class PartySidebarSlot : UIImage
             SpriteBox.Top.Set(10, 0f);
             SpriteBox.Left.Set(59, 0f);
             var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}_Mini",
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}{data.Variant}_Mini",
                 AssetRequestMode.ImmediateLoad))
             {
                 ImageScale = 0.7f

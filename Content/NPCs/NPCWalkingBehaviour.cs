@@ -19,8 +19,6 @@ public class NPCWalkingBehaviour : NPCComponent
     public int StopFrequency = 200;
     public float WalkSpeed = 1f;
 
-    protected override bool CacheInstances => true;
-
     private ref float AI_State => ref NPC.ai[0];
     private ref float AI_Timer => ref NPC.ai[1];
     private ref float AI_WalkDir => ref NPC.ai[2];

@@ -29,27 +29,31 @@ public class PokemonData : TagSerializable
 
     public TagCompound SerializeData()
     {
-        return new TagCompound
+        var tag = new TagCompound
         {
             ["id"] = ID,
             ["isShiny"] = IsShiny,
             ["gender"] = (byte)Gender,
             ["lvl"] = Level,
-            ["variant"] = Variant,
             ["ot"] = OT
         };
+        if (Variant != null)
+            tag["variant"] = Variant;
+        return tag;
     }
 
     private static PokemonData Load(TagCompound tag)
     {
-        return new PokemonData
+        var data = new PokemonData
         {
             ID = (ushort)tag.GetShort("id"),
             IsShiny = tag.GetBool("isShiny"),
             Gender = (Gender)tag.GetByte("gender"),
             Level = tag.GetByte("lvl"),
-            Variant = tag.GetString("variant"),
             OT = tag.GetString("ot")
         };
+        if (tag.TryGet<string>("variant", out var variant))
+            data.Variant = variant;
+        return data;
     }
 }

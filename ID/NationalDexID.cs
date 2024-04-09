@@ -159,6 +159,8 @@ public static class NationalDexID
     public const ushort Chikorita = 152;
     public const ushort Cyndaquil = 155;
     public const ushort Totodile = 158;
+    public const ushort Marill = 183;
+    public const ushort Hoppip = 187;
     public const ushort Treecko = 252;
     public const ushort Torchic = 255;
     public const ushort Mudkip = 258;
@@ -174,6 +176,4 @@ public static class NationalDexID
     public const ushort Rowlet = 722;
     public const ushort Litten = 725;
     public const ushort Popplio = 728;
-    public const ushort Marill = 183;
-    public const ushort Hoppip = 187;
 }
