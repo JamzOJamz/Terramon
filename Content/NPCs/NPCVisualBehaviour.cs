@@ -11,7 +11,7 @@ using Terraria.ID;
 namespace Terramon.Content.NPCs;
 
 /// <summary>
-///     A <see cref="NPCComponent" /> to add variants to Pokemon NPCs.
+///     A <see cref="NPCComponent" /> to control the visual behaviour of Pokemon NPCs.
 /// </summary>
 public class NPCVisualBehaviour : NPCComponent
 {
@@ -22,26 +22,25 @@ public class NPCVisualBehaviour : NPCComponent
 
     public int DustID = -1;
     public float DustFrequency = 20;//how many frames until dust is spawned
-    public Vector2 DustPosition;
+    public float DustOffsetX = 0;
+    public float DustOffsetY = 0;
 
-    float dustTimer;
+    private float dustTimer;
 
     public override void AI(NPC npc)
     {
         base.AI(npc);
 
         if (LightStrength > 0)
-            Lighting.AddLight(npc.position, LightColor * LightStrength * (Main.raining || npc.wet ? 1 - DamperAmount : 1));
+            Lighting.AddLight(npc.Center, LightColor * LightStrength * (Main.raining || npc.wet ? 1 - DamperAmount : 1));
 
-        if (DustID > -1)
+        if (DustID <= -1) return;
+        if (dustTimer >= DustFrequency)
         {
-            if (dustTimer >= DustFrequency)
-            {
-                Dust.NewDust(npc.position + DustPosition, 1, 1, DustID);
-                dustTimer = 0;
-            }
-            else
-                dustTimer++;
+            Dust.NewDust(npc.position + new Vector2(npc.spriteDirection == 1 ? npc.width - DustOffsetX : DustOffsetX, DustOffsetY), 1, 1, DustID);
+            dustTimer = 0;
         }
+        else
+            dustTimer++;
     }
 }

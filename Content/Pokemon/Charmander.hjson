@@ -23,6 +23,9 @@ NPC:
     LightStrength: 0.4
     DamperAmount: 0.5
     DustID: 6
+    DustFrequency: 45
+    DustOffsetX: 17
+    DustOffsetY: 10
   }
 }
 

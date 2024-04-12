@@ -38,6 +38,13 @@ public class NPCWalkingBehaviour : NPCComponent
         Main.npcFrameCount[npc.type] = FrameCount;
     }
 
+    public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+    {
+        if (!Enabled) return;
+
+        npc.velocity.X = 0;
+    }
+
     public override void AI(NPC npc)
     {
         if (!Enabled) return;
@@ -63,6 +70,9 @@ public class NPCWalkingBehaviour : NPCComponent
             NPC.velocity.X *= 0.85f;
             AI_Timer++;
         }
+        
+        if (NPC.velocity.X != 0)
+            NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
 
         if (AI_Timer != 120) return;
         AI_State = (float)ActionState.Walking;
@@ -104,9 +114,37 @@ public class NPCWalkingBehaviour : NPCComponent
         {
             collideTimer = 0;
         }
+        
+        // Define constants
+        const float Acceleration = 0.05f; // Acceleration rate
+        const float Deceleration = 0.2f; // Deceleration rate
 
-        NPC.velocity.X = AI_WalkDir * WalkSpeed;
-        NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
+        // Update velocity based on AI behavior (this part may be called each frame)
+        if (AI_WalkDir != 0) {
+            // Accelerate towards the desired direction
+            NPC.velocity.X += AI_WalkDir * Acceleration;
+    
+            // Clamp velocity to maximum speed
+            NPC.velocity.X = Math.Clamp(NPC.velocity.X, -WalkSpeed, WalkSpeed);
+        } else
+        {
+            switch (NPC.velocity.X)
+            {
+                // Decelerate when no input is given
+                case > 0:
+                    NPC.velocity.X -= Deceleration;
+                    break;
+                case < 0:
+                    NPC.velocity.X += Deceleration;
+                    break;
+            }
+
+            // Ensure velocity doesn't change direction when slowing down
+            if (Math.Abs(NPC.velocity.X) < Deceleration)
+                NPC.velocity.X = 0;
+        }
+
+        NPC.spriteDirection = AI_WalkDir == 1 ? 1 : -1;
     }
 
     public override void FindFrame(NPC npc, int frameHeight)

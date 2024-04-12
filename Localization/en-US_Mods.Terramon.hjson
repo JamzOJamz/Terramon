@@ -33,7 +33,7 @@ Configs: {
 
 		ReducedAudio: {
 			Label: Reduced Audio
-			Tooltip: Disables certain sounds (e.g. musical tones when re-arranging sidebar)
+			Tooltip: Disables certain sounds (e.g. musical tones when rearranging sidebar)
 		}
 
 		ModIconType: {
@@ -268,7 +268,7 @@ NPCs: {
 			PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
 			PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
 			PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
-			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well- shine.
+			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
 			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
 			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
 			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."

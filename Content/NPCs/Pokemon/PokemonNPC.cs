@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using Hjson;
 using Newtonsoft.Json.Linq;
+using ReLogic.Content;
 using Terramon.Content.AI;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.Mechanical;
@@ -19,6 +20,7 @@ public class PokemonNPC : ModNPC
     private static Dictionary<ushort, JToken> SchemaCache;
     public readonly ushort useId;
     private readonly string useName;
+    private Asset<Texture2D> glowTexture;
     private bool isDestroyed;
     public bool isShiny;
     private int shinySparkleTimer;
@@ -40,15 +42,21 @@ public class PokemonNPC : ModNPC
 
     public override string Texture => "Terramon/Assets/Pokemon/" + useName;
 
+    private bool ShouldManuallyDraw => isShiny || variant != null || glowTexture != null;
+
     public override void SetDefaults()
     {
         NPC.defense = int.MaxValue;
         NPC.lifeMax = 100;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.value = 0f;
-        NPC.knockBackResist = 1f;
+        NPC.knockBackResist = 0.75f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
+
+        // Load glowmask texture if it exists.
+        if (ModContent.RequestIfExists<Texture2D>("Terramon/Assets/Pokemon/" + useName + "_Glow", out var texture))
+            glowTexture = texture;
 
         // TODO: Optimize.
         if (!SchemaCache.TryGetValue(useId, out var npcSchema))
@@ -89,12 +97,12 @@ public class PokemonNPC : ModNPC
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        return !isShiny && variant == null;
+        return !ShouldManuallyDraw;
     }
 
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (!isShiny && variant == null) return;
+        if (!ShouldManuallyDraw) return;
 
         var path = Texture;
         if (variant != null)
@@ -106,6 +114,11 @@ public class PokemonNPC : ModNPC
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY),
             NPC.frame, drawColor, NPC.rotation,
+            NPC.frame.Size() / 2f, NPC.scale, effects, 0f);
+
+        if (glowTexture == null) return;
+        spriteBatch.Draw(glowTexture.Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY),
+            NPC.frame, Color.White, NPC.rotation,
             NPC.frame.Size() / 2f, NPC.scale, effects, 0f);
     }
 
@@ -155,6 +168,11 @@ public class PokemonNPC : ModNPC
     public override bool? CanBeHitByProjectile(Projectile projectile)
     {
         return projectile.ModProjectile is BasePkballProjectile;
+    }
+
+    public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+    {
+        return false;
     }
 
     public void Destroy()
