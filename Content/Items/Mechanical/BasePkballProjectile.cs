@@ -41,8 +41,8 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 18; //Set to size of spritesheet
-        Projectile.height = 18;
+        Projectile.width = 14; //Set to size of spritesheet
+        Projectile.height = 14;
         //Projectile.damage = 1;
         Projectile.aiStyle = -1; //aiStyle -1 so no vanilla styles interfere with custom ai
         Projectile.penetrate = -1; //How many npcs to collide before being deleted (-1 makes this infinite)
@@ -54,7 +54,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         var drawOrigin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
         var drawPos = Projectile.position - Main.screenPosition + drawOrigin + new Vector2(Projectile.gfxOffY);
-        Main.EntitySpriteDraw(texture, drawPos - new Vector2(3, 0), new Rectangle(0, Projectile.frame * 24, 24, 24), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale,
+        Main.EntitySpriteDraw(texture, drawPos - new Vector2(5, 5), new Rectangle(0, Projectile.frame * 24, 24, 24), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale,
             SpriteEffects.None);
         
         return false;

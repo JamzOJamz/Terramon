@@ -431,5 +431,7 @@ public class PartySidebarSlot : UIImage
             Append(SpriteBox);
             Append(GenderIcon);
         }
+
+        Recalculate();
     }
 }

@@ -169,6 +169,8 @@ public class NPCWalkingBehaviour : NPCComponent
                     NPC.frameCounter = 0;
                 break;
             case "IdleForward": //same as StraightForward but it skips the first frame (which is idle only)
+                /*if (NPC.frameCounter < FrameTime)
+                    NPC.frameCounter = FrameTime;*/
                 if (NPC.frameCounter < FrameTime * FrameCount)
                     NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
                 else

@@ -21,8 +21,10 @@ public class PokemonNPC : ModNPC
     public readonly ushort useId;
     private readonly string useName;
     private Asset<Texture2D> glowTexture;
+    private bool hasGenderDifference;
     private bool isDestroyed;
     public bool isShiny;
+    private Gender gender;
     private int shinySparkleTimer;
     public string variant = null;
 
@@ -42,7 +44,7 @@ public class PokemonNPC : ModNPC
 
     public override string Texture => "Terramon/Assets/Pokemon/" + useName;
 
-    private bool ShouldManuallyDraw => isShiny || variant != null || glowTexture != null;
+    private bool ShouldManuallyDraw => isShiny || variant != null || glowTexture != null || hasGenderDifference;
 
     public override void SetDefaults()
     {
@@ -53,10 +55,14 @@ public class PokemonNPC : ModNPC
         NPC.knockBackResist = 0.75f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
+        gender = NPC.IsABestiaryIconDummy ? Gender.Male : Terramon.RollGender(useId);
+        
+        // Load gender-specific texture if it exists.
+        hasGenderDifference = ModContent.HasAsset("Terramon/Assets/Pokemon/" + useName + "F");
 
         // Load glowmask texture if it exists.
-        if (ModContent.RequestIfExists<Texture2D>("Terramon/Assets/Pokemon/" + useName + "_Glow", out var texture))
-            glowTexture = texture;
+        if (ModContent.RequestIfExists<Texture2D>("Terramon/Assets/Pokemon/" + useName + "_Glow", out var glowTex))
+            glowTexture = glowTex;
 
         // TODO: Optimize.
         if (!SchemaCache.TryGetValue(useId, out var npcSchema))
@@ -97,39 +103,44 @@ public class PokemonNPC : ModNPC
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        return !ShouldManuallyDraw;
+        return false;
     }
 
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (!ShouldManuallyDraw) return;
+        //if (!ShouldManuallyDraw) return;
 
         var path = Texture;
+        if (hasGenderDifference && gender == Gender.Female)
+            path += "F";
         if (variant != null)
             path += variant;
         if (isShiny)
             path += "_S";
 
+        var frameSize = NPC.frame.Size();
         var texture = ModContent.Request<Texture2D>(path).Value;
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY),
+        spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY),
             NPC.frame, drawColor, NPC.rotation,
-            NPC.frame.Size() / 2f, NPC.scale, effects, 0f);
+            frameSize / 2f, NPC.scale, effects, 0f);
 
         if (glowTexture == null) return;
-        spriteBatch.Draw(glowTexture.Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY),
+        spriteBatch.Draw(glowTexture.Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY),
             NPC.frame, Color.White, NPC.rotation,
-            NPC.frame.Size() / 2f, NPC.scale, effects, 0f);
+            frameSize / 2f, NPC.scale, effects, 0f);
     }
 
     public override void SendExtraAI(BinaryWriter writer)
     {
+        writer.Write((byte)gender);
         writer.Write(isShiny);
         Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
+        gender = (Gender)reader.ReadByte();
         isShiny = reader.ReadBoolean();
         Behaviour?.ReceiveExtraAI(reader);
     }

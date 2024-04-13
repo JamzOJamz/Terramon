@@ -13,6 +13,7 @@ public class NPCTransform : NPCComponent
 {
     public int Height = 20;
     public int Width = 20;
+    public int DrawOffsetY = 0;
 
     public override void SetDefaults(NPC npc)
     {
@@ -20,5 +21,6 @@ public class NPCTransform : NPCComponent
         if (!Enabled) return;
         npc.width = Width;
         npc.height = Height;
+        npc.ModNPC.DrawOffsetY = DrawOffsetY;
     }
 }

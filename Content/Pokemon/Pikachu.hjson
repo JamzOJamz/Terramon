@@ -2,11 +2,18 @@ NPC:
 {
   Transform:
   {
-    Width: 28
-    Height: 28
+    Width: 24
+    Height: 20
+    DrawOffsetY: -6
   }
   
-  WalkingBehaviour: {}
+  WalkingBehaviour: {
+    WalkSpeed: 1.25
+    FrameCount: 5
+    FrameTime: 5
+    AnimationType: IdleForward
+    IsClassic: false
+  }
   
   SpawnController:
   {
@@ -20,7 +27,6 @@ NPC:
     Condition: Christmas
     Chance: 0.3
   }
-  
 }
 
 Projectile: {}
