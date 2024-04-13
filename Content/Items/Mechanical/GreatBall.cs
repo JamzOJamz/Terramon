@@ -6,7 +6,7 @@ namespace Terramon.Content.Items.Mechanical;
 internal class GreatBallProjectile : BasePkballProjectile
 {
     public override int pokeballCapture => ModContent.ItemType<GreatBallItem>();
-    public override float catchModifier => 1.5f;
+    protected override float catchModifier => 1.5f;
 }
 
 internal class GreatBallItem : BasePkballItem

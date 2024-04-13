@@ -26,7 +26,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private float rotationVelocity;
     private bool rotationDirection;
     public virtual int pokeballCapture => ModContent.ItemType<BasePkballItem>();
-    public virtual float catchModifier { get; set; }
+    protected virtual float catchModifier { get; set; }
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
@@ -286,34 +286,31 @@ internal abstract class BasePkballProjectile : ModProjectile
             HitPkmn(target);
     }
 
-    public virtual bool CatchPokemonChances(PokemonNPC capture, float random)
+    protected virtual bool CatchPokemonChances(PokemonNPC capture, float random)
     {
         catchModifier = ChangeCatchModifier(capture); //Change modifier (can take into account values like pokemon type)
 
-        var
-            catchChance =
-                0.5f; //Terramon.Database.GetPokemon(capture.useId) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
+        const float catchChance = 0.5f; //Terramon.Database.GetPokemon(capture.useId) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
         //TODO: pull actual data from pokemon when possible
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
         if (catchRandom < catchChance * catchModifier)
             return true;
 
-        var split = (1 - catchChance) /
-                    4; //Determine amount of times pokeball will rock (based on closeness to successful catch)
+        const float split = (1 - catchChance) /
+                            4; //Determine amount of times pokeball will rock (based on closeness to successful catch)
 
-        if (random < catchChance + split * 1)
-            catchTries = 3;
-        else if (random < catchChance + split * 2)
-            catchTries = 2;
-        else if (random < catchChance + split * 3)
-            catchTries = 1;
-        else
-            catchTries = 0;
+        catchTries = random switch
+        {
+            < catchChance + split * 1 => 3,
+            < catchChance + split * 2 => 2,
+            < catchChance + split * 3 => 1,
+            _ => 0
+        };
 
         return false;
     }
 
-    public virtual float ChangeCatchModifier(PokemonNPC capture)
+    protected virtual float ChangeCatchModifier(PokemonNPC capture)
     {
         return catchModifier;
     }
@@ -373,25 +370,24 @@ internal abstract class BasePkballProjectile : ModProjectile
         Projectile.netUpdate = true;
     }
 
-    public void ReleasePokemon()
+    private void ReleasePokemon()
     {
-        if (capture != null)
-        {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkmn_spawn"), Projectile.position);
-            var source = Entity.GetSource_FromThis();
-
-            var e = new NPC();
-            var newNPC =
-                NPC.NewNPC(source, (int)Projectile.Center.X, (int)Projectile.Center.Y,
-                    capture.Type); // spawn a new NPC at the new position
-            var newPoke = (PokemonNPC)Main.npc[newNPC].ModNPC;
-            newPoke.isShiny = capture.isShiny;
-            //newPoke.isShimmer = capture.isShimmer;
-            //newPoke.level = capture.level;
-            //newPoke.catchAttempts = capture.catchAttempts + 1;
-            //Main.NewText($"Catch attempts: {newPoke.catchAttempts}", Color.Firebrick);
-            capture = null;
-        }
+        if (capture == null) return;
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkmn_spawn"), Projectile.position);
+        var source = Entity.GetSource_FromThis();
+        
+        var newNPC =
+            NPC.NewNPC(source, (int)Projectile.Center.X, (int)Projectile.Center.Y,
+                capture.Type); // spawn a new NPC at the new position
+        var newPoke = (PokemonNPC)Main.npc[newNPC].ModNPC;
+        newPoke.isShiny = capture.isShiny;
+        newPoke.gender = capture.gender;
+        newPoke.NPC.spriteDirection = capture.NPC.spriteDirection;
+        //newPoke.isShimmer = capture.isShimmer;
+        //newPoke.level = capture.level;
+        //newPoke.catchAttempts = capture.catchAttempts + 1;
+        //Main.NewText($"Catch attempts: {newPoke.catchAttempts}", Color.Firebrick);
+        capture = null;
     }
 
     private enum Frame //Here we label all of the frames in the spritesheet for better readability

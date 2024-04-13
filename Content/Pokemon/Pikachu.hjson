@@ -8,7 +8,7 @@ NPC:
   }
   
   WalkingBehaviour: {
-    WalkSpeed: 1.25
+    WalkSpeed: 1.2
     FrameCount: 5
     FrameTime: 5
     AnimationType: IdleForward

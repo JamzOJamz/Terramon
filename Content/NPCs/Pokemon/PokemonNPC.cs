@@ -24,7 +24,7 @@ public class PokemonNPC : ModNPC
     private bool hasGenderDifference;
     private bool isDestroyed;
     public bool isShiny;
-    private Gender gender;
+    public Gender gender;
     private int shinySparkleTimer;
     public string variant = null;
 
