@@ -44,8 +44,6 @@ public class PokemonNPC : ModNPC
 
     public override string Texture => "Terramon/Assets/Pokemon/" + useName;
 
-    private bool ShouldManuallyDraw => isShiny || variant != null || glowTexture != null || hasGenderDifference;
-
     public override void SetDefaults()
     {
         NPC.defense = int.MaxValue;
@@ -103,13 +101,6 @@ public class PokemonNPC : ModNPC
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        return false;
-    }
-
-    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-    {
-        //if (!ShouldManuallyDraw) return;
-
         var path = Texture;
         if (hasGenderDifference && gender == Gender.Female)
             path += "F";
@@ -125,10 +116,12 @@ public class PokemonNPC : ModNPC
             NPC.frame, drawColor, NPC.rotation,
             frameSize / 2f, NPC.scale, effects, 0f);
 
-        if (glowTexture == null) return;
+        if (glowTexture == null) return false;
         spriteBatch.Draw(glowTexture.Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY),
             NPC.frame, Color.White, NPC.rotation,
             frameSize / 2f, NPC.scale, effects, 0f);
+        
+        return false;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
