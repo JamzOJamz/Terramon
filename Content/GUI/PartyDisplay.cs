@@ -98,11 +98,8 @@ public class PartySidebar : UIContainer
         //create a static version of Elements so modification in BringSlotToTop doesn't cause errors
         var elements_static = new UIElement[Elements.Count];
         Elements.CopyTo(elements_static);
-        foreach (var element in elements_static)
-        {
-            element.Update(gameTime);
-        }
-        
+        foreach (var element in elements_static) element.Update(gameTime);
+
         var openKey = Main.keyState.IsKeyDown(Keys.F);
         switch (openKey)
         {
@@ -157,11 +154,11 @@ public class PartySidebarSlot : UIImage
     private UIImage HeldItemBox;
     private bool IsHovered;
     private bool JustEndedDragging;
+    public bool MonitorCursor;
+    public UIMouseEvent MonitorEvent;
     private Vector2 Offset;
     private ITweener SnapTween;
     private UIImage SpriteBox;
-    public bool MonitorCursor;
-    public UIMouseEvent MonitorEvent;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
         "Terramon/Assets/GUI/Party/SidebarClosed",
@@ -228,7 +225,7 @@ public class PartySidebarSlot : UIImage
             DragEnd();
         else
             Main.NewText("Clicked on slot containing " + NameText.Text, Color.SeaGreen);
-            //replace with whatever code to summon pokemon
+        //replace with whatever code to summon pokemon
     }
 
     public override void RightMouseDown(UIMouseEvent evt)
@@ -276,14 +273,12 @@ public class PartySidebarSlot : UIImage
         base.Update(gameTime);
 
         if (MonitorCursor)
-        {
             //check if mouse has travelled minimum distance in order to enter drag
             if (MathF.Abs(MonitorEvent.MousePosition.Length() - Main.MouseScreen.Length()) > 8)
             {
                 MonitorCursor = false;
                 DragStart(MonitorEvent);
             }
-        }
 
         var transparentColor = Color.White * 0.45f;
         if (PartyDisplay.IsDraggingSlot)
@@ -412,7 +407,7 @@ public class PartySidebarSlot : UIImage
             SpriteBox.Top.Set(10, 0f);
             SpriteBox.Left.Set(59, 0f);
             var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}{data.Variant}{(data.IsShiny ? "_S" : string.Empty)}_Mini",
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}{(data.Variant != null ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
                 AssetRequestMode.ImmediateLoad))
             {
                 ImageScale = 0.7f

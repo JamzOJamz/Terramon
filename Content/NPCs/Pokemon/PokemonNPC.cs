@@ -105,7 +105,7 @@ public class PokemonNPC : ModNPC
         if (hasGenderDifference && gender == Gender.Female)
             path += "F";
         if (variant != null)
-            path += variant;
+            path += "_" + variant;
         if (isShiny)
             path += "_S";
 
