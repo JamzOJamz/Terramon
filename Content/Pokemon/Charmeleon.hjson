@@ -1,0 +1,24 @@
+NPC:
+{
+  Transform:
+  {
+    Width: 24
+    Height: 29
+    DrawOffsetY: -1
+  }
+  
+  WalkingBehaviour: {
+    WalkSpeed: 0.9
+    FrameCount: 3
+    AnimationType: Alternate
+    IsClassic: false
+  }
+  
+  SpawnController:
+  {
+    Condition: OverworldDaySlime
+    Chance: 0.05
+  }
+}
+
+Projectile: {}
