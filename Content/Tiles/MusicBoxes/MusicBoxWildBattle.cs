@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using Terramon.Content.Items.Mechanical;
 using Terraria.ID;
 
 namespace Terramon.Content.Tiles.MusicBoxes;
 
-public class MusicBoxCenter : MusicTile
+public class MusicBoxWildBattle : MusicTile
 {
     public override IEnumerable<Item> GetItemDrops(int i, int j)
     {
-        yield return new Item(ModContent.ItemType<MusicItemCenter>());
+        yield return new Item(ModContent.ItemType<MusicItemWildBattle>());
     }
 
     public override void MouseOver(int i, int j)
@@ -16,17 +15,17 @@ public class MusicBoxCenter : MusicTile
         var player = Main.LocalPlayer;
         player.noThrow = 2;
         player.cursorItemIconEnabled = true;
-        player.cursorItemIconID = ModContent.ItemType<MusicItemCenter>();
+        player.cursorItemIconID = ModContent.ItemType<MusicItemWildBattle>();
     }
 }
 
-public class MusicItemCenter : MusicItem
+public class MusicItemWildBattle : MusicItem
 {
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Audio/Music/poke_center"),
-            ModContent.ItemType<MusicItemCenter>(), ModContent.TileType<MusicBoxCenter>());
+        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Audio/Music/battle_wild"),
+            ModContent.ItemType<MusicItemWildBattle>(), ModContent.TileType<MusicBoxWildBattle>());
     }
 
     public override void SetDefaults()
@@ -39,19 +38,10 @@ public class MusicItemCenter : MusicItem
         Item.useTime = 10;
         Item.autoReuse = true;
         Item.consumable = true;
-        Item.createTile = ModContent.TileType<MusicBoxCenter>();
+        Item.createTile = ModContent.TileType<MusicBoxWildBattle>();
         Item.width = 30;
         Item.height = 26;
         Item.value = 100000;
         Item.accessory = true;
-    }
-
-    public override void AddRecipes()
-    {
-        CreateRecipe()
-            .AddIngredient(ItemID.MusicBox)
-            .AddIngredient(ModContent.ItemType<PokeBallItem>())
-            .AddTile(TileID.TinkerersWorkbench)
-            .Register();
     }
 }
