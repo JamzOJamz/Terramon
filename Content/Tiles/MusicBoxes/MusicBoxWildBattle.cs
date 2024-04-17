@@ -24,7 +24,7 @@ public class MusicItemWildBattle : MusicItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Audio/Music/battle_wild"),
+        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BattleWild"),
             ModContent.ItemType<MusicItemWildBattle>(), ModContent.TileType<MusicBoxWildBattle>());
     }
 

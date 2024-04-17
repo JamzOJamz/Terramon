@@ -25,7 +25,7 @@ public class MusicItemCenter : MusicItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Assets/Audio/Music/poke_center"),
+        MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PokeCenter"),
             ModContent.ItemType<MusicItemCenter>(), ModContent.TileType<MusicBoxCenter>());
     }
 

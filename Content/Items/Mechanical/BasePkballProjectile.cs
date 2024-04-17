@@ -69,7 +69,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             Projectile.velocity.Y = oldVelocity.Y *= -0.7f;
             Projectile.velocity.X = oldVelocity.X *= 0.5f;
 
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_bounce"), Projectile.position);
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"), Projectile.position);
 
             if (Projectile.velocity.Length() < 1.5f)
                 bounces = 0;
@@ -91,7 +91,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             if (Main.player[Projectile.owner].whoAmI ==
                 Main.myPlayer) //Generate new catch chance, (will switch pokeball to catching anim when value is recieved by clients)
                 catchRandom = Main.rand.NextFloat(0, 1);
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_bounce"), Projectile.position);
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"), Projectile.position);
             bounces = -1;
         }
 
@@ -143,7 +143,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             {
                 Projectile.shimmerWet = false;
                 Projectile.velocity.Y *= -0.8f;
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_bounce"),
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"),
                     Projectile.position);
                 bounces -= 1;
             }
@@ -219,7 +219,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         if (caught)
                         {
                             Projectile.frame = (int)Frame.CaptureComplete;
-                            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch"),
+                            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch"),
                                 Projectile.position);
                             Projectile.ai[1] = 3;
                             Projectile.ai[0] = 0;
@@ -235,7 +235,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         catchTries -= 1;
                         rotationDirection = !rotationDirection;
                         rotationVelocity = rotationDirection ? shakeIntensity : -shakeIntensity;
-                        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_shake"),
+                        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_shake"),
                             Projectile.position);
                     }
 
@@ -326,7 +326,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             Variant = capture.variant
         });
 
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkball_catch_pla"));
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess", level, capture.DisplayName));
         Projectile.Kill();
     }
@@ -373,7 +373,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private void ReleasePokemon()
     {
         if (capture == null) return;
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/Audio/Sounds/pkmn_spawn"), Projectile.position);
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_spawn"), Projectile.position);
         var source = Entity.GetSource_FromThis();
         
         var newNPC =

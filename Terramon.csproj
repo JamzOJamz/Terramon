@@ -13,5 +13,6 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Assets\Items\Evolutionary" />
+        <Folder Include="Sounds" />
     </ItemGroup>
 </Project>

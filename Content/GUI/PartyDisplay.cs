@@ -203,7 +203,7 @@ public class PartySidebarSlot : UIImage
 
         var s = new SoundStyle
         {
-            SoundPath = "Terramon/Assets/Audio/Sounds/button_smm",
+            SoundPath = "Terramon/Sounds/button_smm",
             Pitch = (float)_index / -15 + 0.6f,
             Volume = 0.25f
         };

@@ -1,0 +1,1 @@
+Categorize sound effects into their own subfolders
