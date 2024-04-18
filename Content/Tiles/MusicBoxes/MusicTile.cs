@@ -1,6 +1,7 @@
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace Terramon.Content.Tiles.MusicBoxes;
 
@@ -25,6 +26,7 @@ public abstract class MusicTile : ModTile
     
     public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
     {
+        if (Lighting.UpdateEveryFrame && new FastRandom(Main.TileFrameSeed).WithModifier(i, j).Next(4) != 0) return;
         if (Main.tile[i, j].TileFrameX != 36 || (int)Main.timeForVisualEffects % 7 != 0 ||
             !Main._rand.NextBool(5)) return;
         var MusicNote = Main._rand.Next(570, 573);
