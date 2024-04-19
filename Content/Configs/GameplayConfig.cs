@@ -10,6 +10,8 @@ public class GameplayConfig : ModConfig
     [Header("Miscellaneous")] [DefaultValue(false)]
     public bool FastAnimations;
 
+    [DefaultValue(false)] public bool ShinyLockedStarters;
+
     [DefaultValue(4096)] [Range(1, int.MaxValue)]
     public int ShinySpawnRate;
     

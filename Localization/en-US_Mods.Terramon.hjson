@@ -7,6 +7,11 @@ Configs: {
 			Advanced: Advanced
 		}
 
+		ShinyLockedStarters: {
+			Label: Shiny-Locked Starters
+			Tooltip: Prevents starter Pokémon from being Shiny
+		}
+
 		ShinySpawnRate: {
 			Label: Shiny Spawn Rate
 			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)

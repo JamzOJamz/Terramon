@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Core.Loaders.UILoading;
@@ -166,7 +167,7 @@ public class StarterButton : UIHoverImage
         OnLeftClick += (_, _) =>
         {
             var player = TerramonPlayer.LocalPlayer;
-            player.AddPartyPokemon(new PokemonData(pokemon, 5));
+            player.AddPartyPokemon(new PokemonData(pokemon, 5, ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters));
             player.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").WithFormatArgs(
                 TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(pokemon).Types[0]),
