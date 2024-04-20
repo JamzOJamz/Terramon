@@ -10,13 +10,8 @@ namespace Terramon;
 
 public class Terramon : Mod
 {
-    public static Terramon Instance { get; private set; }
+    public static Terramon Instance => ModContent.GetInstance<Terramon>();
 
-    public Terramon()
-    {
-        Instance = this;
-    }
-    
     public static DatabaseV2 DatabaseV2 { get; private set; }
     
     /*
@@ -76,7 +71,6 @@ public class Terramon : Mod
     public override void Unload()
     {
         DatabaseV2 = null;
-        Instance = null;
     }
 
     //private delegate void orig_UIModItemInitialize(object self);

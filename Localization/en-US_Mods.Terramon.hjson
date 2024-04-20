@@ -293,4 +293,4 @@ NPCs: {
 }
 
 WorldGen.ItemsPass: Scattering candies
-Misc.CatchSuccess: Congratulations! You caught a Lv. {0} {1}!
+Misc.CatchSuccess: Gotcha! [c/{0}:{1}] was caught!

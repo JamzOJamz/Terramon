@@ -2,6 +2,7 @@
 using System.IO;
 using Terramon.Content.Configs;
 using Terramon.Content.NPCs.Pokemon;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -23,8 +24,8 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     private bool hasContainedLocal;
     private float rotation;
-    private float rotationVelocity;
     private bool rotationDirection;
+    private float rotationVelocity;
     public virtual int pokeballCapture => ModContent.ItemType<BasePkballItem>();
     protected virtual float catchModifier { get; set; }
 
@@ -54,9 +55,10 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         var drawOrigin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
         var drawPos = Projectile.position - Main.screenPosition + drawOrigin + new Vector2(Projectile.gfxOffY);
-        Main.EntitySpriteDraw(texture, drawPos - new Vector2(5, 5), new Rectangle(0, Projectile.frame * 24, 24, 24), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale,
+        Main.EntitySpriteDraw(texture, drawPos - new Vector2(5, 5), new Rectangle(0, Projectile.frame * 24, 24, 24),
+            Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale,
             SpriteEffects.None);
-        
+
         return false;
     }
 
@@ -264,10 +266,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                 if (Projectile.ai[0] == 1)
                     for (var i = 0; i < 3; i++)
                         Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust);
-                if (Projectile.ai[0] > catchSuccessAtTick / 2)
-                {
-                    Projectile.alpha += 18;
-                }
+                if (Projectile.ai[0] > catchSuccessAtTick / 2) Projectile.alpha += 18;
                 if (Projectile.ai[0] >= catchSuccessAtTick)
                     PokemonCatchSuccess();
                 break;
@@ -290,7 +289,9 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         catchModifier = ChangeCatchModifier(capture); //Change modifier (can take into account values like pokemon type)
 
-        const float catchChance = 0.5f; //Terramon.Database.GetPokemon(capture.useId) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
+        const float
+            catchChance =
+                0.5f; //Terramon.Database.GetPokemon(capture.useId) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
         //TODO: pull actual data from pokemon when possible
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
         if (catchRandom < catchChance * catchModifier)
@@ -327,7 +328,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         });
 
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess", level, capture.DisplayName));
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess", TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName));
         Projectile.Kill();
     }
 
@@ -375,7 +376,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (capture == null) return;
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_spawn"), Projectile.position);
         var source = Entity.GetSource_FromThis();
-        
+
         var newNPC =
             NPC.NewNPC(source, (int)Projectile.Center.X, (int)Projectile.Center.Y,
                 capture.Type); // spawn a new NPC at the new position

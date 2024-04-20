@@ -1,3 +1,4 @@
+// ReSharper disable MemberCanBePrivate.Global
 namespace Terramon.ID;
 
 public static class TypeID
@@ -25,9 +26,24 @@ public static class TypeID
     {
         return type switch
         {
-            Grass => "70d669",
+            Normal => "9099a1",
             Fire => "f59847",
+            Fighting => "ce4069",
             Water => "4aaeed",
+            Flying => "8fa8dd",
+            Grass => "70d669",
+            Poison => "ab6ac8",
+            Electric => "f3d23b",
+            Ground => "d97746",
+            Psychic => "f97176",
+            Rock => "c7b78b",
+            Ice => "74cec0",
+            Bug => "90c12c",
+            Dragon => "0a6dc4",
+            Ghost => "5269ac",
+            Dark => "5a5366",
+            Steel => "5a8ea1",
+            Fairy => "ec8fe6",
             _ => "ffffff"
         };
     }
