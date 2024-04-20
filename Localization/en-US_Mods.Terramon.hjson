@@ -292,5 +292,12 @@ NPCs: {
 	}
 }
 
+Buffs: {
+	PokemonCompanion: {
+		DisplayName: Pokémon companion
+		Description: A Pokémon is following you around!
+	}
+}
+
 WorldGen.ItemsPass: Scattering candies
 Misc.CatchSuccess: Gotcha! [c/{0}:{1}] was caught!

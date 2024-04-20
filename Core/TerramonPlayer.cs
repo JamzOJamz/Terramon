@@ -1,4 +1,5 @@
 using System.Linq;
+using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Core.Loaders.UILoading;
@@ -25,6 +26,8 @@ public class TerramonPlayer : ModPlayer
     public override void OnEnterWorld()
     {
         UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
+        // TODO: Apply this only when a Pokémon pet projectile is spawned the party
+        Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 60 * 60);
     }
 
     public override void PreUpdate()
