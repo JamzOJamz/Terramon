@@ -9,12 +9,12 @@ public class UIBlendedImage : UIImage
     {
     }
 
-    public override void Draw(SpriteBatch spriteBatch)
+    protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState,
             DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
-        base.Draw(spriteBatch);
+        base.DrawSelf(spriteBatch);
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
             DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);

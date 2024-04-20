@@ -150,15 +150,15 @@ public class PartySidebarSlot : UIImage
     private int _index;
     private PokemonData Data;
     private bool Dragging;
-    private UIImage GenderIcon;
-    private UIImage HeldItemBox;
+    private UIBlendedImage GenderIcon;
+    private UIBlendedImage HeldItemBox;
     private bool IsHovered;
     private bool JustEndedDragging;
     public bool MonitorCursor;
     public UIMouseEvent MonitorEvent;
     private Vector2 Offset;
     private ITweener SnapTween;
-    private UIImage SpriteBox;
+    private UIBlendedImage SpriteBox;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
         "Terramon/Assets/GUI/Party/SidebarClosed",
@@ -398,11 +398,11 @@ public class PartySidebarSlot : UIImage
         {
             NameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID).Value);
             LevelText.SetText("Lv. " + data.Level);
-            HeldItemBox = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",
+            HeldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",
                 AssetRequestMode.ImmediateLoad));
             HeldItemBox.Top.Set(25, 0f);
             HeldItemBox.Left.Set(8, 0f);
-            SpriteBox = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SpriteBox",
+            SpriteBox = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SpriteBox",
                 AssetRequestMode.ImmediateLoad));
             SpriteBox.Top.Set(10, 0f);
             SpriteBox.Left.Set(59, 0f);

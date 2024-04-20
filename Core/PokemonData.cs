@@ -1,4 +1,5 @@
 using System;
+using Terramon.ID;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
@@ -9,11 +10,13 @@ public class PokemonData : TagSerializable
 
     // ReSharper disable once UnusedMember.Global
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
+    public byte Ball = BallID.PokeBall;
     public Gender Gender = Gender.Unspecified;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
     private string OT;
+    private uint PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue);
     public string Variant;
 
     private PokemonData()
@@ -25,7 +28,7 @@ public class PokemonData : TagSerializable
         ID = id;
         Level = level;
         OT = Main.LocalPlayer.name;
-        Gender = Terramon.RollGender(id);
+        Gender = Terramon.DetermineGender(id, PersonalityValue);
         IsShiny = !shinyLocked && Terramon.RollShiny(Main.LocalPlayer);
     }
 
@@ -33,9 +36,10 @@ public class PokemonData : TagSerializable
     {
         var tag = new TagCompound
         {
+            ["pv"] = PersonalityValue,
+            ["ball"] = Ball,
             ["id"] = ID,
             ["isShiny"] = IsShiny,
-            ["gender"] = (byte)Gender,
             ["lvl"] = Level,
             ["ot"] = OT,
             ["version"] = VERSION
@@ -55,23 +59,29 @@ public class PokemonData : TagSerializable
         switch (loadedVersion)
         {
             case < VERSION:
-                Terramon.Instance.Logger.Debug("Upgrading PokemonData from version " + loadedVersion + " to " + VERSION);
+                Terramon.Instance.Logger.Debug("Upgrading PokemonData from version " + loadedVersion + " to " +
+                                               VERSION);
                 break;
             case > VERSION:
-                Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion + ". This may lead to undefined behaviour!");
+                Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +
+                                              ". This may lead to undefined behaviour!");
                 break;
         }
-    
+
         var data = new PokemonData
         {
             ID = (ushort)tag.GetShort("id"),
             IsShiny = tag.GetBool("isShiny"),
-            Gender = (Gender)tag.GetByte("gender"),
             Level = tag.GetByte("lvl"),
             OT = tag.GetString("ot")
         };
+        if (tag.TryGet<byte>("ball", out var ball))
+            data.Ball = ball;
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
+        if (tag.TryGet<uint>("pv", out var pv))
+            data.PersonalityValue = pv;
+        data.Gender = Terramon.DetermineGender(data.ID, data.PersonalityValue);
         return data;
     }
 }

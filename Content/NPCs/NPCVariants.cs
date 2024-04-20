@@ -37,7 +37,7 @@ public class NPCVariants : NPCComponent
         var random = Main.rand.NextFloat(0, 1);
         if (random > Chance * condition) return;
 
-        modNpc.variant = Kind;
+        modNpc.data.Variant = Kind;
         npc.netUpdate = true;
     }
     

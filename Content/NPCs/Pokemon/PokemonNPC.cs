@@ -23,10 +23,8 @@ public class PokemonNPC : ModNPC
     private Asset<Texture2D> glowTexture;
     private bool hasGenderDifference;
     private bool isDestroyed;
-    public bool isShiny;
-    public Gender gender;
     private int shinySparkleTimer;
-    public string variant = null;
+    public PokemonData data;
 
     public PokemonNPC(ushort useId, string useName)
     {
@@ -53,8 +51,8 @@ public class PokemonNPC : ModNPC
         NPC.knockBackResist = 0.75f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
-        gender = NPC.IsABestiaryIconDummy ? Gender.Male : Terramon.RollGender(useId);
-        
+        data = new PokemonData(useId, 5);
+
         // Load gender-specific texture if it exists.
         hasGenderDifference = ModContent.HasAsset("Terramon/Assets/Pokemon/" + useName + "F");
 
@@ -95,18 +93,18 @@ public class PokemonNPC : ModNPC
     {
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
         var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
-        isShiny = Terramon.RollShiny(Main.player[spawningPlayer]);
+        data.IsShiny = Terramon.RollShiny(Main.player[spawningPlayer]);
         NPC.netUpdate = true;
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         var path = Texture;
-        if (hasGenderDifference && gender == Gender.Female)
+        if (hasGenderDifference && data.Gender == Gender.Female)
             path += "F";
-        if (variant != null)
-            path += "_" + variant;
-        if (isShiny)
+        if (data.Variant != null)
+            path += "_" + data.Variant;
+        if (data.IsShiny)
             path += "_S";
 
         var frameSize = NPC.frame.Size();
@@ -120,28 +118,28 @@ public class PokemonNPC : ModNPC
         spriteBatch.Draw(glowTexture.Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY),
             NPC.frame, Color.White, NPC.rotation,
             frameSize / 2f, NPC.scale, effects, 0f);
-        
+
         return false;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
     {
-        writer.Write((byte)gender);
-        writer.Write(isShiny);
+        writer.Write((byte)data.Gender);
+        writer.Write(data.IsShiny);
         Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
-        gender = (Gender)reader.ReadByte();
-        isShiny = reader.ReadBoolean();
+        data.Gender = (Gender)reader.ReadByte();
+        data.IsShiny = reader.ReadBoolean();
         Behaviour?.ReceiveExtraAI(reader);
     }
 
     public override void AI()
     {
         if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
-        if (isShiny) ShinyEffect();
+        if (data.IsShiny) ShinyEffect();
         Behaviour?.AI();
     }
 

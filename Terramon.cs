@@ -5,6 +5,7 @@ global using Terraria;
 global using Terraria.ModLoader;
 using Terramon.Content.Configs;
 using Terramon.Content.Items.KeyItems;
+using Terraria.Utilities;
 
 namespace Terramon;
 
@@ -28,11 +29,11 @@ public class Terramon : Mod
         return Main.rand.NextBool(shinyChance);
     }
 
-    public static Gender RollGender(ushort id)
+    public static Gender DetermineGender(ushort id, uint pv)
     {
         var genderRate = DatabaseV2.GetPokemon(id).GenderRate;
         return genderRate >= 0
-            ? Main.rand.NextBool(genderRate, 8) ? Gender.Female : Gender.Male
+            ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
             : Gender.Unspecified;
     }
 

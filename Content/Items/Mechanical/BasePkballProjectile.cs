@@ -318,15 +318,9 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     private void PokemonCatchSuccess()
     {
-        const byte level = 5;
-
-        //TODO: add level from pokemonnpc
-        TerramonPlayer.LocalPlayer.AddPartyPokemon(new PokemonData(capture.useId, level)
-        {
-            IsShiny = capture.isShiny,
-            Variant = capture.variant
-        });
-
+        var ballName = GetType().Name.Split("Projectile")[0];
+        capture.data.Ball = (byte)BallID.Search.GetId(ballName);
+        TerramonPlayer.LocalPlayer.AddPartyPokemon(capture.data);
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess", TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName));
         Projectile.Kill();
@@ -381,8 +375,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             NPC.NewNPC(source, (int)Projectile.Center.X, (int)Projectile.Center.Y,
                 capture.Type); // spawn a new NPC at the new position
         var newPoke = (PokemonNPC)Main.npc[newNPC].ModNPC;
-        newPoke.isShiny = capture.isShiny;
-        newPoke.gender = capture.gender;
+        newPoke.data = capture.data;
         newPoke.NPC.spriteDirection = capture.NPC.spriteDirection;
         //newPoke.isShimmer = capture.isShimmer;
         //newPoke.level = capture.level;
