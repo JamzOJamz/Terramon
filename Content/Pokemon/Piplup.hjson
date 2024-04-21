@@ -1,0 +1,16 @@
+{
+  NPC:
+  {
+    Transform:
+    {
+      DrawOffsetY: -2
+    }
+    WalkingBehaviour: {}
+    SpawnController:
+    {
+      Condition: OverworldDaySlime
+      Chance: 0.1
+    }
+  }
+  Projectile: {}
+}

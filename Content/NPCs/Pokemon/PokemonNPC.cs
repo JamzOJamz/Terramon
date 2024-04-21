@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -20,11 +21,11 @@ public class PokemonNPC : ModNPC
     private static Dictionary<ushort, JToken> SchemaCache;
     public readonly ushort useId;
     private readonly string useName;
+    public PokemonData data;
     private Asset<Texture2D> glowTexture;
     private bool hasGenderDifference;
     private bool isDestroyed;
     private int shinySparkleTimer;
-    public PokemonData data;
 
     public PokemonNPC(ushort useId, string useName)
     {
@@ -110,14 +111,18 @@ public class PokemonNPC : ModNPC
         var frameSize = NPC.frame.Size();
         var texture = ModContent.Request<Texture2D>(path).Value;
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        spriteBatch.Draw(texture, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY),
+        spriteBatch.Draw(texture,
+            NPC.Center - screenPos +
+            new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
             NPC.frame, drawColor, NPC.rotation,
-            frameSize / 2f, NPC.scale, effects, 0f);
+            frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
 
         if (glowTexture == null) return false;
-        spriteBatch.Draw(glowTexture.Value, NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY),
+        spriteBatch.Draw(glowTexture.Value,
+            NPC.Center - screenPos +
+            new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
             NPC.frame, Color.White, NPC.rotation,
-            frameSize / 2f, NPC.scale, effects, 0f);
+            frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
 
         return false;
     }

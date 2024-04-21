@@ -1,0 +1,13 @@
+{
+  NPC:
+  {
+    Transform: {}
+    WalkingBehaviour: {}
+    SpawnController:
+    {
+      Condition: OverworldDaySlime
+      Chance: 0.1
+    }
+  }
+  Projectile: {}
+}

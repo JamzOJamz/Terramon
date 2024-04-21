@@ -43,7 +43,7 @@ public class Terramon : Mod
         var uiModItemInitialize = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
             ?.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);*/
-        
+
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);

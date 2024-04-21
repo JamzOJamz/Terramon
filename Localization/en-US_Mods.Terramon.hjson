@@ -68,7 +68,7 @@ GUI: {
 		SlotHoverExtra:
 			'''
 
-			Right click and drag to reorder
+			Click and drag to reorder
 			'''
 	}
 }
@@ -265,12 +265,12 @@ NPCs: {
 		}
 
 		Dialogue: {
-			Catchem: There's a lot of Pokémon out there, but you'll need Poke Balls to catch them! Luckily for you, I have some in stock.
+			Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
 			Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
 			CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
 			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
 			Regions: There are many different regions in the world. One day I hope to visit all of them!
-			Crafting: I conveniently sell Pokéballs for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
+			Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
 			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
 			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
 			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
@@ -285,7 +285,7 @@ NPCs: {
 			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
 			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
 			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
-			MechanicComment: "{0} knows a lot about Poke Balls. Maybe one day I could start selling more of them!"
+			MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
 			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
 			ArmsDealerComment: Can you tell  {0} to stop shooting at the Pokémon??
 		}
