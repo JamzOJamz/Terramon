@@ -287,7 +287,7 @@ NPCs: {
 			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
 			MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
 			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
-			ArmsDealerComment: Can you tell  {0} to stop shooting at the Pokémon??
+			ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
 		}
 	}
 }
