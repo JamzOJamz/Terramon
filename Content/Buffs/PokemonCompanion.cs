@@ -9,9 +9,8 @@ public class PokemonCompanion : ModBuff
 {
     private const string PokeballIconPrefix = "Terramon/Assets/Items/PokeBalls/";
     private const string TemplatePath = "Terramon/Assets/Buffs/BuffTemplate";
-    private const string ShinyTemplatePath = "Terramon/Assets/Buffs/BuffTemplateShiny";
     private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
-    private Asset<Texture2D> shinyTemplateTexture;
+    private static RenderTarget2D rt;
     private Asset<Texture2D> starIconTexture;
     private Asset<Texture2D> templateTexture;
 
@@ -20,7 +19,6 @@ public class PokemonCompanion : ModBuff
     public override void SetStaticDefaults()
     {
         templateTexture = ModContent.Request<Texture2D>(TemplatePath);
-        shinyTemplateTexture = ModContent.Request<Texture2D>(ShinyTemplatePath);
         starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }
 
@@ -28,29 +26,56 @@ public class PokemonCompanion : ModBuff
     {
         var player = TerramonPlayer.LocalPlayer;
 
+        // Create a render target
+        var gd = Main.graphics.GraphicsDevice;
+        gd.SetRenderTarget(rt);
+        gd.Clear(Color.Transparent);
+
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+
         // Draw the template texture
-        var useTemplate = player.Party[0] != null && player.Party[0].IsShiny ? shinyTemplateTexture : templateTexture;
-        spriteBatch.Draw(useTemplate.Value, drawParams.Position, new Rectangle(0, 0, 32, 32), drawParams.DrawColor,
+        spriteBatch.Draw(templateTexture.Value, Vector2.Zero, new Rectangle(0, 0, 32, 32), Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         // Draw the pokeball icon
         var ballId = player.Party[0]?.Ball ?? BallID.PokeBall;
         var ballName = BallID.Search.GetName(ballId) + "Projectile";
         var pokeballIconTexture = ModContent.Request<Texture2D>(PokeballIconPrefix + ballName);
-        spriteBatch.Draw(pokeballIconTexture.Value, drawParams.Position + new Vector2(0, 2),
-            pokeballIconTexture.Frame(verticalFrames: 4, frameY: 2), drawParams.DrawColor,
+        spriteBatch.Draw(pokeballIconTexture.Value, new Vector2(0, 2),
+            pokeballIconTexture.Frame(verticalFrames: 4, frameY: 2), Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         // Draw the star icon
-        spriteBatch.Draw(starIconTexture.Value, drawParams.Position + new Vector2(14, 14),
-            new Rectangle(0, 0, starIconTexture.Width(), starIconTexture.Height()), drawParams.DrawColor,
+        spriteBatch.Draw(starIconTexture.Value, new Vector2(14, 14),
+            new Rectangle(0, 0, starIconTexture.Width(), starIconTexture.Height()), Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+        spriteBatch.End();
+        gd.SetRenderTarget(null);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+
+        // Draw the render target
+        spriteBatch.Draw(rt, drawParams.Position, drawParams.DrawColor);
 
         return false;
     }
-    
+
     public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
     {
         rare = ItemRarityID.Expert;
+    }
+
+    public override void Load()
+    {
+        Main.instance.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+        Main.QueueMainThreadAction(() => { rt = new RenderTarget2D(Main.graphics.GraphicsDevice, 32, 32); });
+    }
+
+    public override void Unload()
+    {
+        rt.Dispose();
     }
 }
