@@ -26,7 +26,7 @@ public class PokemonCompanion : ModBuff
     {
         var player = TerramonPlayer.LocalPlayer;
 
-        // Create a render target
+        // Use the render target
         var gd = Main.graphics.GraphicsDevice;
         gd.SetRenderTarget(rt);
         gd.Clear(Color.Transparent);
@@ -76,6 +76,6 @@ public class PokemonCompanion : ModBuff
 
     public override void Unload()
     {
-        rt.Dispose();
+        Main.QueueMainThreadAction(() => rt.Dispose());
     }
 }
