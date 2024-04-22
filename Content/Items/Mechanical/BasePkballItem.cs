@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Terramon.Core.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -39,12 +40,6 @@ public abstract class BasePkballItem : TerramonItem
 
     public override bool CanUseItem(Player player)
     {
-        if (!player.GetModPlayer<TerramonPlayer>().HasChosenStarter)
-        {
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"));
-            return false;
-        }
-
         if (player.altFunctionUse == 2)
         {
             Item.shoot = ProjectileID.None;
@@ -56,6 +51,9 @@ public abstract class BasePkballItem : TerramonItem
             Item.shoot = pokeballThrow;
             Item.createTile = -1;
             Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw");
+            if (player.GetModPlayer<TerramonPlayer>().HasChosenStarter) return true;
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), new Color(173, 173, 198));
+            return false;
         }
 
         return true;
