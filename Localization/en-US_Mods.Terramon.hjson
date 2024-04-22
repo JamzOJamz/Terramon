@@ -56,7 +56,7 @@ Configs: {
 }
 
 GUI: {
-	Starter.ChosenMessage: You chose [c/{0}:{1}], the {2} as your starter Pokémon!
+	Starter.ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
 
 	Shop: {
 		PremierBonus: You got a Premier Ball as an added bonus!
@@ -300,4 +300,8 @@ Buffs: {
 }
 
 WorldGen.ItemsPass: Scattering candies
-Misc.CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
+
+Misc: {
+	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
+	RequireStarter: Choose a starter Pokémon first!
+}

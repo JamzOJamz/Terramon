@@ -223,7 +223,7 @@ public class PartySidebarSlot : UIImage
         MonitorCursor = false;
         if (Dragging)
             DragEnd();
-        else
+        else if (IsMouseHovering)
             Main.NewText("Clicked on slot containing " + NameText.Text, Color.SeaGreen);
         //replace with whatever code to summon pokemon
     }

@@ -44,12 +44,13 @@ public class StarterSelectOverhead : SmartUIState
     private UIBlendedImage background;
     private UIText hintText;
     private UIHoverImageButton showButton;
+    private UIContainer starterPanel;
     private bool starterPanelShowing = true;
     private UIText titleText;
-    private UIContainer starterPanel;
 
     public override bool Visible =>
-        !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter && Main.LocalPlayer.talkNPC < 0;
+        !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter &&
+        Main.LocalPlayer.talkNPC < 0;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -79,7 +80,7 @@ public class StarterSelectOverhead : SmartUIState
         starterPanel = new UIContainer(new Vector2(660, 330))
         {
             HAlign = 0.5f,
-            VAlign = 0.19f,
+            VAlign = 0.19f
         };
 
         titleText = new UIText("Welcome to the world of Pokémon! Thank you for installing the Terramon mod!");
@@ -89,17 +90,17 @@ public class StarterSelectOverhead : SmartUIState
         subText.HAlign = 0.5f;
         titleText.Append(subText);
         starterPanel.Append(titleText);
-        
+
         background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background",
             AssetRequestMode.ImmediateLoad));
         hintText = new UIText("(Press Backspace to Close)", 0.85f)
         {
             HAlign = 0.5f,
-            Top = {Pixels = 281},
+            Top = { Pixels = 281 },
             TextColor = new Color(173, 173, 198)
         };
         starterPanel.Append(hintText);
-        
+
         background.Width.Set(626, 0);
         background.Height.Set(221, 0);
         background.HAlign = 0.5f;
@@ -128,7 +129,7 @@ public class StarterSelectOverhead : SmartUIState
 
             background.Append(item);
         }
-        
+
         starterPanel.Append(background);
         Append(starterPanel);
     }
@@ -167,12 +168,13 @@ public class StarterButton : UIHoverImage
         OnLeftClick += (_, _) =>
         {
             var player = TerramonPlayer.LocalPlayer;
-            player.AddPartyPokemon(new PokemonData(pokemon, 5, ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters));
+            player.AddPartyPokemon(new PokemonData(pokemon, 5,
+                ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters));
             player.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").WithFormatArgs(
+                Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value,
                 TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(pokemon).Types[0]),
-                Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value,
-                Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value
+                Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
             ).Value;
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);

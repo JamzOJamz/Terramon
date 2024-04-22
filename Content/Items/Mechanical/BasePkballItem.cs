@@ -39,6 +39,12 @@ public abstract class BasePkballItem : TerramonItem
 
     public override bool CanUseItem(Player player)
     {
+        if (!player.GetModPlayer<TerramonPlayer>().HasChosenStarter)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"));
+            return false;
+        }
+
         if (player.altFunctionUse == 2)
         {
             Item.shoot = ProjectileID.None;
@@ -51,10 +57,12 @@ public abstract class BasePkballItem : TerramonItem
             Item.createTile = -1;
             Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw");
         }
-        return base.CanUseItem(player);
+
+        return true;
     }
 
-    public override bool AltFunctionUse(Player player) {
+    public override bool AltFunctionUse(Player player)
+    {
         return true;
     }
 
