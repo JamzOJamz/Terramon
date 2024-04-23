@@ -1,5 +1,6 @@
 ﻿using Terramon.Core.Helpers;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 
 namespace Terramon.Content.Items.Mechanical;
 
@@ -18,6 +19,7 @@ internal class PokeBallItem : BasePkballItem
 
     public override void SetStaticDefaults()
     {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AetherBallItem>();
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
             igPrice / 2; // Amount needed to duplicate them in Journey Mode
     }

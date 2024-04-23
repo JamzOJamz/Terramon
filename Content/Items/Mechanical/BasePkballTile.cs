@@ -12,7 +12,7 @@ namespace Terramon.Content.Items.Mechanical;
 
 public abstract class BasePkballTile : ModTile
 {
-    private static readonly int maxInteractDistance = 80;
+    private const int maxInteractDistance = 80;
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
     public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/PokeBallTile_Highlight";
 

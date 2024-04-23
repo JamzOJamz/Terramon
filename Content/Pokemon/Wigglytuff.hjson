@@ -1,7 +1,10 @@
 {
   NPC:
   {
-    Transform: {}
+    Transform:
+    {
+      DrawOffsetY: -2
+    }
     WalkingBehaviour: {}
     SpawnController:
     {

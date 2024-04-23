@@ -136,6 +136,16 @@ Items: {
 		CatchRate: 1x catch rate
 	}
 
+	AetherBallItem: {
+		DisplayName: Aether Ball
+		Tooltip:
+			'''
+			An ethereal Poké Ball infused with shimmering energy.
+			It is said to have a calming effect on wild Pokémon.
+			'''
+		CatchRate: 1x catch rate
+	}
+
 	RareCandy: {
 		DisplayName: Rare Candy
 		Tooltip:
