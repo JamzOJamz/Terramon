@@ -2,8 +2,6 @@ using Terraria.Localization;
 
 namespace Terramon.Content.Items.Materials;
 
-// TODO: Load apricorns after v0.1
-[Autoload(false)]
 public abstract class ApricornItem : Material
 {
     public override LocalizedText Tooltip { get; } = Language.GetText("Mods.Terramon.CommonTooltips.Apricorn");
