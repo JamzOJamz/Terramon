@@ -1,4 +1,5 @@
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
@@ -26,6 +27,11 @@ public abstract class MusicTile : ModTile
         DustType = DustID.Titanium;
 
         AddMapEntry(new Color(191, 142, 111), Language.GetText("ItemName.MusicBox"));
+    }
+
+    public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+    {
+        return true;
     }
 
     public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
