@@ -14,10 +14,25 @@ public class PCService
     /// </summary>
     public PCService()
     {
-        for (var i = 0; i < 8; i++) Boxes.Add(new PCBox());
+        for (var i = 0; i < DefaultBoxes; i++) Boxes.Add(new PCBox());
     }
 
     #region Pokémon Storage System
+
+    /// <summary>
+    ///     Default number of PC boxes.
+    /// </summary>
+    private const byte DefaultBoxes = 8;
+
+    /// <summary>
+    ///     The amount of boxes to add when expanding the PC's storage capacity.
+    /// </summary>
+    private const byte ExpansionBoxes = 8;
+
+    /// <summary>
+    ///     Maximum number of PC boxes that can be unlocked through expansion.
+    /// </summary>
+    private const byte MaxBoxes = 32;
 
     /// <summary>
     ///     List of PC boxes for storing Pokémon.
@@ -33,9 +48,9 @@ public class PCService
         var slot = FindEmptySpace();
         if (slot == -1)
             return null;
-        Boxes[slot / PCBox.CAPACITY][slot % PCBox.CAPACITY] = data;
+        Boxes[slot / PCBox.Capacity][slot % PCBox.Capacity] = data;
         CheckBoxExpansion();
-        return Boxes[slot / PCBox.CAPACITY];
+        return Boxes[slot / PCBox.Capacity];
     }
 
     /// <summary>
@@ -44,11 +59,11 @@ public class PCService
     /// </summary>
     private void CheckBoxExpansion()
     {
-        if (Boxes.Count >= 32) return;
+        if (Boxes.Count >= MaxBoxes) return;
         foreach (var box in Boxes)
         {
             var hasPokemon = false;
-            for (var i = 0; i < PCBox.CAPACITY; i++)
+            for (var i = 0; i < PCBox.Capacity; i++)
             {
                 if (box[i] == null) continue;
                 hasPokemon = true;
@@ -58,7 +73,7 @@ public class PCService
             if (!hasPokemon) return;
         }
 
-        for (var i = 0; i < 8; i++) Boxes.Add(new PCBox());
+        for (var i = 0; i < ExpansionBoxes; i++) Boxes.Add(new PCBox());
     }
 
     /// <summary>
@@ -67,9 +82,9 @@ public class PCService
     private int FindEmptySpace()
     {
         for (var i = 0; i < Boxes.Count; i++)
-        for (var j = 0; j < PCBox.CAPACITY; j++)
+        for (var j = 0; j < PCBox.Capacity; j++)
             if (Boxes[i][j] == null)
-                return i * PCBox.CAPACITY + j;
+                return i * PCBox.Capacity + j;
 
         return -1;
     }
@@ -83,7 +98,7 @@ public class PCService
 public class PCBox : TagSerializable
 {
     // ReSharper disable once UnusedMember.Global
-    public const byte CAPACITY = 30;
+    public const byte Capacity = 30;
     public static readonly Func<TagCompound, PCBox> DESERIALIZER = Load;
     private readonly PokemonData[] Slots = new PokemonData[30];
     public string GivenName;
