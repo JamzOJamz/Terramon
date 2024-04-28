@@ -3,6 +3,9 @@ using ReLogic.Reflection;
 
 namespace Terramon.Core;
 
+/// <summary>
+///     Service class for managing the Pokédex functionality.
+/// </summary>
 public class PokedexService
 {
     public readonly Dictionary<int, byte> Entries = new();

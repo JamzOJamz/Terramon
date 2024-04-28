@@ -4,8 +4,14 @@ using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
 
+/// <summary>
+///     Service class for managing Pokémon storage in PC boxes.
+/// </summary>
 public class PCService
 {
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PCService" /> class, and creates 8 empty PC boxes.
+    /// </summary>
     public PCService()
     {
         for (var i = 0; i < 8; i++) Boxes.Add(new PCBox());
@@ -13,6 +19,9 @@ public class PCService
 
     #region Pokémon Storage System
 
+    /// <summary>
+    ///     List of PC boxes for storing Pokémon.
+    /// </summary>
     public readonly List<PCBox> Boxes = new();
 
     /// <summary>
@@ -30,8 +39,8 @@ public class PCService
     }
 
     /// <summary>
-    /// Checks if the PC's total storage capacity should be increased.
-    /// If every box contains at least one Pokémon, and there are less than 32 total boxes, 8 more boxes are added.
+    ///     Checks if the PC's total storage capacity should be increased.
+    ///     If every box contains at least one Pokémon, and there are less than 32 total boxes, 8 more boxes are added.
     /// </summary>
     private void CheckBoxExpansion()
     {
@@ -51,7 +60,10 @@ public class PCService
 
         for (var i = 0; i < 8; i++) Boxes.Add(new PCBox());
     }
-    
+
+    /// <summary>
+    ///     Finds the first empty space in the PC.
+    /// </summary>
     private int FindEmptySpace()
     {
         for (var i = 0; i < Boxes.Count; i++)
@@ -65,6 +77,9 @@ public class PCService
     #endregion
 }
 
+/// <summary>
+///     Class representing an individual PC box capable of storing Pokémon.
+/// </summary>
 public class PCBox : TagSerializable
 {
     // ReSharper disable once UnusedMember.Global
