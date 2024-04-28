@@ -274,7 +274,7 @@ public class PartySidebarSlot : UIImage
 
         if (MonitorCursor)
             //check if mouse has travelled minimum distance in order to enter drag
-            if (MathF.Abs(MonitorEvent.MousePosition.Length() - Main.MouseScreen.Length()) > 8)
+            if (MathF.Abs(MonitorEvent.MousePosition.Y - Main.MouseScreen.Y) > 8)
             {
                 MonitorCursor = false;
                 DragStart(MonitorEvent);

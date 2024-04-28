@@ -281,7 +281,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         //if (capture == null)
         //Main.NewText($"{target.ModNPC != null}, {target.ModNPC is PokemonNPC}, {(target.ModNPC.Type)}");
 
-        if (capture == null && target.ModNPC != null && target.ModNPC is PokemonNPC)
+        if (capture == null && target.ModNPC is PokemonNPC)
             HitPkmn(target);
     }
 
@@ -318,12 +318,28 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     private void PokemonCatchSuccess()
     {
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+        Projectile.Kill();
         var ballName = GetType().Name.Split("Projectile")[0];
         capture.data.Ball = (byte)BallID.Search.GetId(ballName);
-        TerramonPlayer.LocalPlayer.AddPartyPokemon(capture.data);
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess", TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName));
-        Projectile.Kill();
+        var player = TerramonPlayer.LocalPlayer;
+        var addSuccess = player.AddPartyPokemon(capture.data);
+        if (addSuccess)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
+                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName));
+        }
+        else
+        {
+            var box = player.TransferPokemonToPC(capture.data);
+            Main.NewText(box != null
+                ? Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPC",
+                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName,
+                    box.GivenName ?? player.GetDefaultNameForPCBox(box), player.Player.name)
+                : Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPCNoRoom",
+                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName,
+                    player.Player.name));
+        }
     }
 
     private void HitPkmn(NPC target)

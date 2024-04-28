@@ -313,5 +313,7 @@ WorldGen.ItemsPass: Scattering candies
 
 Misc: {
 	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
+	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
+	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
 	RequireStarter: Choose a starter Pokémon first!
 }

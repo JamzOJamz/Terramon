@@ -11,6 +11,7 @@ namespace Terramon.Core;
 public class TerramonPlayer : ModPlayer
 {
     public readonly PokemonData[] Party = new PokemonData[6];
+    private readonly PCService PC = new();
     private readonly PokedexService Pokedex = new();
     public bool HasChosenStarter;
 
@@ -104,11 +105,22 @@ public class TerramonPlayer : ModPlayer
         return containsId;
     }
 
+    public PCBox TransferPokemonToPC(PokemonData data)
+    {
+        return PC.StorePokemon(data);
+    }
+
+    public string GetDefaultNameForPCBox(PCBox box)
+    {
+        return "Box " + (PC.Boxes.IndexOf(box) + 1);
+    }
+
     public override void SaveData(TagCompound tag)
     {
         tag["starterChosen"] = HasChosenStarter;
         SaveParty(tag);
         SavePokedex(tag);
+        SavePC(tag);
     }
 
     public override void LoadData(TagCompound tag)
@@ -116,6 +128,7 @@ public class TerramonPlayer : ModPlayer
         HasChosenStarter = tag.GetBool("starterChosen");
         LoadParty(tag);
         LoadPokedex(tag);
+        LoadPC(tag);
     }
 
     private void SaveParty(TagCompound tag)
@@ -138,7 +151,7 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePokedex(TagCompound tag)
     {
-        tag["pokedex"] = Pokedex.Entries.Select(entry => new int[] { entry.Key, entry.Value }).ToList();
+        tag["pokedex"] = Pokedex.Entries.Select(entry => new[] { entry.Key, entry.Value }).ToList();
     }
 
     private void LoadPokedex(TagCompound tag)
@@ -147,5 +160,19 @@ public class TerramonPlayer : ModPlayer
         if (!tag.ContainsKey(tagName)) return;
         var entries = tag.GetList<int[]>(tagName);
         foreach (var entry in entries) UpdatePokedex((ushort)entry[0], (byte)entry[1]);
+    }
+
+    private void SavePC(TagCompound tag)
+    {
+        tag["pc"] = PC.Boxes;
+    }
+
+    private void LoadPC(TagCompound tag)
+    {
+        const string tagName = "pc";
+        if (!tag.ContainsKey(tagName)) return;
+        PC.Boxes.Clear();
+        var boxes = tag.GetList<PCBox>(tagName);
+        foreach (var box in boxes) PC.Boxes.Add(box);
     }
 }
