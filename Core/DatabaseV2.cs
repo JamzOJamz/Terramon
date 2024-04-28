@@ -78,18 +78,18 @@ public class DatabaseV2
             set => Types = value;
         }
 
-        public Stats Stats { get; set; }
+        public StatsSchema Stats { get; set; }
 
         [JsonProperty("s")]
-        private Stats b_Stats
+        private StatsSchema b_Stats
         {
             set => Stats = value;
         }
 
-        public Evolution Evolution { get; set; }
+        public EvolutionSchema Evolution { get; set; }
 
         [JsonProperty("e")]
-        private Evolution b_Evolution
+        private EvolutionSchema b_Evolution
         {
             set => Evolution = value;
         }
@@ -103,7 +103,7 @@ public class DatabaseV2
         }
     }
 
-    public class Stats
+    public class StatsSchema
     {
         [JsonProperty("hp")] public int HP { get; set; }
 
@@ -154,7 +154,7 @@ public class DatabaseV2
         }
     }
 
-    public class Evolution
+    public class EvolutionSchema
     {
         [JsonProperty("id")] public int ID { get; set; }
 

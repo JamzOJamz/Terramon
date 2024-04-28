@@ -54,7 +54,7 @@ public class PartyClearCommand : DebugCommand
         }
 
         caller.Reply(
-            $"Removed {Terramon.DatabaseV2.GetLocalizedPokemonName(player.Party[slotIndex].ID)} from the party");
+            $"Removed {player.Party[slotIndex].DisplayName} from the party");
         player.Party[slotIndex] = null;
         for (var i = slotIndex + 1; i < player.Party.Length; i++) player.Party[i - 1] = player.Party[i];
         player.Party[5] = null;

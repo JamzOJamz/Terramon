@@ -396,7 +396,7 @@ public class PartySidebarSlot : UIImage
         }
         else
         {
-            NameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID).Value);
+            NameText.SetText(data.DisplayName);
             LevelText.SetText("Lv. " + data.Level);
             HeldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",
                 AssetRequestMode.ImmediateLoad));

@@ -171,7 +171,7 @@ public class PokemartClerk : ModNPC
             //TODO: Add Pokemon nickname here + later text (nickname would replace second GetLocalizedPokemonName)
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello",
                 Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon.ID),
-                Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon.ID)));
+                pokemon.DisplayName));
 
             /*if (pokemon.data.Nickname == null)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNicknameHowto"));

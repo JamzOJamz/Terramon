@@ -12,19 +12,22 @@ public class PokemonData : TagSerializable
     // ReSharper disable once UnusedMember.Global
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
 
-    private uint _personalityValue;
+    private readonly uint _personalityValue;
     public byte Ball = BallID.PokeBall;
     public Gender Gender;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
+    public string Nickname;
     private string OT;
     public string Variant;
+
+    public string DisplayName => Nickname ?? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value;
 
     private uint PersonalityValue
     {
         get => _personalityValue;
-        set
+        init
         {
             Gender = DetermineGender(ID, value);
             _personalityValue = value;
@@ -35,14 +38,16 @@ public class PokemonData : TagSerializable
     {
         var tag = new TagCompound
         {
-            ["pv"] = PersonalityValue,
             ["ball"] = Ball,
             ["id"] = ID,
             ["isShiny"] = IsShiny,
             ["lvl"] = Level,
             ["ot"] = OT,
+            ["pv"] = PersonalityValue,
             ["version"] = VERSION
         };
+        if (Nickname != null)
+            tag["n"] = Nickname;
         if (Variant != null)
             tag["variant"] = Variant;
         return tag;
@@ -89,17 +94,17 @@ public class PokemonData : TagSerializable
 
         var data = new PokemonData
         {
+            Ball = tag.GetByte("ball"),
             ID = (ushort)tag.GetShort("id"),
             IsShiny = tag.GetBool("isShiny"),
             Level = tag.GetByte("lvl"),
-            OT = tag.GetString("ot")
+            OT = tag.GetString("ot"),
+            PersonalityValue = tag.Get<uint>("pv")
         };
-        if (tag.TryGet<byte>("ball", out var ball))
-            data.Ball = ball;
+        if (tag.TryGet<string>("n", out var nickname))
+            data.Nickname = nickname;
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
-        if (tag.TryGet<uint>("pv", out var pv))
-            data.PersonalityValue = pv;
         return data;
     }
 }
