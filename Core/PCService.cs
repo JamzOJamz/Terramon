@@ -14,7 +14,7 @@ public class PCService
     /// </summary>
     public PCService()
     {
-        for (var i = 0; i < DefaultBoxes; i++) Boxes.Add(new PCBox());
+        for (var i = 0; i < DefaultBoxes; i++) Boxes.Add(new PCBox { Service = this });
     }
 
     #region Pokémon Storage System
@@ -49,7 +49,6 @@ public class PCService
         if (slot == -1)
             return null;
         Boxes[slot / PCBox.Capacity][slot % PCBox.Capacity] = data;
-        CheckBoxExpansion();
         return Boxes[slot / PCBox.Capacity];
     }
 
@@ -57,7 +56,7 @@ public class PCService
     ///     Checks if the PC's total storage capacity should be increased.
     ///     If every box contains at least one Pokémon, more boxes are added until the maximum is reached.
     /// </summary>
-    private void CheckBoxExpansion()
+    public void CheckBoxExpansion()
     {
         if (Boxes.Count >= MaxBoxes) return;
         foreach (var box in Boxes)
@@ -73,7 +72,7 @@ public class PCService
             if (!hasPokemon) return;
         }
 
-        for (var i = 0; i < ExpansionBoxes; i++) Boxes.Add(new PCBox());
+        for (var i = 0; i < ExpansionBoxes; i++) Boxes.Add(new PCBox { Service = this });
     }
 
     /// <summary>
@@ -97,16 +96,30 @@ public class PCService
 /// </summary>
 public class PCBox : TagSerializable
 {
-    // ReSharper disable once UnusedMember.Global
     public const byte Capacity = 30;
+
+    // ReSharper disable once UnusedMember.Global
     public static readonly Func<TagCompound, PCBox> DESERIALIZER = Load;
     private readonly PokemonData[] Slots = new PokemonData[30];
+
+    /// <summary>
+    ///     The display name of the box.
+    /// </summary>
     public string GivenName;
+
+    /// <summary>
+    ///     The <see cref="PCService" /> that manages this box.
+    /// </summary>
+    public PCService Service;
 
     public PokemonData this[int slot]
     {
         get => Slots[slot];
-        set => Slots[slot] = value;
+        set
+        {
+            Slots[slot] = value;
+            Service.CheckBoxExpansion();
+        }
     }
 
     public TagCompound SerializeData()

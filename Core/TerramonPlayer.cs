@@ -173,6 +173,10 @@ public class TerramonPlayer : ModPlayer
         if (!tag.ContainsKey(tagName)) return;
         PC.Boxes.Clear();
         var boxes = tag.GetList<PCBox>(tagName);
-        foreach (var box in boxes) PC.Boxes.Add(box);
+        foreach (var box in boxes)
+        {
+            box.Service = PC;
+            PC.Boxes.Add(box);
+        }
     }
 }
