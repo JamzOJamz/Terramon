@@ -10,7 +10,7 @@ namespace Terramon.Core;
 public class PCService
 {
     /// <summary>
-    ///     Initializes a new instance of the <see cref="PCService" /> class, and creates 8 empty PC boxes.
+    ///     Initializes a new instance of the <see cref="PCService" /> class.
     /// </summary>
     public PCService()
     {
@@ -55,7 +55,7 @@ public class PCService
 
     /// <summary>
     ///     Checks if the PC's total storage capacity should be increased.
-    ///     If every box contains at least one Pokémon, and there are less than 32 total boxes, 8 more boxes are added.
+    ///     If every box contains at least one Pokémon, more boxes are added until the maximum is reached.
     /// </summary>
     private void CheckBoxExpansion()
     {
