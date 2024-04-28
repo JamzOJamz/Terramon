@@ -31,17 +31,19 @@ public class PokemonNPC : ModNPC
     {
         this.useId = useId;
         this.useName = useName;
+        Name = useName + "NPC";
+        Texture = "Terramon/Assets/Pokemon/" + useName;
     }
 
     protected override bool CloneNewInstances => true;
 
-    public override string Name => useName + "NPC";
+    public override string Name { get; }
 
     public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(useId);
 
     private AIController Behaviour { get; set; }
 
-    public override string Texture => "Terramon/Assets/Pokemon/" + useName;
+    public override string Texture { get; }
 
     public override void SetDefaults()
     {
@@ -52,13 +54,12 @@ public class PokemonNPC : ModNPC
         NPC.knockBackResist = 0.75f;
         NPC.despawnEncouraged = true;
         NPC.friendly = true;
-        data = new PokemonData(useId, 5);
 
         // Load gender-specific texture if it exists.
-        hasGenderDifference = ModContent.HasAsset("Terramon/Assets/Pokemon/" + useName + "F");
+        hasGenderDifference = ModContent.HasAsset(Texture + "F");
 
         // Load glowmask texture if it exists.
-        if (ModContent.RequestIfExists<Texture2D>("Terramon/Assets/Pokemon/" + useName + "_Glow", out var glowTex))
+        if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
             glowTexture = glowTex;
 
         // TODO: Optimize.
@@ -94,18 +95,18 @@ public class PokemonNPC : ModNPC
     {
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
         var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
-        data.IsShiny = Terramon.RollShiny(Main.player[spawningPlayer]);
+        data = PokemonData.Create(Main.player[spawningPlayer], useId, 5);
         NPC.netUpdate = true;
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         var path = Texture;
-        if (hasGenderDifference && data.Gender == Gender.Female)
+        if (hasGenderDifference && data?.Gender == Gender.Female)
             path += "F";
-        if (data.Variant != null)
+        if (data?.Variant != null)
             path += "_" + data.Variant;
-        if (data.IsShiny)
+        if (data is { IsShiny: true })
             path += "_S";
 
         var frameSize = NPC.frame.Size();

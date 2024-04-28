@@ -5,7 +5,6 @@ global using Terraria;
 global using Terraria.ModLoader;
 using Terramon.Content.Configs;
 using Terramon.Content.Items.KeyItems;
-using Terraria.Utilities;
 
 namespace Terramon;
 
@@ -25,16 +24,14 @@ public class Terramon : Mod
     public static bool RollShiny(Player player)
     {
         var shinyChance = ModContent.GetInstance<GameplayConfig>().ShinySpawnRate;
-        if (player.HasItemInInventoryOrOpenVoidBag(ModContent.ItemType<ShinyCharm>())) shinyChance /= 2;
-        return Main.rand.NextBool(shinyChance);
-    }
+        var rolls = player.HasItemInInventoryOrOpenVoidBag(ModContent.ItemType<ShinyCharm>()) ? 3 : 1;
+        for (var i = 0; i < rolls; i++)
+        {
+            if (Main.rand.NextBool(shinyChance))
+                return true;
+        }
 
-    public static Gender DetermineGender(ushort id, uint pv)
-    {
-        var genderRate = DatabaseV2.GetPokemon(id).GenderRate;
-        return genderRate >= 0
-            ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
-            : Gender.Unspecified;
+        return false;
     }
 
     public override void Load()

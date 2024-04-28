@@ -1,6 +1,7 @@
 using System;
 using Terramon.ID;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Terramon.Core;
 
@@ -10,26 +11,24 @@ public class PokemonData : TagSerializable
 
     // ReSharper disable once UnusedMember.Global
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
+
+    private uint _personalityValue;
     public byte Ball = BallID.PokeBall;
-    public Gender Gender = Gender.Unspecified;
+    public Gender Gender;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
     private string OT;
-    private uint PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue);
     public string Variant;
 
-    private PokemonData()
+    private uint PersonalityValue
     {
-    }
-
-    public PokemonData(ushort id, byte level = 1, bool shinyLocked = false)
-    {
-        ID = id;
-        Level = level;
-        OT = Main.LocalPlayer.name;
-        Gender = Terramon.DetermineGender(id, PersonalityValue);
-        IsShiny = !shinyLocked && Terramon.RollShiny(Main.LocalPlayer);
+        get => _personalityValue;
+        set
+        {
+            Gender = DetermineGender(ID, value);
+            _personalityValue = value;
+        }
     }
 
     public TagCompound SerializeData()
@@ -47,6 +46,26 @@ public class PokemonData : TagSerializable
         if (Variant != null)
             tag["variant"] = Variant;
         return tag;
+    }
+
+    public static PokemonData Create(Player player, ushort id, byte level = 1)
+    {
+        return new PokemonData
+        {
+            ID = id,
+            Level = level,
+            OT = player.name,
+            PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
+            IsShiny = Terramon.RollShiny(player)
+        };
+    }
+
+    private static Gender DetermineGender(ushort id, uint pv)
+    {
+        var genderRate = Terramon.DatabaseV2.GetPokemon(id).GenderRate;
+        return genderRate >= 0
+            ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
+            : Gender.Unspecified;
     }
 
     private static PokemonData Load(TagCompound tag)
@@ -81,7 +100,6 @@ public class PokemonData : TagSerializable
             data.Variant = variant;
         if (tag.TryGet<uint>("pv", out var pv))
             data.PersonalityValue = pv;
-        data.Gender = Terramon.DetermineGender(data.ID, data.PersonalityValue);
         return data;
     }
 }
