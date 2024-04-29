@@ -1,3 +1,4 @@
+using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Core.Loaders.UILoading;
 
@@ -8,5 +9,6 @@ public class TerramonSystem : ModSystem
     public override void PreSaveAndQuit()
     {
         UILoader.GetUIState<PartyDisplay>().ClearAllSlots();
+        Main.LocalPlayer.ClearBuff(ModContent.BuffType<PokemonCompanion>());
     }
 }

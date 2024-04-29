@@ -56,7 +56,10 @@ Configs: {
 }
 
 GUI: {
-	Starter.ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+	Starter: {
+		ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		ComingSoon: Coming soon...
+	}
 
 	Shop: {
 		PremierBonus: You got a Premier Ball as an added bonus!
@@ -65,6 +68,7 @@ GUI: {
 
 	Party: {
 		SlotHover: Left click to send out
+		SlotHoverActive: Left click to recall
 		SlotHoverExtra:
 			'''
 
@@ -305,7 +309,7 @@ NPCs: {
 Buffs: {
 	PokemonCompanion: {
 		DisplayName: Pokémon companion
-		Description: A Pokémon is following you around!
+		Description: "{0} is following you around!"
 	}
 }
 

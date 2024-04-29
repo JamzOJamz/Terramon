@@ -60,6 +60,11 @@ public class PartyDisplay : SmartUIState
     {
         for (var i = 0; i < PartySlots.Length; i++) UpdateSlot(partyData[i], i);
     }
+    
+    public void RecalculateAllSlots()
+    {
+        for (var i = 0; i < PartySlots.Length; i++) RecalculateSlot(i);
+    }
 
     public void ClearAllSlots()
     {
@@ -157,10 +162,11 @@ public class PartySidebarSlot : UIImage
     private bool Dragging;
     private UIBlendedImage GenderIcon;
     private UIBlendedImage HeldItemBox;
+    private bool IsActiveSlot;
     private bool IsHovered;
     private bool JustEndedDragging;
-    public bool MonitorCursor;
-    public UIMouseEvent MonitorEvent;
+    private bool MonitorCursor;
+    private UIMouseEvent MonitorEvent;
     private Vector2 Offset;
     private ITweener SnapTween;
     private UIBlendedImage SpriteBox;
@@ -195,7 +201,7 @@ public class PartySidebarSlot : UIImage
     {
         base.DrawSelf(spriteBatch);
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
-        var hoverText = Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover");
+        var hoverText = Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover" + (IsActiveSlot ? "Active" : string.Empty));
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
             hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
         Main.hoverItemName = hoverText;
@@ -210,7 +216,7 @@ public class PartySidebarSlot : UIImage
         {
             SoundPath = "Terramon/Sounds/button_smm",
             Pitch = (float)_index / -15 + 0.6f,
-            Volume = 0.25f
+            Volume = 0.3f
         };
         SoundEngine.PlaySound(s);
     }
@@ -227,10 +233,22 @@ public class PartySidebarSlot : UIImage
         base.LeftMouseUp(evt);
         MonitorCursor = false;
         if (Dragging)
+        {
             DragEnd();
+        }
         else if (IsMouseHovering)
-            Main.NewText("Clicked on slot containing " + NameText.Text, Color.SeaGreen);
-        //replace with whatever code to summon pokemon
+        {
+            var s = IsActiveSlot
+                ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.5f }
+                : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.8f };
+            SoundEngine.PlaySound(s);
+            var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID)) { Volume = 0.7f };
+            if (!IsActiveSlot)
+                SoundEngine.PlaySound(cry);
+            TerramonPlayer.LocalPlayer.ActiveSlot = IsActiveSlot ? -1 : Index;
+            // Recalculates slots in order to update textures
+            PartyDisplay.RecalculateAllSlots();
+        }
     }
 
     public override void RightMouseDown(UIMouseEvent evt)
@@ -377,6 +395,8 @@ public class PartySidebarSlot : UIImage
         {
             if (selected)
                 spritePath += "_Selected";
+            if (IsActiveSlot)
+                spritePath += "Active";
         }
         else
         {
@@ -390,7 +410,8 @@ public class PartySidebarSlot : UIImage
     public void SetData(PokemonData data)
     {
         Data = data;
-        UpdateSprite();
+        IsActiveSlot = TerramonPlayer.LocalPlayer.ActiveSlot == Index;
+        UpdateSprite(IsMouseHovering && !PartyDisplay.IsDraggingSlot);
         HeldItemBox?.Remove();
         SpriteBox?.Remove();
         GenderIcon?.Remove();
@@ -403,11 +424,13 @@ public class PartySidebarSlot : UIImage
         {
             NameText.SetText(data.DisplayName);
             LevelText.SetText("Lv. " + data.Level);
-            HeldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox",
+            HeldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>(
+                "Terramon/Assets/GUI/Party/HeldItemBox" + (IsActiveSlot ? "Active" : string.Empty),
                 AssetRequestMode.ImmediateLoad));
             HeldItemBox.Top.Set(25, 0f);
             HeldItemBox.Left.Set(8, 0f);
-            SpriteBox = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SpriteBox",
+            SpriteBox = new UIBlendedImage(ModContent.Request<Texture2D>(
+                "Terramon/Assets/GUI/Party/SpriteBox" + (IsActiveSlot ? "Active" : string.Empty),
                 AssetRequestMode.ImmediateLoad));
             SpriteBox.Top.Set(10, 0f);
             SpriteBox.Left.Set(59, 0f);

@@ -5,6 +5,11 @@ namespace Terramon.Content.Commands;
 
 public class NicknameCommand : TerramonCommand
 {
+    /// <summary>
+    /// Maximum allowed length for a Pokémon's nickname.
+    /// </summary>
+    private const int MaxNicknameLength = 12;
+    
     public override CommandType Type
         => CommandType.World;
 
@@ -15,7 +20,7 @@ public class NicknameCommand : TerramonCommand
         => "/nickname <set/clear> nickname";
 
     public override string Description
-        => "Change the nickname of the Pokémon in your first party slot";
+        => "Change the nickname of your currently active Pokémon";
 
     protected override int MinimumArgumentCount => 1;
 
@@ -25,19 +30,19 @@ public class NicknameCommand : TerramonCommand
         if (!Allowed) return;
 
         var player = caller.Player.GetModPlayer<TerramonPlayer>();
-        var data = player.Party[0];
-        if (data == null)
+        if (player.ActiveSlot == -1)
         {
-            caller.Reply("No Pokémon found in the first party slot");
+            caller.Reply("No Pokémon is currently active");
             return;
         }
-
+        
+        var data = player.Party[player.ActiveSlot];
         string subcommand = args[0], nick = args.Length > 1 ? args[1] : null;
         switch (subcommand)
         {
             case "set":
                 // Make sure the nickname is not too long (12 characters max)
-                if (nick.Length > 12)
+                if (nick?.Length > MaxNicknameLength)
                 {
                     caller.Reply("Nickname must be 12 characters or less (including spaces)");
                     return;
@@ -55,7 +60,7 @@ public class NicknameCommand : TerramonCommand
                     ? $"Set nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)} to {nick}"
                     : $"Changed nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)} from {data.Nickname} to {nick}");
                 data.Nickname = nick;
-                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(0);
+                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             case "clear":
                 if (data.Nickname == null)
@@ -66,7 +71,7 @@ public class NicknameCommand : TerramonCommand
 
                 caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)}'s nickname");
                 data.Nickname = null;
-                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(0);
+                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             default:
                 caller.Reply("Invalid subcommand. Use 'set' or 'clear'");

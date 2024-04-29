@@ -153,7 +153,7 @@ public class StarterButton : UIHoverImage
     public StarterButton(Asset<Texture2D> texture, ushort pokemon) : base(texture,
         Terramon.DatabaseV2.IsAvailableStarter(pokemon)
             ? Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
-            : "Coming soon...")
+            : Language.GetTextValue("Mods.Terramon.GUI.Starter.ComingSoon"))
     {
         if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon)) return;
         var cacheHoverTexture = ModContent.Request<Texture2D>(

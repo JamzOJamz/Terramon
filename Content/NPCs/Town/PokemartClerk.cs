@@ -239,7 +239,6 @@ public class PokemartClerk : ModNPC
     {
         if (firstButton)
         {
-            TerramonPlayer.LocalPlayer.premierBonusCount = 0;
             shopName = "Shop";
         }
         /*else

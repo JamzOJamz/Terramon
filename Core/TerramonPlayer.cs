@@ -13,10 +13,29 @@ public class TerramonPlayer : ModPlayer
     public readonly PokemonData[] Party = new PokemonData[6];
     private readonly PCService PC = new();
     private readonly PokedexService Pokedex = new();
+
+    private int _activeSlot = -1;
+
+    private bool _lastPlayerInventory;
+    private int _premierBonusCount;
+
     public bool HasChosenStarter;
 
-    private bool lastPlayerInventory;
-    public int premierBonusCount;
+    public int ActiveSlot
+    {
+        get => _activeSlot;
+        set
+        {
+            // Toggle off dedicated pet slots
+            if (_activeSlot == -1)
+                Player.hideMisc[0] = true;
+            _activeSlot = value;
+            var buffType = ModContent.BuffType<PokemonCompanion>();
+            Player.ClearBuff(buffType);
+            if (value >= 0) Player.AddBuff(buffType, 3600);
+        }
+    }
+
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 
     public PokedexService GetPokedex()
@@ -27,19 +46,24 @@ public class TerramonPlayer : ModPlayer
     public override void OnEnterWorld()
     {
         UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
-        // TODO: Apply this only when a Pokémon pet projectile is spawned the party
-        Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 60 * 60);
     }
 
     public override void PreUpdate()
     {
-        if (Main.playerInventory && !lastPlayerInventory)
+        if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0)
+        {
+            var oldSlot = ActiveSlot;
+            ActiveSlot = -1;
+            UILoader.GetUIState<PartyDisplay>().RecalculateSlot(oldSlot);
+        }
+        
+        if (Main.playerInventory && !_lastPlayerInventory)
             UILoader.GetUIState<PartyDisplay>().Sidebar.ForceKillAnimation();
 
-        lastPlayerInventory = Main.playerInventory;
+        _lastPlayerInventory = Main.playerInventory;
 
-        if (premierBonusCount <= 0 || Main.npcShop != 0) return;
-        var premierBonus = premierBonusCount / 10;
+        if (_premierBonusCount <= 0 || Main.npcShop != 0) return;
+        var premierBonus = _premierBonusCount / 10;
         if (premierBonus > 0)
         {
             Main.NewText(premierBonus == 1
@@ -50,14 +74,14 @@ public class TerramonPlayer : ModPlayer
                 premierBonus);
         }
 
-        premierBonusCount = 0;
+        _premierBonusCount = 0;
     }
 
     public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item)
     {
         //use CanSellItem rather than PostSellItem because PostSellItem doesn't return item data correctly
         if (item.type == ModContent.ItemType<PokeBallItem>())
-            premierBonusCount -= item.stack;
+            _premierBonusCount -= item.stack;
 
         return item.type != ModContent.ItemType<MasterBallItem>() && base.CanSellItem(vendor, shopInventory, item);
     }
@@ -65,7 +89,7 @@ public class TerramonPlayer : ModPlayer
     public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
     {
         if (item.type == ModContent.ItemType<PokeBallItem>())
-            premierBonusCount++;
+            _premierBonusCount++;
     }
 
     /// <summary>
@@ -86,6 +110,10 @@ public class TerramonPlayer : ModPlayer
 
     public void SwapParty(int first, int second)
     {
+        if (ActiveSlot == first)
+            ActiveSlot = second;
+        else if (ActiveSlot == second)
+            ActiveSlot = first;
         (Party[first], Party[second]) = (Party[second], Party[first]);
     }
 
@@ -118,6 +146,8 @@ public class TerramonPlayer : ModPlayer
     public override void SaveData(TagCompound tag)
     {
         tag["starterChosen"] = HasChosenStarter;
+        if (ActiveSlot >= 0)
+            tag["activeSlot"] = ActiveSlot;
         SaveParty(tag);
         SavePokedex(tag);
         SavePC(tag);
@@ -126,6 +156,8 @@ public class TerramonPlayer : ModPlayer
     public override void LoadData(TagCompound tag)
     {
         HasChosenStarter = tag.GetBool("starterChosen");
+        if (tag.TryGet("activeSlot", out int slot))
+            ActiveSlot = slot;
         LoadParty(tag);
         LoadPokedex(tag);
         LoadPC(tag);
