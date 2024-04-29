@@ -51,6 +51,11 @@ public class PartyDisplay : SmartUIState
         PartySlots[index].SetData(data);
     }
 
+    public void RecalculateSlot(int index)
+    {
+        PartySlots[index].SetData(PartySlots[index].Data);
+    }
+
     public void UpdateAllSlots(PokemonData[] partyData)
     {
         for (var i = 0; i < PartySlots.Length; i++) UpdateSlot(partyData[i], i);
@@ -148,7 +153,7 @@ public class PartySidebarSlot : UIImage
     private readonly UIText NameText;
     private readonly PartyDisplay PartyDisplay;
     private int _index;
-    private PokemonData Data;
+    public PokemonData Data;
     private bool Dragging;
     private UIBlendedImage GenderIcon;
     private UIBlendedImage HeldItemBox;

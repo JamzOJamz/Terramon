@@ -55,7 +55,7 @@ public class NicknameCommand : TerramonCommand
                     ? $"Set nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)} to {nick}"
                     : $"Changed nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)} from {data.Nickname} to {nick}");
                 data.Nickname = nick;
-                UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, 0);
+                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(0);
                 break;
             case "clear":
                 if (data.Nickname == null)
@@ -64,9 +64,9 @@ public class NicknameCommand : TerramonCommand
                     return;
                 }
 
-                caller.Reply($"Cleared nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)}");
+                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)}'s nickname");
                 data.Nickname = null;
-                UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, 0);
+                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(0);
                 break;
             default:
                 caller.Reply("Invalid subcommand. Use 'set' or 'clear'");

@@ -13,7 +13,6 @@ internal class AetherBallProjectile : BasePkballProjectile
 
 internal class AetherBallItem : BasePkballItem
 {
-    public override string Texture => "Terramon/Assets/Items/PokeBalls/PokeBallItem";
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
     protected override int pokeballThrow => ModContent.ProjectileType<AetherBallProjectile>();
     protected override int pokeballTile => ModContent.TileType<AetherBallTile>();

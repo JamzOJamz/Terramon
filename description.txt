@@ -13,3 +13,5 @@ Note: Pokémon battling is coming in a future update. Stay tuned!
 
 The source code of the mod is available at
 https://github.com/nsfury/Terramon
+
+Disclaimer: This fan-made mod acknowledges all rights to Nintendo and Game Freak.
