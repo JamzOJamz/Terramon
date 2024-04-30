@@ -14,7 +14,7 @@ public class PartyDataCommand : DebugCommand
         => "/partydata slot";
 
     public override string Description
-        => "Displays info for the specified Pokémon in your party";
+        => "Logs info for the specified Pokémon in your party";
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
@@ -42,7 +42,10 @@ public class PartyDataCommand : DebugCommand
             caller.Reply($"No Pokémon data available for slot {slot}");
             return;
         }
+        
+        // Log the data to the client.log file
+        Mod.Logger.Debug($"/partydata {slot} — {PrettySharp.Print(data, 1)}");
 
-        caller.Reply(PrettySharp.Print(data, 1));
+        caller.Reply("Pokemon data for slot " + slot + " written to client.log");
     }
 }

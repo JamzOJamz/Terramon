@@ -27,9 +27,9 @@ public static class PrettySharp
         foreach (var field in fields)
         {
             var value = field.GetValue(obj);
-            Main.NewText(IsSimpleType(field.FieldType));
             var formattedValue = value is string ? $"\"{value}\"" :
                 IsSimpleType(field.FieldType) ? value?.ToString() : FormatObject(value, currentDepth + 1, maxDepth);
+            if (value == null) formattedValue = "null";
             sb.Append($"{field.Name}: {formattedValue}, ");
         }
 

@@ -5,8 +5,6 @@ namespace Terramon.Content.Items.Mechanical;
 
 internal class AetherBallProjectile : BasePkballProjectile
 {
-    public override string Texture => "Terramon/Assets/Items/PokeBalls/PokeBallProjectile";
-    
     public override int pokeballCapture => ModContent.ItemType<AetherBallItem>();
     protected override float catchModifier => 1;
 }
@@ -29,17 +27,16 @@ internal class AetherBallItem : BasePkballItem
 
 public class AetherBallTile : BasePkballTile
 {
-    public override string Texture => "Terramon/Assets/Items/PokeBalls/PokeBallTile";
-    protected override int dropItem => ModContent.ItemType<PremierBallItem>();
+    protected override int dropItem => ModContent.ItemType<AetherBallItem>();
 }
 
 public class AetherBallRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
     {
-        new(85, 230, 179),
-        new(213, 20, 201),
-        new(170, 62, 254)
+        new(255, 84, 222),
+        new(75, 123, 255),
+        new(113, 60, 234),
     };
 
     protected override float Time => 2f;

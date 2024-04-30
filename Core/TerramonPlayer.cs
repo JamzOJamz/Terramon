@@ -26,13 +26,13 @@ public class TerramonPlayer : ModPlayer
         get => _activeSlot;
         set
         {
-            // Toggle off dedicated pet slots
+            // Toggle off dedicated pet slot
             if (_activeSlot == -1)
                 Player.hideMisc[0] = true;
             _activeSlot = value;
             var buffType = ModContent.BuffType<PokemonCompanion>();
             Player.ClearBuff(buffType);
-            if (value >= 0) Player.AddBuff(buffType, 3600);
+            if (value >= 0) Player.AddBuff(buffType, 2);
         }
     }
 

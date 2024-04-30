@@ -27,6 +27,7 @@ public class PartyClearCommand : DebugCommand
         if (args[0] == "all")
         {
             Array.Clear(player.Party, 0, player.Party.Length);
+            player.ActiveSlot = -1;
             UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
             caller.Reply("Removed all Pokemon from the party");
             return;
@@ -58,6 +59,7 @@ public class PartyClearCommand : DebugCommand
         player.Party[slotIndex] = null;
         for (var i = slotIndex + 1; i < player.Party.Length; i++) player.Party[i - 1] = player.Party[i];
         player.Party[5] = null;
+        if (player.ActiveSlot == slotIndex) player.ActiveSlot = -1;
         UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
     }
 }

@@ -20,7 +20,7 @@ NPC:
     Chance: 0.05
   }
   
-  VisualBehaviour:
+  Visuals:
   {
     LightStrength: 0.45
     DamperAmount: 0.5

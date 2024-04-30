@@ -25,6 +25,12 @@ public class PokemonCompanion : ModBuff
         starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }
 
+    public override void Update(Player player, ref int buffIndex)
+    {
+        // Prevent the buff from expiring
+        player.buffTime[buffIndex] = int.MaxValue;
+    }
+
     public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)
     {
         spriteBatch.End();

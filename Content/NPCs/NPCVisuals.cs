@@ -13,7 +13,7 @@ namespace Terramon.Content.NPCs;
 /// <summary>
 ///     A <see cref="NPCComponent" /> to control the visual behaviour of Pokemon NPCs.
 /// </summary>
-public class NPCVisualBehaviour : NPCComponent
+public class NPCVisuals : NPCComponent
 {
     //TODO: Vector3 (or Color) and Vector2 support in hjson
     public Vector3 LightColor = Vector3.One;
