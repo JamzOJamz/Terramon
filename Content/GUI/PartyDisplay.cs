@@ -242,9 +242,11 @@ public class PartySidebarSlot : UIImage
                 ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.5f }
                 : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.8f };
             SoundEngine.PlaySound(s);
-            var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID)) { Volume = 0.7f };
             if (!IsActiveSlot)
+            {
+                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID)) { Volume = 0.7f };
                 SoundEngine.PlaySound(cry);
+            }
             TerramonPlayer.LocalPlayer.ActiveSlot = IsActiveSlot ? -1 : Index;
             // Recalculates slots in order to update textures
             PartyDisplay.RecalculateAllSlots();
