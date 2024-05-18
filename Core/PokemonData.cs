@@ -38,13 +38,14 @@ public class PokemonData : TagSerializable
     {
         var tag = new TagCompound
         {
-            ["ball"] = Ball,
             ["id"] = ID,
             ["lvl"] = Level,
             ["ot"] = OT,
             ["pv"] = PersonalityValue,
             ["version"] = VERSION
         };
+        if (Ball != BallID.PokeBall)
+            tag["ball"] = Ball;
         if (IsShiny)
             tag["isShiny"] = true;
         if (Nickname != null)
@@ -95,12 +96,13 @@ public class PokemonData : TagSerializable
 
         var data = new PokemonData
         {
-            Ball = tag.GetByte("ball"),
             ID = (ushort)tag.GetShort("id"),
             Level = tag.GetByte("lvl"),
             OT = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
+        if (tag.TryGet<byte>("ball", out var ball))
+            data.Ball = ball;
         if (tag.TryGet<bool>("isShiny", out var isShiny))
             data.IsShiny = isShiny;
         if (tag.TryGet<string>("n", out var nickname))
