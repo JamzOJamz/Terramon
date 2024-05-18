@@ -6,10 +6,10 @@ namespace Terramon.Content.Commands;
 public class NicknameCommand : TerramonCommand
 {
     /// <summary>
-    /// Maximum allowed length for a Pokémon's nickname.
+    ///     Maximum allowed length for a Pokémon's nickname.
     /// </summary>
     private const int MaxNicknameLength = 12;
-    
+
     public override CommandType Type
         => CommandType.World;
 
@@ -30,13 +30,13 @@ public class NicknameCommand : TerramonCommand
         if (!Allowed) return;
 
         var player = caller.Player.GetModPlayer<TerramonPlayer>();
-        if (player.ActiveSlot == -1)
+        var activePokemonData = player.GetActivePokemon();
+        if (activePokemonData == null)
         {
             caller.Reply("No Pokémon is currently active");
             return;
         }
-        
-        var data = player.Party[player.ActiveSlot];
+
         string subcommand = args[0], nick = args.Length > 1 ? args[1] : null;
         switch (subcommand)
         {
@@ -49,28 +49,28 @@ public class NicknameCommand : TerramonCommand
                 }
 
                 // Make sure the nickname is not the same as the current one
-                if (data.Nickname == nick)
+                if (activePokemonData.Nickname == nick)
                 {
                     caller.Reply("Nickname is already set to that value");
                     return;
                 }
 
                 // Set the nickname
-                caller.Reply(data.Nickname == null
-                    ? $"Set nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)} to {nick}"
-                    : $"Changed nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)} from {data.Nickname} to {nick}");
-                data.Nickname = nick;
+                caller.Reply(activePokemonData.Nickname == null
+                    ? $"Set nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)} to {nick}"
+                    : $"Changed nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)} from {activePokemonData.Nickname} to {nick}");
+                activePokemonData.Nickname = nick;
                 UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             case "clear":
-                if (data.Nickname == null)
+                if (activePokemonData.Nickname == null)
                 {
                     caller.Reply("No nickname set for this Pokémon");
                     return;
                 }
 
-                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(data.ID)}'s nickname");
-                data.Nickname = null;
+                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname");
+                activePokemonData.Nickname = null;
                 UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             default:

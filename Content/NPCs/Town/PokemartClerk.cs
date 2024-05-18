@@ -137,15 +137,7 @@ public class PokemartClerk : ModNPC
     public override string GetChat()
     {
         var player = TerramonPlayer.LocalPlayer;
-
-        //TODO: Use player's currently summoned Pokemon rather than picking one from the party (temp solution)
-
-        PokemonData pokemon = null;
-        if (player.NextFreePartyIndex() > 0)
-        {
-            var partyIndex = Main.rand.Next(0, player.NextFreePartyIndex());
-            pokemon = player.Party[partyIndex];
-        }
+        var activePokemonData = player.GetActivePokemon();
 
         //if (pokemon != null && pokemon.data.IsEvolveReady())
         //return $"Oh? It look's like {pokemon.data.GetName()} is ready to evolve.";
@@ -166,19 +158,19 @@ public class PokemartClerk : ModNPC
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.BadName"));
 
         //only add chat about Pokemon if it exists
-        if (pokemon != null)
+        if (activePokemonData != null)
         {
             //TODO: Add Pokemon nickname here + later text (nickname would replace second GetLocalizedPokemonName)
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello",
-                Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon.ID),
-                pokemon.DisplayName));
+                Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID),
+                activePokemonData.DisplayName));
 
             /*if (pokemon.data.Nickname == null)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNicknameHowto"));
             else
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNickname", pokemon.));*/
 
-            var pokemonType = Terramon.DatabaseV2.GetPokemon(pokemon.ID).Types[0];
+            var pokemonType = Terramon.DatabaseV2.GetPokemon(activePokemonData.ID).Types[0];
             switch (pokemonType)
             {
                 case TypeID.Grass:
@@ -189,7 +181,7 @@ public class PokemartClerk : ModNPC
                     break;
             }
 
-            if (pokemon.IsShiny)
+            if (activePokemonData.IsShiny)
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonShiny"));
             //else if (player.usePokeIsShimmer)
             //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonShimmer"));

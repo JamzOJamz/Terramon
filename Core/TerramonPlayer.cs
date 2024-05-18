@@ -38,6 +38,14 @@ public class TerramonPlayer : ModPlayer
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 
+    /// <summary>
+    ///     Returns this player's currently active Pokémon, or null if there is none.
+    /// </summary>
+    public PokemonData GetActivePokemon()
+    {
+        return ActiveSlot >= 0 ? Party[ActiveSlot] : null;
+    }
+
     public PokedexService GetPokedex()
     {
         return Pokedex;
@@ -56,7 +64,7 @@ public class TerramonPlayer : ModPlayer
             ActiveSlot = -1;
             UILoader.GetUIState<PartyDisplay>().RecalculateSlot(oldSlot);
         }
-        
+
         if (Main.playerInventory && !_lastPlayerInventory)
             UILoader.GetUIState<PartyDisplay>().Sidebar.ForceKillAnimation();
 
