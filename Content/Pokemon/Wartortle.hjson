@@ -1,22 +1,22 @@
-NPC:
 {
-  Transform:
+  NPC:
   {
-    Width: 26
-    Height: 27
+    Transform:
+    {
+      Width: 26
+      Height: 27
+    }
+    WalkingBehaviour:
+    {
+      WalkSpeed: 0.9
+      FrameCount: 4
+      IsClassic: false
+    }
+    SpawnController:
+    {
+      Condition: OverworldDaySlime
+      Chance: 0.05
+    }
   }
-  
-  WalkingBehaviour: {
-    WalkSpeed: 0.9
-    FrameCount: 4
-    IsClassic: false
-  }
-  
-  SpawnController:
-  {
-    Condition: OverworldDaySlime
-    Chance: 0.05
-  }
+  Projectile: {}
 }
-
-Projectile: {}

@@ -1,17 +1,16 @@
-NPC:
 {
-  Transform:
+  NPC:
   {
-    DrawOffsetY: -2
+    Transform:
+    {
+      DrawOffsetY: -2
+    }
+    WalkingBehaviour: {}
+    SpawnController:
+    {
+      Condition: OverworldDaySlime
+      Chance: 0.1
+    }
   }
-  
-  WalkingBehaviour: {}
-  
-  SpawnController:
-  {
-    Condition: OverworldDaySlime
-    Chance: 0.1
-  }
+  Projectile: {}
 }
-
-Projectile: {}

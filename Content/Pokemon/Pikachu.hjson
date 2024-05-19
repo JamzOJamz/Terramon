@@ -1,31 +1,30 @@
-NPC:
 {
-  Transform:
+  NPC:
   {
-    Width: 24
-    Height: 20
+    Transform:
+    {
+      Width: 24
+      Height: 20
+    }
+    WalkingBehaviour:
+    {
+      WalkSpeed: 1.2
+      FrameCount: 5
+      FrameTime: 5
+      AnimationType: IdleForward
+      IsClassic: false
+    }
+    SpawnController:
+    {
+      Condition: OverworldDaySlime
+      Chance: 0.1
+    }
+    Variants:
+    {
+      Kind: Christmas
+      Condition: Christmas
+      Chance: 0.3
+    }
   }
-  
-  WalkingBehaviour: {
-    WalkSpeed: 1.2
-    FrameCount: 5
-    FrameTime: 5
-    AnimationType: IdleForward
-    IsClassic: false
-  }
-  
-  SpawnController:
-  {
-    Condition: OverworldDaySlime
-    Chance: 0.1
-  }
-
-  Variants:
-  {
-    Kind: Christmas
-    Condition: Christmas
-    Chance: 0.3
-  }
+  Projectile: {}
 }
-
-Projectile: {}

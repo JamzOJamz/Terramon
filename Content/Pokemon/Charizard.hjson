@@ -1,33 +1,32 @@
-NPC:
 {
-  Transform:
+  NPC:
   {
-    Width: 45
-    Height: 50
+    Transform:
+    {
+      Width: 45
+      Height: 50
+    }
+    WalkingBehaviour:
+    {
+      WalkSpeed: 0.8
+      FrameCount: 5
+      AnimationType: Alternate
+      IsClassic: false
+    }
+    SpawnController:
+    {
+      Condition: OverworldDaySlime
+      Chance: 0.025
+    }
+    Visuals:
+    {
+      LightStrength: 0.5
+      DamperAmount: 0.5
+      DustID: 6
+      DustFrequency: 45
+      DustOffsetX: 40
+      DustOffsetY: 37
+    }
   }
-  
-  WalkingBehaviour: {
-    WalkSpeed: 0.8
-    FrameCount: 5
-    AnimationType: Alternate
-    IsClassic: false
-  }
-  
-  SpawnController:
-  {
-    Condition: OverworldDaySlime
-    Chance: 0.025
-  }
-  
-  Visuals:
-  {
-    LightStrength: 0.5
-    DamperAmount: 0.5
-    DustID: 6
-    DustFrequency: 45
-    DustOffsetX: 40
-    DustOffsetY: 37
-  }
+  Projectile: {}
 }
-
-Projectile: {}
