@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Terramon.Content.Items.Mechanical;
 using Terramon.Content.Items.Vanity;
+using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.ID;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -50,7 +51,7 @@ public class PokemartClerk : ModNPC
         // Influences how the NPC looks in the Bestiary
         var drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers
         {
-            Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+            Velocity = 1f // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
         };
 
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
@@ -63,8 +64,7 @@ public class PokemartClerk : ModNPC
             .SetNPCAffection(NPCID.Mechanic, AffectionLevel.Like)
             .SetNPCAffection(NPCID.Merchant, AffectionLevel.Like)
             .SetNPCAffection(NPCID.Pirate, AffectionLevel.Dislike)
-            .SetNPCAffection(NPCID.ArmsDealer, AffectionLevel.Hate)
-            ; // < Mind the semicolon!
+            .SetNPCAffection(NPCID.ArmsDealer, AffectionLevel.Hate);
 
         //breeder - bestiarygirl, nurse    stylist, partygirl
 
@@ -119,8 +119,8 @@ public class PokemartClerk : ModNPC
 
     public override List<string> SetNPCNameList()
     {
-        return new List<string>
-        {
+        return
+        [
             "Martin",
             "Tom",
             "Dave",
@@ -131,7 +131,7 @@ public class PokemartClerk : ModNPC
             "Asher",
             Language.GetTextValue("Mods.Terramon.Pokemon.Pikachu.DisplayName"),
             "Lance"
-        };
+        ];
     }
 
     public override string GetChat()
@@ -229,10 +229,7 @@ public class PokemartClerk : ModNPC
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
-        if (firstButton)
-        {
-            shopName = "Shop";
-        }
+        if (firstButton) shopName = "Shop";
         /*else
         {
             var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
@@ -251,7 +248,8 @@ public class PokemartClerk : ModNPC
             .Add<UltraBallItem>()
             .Add<TrainerCap>(TrainerSetCondition)
             .Add<TrainerTorso>(TrainerSetCondition)
-            .Add<TrainerLegs>(TrainerSetCondition);
+            .Add<TrainerLegs>(TrainerSetCondition)
+            .Add<MusicItemWildBattle>();
 
         npcShop.Register(); // Name of this shop tab
     }

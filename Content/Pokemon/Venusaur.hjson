@@ -10,7 +10,7 @@
     {
       WalkSpeed: 0.8
       FrameCount: 5
-      FrameTime: 6
+      FrameTime: 7
       IsClassic: false
     }
     SpawnController:
