@@ -5,7 +5,7 @@ namespace Terramon.Content.Items.Mechanical;
 
 internal class AetherBallProjectile : BasePkballProjectile
 {
-    public override int pokeballCapture => ModContent.ItemType<AetherBallItem>();
+    public override int pokeballItem => ModContent.ItemType<AetherBallItem>();
     protected override float catchModifier => 1;
 }
 
