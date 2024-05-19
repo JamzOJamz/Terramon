@@ -17,10 +17,10 @@ public class FireStone : EvolutionaryItem
 public class FireStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
-    {
-        new(255, 202, 99),
-        new(234, 132, 53)
-    };
+    [
+        new Color(255, 202, 99),
+        new Color(234, 132, 53)
+    ];
 
     protected override float Time => 2f;
 }

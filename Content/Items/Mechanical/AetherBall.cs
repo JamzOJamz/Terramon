@@ -33,11 +33,11 @@ public class AetherBallTile : BasePkballTile
 public class AetherBallRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
-    {
-        new(255, 84, 222),
-        new(75, 123, 255),
-        new(113, 60, 234),
-    };
+    [
+        new Color(255, 84, 222),
+        new Color(75, 123, 255),
+        new Color(113, 60, 234)
+    ];
 
     protected override float Time => 2f;
 }

@@ -34,11 +34,11 @@ public abstract class KeyItem : TerramonItem
 public class KeyItemRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
-    {
-        new(122, 255, 255),
-        new(255, 86, 232),
-        new(255, 192, 35)
-    };
+    [
+        new Color(122, 255, 255),
+        new Color(255, 86, 232),
+        new Color(255, 192, 35)
+    ];
 
     protected override float Time => 2f;
 }

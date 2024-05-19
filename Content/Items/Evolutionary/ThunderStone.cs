@@ -17,10 +17,10 @@ public class ThunderStone : EvolutionaryItem
 public class ThunderStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
-    {
-        new(54, 204, 34),
-        new(229, 208, 100)
-    };
+    [
+        new Color(54, 204, 34),
+        new Color(229, 208, 100)
+    ];
 
     protected override float Time => 2f;
 }

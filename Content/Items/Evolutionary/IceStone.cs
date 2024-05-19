@@ -2,11 +2,11 @@ using Terramon.Content.Rarities;
 
 namespace Terramon.Content.Items.Evolutionary;
 
-public class DuskStone : EvolutionaryItem
+public class IceStone : EvolutionaryItem
 {
     protected override bool Obtainable => false;
-
-    protected override int UseRarity => ModContent.RarityType<DuskStoneRarity>();
+    
+    protected override int UseRarity => ModContent.RarityType<IceStoneRarity>();
 
     public override void SetDefaults()
     {
@@ -16,12 +16,12 @@ public class DuskStone : EvolutionaryItem
     }
 }
 
-public class DuskStoneRarity : DiscoRarity
+public class IceStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
     [
-        new Color(219, 161, 221),
-        new Color(152, 99, 183)
+        new Color(152, 232, 255),
+        new Color(89, 206, 255)
     ];
 
     protected override float Time => 2f;

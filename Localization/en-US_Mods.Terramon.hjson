@@ -244,6 +244,15 @@ Items: {
 			'''
 	}
 
+	IceStone: {
+		DisplayName: Ice Stone
+		Tooltip:
+			'''
+			A stone used for making certain kinds of Pokémon evolve.
+			It has an unmistakable snowflake pattern.
+			'''
+	}
+
 	BlackApricorn.DisplayName: Black Apricorn
 	BlueApricorn.DisplayName: Blue Apricorn
 	GreenApricorn.DisplayName: Green Apricorn

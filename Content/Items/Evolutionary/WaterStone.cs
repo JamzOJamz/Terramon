@@ -17,10 +17,10 @@ public class WaterStone : EvolutionaryItem
 public class WaterStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
-    {
-        new(112, 178, 215),
-        new(83, 115, 208)
-    };
+    [
+        new Color(112, 178, 215),
+        new Color(83, 115, 208)
+    ];
 
     protected override float Time => 2f;
 }

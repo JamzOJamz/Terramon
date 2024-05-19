@@ -17,10 +17,10 @@ public class LeafStone : EvolutionaryItem
 public class LeafStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
-    {
-        new(172, 204, 125),
-        new(119, 153, 68)
-    };
+    [
+        new Color(172, 204, 125),
+        new Color(119, 153, 68)
+    ];
 
     protected override float Time => 2f;
 }
