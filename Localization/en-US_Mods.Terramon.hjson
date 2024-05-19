@@ -87,6 +87,7 @@ CommonTooltips: {
 	KeyItem: Key Item
 	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
+	Unobtainable: Unobtainable
 }
 
 Items: {

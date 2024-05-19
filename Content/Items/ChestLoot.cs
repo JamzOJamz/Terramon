@@ -8,12 +8,8 @@ using Terraria.WorldBuilding;
 
 namespace Terramon.Content.Items;
 
-public class TerramonItemPass : GenPass
+public class TerramonItemPass(string name, float loadWeight) : GenPass(name, loadWeight)
 {
-    public TerramonItemPass(string name, float loadWeight) : base(name, loadWeight)
-    {
-    }
-
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
         progress.Message = Language.GetTextValue("Mods.Terramon.WorldGen.ItemsPass");

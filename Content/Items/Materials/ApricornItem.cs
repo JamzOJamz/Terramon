@@ -4,6 +4,8 @@ namespace Terramon.Content.Items.Materials;
 
 public abstract class ApricornItem : Material
 {
+    protected override bool Obtainable => false;
+    
     public override LocalizedText Tooltip { get; } = Language.GetText("Mods.Terramon.CommonTooltips.Apricorn");
 
     public override void SetDefaults()

@@ -4,6 +4,8 @@ namespace Terramon.Content.Items.Evolutionary;
 
 public class DuskStone : EvolutionaryItem
 {
+    protected override bool Obtainable => false;
+
     protected override int UseRarity => ModContent.RarityType<DuskStoneRarity>();
 
     public override void SetDefaults()

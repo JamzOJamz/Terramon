@@ -22,6 +22,7 @@ public abstract class EvolutionaryItem : TerramonItem
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
+        base.ModifyTooltips(tooltips);
         tooltips.Insert(tooltips.FindIndex(t => t.Name == "Tooltip0"),
             new TooltipLine(Mod, "EvolutionaryItem",
                 Language.GetTextValue("Mods.Terramon.CommonTooltips.EvolutionaryItem")));
