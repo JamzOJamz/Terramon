@@ -4,7 +4,6 @@ NPC:
   {
     Width: 24
     Height: 29
-    DrawOffsetY: -1
   }
   
   WalkingBehaviour: {

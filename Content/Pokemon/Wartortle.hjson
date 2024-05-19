@@ -9,7 +9,6 @@ NPC:
   WalkingBehaviour: {
     WalkSpeed: 0.9
     FrameCount: 4
-    AnimationType: StraightForward
     IsClassic: false
   }
   

@@ -13,14 +13,14 @@ namespace Terramon.Content.NPCs;
 /// </summary>
 public class NPCWalkingBehaviour : NPCComponent
 {
-    public int FrameTime = 10;
+    public string AnimationType = "StraightForward";
     private int collideTimer;
     public int FrameCount = 2;
+    public int FrameTime = 10;
+    public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
     private NPC NPC;
     public int StopFrequency = 200;
     public float WalkSpeed = 1f;
-    public string AnimationType = "StraightForward";
-    public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
 
     private ref float AI_State => ref NPC.ai[0];
     private ref float AI_Timer => ref NPC.ai[1];
@@ -70,7 +70,7 @@ public class NPCWalkingBehaviour : NPCComponent
             NPC.velocity.X *= 0.85f;
             AI_Timer++;
         }
-        
+
         if (NPC.velocity.X != 0)
             NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
 
@@ -114,19 +114,21 @@ public class NPCWalkingBehaviour : NPCComponent
         {
             collideTimer = 0;
         }
-        
+
         // Define constants
         const float Acceleration = 0.05f; // Acceleration rate
         const float Deceleration = 0.2f; // Deceleration rate
 
         // Update velocity based on AI behavior (this part may be called each frame)
-        if (AI_WalkDir != 0) {
+        if (AI_WalkDir != 0)
+        {
             // Accelerate towards the desired direction
             NPC.velocity.X += AI_WalkDir * Acceleration;
-    
+
             // Clamp velocity to maximum speed
             NPC.velocity.X = Math.Clamp(NPC.velocity.X, -WalkSpeed, WalkSpeed);
-        } else
+        }
+        else
         {
             switch (NPC.velocity.X)
             {
@@ -147,6 +149,10 @@ public class NPCWalkingBehaviour : NPCComponent
         NPC.spriteDirection = AI_WalkDir == 1 ? 1 : -1;
     }
 
+    /// <summary>
+    ///     Determines the frame of the NPC based on its current state.
+    ///     StraightForward: Plays the animation in a straight forward manner.
+    /// </summary>
     public override void FindFrame(NPC npc, int frameHeight)
     {
         if (!Enabled) return;
@@ -162,30 +168,41 @@ public class NPCWalkingBehaviour : NPCComponent
 
         switch (AnimationType)
         {
-            case "StraightForward":
+            case "StraightForward": // Animates all frames in a sequential order
                 if (NPC.frameCounter < FrameTime * FrameCount)
                     NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
                 else
                     NPC.frameCounter = 0;
                 break;
-            case "IdleForward": //same as StraightForward but it skips the first frame (which is idle only)
-                /*if (NPC.frameCounter < FrameTime)
-                    NPC.frameCounter = FrameTime;*/
+            case "IdleForward": // Same as StraightForward, but skips the first frame (which is idle only)
                 if (NPC.frameCounter < FrameTime * FrameCount)
                     NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
                 else
                     NPC.frameCounter = FrameTime;
                 break;
-            case "Alternate":
-                if (NPC.frameCounter >= FrameTime * 2 && NPC.frameCounter < FrameTime * (FrameCount * 2))
+            case "Alternate": // Alternates between frame sequences
+                var cycleLength = FrameCount + 1;
+                var alternateFrame = (int)(NPC.frameCounter / FrameTime) % cycleLength;
+                NPC.frame.Y = cycleLength switch
                 {
-                    if (Math.Floor(NPC.frameCounter / FrameTime) % 2 > 0)
-                        NPC.frame.Y = ((int)Math.Floor(NPC.frameCounter / FrameTime) / 2) * frameHeight;
-                    else
-                        NPC.frame.Y = 0;
-                }
-                else                                   //set it to FrameTime so it skips the first frame
-                    NPC.frameCounter = FrameTime * 2; //(since each frame gets a first frame this would play the first frame 3 times in a row)
+                    4 => alternateFrame switch
+                    {
+                        0 or 2 => 0 * frameHeight,
+                        1 => 1 * frameHeight,
+                        3 => 2 * frameHeight,
+                        _ => NPC.frame.Y
+                    },
+                    6 => alternateFrame switch
+                    {
+                        0 or 3 => 0 * frameHeight,
+                        1 => 1 * frameHeight,
+                        2 => 2 * frameHeight,
+                        4 => 3 * frameHeight,
+                        5 => 4 * frameHeight,
+                        _ => NPC.frame.Y
+                    },
+                    _ => NPC.frame.Y
+                };
                 break;
             default:
                 NPC.frame.Y = 0;

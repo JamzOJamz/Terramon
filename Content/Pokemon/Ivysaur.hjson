@@ -10,7 +10,6 @@ NPC:
     WalkSpeed: 0.9
     FrameCount: 4
     FrameTime: 6
-    AnimationType: StraightForward
     IsClassic: false
   }
   
