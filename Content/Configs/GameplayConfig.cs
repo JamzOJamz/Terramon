@@ -7,13 +7,17 @@ namespace Terramon.Content.Configs;
 
 public class GameplayConfig : ModConfig
 {
-    [Header("Miscellaneous")] [DefaultValue(false)]
-    public bool FastAnimations;
-
-    [DefaultValue(false)] public bool ShinyLockedStarters;
-
+    [Header("Spawning")] [DefaultValue(true)]
+    public bool AllowPokemonSpawning;
+    
     [DefaultValue(4096)] [Range(1, int.MaxValue)]
     public int ShinySpawnRate;
+    
+    [Header("Visuals")] [DefaultValue(false)]
+    public bool FastAnimations;
+    
+    [Header("Miscellaneous")] [DefaultValue(false)]
+    public bool ShinyLockedStarters;
     
     [Header("Advanced")] [DefaultValue(false)]
     public bool DebugMode;

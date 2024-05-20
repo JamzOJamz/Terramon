@@ -26,7 +26,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private float rotation;
     private bool rotationDirection;
     private float rotationVelocity;
-    public virtual int pokeballItem => ModContent.ItemType<BasePkballItem>();
+    protected virtual int pokeballItem => ModContent.ItemType<BasePkballItem>();
     protected virtual float catchModifier { get; set; }
 
     /// <summary>
@@ -51,6 +51,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         Projectile.width = 14; //Set to size of spritesheet
         Projectile.height = 14;
         //Projectile.damage = 1;
+        Projectile.friendly = true;
         Projectile.aiStyle = -1; //aiStyle -1 so no vanilla styles interfere with custom ai
         Projectile.penetrate = -1; //How many npcs to collide before being deleted (-1 makes this infinite)
     }
@@ -113,6 +114,11 @@ internal abstract class BasePkballProjectile : ModProjectile
         }
 
         return false;
+    }
+
+    public override bool? CanHitNPC(NPC target)
+    {
+        return target.ModNPC is PokemonNPC;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -307,12 +313,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        modifiers.FinalDamage.Scale(0);
-        //damage = 0;
-        //if (capture == null)
-        //Main.NewText($"{target.ModNPC != null}, {target.ModNPC is PokemonNPC}, {(target.ModNPC.Type)}");
-
-        if (capture == null && target.ModNPC is PokemonNPC)
+        if (capture == null)
             HitPkmn(target);
     }
 

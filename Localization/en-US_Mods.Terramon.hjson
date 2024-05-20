@@ -5,6 +5,8 @@ Configs: {
 		Headers: {
 			Miscellaneous: Miscellaneous
 			Advanced: Advanced
+			Spawning: Spawning
+			Visuals: Visuals
 		}
 
 		ShinyLockedStarters: {
@@ -25,6 +27,11 @@ Configs: {
 		DebugMode: {
 			Label: Debug Mode
 			Tooltip: Allows the use of certain debug commands that can also be used to cheat
+		}
+
+		AllowPokemonSpawning: {
+			Label: Wild Pokémon Spawning
+			Tooltip: Whether or not wild Pokémon should spawn in the world
 		}
 	}
 

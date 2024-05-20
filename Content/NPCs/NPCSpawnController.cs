@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Terramon.Content.Configs;
 using Terramon.Core.NPCComponents;
 using Terraria.ID;
 using Terraria.ModLoader.Utilities;
@@ -23,6 +24,7 @@ public class NPCSpawnController : NPCComponent
 
     public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
     {
+        if (!ModContent.GetInstance<GameplayConfig>().AllowPokemonSpawning) return;
         var hasWaterCandle = spawnInfo.Player.HasBuff(BuffID.WaterCandle);
         var hasBattlePotion = spawnInfo.Player.HasBuff(BuffID.Battle);
         foreach (var (type, component) in Instances)

@@ -6,7 +6,7 @@ namespace Terramon.Content.Items.Mechanical;
 
 internal class MasterBallProjectile : BasePkballProjectile
 {
-    public override int pokeballItem => ModContent.ItemType<MasterBallItem>();
+    protected override int pokeballItem => ModContent.ItemType<MasterBallItem>();
 
     protected override int dropItemChance => 1;
 

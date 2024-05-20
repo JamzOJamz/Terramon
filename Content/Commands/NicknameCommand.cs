@@ -31,7 +31,7 @@ public class NicknameCommand : TerramonCommand
         var activePokemonData = player.GetActivePokemon();
         if (activePokemonData == null)
         {
-            caller.Reply("No Pokémon is currently active");
+            caller.Reply("No Pokémon is currently active", Color.Red);
             return;
         }
 
@@ -42,37 +42,38 @@ public class NicknameCommand : TerramonCommand
                 // Make sure the nickname is not too long (12 characters max)
                 if (nick?.Length > MaxNicknameLength)
                 {
-                    caller.Reply("Nickname must be 12 characters or less (including spaces)");
+                    caller.Reply("Nickname must be 12 characters or less (including spaces)", Color.Red);
                     return;
                 }
 
                 // Make sure the nickname is not the same as the current one
                 if (activePokemonData.Nickname == nick)
                 {
-                    caller.Reply("Nickname is already set to that value");
+                    caller.Reply("Nickname is already set to that value", Color.Red);
                     return;
                 }
 
                 // Set the nickname
                 caller.Reply(activePokemonData.Nickname == null
-                    ? $"Set nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)} to {nick}"
-                    : $"Changed nickname of {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)} from {activePokemonData.Nickname} to {nick}");
+                        ? $"Set {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname to {nick}"
+                        : $"Changed {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname from {activePokemonData.Nickname} to {nick}",
+                    new Color(255, 240, 20));
                 activePokemonData.Nickname = nick;
                 UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             case "clear":
                 if (activePokemonData.Nickname == null)
                 {
-                    caller.Reply("No nickname set for this Pokémon");
+                    caller.Reply("No nickname set for this Pokémon", Color.Red);
                     return;
                 }
 
-                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname");
+                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname", new Color(255, 240, 20));
                 activePokemonData.Nickname = null;
                 UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             default:
-                caller.Reply("Invalid subcommand. Use 'set' or 'clear'");
+                caller.Reply("Invalid subcommand. Use 'set' or 'clear'", Color.Red);
                 return;
         }
     }
