@@ -75,10 +75,20 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (bounces > 0)
         {
             bounces -= 1;
-            Projectile.velocity.Y = oldVelocity.Y *= -0.7f;
-            Projectile.velocity.X = oldVelocity.X *= 0.5f;
-
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"), Projectile.position);
+            
+            // If the projectile hits the left or right side of the tile, reverse the X velocity
+            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon) {
+                Projectile.velocity.X = -oldVelocity.X;
+            }
+
+            // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
+            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon) {
+                Projectile.velocity.Y = -oldVelocity.Y;
+            }
+
+            Projectile.velocity.Y *= 0.7f;
+            Projectile.velocity.X *= 0.5f;
 
             if (Projectile.velocity.Length() < 1.5f)
                 bounces = 0;
