@@ -26,7 +26,7 @@ public class NPCWalkingBehaviour : NPCComponent
     private ref float AI_Timer => ref NPC.ai[1];
     private ref float AI_WalkDir => ref NPC.ai[2];
 
-    public override void OnEnabled(NPC npc)
+    protected override void OnEnabled(NPC npc)
     {
         NPC = npc;
     }
@@ -151,7 +151,6 @@ public class NPCWalkingBehaviour : NPCComponent
 
     /// <summary>
     ///     Determines the frame of the NPC based on its current state.
-    ///     StraightForward: Plays the animation in a straight forward manner.
     /// </summary>
     public override void FindFrame(NPC npc, int frameHeight)
     {

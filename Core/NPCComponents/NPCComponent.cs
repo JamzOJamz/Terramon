@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Terramon.Content.NPCs.Pokemon;
 
 namespace Terramon.Core.NPCComponents;
 
@@ -15,11 +16,16 @@ public abstract class NPCComponent : GlobalNPC
 
     protected virtual bool CacheInstances => false;
 
-    public virtual void OnEnabled(NPC npc)
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.ModNPC is PokemonNPC;
+    }
+
+    protected virtual void OnEnabled(NPC npc)
     {
     }
 
-    public virtual void OnDisabled(NPC npc)
+    protected virtual void OnDisabled(NPC npc)
     {
     }
 
