@@ -147,18 +147,16 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         // Prevent duplicate drops in multiplayer or if a Pokémon was already caught
         if (Projectile.owner != Main.myPlayer || hasContainedLocal) return;
-        
+
         // Drop the item when the projectile is destroyed
         var item = 0;
-        if (Main.rand.NextBool(dropItemChance)) {
+        if (Main.rand.NextBool(dropItemChance))
             item = Item.NewItem(Projectile.GetSource_DropAsItem(), Projectile.getRect(), pokeballItem);
-        }
 
         // Sync the drop for multiplayer
         // Note the usage of Terraria.ID.MessageID, please use this!
-        if (Main.netMode == NetmodeID.MultiplayerClient && item >= 0) {
+        if (Main.netMode == NetmodeID.MultiplayerClient && item >= 0)
             NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
-        }
     }
 
     public override void AI()
@@ -356,7 +354,9 @@ internal abstract class BasePkballProjectile : ModProjectile
         var ballName = GetType().Name.Split("Projectile")[0];
         capture.data.Ball = (byte)BallID.Search.GetId(ballName);
         var player = TerramonPlayer.LocalPlayer;
-        var addSuccess = player.AddPartyPokemon(capture.data);
+        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(capture.useId, out var status) &&
+                                           status == PokedexEntryStatus.Registered;
+        var addSuccess = player.AddPartyPokemon(capture.data, !isCaptureRegisteredInPokedex);
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
@@ -373,6 +373,10 @@ internal abstract class BasePkballProjectile : ModProjectile
                     TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName,
                     player.Player.name));
         }
+
+        if (isCaptureRegisteredInPokedex) return;
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", capture.DisplayName),
+            new Color(160, 160, 165));
     }
 
     private void HitPkmn(NPC target)
