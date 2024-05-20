@@ -9,12 +9,10 @@ public class DexStatusCommand : TerramonCommand
         => "dexstatus";
 
     public override string Usage
-        => "/dexstatus id";
+        => "/dexstatus <id>";
 
     public override string Description
         => "View the status of a Pokemon in your Pokedex";
-
-    protected override int MinimumArgumentCount => 1;
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

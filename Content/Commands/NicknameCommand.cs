@@ -17,12 +17,10 @@ public class NicknameCommand : TerramonCommand
         => "nickname";
 
     public override string Usage
-        => "/nickname <set/clear> nickname";
+        => "/nickname <set/clear> <nickname>";
 
     public override string Description
-        => "Change the nickname of your currently active Pokémon";
-
-    protected override int MinimumArgumentCount => 1;
+        => "Changes the nickname of your currently active Pokémon";
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

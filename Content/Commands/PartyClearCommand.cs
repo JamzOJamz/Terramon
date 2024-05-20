@@ -13,7 +13,7 @@ public class PartyClearCommand : DebugCommand
         => "partyclear";
 
     public override string Usage
-        => "/partyclear slot";
+        => "/partyclear <slot>";
 
     public override string Description
         => "Removes the specified Pokémon from your party";
@@ -29,33 +29,33 @@ public class PartyClearCommand : DebugCommand
             Array.Clear(player.Party, 0, player.Party.Length);
             player.ActiveSlot = -1;
             UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
-            caller.Reply("Removed all Pokemon from the party");
+            caller.Reply("Removed all Pokemon from the party", new Color(255, 240, 20));
             return;
         }
 
         var hasValidSlot = int.TryParse(args[0], out var slot);
         if (!hasValidSlot)
         {
-            caller.Reply("Failed to parse slot argument as integer");
+            caller.Reply("Failed to parse slot argument as integer", Color.Red);
             return;
         }
 
         var hasValidSlot2 = slot is > 0 and < 7;
         if (!hasValidSlot2)
         {
-            caller.Reply("Slot argument is out of range");
+            caller.Reply("Slot argument is out of range", Color.Red);
             return;
         }
 
         var slotIndex = slot - 1;
         if (player.Party[slotIndex] == null)
         {
-            caller.Reply($"No Pokemon found in slot {slot}");
+            caller.Reply($"No Pokemon found in slot {slot}", Color.Red);
             return;
         }
 
         caller.Reply(
-            $"Removed {player.Party[slotIndex].DisplayName} from the party");
+            $"Removed {player.Party[slotIndex].DisplayName} from the party", new Color(255, 240, 20));
         player.Party[slotIndex] = null;
         for (var i = slotIndex + 1; i < player.Party.Length; i++) player.Party[i - 1] = player.Party[i];
         player.Party[5] = null;

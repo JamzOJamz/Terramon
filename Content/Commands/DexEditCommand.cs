@@ -9,10 +9,10 @@ public class DexEditCommand : DebugCommand
         => "dexedit";
 
     public override string Usage
-        => "/dexedit id status";
+        => "/dexedit <id> <status>";
 
     public override string Description
-        => "Forcefully set Pokédex entry statuses";
+        => "Forcefully sets Pokédex entry statuses";
 
     protected override int MinimumArgumentCount => 2;
 

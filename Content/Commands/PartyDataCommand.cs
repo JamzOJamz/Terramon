@@ -11,7 +11,7 @@ public class PartyDataCommand : DebugCommand
         => "partydata";
 
     public override string Usage
-        => "/partydata slot";
+        => "/partydata <slot>";
 
     public override string Description
         => "Logs info for the specified Pokémon in your party";
