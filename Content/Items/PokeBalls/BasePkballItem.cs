@@ -1,23 +1,24 @@
 using System.Collections.Generic;
-using Terramon.Core.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 public abstract class BasePkballItem : TerramonItem
 {
+    public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBalls;
     protected virtual int pokeballThrow => ModContent.ProjectileType<BasePkballProjectile>();
     protected virtual int pokeballTile => ModContent.TileType<BasePkballTile>();
-    protected virtual int igPrice => -1; //ingame price (from pokemon games) so price scaling matches
+    protected virtual int igPrice => 0; //ingame price (from pokemon games) so price scaling matches
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
+            igPrice / 4; // Amount needed to duplicate them in Journey Mode
     }
 
     public override void SetDefaults()
@@ -74,6 +75,7 @@ public abstract class BasePkballItem : TerramonItem
             var catchRate = $"[c/ADADC6:{Language.GetTextValue($"Mods.Terramon.Items.{GetType().Name}.CatchRate")}]";
             tooltips.Add(new TooltipLine(Mod, "CatchRate", catchRate));
         }
+
         base.ModifyTooltips(tooltips);
     }
 }

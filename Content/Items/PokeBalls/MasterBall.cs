@@ -2,7 +2,7 @@
 using Terramon.Core.Helpers;
 using Terraria.GameContent.Creative;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 internal class MasterBallProjectile : BasePkballProjectile
 {
@@ -14,6 +14,11 @@ internal class MasterBallProjectile : BasePkballProjectile
     {
         return true;
     }
+}
+
+internal class MasterBallMiniItem : BasePkballMiniItem
+{
+    protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
 }
 
 internal class MasterBallItem : BasePkballItem

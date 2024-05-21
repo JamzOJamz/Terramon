@@ -38,8 +38,8 @@ internal class UILoader : ModSystem
         // Localization should be loaded before UIStates initialization
         LocalizationHelper.ForceLoadModHJsonLocalization(Mod);
 
-        UserInterfaces = new List<UserInterface>();
-        UIStates = new List<SmartUIState>();
+        UserInterfaces = [];
+        UIStates = [];
 
         foreach (var t in Mod.Code.GetTypes())
             if (!t.IsAbstract && t.IsSubclassOf(typeof(SmartUIState)))

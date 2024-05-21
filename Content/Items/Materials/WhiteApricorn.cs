@@ -1,4 +1,4 @@
-using Terramon.Content.Items.Mechanical;
+using Terramon.Content.Items.PokeBalls;
 
 namespace Terramon.Content.Items.Materials;
 

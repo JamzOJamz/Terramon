@@ -1,7 +1,7 @@
 using System.Linq;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
-using Terramon.Content.Items.Mechanical;
+using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;

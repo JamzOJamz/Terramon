@@ -1,12 +1,17 @@
 ﻿using Terramon.Core.Helpers;
 using Terraria.GameContent.Creative;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 internal class UltraBallProjectile : BasePkballProjectile
 {
     protected override int pokeballItem => ModContent.ItemType<UltraBallItem>();
     protected override float catchModifier => 2f;
+}
+
+internal class UltraBallMiniItem : BasePkballMiniItem
+{
+    protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
 }
 
 internal class UltraBallItem : BasePkballItem

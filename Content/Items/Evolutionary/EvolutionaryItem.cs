@@ -6,6 +6,8 @@ namespace Terramon.Content.Items.Evolutionary;
 
 public abstract class EvolutionaryItem : TerramonItem
 {
+    public override ItemLoadPriority LoadPriority => ItemLoadPriority.EvolutionaryItems;
+
     public override string Texture => "Terramon/Assets/Items/Evolutionary/" + GetType().Name;
 
     public override void SetStaticDefaults()

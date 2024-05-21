@@ -60,7 +60,7 @@ public class PartyDisplay : SmartUIState
     {
         for (var i = 0; i < PartySlots.Length; i++) UpdateSlot(partyData[i], i);
     }
-    
+
     public void RecalculateAllSlots()
     {
         for (var i = 0; i < PartySlots.Length; i++) RecalculateSlot(i);
@@ -201,7 +201,8 @@ public class PartySidebarSlot : UIImage
     {
         base.DrawSelf(spriteBatch);
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
-        var hoverText = Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover" + (IsActiveSlot ? "Active" : string.Empty));
+        var hoverText =
+            Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover" + (IsActiveSlot ? "Active" : string.Empty));
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
             hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
         Main.hoverItemName = hoverText;
@@ -244,9 +245,11 @@ public class PartySidebarSlot : UIImage
             SoundEngine.PlaySound(s);
             if (!IsActiveSlot)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID)) { Volume = 0.7f };
+                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID))
+                    { Volume = 0.7f };
                 SoundEngine.PlaySound(cry);
             }
+
             TerramonPlayer.LocalPlayer.ActiveSlot = IsActiveSlot ? -1 : Index;
             // Recalculates slots in order to update textures
             PartyDisplay.RecalculateAllSlots();

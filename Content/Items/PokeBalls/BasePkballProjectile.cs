@@ -10,7 +10,7 @@ using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 internal abstract class BasePkballProjectile : ModProjectile
 {
@@ -76,16 +76,12 @@ internal abstract class BasePkballProjectile : ModProjectile
         {
             bounces -= 1;
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"), Projectile.position);
-            
+
             // If the projectile hits the left or right side of the tile, reverse the X velocity
-            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon) {
-                Projectile.velocity.X = -oldVelocity.X;
-            }
+            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon) Projectile.velocity.X = -oldVelocity.X;
 
             // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
-            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon) {
-                Projectile.velocity.Y = -oldVelocity.Y;
-            }
+            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon) Projectile.velocity.Y = -oldVelocity.Y;
 
             Projectile.velocity.Y *= 0.7f;
             Projectile.velocity.X *= 0.5f;

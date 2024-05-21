@@ -10,7 +10,7 @@ public class RareCandy : Vitamin
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
     }
 
     public override void SetDefaults()

@@ -1,6 +1,5 @@
-
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\tModLoader.targets" />
+    <Import Project="..\tModLoader.targets"/>
     <PropertyGroup>
         <AssemblyName>Terramon</AssemblyName>
         <LangVersion>latest</LangVersion>
@@ -9,7 +8,7 @@
     <ItemGroup>
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Assets\Items\Evolutionary" />
-        <Folder Include="Sounds" />
+        <Folder Include="Assets\Items\Evolutionary"/>
+        <Folder Include="Sounds"/>
     </ItemGroup>
 </Project>

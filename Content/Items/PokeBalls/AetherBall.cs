@@ -1,12 +1,17 @@
 ﻿using Terramon.Content.Rarities;
 using Terraria.GameContent.Creative;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 internal class AetherBallProjectile : BasePkballProjectile
 {
     protected override int pokeballItem => ModContent.ItemType<AetherBallItem>();
     protected override float catchModifier => 1;
+}
+
+internal class AetherBallMiniItem : BasePkballMiniItem
+{
+    protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
 }
 
 internal class AetherBallItem : BasePkballItem

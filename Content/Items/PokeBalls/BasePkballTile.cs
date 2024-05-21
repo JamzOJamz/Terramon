@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 public abstract class BasePkballTile : ModTile
 {

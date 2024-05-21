@@ -94,6 +94,11 @@ CommonTooltips: {
 	KeyItem: Key Item
 	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
+	PokeBallMinis:
+		'''
+		'For decorative purposes'
+		Can be placed on item frames
+		'''
 	Unobtainable: Unobtainable
 }
 
@@ -108,6 +113,11 @@ Items: {
 		CatchRate: 1x catch rate
 	}
 
+	PokeBallMiniItem: {
+		DisplayName: "{$Items.PokeBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
 	GreatBallItem: {
 		DisplayName: Great Ball
 		Tooltip:
@@ -116,6 +126,11 @@ Items: {
 			Provides a higher Pokémon catch rate than a standard Poké Ball.
 			'''
 		CatchRate: 1.5x catch rate
+	}
+
+	GreatBallMiniItem: {
+		DisplayName: "{$Items.GreatBallItem.DisplayName} (Mini)"
+		Tooltip: ""
 	}
 
 	UltraBallItem: {
@@ -128,6 +143,11 @@ Items: {
 		CatchRate: 2x catch rate
 	}
 
+	UltraBallMiniItem: {
+		DisplayName: "{$Items.UltraBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
 	MasterBallItem: {
 		DisplayName: Master Ball
 		Tooltip:
@@ -136,6 +156,11 @@ Items: {
 			It will catch any wild Pokémon without fail.
 			'''
 		CatchRate: 100% catch rate
+	}
+
+	MasterBallMiniItem: {
+		DisplayName: "{$Items.MasterBallItem.DisplayName} (Mini)"
+		Tooltip: ""
 	}
 
 	PremierBallItem: {
@@ -148,6 +173,11 @@ Items: {
 		CatchRate: 1x catch rate
 	}
 
+	PremierBallMiniItem: {
+		DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
 	AetherBallItem: {
 		DisplayName: Aether Ball
 		Tooltip:
@@ -156,6 +186,11 @@ Items: {
 			It is said to have a calming effect on wild Pokémon.
 			'''
 		CatchRate: 1x catch rate
+	}
+
+	AetherBallMiniItem: {
+		DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
+		Tooltip: ""
 	}
 
 	RareCandy: {

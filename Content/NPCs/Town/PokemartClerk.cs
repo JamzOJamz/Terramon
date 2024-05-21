@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Terramon.Content.Items.Mechanical;
+using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Items.Vanity;
 using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.ID;

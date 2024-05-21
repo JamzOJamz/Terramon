@@ -5,7 +5,7 @@ namespace Terramon.Content.Items.Evolutionary;
 public class IceStone : EvolutionaryItem
 {
     protected override bool Obtainable => false;
-    
+
     protected override int UseRarity => ModContent.RarityType<IceStoneRarity>();
 
     public override void SetDefaults()

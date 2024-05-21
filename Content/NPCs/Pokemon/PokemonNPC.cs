@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.AI;
 using Terramon.Content.Dusts;
-using Terramon.Content.Items.Mechanical;
+using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.NPCComponents;
 using Terraria.DataStructures;
 using Terraria.ID;

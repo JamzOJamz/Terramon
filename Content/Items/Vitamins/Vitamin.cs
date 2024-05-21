@@ -5,6 +5,8 @@ namespace Terramon.Content.Items.Vitamins;
 
 public abstract class Vitamin : TerramonItem
 {
+    public override ItemLoadPriority LoadPriority => ItemLoadPriority.Vitamins;
+
     public override string Texture => "Terramon/Assets/Items/Vitamins/" + GetType().Name;
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
-using Terramon.Content.Items.Mechanical;
+using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;

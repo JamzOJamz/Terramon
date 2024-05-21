@@ -1,13 +1,23 @@
 ﻿using Terramon.Core.Helpers;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 
-namespace Terramon.Content.Items.Mechanical;
+namespace Terramon.Content.Items.PokeBalls;
 
 internal class PokeBallProjectile : BasePkballProjectile
 {
     protected override int pokeballItem => ModContent.ItemType<PokeBallItem>();
     protected override float catchModifier => 1;
+}
+
+internal class PokeBallMiniItem : BasePkballMiniItem
+{
+    protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
+
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AetherBallMiniItem>();
+    }
 }
 
 internal class PokeBallItem : BasePkballItem
@@ -19,9 +29,8 @@ internal class PokeBallItem : BasePkballItem
 
     public override void SetStaticDefaults()
     {
+        base.SetStaticDefaults();
         ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AetherBallItem>();
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            igPrice / 2; // Amount needed to duplicate them in Journey Mode
     }
 }
 
