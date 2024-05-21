@@ -1,4 +1,5 @@
 using Terramon.Content.Items.Materials;
+using Terramon.ID;
 
 namespace Terramon.Content.Items.Evolutionary;
 
@@ -11,5 +12,18 @@ public class MoonStone : EvolutionaryItem
         base.SetDefaults();
         Item.width = 28;
         Item.height = 28;
+    }
+    
+    public override ushort GetEvolvedSpecies(PokemonData data, EvolutionTrigger trigger)
+    {
+        if (trigger != EvolutionTrigger.DirectUse) return 0;
+        return data.ID switch
+        {
+            NationalDexID.Nidorina => NationalDexID.Nidoqueen,
+            NationalDexID.Nidorino => NationalDexID.Nidoking,
+            NationalDexID.Clefairy => NationalDexID.Clefable,
+            NationalDexID.Jigglypuff => NationalDexID.Wigglytuff,
+            _ => 0
+        };
     }
 }

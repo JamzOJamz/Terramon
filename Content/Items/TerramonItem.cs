@@ -45,5 +45,5 @@ public enum ItemLoadPriority
     Vitamins,
     KeyItems,
     PokeBallMinis,
-    Unspecified,
+    Unspecified
 }

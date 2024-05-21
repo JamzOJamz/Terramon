@@ -373,4 +373,7 @@ Misc: {
 	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
 	PokedexRegistered: "{0}'s data was added to the Pokédex."
 	RequireStarter: Choose a starter Pokémon first!
+	NoActivePokemon: You need to have an active Pokémon to do that!
+	ItemNoEffect: It won't have any effect on {0}.
+	PokemonEvolved: "{0} evolved into {1}!"
 }

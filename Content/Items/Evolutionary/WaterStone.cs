@@ -1,4 +1,5 @@
 using Terramon.Content.Rarities;
+using Terramon.ID;
 
 namespace Terramon.Content.Items.Evolutionary;
 
@@ -11,6 +12,19 @@ public class WaterStone : EvolutionaryItem
         base.SetDefaults();
         Item.width = 24;
         Item.height = 26;
+    }
+    
+    public override ushort GetEvolvedSpecies(PokemonData data, EvolutionTrigger trigger)
+    {
+        if (trigger != EvolutionTrigger.DirectUse) return 0;
+        return data.ID switch
+        {
+            NationalDexID.Poliwhirl => NationalDexID.Poliwrath,
+            NationalDexID.Shellder => NationalDexID.Cloyster,
+            NationalDexID.Staryu => NationalDexID.Starmie,
+            NationalDexID.Eevee => NationalDexID.Vaporeon,
+            _ => 0
+        };
     }
 }
 

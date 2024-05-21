@@ -11,18 +11,18 @@ namespace Terramon.Core;
 
 public class DatabaseV2
 {
-    [JsonProperty] public int StarterMax { get; private set; }
+    [JsonProperty] public ushort StarterMax { get; private set; }
 
     [JsonProperty("sm")]
-    private int b_StarterMax
+    private ushort b_StarterMax
     {
         set => StarterMax = value;
     }
 
-    [JsonProperty] public Dictionary<int, PokemonSchema> Pokemon { get; private set; }
+    [JsonProperty] public Dictionary<ushort, PokemonSchema> Pokemon { get; private set; }
 
     [JsonProperty("p")]
-    private Dictionary<int, PokemonSchema> b_Pokemon
+    private Dictionary<ushort, PokemonSchema> b_Pokemon
     {
         set => Pokemon = value;
     }
@@ -34,10 +34,16 @@ public class DatabaseV2
         reader.Close();
         return db;
     }
+    
+    public ushort GetEvolutionAtLevel(ushort id, byte level)
+    {
+        var pokemon = GetPokemon(id);
+        return pokemon?.Evolution.AtLevel == level ? pokemon.Evolution.ID : (ushort)0;
+    }
 
     public PokemonSchema GetPokemon(ushort id)
     {
-        return Pokemon.TryGetValue(id, out var pokemon) ? pokemon : null;
+        return Pokemon.GetValueOrDefault(id);
     }
 
     public string GetPokemonName(ushort id)
@@ -94,10 +100,10 @@ public class DatabaseV2
             set => Evolution = value;
         }
 
-        public int GenderRate { get; set; }
+        public sbyte GenderRate { get; set; }
 
         [JsonProperty("g")]
-        private int b_GenderRate
+        private sbyte b_GenderRate
         {
             set => GenderRate = value;
         }
@@ -105,50 +111,50 @@ public class DatabaseV2
 
     public class StatsSchema
     {
-        [JsonProperty("hp")] public int HP { get; set; }
+        [JsonProperty("hp")] public byte HP { get; set; }
 
         [JsonProperty("h")]
-        private int b_HP
+        private byte b_HP
         {
             set => HP = value;
         }
 
-        public int Attack { get; set; }
+        public byte Attack { get; set; }
 
         [JsonProperty("a")]
-        private int b_Attack
+        private byte b_Attack
         {
             set => Attack = value;
         }
 
-        public int Defense { get; set; }
+        public byte Defense { get; set; }
 
         [JsonProperty("d")]
-        private int b_Defense
+        private byte b_Defense
         {
             set => Defense = value;
         }
 
-        public int SpAtk { get; set; }
+        public byte SpAtk { get; set; }
 
         [JsonProperty("sa")]
-        private int b_SpAtk
+        private byte b_SpAtk
         {
             set => SpAtk = value;
         }
 
-        public int SpDef { get; set; }
+        public byte SpDef { get; set; }
 
         [JsonProperty("sd")]
-        private int b_SpDef
+        private byte b_SpDef
         {
             set => SpDef = value;
         }
 
-        public int Speed { get; set; }
+        public byte Speed { get; set; }
 
         [JsonProperty("s")]
-        private int b_Speed
+        private byte b_Speed
         {
             set => Speed = value;
         }
@@ -156,18 +162,18 @@ public class DatabaseV2
 
     public class EvolutionSchema
     {
-        [JsonProperty("id")] public int ID { get; set; }
+        [JsonProperty("id")] public ushort ID { get; set; }
 
         [JsonProperty("i")]
-        private int b_ID
+        private ushort b_ID
         {
             set => ID = value;
         }
 
-        public int AtLevel { get; set; }
+        public byte AtLevel { get; set; }
 
         [JsonProperty("l")]
-        private int b_AtLevel
+        private byte b_AtLevel
         {
             set => AtLevel = value;
         }

@@ -1,5 +1,7 @@
 using System;
+using Terramon.Content.Items.Evolutionary;
 using Terramon.ID;
+using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
@@ -15,6 +17,7 @@ public class PokemonData : TagSerializable
     private readonly uint _personalityValue;
     public byte Ball = BallID.PokeBall;
     public Gender Gender;
+    private Item HeldItem;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
@@ -52,7 +55,58 @@ public class PokemonData : TagSerializable
             tag["n"] = Nickname;
         if (Variant != null)
             tag["variant"] = Variant;
+        if (HeldItem != null)
+            tag["item"] = new ItemDefinition(HeldItem.type);
         return tag;
+    }
+
+    /// <summary>
+    ///     Increases the Pokémon's level by 1.
+    ///     Returns false if the Pokémon is already at level 100.
+    /// </summary>
+    public bool LevelUp()
+    {
+        if (Level >= 100)
+            return false;
+        Level++;
+        return true;
+    }
+
+    /// <summary>
+    ///     Returns the ID of the species the Pokémon should evolve into.
+    /// </summary>
+    /// <param name="trigger">The trigger that prompted the evolution.</param>
+    public ushort GetQueuedEvolution(EvolutionTrigger trigger)
+    {
+        switch (trigger)
+        {
+            case EvolutionTrigger.DirectUse:
+                return 0;
+            case EvolutionTrigger.LevelUp:
+            {
+                var naturalEvolution = Terramon.DatabaseV2.GetEvolutionAtLevel(ID, Level);
+                if (naturalEvolution != 0)
+                    return naturalEvolution;
+                break;
+            }
+            case EvolutionTrigger.Trade:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(trigger), trigger, null);
+        }
+
+        if (HeldItem?.ModItem is EvolutionaryItem item)
+            return item.GetEvolvedSpecies(this, trigger);
+        return 0;
+    }
+
+    /// <summary>
+    ///     Evolves the Pokémon into the specified species.
+    /// </summary>
+    /// <param name="id">The ID of the species to evolve into.</param>
+    public void EvolveInto(ushort id)
+    {
+        ID = id;
     }
 
     public static PokemonData Create(Player player, ushort id, byte level = 1)
@@ -109,6 +163,8 @@ public class PokemonData : TagSerializable
             data.Nickname = nickname;
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
+        if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
+            data.HeldItem = new Item(itemDefinition.Type);
         return data;
     }
 }

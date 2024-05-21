@@ -1,4 +1,5 @@
 using Terramon.Content.Rarities;
+using Terramon.ID;
 
 namespace Terramon.Content.Items.Evolutionary;
 
@@ -11,6 +12,17 @@ public class ThunderStone : EvolutionaryItem
         base.SetDefaults();
         Item.width = 24;
         Item.height = 28;
+    }
+    
+    public override ushort GetEvolvedSpecies(PokemonData data, EvolutionTrigger trigger)
+    {
+        if (trigger != EvolutionTrigger.DirectUse) return 0;
+        return data.ID switch
+        {
+            NationalDexID.Pikachu => NationalDexID.Raichu,
+            NationalDexID.Eevee => NationalDexID.Jolteon,
+            _ => 0
+        };
     }
 }
 
