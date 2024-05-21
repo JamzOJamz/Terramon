@@ -14,9 +14,8 @@ public class WaterStone : EvolutionaryItem
         Item.height = 26;
     }
     
-    public override ushort GetEvolvedSpecies(PokemonData data, EvolutionTrigger trigger)
+    public override ushort GetEvolvedSpecies(PokemonData data)
     {
-        if (trigger != EvolutionTrigger.DirectUse) return 0;
         return data.ID switch
         {
             NationalDexID.Poliwhirl => NationalDexID.Poliwrath,

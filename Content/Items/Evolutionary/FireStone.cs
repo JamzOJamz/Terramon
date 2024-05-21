@@ -14,9 +14,8 @@ public class FireStone : EvolutionaryItem
         Item.height = 28;
     }
 
-    public override ushort GetEvolvedSpecies(PokemonData data, EvolutionTrigger trigger)
+    public override ushort GetEvolvedSpecies(PokemonData data)
     {
-        if (trigger != EvolutionTrigger.DirectUse) return 0;
         return data.ID switch
         {
             NationalDexID.Vulpix => NationalDexID.Ninetales,

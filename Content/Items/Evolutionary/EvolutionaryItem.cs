@@ -13,6 +13,11 @@ public abstract class EvolutionaryItem : TerramonItem
 
     public override string Texture => "Terramon/Assets/Items/Evolutionary/" + GetType().Name;
 
+    /// <summary>
+    ///     The trigger method that causes the evolution. Defaults to <see cref="EvolutionTrigger.DirectUse" />.
+    /// </summary>
+    public virtual EvolutionTrigger Trigger => EvolutionTrigger.DirectUse;
+
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
@@ -23,6 +28,7 @@ public abstract class EvolutionaryItem : TerramonItem
         base.SetDefaults();
         Item.maxStack = 1;
         Item.value = 50000;
+        if (Trigger != EvolutionTrigger.DirectUse) return;
         Item.useTime = 30;
         Item.useAnimation = 30;
         Item.useStyle = ItemUseStyleID.HoldUp;
@@ -32,6 +38,7 @@ public abstract class EvolutionaryItem : TerramonItem
 
     public override bool CanUseItem(Player player)
     {
+        if (Trigger != EvolutionTrigger.DirectUse) return false;
         var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         if (activePokemonData == null)
         {
@@ -39,7 +46,7 @@ public abstract class EvolutionaryItem : TerramonItem
             return false;
         }
 
-        var evolvedSpecies = GetEvolvedSpecies(activePokemonData, EvolutionTrigger.DirectUse);
+        var evolvedSpecies = GetEvolvedSpecies(activePokemonData);
         if (evolvedSpecies != 0) return true;
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),
             new Color(255, 240, 20));
@@ -51,9 +58,9 @@ public abstract class EvolutionaryItem : TerramonItem
         var modPlayer = player.GetModPlayer<TerramonPlayer>();
         var activePokemonData = modPlayer.GetActivePokemon();
         if (activePokemonData == null) return null;
-        var evolvedSpecies = GetEvolvedSpecies(activePokemonData, EvolutionTrigger.DirectUse);
+        var evolvedSpecies = GetEvolvedSpecies(activePokemonData);
         if (evolvedSpecies == 0) return null;
-        
+
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", activePokemonData.DisplayName,
                 Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies)), new Color(50, 255, 130));
@@ -75,11 +82,10 @@ public abstract class EvolutionaryItem : TerramonItem
     ///     Determines the species to which a given Pokémon evolves with this item.
     /// </summary>
     /// <param name="data">The data of the Pokémon trying to be evolved.</param>
-    /// <param name="trigger">The trigger that prompted the evolution.</param>
     /// <returns>
     ///     The ID of the evolved Pokémon. If no evolution is possible, return 0.
     /// </returns>
-    public virtual ushort GetEvolvedSpecies(PokemonData data, EvolutionTrigger trigger)
+    public virtual ushort GetEvolvedSpecies(PokemonData data)
     {
         return 0;
     }

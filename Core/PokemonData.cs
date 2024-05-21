@@ -94,9 +94,10 @@ public class PokemonData : TagSerializable
             default:
                 throw new ArgumentOutOfRangeException(nameof(trigger), trigger, null);
         }
-
-        if (HeldItem?.ModItem is EvolutionaryItem item)
-            return item.GetEvolvedSpecies(this, trigger);
+        
+        // Check for Pokémon that evolve through held items
+        if (HeldItem?.ModItem is EvolutionaryItem item && item.Trigger == trigger)
+            return item.GetEvolvedSpecies(this);
         return 0;
     }
 
