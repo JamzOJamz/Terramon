@@ -23,9 +23,9 @@ internal class PokeBallMiniItem : BasePkballMiniItem
 internal class PokeBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<PokeBallRarity>();
-    protected override int pokeballThrow => ModContent.ProjectileType<PokeBallProjectile>();
-    protected override int pokeballTile => ModContent.TileType<PokeBallTile>();
-    protected override int igPrice => 200;
+    protected override int PokeballThrow => ModContent.ProjectileType<PokeBallProjectile>();
+    protected override int PokeballTile => ModContent.TileType<PokeBallTile>();
+    protected override int InGamePrice => 200;
 
     public override void SetStaticDefaults()
     {
@@ -36,7 +36,7 @@ internal class PokeBallItem : BasePkballItem
 
 public class PokeBallTile : BasePkballTile
 {
-    protected override int dropItem => ModContent.ItemType<PokeBallItem>();
+    protected override int DropItem => ModContent.ItemType<PokeBallItem>();
 }
 
 public class PokeBallRarity : ModRarity

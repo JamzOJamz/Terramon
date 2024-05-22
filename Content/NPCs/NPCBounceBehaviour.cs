@@ -20,21 +20,21 @@ public class NPCBounceBehaviour : NPCComponent
     public float FallSpeedMultiplier = 1f;
     public int FrameCount = 2;
     public int FrameTime = 10;
-    private bool hasFirstDir;
+    private bool _hasFirstDir;
     public float HorizontalSpeedMax = 3.5f;
     public float HorizontalSpeedMin = 2f;
     public float JumpSpeedMultiplier = 1f;
     public int MaxJumpClearance = -1;
-    private NPC NPC;
+    private NPC _npc;
 
-    private ref float AI_State => ref NPC.ai[0];
-    private ref float AI_Timer => ref NPC.ai[1];
-    private ref float AI_JumpVelocity => ref NPC.ai[2];
-    private ref float AI_JumpDirection => ref NPC.ai[3];
+    private ref float AIState => ref _npc.ai[0];
+    private ref float AITimer => ref _npc.ai[1];
+    private ref float AIJumpVelocity => ref _npc.ai[2];
+    private ref float AIJumpDirection => ref _npc.ai[3];
 
     protected override void OnEnabled(NPC npc)
     {
-        NPC = npc;
+        _npc = npc;
     }
 
     public override void SetDefaults(NPC npc)
@@ -55,8 +55,8 @@ public class NPCBounceBehaviour : NPCComponent
     {
         if (!Enabled) return;
 
-        if (NPC.collideY) NPC.velocity.Y = 0;
-        switch (AI_State)
+        if (_npc.collideY) _npc.velocity.Y = 0;
+        switch (AIState)
         {
             case (float)ActionState.Idle:
                 Idle();
@@ -69,59 +69,59 @@ public class NPCBounceBehaviour : NPCComponent
 
     private void Idle()
     {
-        var isGrounded = NPC.velocity.Y == 0;
+        var isGrounded = _npc.velocity.Y == 0;
         if (isGrounded)
         {
-            NPC.velocity.X *= 0.7f;
-            AI_Timer++;
+            _npc.velocity.X *= 0.7f;
+            AITimer++;
         }
         else
         {
-            AI_Timer = 0;
+            AITimer = 0;
         }
 
-        if ((int)AI_Timer == (int)(BounceFrequency / 2) && Main.netMode != NetmodeID.MultiplayerClient)
+        if ((int)AITimer == (int)(BounceFrequency / 2) && Main.netMode != NetmodeID.MultiplayerClient)
         {
-            if (Main.rand.NextFloat() <= ChangeDirectionChance || !hasFirstDir)
+            if (Main.rand.NextFloat() <= ChangeDirectionChance || !_hasFirstDir)
             {
-                AI_JumpDirection = Main.rand.NextBool() ? 1 : -1;
-                if (!hasFirstDir) hasFirstDir = true;
+                AIJumpDirection = Main.rand.NextBool() ? 1 : -1;
+                if (!_hasFirstDir) _hasFirstDir = true;
             }
 
             if (MaxJumpClearance != -1)
             {
-                if (Collision.SolidCollision(NPC.Left - new Vector2(8, MaxJumpClearance), 8, 8))
-                    AI_JumpDirection = -1;
-                else if (Collision.SolidCollision(NPC.Right + new Vector2(8, -MaxJumpClearance), 8, 8))
-                    AI_JumpDirection = 1;
+                if (Collision.SolidCollision(_npc.Left - new Vector2(8, MaxJumpClearance), 8, 8))
+                    AIJumpDirection = -1;
+                else if (Collision.SolidCollision(_npc.Right + new Vector2(8, -MaxJumpClearance), 8, 8))
+                    AIJumpDirection = 1;
             }
 
-            NPC.netUpdate = true;
+            _npc.netUpdate = true;
         }
 
-        NPC.spriteDirection = (int)AI_JumpDirection * -1;
-        if (AI_Timer <= BounceFrequency) return;
-        if (isGrounded) AI_State = (float)ActionState.Jump;
-        AI_Timer = 0;
+        _npc.spriteDirection = (int)AIJumpDirection * -1;
+        if (AITimer <= BounceFrequency) return;
+        if (isGrounded) AIState = (float)ActionState.Jump;
+        AITimer = 0;
     }
 
     private void Jump()
     {
-        AI_Timer++;
-        if (AI_Timer == 1 && Main.netMode != NetmodeID.MultiplayerClient)
+        AITimer++;
+        if (AITimer == 1 && Main.netMode != NetmodeID.MultiplayerClient)
         {
-            NPC.velocity.Y = Main.rand.NextFloat(BounceMinRange, BounceMaxRange);
+            _npc.velocity.Y = Main.rand.NextFloat(BounceMinRange, BounceMaxRange);
             var jumpStrength = Main.rand.NextFloat(HorizontalSpeedMin, HorizontalSpeedMax);
-            AI_JumpVelocity = AI_JumpDirection == 1 ? -jumpStrength : jumpStrength;
-            NPC.netUpdate = true;
+            AIJumpVelocity = AIJumpDirection == 1 ? -jumpStrength : jumpStrength;
+            _npc.netUpdate = true;
         }
 
-        NPC.velocity.X = AI_JumpVelocity;
-        if (NPC.velocity.Y > 0) NPC.velocity.Y *= FallSpeedMultiplier;
-        else NPC.velocity.Y *= JumpSpeedMultiplier;
-        if (NPC.velocity.Y != 0) return;
-        AI_State = (float)ActionState.Idle;
-        AI_Timer = 0;
+        _npc.velocity.X = AIJumpVelocity;
+        if (_npc.velocity.Y > 0) _npc.velocity.Y *= FallSpeedMultiplier;
+        else _npc.velocity.Y *= JumpSpeedMultiplier;
+        if (_npc.velocity.Y != 0) return;
+        AIState = (float)ActionState.Idle;
+        AITimer = 0;
     }
 
     /// <summary>
@@ -131,12 +131,12 @@ public class NPCBounceBehaviour : NPCComponent
     {
         if (!Enabled) return;
 
-        NPC.frameCounter++;
+        _npc.frameCounter++;
 
-        if (NPC.frameCounter < FrameTime * FrameCount)
-            NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+        if (_npc.frameCounter < FrameTime * FrameCount)
+            _npc.frame.Y = (int)Math.Floor(_npc.frameCounter / FrameTime) * frameHeight;
         else
-            NPC.frameCounter = 0;
+            _npc.frameCounter = 0;
     }
 
     private enum ActionState

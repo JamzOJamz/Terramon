@@ -11,8 +11,8 @@ namespace Terramon.Core;
 public class TerramonPlayer : ModPlayer
 {
     public readonly PokemonData[] Party = new PokemonData[6];
-    private readonly PCService PC = new();
-    private readonly PokedexService Pokedex = new();
+    private readonly PCService _pc = new();
+    private readonly PokedexService _pokedex = new();
 
     private int _activeSlot = -1;
 
@@ -48,7 +48,7 @@ public class TerramonPlayer : ModPlayer
 
     public PokedexService GetPokedex()
     {
-        return Pokedex;
+        return _pokedex;
     }
 
     public override void OnEnterWorld()
@@ -136,19 +136,19 @@ public class TerramonPlayer : ModPlayer
 
     public bool UpdatePokedex(ushort id, PokedexEntryStatus status)
     {
-        var containsId = Pokedex.Entries.ContainsKey(id);
-        if (containsId) Pokedex.Entries[id] = status;
+        var containsId = _pokedex.Entries.ContainsKey(id);
+        if (containsId) _pokedex.Entries[id] = status;
         return containsId;
     }
 
     public PCBox TransferPokemonToPC(PokemonData data)
     {
-        return PC.StorePokemon(data);
+        return _pc.StorePokemon(data);
     }
 
     public string GetDefaultNameForPCBox(PCBox box)
     {
-        return "Box " + (PC.Boxes.IndexOf(box) + 1);
+        return "Box " + (_pc.Boxes.IndexOf(box) + 1);
     }
 
     public override void SaveData(TagCompound tag)
@@ -191,7 +191,7 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePokedex(TagCompound tag)
     {
-        tag["pokedex"] = Pokedex.Entries.Select(entry => new[] { entry.Key, (byte)entry.Value }).ToList();
+        tag["pokedex"] = _pokedex.Entries.Select(entry => new[] { entry.Key, (byte)entry.Value }).ToList();
     }
 
     private void LoadPokedex(TagCompound tag)
@@ -204,19 +204,19 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePC(TagCompound tag)
     {
-        tag["pc"] = PC.Boxes;
+        tag["pc"] = _pc.Boxes;
     }
 
     private void LoadPC(TagCompound tag)
     {
         const string tagName = "pc";
         if (!tag.ContainsKey(tagName)) return;
-        PC.Boxes.Clear();
+        _pc.Boxes.Clear();
         var boxes = tag.GetList<PCBox>(tagName);
         foreach (var box in boxes)
         {
-            box.Service = PC;
-            PC.Boxes.Add(box);
+            box.Service = _pc;
+            _pc.Boxes.Add(box);
         }
     }
 }

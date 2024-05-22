@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria.ID;
+// ReSharper disable InconsistentNaming
 
 namespace GenUtils;
 
@@ -8,7 +9,7 @@ internal class ChestGen
     public static void AddChestLoot(int itemID, int chestID = -1, int minimumStack = 1, int maximumStack = 1,
         int chance = 10000, bool excludeDuplicates = false)
     {
-        AddChestLoot(itemID, chestID == -1 ? null : new List<int> { chestID }, minimumStack, maximumStack, chance,
+        AddChestLoot(itemID, chestID == -1 ? null : [chestID], minimumStack, maximumStack, chance,
             excludeDuplicates);
     }
 
@@ -26,42 +27,42 @@ internal class ChestGen
 
             var chest = Main.chest[chestIndex];
             //check if the chest actually exists
-            if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers)
-                //make sure the chest is the right type that we are looking for
-                if (chestIDs == null || chestIDs.Contains(Main.tile[chest.x, chest.y].TileFrameX / 36))
-                    //check all slots
-                    for (var inventoryIndex = 0; inventoryIndex < Chest.maxItems; inventoryIndex++)
-                        //if slot contains our item and duplicates are disabled, skip this chest
-                        if (chest.item[inventoryIndex].type == itemID && excludeDuplicates)
-                        {
-                            break;
-                        }
-                        //if slot is empty or already contains our item
-                        else if (chest.item[inventoryIndex].IsAir || chest.item[inventoryIndex].type == itemID)
-                        {
-                            var amount = WorldGen.genRand.Next(minimumStack, maximumStack + 1);
+            if (chest == null || Main.tile[chest.x, chest.y].TileType != TileID.Containers) continue;
+            //make sure the chest is the right type that we are looking for
+            if (chestIDs != null && !chestIDs.Contains(Main.tile[chest.x, chest.y].TileFrameX / 36)) continue;
+            //check all slots
+            for (var inventoryIndex = 0; inventoryIndex < Chest.maxItems; inventoryIndex++)
+                //if slot contains our item and duplicates are disabled, skip this chest
+                if (chest.item[inventoryIndex].type == itemID && excludeDuplicates)
+                {
+                    break;
+                }
+                //if slot is empty or already contains our item
+                else if (chest.item[inventoryIndex].IsAir || chest.item[inventoryIndex].type == itemID)
+                {
+                    var amount = WorldGen.genRand.Next(minimumStack, maximumStack + 1);
 
-                            //break if the amount is 0 (shouldn't try to add an item)
-                            if (amount == 0)
-                                break;
+                    //break if the amount is 0 (shouldn't try to add an item)
+                    if (amount == 0)
+                        break;
 
-                            //only create new item if none exists
-                            if (chest.item[inventoryIndex].IsAir)
-                            {
-                                chest.item[inventoryIndex].SetDefaults(itemID);
-                                chest.item[inventoryIndex].stack = 0;
-                            }
+                    //only create new item if none exists
+                    if (chest.item[inventoryIndex].IsAir)
+                    {
+                        chest.item[inventoryIndex].SetDefaults(itemID);
+                        chest.item[inventoryIndex].stack = 0;
+                    }
 
-                            chest.item[inventoryIndex].stack += amount;
-                            break;
-                        }
+                    chest.item[inventoryIndex].stack += amount;
+                    break;
+                }
         }
     }
 
     public static void RemoveChestLoot(int itemID, int chestID = -1, int minimumAmount = 1, int maximumAmount = 1,
         int chance = 10000)
     {
-        RemoveChestLoot(itemID, chestID == -1 ? null : new List<int> { chestID }, minimumAmount, maximumAmount,
+        RemoveChestLoot(itemID, chestID == -1 ? null : [chestID], minimumAmount, maximumAmount,
             chance);
     }
 
@@ -162,24 +163,17 @@ public class ChestID
     public const short Crystal = 52;
     public const short GoldPirate = 53;
 
-    public static List<int> Dungeon = new()
-    {
+    public static readonly List<int> Dungeon =
+    [
         GreenDungeon, GreenDungeon_Locked, PinkDungeon, PinkDungeon_Locked, BlueDungeon, BlueDungeon_Locked, Gold_Locked
-    };
+    ];
 
-    public static List<int> DungeonLocked = new()
-        { GreenDungeon_Locked, PinkDungeon_Locked, BlueDungeon_Locked, Gold_Locked };
+    public static readonly List<int> DungeonLocked = [GreenDungeon_Locked, PinkDungeon_Locked, BlueDungeon_Locked, Gold_Locked];
 
-    public static List<int> DungeonUnlocked = new() { GreenDungeon, PinkDungeon, BlueDungeon };
+    public static readonly List<int> DungeonUnlocked = [GreenDungeon, PinkDungeon, BlueDungeon];
 
-    public static List<int> DungeonSpecial = new()
-        { Corruption_Locked, Crimson_Locked, Ice_Locked, Jungle_Locked, Hallowed_Locked };
+    public static readonly List<int> DungeonSpecial =
+        [Corruption_Locked, Crimson_Locked, Ice_Locked, Jungle_Locked, Hallowed_Locked];
 
-    public static List<int> Locked = new()
-    {
-        BlueDungeon_Locked, Corruption_Locked, Crimson_Locked, Gold_Locked, GreenDungeon_Locked, Hallowed_Locked,
-        Ice_Locked, Jungle_Locked, PinkDungeon_Locked, Shadow_Locked
-    };
-
-    public static List<int> LivingTrees = new() { LivingWood, Ivy };
+    public static readonly List<int> LivingTrees = [LivingWood, Ivy];
 }

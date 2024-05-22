@@ -17,20 +17,20 @@ internal class UltraBallMiniItem : BasePkballMiniItem
 internal class UltraBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
-    protected override int pokeballThrow => ModContent.ProjectileType<UltraBallProjectile>();
-    protected override int pokeballTile => ModContent.TileType<UltraBallTile>();
-    protected override int igPrice => 800;
+    protected override int PokeballThrow => ModContent.ProjectileType<UltraBallProjectile>();
+    protected override int PokeballTile => ModContent.TileType<UltraBallTile>();
+    protected override int InGamePrice => 800;
 
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            igPrice / 2; //Amount needed to duplicate them in Journey Mode
+            InGamePrice / 2; //Amount needed to duplicate them in Journey Mode
     }
 }
 
 public class UltraBallTile : BasePkballTile
 {
-    protected override int dropItem => ModContent.ItemType<UltraBallItem>();
+    protected override int DropItem => ModContent.ItemType<UltraBallItem>();
 }
 
 public class UltraBallRarity : ModRarity

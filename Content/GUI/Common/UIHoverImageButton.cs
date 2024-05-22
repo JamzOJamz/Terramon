@@ -5,24 +5,24 @@ namespace Terramon.Content.GUI.Common;
 
 public class UIHoverImageButton : UIImageButton
 {
-    private readonly string HoverText;
-    private bool IsActivated;
+    private readonly string _hoverText;
+    private bool _isActivated;
 
     public UIHoverImageButton(Asset<Texture2D> texture, string hoverText) : base(texture)
     {
-        HoverText = hoverText;
+        _hoverText = hoverText;
     }
 
     public void SetIsActive(bool active)
     {
-        IsActivated = active;
+        _isActivated = active;
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        if (!IsActivated) return;
+        if (!_isActivated) return;
         base.DrawSelf(spriteBatch);
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
-        if (IsMouseHovering) Main.hoverItemName = HoverText;
+        if (IsMouseHovering) Main.hoverItemName = _hoverText;
     }
 }

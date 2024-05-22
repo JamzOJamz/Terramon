@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using Terraria.Localization;
 
+// ReSharper disable InconsistentNaming
+
 namespace Terramon.Core.Helpers;
 
 /*
@@ -29,6 +31,10 @@ namespace Terramon.Core.Helpers;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/// <summary>
+///     A helper class for using localized text.
+/// </summary>
 public static class LocalizationHelper
 {
     private static readonly MethodInfo LocalizationLoader_LoadTranslations =
@@ -37,15 +43,19 @@ public static class LocalizationHelper
     private static readonly MethodInfo LocalizedText_SetValue =
         typeof(LocalizedText).GetMethod("SetValue", BindingFlags.NonPublic | BindingFlags.Instance);
 
+    /// <summary>
+    ///     Forces the localization for the given mod to be loaded for use with <see cref="Language" />.
+    /// </summary>
+    /// <param name="mod">The mod instance</param>
     public static void ForceLoadModHJsonLocalization(Mod mod)
     {
         var lang = LanguageManager.Instance;
         foreach (var (key, value) in (LocalizationLoader_LoadTranslations.Invoke(null,
-                     new object[] { mod, Language.ActiveCulture }) as List<(string key, string value)>)!)
+                     [mod, Language.ActiveCulture]) as List<(string key, string value)>)!)
         {
             var text = lang.GetText(key);
             LocalizedText_SetValue.Invoke(text,
-                new object[] { value }); // can only set the value of existing keys. Cannot register new keys.
+                [value]); // can only set the value of existing keys. Cannot register new keys.
         }
     }
 }

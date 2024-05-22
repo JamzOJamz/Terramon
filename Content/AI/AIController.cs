@@ -2,15 +2,10 @@ using System.IO;
 
 namespace Terramon.Content.AI;
 
-public abstract class AIController
+public abstract class AIController(NPC npc)
 {
-    protected readonly NPC NPC;
+    protected readonly NPC NPC = npc;
     protected const int FrameSpeed = 10;
-
-    protected AIController(NPC npc)
-    {
-        NPC = npc;
-    }
 
     public abstract void AI();
 

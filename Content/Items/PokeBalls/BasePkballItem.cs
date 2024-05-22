@@ -9,23 +9,28 @@ namespace Terramon.Content.Items.PokeBalls;
 public abstract class BasePkballItem : TerramonItem
 {
     public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBalls;
-    protected virtual int pokeballThrow => ModContent.ProjectileType<BasePkballProjectile>();
-    protected virtual int pokeballTile => ModContent.TileType<BasePkballTile>();
-    protected virtual int igPrice => 0; //ingame price (from pokemon games) so price scaling matches
+    protected virtual int PokeballThrow => ModContent.ProjectileType<BasePkballProjectile>();
+    protected virtual int PokeballTile => ModContent.TileType<BasePkballTile>();
+
+    /// <summary>
+    ///     The in-game price of the Poké Ball in the core series games measured in Pokémon Dollars. Used for price scaling in
+    ///     town NPC shops.
+    /// </summary>
+    protected virtual int InGamePrice => 0;
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            igPrice / 4; // Amount needed to duplicate them in Journey Mode
+            InGamePrice / 4; // Amount needed to duplicate them in Journey Mode
     }
 
     public override void SetDefaults()
     {
         Item.CloneDefaults(ItemID.Shuriken);
         base.SetDefaults();
-        Item.shoot = pokeballThrow;
+        Item.shoot = PokeballThrow;
         Item.shootSpeed = 6.5f;
         Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw");
         Item.width = 32;
@@ -34,7 +39,7 @@ public abstract class BasePkballItem : TerramonItem
         Item.damage = 0;
         Item.autoReuse = false;
         Item.useStyle = ItemUseStyleID.Rapier;
-        Item.value = igPrice * 3;
+        Item.value = InGamePrice * 3;
         Item.useTime = 15;
         Item.consumable = true;
     }
@@ -44,12 +49,12 @@ public abstract class BasePkballItem : TerramonItem
         if (player.altFunctionUse == 2)
         {
             Item.shoot = ProjectileID.None;
-            Item.createTile = pokeballTile;
+            Item.createTile = PokeballTile;
             Item.UseSound = null;
         }
         else
         {
-            Item.shoot = pokeballThrow;
+            Item.shoot = PokeballThrow;
             Item.createTile = -1;
             Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw");
             if (player.GetModPlayer<TerramonPlayer>().HasChosenStarter) return true;

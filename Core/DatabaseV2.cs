@@ -3,6 +3,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Terraria.Localization;
 
+// ReSharper disable InconsistentNaming
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable CollectionNeverUpdated.Global
 // ReSharper disable MemberCanBePrivate.Global

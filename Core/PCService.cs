@@ -99,8 +99,9 @@ public class PCBox : TagSerializable
     public const byte Capacity = 30;
 
     // ReSharper disable once UnusedMember.Global
+    // ReSharper disable once InconsistentNaming
     public static readonly Func<TagCompound, PCBox> DESERIALIZER = Load;
-    private readonly PokemonData[] Slots = new PokemonData[30];
+    private readonly PokemonData[] _slots = new PokemonData[30];
 
     /// <summary>
     ///     The display name of the box.
@@ -114,10 +115,10 @@ public class PCBox : TagSerializable
 
     public PokemonData this[int slot]
     {
-        get => Slots[slot];
+        get => _slots[slot];
         set
         {
-            Slots[slot] = value;
+            _slots[slot] = value;
             Service.CheckBoxExpansion();
         }
     }
@@ -127,9 +128,9 @@ public class PCBox : TagSerializable
         var tag = new TagCompound();
         if (!string.IsNullOrEmpty(GivenName))
             tag["name"] = GivenName;
-        for (var i = 0; i < Slots.Length; i++)
-            if (Slots[i] != null)
-                tag[$"s{i}"] = Slots[i].SerializeData();
+        for (var i = 0; i < _slots.Length; i++)
+            if (_slots[i] != null)
+                tag[$"s{i}"] = _slots[i].SerializeData();
         return tag;
     }
 
@@ -138,11 +139,11 @@ public class PCBox : TagSerializable
         var box = new PCBox();
         if (tag.ContainsKey("name"))
             box.GivenName = tag.GetString("name");
-        for (var i = 0; i < box.Slots.Length; i++)
+        for (var i = 0; i < box._slots.Length; i++)
         {
             var tagName = $"s{i}";
             if (tag.ContainsKey(tagName))
-                box.Slots[i] = tag.Get<PokemonData>(tagName);
+                box._slots[i] = tag.Get<PokemonData>(tagName);
         }
 
         return box;

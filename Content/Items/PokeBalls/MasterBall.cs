@@ -25,8 +25,8 @@ internal class MasterBallItem : BasePkballItem
 {
     protected override bool Obtainable => false;
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
-    protected override int pokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
-    protected override int pokeballTile => ModContent.TileType<MasterBallTile>();
+    protected override int PokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
+    protected override int PokeballTile => ModContent.TileType<MasterBallTile>();
 
     public override void SetStaticDefaults()
     {
@@ -37,7 +37,7 @@ internal class MasterBallItem : BasePkballItem
 public class MasterBallTile : BasePkballTile
 {
     public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name + "_Highlight";
-    protected override int dropItem => ModContent.ItemType<MasterBallItem>();
+    protected override int DropItem => ModContent.ItemType<MasterBallItem>();
 }
 
 public class MasterBallRarity : ModRarity

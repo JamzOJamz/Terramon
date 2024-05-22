@@ -14,12 +14,12 @@ internal class UILoader : ModSystem
     /// <summary>
     ///     The collection of automatically craetaed UserInterfaces for SmartUIStates.
     /// </summary>
-    private static List<UserInterface> UserInterfaces = new();
+    private static List<UserInterface> _userInterfaces = new();
 
     /// <summary>
     ///     The collection of all automatically loaded SmartUIStates.
     /// </summary>
-    private static List<SmartUIState> UIStates = new();
+    private static List<SmartUIState> _uiStates = new();
 
     public static void UpdateApplication(IEnumerable<Type> changedTypes)
     {
@@ -38,8 +38,8 @@ internal class UILoader : ModSystem
         // Localization should be loaded before UIStates initialization
         LocalizationHelper.ForceLoadModHJsonLocalization(Mod);
 
-        UserInterfaces = [];
-        UIStates = [];
+        _userInterfaces = [];
+        _uiStates = [];
 
         foreach (var t in Mod.Code.GetTypes())
             if (!t.IsAbstract && t.IsSubclassOf(typeof(SmartUIState)))
@@ -51,18 +51,18 @@ internal class UILoader : ModSystem
                 {
                     state.UserInterface = userInterface;
 
-                    UIStates?.Add(state);
+                    _uiStates?.Add(state);
                 }
 
-                UserInterfaces?.Add(userInterface);
+                _userInterfaces?.Add(userInterface);
             }
     }
 
     public override void Unload()
     {
-        UIStates.ForEach(n => n.Unload());
-        UserInterfaces = null;
-        UIStates = null;
+        _uiStates.ForEach(n => n.Unload());
+        _userInterfaces = null;
+        _uiStates = null;
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ internal class UILoader : ModSystem
     /// <returns>The autoloaded instance of the desired SmartUIState</returns>
     public static T GetUIState<T>() where T : SmartUIState
     {
-        return UIStates.FirstOrDefault(n => n is T) as T;
+        return _uiStates.FirstOrDefault(n => n is T) as T;
     }
 
     /// <summary>
@@ -103,10 +103,10 @@ internal class UILoader : ModSystem
     /// <typeparam name="T">The SmartUIState subclass to reload</typeparam>
     public static void ReloadState<T>() where T : SmartUIState
     {
-        var index = UIStates.IndexOf(GetUIState<T>());
-        UIStates[index] = (T)Activator.CreateInstance(typeof(T), null);
-        UserInterfaces[index] = new UserInterface();
-        UserInterfaces[index].SetState(UIStates[index]);
+        var index = _uiStates.IndexOf(GetUIState<T>());
+        _uiStates[index] = (T)Activator.CreateInstance(typeof(T), null);
+        _userInterfaces[index] = new UserInterface();
+        _userInterfaces[index].SetState(_uiStates[index]);
     }
 
     /// <summary>
@@ -122,16 +122,16 @@ internal class UILoader : ModSystem
             Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "0");
         }
 
-        foreach (var state in UIStates)
+        foreach (var state in _uiStates)
             AddLayer(layers, state, state.InsertionIndex(layers), state.Visible, state.Scale);
     }
 
     public override void UpdateUI(GameTime gameTime)
     {
         var index = 0;
-        for (; index < UserInterfaces.Count; index++)
+        for (; index < _userInterfaces.Count; index++)
         {
-            var eachState = UserInterfaces[index];
+            var eachState = _userInterfaces[index];
             if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
                 eachState.Update(gameTime);
         }

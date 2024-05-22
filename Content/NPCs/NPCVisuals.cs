@@ -25,7 +25,7 @@ public class NPCVisuals : NPCComponent
     public float DustOffsetX = 0;
     public float DustOffsetY = 0;
 
-    private float dustTimer;
+    private float _dustTimer;
 
     public override void AI(NPC npc)
     {
@@ -35,12 +35,12 @@ public class NPCVisuals : NPCComponent
             Lighting.AddLight(npc.Center, LightColor * LightStrength * (Main.raining || npc.wet ? 1 - DamperAmount : 1));
 
         if (DustID <= -1) return;
-        if (dustTimer >= DustFrequency)
+        if (_dustTimer >= DustFrequency)
         {
             Dust.NewDust(npc.position + new Vector2(npc.spriteDirection == 1 ? npc.width - DustOffsetX : DustOffsetX, DustOffsetY), 1, 1, DustID);
-            dustTimer = 0;
+            _dustTimer = 0;
         }
         else
-            dustTimer++;
+            _dustTimer++;
     }
 }

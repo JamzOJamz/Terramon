@@ -40,21 +40,21 @@ public abstract class MusicTile : ModTile
         var tile = Main.tile[i, j];
         if (tile.TileFrameX != 36 || tile.TileFrameY % 36 != 0 || (int)Main.timeForVisualEffects % 7 != 0 ||
             !Main._rand.NextBool(3)) return;
-        var MusicNote = Main._rand.Next(570, 573);
-        Vector2 SpawnPosition = new(i * 16 + 8, j * 16 - 8);
-        Vector2 NoteMovement = new(Main.WindForVisuals * 2f, -0.5f);
-        NoteMovement.X *= 1f + Main._rand.Next(-50, 51) * 0.01f;
-        NoteMovement.Y *= 1f + Main._rand.Next(-50, 51) * 0.01f;
-        switch (MusicNote)
+        var musicNote = Main._rand.Next(570, 573);
+        Vector2 spawnPosition = new(i * 16 + 8, j * 16 - 8);
+        Vector2 noteMovement = new(Main.WindForVisuals * 2f, -0.5f);
+        noteMovement.X *= 1f + Main._rand.Next(-50, 51) * 0.01f;
+        noteMovement.Y *= 1f + Main._rand.Next(-50, 51) * 0.01f;
+        switch (musicNote)
         {
             case 572:
-                SpawnPosition.X -= 8f;
+                spawnPosition.X -= 8f;
                 break;
             case 571:
-                SpawnPosition.X -= 4f;
+                spawnPosition.X -= 4f;
                 break;
         }
 
-        Gore.NewGore(new EntitySource_TileUpdate(i, j), SpawnPosition, NoteMovement, MusicNote, 0.8f);
+        Gore.NewGore(new EntitySource_TileUpdate(i, j), spawnPosition, noteMovement, musicNote, 0.8f);
     }
 }

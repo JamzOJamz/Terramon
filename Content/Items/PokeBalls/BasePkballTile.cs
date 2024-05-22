@@ -12,11 +12,11 @@ namespace Terramon.Content.Items.PokeBalls;
 
 public abstract class BasePkballTile : ModTile
 {
-    private const int maxInteractDistance = 80;
+    private const int MaxInteractDistance = 80;
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
     public override string HighlightTexture => "Terramon/Assets/Items/PokeBalls/PokeBallTile_Highlight";
 
-    protected virtual int dropItem => -1;
+    protected virtual int DropItem => -1;
 
     public override void SetStaticDefaults()
     {
@@ -45,7 +45,7 @@ public abstract class BasePkballTile : ModTile
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
     {
         if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return base.PreDraw(i, j, spriteBatch);
-        Main.tile[i, j].TileFrameX = e.open ? (short)18 : (short)0;
+        Main.tile[i, j].TileFrameX = e.Open ? (short)18 : (short)0;
 
         return base.PreDraw(i, j, spriteBatch);
     }
@@ -60,15 +60,15 @@ public abstract class BasePkballTile : ModTile
         var player = Main.LocalPlayer;
 
         if (!player.IsWithinSnappngRangeToTile(i, j,
-                maxInteractDistance)) // Match condition in RightClick. Interaction should only show if clicking it does something
+                MaxInteractDistance)) // Match condition in RightClick. Interaction should only show if clicking it does something
             return;
 
         player.noThrow = 2;
         player.cursorItemIconEnabled = true;
-        if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e) && !e.item.IsAir)
-            player.cursorItemIconID = e.item.type;
+        if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e) && !e.Item.IsAir)
+            player.cursorItemIconID = e.Item.type;
         else
-            player.cursorItemIconID = dropItem;
+            player.cursorItemIconID = DropItem;
     }
 
     public override bool RightClick(int i, int j)
@@ -76,31 +76,31 @@ public abstract class BasePkballTile : ModTile
         var player = Main.LocalPlayer;
 
         if (!player.IsWithinSnappngRangeToTile(i, j,
-                maxInteractDistance)) return false; // Avoid being able to trigger it from long range
+                MaxInteractDistance)) return false; // Avoid being able to trigger it from long range
         if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return false;
         SoundEngine.PlaySound(SoundID.Mech);
-        if (e.open) //when closing
+        if (e.Open) //when closing
         {
             if (!player.HeldItem.IsAir && player.HeldItem.ModItem is not BasePkballItem)
             {
-                e.item = player.HeldItem.Clone();
-                e.item.stack = player.HeldItem.stack;
+                e.Item = player.HeldItem.Clone();
+                e.Item.stack = player.HeldItem.stack;
                 player.HeldItem.stack -= player.HeldItem.stack;
             }
 
-            e.open = false;
+            e.Open = false;
         }
         else //when opening
         {
-            if (!e.item.IsAir)
+            if (!e.Item.IsAir)
             {
-                player.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
-                e.item = new Item();
+                player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
+                e.Item = new Item();
             }
 
-            e.open = true;
+            e.Open = true;
 
-            if (e.disposable)
+            if (e.Disposable)
                 WorldGen.KillTile(i, j);
         }
 
@@ -111,14 +111,14 @@ public abstract class BasePkballTile : ModTile
     {
         if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e))
         {
-            if (!e.item.IsAir) Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.item, e.item.stack);
+            if (!e.Item.IsAir) Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
 
-            if (!e.disposable)
-                yield return new Item(dropItem);
+            if (!e.Disposable)
+                yield return new Item(DropItem);
         }
         else
         {
-            yield return new Item(dropItem);
+            yield return new Item(DropItem);
         }
 
 
@@ -128,9 +128,9 @@ public abstract class BasePkballTile : ModTile
 
 public class BasePkballEntity : ModTileEntity
 {
-    public bool disposable;
-    public Item item = new();
-    public bool open;
+    public bool Disposable;
+    public Item Item = new();
+    public bool Open;
 
     public override bool IsTileValidForEntity(int x, int y)
     {
@@ -165,29 +165,29 @@ public class BasePkballEntity : ModTileEntity
 
     public override void NetSend(BinaryWriter writer)
     {
-        item.Serialize(writer, ItemSerializationContext.Syncing);
-        writer.Write(open);
-        writer.Write(disposable);
+        Item.Serialize(writer, ItemSerializationContext.Syncing);
+        writer.Write(Open);
+        writer.Write(Disposable);
     }
 
     public override void NetReceive(BinaryReader reader)
     {
-        item.DeserializeFrom(reader, ItemSerializationContext.Syncing);
-        open = reader.ReadBoolean();
-        disposable = reader.ReadBoolean();
+        Item.DeserializeFrom(reader, ItemSerializationContext.Syncing);
+        Open = reader.ReadBoolean();
+        Disposable = reader.ReadBoolean();
     }
 
     public override void SaveData(TagCompound tag)
     {
-        tag.Set("pkballTile", item.SerializeData());
-        tag.Set("pkballOpen", open);
-        tag.Set("pkballDisposable", disposable);
+        tag.Set("pkballTile", Item.SerializeData());
+        tag.Set("pkballOpen", Open);
+        tag.Set("pkballDisposable", Disposable);
     }
 
     public override void LoadData(TagCompound tag)
     {
-        item = tag.Get<Item>("pkballTile");
-        open = tag.GetBool("pkballOpen");
-        disposable = tag.GetBool("pkballDisposable");
+        Item = tag.Get<Item>("pkballTile");
+        Open = tag.GetBool("pkballOpen");
+        Disposable = tag.GetBool("pkballDisposable");
     }
 }

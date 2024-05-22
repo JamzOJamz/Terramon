@@ -17,20 +17,20 @@ internal class GreatBallMiniItem : BasePkballMiniItem
 internal class GreatBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<GreatBallRarity>();
-    protected override int pokeballThrow => ModContent.ProjectileType<GreatBallProjectile>();
-    protected override int pokeballTile => ModContent.TileType<GreatBallTile>();
-    protected override int igPrice => 600;
+    protected override int PokeballThrow => ModContent.ProjectileType<GreatBallProjectile>();
+    protected override int PokeballTile => ModContent.TileType<GreatBallTile>();
+    protected override int InGamePrice => 600;
 
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            igPrice / 2; //Amount needed to duplicate them in Journey Mode
+            InGamePrice / 2; //Amount needed to duplicate them in Journey Mode
     }
 }
 
 public class GreatBallTile : BasePkballTile
 {
-    protected override int dropItem => ModContent.ItemType<GreatBallItem>();
+    protected override int DropItem => ModContent.ItemType<GreatBallItem>();
 }
 
 public class GreatBallRarity : ModRarity

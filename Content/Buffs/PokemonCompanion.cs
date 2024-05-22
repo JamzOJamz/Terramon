@@ -10,9 +10,9 @@ public class PokemonCompanion : ModBuff
     private const string PokeballIconPrefix = "Terramon/Assets/Items/PokeBalls/";
     private const string TemplatePath = "Terramon/Assets/Buffs/BuffTemplate";
     private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
-    private static RenderTarget2D rt;
-    private Asset<Texture2D> starIconTexture;
-    private Asset<Texture2D> templateTexture;
+    private static RenderTarget2D _rt;
+    private Asset<Texture2D> _starIconTexture;
+    private Asset<Texture2D> _templateTexture;
 
     public override string Texture => "Terramon/Assets/Buffs/" + GetType().Name;
 
@@ -20,8 +20,8 @@ public class PokemonCompanion : ModBuff
     {
         Main.buffNoTimeDisplay[Type] = true;
         Main.vanityPet[Type] = true;
-        templateTexture = ModContent.Request<Texture2D>(TemplatePath);
-        starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
+        _templateTexture = ModContent.Request<Texture2D>(TemplatePath);
+        _starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }
 
     public override void Update(Player player, ref int buffIndex)
@@ -36,7 +36,7 @@ public class PokemonCompanion : ModBuff
 
         // Use the render target
         var gd = Main.graphics.GraphicsDevice;
-        gd.SetRenderTarget(rt);
+        gd.SetRenderTarget(_rt);
         gd.Clear(Color.Transparent);
 
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
@@ -45,7 +45,7 @@ public class PokemonCompanion : ModBuff
         var player = TerramonPlayer.LocalPlayer;
 
         // Draw the template texture
-        spriteBatch.Draw(templateTexture.Value, Vector2.Zero, new Rectangle(0, 0, 32, 32), Color.White,
+        spriteBatch.Draw(_templateTexture.Value, Vector2.Zero, new Rectangle(0, 0, 32, 32), Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         // Draw the pokeball icon
@@ -57,8 +57,8 @@ public class PokemonCompanion : ModBuff
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         // Draw the star icon
-        spriteBatch.Draw(starIconTexture.Value, new Vector2(14, 14),
-            new Rectangle(0, 0, starIconTexture.Width(), starIconTexture.Height()), Color.White,
+        spriteBatch.Draw(_starIconTexture.Value, new Vector2(14, 14),
+            new Rectangle(0, 0, _starIconTexture.Width(), _starIconTexture.Height()), Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         spriteBatch.End();
@@ -70,7 +70,7 @@ public class PokemonCompanion : ModBuff
             DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
 
         // Draw the render target
-        spriteBatch.Draw(rt, drawParams.Position, drawParams.DrawColor);
+        spriteBatch.Draw(_rt, drawParams.Position, drawParams.DrawColor);
 
         return false;
     }
@@ -85,11 +85,11 @@ public class PokemonCompanion : ModBuff
     public override void Load()
     {
         Main.instance.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
-        Main.QueueMainThreadAction(() => { rt = new RenderTarget2D(Main.graphics.GraphicsDevice, 32, 32); });
+        Main.QueueMainThreadAction(() => { _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, 32, 32); });
     }
 
     public override void Unload()
     {
-        Main.QueueMainThreadAction(() => rt.Dispose());
+        Main.QueueMainThreadAction(() => _rt.Dispose());
     }
 }

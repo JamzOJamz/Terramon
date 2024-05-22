@@ -16,7 +16,7 @@ namespace Terramon.Content.GUI;
 
 public class StarterSelectOverhead : SmartUIState
 {
-    private readonly ushort[] Starters =
+    private readonly ushort[] _starters =
     {
         NationalDexID.Bulbasaur,
         NationalDexID.Charmander,
@@ -41,12 +41,12 @@ public class StarterSelectOverhead : SmartUIState
         NationalDexID.Popplio
     };
 
-    private UIBlendedImage background;
-    private UIText hintText;
-    private UIHoverImageButton showButton;
-    private UIContainer starterPanel;
-    private bool starterPanelShowing = true;
-    private UIText titleText;
+    private UIBlendedImage _background;
+    private UIText _hintText;
+    private UIHoverImageButton _showButton;
+    private UIContainer _starterPanel;
+    private bool _starterPanelShowing = true;
+    private UIText _titleText;
 
     public override bool Visible =>
         !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter &&
@@ -59,55 +59,55 @@ public class StarterSelectOverhead : SmartUIState
 
     public override void OnInitialize()
     {
-        showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification",
+        _showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification",
             AssetRequestMode.ImmediateLoad), string.Empty);
-        showButton.Width.Set(42, 0);
-        showButton.Height.Set(40, 0);
-        showButton.HAlign = 1;
-        showButton.VAlign = 1;
-        showButton.MarginRight = 10;
-        showButton.MarginBottom = 10;
-        showButton.OnMouseOver += (_, _) => SoundEngine.PlaySound(SoundID.MenuTick);
-        showButton.OnLeftClick += (_, _) =>
+        _showButton.Width.Set(42, 0);
+        _showButton.Height.Set(40, 0);
+        _showButton.HAlign = 1;
+        _showButton.VAlign = 1;
+        _showButton.MarginRight = 10;
+        _showButton.MarginBottom = 10;
+        _showButton.OnMouseOver += (_, _) => SoundEngine.PlaySound(SoundID.MenuTick);
+        _showButton.OnLeftClick += (_, _) =>
         {
-            showButton.SetIsActive(false);
+            _showButton.SetIsActive(false);
             SoundEngine.PlaySound(SoundID.MenuOpen);
-            starterPanel.VAlign = 0.19f;
-            starterPanelShowing = true;
+            _starterPanel.VAlign = 0.19f;
+            _starterPanelShowing = true;
         };
-        Append(showButton);
+        Append(_showButton);
 
-        starterPanel = new UIContainer(new Vector2(660, 330))
+        _starterPanel = new UIContainer(new Vector2(660, 330))
         {
             HAlign = 0.5f,
             VAlign = 0.19f
         };
 
-        titleText = new UIText("Welcome to the world of Pokémon! Thank you for installing the Terramon mod!");
+        _titleText = new UIText("Welcome to the world of Pokémon! Thank you for installing the Terramon mod!");
         var subText = new UIText("Now, please choose your starter Pokémon!");
-        titleText.HAlign = 0.5f;
+        _titleText.HAlign = 0.5f;
         subText.Top.Set(26, 0);
         subText.HAlign = 0.5f;
-        titleText.Append(subText);
-        starterPanel.Append(titleText);
+        _titleText.Append(subText);
+        _starterPanel.Append(_titleText);
 
-        background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background",
+        _background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background",
             AssetRequestMode.ImmediateLoad));
-        hintText = new UIText("(Press Backspace to Close)", 0.85f)
+        _hintText = new UIText("(Press Backspace to Close)", 0.85f)
         {
             HAlign = 0.5f,
             Top = { Pixels = 281 },
             TextColor = new Color(173, 173, 198)
         };
-        starterPanel.Append(hintText);
+        _starterPanel.Append(_hintText);
 
-        background.Width.Set(626, 0);
-        background.Height.Set(221, 0);
-        background.HAlign = 0.5f;
-        background.Top.Set(53, 0);
-        for (var i = 0; i < Starters.Length; i++)
+        _background.Width.Set(626, 0);
+        _background.Height.Set(221, 0);
+        _background.HAlign = 0.5f;
+        _background.Top.Set(53, 0);
+        for (var i = 0; i < _starters.Length; i++)
         {
-            var starter = Starters[i];
+            var starter = _starters[i];
             var item = new StarterButton(ModContent.Request<Texture2D>(
                 $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(starter)}_Mini",
                 AssetRequestMode.ImmediateLoad), starter);
@@ -127,21 +127,21 @@ public class StarterSelectOverhead : SmartUIState
                     break;
             }
 
-            background.Append(item);
+            _background.Append(item);
         }
 
-        starterPanel.Append(background);
-        Append(starterPanel);
+        _starterPanel.Append(_background);
+        Append(_starterPanel);
     }
 
     public override void SafeUpdate(GameTime gameTime)
     {
-        if (starterPanelShowing && !Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
+        if (_starterPanelShowing && !Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
         {
-            showButton.SetIsActive(true);
+            _showButton.SetIsActive(true);
             SoundEngine.PlaySound(SoundID.MenuClose);
-            starterPanel.VAlign = -2f;
-            starterPanelShowing = false;
+            _starterPanel.VAlign = -2f;
+            _starterPanelShowing = false;
         }
 
         Recalculate();

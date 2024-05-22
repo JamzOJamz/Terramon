@@ -4,25 +4,21 @@ using Terraria.ID;
 
 namespace Terramon.Content.AI;
 
-public class WanderingHoverAI : AIController
+public class WanderingHoverAi(NPC npc) : AIController(npc)
 {
-    private float endTime;
+    private float _endTime;
 
-    private float moveSpeed = 0.5f;
-    private float startTime;
+    private float _moveSpeed = 0.5f;
+    private float _startTime;
 
-    public WanderingHoverAI(NPC npc) : base(npc)
-    {
-    }
-
-    private ref float AI_State => ref NPC.ai[0];
-    private ref float AI_Timer => ref NPC.ai[1];
-    private ref float AI_MoveDirectionX => ref NPC.ai[2];
-    private ref float AI_MoveDirectionY => ref NPC.ai[3];
+    private ref float AIState => ref NPC.ai[0];
+    private ref float AITimer => ref NPC.ai[1];
+    private ref float AIMoveDirectionX => ref NPC.ai[2];
+    private ref float AIMoveDirectionY => ref NPC.ai[3];
 
     public override void AI()
     {
-        switch (AI_State)
+        switch (AIState)
         {
             case (float)ActionState.Hover:
                 Hover();
@@ -32,11 +28,11 @@ public class WanderingHoverAI : AIController
 
     private void Hover()
     {
-        AI_Timer++;
-        if (AI_Timer == 1 || AI_Timer % 260 == 0)
+        AITimer++;
+        if (AITimer == 1 || AITimer % 260 == 0)
         {
-            startTime = AI_Timer;
-            endTime = AI_Timer + 260;
+            _startTime = AITimer;
+            _endTime = AITimer + 260;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 var tileCoords = NPC.position.ToTileCoordinates();
@@ -48,21 +44,21 @@ public class WanderingHoverAI : AIController
                     : Main.rand.NextFloat(0f, MathHelper.Pi);
                 var direction =
                     new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
-                AI_MoveDirectionX = direction.X;
-                AI_MoveDirectionY = direction.Y;
-                moveSpeed = Main.rand.NextFloat(0.5f, 1.25f) / (tileSolid ? 1f : 1.5f);
+                AIMoveDirectionX = direction.X;
+                AIMoveDirectionY = direction.Y;
+                _moveSpeed = Main.rand.NextFloat(0.5f, 1.25f) / (tileSolid ? 1f : 1.5f);
                 NPC.netUpdate = true;
             }
         }
 
-        var useVelX = AI_Timer < endTime
-            ? MathHelper.Lerp(NPC.velocity.X, AI_MoveDirectionX * moveSpeed,
-                (AI_Timer - startTime) / (endTime - startTime))
-            : AI_MoveDirectionX * moveSpeed;
-        var useVelY = AI_Timer < endTime
-            ? MathHelper.Lerp(NPC.velocity.Y, AI_MoveDirectionY * moveSpeed,
-                (AI_Timer - startTime) / (endTime - startTime))
-            : AI_MoveDirectionY * moveSpeed;
+        var useVelX = AITimer < _endTime
+            ? MathHelper.Lerp(NPC.velocity.X, AIMoveDirectionX * _moveSpeed,
+                (AITimer - _startTime) / (_endTime - _startTime))
+            : AIMoveDirectionX * _moveSpeed;
+        var useVelY = AITimer < _endTime
+            ? MathHelper.Lerp(NPC.velocity.Y, AIMoveDirectionY * _moveSpeed,
+                (AITimer - _startTime) / (_endTime - _startTime))
+            : AIMoveDirectionY * _moveSpeed;
         NPC.velocity = new Vector2(useVelX, useVelY);
         NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
     }
@@ -70,13 +66,13 @@ public class WanderingHoverAI : AIController
     public override void SendExtraAI(BinaryWriter writer)
     {
         base.SendExtraAI(writer);
-        writer.Write(moveSpeed);
+        writer.Write(_moveSpeed);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         base.ReceiveExtraAI(reader);
-        moveSpeed = reader.ReadSingle();
+        _moveSpeed = reader.ReadSingle();
     }
 
     public override void FindFrame(int frameHeight)
