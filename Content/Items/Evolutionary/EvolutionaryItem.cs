@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Terramon.Content.GUI;
-using Terramon.Core.Loaders.UILoading;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
@@ -18,6 +16,8 @@ public abstract class EvolutionaryItem : TerramonItem
     /// </summary>
     public virtual EvolutionTrigger Trigger => EvolutionTrigger.DirectUse;
 
+    protected override bool HasPokemonDirectUse => Trigger == EvolutionTrigger.DirectUse;
+
     public override void SetStaticDefaults()
     {
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
@@ -28,54 +28,8 @@ public abstract class EvolutionaryItem : TerramonItem
         base.SetDefaults();
         Item.maxStack = 1;
         Item.value = 50000;
-        if (Trigger != EvolutionTrigger.DirectUse) return;
-        Item.useTime = 30;
-        Item.useAnimation = 30;
-        Item.useStyle = ItemUseStyleID.HoldUp;
+        if (!HasPokemonDirectUse) return;
         Item.UseSound = SoundID.Item28;
-        Item.consumable = true;
-    }
-
-    public override bool CanUseItem(Player player)
-    {
-        if (Trigger != EvolutionTrigger.DirectUse) return false;
-        var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
-        if (activePokemonData == null)
-        {
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), new Color(255, 240, 20));
-            return false;
-        }
-
-        var evolvedSpecies = GetEvolvedSpecies(activePokemonData);
-        if (evolvedSpecies != 0) return true;
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),
-            new Color(255, 240, 20));
-        return false;
-    }
-
-    public override bool? UseItem(Player player)
-    {
-        var modPlayer = player.GetModPlayer<TerramonPlayer>();
-        var activePokemonData = modPlayer.GetActivePokemon();
-        if (activePokemonData == null) return null;
-        var evolvedSpecies = GetEvolvedSpecies(activePokemonData);
-        if (evolvedSpecies == 0) return null;
-
-        Main.NewText(
-            Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", activePokemonData.DisplayName,
-                Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies)), new Color(50, 255, 130));
-        activePokemonData.EvolveInto(evolvedSpecies);
-        UILoader.GetUIState<PartyDisplay>().RecalculateSlot(modPlayer.ActiveSlot);
-        modPlayer.UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered);
-        return true;
-    }
-
-    public override void ModifyTooltips(List<TooltipLine> tooltips)
-    {
-        base.ModifyTooltips(tooltips);
-        tooltips.Insert(tooltips.FindIndex(t => t.Name == "Tooltip0"),
-            new TooltipLine(Mod, "EvolutionaryItem",
-                Language.GetTextValue("Mods.Terramon.CommonTooltips.EvolutionaryItem")));
     }
 
     /// <summary>
@@ -88,6 +42,29 @@ public abstract class EvolutionaryItem : TerramonItem
     public virtual ushort GetEvolvedSpecies(PokemonData data)
     {
         return 0;
+    }
+
+    protected override bool AffectedByPokemonDirectUse(PokemonData data)
+    {
+        return GetEvolvedSpecies(data) != 0;
+    }
+
+    protected override void PokemonDirectUse(Player player, PokemonData data)
+    {
+        var evolvedSpecies = GetEvolvedSpecies(data);
+        Main.NewText(
+            Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
+                Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies)), new Color(50, 255, 130));
+        data.EvolveInto(evolvedSpecies);
+        player.GetModPlayer<TerramonPlayer>().UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered);
+    }
+
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
+    {
+        base.ModifyTooltips(tooltips);
+        tooltips.Insert(tooltips.FindIndex(t => t.Name == "Tooltip0"),
+            new TooltipLine(Mod, "EvolutionaryItem",
+                Language.GetTextValue("Mods.Terramon.CommonTooltips.EvolutionaryItem")));
     }
 }
 

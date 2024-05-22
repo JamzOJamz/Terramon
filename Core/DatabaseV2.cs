@@ -34,11 +34,12 @@ public class DatabaseV2
         reader.Close();
         return db;
     }
-    
+
     public ushort GetEvolutionAtLevel(ushort id, byte level)
     {
         var pokemon = GetPokemon(id);
-        return pokemon?.Evolution.AtLevel == level ? pokemon.Evolution.ID : (ushort)0;
+        if (pokemon?.Evolution == null) return 0;
+        return pokemon.Evolution.AtLevel <= level && id != pokemon.Evolution.ID ? pokemon.Evolution.ID : (ushort)0;
     }
 
     public PokemonSchema GetPokemon(ushort id)

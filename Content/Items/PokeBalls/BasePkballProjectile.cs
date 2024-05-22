@@ -383,7 +383,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         if (isCaptureRegisteredInPokedex) return;
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", capture.DisplayName),
-            new Color(125, 127, 137));
+            new Color(138, 140, 150));
     }
 
     private void HitPkmn(NPC target)

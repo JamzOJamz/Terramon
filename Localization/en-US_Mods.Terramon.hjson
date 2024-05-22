@@ -376,4 +376,5 @@ Misc: {
 	NoActivePokemon: You need to have an active Pokémon to do that!
 	ItemNoEffect: It won't have any effect on {0}.
 	PokemonEvolved: "{0} evolved into {1}!"
+	RareCandyUse: "{0} was elevated to level {1}!"
 }

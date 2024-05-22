@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Terramon.Content.GUI;
+using Terramon.Core.Loaders.UILoading;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -19,6 +21,11 @@ public abstract class TerramonItem : ModItem
     protected virtual bool Obtainable => true;
 
     /// <summary>
+    ///     Whether this item can have an effect when used directly on a Pokémon.
+    /// </summary>
+    protected virtual bool HasPokemonDirectUse => false;
+
+    /// <summary>
     ///     The rarity of the item. Defaults to White.
     /// </summary>
     protected virtual int UseRarity => ItemRarityID.White;
@@ -27,6 +34,11 @@ public abstract class TerramonItem : ModItem
     {
         Item.rare = UseRarity;
         Item.maxStack = Item.CommonMaxStack;
+        if (!HasPokemonDirectUse) return;
+        Item.useTime = 30;
+        Item.useAnimation = 30;
+        Item.useStyle = ItemUseStyleID.HoldUp;
+        Item.consumable = true;
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -34,6 +46,55 @@ public abstract class TerramonItem : ModItem
         if (Obtainable) return;
         tooltips.Add(new TooltipLine(Mod, "Unobtainable",
             $"[c/ADADC6:{Language.GetTextValue("Mods.Terramon.CommonTooltips.Unobtainable")}]"));
+    }
+
+    public override bool CanUseItem(Player player)
+    {
+        if (!HasPokemonDirectUse) return false;
+
+        var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
+        if (activePokemonData == null)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), new Color(255, 240, 20));
+            return false;
+        }
+
+        if (AffectedByPokemonDirectUse(activePokemonData)) return true;
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),
+            new Color(255, 240, 20));
+        return false;
+    }
+
+    public override bool? UseItem(Player player)
+    {
+        if (!HasPokemonDirectUse) return null;
+
+        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        PokemonDirectUse(player, modPlayer.GetActivePokemon());
+        UILoader.GetUIState<PartyDisplay>().RecalculateSlot(modPlayer.ActiveSlot); // Reflect changes in UI
+        return true;
+    }
+
+    /// <summary>
+    ///     Determines if the item will have an effect when used directly on a Pokémon and <see cref="HasPokemonDirectUse" />
+    ///     is true.
+    ///     If this method returns false, the item will not be usable on the Pokémon and
+    ///     <see cref="PokemonDirectUse" /> will not be called. By default returns true.
+    /// </summary>
+    /// <param name="data">The Pokémon to check.</param>
+    protected virtual bool AffectedByPokemonDirectUse(PokemonData data)
+    {
+        return true;
+    }
+
+    /// <summary>
+    ///     Called when the item is used directly on a compatible Pokémon. Any data changes should be done here.
+    ///     This method is only called if <see cref="HasPokemonDirectUse" /> is true.
+    /// </summary>
+    /// <param name="player">The player using the item.</param>
+    /// <param name="data">The Pokémon the item is being used on.</param>
+    protected virtual void PokemonDirectUse(Player player, PokemonData data)
+    {
     }
 }
 
