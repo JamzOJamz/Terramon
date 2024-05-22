@@ -24,7 +24,10 @@ public class PokemonData : TagSerializable
     public string Nickname;
     private string OT;
     public string Variant;
-
+    
+    /// <summary>
+    ///     The display name of the Pokémon. If a nickname is set, it will be used. Otherwise, the localized name will be used.
+    /// </summary>
     public string DisplayName => Nickname ?? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value;
 
     private uint PersonalityValue

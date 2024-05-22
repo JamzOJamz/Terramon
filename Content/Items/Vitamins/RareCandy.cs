@@ -1,5 +1,7 @@
+using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Core.Helpers;
+using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,7 +23,6 @@ public class RareCandy : Vitamin
         base.SetDefaults();
         Item.width = 28;
         Item.height = 28;
-        Item.UseSound = SoundID.Item4;
     }
 
     protected override bool AffectedByPokemonDirectUse(PokemonData data)
@@ -36,12 +37,27 @@ public class RareCandy : Vitamin
             Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level),
             new Color(73, 158, 255));
         var queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
-        if (queuedEvolution == 0) return;
-        Main.NewText(
-            Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution)), new Color(50, 255, 130));
-        data.EvolveInto(queuedEvolution);
-        player.GetModPlayer<TerramonPlayer>().UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+        if (queuedEvolution == 0)
+        {
+            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            return;
+        }
+
+        if (ModContent.GetInstance<ClientConfig>().FastEvolution)
+        {
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            Main.NewText(
+                Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
+                    Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution)), new Color(50, 255, 130));
+            data.EvolveInto(queuedEvolution);
+            player.GetModPlayer<TerramonPlayer>().UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+        }
+        else
+        {
+            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            Main.NewText(
+                Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolutionReady", data.DisplayName), new Color(50, 255, 130));
+        }
     }
 }
 

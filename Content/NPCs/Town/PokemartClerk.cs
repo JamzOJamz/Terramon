@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using Terramon.Content.GUI;
+using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Items.Vanity;
 using Terramon.Content.Tiles.MusicBoxes;
+using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
@@ -139,9 +143,6 @@ public class PokemartClerk : ModNPC
         var player = TerramonPlayer.LocalPlayer;
         var activePokemonData = player.GetActivePokemon();
 
-        //if (pokemon != null && pokemon.data.IsEvolveReady())
-        //return $"Oh? It look's like {pokemon.data.GetName()} is ready to evolve.";
-
         //TODO: Re-enable dialogue CheckBack when he's given more sales and Crafting when Poke Balls are craftable
         var chat = new WeightedRandom<string>();
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Catchem"));
@@ -150,6 +151,7 @@ public class PokemartClerk : ModNPC
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Biomes"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Regions"));
         //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Crafting"));
+        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Evolution"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.SickBurn"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Dedication", Main.worldName));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.NoBattleRip"));
@@ -187,10 +189,9 @@ public class PokemartClerk : ModNPC
             //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonShimmer"));
         }
 
-        if (NPC.IsShimmerVariant)
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Shimmer"));
-        else
-            chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.ShimmerQuery"));
+        chat.Add(NPC.IsShimmerVariant
+            ? Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Shimmer")
+            : Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.ShimmerQuery"));
 
         var merchant = NPC.FindFirstNPC(NPCID.Merchant);
         if (merchant >= 0)
@@ -222,22 +223,29 @@ public class PokemartClerk : ModNPC
         // What the chat buttons are when you open up the chat UI
         button = Language.GetTextValue("LegacyInterface.28");
 
-        /*var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
-        if (pokemon != null && pokemon.data.IsEvolveReady())
-            button2 = "Evolve";*/
+        var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
+        var activePokemonData = player.GetActivePokemon();
+        if (activePokemonData != null && activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp) != 0)
+            button2 = "Evolve " + activePokemonData.DisplayName;
     }
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
         if (firstButton) shopName = "Shop";
-        /*else
+        else
         {
             var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
-            var pokeName = pokemon.data.GetName();
-            pokemon.data.Evolve(null, false);
-            pokemon.UpdateName();
-            Main.npcChatText = $"Congratulations! Your {pokeName} evolved into {pokemon.data.GetInfo().Name}!";
-        }*/
+            var activePokemonData = player.GetActivePokemon();
+            if (activePokemonData == null) return;
+            var queuedEvolution = activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp);
+            if (queuedEvolution == 0) return;
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            Main.npcChatText = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionCongrats",
+                activePokemonData.DisplayName, Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution));
+            activePokemonData.EvolveInto(queuedEvolution);
+            UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
+            player.UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+        }
     }
 
     public override void AddShops()

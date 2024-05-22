@@ -9,8 +9,14 @@ public class ClientConfig : ModConfig
 {
     // TODO: Add this back once alternate mod icons are redesigned to fit the new style
     //[Header("Graphics")] public ModIconType ModIconType;
+    
+    [Header("Miscellaneous")] [DefaultValue(true)]
+    public bool FastEvolution;
 
-    [Header("Miscellaneous")] [DefaultValue(false)]
+    [DefaultValue(true)]
+    public bool ShowPokedexRegistrationMessages;
+
+    [DefaultValue(false)]
     public bool ReducedAudio;
 
     public override ConfigScope Mode => ConfigScope.ClientSide;

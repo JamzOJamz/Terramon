@@ -36,11 +36,21 @@ Configs: {
 	}
 
 	ClientConfig: {
-		DisplayName: Preferences
+		DisplayName: Client Settings
 
 		Headers: {
-			Miscellaneous: Miscellaneous
+			Miscellaneous: Preferences
 			Graphics: Graphics
+		}
+
+		FastEvolution: {
+			Label: Fast Evolution
+			Tooltip: Whether to automatically evolve Pokémon when using Rare Candy (otherwise speak with the {$NPCs.PokemartClerk.DisplayName})
+		}
+
+		ShowPokedexRegistrationMessages: {
+			Label: Pokédex Registration Messages
+			Tooltip: Whether to display a message in chat when a new Pokémon has been registered in the Pokédex
 		}
 
 		ReducedAudio: {
@@ -337,6 +347,7 @@ NPCs: {
 			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
 			Regions: There are many different regions in the world. One day I hope to visit all of them!
 			Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
+			Evolution: I've heard that some Pokémon evolve when they reach a certain level. I wonder if that's true?
 			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
 			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
 			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
@@ -354,6 +365,7 @@ NPCs: {
 			MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
 			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
 			ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
+			EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
 		}
 	}
 }
@@ -376,5 +388,6 @@ Misc: {
 	NoActivePokemon: You need to have an active Pokémon to do that!
 	ItemNoEffect: It won't have any effect on {0}.
 	PokemonEvolved: "{0} evolved into {1}!"
+	PokemonEvolutionReady: "{0} seems ready to evolve!"
 	RareCandyUse: "{0} was elevated to level {1}!"
 }

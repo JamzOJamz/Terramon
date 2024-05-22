@@ -381,9 +381,10 @@ internal abstract class BasePkballProjectile : ModProjectile
                     player.Player.name));
         }
 
-        if (isCaptureRegisteredInPokedex) return;
+        if (isCaptureRegisteredInPokedex ||
+            !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", capture.DisplayName),
-            new Color(138, 140, 150));
+            new Color(159, 162, 173));
     }
 
     private void HitPkmn(NPC target)
