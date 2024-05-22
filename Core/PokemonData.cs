@@ -9,20 +9,21 @@ namespace Terramon.Core;
 
 public class PokemonData : TagSerializable
 {
-    private const ushort VERSION = 0;
+    private const ushort Version = 0;
 
     // ReSharper disable once UnusedMember.Global
+    // ReSharper disable once InconsistentNaming
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
 
     private readonly uint _personalityValue;
     public byte Ball = BallID.PokeBall;
     public Gender Gender;
-    private Item HeldItem;
+    private Item _heldItem;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
     public string Nickname;
-    private string OT;
+    private string _ot;
     public string Variant;
     
     /// <summary>
@@ -46,9 +47,9 @@ public class PokemonData : TagSerializable
         {
             ["id"] = ID,
             ["lvl"] = Level,
-            ["ot"] = OT,
+            ["ot"] = _ot,
             ["pv"] = PersonalityValue,
-            ["version"] = VERSION
+            ["version"] = Version
         };
         if (Ball != BallID.PokeBall)
             tag["ball"] = Ball;
@@ -58,8 +59,8 @@ public class PokemonData : TagSerializable
             tag["n"] = Nickname;
         if (Variant != null)
             tag["variant"] = Variant;
-        if (HeldItem != null)
-            tag["item"] = new ItemDefinition(HeldItem.type);
+        if (_heldItem != null)
+            tag["item"] = new ItemDefinition(_heldItem.type);
         return tag;
     }
 
@@ -99,7 +100,7 @@ public class PokemonData : TagSerializable
         }
         
         // Check for Pokémon that evolve through held items
-        if (HeldItem?.ModItem is EvolutionaryItem item && item.Trigger == trigger)
+        if (_heldItem?.ModItem is EvolutionaryItem item && item.Trigger == trigger)
             return item.GetEvolvedSpecies(this);
         return 0;
     }
@@ -119,7 +120,7 @@ public class PokemonData : TagSerializable
         {
             ID = id,
             Level = level,
-            OT = player.name,
+            _ot = player.name,
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
             IsShiny = Terramon.RollShiny(player)
         };
@@ -142,11 +143,11 @@ public class PokemonData : TagSerializable
 
         switch (loadedVersion)
         {
-            case < VERSION:
+            case < Version:
                 Terramon.Instance.Logger.Debug("Upgrading PokemonData from version " + loadedVersion + " to " +
-                                               VERSION);
+                                               Version);
                 break;
-            case > VERSION:
+            case > Version:
                 Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +
                                               ". This may lead to undefined behaviour!");
                 break;
@@ -156,7 +157,7 @@ public class PokemonData : TagSerializable
         {
             ID = (ushort)tag.GetShort("id"),
             Level = tag.GetByte("lvl"),
-            OT = tag.GetString("ot"),
+            _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
         if (tag.TryGet<byte>("ball", out var ball))
@@ -168,7 +169,7 @@ public class PokemonData : TagSerializable
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
-            data.HeldItem = new Item(itemDefinition.Type);
+            data._heldItem = new Item(itemDefinition.Type);
         return data;
     }
 }

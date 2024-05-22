@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
@@ -16,34 +17,26 @@ using Terraria.Localization;
 namespace Terramon.Content.NPCs.Pokemon;
 
 [Autoload(false)]
-public class PokemonNPC : ModNPC
+public class PokemonNPC(ushort useId, string useName) : ModNPC
 {
-    private static Dictionary<ushort, JToken> SchemaCache;
-    public readonly ushort useId;
-    private readonly string useName;
-    public PokemonData data;
-    private Asset<Texture2D> glowTexture;
-    private bool hasGenderDifference;
-    private bool isDestroyed;
-    private int shinySparkleTimer;
-
-    public PokemonNPC(ushort useId, string useName)
-    {
-        this.useId = useId;
-        this.useName = useName;
-        Name = useName + "NPC";
-        Texture = "Terramon/Assets/Pokemon/" + useName;
-    }
+    private static Dictionary<ushort, JToken> _schemaCache;
+    private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
+    private bool _hasGenderDifference;
+    private bool _isDestroyed;
+    private Asset<Texture2D> _mainTexture;
+    private int _shinySparkleTimer;
+    public ushort UseId { get; } = useId;
+    public PokemonData Data { get; set; }
 
     protected override bool CloneNewInstances => true;
 
-    public override string Name { get; }
+    public override string Name { get; } = useName + "NPC";
 
-    public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(useId);
+    public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(UseId);
 
     private AIController Behaviour { get; set; }
 
-    public override string Texture { get; }
+    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + useName;
 
     public override void SetDefaults()
     {
@@ -56,23 +49,24 @@ public class PokemonNPC : ModNPC
         NPC.friendly = true;
 
         // Load gender-specific texture if it exists.
-        hasGenderDifference = ModContent.HasAsset(Texture + "F");
+        _hasGenderDifference = ModContent.HasAsset(Texture + "F");
 
         // Load glowmask texture if it exists.
-        if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
-            glowTexture = glowTex;
+        if (!_glowTextureCache.ContainsKey(UseId))
+            if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
+                _glowTextureCache[UseId] = glowTex;
 
         // TODO: Optimize.
-        if (!SchemaCache.TryGetValue(useId, out var npcSchema))
+        if (!_schemaCache.TryGetValue(UseId, out var npcSchema))
         {
             var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{useName}.hjson");
             using var hjsonReader = new StreamReader(hjsonStream);
             var jsonText = HjsonValue.Load(hjsonReader).ToString();
             hjsonReader.Close();
             var schema = JObject.Parse(jsonText);
-            if (!schema.ContainsKey("NPC")) return;
-            npcSchema = schema["NPC"];
-            SchemaCache.Add(useId, npcSchema);
+            if (!schema.TryGetValue("NPC", out var value)) return;
+            npcSchema = value;
+            _schemaCache.Add(UseId, npcSchema);
         }
 
         var mi = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
@@ -95,65 +89,70 @@ public class PokemonNPC : ModNPC
     {
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
         var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
-        data = PokemonData.Create(Main.player[spawningPlayer], useId, 5);
+        Data = PokemonData.Create(Main.player[spawningPlayer], UseId, 5);
         NPC.netUpdate = true;
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        var path = Texture;
-        if (hasGenderDifference && data?.Gender == Gender.Female)
-            path += "F";
-        if (data?.Variant != null)
-            path += "_" + data.Variant;
-        if (data is { IsShiny: true })
-            path += "_S";
+        if (_mainTexture == null)
+        {
+            var pathBuilder = new StringBuilder(Texture);
+
+            if (_hasGenderDifference && Data?.Gender == Gender.Female)
+                pathBuilder.Append('F');
+            if (Data?.Variant != null)
+                pathBuilder.Append('_').Append(Data.Variant);
+            if (Data is { IsShiny: true })
+                pathBuilder.Append("_S");
+
+            var path = pathBuilder.ToString();
+            _mainTexture = ModContent.Request<Texture2D>(path);
+        }
 
         var frameSize = NPC.frame.Size();
-        var texture = ModContent.Request<Texture2D>(path).Value;
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        spriteBatch.Draw(texture,
+        spriteBatch.Draw(_mainTexture.Value,
             NPC.Center - screenPos +
             new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
             NPC.frame, drawColor, NPC.rotation,
             frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
 
-        if (glowTexture == null) return false;
-        spriteBatch.Draw(glowTexture.Value,
-            NPC.Center - screenPos +
-            new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
-            NPC.frame, Color.White, NPC.rotation,
-            frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
-
+        if (_glowTextureCache.TryGetValue(UseId, out var glowTexture))
+            spriteBatch.Draw(glowTexture.Value,
+                NPC.Center - screenPos +
+                new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
+                NPC.frame, Color.White, NPC.rotation,
+                frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
         return false;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
     {
-        writer.Write((byte)data.Gender);
-        writer.Write(data.IsShiny);
+        writer.Write((byte)Data.Gender);
+        writer.Write(Data.IsShiny);
         Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
-        data.Gender = (Gender)reader.ReadByte();
-        data.IsShiny = reader.ReadBoolean();
+        Data.Gender = (Gender)reader.ReadByte();
+        Data.IsShiny = reader.ReadBoolean();
         Behaviour?.ReceiveExtraAI(reader);
     }
 
     public override void AI()
     {
         if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
-        if (data.IsShiny) ShinyEffect();
+        if (Data.IsShiny) ShinyEffect();
         Behaviour?.AI();
     }
 
     private void ShinyEffect()
     {
         Lighting.AddLight(NPC.position, 0.5f, 0.5f, 0.5f);
-        shinySparkleTimer++;
-        if (shinySparkleTimer < 6) return;
+        _shinySparkleTimer++;
+        if (_shinySparkleTimer < 6) return;
         for (var i = 0; i < 2; i++)
         {
             const short dustType = 204;
@@ -165,7 +164,7 @@ public class PokemonNPC : ModNPC
             dust.scale *= 1f + Main.rand.NextFloat(-0.03f, 0.03f);
         }
 
-        shinySparkleTimer = 0;
+        _shinySparkleTimer = 0;
     }
 
     public override void FindFrame(int frameHeight)
@@ -185,7 +184,7 @@ public class PokemonNPC : ModNPC
 
     public void Destroy()
     {
-        if (isDestroyed) return;
+        if (_isDestroyed) return;
 
         //TODO: Add shader animation (I already made this shader in my mod source but I couldn't figure out how to apply it properly)
         var dust = ModContent.DustType<SummonCloud>();
@@ -200,16 +199,18 @@ public class PokemonNPC : ModNPC
 
         NPC.netUpdate = true;
         NPC.active = false;
-        isDestroyed = true;
+        _isDestroyed = true;
     }
 
     public override void Load()
     {
-        SchemaCache = new Dictionary<ushort, JToken>();
+        _schemaCache = new Dictionary<ushort, JToken>();
+        _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
     }
 
     public override void Unload()
     {
-        SchemaCache = null;
+        _schemaCache = null;
+        _glowTextureCache = null;
     }
 }

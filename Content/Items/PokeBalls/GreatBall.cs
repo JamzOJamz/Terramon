@@ -5,8 +5,8 @@ namespace Terramon.Content.Items.PokeBalls;
 
 internal class GreatBallProjectile : BasePkballProjectile
 {
-    protected override int pokeballItem => ModContent.ItemType<GreatBallItem>();
-    protected override float catchModifier => 1.5f;
+    protected override int PokeballItem => ModContent.ItemType<GreatBallItem>();
+    protected override float CatchModifier => 1.5f;
 }
 
 internal class GreatBallMiniItem : BasePkballMiniItem

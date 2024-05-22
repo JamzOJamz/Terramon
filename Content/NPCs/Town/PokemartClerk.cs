@@ -20,19 +20,18 @@ namespace Terramon.Content.NPCs.Town;
 [AutoloadHead]
 public class PokemartClerk : ModNPC
 {
-    private static int ShimmerHeadIndex;
-    private static StackedNPCProfile NPCProfile;
+    private static int _shimmerHeadIndex;
+    private static StackedNPCProfile _npcProfile;
 
     private static readonly Condition TrainerSetCondition =
         new("ClerkTrainerSale", () => Condition.IsNpcShimmered.IsMet() || Main.halloween);
 
     public override string Texture => "Terramon/Assets/NPCs/" + GetType().Name;
 
-
     public override void Load()
     {
         // Adds our Shimmer Head to the NPCHeadLoader.
-        ShimmerHeadIndex = Mod.AddNPCHeadTexture(Type, Texture + "_Shimmer_Head");
+        _shimmerHeadIndex = Mod.AddNPCHeadTexture(Type, Texture + "_Shimmer_Head");
     }
 
     public override void SetStaticDefaults()
@@ -73,9 +72,9 @@ public class PokemartClerk : ModNPC
         //breeder - bestiarygirl, nurse    stylist, partygirl
 
         // This creates a "profile" for our NPC, which allows for different textures during a party and/or while the NPC is shimmered.
-        NPCProfile = new StackedNPCProfile(
+        _npcProfile = new StackedNPCProfile(
             new DefaultNPCProfile(Texture, NPCHeadLoader.GetHeadSlot(HeadTexture)),
-            new DefaultNPCProfile(Texture + "_Shimmer", ShimmerHeadIndex, Texture + "_Shimmer_Hatless")
+            new DefaultNPCProfile(Texture + "_Shimmer", _shimmerHeadIndex, Texture + "_Shimmer_Hatless")
         );
     }
 
@@ -118,7 +117,7 @@ public class PokemartClerk : ModNPC
 
     public override ITownNPCProfile TownNPCProfile()
     {
-        return NPCProfile;
+        return _npcProfile;
     }
 
     public override List<string> SetNPCNameList()
@@ -151,7 +150,7 @@ public class PokemartClerk : ModNPC
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Biomes"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Regions"));
         //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Crafting"));
-        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Evolution"));
+        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionStones"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.SickBurn"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Dedication", Main.worldName));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.NoBattleRip"));

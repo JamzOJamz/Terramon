@@ -134,7 +134,7 @@ public class TerramonPlayer : ModPlayer
         return 6;
     }
 
-    public bool UpdatePokedex(ushort id, byte status)
+    public bool UpdatePokedex(ushort id, PokedexEntryStatus status)
     {
         var containsId = Pokedex.Entries.ContainsKey(id);
         if (containsId) Pokedex.Entries[id] = status;
@@ -191,7 +191,7 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePokedex(TagCompound tag)
     {
-        tag["pokedex"] = Pokedex.Entries.Select(entry => new[] { entry.Key, entry.Value }).ToList();
+        tag["pokedex"] = Pokedex.Entries.Select(entry => new[] { entry.Key, (byte)entry.Value }).ToList();
     }
 
     private void LoadPokedex(TagCompound tag)
@@ -199,7 +199,7 @@ public class TerramonPlayer : ModPlayer
         const string tagName = "pokedex";
         if (!tag.ContainsKey(tagName)) return;
         var entries = tag.GetList<int[]>(tagName);
-        foreach (var entry in entries) UpdatePokedex((ushort)entry[0], (byte)entry[1]);
+        foreach (var entry in entries) UpdatePokedex((ushort)entry[0], (PokedexEntryStatus)entry[1]);
     }
 
     private void SavePC(TagCompound tag)

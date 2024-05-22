@@ -8,7 +8,7 @@ namespace Terramon.Core;
 /// </summary>
 public class PokedexService
 {
-    public readonly Dictionary<int, byte> Entries = new();
+    public readonly Dictionary<int, PokedexEntryStatus> Entries = new();
 
     public PokedexService()
     {
@@ -21,10 +21,9 @@ public class PokedexService
     }
 }
 
-public static class PokedexEntryStatus
+public enum PokedexEntryStatus : byte
 {
-    public const byte Undiscovered = 0;
-    public const byte Seen = 1;
-    public const byte Registered = 2;
-    public static readonly IdDictionary Search = IdDictionary.Create(typeof(PokedexEntryStatus), typeof(byte));
+    Undiscovered = 0,
+    Seen = 1,
+    Registered = 2
 }

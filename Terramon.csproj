@@ -6,8 +6,6 @@
         <OutputType>Exe</OutputType>
     </PropertyGroup>
     <ItemGroup>
-    </ItemGroup>
-    <ItemGroup>
         <Folder Include="Assets\Items\Evolutionary"/>
         <Folder Include="Sounds"/>
     </ItemGroup>

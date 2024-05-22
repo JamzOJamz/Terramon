@@ -6,9 +6,9 @@ namespace Terramon.Content.Items.PokeBalls;
 
 internal class MasterBallProjectile : BasePkballProjectile
 {
-    protected override int pokeballItem => ModContent.ItemType<MasterBallItem>();
+    protected override int PokeballItem => ModContent.ItemType<MasterBallItem>();
 
-    protected override int dropItemChance => 1;
+    protected override int DropItemChance => 1;
 
     protected override bool CatchPokemonChances(PokemonNPC target, float random)
     {

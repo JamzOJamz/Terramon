@@ -14,26 +14,26 @@ namespace Terramon.Content.Items.PokeBalls;
 
 internal abstract class BasePkballProjectile : ModProjectile
 {
-    private float animSpeedMultiplier = 1;
-    private int bounces = 5;
-    private PokemonNPC capture; //Type of pokemon to be caught
-    private float catchRandom = -1;
-    private int catchTries = 3;
-    private bool caught;
-    private bool hasCalculatedCapture;
+    private float _animSpeedMultiplier = 1;
+    private int _bounces = 5;
+    private PokemonNPC _capture; //Type of pokemon to be caught
+    private float _catchRandom = -1;
+    private int _catchTries = 3;
+    private bool _caught;
+    private bool _hasCalculatedCapture;
 
-    private bool hasContainedLocal;
-    private float rotation;
-    private bool rotationDirection;
-    private float rotationVelocity;
-    protected virtual int pokeballItem => ModContent.ItemType<BasePkballItem>();
-    protected virtual float catchModifier { get; set; }
+    private bool _hasContainedLocal;
+    private float _rotation;
+    private bool _rotationDirection;
+    private float _rotationVelocity;
+    protected virtual int PokeballItem => ModContent.ItemType<BasePkballItem>();
+    protected virtual float CatchModifier { get; set; }
 
     /// <summary>
     ///     The chance (1/x) to drop this Poké Ball's item when the projectile is destroyed without catching a Pokémon. Default
     ///     is 3.
     /// </summary>
-    protected virtual int dropItemChance => 3;
+    protected virtual int DropItemChance => 3;
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
@@ -72,9 +72,9 @@ internal abstract class BasePkballProjectile : ModProjectile
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
         //return base.OnTileCollide(oldVelocity);
-        if (bounces > 0)
+        if (_bounces > 0)
         {
-            bounces -= 1;
+            _bounces -= 1;
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"), Projectile.position);
 
             // If the projectile hits the left or right side of the tile, reverse the X velocity
@@ -87,7 +87,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             Projectile.velocity.X *= 0.5f;
 
             if (Projectile.velocity.Length() < 1.5f)
-                bounces = 0;
+                _bounces = 0;
         }
         else
         {
@@ -106,14 +106,14 @@ internal abstract class BasePkballProjectile : ModProjectile
                     return true;
                 }
                 //only randomise catch number and play sound once
-                case 1 when bounces == 0:
+                case 1 when _bounces == 0:
                 {
                     //caught = CatchPokemonChances(capture);
                     if (Main.player[Projectile.owner].whoAmI ==
                         Main.myPlayer) //Generate new catch chance, (will switch pokeball to catching anim when value is recieved by clients)
-                        catchRandom = Main.rand.NextFloat(0, 1);
+                        _catchRandom = Main.rand.NextFloat(0, 1);
                     SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"), Projectile.position);
-                    bounces = -1;
+                    _bounces = -1;
                     break;
                 }
             }
@@ -130,10 +130,10 @@ internal abstract class BasePkballProjectile : ModProjectile
     public override void SendExtraAI(BinaryWriter writer)
     {
         var captureId = -1;
-        if (capture != null)
-            captureId = capture.NPC.whoAmI; //BinaryWriter can't send whole NPC, so we send the NPC's number instead
+        if (_capture != null)
+            captureId = _capture.NPC.whoAmI; //BinaryWriter can't send whole NPC, so we send the NPC's number instead
 
-        writer.Write(catchRandom);
+        writer.Write(_catchRandom);
         writer.Write(captureId);
     }
 
@@ -142,10 +142,10 @@ internal abstract class BasePkballProjectile : ModProjectile
         var catchRandomVar = reader.ReadSingle();
         var captureId = reader.ReadInt32();
 
-        if (catchRandom == -1)
-            catchRandom = catchRandomVar;
-        if (capture == null && captureId != -1) //only change capture if none exists
-            capture = Main.npc[captureId].ModNPC as PokemonNPC;
+        if (_catchRandom == -1)
+            _catchRandom = catchRandomVar;
+        if (_capture == null && captureId != -1) //only change capture if none exists
+            _capture = Main.npc[captureId].ModNPC as PokemonNPC;
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -158,12 +158,12 @@ internal abstract class BasePkballProjectile : ModProjectile
     public override void OnKill(int timeLeft)
     {
         // Prevent duplicate drops in multiplayer or if a Pokémon was already caught
-        if (Projectile.owner != Main.myPlayer || hasContainedLocal) return;
+        if (Projectile.owner != Main.myPlayer || _hasContainedLocal) return;
 
         // Drop the item when the projectile is destroyed
         var item = 0;
-        if (Main.rand.NextBool(dropItemChance))
-            item = Item.NewItem(Projectile.GetSource_DropAsItem(), Projectile.getRect(), pokeballItem);
+        if (Main.rand.NextBool(DropItemChance))
+            item = Item.NewItem(Projectile.GetSource_DropAsItem(), Projectile.getRect(), PokeballItem);
 
         // Sync the drop for multiplayer
         // Note the usage of Terraria.ID.MessageID, please use this!
@@ -181,33 +181,33 @@ internal abstract class BasePkballProjectile : ModProjectile
                     new Vector2(Projectile.velocity.X, Projectile.velocity.Y * -0.8f),
                     ModContent.ProjectileType<PremierBallProjectile>(), 0, 0, Projectile.owner);
                 if (Main.projectile[shimmer].ModProjectile is BasePkballProjectile shimmerProj)
-                    shimmerProj.catchModifier = catchModifier;
+                    shimmerProj.CatchModifier = CatchModifier;
                 Projectile.Kill();
             }
-            else if (bounces > 0 && Projectile.velocity.Y < 0)
+            else if (_bounces > 0 && Projectile.velocity.Y < 0)
             {
                 Projectile.shimmerWet = false;
                 Projectile.velocity.Y *= -0.8f;
                 SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce"),
                     Projectile.position);
-                bounces -= 1;
+                _bounces -= 1;
             }
         }
 
 
         //Main.NewText(catchRandom, Color.Pink);
         if (ModContent.GetInstance<GameplayConfig>().FastAnimations)
-            animSpeedMultiplier = 0.7f;
+            _animSpeedMultiplier = 0.7f;
 
         Projectile.damage = Projectile.ai[1] == 0 ? 1 : 0;
         Projectile.ai[0]++;
         //Projectile.spriteDirection = Projectile.direction;
-        if (hasContainedLocal == false && capture != null)
-            HitPkmn(capture.NPC);
-        if (catchRandom > -1 && !hasCalculatedCapture)
+        if (_hasContainedLocal == false && _capture != null)
+            HitPkmn(_capture.NPC);
+        if (_catchRandom > -1 && !_hasCalculatedCapture)
         {
-            hasCalculatedCapture = true;
-            caught = CatchPokemonChances(capture, catchRandom);
+            _hasCalculatedCapture = true;
+            _caught = CatchPokemonChances(_capture, _catchRandom);
             Projectile.ai[0] = 0;
             Projectile.ai[1] = 2;
         }
@@ -231,13 +231,13 @@ internal abstract class BasePkballProjectile : ModProjectile
             }
             case 1:
             {
-                capture?.Destroy(); //Destroy Pokemon NPC
+                _capture?.Destroy(); //Destroy Pokemon NPC
 
                 if (Projectile.ai[0] <
-                    35 * animSpeedMultiplier) //Stay still (no velocity) if 50 frames havent passed yet (60fps)
+                    35 * _animSpeedMultiplier) //Stay still (no velocity) if 50 frames havent passed yet (60fps)
                 {
                     Projectile.frame = (int)Frame.Catch;
-                    Projectile.rotation = rotation;
+                    Projectile.rotation = _rotation;
                     Projectile.velocity.X = 0;
                     Projectile.velocity.Y = 0;
                 }
@@ -254,14 +254,14 @@ internal abstract class BasePkballProjectile : ModProjectile
             case 2:
             {
                 const float shakeIntensity = 0.15f;
-                var shakeAtTick = 75 * animSpeedMultiplier;
-                Projectile.rotation += rotationVelocity;
+                var shakeAtTick = 75 * _animSpeedMultiplier;
+                Projectile.rotation += _rotationVelocity;
                 if (Projectile.ai[0] >= shakeAtTick)
                 {
                     //Main.NewText(catchTries, Color.CornflowerBlue);
-                    if (catchTries == 0 || ModContent.GetInstance<GameplayConfig>().FastAnimations)
+                    if (_catchTries == 0 || ModContent.GetInstance<GameplayConfig>().FastAnimations)
                     {
-                        if (caught)
+                        if (_caught)
                         {
                             Projectile.frame = (int)Frame.CaptureComplete;
                             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch"),
@@ -277,9 +277,9 @@ internal abstract class BasePkballProjectile : ModProjectile
                     }
                     else
                     {
-                        catchTries -= 1;
-                        rotationDirection = !rotationDirection;
-                        rotationVelocity = rotationDirection ? shakeIntensity : -shakeIntensity;
+                        _catchTries -= 1;
+                        _rotationDirection = !_rotationDirection;
+                        _rotationVelocity = _rotationDirection ? shakeIntensity : -shakeIntensity;
                         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_shake"),
                             Projectile.position);
                     }
@@ -287,25 +287,25 @@ internal abstract class BasePkballProjectile : ModProjectile
                     Projectile.ai[0] = 0;
                     Projectile.rotation = 0;
                 }
-                else if (Projectile.ai[0] > shakeAtTick * 0.2 && rotationVelocity != 0)
+                else if (Projectile.ai[0] > shakeAtTick * 0.2 && _rotationVelocity != 0)
                 {
-                    rotationVelocity = 0;
+                    _rotationVelocity = 0;
                     Projectile.rotation = 0;
                 }
-                else if (Projectile.ai[0] > shakeAtTick * 0.15 && rotationVelocity != 0)
+                else if (Projectile.ai[0] > shakeAtTick * 0.15 && _rotationVelocity != 0)
                 {
-                    rotationVelocity = rotationDirection ? shakeIntensity : -shakeIntensity;
+                    _rotationVelocity = _rotationDirection ? shakeIntensity : -shakeIntensity;
                 }
-                else if (Projectile.ai[0] > shakeAtTick * 0.05 && rotationVelocity != 0)
+                else if (Projectile.ai[0] > shakeAtTick * 0.05 && _rotationVelocity != 0)
                 {
-                    rotationVelocity = rotationDirection ? -shakeIntensity : shakeIntensity;
+                    _rotationVelocity = _rotationDirection ? -shakeIntensity : shakeIntensity;
                 }
 
                 break;
             }
             case 3:
             {
-                var catchSuccessAtTick = 90f * animSpeedMultiplier;
+                var catchSuccessAtTick = 90f * _animSpeedMultiplier;
                 if (Projectile.ai[0] == 1)
                     for (var i = 0; i < 3; i++)
                         Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust);
@@ -319,26 +319,26 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (capture == null)
+        if (_capture == null)
             HitPkmn(target);
     }
 
     protected virtual bool CatchPokemonChances(PokemonNPC target, float random)
     {
-        catchModifier = ChangeCatchModifier(target); //Change modifier (can take into account values like pokemon type)
+        CatchModifier = ChangeCatchModifier(target); //Change modifier (can take into account values like pokemon type)
 
         const float
             catchChance =
                 0.5f; //Terramon.Database.GetPokemon(capture.useId) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
         //TODO: pull actual data from pokemon when possible
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
-        if (catchRandom < catchChance * catchModifier)
+        if (_catchRandom < catchChance * CatchModifier)
             return true;
 
         const float split = (1 - catchChance) /
                             4; //Determine amount of times pokeball will rock (based on closeness to successful catch)
 
-        catchTries = random switch
+        _catchTries = random switch
         {
             < catchChance + split * 1 => 3,
             < catchChance + split * 2 => 2,
@@ -351,7 +351,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     protected virtual float ChangeCatchModifier(PokemonNPC target)
     {
-        return catchModifier;
+        return CatchModifier;
     }
 
     private void PokemonCatchSuccess()
@@ -359,62 +359,62 @@ internal abstract class BasePkballProjectile : ModProjectile
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
         Projectile.Kill();
         var ballName = GetType().Name.Split("Projectile")[0];
-        capture.data.Ball = (byte)BallID.Search.GetId(ballName);
+        _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
         var player = TerramonPlayer.LocalPlayer;
-        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(capture.useId, out var status) &&
+        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.UseId, out var status) &&
                                            status == PokedexEntryStatus.Registered;
-        var addSuccess = player.AddPartyPokemon(capture.data, !isCaptureRegisteredInPokedex);
+        var addSuccess = player.AddPartyPokemon(_capture.Data, !isCaptureRegisteredInPokedex);
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
-                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName));
+                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0]), _capture.DisplayName));
         }
         else
         {
-            var box = player.TransferPokemonToPC(capture.data);
+            var box = player.TransferPokemonToPC(_capture.Data);
             Main.NewText(box != null
                 ? Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPC",
-                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName,
+                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0]), _capture.DisplayName,
                     box.GivenName ?? player.GetDefaultNameForPCBox(box), player.Player.name)
                 : Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPCNoRoom",
-                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(capture.useId).Types[0]), capture.DisplayName,
+                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0]), _capture.DisplayName,
                     player.Player.name));
         }
 
         if (isCaptureRegisteredInPokedex ||
             !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", capture.DisplayName),
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", _capture.DisplayName),
             new Color(159, 162, 173));
     }
 
     private void HitPkmn(NPC target)
     {
-        hasContainedLocal = true;
+        _hasContainedLocal = true;
         //Main.NewText($"Contain success", Color.Orange);
-        capture = (PokemonNPC)target.ModNPC;
+        _capture = (PokemonNPC)target.ModNPC;
 
         // Register as seen in the player's Pokedex
         var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
         var pokedex = ownerPlayer.GetPokedex();
-        if (pokedex.Entries.TryGetValue(capture.useId, out var status) && status == PokedexEntryStatus.Undiscovered)
-            ownerPlayer.UpdatePokedex(capture.useId, PokedexEntryStatus.Seen);
+        if (pokedex.Entries.TryGetValue(_capture.UseId, out var status) && status == PokedexEntryStatus.Undiscovered)
+            ownerPlayer.UpdatePokedex(_capture.UseId, PokedexEntryStatus.Seen);
 
         Projectile.ai[1] = 1;
         Projectile.ai[0] = 0;
         if (!ModContent.GetInstance<GameplayConfig>().FastAnimations)
-            bounces = 5; //If fast animation disabled, reset bounces to 5 (so the animation isn't shorter if it's already hit the ground)
-        else if (bounces > 2)
-            bounces = 2;
+            _bounces = 5; //If fast animation disabled, reset bounces to 5 (so the animation isn't shorter if it's already hit the ground)
+        else if (_bounces > 2)
+            _bounces = 2;
 
-        rotation = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero)
+        _rotation = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero)
             .ToRotation(); //Rotate to face Pokemon
 
-        if (Math.Abs(rotation) > 1.5) //Stuff to make sure Pokeball doesn't appear upside down or reversed
+        if (Math.Abs(_rotation) > 1.5) //Stuff to make sure Pokeball doesn't appear upside down or reversed
         {
-            if (rotation > 0)
-                rotation -= 3;
+            if (_rotation > 0)
+                _rotation -= 3;
             else
-                rotation += 3;
+                _rotation += 3;
 
             Projectile.spriteDirection = 1;
         }
@@ -428,21 +428,21 @@ internal abstract class BasePkballProjectile : ModProjectile
 
     private void ReleasePokemon()
     {
-        if (capture == null) return;
+        if (_capture == null) return;
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_spawn"), Projectile.position);
         var source = Entity.GetSource_FromThis();
 
         var newNPC =
             NPC.NewNPC(source, (int)Projectile.Center.X, (int)Projectile.Center.Y,
-                capture.Type); // spawn a new NPC at the new position
+                _capture.Type); // spawn a new NPC at the new position
         var newPoke = (PokemonNPC)Main.npc[newNPC].ModNPC;
-        newPoke.data = capture.data;
-        newPoke.NPC.spriteDirection = capture.NPC.spriteDirection;
+        newPoke.Data = _capture.Data;
+        newPoke.NPC.spriteDirection = _capture.NPC.spriteDirection;
         //newPoke.isShimmer = capture.isShimmer;
         //newPoke.level = capture.level;
         //newPoke.catchAttempts = capture.catchAttempts + 1;
         //Main.NewText($"Catch attempts: {newPoke.catchAttempts}", Color.Firebrick);
-        capture = null;
+        _capture = null;
     }
 
     private enum Frame //Here we label all of the frames in the spritesheet for better readability
