@@ -9,4 +9,9 @@
         <Folder Include="Assets\Items\Evolutionary"/>
         <Folder Include="Sounds"/>
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="EasyPacketsLib">
+        <HintPath>lib\EasyPacketsLib.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>
