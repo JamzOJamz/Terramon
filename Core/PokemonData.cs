@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
@@ -15,53 +16,31 @@ public class PokemonData : TagSerializable
     // ReSharper disable once InconsistentNaming
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
 
-    private readonly uint _personalityValue;
+    private Item _heldItem;
+    private string _ot;
+    private uint _personalityValue;
     public byte Ball = BallID.PokeBall;
     public Gender Gender;
-    private Item _heldItem;
     public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
     public string Nickname;
-    private string _ot;
     public string Variant;
-    
+
     /// <summary>
     ///     The display name of the Pokémon. If a nickname is set, it will be used. Otherwise, the localized name will be used.
     /// </summary>
-    public string DisplayName => Nickname ?? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value;
+    public string DisplayName =>
+        string.IsNullOrEmpty(Nickname) ? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value : Nickname;
 
     private uint PersonalityValue
     {
         get => _personalityValue;
-        init
+        set
         {
             Gender = DetermineGender(ID, value);
             _personalityValue = value;
         }
-    }
-
-    public TagCompound SerializeData()
-    {
-        var tag = new TagCompound
-        {
-            ["id"] = ID,
-            ["lvl"] = Level,
-            ["ot"] = _ot,
-            ["pv"] = PersonalityValue,
-            ["version"] = Version
-        };
-        if (Ball != BallID.PokeBall)
-            tag["ball"] = Ball;
-        if (IsShiny)
-            tag["isShiny"] = true;
-        if (Nickname != null)
-            tag["n"] = Nickname;
-        if (Variant != null)
-            tag["variant"] = Variant;
-        if (_heldItem != null)
-            tag["item"] = new ItemDefinition(_heldItem.type);
-        return tag;
     }
 
     /// <summary>
@@ -98,7 +77,7 @@ public class PokemonData : TagSerializable
             default:
                 throw new ArgumentOutOfRangeException(nameof(trigger), trigger, null);
         }
-        
+
         // Check for Pokémon that evolve through held items
         if (_heldItem?.ModItem is EvolutionaryItem item && item.Trigger == trigger)
             return item.GetEvolvedSpecies(this);
@@ -132,6 +111,31 @@ public class PokemonData : TagSerializable
         return genderRate >= 0
             ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
             : Gender.Unspecified;
+    }
+
+    #region NBT Serialization
+
+    public TagCompound SerializeData()
+    {
+        var tag = new TagCompound
+        {
+            ["id"] = ID,
+            ["lvl"] = Level,
+            ["ot"] = _ot,
+            ["pv"] = PersonalityValue,
+            ["version"] = Version
+        };
+        if (Ball != BallID.PokeBall)
+            tag["ball"] = Ball;
+        if (IsShiny)
+            tag["isShiny"] = true;
+        if (!string.IsNullOrEmpty(Nickname))
+            tag["n"] = Nickname;
+        if (!string.IsNullOrEmpty(Variant))
+            tag["variant"] = Variant;
+        if (_heldItem != null)
+            tag["item"] = new ItemDefinition(_heldItem.type);
+        return tag;
     }
 
     private static PokemonData Load(TagCompound tag)
@@ -172,4 +176,45 @@ public class PokemonData : TagSerializable
             data._heldItem = new Item(itemDefinition.Type);
         return data;
     }
+
+    #endregion
+
+    #region Network Sync
+
+    /// <summary>
+    ///     Writes this Pokémon's data to the specified writer.
+    ///     This method is used for network synchronization.
+    /// </summary>
+    public void NetSend(BinaryWriter writer)
+    {
+        writer.Write7BitEncodedInt(ID);
+        writer.Write(Level);
+        writer.Write(Ball);
+        writer.Write(IsShiny);
+        writer.Write(PersonalityValue);
+        writer.Write(Nickname ?? string.Empty);
+        writer.Write(Variant ?? string.Empty);
+        writer.Write(_ot ?? string.Empty);
+        writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
+    }
+
+    /// <summary>
+    ///     Reads this Pokémon's data from the specified reader.
+    ///     This method is used for network synchronization.
+    /// </summary>
+    public void NetReceive(BinaryReader reader)
+    {
+        ID = (ushort)reader.Read7BitEncodedInt();
+        Level = reader.ReadByte();
+        Ball = reader.ReadByte();
+        IsShiny = reader.ReadBoolean();
+        PersonalityValue = reader.ReadUInt32();
+        Nickname = reader.ReadString();
+        Variant = reader.ReadString();
+        _ot = reader.ReadString();
+        var heldItem = reader.Read7BitEncodedInt();
+        _heldItem = heldItem == 0 ? null : new Item(heldItem);
+    }
+
+    #endregion
 }

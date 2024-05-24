@@ -39,8 +39,15 @@ public class NicknameCommand : TerramonCommand
         switch (subcommand)
         {
             case "set":
+                // Make sure a nickname has been provided
+                if (string.IsNullOrEmpty(nick))
+                {
+                    caller.Reply("No nickname provided", Color.Red);
+                    return;
+                }
+
                 // Make sure the nickname is not too long (12 characters max)
-                if (nick?.Length > MaxNicknameLength)
+                if (nick.Length > MaxNicknameLength)
                 {
                     caller.Reply("Nickname must be 12 characters or less (including spaces)", Color.Red);
                     return;
@@ -54,7 +61,7 @@ public class NicknameCommand : TerramonCommand
                 }
 
                 // Set the nickname
-                caller.Reply(activePokemonData.Nickname == null
+                caller.Reply(string.IsNullOrEmpty(activePokemonData.Nickname)
                         ? $"Set {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname to {nick}"
                         : $"Changed {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname from {activePokemonData.Nickname} to {nick}",
                     new Color(255, 240, 20));
@@ -62,13 +69,14 @@ public class NicknameCommand : TerramonCommand
                 UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             case "clear":
-                if (activePokemonData.Nickname == null)
+                if (string.IsNullOrEmpty(activePokemonData.Nickname))
                 {
                     caller.Reply("No nickname set for this Pokémon", Color.Red);
                     return;
                 }
 
-                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname", new Color(255, 240, 20));
+                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname",
+                    new Color(255, 240, 20));
                 activePokemonData.Nickname = null;
                 UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;

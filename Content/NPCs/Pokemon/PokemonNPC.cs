@@ -101,7 +101,7 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
 
             if (_hasGenderDifference && Data?.Gender == Gender.Female)
                 pathBuilder.Append('F');
-            if (Data?.Variant != null)
+            if (!string.IsNullOrEmpty(Data?.Variant))
                 pathBuilder.Append('_').Append(Data.Variant);
             if (Data is { IsShiny: true })
                 pathBuilder.Append("_S");
@@ -129,15 +129,14 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
 
     public override void SendExtraAI(BinaryWriter writer)
     {
-        writer.Write((byte)Data.Gender);
-        writer.Write(Data.IsShiny);
+        Data.NetSend(writer);
         Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
-        Data.Gender = (Gender)reader.ReadByte();
-        Data.IsShiny = reader.ReadBoolean();
+        Data ??= new PokemonData();
+        Data.NetReceive(reader);
         Behaviour?.ReceiveExtraAI(reader);
     }
 
