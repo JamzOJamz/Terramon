@@ -1,7 +1,7 @@
 /*
  *  IEasyPacket`1.cs
  *  DavidFDev
-*/
+ */
 
 using System.Diagnostics.Contracts;
 using System.IO;
@@ -49,7 +49,7 @@ public interface IEasyPacket<out T> where T : struct, IEasyPacket<T>
     /// </summary>
     /// <example>
     ///     <code>
-    ///         void IEasyPacket&lt;ExamplePacket&gt;.Serialise(BinaryWriter writer)
+    ///         void IEasyPacket&lt;ExamplePacket&gt;.Serialize(BinaryWriter writer)
     ///         {
     ///             writer.Write(X);
     ///             writer.Write(Y);
@@ -58,22 +58,22 @@ public interface IEasyPacket<out T> where T : struct, IEasyPacket<T>
     /// </example>
     // ReSharper disable once PureAttributeOnVoidMethod
     [Pure]
-    void Serialise(BinaryWriter writer);
+    void Serialize(BinaryWriter writer);
 
     /// <summary>
-    ///     Deserialise the packet data using the provided reader.
+    ///     Deserialize the packet data using the provided reader.
     ///     An error will be raised if not all data is read from the reader.
     /// </summary>
     /// <example>
     ///     <code>
-    ///         ExamplePacket IEasyPacket&lt;ExamplePacket&gt;.Deserialise(BinaryReader reader, in SenderInfo sender)
+    ///         ExamplePacket IEasyPacket&lt;ExamplePacket&gt;.Deserialize(BinaryReader reader, in SenderInfo sender)
     ///         {
     ///             return new ExamplePacket(reader.ReadInt32(), reader.ReadInt32());
     ///         }
     ///     </code>
     /// </example>
     [Pure]
-    T Deserialise(BinaryReader reader, in SenderInfo sender);
+    T Deserialize(BinaryReader reader, in SenderInfo sender);
 
     #endregion
 }

@@ -1,14 +1,15 @@
 ﻿/*
  *  EasyPacketHandler.cs
  *  DavidFDev
-*/
+ */
 
 namespace Terramon.Core.Networking.Internals;
 
 /// <summary>
 ///     Generic wrapper for an <see cref="IEasyPacketHandler{T}" /> type.
 /// </summary>
-internal readonly struct EasyPacketHandler<THandler, TPacket> : IEasyPacketHandler where THandler : struct, IEasyPacketHandler<TPacket> where TPacket : struct, IEasyPacket<TPacket>
+internal readonly struct EasyPacketHandler<THandler, TPacket> : IEasyPacketHandler
+    where THandler : struct, IEasyPacketHandler<TPacket> where TPacket : struct, IEasyPacket<TPacket>
 {
     #region Static Methods
 

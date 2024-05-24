@@ -1,7 +1,7 @@
 ﻿/*
  *  EasyPacketExtensions.cs
  *  DavidFDev
-*/
+ */
 
 using System;
 using System.IO;
@@ -30,7 +30,8 @@ public static class EasyPacketExtensions
     /// <param name="ignoreClient">If non-negative, this packet will not be sent to the specified client.</param>
     /// <param name="forward">If sending from a client, this packet will be forwarded to other clients through the server.</param>
     /// <typeparam name="T">Type that implements <see cref="IEasyPacket{T}" />.</typeparam>
-    public static void SendPacket<T>(this Mod mod, in T packet, int toClient = -1, int ignoreClient = -1, bool forward = false) where T : struct, IEasyPacket<T>
+    public static void SendPacket<T>(this Mod mod, in T packet, int toClient = -1, int ignoreClient = -1,
+        bool forward = false) where T : struct, IEasyPacket<T>
     {
         forward = forward && Main.netMode == NetmodeID.MultiplayerClient;
         SendPacket_Internal(mod, in packet, (byte)Main.myPlayer, toClient, ignoreClient, forward);
@@ -65,7 +66,8 @@ public static class EasyPacketExtensions
     /// <param name="mod">Mod handling the packet.</param>
     /// <param name="handler">Method handling the packet.</param>
     /// <typeparam name="T">Type that implements <see cref="IEasyPacket{T}" />.</typeparam>
-    public static void AddPacketHandler<T>(this Mod mod, HandleEasyPacketDelegate<T> handler) where T : struct, IEasyPacket<T>
+    public static void AddPacketHandler<T>(this Mod mod, HandleEasyPacketDelegate<T> handler)
+        where T : struct, IEasyPacket<T>
     {
         EasyPacketLoader.AddHandler(handler);
     }
@@ -99,7 +101,8 @@ public static class EasyPacketExtensions
     /// <param name="mod">Mod handling the packet.</param>
     /// <param name="handler">Method handling the packet.</param>
     /// <typeparam name="T">Type that implements <see cref="IEasyPacket{T}" />.</typeparam>
-    public static void RemovePacketHandler<T>(this Mod mod, HandleEasyPacketDelegate<T> handler) where T : struct, IEasyPacket<T>
+    public static void RemovePacketHandler<T>(this Mod mod, HandleEasyPacketDelegate<T> handler)
+        where T : struct, IEasyPacket<T>
     {
         EasyPacketLoader.RemoveHandler(handler);
     }
@@ -112,7 +115,7 @@ public static class EasyPacketExtensions
     /// <typeparam name="T">Type that implements <see cref="IEasyPacket{T}" />.</typeparam>
     public static void Write<T>(this BinaryWriter writer, in T packet) where T : struct, IEasyPacket<T>
     {
-        packet.Serialise(writer);
+        packet.Serialize(writer);
     }
 
     /// <summary>
@@ -124,62 +127,47 @@ public static class EasyPacketExtensions
     /// <returns>Packet instance that implements <see cref="IEasyPacket{T}" />.</returns>
     public static T Read<T>(this BinaryReader reader, in SenderInfo sender) where T : struct, IEasyPacket<T>
     {
-        return new T().Deserialise(reader, in sender);
+        return new T().Deserialize(reader, in sender);
     }
-    
-    internal static void SendPacket_Internal<T>(this Mod mod, in T packet, byte whoAmI, int toClient, int ignoreClient, bool forward) where T : struct, IEasyPacket<T>
+
+    internal static void SendPacket_Internal<T>(this Mod mod, in T packet, byte whoAmI, int toClient, int ignoreClient,
+        bool forward) where T : struct, IEasyPacket<T>
     {
-        if (Main.netMode == NetmodeID.SinglePlayer)
-        {
-            throw new Exception("SendPacket called in single-player.");
-        }
+        if (Main.netMode == NetmodeID.SinglePlayer) throw new Exception("SendPacket called in single-player.");
 
         if (!EasyPacketLoader.IsRegistered<T>())
-        {
             throw new Exception($"SendPacket called on an unregistered type: {typeof(T).Name}.");
-        }
 
         // Check if the mod is synced
         if (!mod.IsNetSynced)
         {
             // Client's IsNetSynced is true if Side=Both, but if Side=NoSync, true if the server has the mod
             // Server's IsNetSynced is true if Side=Both or Side=NoSync
-            if (Main.netMode == NetmodeID.MultiplayerClient && mod.Side == ModSide.NoSync)
-            {
-                return;
-            }
+            if (Main.netMode == NetmodeID.MultiplayerClient && mod.Side == ModSide.NoSync) return;
 
             throw new Exception("SendPacket called on an un-synced mod.");
         }
-        
+
         // Important that the packet is sent by this mod, so that it is received correctly
         var modPacket = Terramon.Instance.GetPacket();
 
         // Mod's net id is synced across server and clients
         var modNetId = mod.NetID;
         if (ModNet.NetModCount < 256)
-        {
             modPacket.Write((byte)modNetId);
-        }
         else
-        {
             modPacket.Write(modNetId);
-        }
 
         // Easy packet type's net id is synced across server and clients
         var packetNetId = EasyPacketLoader.GetNetId<T>();
         if (EasyPacketLoader.NetEasyPacketCount < 256)
-        {
             modPacket.Write((byte)packetNetId);
-        }
         else
-        {
             modPacket.Write(packetNetId);
-        }
 
         // Write any additional flags
         var expected = mod.Side == ModSide.Both;
-        var flags = new BitsByte {[0] = forward, [1] = expected};
+        var flags = new BitsByte { [0] = forward, [1] = expected };
         modPacket.Write(flags);
 
         // Special case if the packet is to be forwarded
@@ -199,7 +187,7 @@ public static class EasyPacketExtensions
         }
 
         // Let the easy packet serialise itself
-        packet.Serialise(modPacket);
+        packet.Serialize(modPacket);
 
         // Finally, send the packet
         modPacket.Send(toClient, ignoreClient);
@@ -208,17 +196,13 @@ public static class EasyPacketExtensions
     /// <summary>
     ///     Work in progress. Do not use.
     /// </summary>
-    internal static void SendPacket_SplitSupport<T>(this Mod mod, in T packet, byte whoAmI, int toClient, int ignoreClient, bool forward) where T : struct, IEasyPacket<T>
+    internal static void SendPacket_SplitSupport<T>(this Mod mod, in T packet, byte whoAmI, int toClient,
+        int ignoreClient, bool forward) where T : struct, IEasyPacket<T>
     {
-        if (Main.netMode == NetmodeID.SinglePlayer)
-        {
-            throw new Exception("SendPacket called in single-player.");
-        }
+        if (Main.netMode == NetmodeID.SinglePlayer) throw new Exception("SendPacket called in single-player.");
 
         if (!EasyPacketLoader.IsRegistered<T>())
-        {
             throw new Exception($"SendPacket called on an unregistered type: {typeof(T).Name}.");
-        }
 
         // Let the easy packet serialise itself, and retrieve the bytes to be sent in the packet body
         byte[] bodyBytes;
@@ -226,40 +210,29 @@ public static class EasyPacketExtensions
         {
             using (var writer = new BinaryWriter(stream))
             {
-                packet.Serialise(writer);
+                packet.Serialize(writer);
             }
 
             stream.Flush();
             bodyBytes = stream.GetBuffer();
         }
 
-        if (bodyBytes.Length == 0)
-        {
-            throw new Exception($"SendPacket called on an empty packet: {typeof(T).Name}.");
-        }
+        if (bodyBytes.Length == 0) throw new Exception($"SendPacket called on an empty packet: {typeof(T).Name}.");
 
         // Determine the total size of the packet, in case it's over the max
         var totalSize = bodyBytes.Length;
 
         // Mod's net ID
         if (ModNet.NetModCount < 256)
-        {
             totalSize += sizeof(byte);
-        }
         else
-        {
             totalSize += sizeof(short);
-        }
 
         // Easy packet's net ID
         if (EasyPacketLoader.NetEasyPacketCount < 256)
-        {
             totalSize += sizeof(byte);
-        }
         else
-        {
             totalSize += sizeof(ushort);
-        }
 
         totalSize += sizeof(byte); // flags
 
@@ -283,10 +256,7 @@ public static class EasyPacketExtensions
         // Check if the packet data needs to be separated into multiple packets
         const int maxSize = int.MaxValue; // TODO
         var split = totalSize >= maxSize;
-        if (split)
-        {
-            totalSize += sizeof(int); // length
-        }
+        if (split) totalSize += sizeof(int); // length
 
         for (var i = 0; i < bodyBytes.Length;)
         {
@@ -296,27 +266,19 @@ public static class EasyPacketExtensions
             // Mod's net id is synced across server and clients
             var modNetId = mod.NetID;
             if (ModNet.NetModCount < 256)
-            {
                 modPacket.Write((byte)modNetId);
-            }
             else
-            {
                 modPacket.Write(modNetId);
-            }
 
             // Easy packet type's net id is synced across server and clients
             var packetNetId = EasyPacketLoader.GetNetId<T>();
             if (EasyPacketLoader.NetEasyPacketCount < 256)
-            {
                 modPacket.Write((byte)packetNetId);
-            }
             else
-            {
                 modPacket.Write(packetNetId);
-            }
 
             // Write any additional flags
-            var flags = new BitsByte {[0] = forward, [1] = split};
+            var flags = new BitsByte { [0] = forward, [1] = split };
             modPacket.Write(flags);
 
             // Special case if the packet is to be forwarded
@@ -337,10 +299,7 @@ public static class EasyPacketExtensions
 
             // TODO: Determine length properly. This logic is wrong.
             var length = Math.Min(bodyBytes.Length - i, maxSize - (totalSize - bodyBytes.Length));
-            if (split)
-            {
-                modPacket.Write(length);
-            }
+            if (split) modPacket.Write(length);
 
             // Write the packet data
             modPacket.Write(new ReadOnlySpan<byte>(bodyBytes, i, i + length));

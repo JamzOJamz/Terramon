@@ -1,7 +1,7 @@
 ﻿/*
  *  IEasyPacket.cs
  *  DavidFDev
-*/
+ */
 
 using System.IO;
 

@@ -1,7 +1,7 @@
 ﻿/*
  *  IEasyPacketHandler.cs
  *  DavidFDev
-*/
+ */
 
 namespace Terramon.Core.Networking.Internals;
 

@@ -1,7 +1,7 @@
 /*
  *  EasyPacket.cs
  *  DavidFDev
-*/
+ */
 
 using System.IO;
 using Terraria.ID;
@@ -18,23 +18,18 @@ internal sealed class EasyPacket<T> : IEasyPacket where T : struct, IEasyPacket<
 
     public void ReceivePacket(BinaryReader reader, in SenderInfo sender)
     {
-        var packet = default(T).Deserialise(reader, in sender);
+        var packet = default(T).Deserialize(reader, in sender);
 
         // Check if the packet should be automatically forwarded to clients
         if (Main.netMode == NetmodeID.Server && sender.Forwarded)
-        {
             sender.Mod.SendPacket_Internal(in packet, sender.WhoAmI, sender.ToClient, sender.IgnoreClient, true);
-        }
 
         // Let any handlers handle the received packet
         var handler = EasyPacketLoader.GetHandler<T>();
         var handled = false;
         handler?.Invoke(in packet, in sender, ref handled);
 
-        if (!handled)
-        {
-            sender.Mod.Logger.Error($"Unhandled packet: {typeof(T).Name}.");
-        }
+        if (!handled) sender.Mod.Logger.Error($"Unhandled packet: {typeof(T).Name}.");
     }
 
     #endregion

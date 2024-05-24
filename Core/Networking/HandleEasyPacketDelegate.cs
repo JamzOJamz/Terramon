@@ -1,7 +1,7 @@
 ﻿/*
  *  HandleEasyPacketDelegate.cs
  *  DavidFDev
-*/
+ */
 
 namespace Terramon.Core.Networking;
 
@@ -22,4 +22,5 @@ namespace Terramon.Core.Networking;
 ///         }
 ///     </code>
 /// </example>
-public delegate void HandleEasyPacketDelegate<T>(in T packet, in SenderInfo sender, ref bool handled) where T : struct, IEasyPacket<T>;
+public delegate void HandleEasyPacketDelegate<T>(in T packet, in SenderInfo sender, ref bool handled)
+    where T : struct, IEasyPacket<T>;

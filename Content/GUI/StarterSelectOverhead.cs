@@ -173,11 +173,11 @@ public class StarterButton : UIHoverImage
                 data.IsShiny = false;
             player.AddPartyPokemon(data);
             player.HasChosenStarter = true;
-            var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").WithFormatArgs(
+            var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
                 Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value,
                 TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(pokemon).Types[0]),
                 Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
-            ).Value;
+            );
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
             Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_GiftOrReward(),

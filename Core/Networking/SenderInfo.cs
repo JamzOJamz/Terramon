@@ -1,7 +1,7 @@
 /*
  *  SenderInfo.cs
  *  DavidFDev
-*/
+ */
 
 namespace Terramon.Core.Networking;
 
