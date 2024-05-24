@@ -3,8 +3,10 @@ global using Microsoft.Xna.Framework.Graphics;
 global using Terramon.Core;
 global using Terraria;
 global using Terraria.ModLoader;
+using System.IO;
 using Terramon.Content.Configs;
 using Terramon.Content.Items.KeyItems;
+using Terramon.Core.Networking;
 
 namespace Terramon;
 
@@ -33,6 +35,11 @@ public class Terramon : Mod
 
         return false;
     }
+    
+    public override void HandlePacket(BinaryReader reader, int whoAmI)
+    {
+        EasyPacketsLib.HandlePacket(reader, whoAmI);
+    }
 
     public override void Load()
     {
@@ -46,6 +53,11 @@ public class Terramon : Mod
         DatabaseV2 = DatabaseV2.Parse(dbStream);
     }
 
+    public override void Unload()
+    {
+        DatabaseV2 = null;
+    }
+    
     /*private static void UIModItemInitialize_Detour(orig_UIModItemInitialize orig, object self)
     {
         orig(self);
@@ -65,11 +77,6 @@ public class Terramon : Mod
         };
         modIcon?.SetImage(ModContent.Request<Texture2D>("Terramon/" + iconPath, AssetRequestMode.ImmediateLoad));
     }*/
-
-    public override void Unload()
-    {
-        DatabaseV2 = null;
-    }
 
     //private delegate void orig_UIModItemInitialize(object self);
 }
