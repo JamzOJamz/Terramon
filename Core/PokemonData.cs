@@ -15,6 +15,8 @@ public class PokemonData : TagSerializable
     // ReSharper disable once UnusedMember.Global
     // ReSharper disable once InconsistentNaming
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
+    
+    private readonly Guid _uniqueId = Guid.NewGuid();
 
     private Item _heldItem;
     private string _ot;
@@ -112,6 +114,11 @@ public class PokemonData : TagSerializable
             ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
             : Gender.Unspecified;
     }
+    
+    public PokemonData ShallowCopy()
+    {
+        return (PokemonData)MemberwiseClone();
+    }
 
     #region NBT Serialization
 
@@ -185,7 +192,7 @@ public class PokemonData : TagSerializable
     ///     Writes this Pokémon's data to the specified writer.
     ///     This method is used for network synchronization.
     /// </summary>
-    public void NetSend(BinaryWriter writer)
+    public void NetWrite(BinaryWriter writer)
     {
         writer.Write7BitEncodedInt(ID);
         writer.Write(Level);
@@ -202,7 +209,8 @@ public class PokemonData : TagSerializable
     ///     Reads this Pokémon's data from the specified reader.
     ///     This method is used for network synchronization.
     /// </summary>
-    public void NetReceive(BinaryReader reader)
+    /// <returns>The instance the method was called on.</returns>
+    public PokemonData NetRead(BinaryReader reader)
     {
         ID = (ushort)reader.Read7BitEncodedInt();
         Level = reader.ReadByte();
@@ -214,6 +222,7 @@ public class PokemonData : TagSerializable
         _ot = reader.ReadString();
         var heldItem = reader.Read7BitEncodedInt();
         _heldItem = heldItem == 0 ? null : new Item(heldItem);
+        return this;
     }
 
     #endregion

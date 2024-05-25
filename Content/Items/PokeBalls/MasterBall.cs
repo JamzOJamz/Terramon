@@ -1,5 +1,5 @@
 ﻿using Terramon.Content.NPCs.Pokemon;
-using Terramon.Core.Helpers;
+using Terramon.Helpers;
 using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.PokeBalls;

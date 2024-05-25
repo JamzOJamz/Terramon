@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Terramon.Content.GUI;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -55,12 +56,12 @@ public abstract class TerramonItem : ModItem
         var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         if (activePokemonData == null)
         {
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), new Color(255, 240, 20));
+            player.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), new Color(255, 240, 20));
             return false;
         }
 
         if (AffectedByPokemonDirectUse(activePokemonData)) return true;
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),
+        player.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),
             new Color(255, 240, 20));
         return false;
     }
@@ -68,10 +69,10 @@ public abstract class TerramonItem : ModItem
     public override bool? UseItem(Player player)
     {
         if (!HasPokemonDirectUse) return null;
-
         var modPlayer = player.GetModPlayer<TerramonPlayer>();
         PokemonDirectUse(player, modPlayer.GetActivePokemon());
-        UILoader.GetUIState<PartyDisplay>().RecalculateSlot(modPlayer.ActiveSlot); // Reflect changes in UI
+        if (player.whoAmI == Main.myPlayer)
+            UILoader.GetUIState<PartyDisplay>().RecalculateSlot(modPlayer.ActiveSlot); // Reflect changes in UI
         return true;
     }
 

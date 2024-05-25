@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Terramon.Core.Helpers;
+using Terramon.Helpers;
 using Terraria.UI;
 
 namespace Terramon.Core.Loaders.UILoading;

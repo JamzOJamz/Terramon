@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Terraria.ID;
+
 // ReSharper disable InconsistentNaming
 
-namespace GenUtils;
+namespace Terramon.Helpers;
 
 internal class ChestGen
 {

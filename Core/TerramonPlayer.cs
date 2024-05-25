@@ -2,7 +2,9 @@ using System.Linq;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Core.Networking;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
@@ -10,7 +12,6 @@ namespace Terramon.Core;
 
 public class TerramonPlayer : ModPlayer
 {
-    public readonly PokemonData[] Party = new PokemonData[6];
     private readonly PCService _pc = new();
     private readonly PokedexService _pokedex = new();
 
@@ -20,6 +21,7 @@ public class TerramonPlayer : ModPlayer
     private int _premierBonusCount;
 
     public bool HasChosenStarter;
+    public PokemonData[] Party { get; } = new PokemonData[6];
 
     public int ActiveSlot
     {
@@ -56,9 +58,21 @@ public class TerramonPlayer : ModPlayer
         UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
     }
 
+    public override void OnRespawn()
+    {
+        if (Player.whoAmI != Main.myPlayer) return;
+
+        // Reapply companion buff on player respawn
+        if (ActiveSlot >= 0)
+            Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
+    }
+
     public override void PreUpdate()
     {
-        if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0)
+        if (Player.whoAmI != Main.myPlayer) return;
+
+        // Handle player removing companion buff manually (right-clicking the buff icon)
+        if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0 && !Player.dead)
         {
             var oldSlot = ActiveSlot;
             ActiveSlot = -1;
@@ -219,4 +233,38 @@ public class TerramonPlayer : ModPlayer
             _pc.Boxes.Add(box);
         }
     }
+
+    #region Network Sync
+
+    public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+    {
+        for (var i = 0; i < Party.Length; i++)
+            Mod.SendPacket(new PartySyncPacket((byte)Player.whoAmI, (byte)i, Party[i]), toWho, fromWho, !newPlayer);
+        Mod.SendPacket(new ActiveSlotUpdatedPacket((byte)Player.whoAmI, ActiveSlot), toWho, fromWho, !newPlayer);
+    }
+
+    public override void CopyClientState(ModPlayer targetCopy)
+    {
+        var clone = (TerramonPlayer)targetCopy;
+        for (var i = 0; i < Party.Length; i++)
+            if (clone.Party[i] != null && Party[i] == null)
+                clone.Party[i] = null;
+            else if (clone.Party[i] == null && Party[i] != null)
+                clone.Party[i] = Party[i].ShallowCopy();
+        /*else if (clone.Party[i] != null && Party[i] != null)
+                Party[i].CopyNetStateTo(clone.Party[i]);*/
+        clone.ActiveSlot = ActiveSlot;
+    }
+
+    public override void SendClientChanges(ModPlayer clientPlayer)
+    {
+        var clone = (TerramonPlayer)clientPlayer;
+        for (var i = 0; i < Party.Length; i++)
+            if ((Party[i] == null && clone.Party[i] != null) || (Party[i] != null && clone.Party[i] == null))
+                Mod.SendPacket(new PartySyncPacket((byte)Player.whoAmI, (byte)i, Party[i]), -1, Main.myPlayer, true);
+        if (ActiveSlot == clone.ActiveSlot) return;
+        Mod.SendPacket(new ActiveSlotUpdatedPacket((byte)Player.whoAmI, ActiveSlot), -1, Main.myPlayer, true);
+    }
+
+    #endregion
 }

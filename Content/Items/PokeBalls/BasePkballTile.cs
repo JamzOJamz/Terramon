@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
@@ -26,9 +27,9 @@ public abstract class BasePkballTile : ModTile
         Main.tileFrameImportant[Type] = true;
 
         TileID.Sets.HasOutlines[Type] = true;
-        TileObjectData.newTile.StyleHorizontal = true;
 
         TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+        TileObjectData.newTile.StyleHorizontal = true;
         TileObjectData.newTile.HookPostPlaceMyPlayer =
             new PlacementHook(ModContent.GetInstance<BasePkballEntity>().Hook_AfterPlacement, -1, 0, false);
         TileObjectData.newTile.UsesCustomCanPlace = true;

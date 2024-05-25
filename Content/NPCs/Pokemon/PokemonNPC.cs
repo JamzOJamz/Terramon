@@ -129,14 +129,14 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
 
     public override void SendExtraAI(BinaryWriter writer)
     {
-        Data.NetSend(writer);
+        Data.NetWrite(writer);
         Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         Data ??= new PokemonData();
-        Data.NetReceive(reader);
+        Data.NetRead(reader);
         Behaviour?.ReceiveExtraAI(reader);
     }
 

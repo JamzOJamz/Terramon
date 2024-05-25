@@ -1,7 +1,7 @@
 ﻿using Terraria.DataStructures;
 using Terraria.ObjectData;
 
-namespace Terramon.Core;
+namespace Terramon.Helpers;
 
 public static class TileUtils
 {

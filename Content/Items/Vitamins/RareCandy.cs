@@ -1,6 +1,6 @@
 using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
-using Terramon.Core.Helpers;
+using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -32,6 +32,12 @@ public class RareCandy : Vitamin
 
     protected override void PokemonDirectUse(Player player, PokemonData data)
     {
+        if (player.whoAmI != Main.myPlayer)
+        {
+            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            return;
+        }
+
         data.LevelUp();
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level),
@@ -56,7 +62,8 @@ public class RareCandy : Vitamin
         {
             SoundEngine.PlaySound(SoundID.Item4, player.position);
             Main.NewText(
-                Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolutionReady", data.DisplayName), new Color(50, 255, 130));
+                Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolutionReady", data.DisplayName),
+                new Color(50, 255, 130));
         }
     }
 }

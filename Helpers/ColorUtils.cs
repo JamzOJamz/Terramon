@@ -1,4 +1,4 @@
-namespace Terramon.Core.Helpers;
+namespace Terramon.Helpers;
 
 public static class ColorUtils
 {
