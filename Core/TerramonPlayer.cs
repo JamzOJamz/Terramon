@@ -246,10 +246,10 @@ public class TerramonPlayer : ModPlayer
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
+        /*for (var i = 0; i < Party.Length; i++)
+            Mod.SendPacket(new PartySyncRpc((byte)Player.whoAmI, (byte)i, Party[i]), toWho, fromWho, !newPlayer);*/
+        Mod.SendPacket(new SetActivePokemonRpc((byte)Player.whoAmI, GetActivePokemon()), toWho, fromWho, !newPlayer);
         Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), toWho, fromWho, !newPlayer);
-        for (var i = 0; i < Party.Length; i++)
-            Mod.SendPacket(new PartySyncRpc((byte)Player.whoAmI, (byte)i, Party[i]), toWho, fromWho, !newPlayer);
-        Mod.SendPacket(new SetActiveSlotRpc((byte)Player.whoAmI, ActiveSlot), toWho, fromWho, !newPlayer);
     }
 
     public override void CopyClientState(ModPlayer targetCopy)
@@ -269,13 +269,16 @@ public class TerramonPlayer : ModPlayer
     public override void SendClientChanges(ModPlayer clientPlayer)
     {
         var clone = (TerramonPlayer)clientPlayer;
-        if (HasChosenStarter != clone.HasChosenStarter)
-            Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), -1, Main.myPlayer, true);
-        for (var i = 0; i < Party.Length; i++)
+        /*for (var i = 0; i < Party.Length; i++)
             if ((Party[i] == null && clone.Party[i] != null) || (Party[i] != null && clone.Party[i] == null))
-                Mod.SendPacket(new PartySyncRpc((byte)Player.whoAmI, (byte)i, Party[i]), -1, Main.myPlayer, true);
-        if (ActiveSlot == clone.ActiveSlot) return;
-        Mod.SendPacket(new SetActiveSlotRpc((byte)Player.whoAmI, ActiveSlot), -1, Main.myPlayer, true);
+                Mod.SendPacket(new PartySyncRpc((byte)Player.whoAmI, (byte)i, Party[i]), -1, Main.myPlayer, true);*/
+        var activePokemonData = GetActivePokemon();
+        var cloneActivePokemonData = clone.GetActivePokemon();
+        if ((activePokemonData == null && cloneActivePokemonData != null) ||
+            (activePokemonData != null && cloneActivePokemonData == null))
+            Mod.SendPacket(new SetActivePokemonRpc((byte)Player.whoAmI, GetActivePokemon()), -1, Main.myPlayer, true);
+        if (HasChosenStarter == clone.HasChosenStarter) return;
+        Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), -1, Main.myPlayer, true);
     }
 
     #endregion
