@@ -59,7 +59,7 @@ public abstract class BasePkballItem : TerramonItem
             Item.createTile = -1;
             Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw");
             if (player.GetModPlayer<TerramonPlayer>().HasChosenStarter) return true;
-            player.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), new Color(255, 240, 20));
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), new Color(255, 240, 20));
             return false;
         }
 

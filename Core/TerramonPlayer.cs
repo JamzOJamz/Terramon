@@ -33,8 +33,16 @@ public class TerramonPlayer : ModPlayer
                 Player.hideMisc[0] = true;
             _activeSlot = value;
             var buffType = ModContent.BuffType<PokemonCompanion>();
-            Player.ClearBuff(buffType);
-            if (value >= 0) Player.AddBuff(buffType, 2);
+            var hasBuff = Player.HasBuff(buffType);
+            switch (value)
+            {
+                case >= 0 when !hasBuff:
+                    Player.AddBuff(buffType, 2);
+                    break;
+                case -1 when hasBuff:
+                    Player.ClearBuff(buffType);
+                    break;
+            }
         }
     }
 
@@ -238,9 +246,10 @@ public class TerramonPlayer : ModPlayer
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
+        Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), toWho, fromWho, !newPlayer);
         for (var i = 0; i < Party.Length; i++)
-            Mod.SendPacket(new PartySyncPacket((byte)Player.whoAmI, (byte)i, Party[i]), toWho, fromWho, !newPlayer);
-        Mod.SendPacket(new ActiveSlotUpdatedPacket((byte)Player.whoAmI, ActiveSlot), toWho, fromWho, !newPlayer);
+            Mod.SendPacket(new PartySyncRpc((byte)Player.whoAmI, (byte)i, Party[i]), toWho, fromWho, !newPlayer);
+        Mod.SendPacket(new SetActiveSlotRpc((byte)Player.whoAmI, ActiveSlot), toWho, fromWho, !newPlayer);
     }
 
     public override void CopyClientState(ModPlayer targetCopy)
@@ -254,16 +263,19 @@ public class TerramonPlayer : ModPlayer
         /*else if (clone.Party[i] != null && Party[i] != null)
                 Party[i].CopyNetStateTo(clone.Party[i]);*/
         clone.ActiveSlot = ActiveSlot;
+        clone.HasChosenStarter = HasChosenStarter;
     }
 
     public override void SendClientChanges(ModPlayer clientPlayer)
     {
         var clone = (TerramonPlayer)clientPlayer;
+        if (HasChosenStarter != clone.HasChosenStarter)
+            Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), -1, Main.myPlayer, true);
         for (var i = 0; i < Party.Length; i++)
             if ((Party[i] == null && clone.Party[i] != null) || (Party[i] != null && clone.Party[i] == null))
-                Mod.SendPacket(new PartySyncPacket((byte)Player.whoAmI, (byte)i, Party[i]), -1, Main.myPlayer, true);
+                Mod.SendPacket(new PartySyncRpc((byte)Player.whoAmI, (byte)i, Party[i]), -1, Main.myPlayer, true);
         if (ActiveSlot == clone.ActiveSlot) return;
-        Mod.SendPacket(new ActiveSlotUpdatedPacket((byte)Player.whoAmI, ActiveSlot), -1, Main.myPlayer, true);
+        Mod.SendPacket(new SetActiveSlotRpc((byte)Player.whoAmI, ActiveSlot), -1, Main.myPlayer, true);
     }
 
     #endregion

@@ -51,8 +51,8 @@ public abstract class TerramonItem : ModItem
 
     public override bool CanUseItem(Player player)
     {
-        if (!HasPokemonDirectUse) return false;
-
+        if (!HasPokemonDirectUse) return true;
+        
         var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         if (activePokemonData == null)
         {

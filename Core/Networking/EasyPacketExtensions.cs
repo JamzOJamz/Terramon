@@ -4,6 +4,7 @@
  */
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using Terramon.Core.Networking.Internals;
 using Terraria.ID;

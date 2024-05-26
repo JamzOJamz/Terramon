@@ -4,8 +4,11 @@ using Terraria.ID;
 
 namespace Terramon.Content.Packets;
 
-public readonly struct PartySyncPacket(byte player, byte index, PokemonData data)
-    : IEasyPacket<PartySyncPacket>, IEasyPacketHandler<PartySyncPacket>
+/// <summary>
+///     A packet for synchronizing a player's <see cref="TerramonPlayer.Party" /> with all clients.
+/// </summary>
+public readonly struct PartySyncRpc(byte player, byte index, PokemonData data)
+    : IEasyPacket<PartySyncRpc>, IEasyPacketHandler<PartySyncRpc>
 {
     private readonly byte _player = player;
     private readonly byte _index = index;
@@ -19,23 +22,20 @@ public readonly struct PartySyncPacket(byte player, byte index, PokemonData data
         _data?.NetWrite(writer);
     }
 
-    public PartySyncPacket Deserialize(BinaryReader reader, in SenderInfo sender)
+    public PartySyncRpc Deserialize(BinaryReader reader, in SenderInfo sender)
     {
         var readPlayer = reader.ReadByte();
         var readIndex = reader.ReadByte();
         var readData = reader.ReadBoolean() ? new PokemonData().NetRead(reader) : null;
-        return new PartySyncPacket(readPlayer, readIndex, readData);
+        return new PartySyncRpc(readPlayer, readIndex, readData);
     }
 
-    public void Receive(in PartySyncPacket packet, in SenderInfo sender, ref bool handled)
+    public void Receive(in PartySyncRpc packet, in SenderInfo sender, ref bool handled)
     {
-        /*sender.Mod.Logger.Debug(
-            $"Received PartySyncPacket on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {packet._player}");*/
+        sender.Mod.Logger.Debug(
+            $"Received PartySyncRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {packet._player}");
         var player = Main.player[packet._player].GetModPlayer<TerramonPlayer>();
         player.Party[packet._index] = packet._data;
-        if (Main.netMode == NetmodeID.Server && sender.Forwarded)
-            // Forward the changes to the other clients
-            sender.Mod.SendPacket(packet, ignoreClient: sender.WhoAmI);
         handled = true;
     }
 }
