@@ -15,7 +15,7 @@ public class PokemonData : TagSerializable
     // ReSharper disable once UnusedMember.Global
     // ReSharper disable once InconsistentNaming
     public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
-    
+
     private readonly Guid _uniqueId = Guid.NewGuid();
 
     private Item _heldItem;
@@ -114,7 +114,7 @@ public class PokemonData : TagSerializable
             ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
             : Gender.Unspecified;
     }
-    
+
     public PokemonData ShallowCopy()
     {
         return (PokemonData)MemberwiseClone();
@@ -188,21 +188,83 @@ public class PokemonData : TagSerializable
 
     #region Network Sync
 
+    public const int BitID = 1 << 0;
+    public const int BitLevel = 1 << 1;
+    private const int BitBall = 1 << 2;
+    public const int BitIsShiny = 1 << 3;
+    public const int BitPersonalityValue = 1 << 4;
+    private const int BitNickname = 1 << 5;
+    public const int BitVariant = 1 << 6;
+    private const int BitOT = 1 << 7;
+    private const int BitHeldItem = 1 << 8;
+
+    public const int AllFieldsBitmask = BitID | BitLevel | BitBall | BitIsShiny | BitPersonalityValue | BitNickname |
+                                        BitVariant | BitOT | BitHeldItem;
+
+    /// <summary>
+    ///     Determines whether the Pokémon's network state has changed compared to the specified data,
+    ///     considering only the specified fields for comparison.
+    ///     This method is used for network synchronization.
+    /// </summary>
+    /// <param name="compareData">The Pokémon data to compare against.</param>
+    /// ///
+    /// <param name="compareFields">The bitmask representing the fields to compare.</param>
+    /// <param name="dirtyFields">The bitmask representing the fields that have changed.</param>
+    /// <returns>True if any of the specified fields have changed; otherwise, false.</returns>
+    public bool IsNetStateDirty(PokemonData compareData, int compareFields, out int dirtyFields)
+    {
+        dirtyFields = 0;
+
+        if ((compareFields & BitID) != 0 && ID != compareData.ID) dirtyFields |= BitID;
+        if ((compareFields & BitLevel) != 0 && Level != compareData.Level) dirtyFields |= BitLevel;
+        if ((compareFields & BitBall) != 0 && Ball != compareData.Ball) dirtyFields |= BitBall;
+        if ((compareFields & BitIsShiny) != 0 && IsShiny != compareData.IsShiny) dirtyFields |= BitIsShiny;
+        if ((compareFields & BitPersonalityValue) != 0 && PersonalityValue != compareData.PersonalityValue)
+            dirtyFields |= BitPersonalityValue;
+        if ((compareFields & BitNickname) != 0 && Nickname != compareData.Nickname) dirtyFields |= BitNickname;
+        if ((compareFields & BitVariant) != 0 && Variant != compareData.Variant) dirtyFields |= BitVariant;
+        if ((compareFields & BitOT) != 0 && _ot != compareData._ot) dirtyFields |= BitOT;
+        if ((compareFields & BitHeldItem) != 0 && _heldItem?.type != compareData._heldItem?.type)
+            dirtyFields |= BitHeldItem;
+
+        return dirtyFields != 0;
+    }
+
+
+    /// <summary>
+    ///     Copies the network state of this Pokémon to the specified target.
+    ///     This method is used for network synchronization.
+    /// </summary>
+    public void CopyNetStateTo(PokemonData target, int fields)
+    {
+        if ((fields & BitID) != 0) target.ID = ID;
+        if ((fields & BitLevel) != 0) target.Level = Level;
+        if ((fields & BitBall) != 0) target.Ball = Ball;
+        if ((fields & BitIsShiny) != 0) target.IsShiny = IsShiny;
+        if ((fields & BitPersonalityValue) != 0) target.PersonalityValue = PersonalityValue;
+        if ((fields & BitNickname) != 0) target.Nickname = Nickname;
+        if ((fields & BitVariant) != 0) target.Variant = Variant;
+        if ((fields & BitOT) != 0) target._ot = _ot;
+        if ((fields & BitHeldItem) != 0) target._heldItem = _heldItem;
+    }
+
     /// <summary>
     ///     Writes this Pokémon's data to the specified writer.
     ///     This method is used for network synchronization.
     /// </summary>
-    public void NetWrite(BinaryWriter writer)
+    public void NetWrite(BinaryWriter writer, int fields = AllFieldsBitmask)
     {
-        writer.Write7BitEncodedInt(ID);
-        writer.Write(Level);
-        writer.Write(Ball);
-        writer.Write(IsShiny);
-        writer.Write(PersonalityValue);
-        writer.Write(Nickname ?? string.Empty);
-        writer.Write(Variant ?? string.Empty);
-        writer.Write(_ot ?? string.Empty);
-        writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
+        writer.Write7BitEncodedInt(fields);
+
+        if ((fields & BitID) != 0) writer.Write7BitEncodedInt(ID);
+        if ((fields & BitLevel) != 0) writer.Write(Level);
+        if ((fields & BitBall) != 0) writer.Write(Ball);
+        if ((fields & BitIsShiny) != 0) writer.Write(IsShiny);
+        if ((fields & BitPersonalityValue) != 0) writer.Write(PersonalityValue);
+        if ((fields & BitNickname) != 0) writer.Write(Nickname ?? string.Empty);
+        if ((fields & BitVariant) != 0) writer.Write(Variant ?? string.Empty);
+        if ((fields & BitOT) != 0) writer.Write(_ot ?? string.Empty);
+        if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
     }
 
     /// <summary>
@@ -212,16 +274,22 @@ public class PokemonData : TagSerializable
     /// <returns>The instance the method was called on.</returns>
     public PokemonData NetRead(BinaryReader reader)
     {
-        ID = (ushort)reader.Read7BitEncodedInt();
-        Level = reader.ReadByte();
-        Ball = reader.ReadByte();
-        IsShiny = reader.ReadBoolean();
-        PersonalityValue = reader.ReadUInt32();
-        Nickname = reader.ReadString();
-        Variant = reader.ReadString();
-        _ot = reader.ReadString();
-        var heldItem = reader.Read7BitEncodedInt();
-        _heldItem = heldItem == 0 ? null : new Item(heldItem);
+        var fields = reader.Read7BitEncodedInt();
+
+        if ((fields & BitID) != 0) ID = (ushort)reader.Read7BitEncodedInt();
+        if ((fields & BitLevel) != 0) Level = reader.ReadByte();
+        if ((fields & BitBall) != 0) Ball = reader.ReadByte();
+        if ((fields & BitIsShiny) != 0) IsShiny = reader.ReadBoolean();
+        if ((fields & BitPersonalityValue) != 0) PersonalityValue = reader.ReadUInt32();
+        if ((fields & BitNickname) != 0) Nickname = reader.ReadString();
+        if ((fields & BitVariant) != 0) Variant = reader.ReadString();
+        if ((fields & BitOT) != 0) _ot = reader.ReadString();
+        if ((fields & BitHeldItem) != 0)
+        {
+            var heldItem = reader.Read7BitEncodedInt();
+            _heldItem = heldItem == 0 ? null : new Item(heldItem);
+        }
+
         return this;
     }
 
