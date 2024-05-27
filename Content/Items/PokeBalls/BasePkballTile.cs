@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using EasyPacketsLib;
 using Terramon.Content.Packets;
-using Terramon.Core.Networking;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;

@@ -1,6 +1,6 @@
+using EasyPacketsLib;
 using System.IO;
 using Terramon.Content.Items.PokeBalls;
-using Terramon.Core.Networking;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -18,14 +18,14 @@ public readonly struct PlacedPkballTileRpc(byte player, Point16 tileCoords)
     private readonly byte _player = player;
     private readonly Point16 _tileCoords = tileCoords;
 
-    public void Serialize(BinaryWriter writer)
+    public void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         writer.Write(_tileCoords.X);
         writer.Write(_tileCoords.Y);
     }
 
-    public PlacedPkballTileRpc Deserialize(BinaryReader reader, in SenderInfo sender)
+    public PlacedPkballTileRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         return new PlacedPkballTileRpc(reader.ReadByte(), new Point16(reader.ReadInt16(), reader.ReadInt16()));
     }

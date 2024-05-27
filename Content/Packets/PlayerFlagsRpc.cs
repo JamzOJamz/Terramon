@@ -1,5 +1,5 @@
+using EasyPacketsLib;
 using System.IO;
-using Terramon.Core.Networking;
 using Terraria.ID;
 
 namespace Terramon.Content.Packets;
@@ -13,13 +13,13 @@ public readonly struct PlayerFlagsRpc(byte player, bool starterChosen)
     private readonly byte _player = player;
     private readonly bool _starterChosen = starterChosen;
 
-    public void Serialize(BinaryWriter writer)
+    public void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         writer.Write(_starterChosen);
     }
 
-    public PlayerFlagsRpc Deserialize(BinaryReader reader, in SenderInfo sender)
+    public PlayerFlagsRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         return new PlayerFlagsRpc(reader.ReadByte(), reader.ReadBoolean());
     }

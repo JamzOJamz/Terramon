@@ -6,7 +6,6 @@ global using Terraria.ModLoader;
 using System.IO;
 using Terramon.Content.Configs;
 using Terramon.Content.Items.KeyItems;
-using Terramon.Core.Networking;
 
 namespace Terramon;
 
@@ -38,7 +37,7 @@ public class Terramon : Mod
     
     public override void HandlePacket(BinaryReader reader, int whoAmI)
     {
-        EasyPacketsLib.HandlePacket(reader, whoAmI);
+        EasyPacketsLib.EasyPacketDLL.HandlePacket(reader, whoAmI);
     }
 
     public override void Load()
@@ -51,11 +50,15 @@ public class Terramon : Mod
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
+        
+        // Register the mod in EasyPacketsLib
+        EasyPacketsLib.EasyPacketDLL.RegisterMod(this);
     }
 
     public override void Unload()
     {
         DatabaseV2 = null;
+        EasyPacketsLib.EasyPacketDLL.Unload();
     }
     
     /*private static void UIModItemInitialize_Detour(orig_UIModItemInitialize orig, object self)

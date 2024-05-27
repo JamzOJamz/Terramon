@@ -1,5 +1,5 @@
+using EasyPacketsLib;
 using System.IO;
-using Terramon.Core.Networking;
 using Terraria.ID;
 
 namespace Terramon.Content.Packets;
@@ -17,7 +17,7 @@ public readonly struct UpdateActivePokemonRpc(
     private readonly PokemonData _data = data;
     private readonly int _syncFields = syncFields;
 
-    public void Serialize(BinaryWriter writer)
+    public void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         var hasData = _data != null;
@@ -28,7 +28,7 @@ public readonly struct UpdateActivePokemonRpc(
         _data?.NetWrite(writer, _syncFields);
     }
 
-    public UpdateActivePokemonRpc Deserialize(BinaryReader reader, in SenderInfo sender)
+    public UpdateActivePokemonRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         var readPlayer = reader.ReadByte();
         if (!reader.ReadBoolean())

@@ -1,6 +1,6 @@
+using EasyPacketsLib;
 using System;
 using System.IO;
-using Terramon.Core.Networking;
 using Terraria.ID;
 
 namespace Terramon.Content.Packets;
@@ -16,7 +16,7 @@ public readonly struct PartySyncRpc(byte player, byte index, PokemonData data)
     private readonly byte _index = index;
     private readonly PokemonData _data = data;
 
-    public void Serialize(BinaryWriter writer)
+    public void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         writer.Write(_index);
@@ -24,7 +24,7 @@ public readonly struct PartySyncRpc(byte player, byte index, PokemonData data)
         _data?.NetWrite(writer);
     }
 
-    public PartySyncRpc Deserialize(BinaryReader reader, in SenderInfo sender)
+    public PartySyncRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         var readPlayer = reader.ReadByte();
         var readIndex = reader.ReadByte();

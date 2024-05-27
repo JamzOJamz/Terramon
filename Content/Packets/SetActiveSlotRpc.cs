@@ -1,6 +1,6 @@
+using EasyPacketsLib;
 using System;
 using System.IO;
-using Terramon.Core.Networking;
 using Terraria.ID;
 
 namespace Terramon.Content.Packets;
@@ -15,13 +15,13 @@ public readonly struct SetActiveSlotRpc(byte player, int activeSlot)
     private readonly byte _player = player;
     private readonly int _activeSlot = activeSlot;
 
-    public void Serialize(BinaryWriter writer)
+    public void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         writer.Write((byte)(_activeSlot + 1));
     }
 
-    public SetActiveSlotRpc Deserialize(BinaryReader reader, in SenderInfo sender)
+    public SetActiveSlotRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         return new SetActiveSlotRpc(reader.ReadByte(), reader.ReadByte() - 1);
     }
