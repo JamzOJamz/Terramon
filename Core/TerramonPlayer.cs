@@ -1,7 +1,9 @@
 using System.Linq;
+using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -10,7 +12,6 @@ namespace Terramon.Core;
 
 public class TerramonPlayer : ModPlayer
 {
-    public readonly PokemonData[] Party = new PokemonData[6];
     private readonly PCService _pc = new();
     private readonly PokedexService _pokedex = new();
 
@@ -20,6 +21,7 @@ public class TerramonPlayer : ModPlayer
     private int _premierBonusCount;
 
     public bool HasChosenStarter;
+    public PokemonData[] Party { get; } = new PokemonData[6];
 
     public int ActiveSlot
     {
@@ -31,8 +33,16 @@ public class TerramonPlayer : ModPlayer
                 Player.hideMisc[0] = true;
             _activeSlot = value;
             var buffType = ModContent.BuffType<PokemonCompanion>();
-            Player.ClearBuff(buffType);
-            if (value >= 0) Player.AddBuff(buffType, 2);
+            var hasBuff = Player.HasBuff(buffType);
+            switch (value)
+            {
+                case >= 0 when !hasBuff:
+                    Player.AddBuff(buffType, 2);
+                    break;
+                case -1 when hasBuff:
+                    Player.ClearBuff(buffType);
+                    break;
+            }
         }
     }
 
@@ -56,9 +66,21 @@ public class TerramonPlayer : ModPlayer
         UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
     }
 
+    public override void OnRespawn()
+    {
+        if (Player.whoAmI != Main.myPlayer) return;
+
+        // Reapply companion buff on player respawn
+        if (ActiveSlot >= 0)
+            Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
+    }
+
     public override void PreUpdate()
     {
-        if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0)
+        if (Player.whoAmI != Main.myPlayer) return;
+
+        // Handle player removing companion buff manually (right-clicking the buff icon)
+        if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0 && !Player.dead)
         {
             var oldSlot = ActiveSlot;
             ActiveSlot = -1;
@@ -219,4 +241,52 @@ public class TerramonPlayer : ModPlayer
             _pc.Boxes.Add(box);
         }
     }
+
+    #region Network Sync
+
+    /// <summary>
+    ///     The bitmask of the <see cref="PokemonData" /> fields that require syncing for the player's active Pokémon.
+    ///     These fields will be observed for changes and if they are changed, their new values will be forwarded to other
+    ///     clients.
+    /// </summary>
+    private const int ActivePokemonSyncFields = PokemonData.BitID | PokemonData.BitLevel;
+
+    public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+    {
+        Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, GetActivePokemon()), toWho, fromWho, !newPlayer);
+        Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), toWho, fromWho, !newPlayer);
+    }
+
+    public override void CopyClientState(ModPlayer targetCopy)
+    {
+        var clone = (TerramonPlayer)targetCopy;
+        for (var i = 0; i < Party.Length; i++)
+            if (clone.Party[i] != null && Party[i] == null)
+                clone.Party[i] = null;
+            else if (clone.Party[i] == null && Party[i] != null)
+                clone.Party[i] = Party[i].ShallowCopy();
+            else if (clone.Party[i] != null && Party[i] != null)
+                Party[i].CopyNetStateTo(clone.Party[i], ActivePokemonSyncFields);
+        clone.ActiveSlot = ActiveSlot;
+        clone.HasChosenStarter = HasChosenStarter;
+    }
+
+    public override void SendClientChanges(ModPlayer clientPlayer)
+    {
+        var clone = (TerramonPlayer)clientPlayer;
+        var activePokemonData = GetActivePokemon();
+        var cloneActivePokemonData = clone.GetActivePokemon();
+        if ((activePokemonData == null && cloneActivePokemonData != null) ||
+            (activePokemonData != null && cloneActivePokemonData == null))
+            Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData), -1, Main.myPlayer, true);
+        else if (activePokemonData != null &&
+                 activePokemonData.IsNetStateDirty(cloneActivePokemonData, ActivePokemonSyncFields,
+                     out var dirtyFields))
+            Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData, dirtyFields), -1,
+                Main.myPlayer, true);
+        if (HasChosenStarter == clone.HasChosenStarter) return;
+        Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), -1, Main.myPlayer, true);
+    }
+
+    #endregion
 }

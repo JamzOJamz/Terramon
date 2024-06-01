@@ -4,7 +4,7 @@ using Terraria.Localization;
 
 // ReSharper disable InconsistentNaming
 
-namespace Terramon.Core.Helpers;
+namespace Terramon.Helpers;
 
 /*
  * MIT License

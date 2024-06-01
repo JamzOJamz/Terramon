@@ -22,7 +22,6 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
     private static Dictionary<ushort, JToken> _schemaCache;
     private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
     private bool _hasGenderDifference;
-    private bool _isDestroyed;
     private Asset<Texture2D> _mainTexture;
     private int _shinySparkleTimer;
     public ushort UseId { get; } = useId;
@@ -75,7 +74,7 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
             var componentType = Mod.Code.GetType($"Terramon.Content.NPCs.NPC{component.Name}");
             if (componentType == null) continue;
             var enableComponentRef = mi!.MakeGenericMethod(componentType);
-            var instancedComponent = enableComponentRef.Invoke(null, new object[] { NPC, null });
+            var instancedComponent = enableComponentRef.Invoke(null, [NPC, null]);
             foreach (var prop in component.Value.Children<JProperty>())
             {
                 var fieldInfo = componentType.GetRuntimeField(prop.Name);
@@ -101,7 +100,7 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
 
             if (_hasGenderDifference && Data?.Gender == Gender.Female)
                 pathBuilder.Append('F');
-            if (Data?.Variant != null)
+            if (!string.IsNullOrEmpty(Data?.Variant))
                 pathBuilder.Append('_').Append(Data.Variant);
             if (Data is { IsShiny: true })
                 pathBuilder.Append("_S");
@@ -129,15 +128,18 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
 
     public override void SendExtraAI(BinaryWriter writer)
     {
-        writer.Write((byte)Data.Gender);
-        writer.Write(Data.IsShiny);
+        Data.NetWrite(writer, PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant);
         Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
-        Data.Gender = (Gender)reader.ReadByte();
-        Data.IsShiny = reader.ReadBoolean();
+        Data ??= new PokemonData
+        {
+            ID = UseId,
+            Level = 5
+        };
+        Data.NetRead(reader);
         Behaviour?.ReceiveExtraAI(reader);
     }
 
@@ -184,22 +186,21 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
 
     public void Destroy()
     {
-        if (_isDestroyed) return;
+        if (!NPC.active) return;
 
         //TODO: Add shader animation (I already made this shader in my mod source but I couldn't figure out how to apply it properly)
         var dust = ModContent.DustType<SummonCloud>();
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0, 1);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0, -1);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 1);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, -1);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0.5f, 0.5f);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, 0.5f, -0.5f);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, -0.5f, 0.5f);
-        Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, -0.5f, -0.5f);
-
-        NPC.netUpdate = true;
+        for (var i = 0; i < 4; i++)
+        {
+            var angle = MathHelper.PiOver2 * i;
+            var x = (float)Math.Cos(angle);
+            var y = (float)Math.Sin(angle);
+            Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x / 2, y / 2);
+            Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
+        }
+        
         NPC.active = false;
-        _isDestroyed = true;
+        NPC.netUpdate = true;
     }
 
     public override void Load()

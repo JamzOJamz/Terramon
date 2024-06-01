@@ -157,11 +157,10 @@ public class PartySidebarSlot : UIImage
     private readonly UIText _levelText;
     private readonly UIText _nameText;
     private readonly PartyDisplay _partyDisplay;
-    private int _index;
-    public PokemonData Data;
     private bool _dragging;
     private UIBlendedImage _genderIcon;
     private UIBlendedImage _heldItemBox;
+    private int _index;
     private bool _isActiveSlot;
     private bool _isHovered;
     private bool _justEndedDragging;
@@ -170,6 +169,7 @@ public class PartySidebarSlot : UIImage
     private Vector2 _offset;
     private ITweener _snapTween;
     private UIBlendedImage _spriteBox;
+    public PokemonData Data;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
         "Terramon/Assets/GUI/Party/SidebarClosed",
@@ -440,7 +440,7 @@ public class PartySidebarSlot : UIImage
             _spriteBox.Top.Set(10, 0f);
             _spriteBox.Left.Set(59, 0f);
             var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}{(data.Variant != null ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
                 AssetRequestMode.ImmediateLoad))
             {
                 ImageScale = 0.7f

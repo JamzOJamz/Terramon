@@ -2,4 +2,5 @@ displayName = Terramon Mod
 homepage = https://terramon.carrd.co
 author = The Terramon Team
 version = 1.0.0
+dllReferences = EasyPacketsLib
 buildIgnore = .gitignore, .sln,.csproj, *.user, obj*, bin*, .vs*, Properties*, .git*, Content\Scripts\*, Assets\Data\PokemonDB-min.json

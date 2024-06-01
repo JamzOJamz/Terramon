@@ -1,7 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
+using EasyPacketsLib;
+using Terramon.Content.Packets;
+using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -26,13 +30,14 @@ public abstract class BasePkballTile : ModTile
         Main.tileFrameImportant[Type] = true;
 
         TileID.Sets.HasOutlines[Type] = true;
-        TileObjectData.newTile.StyleHorizontal = true;
 
         TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+        TileObjectData.newTile.StyleHorizontal = true;
         TileObjectData.newTile.HookPostPlaceMyPlayer =
             new PlacementHook(ModContent.GetInstance<BasePkballEntity>().Hook_AfterPlacement, -1, 0, false);
         TileObjectData.newTile.UsesCustomCanPlace = true;
         TileObjectData.newTile.LavaDeath = false;
+        TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.Table, 1, 0);
         TileObjectData.addTile(Type);
 
         HitSound = SoundID.Tink;
@@ -40,6 +45,13 @@ public abstract class BasePkballTile : ModTile
 
         AddMapEntry(Color.LightGray,
             Language.GetText($"Mods.Terramon.Items.{GetType().Name.Replace("Tile", "Item")}.DisplayName"));
+    }
+
+    public override void PlaceInWorld(int i, int j, Item item)
+    {
+        if (Main.netMode != NetmodeID.MultiplayerClient) return;
+        Mod.SendPacket(new PlacedPkballTileRpc((byte)Main.LocalPlayer.whoAmI, new Point16(i, j)), -1, Main.myPlayer,
+            true);
     }
 
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -159,8 +171,7 @@ public class BasePkballEntity : ModTileEntity
 
     public override void OnNetPlace()
     {
-        if (Main.netMode == NetmodeID.Server)
-            NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
+        NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
     }
 
     public override void NetSend(BinaryWriter writer)

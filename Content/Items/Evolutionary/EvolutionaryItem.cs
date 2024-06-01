@@ -51,6 +51,7 @@ public abstract class EvolutionaryItem : TerramonItem
 
     protected override void PokemonDirectUse(Player player, PokemonData data)
     {
+        if (player.whoAmI != Main.myPlayer) return;
         var evolvedSpecies = GetEvolvedSpecies(data);
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,

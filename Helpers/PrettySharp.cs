@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Terramon.Core.Helpers;
+namespace Terramon.Helpers;
 
 public static class PrettySharp
 {

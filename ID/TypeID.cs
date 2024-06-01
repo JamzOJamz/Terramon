@@ -26,7 +26,7 @@ public static class TypeID
     {
         return type switch
         {
-            Normal => "c1c2c1",
+            Normal => "cecfce",
             Fire => "ed6657",
             Fighting => "ffac59",
             Water => "74acf5",

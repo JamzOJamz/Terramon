@@ -78,18 +78,20 @@ public class PokemonCompanion : ModBuff
     public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
     {
         var player = TerramonPlayer.LocalPlayer;
-        tip = Description.WithFormatArgs(player.GetActivePokemon()?.DisplayName).Value;
+        tip = Description.Format(player.GetActivePokemon()?.DisplayName);
         rare = ItemRarityID.Expert;
     }
 
     public override void Load()
     {
+        if (Main.dedServ) return;
         Main.instance.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
         Main.QueueMainThreadAction(() => { _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, 32, 32); });
     }
 
     public override void Unload()
     {
+        if (Main.dedServ) return;
         Main.QueueMainThreadAction(() => _rt.Dispose());
     }
 }

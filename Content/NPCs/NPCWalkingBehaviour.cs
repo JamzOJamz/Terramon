@@ -1,6 +1,6 @@
 using System;
 using Terramon.Core.NPCComponents;
-using Terraria.ID;
+using Terramon.Helpers;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -11,46 +11,35 @@ namespace Terramon.Content.NPCs;
 /// <summary>
 ///     A <see cref="NPCComponent" /> for adding basic walking AI to an NPC.
 /// </summary>
-public class NPCWalkingBehaviour : NPCComponent
+public class NPCWalkingBehaviour : NPCAIComponent
 {
-    public string AnimationType = "StraightForward";
     private int _collideTimer;
+    public string AnimationType = "StraightForward";
     public int FrameCount = 2;
     public int FrameTime = 10;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
-    private NPC _npc;
-    public int StopFrequency = 200;
+    public int StopFrequency = 225;
     public float WalkSpeed = 1f;
 
-    private ref float AIState => ref _npc.ai[0];
-    private ref float AITimer => ref _npc.ai[1];
-    private ref float AIWalkDir => ref _npc.ai[2];
-
-    protected override void OnEnabled(NPC npc)
-    {
-        _npc = npc;
-    }
+    private ref float AIState => ref NPC.ai[0];
+    private ref float AITimer => ref NPC.ai[1];
+    private ref float AIWalkDir => ref NPC.ai[2];
 
     public override void SetDefaults(NPC npc)
     {
         base.SetDefaults(npc);
         if (!Enabled) return;
+
         Main.npcFrameCount[npc.type] = FrameCount;
-    }
-
-    public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
-    {
-        if (!Enabled) return;
-
-        npc.velocity.X = 0;
     }
 
     public override void AI(NPC npc)
     {
         if (!Enabled) return;
-
+        
         // Smooth walking over slopes
-        Collision.StepUp(ref _npc.position, ref _npc.velocity, _npc.width, _npc.height, ref _npc.stepSpeed, ref _npc.gfxOffY);
+        Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed,
+            ref NPC.gfxOffY);
 
         switch (AIState)
         {
@@ -65,14 +54,14 @@ public class NPCWalkingBehaviour : NPCComponent
 
     private void Idle()
     {
-        if (_npc.velocity.Y == 0)
+        if (NPC.velocity.Y == 0)
         {
-            _npc.velocity.X *= 0.85f;
+            NPC.velocity.X *= 0.85f;
             AITimer++;
         }
 
-        if (_npc.velocity.X != 0)
-            _npc.spriteDirection = _npc.velocity.X > 0 ? 1 : -1;
+        if (NPC.velocity.X != 0)
+            NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
 
         if (AITimer != 120) return;
         AIState = (float)ActionState.Walking;
@@ -82,31 +71,22 @@ public class NPCWalkingBehaviour : NPCComponent
     private void Walking()
     {
         AITimer++;
-        if (Main.netMode != NetmodeID.MultiplayerClient)
-            switch (AITimer)
-            {
-                case 1:
-                    AIWalkDir = Main.rand.NextBool() ? 1 : -1;
-                    _npc.netUpdate = true;
-                    break;
-                case >= 120 when Main.rand.NextBool(StopFrequency):
-                    AIState = (float)ActionState.Idle;
-                    AITimer = 0;
-                    _npc.netUpdate = true;
-                    return;
-            }
+        switch (AITimer)
+        {
+            case 1:
+                AIWalkDir = Random.NextBool() ? 1 : -1;
+                break;
+            case >= 120 when Random.Next(StopFrequency) == 0:
+                AIState = (float)ActionState.Idle;
+                AITimer = 0;
+                return;
+        }
 
-        if (_npc.collideX)
+        if (NPC.collideX)
         {
             if (_collideTimer < 10)
-            {
-                _npc.velocity.Y = -2f;
-            }
-            else if (_npc.velocity.Y == 0)
-            {
-                AIWalkDir *= -1;
-                _npc.netUpdate = true;
-            }
+                NPC.velocity.Y = -2f;
+            else if (NPC.velocity.Y == 0) AIWalkDir *= -1;
 
             _collideTimer++;
         }
@@ -123,30 +103,30 @@ public class NPCWalkingBehaviour : NPCComponent
         if (AIWalkDir != 0)
         {
             // Accelerate towards the desired direction
-            _npc.velocity.X += AIWalkDir * acceleration;
+            NPC.velocity.X += AIWalkDir * acceleration;
 
             // Clamp velocity to maximum speed
-            _npc.velocity.X = Math.Clamp(_npc.velocity.X, -WalkSpeed, WalkSpeed);
+            NPC.velocity.X = Math.Clamp(NPC.velocity.X, -WalkSpeed, WalkSpeed);
         }
         else
         {
-            switch (_npc.velocity.X)
+            switch (NPC.velocity.X)
             {
                 // Decelerate when no input is given
                 case > 0:
-                    _npc.velocity.X -= deceleration;
+                    NPC.velocity.X -= deceleration;
                     break;
                 case < 0:
-                    _npc.velocity.X += deceleration;
+                    NPC.velocity.X += deceleration;
                     break;
             }
 
             // Ensure velocity doesn't change direction when slowing down
-            if (Math.Abs(_npc.velocity.X) < deceleration)
-                _npc.velocity.X = 0;
+            if (Math.Abs(NPC.velocity.X) < deceleration)
+                NPC.velocity.X = 0;
         }
 
-        _npc.spriteDirection = AIWalkDir == 1 ? 1 : -1;
+        NPC.spriteDirection = AIWalkDir == 1 ? 1 : -1;
     }
 
     /// <summary>
@@ -156,40 +136,40 @@ public class NPCWalkingBehaviour : NPCComponent
     {
         if (!Enabled) return;
 
-        if (AIState == (float)ActionState.Idle && !_npc.IsABestiaryIconDummy)
+        if (AIState == (float)ActionState.Idle && !NPC.IsABestiaryIconDummy)
         {
-            _npc.frameCounter = IsClassic ? FrameTime : 0;
-            _npc.frame.Y = IsClassic ? frameHeight : 0;
+            NPC.frameCounter = IsClassic ? FrameTime : 0;
+            NPC.frame.Y = IsClassic ? frameHeight : 0;
             return;
         }
 
-        _npc.frameCounter++;
+        NPC.frameCounter++;
 
         switch (AnimationType)
         {
             case "StraightForward": // Animates all frames in a sequential order
-                if (_npc.frameCounter < FrameTime * FrameCount)
-                    _npc.frame.Y = (int)Math.Floor(_npc.frameCounter / FrameTime) * frameHeight;
+                if (NPC.frameCounter < FrameTime * FrameCount)
+                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
                 else
-                    _npc.frameCounter = 0;
+                    NPC.frameCounter = 0;
                 break;
             case "IdleForward": // Same as StraightForward, but skips the first frame (which is idle only)
-                if (_npc.frameCounter < FrameTime * FrameCount)
-                    _npc.frame.Y = (int)Math.Floor(_npc.frameCounter / FrameTime) * frameHeight;
+                if (NPC.frameCounter < FrameTime * FrameCount)
+                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
                 else
-                    _npc.frameCounter = FrameTime;
+                    NPC.frameCounter = FrameTime;
                 break;
             case "Alternate": // Alternates between frame sequences
                 var cycleLength = FrameCount + 1;
-                var alternateFrame = (int)(_npc.frameCounter / FrameTime) % cycleLength;
-                _npc.frame.Y = cycleLength switch
+                var alternateFrame = (int)(NPC.frameCounter / FrameTime) % cycleLength;
+                NPC.frame.Y = cycleLength switch
                 {
                     4 => alternateFrame switch
                     {
                         0 or 2 => 0 * frameHeight,
                         1 => 1 * frameHeight,
                         3 => 2 * frameHeight,
-                        _ => _npc.frame.Y
+                        _ => NPC.frame.Y
                     },
                     6 => alternateFrame switch
                     {
@@ -198,13 +178,13 @@ public class NPCWalkingBehaviour : NPCComponent
                         2 => 2 * frameHeight,
                         4 => 3 * frameHeight,
                         5 => 4 * frameHeight,
-                        _ => _npc.frame.Y
+                        _ => NPC.frame.Y
                     },
-                    _ => _npc.frame.Y
+                    _ => NPC.frame.Y
                 };
                 break;
             default:
-                _npc.frame.Y = 0;
+                NPC.frame.Y = 0;
                 break;
         }
     }
