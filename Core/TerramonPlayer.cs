@@ -1,5 +1,5 @@
-using EasyPacketsLib;
 using System.Linq;
+using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.PokeBalls;
@@ -244,6 +244,13 @@ public class TerramonPlayer : ModPlayer
 
     #region Network Sync
 
+    /// <summary>
+    ///     The bitmask of the <see cref="PokemonData" /> fields that require syncing for the player's active Pokémon.
+    ///     These fields will be observed for changes and if they are changed, their new values will be forwarded to other
+    ///     clients.
+    /// </summary>
+    private const int ActivePokemonSyncFields = PokemonData.BitID | PokemonData.BitLevel;
+
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
         Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, GetActivePokemon()), toWho, fromWho, !newPlayer);
@@ -259,7 +266,7 @@ public class TerramonPlayer : ModPlayer
             else if (clone.Party[i] == null && Party[i] != null)
                 clone.Party[i] = Party[i].ShallowCopy();
             else if (clone.Party[i] != null && Party[i] != null)
-                Party[i].CopyNetStateTo(clone.Party[i], PokemonData.BitID | PokemonData.BitLevel);
+                Party[i].CopyNetStateTo(clone.Party[i], ActivePokemonSyncFields);
         clone.ActiveSlot = ActiveSlot;
         clone.HasChosenStarter = HasChosenStarter;
     }
@@ -273,7 +280,7 @@ public class TerramonPlayer : ModPlayer
             (activePokemonData != null && cloneActivePokemonData == null))
             Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData), -1, Main.myPlayer, true);
         else if (activePokemonData != null &&
-                 activePokemonData.IsNetStateDirty(cloneActivePokemonData, PokemonData.BitID | PokemonData.BitLevel,
+                 activePokemonData.IsNetStateDirty(cloneActivePokemonData, ActivePokemonSyncFields,
                      out var dirtyFields))
             Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData, dirtyFields), -1,
                 Main.myPlayer, true);

@@ -11,7 +11,7 @@ public class NicknameCommand : TerramonCommand
     private const int MaxNicknameLength = 12;
 
     public override CommandType Type
-        => CommandType.World;
+        => CommandType.Chat;
 
     public override string Command
         => "nickname";

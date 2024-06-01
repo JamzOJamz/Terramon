@@ -8,7 +8,7 @@ internal class MasterBallProjectile : BasePkballProjectile
 {
     protected override int PokeballItem => ModContent.ItemType<MasterBallItem>();
 
-    protected override int DropItemChance => 1;
+    protected override int DropItemChanceDenominator => 1;
 
     protected override bool CatchPokemonChances(PokemonNPC target, float random)
     {

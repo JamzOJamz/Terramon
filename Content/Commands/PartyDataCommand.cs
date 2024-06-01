@@ -5,7 +5,7 @@ namespace Terramon.Content.Commands;
 public class PartyDataCommand : DebugCommand
 {
     public override CommandType Type
-        => CommandType.World;
+        => CommandType.Chat;
 
     public override string Command
         => "partydata";

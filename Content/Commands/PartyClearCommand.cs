@@ -7,7 +7,7 @@ namespace Terramon.Content.Commands;
 public class PartyClearCommand : DebugCommand
 {
     public override CommandType Type
-        => CommandType.World;
+        => CommandType.Chat;
 
     public override string Command
         => "partyclear";
