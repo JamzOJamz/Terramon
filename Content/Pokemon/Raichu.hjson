@@ -3,13 +3,21 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 32
+      Height: 30
     }
-    WalkingBehaviour: {}
+    WalkingBehaviour: 
+    {
+      WalkSpeed: 1.1
+      FrameCount: 5
+      FrameTime: 5
+      AnimationType: IdleForward
+      IsClassic: false
+    }
     SpawnController:
     {
       Condition: OverworldDaySlime
-      Chance: 0.1
+      Chance: 0.05
     }
   }
   Projectile: {}
