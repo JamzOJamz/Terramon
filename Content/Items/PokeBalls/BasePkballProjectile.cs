@@ -387,8 +387,8 @@ internal abstract class BasePkballProjectile : ModProjectile
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
         var player = TerramonPlayer.LocalPlayer;
-        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.UseId, out var status) &&
-                                           status == PokedexEntryStatus.Registered;
+        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.UseId, out var entry) &&
+                                           entry.Status == PokedexEntryStatus.Registered;
         var addSuccess = player.AddPartyPokemon(_capture.Data, !isCaptureRegisteredInPokedex);
         if (addSuccess)
         {
@@ -422,9 +422,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         // Register as seen in the player's Pokedex
         var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
-        var pokedex = ownerPlayer.GetPokedex();
-        if (pokedex.Entries.TryGetValue(_capture.UseId, out var status) && status == PokedexEntryStatus.Undiscovered)
-            ownerPlayer.UpdatePokedex(_capture.UseId, PokedexEntryStatus.Seen);
+        ownerPlayer.UpdatePokedex(_capture.UseId, PokedexEntryStatus.Seen);
 
         AIState = (float)ActionState.Catch;
         AITimer = 0;

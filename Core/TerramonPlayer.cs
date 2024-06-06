@@ -156,11 +156,15 @@ public class TerramonPlayer : ModPlayer
         return 6;
     }
 
-    public bool UpdatePokedex(ushort id, PokedexEntryStatus status)
+    public bool UpdatePokedex(ushort id, PokedexEntryStatus status, bool force = false)
     {
-        var containsId = _pokedex.Entries.ContainsKey(id);
-        if (containsId) _pokedex.Entries[id] = status;
-        return containsId;
+        ModContent.GetInstance<TerramonWorld>().UpdateWorldDex(id, status, Player.name, force);
+        var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
+        if (!hasEntry) return false;
+        if (!force && entry.Status >= status) return false;
+        entry.Status = status;
+
+        return true;
     }
 
     public PCBox TransferPokemonToPC(PokemonData data)
@@ -213,7 +217,7 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePokedex(TagCompound tag)
     {
-        tag["pokedex"] = _pokedex.Entries.Select(entry => new[] { entry.Key, (byte)entry.Value }).ToList();
+        tag["pokedex"] = _pokedex.Entries.Select(entry => new[] { entry.Key, (byte)entry.Value.Status }).ToList();
     }
 
     private void LoadPokedex(TagCompound tag)

@@ -1,14 +1,22 @@
 using System.Collections.Generic;
-using ReLogic.Reflection;
 
 namespace Terramon.Core;
+
+/// <summary>
+///     Class to hold the status of a Pokédex entry and the name of the player who last updated it.
+/// </summary>
+public class PokedexEntry(PokedexEntryStatus status, string lastUpdatedBy = null)
+{
+    public PokedexEntryStatus Status { get; set; } = status;
+    public string LastUpdatedBy { get; set; } = lastUpdatedBy;
+}
 
 /// <summary>
 ///     Service class for managing the Pokédex functionality.
 /// </summary>
 public class PokedexService
 {
-    public readonly Dictionary<int, PokedexEntryStatus> Entries = new();
+    public readonly Dictionary<int, PokedexEntry> Entries = new();
 
     public PokedexService()
     {
@@ -16,7 +24,7 @@ public class PokedexService
         foreach (var id in Terramon.DatabaseV2.Pokemon.Keys)
         {
             if (id > Terramon.MaxPokemonID) break;
-            Entries.Add(id, PokedexEntryStatus.Undiscovered);
+            Entries.Add(id, new PokedexEntry(PokedexEntryStatus.Undiscovered));
         }
     }
 }

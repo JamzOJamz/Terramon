@@ -45,7 +45,7 @@ public class DexEditCommand : DebugCommand
         }
 
         var player = caller.Player.GetModPlayer<TerramonPlayer>();
-        var success = player.UpdatePokedex((ushort)id, (PokedexEntryStatus)status);
+        var success = player.UpdatePokedex((ushort)id, (PokedexEntryStatus)status, true);
         if (success)
             caller.Reply($"Successfully set Pokédex entry {id} to status {statusName}", new Color(255, 240, 20));
         else
