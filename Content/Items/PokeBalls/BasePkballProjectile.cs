@@ -389,7 +389,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         var player = TerramonPlayer.LocalPlayer;
         var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.UseId, out var entry) &&
                                            entry.Status == PokedexEntryStatus.Registered;
-        var addSuccess = player.AddPartyPokemon(_capture.Data, !isCaptureRegisteredInPokedex);
+        var addSuccess = player.AddPartyPokemon(_capture.Data);
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
