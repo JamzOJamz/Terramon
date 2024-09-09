@@ -1,0 +1,239 @@
+using System;
+using System.Collections.Generic;
+using ReLogic.Content;
+using Terramon.Content.Configs;
+using Terramon.Content.GUI.Common;
+using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
+using Terraria.Audio;
+using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
+using Terraria.UI;
+
+namespace Terramon.Content.GUI;
+
+public class InventoryParty : SmartUIState
+{
+    private static readonly CustomPartyItemSlot[] CustomSlots = new CustomPartyItemSlot[6];
+
+    private static readonly Asset<Texture2D> PartySlotBallTexture;
+    private static readonly Asset<Texture2D> PartySlotBallHoverTexture;
+    private static readonly Asset<Texture2D> PartySlotBallGreyedTexture;
+
+    private bool _isCompressed;
+    private UIHoverImageButton _toggleSlotsButton;
+    private ITweener _toggleTween;
+
+    static InventoryParty()
+    {
+        PartySlotBallTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBall");
+        PartySlotBallHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBallHover");
+        PartySlotBallGreyedTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBallGreyed");
+    }
+
+    public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
+                                    !Main.LocalPlayer.dead &&
+                                    TerramonPlayer.LocalPlayer.HasChosenStarter;
+
+    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    {
+        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
+    }
+
+    public override void OnInitialize()
+    {
+        // AutoTrash compatibility
+        var container = new UIContainer(new Vector2(449, 304));
+        if (ModLoader.HasMod("AutoTrash"))
+            container.Left.Set(-47, 0f);
+
+        // Initialize according to reduced motion setting
+        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        if (reducedMotion)
+        {
+            _isCompressed = true;
+            _toggleSlotsButton = new UIHoverImageButton(PartySlotBallGreyedTexture, "Show Party");
+        }
+        else
+        {
+            _toggleSlotsButton = new UIHoverImageButton(PartySlotBallTexture, "Hide Party");
+        }
+
+        _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
+        _toggleSlotsButton.SetVisibility(1, 1);
+        _toggleSlotsButton.OnLeftClick += ToggleSlots;
+        AddElement(_toggleSlotsButton, reducedMotion ? 404 : 119, 262, 36, 36, container);
+
+        int[] slotPositionsX = [158, 206, 254, 301, 349, 396];
+        for (var i = 0; i < slotPositionsX.Length; i++)
+        {
+            var slot = new CustomPartyItemSlot(i);
+            if (reducedMotion) slot.Color = Color.White * 0f;
+            CustomSlots[i] = slot;
+            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 52, 52, container);
+        }
+
+        Append(container);
+    }
+
+    private void ToggleSlots(UIMouseEvent evt, UIElement listeningelement)
+    {
+        if (_toggleTween is { IsRunning: true }) return;
+
+        SoundEngine.PlaySound(_isCompressed ? SoundID.MenuOpen : SoundID.MenuClose);
+        _isCompressed = !_isCompressed;
+        _toggleSlotsButton.SetImage(_isCompressed ? PartySlotBallGreyedTexture : PartySlotBallTexture);
+        var startingAlpha = _isCompressed ? 1f : 0f;
+
+        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        if (reducedMotion)
+        {
+            _toggleSlotsButton.SetHoverText(_isCompressed ? "Show Party" : "Hide Party");
+            foreach (var slot in CustomSlots)
+                slot.Color = Color.White * (1 - startingAlpha);
+            return;
+        }
+
+        // Start animation for the compression of the party slots
+        IgnoresMouseInteraction = true;
+        _toggleSlotsButton.SetHoverText(string.Empty);
+        _toggleSlotsButton.SetHoverImage(null);
+        _toggleSlotsButton.Width.Set(36, 0);
+        _toggleSlotsButton.Height.Set(36, 0);
+        _toggleSlotsButton.Rotation = 0;
+        var endRotation = (float)Math.PI * 2f;
+        if (!_isCompressed) endRotation *= -1;
+        Tween.To(() => _toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x, endRotation, 0.35f);
+        _toggleTween = Tween.To(() => _toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
+                _isCompressed ? 404 : 119, 0.6f)
+            .SetEase(Ease.OutExpo);
+        _toggleTween.OnComplete = () =>
+        {
+            _toggleSlotsButton.SetHoverText(_isCompressed ? "Show Party" : "Hide Party");
+            _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
+            IgnoresMouseInteraction = false;
+        };
+        Tween.To(() => startingAlpha, x =>
+        {
+            var newColor = Color.White * x;
+            foreach (var slot in CustomSlots)
+            {
+                slot.Color = newColor;
+                slot.Update(null);
+            }
+        }, _isCompressed ? 0f : 1f, 0.35f);
+    }
+
+    private static void UpdateSlot(PokemonData data, int index)
+    {
+        CustomSlots[index].SetData(data);
+    }
+
+    public static void UpdateAllSlots(PokemonData[] partyData)
+    {
+        for (var i = 0; i < CustomSlots.Length; i++) UpdateSlot(partyData[i], i);
+    }
+
+    public static void ClearAllSlots()
+    {
+        for (var i = 0; i < CustomSlots.Length; i++) UpdateSlot(null, i);
+    }
+
+    public override void SafeUpdate(GameTime gameTime)
+    {
+        // Update party display to stop dragging state
+        var partyDisplay = UILoader.GetUIState<PartyDisplay>();
+        if (!partyDisplay.Visible && PartyDisplay.IsDraggingSlot)
+            partyDisplay.StopDragging();
+
+        var player = TerramonPlayer.LocalPlayer;
+        foreach (var slot in CustomSlots)
+        {
+            var partyData = player.Party[slot.Index];
+
+            if ((slot.Data == null && partyData != null) ||
+                (slot.Data != null && partyData == null) ||
+                (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname, out _)))
+                UpdateSlot(partyData, slot.Index);
+        }
+
+        Recalculate();
+    }
+}
+
+internal sealed class CustomPartyItemSlot : UIImage
+{
+    public readonly int Index;
+    private UIImage _minispriteImage;
+    private string _tooltipName;
+    private string _tooltipText;
+
+    public CustomPartyItemSlot(int index) : base(
+        ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmpty"))
+    {
+        Index = index;
+        ImageScale = 0.85f;
+        AllowResizingDimensions = false;
+    }
+
+    public PokemonData CloneData { get; private set; }
+    public PokemonData Data { get; private set; }
+
+    public void SetData(PokemonData data)
+    {
+        Data = data;
+        CloneData = data?.ShallowCopy();
+        _minispriteImage?.Remove();
+        SetImage(data == null
+            ? ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmpty")
+            : ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBg"));
+        if (data != null)
+        {
+            var schema = Terramon.DatabaseV2.GetPokemon(data.ID);
+            var hp = data.HP;
+            var currentLevelExp = ExperienceLookupTable.GetLevelTotalExp(data.Level, schema.GrowthRate);
+            var nextLevelExp = ExperienceLookupTable.GetLevelTotalExp((byte)(data.Level + 1), schema.GrowthRate);
+            var toNextLevel = nextLevelExp - currentLevelExp;
+            _tooltipName = $"[c/E8E8F4:{data.DisplayName} (Lv. {data.Level})]";
+            _tooltipText = $"HP: {hp}/{hp}\nEXP: 0/{toNextLevel}"; // [c/80B9F1:Frozen]
+            _minispriteImage = new UIImage(ModContent.Request<Texture2D>(
+                $"Terramon/Assets/Pokemon/{schema.Identifier}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
+                AssetRequestMode.ImmediateLoad))
+            {
+                ImageScale = 0.7f
+            };
+            _minispriteImage.Top.Set(-6, 0f);
+            _minispriteImage.Left.Set(-14, 0f);
+            _minispriteImage.Color = Color;
+            Append(_minispriteImage);
+        }
+        else
+        {
+            _tooltipName = null;
+            _tooltipText = null;
+        }
+
+        Recalculate();
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        IgnoresMouseInteraction = Color.A < 255;
+        if (Data != null) _minispriteImage.Color = Color;
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
+        if (IsMouseHovering && Main.mouseItem.type == ItemID.None && Data != null)
+        {
+            TooltipOverlay.SetName(_tooltipName);
+            TooltipOverlay.SetTooltip(_tooltipText);
+            TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
+        }
+
+        base.Draw(spriteBatch);
+    }
+}

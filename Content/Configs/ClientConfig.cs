@@ -16,8 +16,18 @@ public class ClientConfig : ModConfig
     [DefaultValue(true)]
     public bool ShowPokedexRegistrationMessages;
 
-    [DefaultValue(false)]
+    [Header("GUI")] [DefaultValue(false)]
     public bool ReducedAudio;
+
+    [DefaultValue(false)] [ReloadRequired]
+    public bool ReducedMotion;
+
+    [Header("Accessibility")] [DefaultValue(true)]
+    [ReloadRequired]
+    public bool AnimatedModIcon;
+    
+    [DefaultValue(true)]
+    public bool RainbowBuffText;
 
     public override ConfigScope Mode => ConfigScope.ClientSide;
 }

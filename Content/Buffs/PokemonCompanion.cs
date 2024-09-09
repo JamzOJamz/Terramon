@@ -1,4 +1,6 @@
 using ReLogic.Content;
+using Terramon.Content.Configs;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -7,7 +9,6 @@ namespace Terramon.Content.Buffs;
 
 public class PokemonCompanion : ModBuff
 {
-    private const string PokeballIconPrefix = "Terramon/Assets/Items/PokeBalls/";
     private const string TemplatePath = "Terramon/Assets/Buffs/BuffTemplate";
     private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
     private static RenderTarget2D _rt;
@@ -50,10 +51,8 @@ public class PokemonCompanion : ModBuff
 
         // Draw the pokeball icon
         var ballId = player.GetActivePokemon()?.Ball ?? BallID.PokeBall;
-        var ballName = BallID.Search.GetName(ballId) + "Projectile";
-        var pokeballIconTexture = ModContent.Request<Texture2D>(PokeballIconPrefix + ballName);
-        spriteBatch.Draw(pokeballIconTexture.Value, new Vector2(0, 2),
-            pokeballIconTexture.Frame(verticalFrames: 4, frameY: 2), Color.White,
+        spriteBatch.Draw(BallAssets.GetBallIcon(ballId).Value, new Vector2(4, 6),
+            null, Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         // Draw the star icon
@@ -79,7 +78,8 @@ public class PokemonCompanion : ModBuff
     {
         var player = TerramonPlayer.LocalPlayer;
         tip = Description.Format(player.GetActivePokemon()?.DisplayName);
-        rare = ItemRarityID.Expert;
+        if (ModContent.GetInstance<ClientConfig>().RainbowBuffText)
+            rare = ItemRarityID.Expert;
     }
 
     public override void Load()

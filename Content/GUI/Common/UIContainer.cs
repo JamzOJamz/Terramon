@@ -23,4 +23,12 @@ public class UIContainer : UIElement
         InternalUpdateSize();
         base.Recalculate();
     }
+
+    /*public override void Draw(SpriteBatch spriteBatch)
+    {
+        // Draw the container as a semi-transparent pink box for debugging purposes
+        spriteBatch.Draw(TextureAssets.MagicPixel.Value, GetDimensions().ToRectangle(), Color.Pink * 0.5f);
+        
+        base.Draw(spriteBatch);
+    }*/
 }

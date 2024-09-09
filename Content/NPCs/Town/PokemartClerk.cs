@@ -4,7 +4,6 @@ using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Items.Vanity;
 using Terramon.Content.Tiles.MusicBoxes;
-using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -242,7 +241,6 @@ public class PokemartClerk : ModNPC
             Main.npcChatText = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionCongrats",
                 activePokemonData.DisplayName, Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution));
             activePokemonData.EvolveInto(queuedEvolution);
-            UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
             player.UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
         }
     }

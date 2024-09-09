@@ -2,7 +2,7 @@ using Terramon.Content.NPCs.Pokemon;
 
 namespace Terramon.Core.Loaders;
 
-public class PokemonNPCLoader : ModSystem
+public class PokemonEntityLoader : ModSystem
 {
     public override void OnModLoad()
     {
@@ -11,7 +11,7 @@ public class PokemonNPCLoader : ModSystem
             if (id > Terramon.MaxPokemonID) continue;
             var schemaPath = $"Content/Pokemon/{pokemon.Identifier}.hjson";
             if (!Mod.FileExists(schemaPath)) continue;
-            var pokemonNpc = new PokemonNPC((ushort)id, pokemon.Identifier);
+            var pokemonNpc = new PokemonNPC(id, pokemon.Identifier);
             Mod.AddContent(pokemonNpc);
         }
     }

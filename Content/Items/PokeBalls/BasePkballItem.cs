@@ -79,7 +79,12 @@ public abstract class BasePkballItem : TerramonItem
         if (Main.npcShop == 0)
         {
             var catchRate = $"[c/ADADC6:{Language.GetTextValue($"Mods.Terramon.Items.{GetType().Name}.CatchRate")}]";
-            tooltips.Add(new TooltipLine(Mod, "CatchRate", catchRate));
+            var catchRateTooltipLine = new TooltipLine(Mod, "CatchRate", catchRate);
+            var journeyResearchIndex = tooltips.FindIndex(t => t.Name == "JourneyResearch");
+            if (journeyResearchIndex != -1)
+                tooltips.Insert(journeyResearchIndex, catchRateTooltipLine);
+            else
+                tooltips.Add(catchRateTooltipLine);
         }
 
         base.ModifyTooltips(tooltips);

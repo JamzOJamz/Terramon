@@ -3,12 +3,8 @@ using Terraria.GameContent.UI.Elements;
 
 namespace Terramon.Content.GUI.Common;
 
-public class UIBlendedImage : UIImage
+public class UIBlendedImage(Asset<Texture2D> texture) : UIImage(texture)
 {
-    public UIBlendedImage(Asset<Texture2D> texture) : base(texture)
-    {
-    }
-
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         spriteBatch.End();

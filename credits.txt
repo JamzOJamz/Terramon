@@ -1,0 +1,40 @@
+- JamzOJamz -
+Almost all new code in 1.0
+Data for all Pokémon
+GUI code and design
+Multiplayer compatibility
+
+- InfinaMii -
+Rare Candy sprite
+Thrown Poké Ball sprites
+Base code for Poké Ball, Pokémon, Evolution
+All 0.1 code basically
+
+- Jackal Chan -
+Pokémon sprites
+Mod logo
+
+- L0ST5ILVER -
+Official soundtrack
+
+- Rose -
+Poké Ball item sprites
+Apricorn sprites
+Evolution stone sprites
+
+- Rocketlauncher269 -
+Poké Mart Clerk NPC
+Trainer vanity
+
+- Fred -
+Mod icon
+
+- cz43 -
+Linking Cord sprite
+Shiny Charm sprite
+
+- Game Freak -
+Pokémon sprites
+Pokémon minisprites
+Sound effects
+The Pokémon franchise

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Terramon.Content.GUI;
-using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terraria.ID;
 using Terraria.Localization;
@@ -71,8 +70,6 @@ public abstract class TerramonItem : ModItem
         if (!HasPokemonDirectUse) return null;
         var modPlayer = player.GetModPlayer<TerramonPlayer>();
         PokemonDirectUse(player, modPlayer.GetActivePokemon());
-        if (player.whoAmI == Main.myPlayer)
-            UILoader.GetUIState<PartyDisplay>().RecalculateSlot(modPlayer.ActiveSlot); // Reflect changes in UI
         return true;
     }
 

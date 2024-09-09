@@ -1,4 +1,5 @@
 using System;
+using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
 
@@ -14,7 +15,7 @@ public class DexEditCommand : DebugCommand
         => "/dexedit <id> <status>";
 
     public override string Description
-        => "Forcefully sets Pokédex entry statuses";
+        => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Description");
 
     protected override int MinimumArgumentCount => 2;
 

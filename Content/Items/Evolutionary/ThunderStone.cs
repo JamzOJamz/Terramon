@@ -1,11 +1,18 @@
 using Terramon.Content.Rarities;
 using Terramon.ID;
+using Terraria.ID;
 
 namespace Terramon.Content.Items.Evolutionary;
 
 public class ThunderStone : EvolutionaryItem
 {
     protected override int UseRarity => ModContent.RarityType<ThunderStoneRarity>();
+
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<FireStone>();
+    }
 
     public override void SetDefaults()
     {

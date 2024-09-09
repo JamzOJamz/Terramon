@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using Terraria.Localization;
 
@@ -46,7 +47,7 @@ public class DatabaseV2
 
     public PokemonSchema GetPokemon(ushort id)
     {
-        return Pokemon.GetValueOrDefault(id);
+        return CollectionsMarshal.GetValueRefOrNullRef(Pokemon, id);
     }
 
     public string GetPokemonName(ushort id)
@@ -86,6 +87,30 @@ public class DatabaseV2
         {
             set => Types = value;
         }
+        
+        public byte CatchRate { get; set; } = 45;
+        
+        [JsonProperty("c")]
+        private byte b_CatchRate
+        {
+            set => CatchRate = value;
+        }
+
+        public ushort BaseExp { get; set; } = 45;
+        
+        [JsonProperty("b")]
+        private ushort b_BaseExp
+        {
+            set => BaseExp = value;
+        }
+        
+        public ExperienceGroup GrowthRate { get; set; } = ExperienceGroup.MediumFast;
+        
+        [JsonProperty("r")]
+        private ExperienceGroup b_GrowthRate
+        {
+            set => GrowthRate = value;
+        }
 
         public StatsSchema Stats { get; set; }
 
@@ -102,13 +127,14 @@ public class DatabaseV2
         {
             set => Evolution = value;
         }
-
-        public sbyte GenderRate { get; set; }
+        
+        [JsonProperty("genderRate")]
+        public sbyte GenderRatio { get; set; }
 
         [JsonProperty("g")]
-        private sbyte b_GenderRate
+        private sbyte b_GenderRatio
         {
-            set => GenderRate = value;
+            set => GenderRatio = value;
         }
     }
 

@@ -1,3 +1,5 @@
+Commands.DexEdit.Description: Forcefully sets Pokédex entry statuses
+
 Configs: {
 	GameplayConfig: {
 		DisplayName: Gameplay Settings
@@ -40,7 +42,8 @@ Configs: {
 
 		Headers: {
 			Miscellaneous: Preferences
-			Graphics: Graphics
+			GUI: GUI
+			Accessibility: Accessibility
 		}
 
 		FastEvolution: {
@@ -54,13 +57,28 @@ Configs: {
 		}
 
 		ReducedAudio: {
-			Label: Reduced Audio
-			Tooltip: Disables certain sounds (e.g. musical tones when rearranging sidebar)
+			Label: (Party Sidebar) Reduced Audio
+			Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
+		}
+
+		ReducedMotion: {
+			Label: (Inventory Slots) Reduced Motion
+			Tooltip: Disables the sliding animation when toggling inventory party slots
 		}
 
 		ModIconType: {
 			Label: Mod Icon Type
 			Tooltip: Changes the mod icon
+		}
+
+		RainbowBuffText: {
+			Label: Rainbow Buff Text
+			Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+		}
+
+		AnimatedModIcon: {
+			Label: Animated Mod Icon
+			Tooltip: Animates the mod's icon in the Mods menu when the mod is enabled
 		}
 	}
 
@@ -71,6 +89,8 @@ Configs: {
 		Classic.Label: Classic
 	}
 }
+
+Keybinds.ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
 
 GUI: {
 	Starter: {
@@ -100,8 +120,8 @@ CommonTooltips: {
 		A special fruit seemingly related to berries.
 		Can be used to craft assorted Poké Balls.
 		'''
-	EvolutionaryItem: Evolutionary Item
-	KeyItem: Key Item
+	EvolutionaryItem: Evolutionary item
+	KeyItem: Key item
 	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
 	PokeBallMinis:
@@ -214,17 +234,17 @@ Items: {
 
 	TrainerCap: {
 		DisplayName: Pokémon Trainer Cap
-		Tooltip: ""
+		Tooltip: "'Gotta catch 'em all!'"
 	}
 
 	TrainerTorso: {
 		DisplayName: Pokémon Trainer Jacket
-		Tooltip: ""
+		Tooltip: "'Gotta catch 'em all!'"
 	}
 
 	TrainerLegs: {
 		DisplayName: Pokémon Trainer Jeans
-		Tooltip: ""
+		Tooltip: "'Gotta catch 'em all!'"
 	}
 
 	MusicItemCenter: {
@@ -302,6 +322,15 @@ Items: {
 			'''
 			A stone used for making certain kinds of Pokémon evolve.
 			It has an unmistakable snowflake pattern.
+			'''
+	}
+
+	LinkingCord: {
+		DisplayName: Linking Cord
+		Tooltip:
+			'''
+			A cord that makes you feel a strange sense of connection.
+			It's loved by certain Pokémon.
 			'''
 	}
 

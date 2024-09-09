@@ -17,7 +17,7 @@ namespace Terramon.Content.GUI;
 public class StarterSelectOverhead : SmartUIState
 {
     private readonly ushort[] _starters =
-    {
+    [
         NationalDexID.Bulbasaur,
         NationalDexID.Charmander,
         NationalDexID.Squirtle,
@@ -39,7 +39,7 @@ public class StarterSelectOverhead : SmartUIState
         NationalDexID.Rowlet,
         NationalDexID.Litten,
         NationalDexID.Popplio
-    };
+    ];
 
     private UIBlendedImage _background;
     private UIText _hintText;
@@ -59,8 +59,8 @@ public class StarterSelectOverhead : SmartUIState
 
     public override void OnInitialize()
     {
-        _showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification",
-            AssetRequestMode.ImmediateLoad), string.Empty);
+        _showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification"),
+            string.Empty);
         _showButton.Width.Set(42, 0);
         _showButton.Height.Set(40, 0);
         _showButton.HAlign = 1;
@@ -75,6 +75,7 @@ public class StarterSelectOverhead : SmartUIState
             _starterPanel.VAlign = 0.19f;
             _starterPanelShowing = true;
         };
+        _showButton.SetIsActive(false);
         Append(_showButton);
 
         _starterPanel = new UIContainer(new Vector2(660, 330))
@@ -91,8 +92,7 @@ public class StarterSelectOverhead : SmartUIState
         _titleText.Append(subText);
         _starterPanel.Append(_titleText);
 
-        _background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background",
-            AssetRequestMode.ImmediateLoad));
+        _background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background"));
         _hintText = new UIText("(Press Backspace to Close)", 0.85f)
         {
             HAlign = 0.5f,
@@ -109,8 +109,7 @@ public class StarterSelectOverhead : SmartUIState
         {
             var starter = _starters[i];
             var item = new StarterButton(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(starter)}_Mini",
-                AssetRequestMode.ImmediateLoad), starter);
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(starter)}_Mini"), starter);
             item.Width.Set(80, 0);
             item.Height.Set(60, 0);
             item.Left.Set(30 + (int)(i / 3f) * 80, 0);
@@ -157,8 +156,7 @@ public class StarterButton : UIHoverImage
     {
         if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon)) return;
         var cacheHoverTexture = ModContent.Request<Texture2D>(
-            $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini_Highlighted",
-            AssetRequestMode.ImmediateLoad);
+            $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini_Highlighted");
         OnMouseOver += (_, _) =>
         {
             SetImage(cacheHoverTexture);
@@ -181,7 +179,7 @@ public class StarterButton : UIHoverImage
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
             Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_GiftOrReward(),
-                ModContent.ItemType<PokeBallItem>(), 5);
+                ModContent.ItemType<PokeBallItem>(), 10);
         };
     }
 }

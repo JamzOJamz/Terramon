@@ -37,7 +37,7 @@ public class PCService
     /// <summary>
     ///     List of PC boxes for storing Pokémon.
     /// </summary>
-    public readonly List<PCBox> Boxes = new();
+    public readonly List<PCBox> Boxes = [];
 
     /// <summary>
     ///     Stores a Pokémon in the first available slot in the PC.

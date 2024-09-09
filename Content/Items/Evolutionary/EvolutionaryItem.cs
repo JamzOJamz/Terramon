@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
@@ -57,6 +58,7 @@ public abstract class EvolutionaryItem : TerramonItem
             Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
                 Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies)), new Color(50, 255, 130));
         data.EvolveInto(evolvedSpecies);
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
         player.GetModPlayer<TerramonPlayer>().UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered);
     }
 

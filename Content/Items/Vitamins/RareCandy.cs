@@ -52,6 +52,7 @@ public class RareCandy : Vitamin
         if (ModContent.GetInstance<ClientConfig>().FastEvolution)
         {
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            SoundEngine.PlaySound(SoundID.Item4, player.position);
             Main.NewText(
                 Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
                     Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution)), new Color(50, 255, 130));

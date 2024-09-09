@@ -1,5 +1,4 @@
 using Terramon.Content.GUI;
-using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon.Content.Commands;
 
@@ -66,7 +65,6 @@ public class NicknameCommand : TerramonCommand
                         : $"Changed {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname from {activePokemonData.Nickname} to {nick}",
                     new Color(255, 240, 20));
                 activePokemonData.Nickname = nick;
-                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             case "clear":
                 if (string.IsNullOrEmpty(activePokemonData.Nickname))
@@ -78,7 +76,6 @@ public class NicknameCommand : TerramonCommand
                 caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname",
                     new Color(255, 240, 20));
                 activePokemonData.Nickname = null;
-                UILoader.GetUIState<PartyDisplay>().RecalculateSlot(player.ActiveSlot);
                 break;
             default:
                 caller.Reply("Invalid subcommand. Use 'set' or 'clear'", Color.Red);

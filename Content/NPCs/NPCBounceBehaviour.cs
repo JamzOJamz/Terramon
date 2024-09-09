@@ -101,10 +101,10 @@ public class NPCBounceBehaviour : NPCAIComponent
             NPC.velocity.Y = Random.NextFloat(BounceMinRange, BounceMaxRange);
             var jumpStrength = Random.NextFloat(HorizontalSpeedMin, HorizontalSpeedMax);
             AIJumpVelocity = AIJumpDirection == 1 ? -jumpStrength : jumpStrength;
+            NPC.velocity.X = AIJumpVelocity;
             NPC.netUpdate = true;
         }
-
-        NPC.velocity.X = AIJumpVelocity;
+        
         if (NPC.velocity.Y > 0) NPC.velocity.Y *= FallSpeedMultiplier;
         else NPC.velocity.Y *= JumpSpeedMultiplier;
         if (NPC.velocity.Y != 0) return;

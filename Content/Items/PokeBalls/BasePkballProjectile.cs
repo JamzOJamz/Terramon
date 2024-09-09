@@ -25,6 +25,14 @@ internal abstract class BasePkballProjectile : ModProjectile
     private float _rotation;
     private bool _rotationDirection;
     private float _rotationVelocity;
+    
+    private readonly string[] _wobbleSoundPaths =
+    [
+        "Terramon/Sounds/ls_catch_wobble1",
+        "Terramon/Sounds/ls_catch_wobble2",
+        "Terramon/Sounds/ls_catch_wobble3"
+    ];
+    
     protected virtual int PokeballItem => ModContent.ItemType<BasePkballItem>();
     protected virtual float CatchModifier { get; private set; }
 
@@ -262,7 +270,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         if (_isCaught)
                         {
                             Projectile.frame = (int)ActionState.CaptureComplete;
-                            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch"),
+                            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_catch_click"),
                                 Projectile.position);
                             AIState = (float)ActionState.CaptureComplete;
                             AITimer = 0;
@@ -278,7 +286,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         _catchTries -= 1;
                         _rotationDirection = !_rotationDirection;
                         _rotationVelocity = _rotationDirection ? shakeIntensity : -shakeIntensity;
-                        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_shake"),
+                        SoundEngine.PlaySound(new SoundStyle(_wobbleSoundPaths[2 - _catchTries]),
                             Projectile.position);
                     }
 
@@ -382,7 +390,8 @@ internal abstract class BasePkballProjectile : ModProjectile
         // Don't run this code on other clients
         if (Projectile.owner != Main.myPlayer) return;
 
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/ls_catch_fanfare"));
+
         Projectile.Kill();
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
@@ -455,7 +464,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private void ReleasePokemon()
     {
         if (_capture == null) return;
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_spawn"), Projectile.position);
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_catch_fail"), Projectile.position);
 
         // Release (respawn) the Pokémon on the server. It will be synced to all clients.
         if (Main.netMode != NetmodeID.MultiplayerClient)

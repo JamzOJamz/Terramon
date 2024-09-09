@@ -9,7 +9,7 @@ public class TerramonMenu : ModMenu
     public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu");
 
     public override Asset<Texture2D> Logo =>
-        ModContent.Request<Texture2D>("Terramon/logo");
+        ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo");
 
     public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation,
         ref float logoScale,

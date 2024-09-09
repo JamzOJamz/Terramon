@@ -48,6 +48,8 @@ public class Tween : SmartUIState
 
 public interface ITweener
 {
+    bool IsRunning { get; }
+    Action OnComplete { set; }
     bool Update();
     void Kill();
     ITweener SetEase(Ease easeType);
@@ -56,14 +58,16 @@ public interface ITweener
 public class Tweener<TFrom, TValue> : ITweener where TValue : struct
 {
     private Ease _ease;
+
+    private bool _killed;
     public float EndTime;
     public TValue EndValue;
     public TFrom From;
-
-    private bool _killed;
     public Action<TFrom, TValue> Setter;
     public float StartTime;
     public TValue StartValue;
+    public bool IsRunning => !_killed;
+    public Action OnComplete { get; set; }
 
     public bool Update()
     {
@@ -72,14 +76,20 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
                 (EndTime - StartTime);
         t = Math.Clamp(t, 0, 1);
         t = ApplyEasing(_ease, t);
-        switch ((StartValue, EndValue))
+        switch (StartValue, EndValue)
         {
             case (float s, float e):
                 Setter.Invoke(From, (TValue)Convert.ChangeType(s + (e - s) * t, typeof(TValue)));
                 break;
         }
 
-        return Main.timeForVisualEffects <= EndTime;
+        var isComplete = Main.timeForVisualEffects >= EndTime;
+        if (!isComplete) return true;
+        Setter.Invoke(From, EndValue);
+        _killed = true;
+        OnComplete?.Invoke();
+
+        return false;
     }
 
     public void Kill()

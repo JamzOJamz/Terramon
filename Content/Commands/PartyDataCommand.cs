@@ -24,14 +24,14 @@ public class PartyDataCommand : DebugCommand
         var hasValidSlot = int.TryParse(args[0], out var slot);
         if (!hasValidSlot)
         {
-            caller.Reply("Failed to parse slot argument as integer");
+            caller.Reply("Failed to parse slot argument as integer", Color.Red);
             return;
         }
 
         var hasValidSlot2 = slot is > 0 and < 7;
         if (!hasValidSlot2)
         {
-            caller.Reply("Slot argument is out of range");
+            caller.Reply("Slot argument is out of range", Color.Red);
             return;
         }
 
@@ -39,7 +39,7 @@ public class PartyDataCommand : DebugCommand
         var data = player.Party[slot - 1];
         if (data == null)
         {
-            caller.Reply($"No Pokémon data available for slot {slot}");
+            caller.Reply($"No Pokémon data available for slot {slot}", Color.Red);
             return;
         }
         

@@ -3,14 +3,13 @@ using Terraria.GameContent.UI.Elements;
 
 namespace Terramon.Content.GUI.Common;
 
-public class UIHoverImageButton : UIImageButton
+public class UIHoverImageButton(Asset<Texture2D> texture, string text) : TransformableUIButton(texture)
 {
-    private readonly string _hoverText;
-    private bool _isActivated;
+    private bool _isActivated = true;
 
-    public UIHoverImageButton(Asset<Texture2D> texture, string hoverText) : base(texture)
+    public void SetHoverText(string hoverText)
     {
-        _hoverText = hoverText;
+        text = hoverText;
     }
 
     public void SetIsActive(bool active)
@@ -23,6 +22,6 @@ public class UIHoverImageButton : UIImageButton
         if (!_isActivated) return;
         base.DrawSelf(spriteBatch);
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
-        if (IsMouseHovering) Main.hoverItemName = _hoverText;
+        if (IsMouseHovering) Main.hoverItemName = text;
     }
 }

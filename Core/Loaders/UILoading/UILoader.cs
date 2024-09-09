@@ -14,12 +14,12 @@ internal class UILoader : ModSystem
     /// <summary>
     ///     The collection of automatically craetaed UserInterfaces for SmartUIStates.
     /// </summary>
-    private static List<UserInterface> _userInterfaces = new();
+    private static List<UserInterface> _userInterfaces = [];
 
     /// <summary>
     ///     The collection of all automatically loaded SmartUIStates.
     /// </summary>
-    private static List<SmartUIState> _uiStates = new();
+    private static List<SmartUIState> _uiStates = [];
 
     public static void UpdateApplication(IEnumerable<Type> changedTypes)
     {
@@ -132,7 +132,12 @@ internal class UILoader : ModSystem
         for (; index < _userInterfaces.Count; index++)
         {
             var eachState = _userInterfaces[index];
-            if (eachState?.CurrentState != null && ((SmartUIState)eachState.CurrentState).Visible)
+            if (eachState?.CurrentState == null) continue;
+            var smartUiState = (SmartUIState)eachState.CurrentState;
+            if (!smartUiState.Visible && smartUiState.LastVisible)
+                eachState.ResetLasts();
+            smartUiState.LastVisible = smartUiState.Visible;
+            if (smartUiState.Visible)
                 eachState.Update(gameTime);
         }
     }

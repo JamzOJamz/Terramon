@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
+using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
@@ -34,6 +36,9 @@ public class PokemonData : TagSerializable
     /// </summary>
     public string DisplayName =>
         string.IsNullOrEmpty(Nickname) ? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value : Nickname;
+
+    public ushort HP =>
+        (ushort)(Math.Floor(2 * Terramon.DatabaseV2.GetPokemon(ID).Stats.HP * Level / 100f) + Level + 10);
 
     private uint PersonalityValue
     {
@@ -103,15 +108,26 @@ public class PokemonData : TagSerializable
             Level = level,
             _ot = player.name,
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
-            IsShiny = Terramon.RollShiny(player)
+            IsShiny = RollShiny(player)
         };
+    }
+
+    private static bool RollShiny(Player player)
+    {
+        var shinyChance = ModContent.GetInstance<GameplayConfig>().ShinySpawnRate;
+        var rolls = player.HasItemInInventoryOrOpenVoidBag(ModContent.ItemType<ShinyCharm>()) ? 3 : 1;
+        for (var i = 0; i < rolls; i++)
+            if (Main.rand.NextBool(shinyChance))
+                return true;
+
+        return false;
     }
 
     private static Gender DetermineGender(ushort id, uint pv)
     {
-        var genderRate = Terramon.DatabaseV2.GetPokemon(id).GenderRate;
-        return genderRate >= 0
-            ? new FastRandom(pv).Next(8) < genderRate ? Gender.Female : Gender.Male
+        var genderRatio = Terramon.DatabaseV2.GetPokemon(id).GenderRatio;
+        return genderRatio >= 0
+            ? new FastRandom(pv).Next(8) < genderRatio ? Gender.Female : Gender.Male
             : Gender.Unspecified;
     }
 
@@ -193,7 +209,7 @@ public class PokemonData : TagSerializable
     private const int BitBall = 1 << 2;
     public const int BitIsShiny = 1 << 3;
     public const int BitPersonalityValue = 1 << 4;
-    private const int BitNickname = 1 << 5;
+    public const int BitNickname = 1 << 5;
     public const int BitVariant = 1 << 6;
     private const int BitOT = 1 << 7;
     private const int BitHeldItem = 1 << 8;
@@ -207,7 +223,6 @@ public class PokemonData : TagSerializable
     ///     This method is used for network synchronization.
     /// </summary>
     /// <param name="compareData">The Pokémon data to compare against.</param>
-    /// ///
     /// <param name="compareFields">The bitmask representing the fields to compare.</param>
     /// <param name="dirtyFields">The bitmask representing the fields that have changed.</param>
     /// <returns>True if any of the specified fields have changed; otherwise, false.</returns>

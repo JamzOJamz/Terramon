@@ -6,7 +6,6 @@ using System.Text;
 using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
-using Terramon.Content.AI;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.NPCComponents;
@@ -32,8 +31,6 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
     public override string Name { get; } = useName + "NPC";
 
     public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(UseId);
-
-    private AIController Behaviour { get; set; }
 
     public override string Texture { get; } = "Terramon/Assets/Pokemon/" + useName;
 
@@ -129,7 +126,6 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
     public override void SendExtraAI(BinaryWriter writer)
     {
         Data.NetWrite(writer, PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant);
-        Behaviour?.SendExtraAI(writer);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
@@ -140,14 +136,12 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
             Level = 5
         };
         Data.NetRead(reader);
-        Behaviour?.ReceiveExtraAI(reader);
     }
 
     public override void AI()
     {
         if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
         if (Data.IsShiny) ShinyEffect();
-        Behaviour?.AI();
     }
 
     private void ShinyEffect()
@@ -167,11 +161,6 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
         }
 
         _shinySparkleTimer = 0;
-    }
-
-    public override void FindFrame(int frameHeight)
-    {
-        Behaviour?.FindFrame(frameHeight);
     }
 
     public override bool? CanBeHitByProjectile(Projectile projectile)

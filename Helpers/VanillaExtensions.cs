@@ -19,7 +19,7 @@ public static class VanillaExtensions
     /// </summary>
     public static bool NextBool(this FastRandom r)
     {
-        return r.NextDouble() < .5;
+        return r.NextFloat() < .5;
     }
 
     /// <summary>

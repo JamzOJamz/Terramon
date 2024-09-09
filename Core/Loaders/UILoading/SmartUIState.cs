@@ -17,6 +17,11 @@ public abstract class SmartUIState : UIState
     ///     If the UI should be visible and interactable or not
     /// </summary>
     public virtual bool Visible { get; set; } = false;
+    
+    /// <summary>
+    ///    If this UI was visible on the last frame
+    /// </summary>
+    public virtual bool LastVisible { get; set; } = false;
 
     /// <summary>
     ///     What scale setting this UI should scale with
@@ -40,6 +45,19 @@ public abstract class SmartUIState : UIState
     // ===============================================================================================================================================
     // Helpers for appending elements easily
     // ===============================================================================================================================================
+
+    /// <summary>
+    ///     Appends an element to this state at the given position
+    /// </summary>
+    /// <param name="element">The element to append</param>
+    /// <param name="x">The x position in pixels</param>
+    /// <param name="y">The y position in pixels</param>
+    internal void AddElement(UIElement element, int x, int y)
+    {
+        element.Left.Set(x, 0);
+        element.Top.Set(y, 0);
+        Append(element);
+    }
 
     /// <summary>
     ///     Appends an element to this state with the given dimensions

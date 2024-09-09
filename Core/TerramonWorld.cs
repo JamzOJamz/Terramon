@@ -1,14 +1,32 @@
 using System.Collections.Generic;
+using ReLogic.Utilities;
 using Terramon.Content.Buffs;
-using Terramon.Content.GUI;
-using Terramon.Core.Loaders.UILoading;
+using Terraria.Audio;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
 
 public class TerramonWorld : ModSystem
 {
+    private static SlotId _currentSlotId;
+    private static float _originalMusicVolume;
+    private static bool _isPlayingSoundLastFrame;
     private PokedexService _worldDex;
+
+    /// <summary>
+    ///     Plays a sound while temporarily lowering the background music volume.
+    ///     The background music volume is restored once the sound has finished playing.
+    ///     This is useful for preventing dissonance when playing longer sounds that would overlap with background music.
+    /// </summary>
+    /// <param name="style">The sound style containing the parameters for the sound to be played.</param>
+    public static void PlaySoundOverBGM(in SoundStyle style)
+    {
+        var slotId = SoundEngine.PlaySound(style);
+        if (!(Main.musicVolume > 0f)) return;
+        _originalMusicVolume = Main.musicVolume;
+        _currentSlotId = slotId;
+        Main.musicVolume = Main.soundVolume / 2.5f;
+    }
 
     public void UpdateWorldDex(int id, PokedexEntryStatus status, string lastUpdatedBy = null, bool force = false)
     {
@@ -21,9 +39,26 @@ public class TerramonWorld : ModSystem
         entry.Status = status;
     }
 
+    public override void PostUpdateEverything()
+    {
+        if (!SoundEngine.TryGetActiveSound(_currentSlotId, out var activeSound))
+        {
+            if (!_isPlayingSoundLastFrame) return;
+            _isPlayingSoundLastFrame = false;
+            _currentSlotId = default;
+            
+            Tween.To(() => Main.musicVolume, x => { Main.musicVolume = x; }, _originalMusicVolume, 0.75f);
+
+            return;
+        }
+
+        if (!activeSound.IsPlaying) return;
+        _isPlayingSoundLastFrame = true;
+    }
+
     public override void PreSaveAndQuit()
     {
-        UILoader.GetUIState<PartyDisplay>().ClearAllSlots();
+        Terramon.ResetPartyUI(true);
         Main.LocalPlayer.ClearBuff(ModContent.BuffType<PokemonCompanion>());
     }
 

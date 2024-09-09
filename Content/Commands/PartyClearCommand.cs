@@ -1,6 +1,4 @@
 using System;
-using Terramon.Content.GUI;
-using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon.Content.Commands;
 
@@ -28,7 +26,6 @@ public class PartyClearCommand : DebugCommand
         {
             Array.Clear(player.Party, 0, player.Party.Length);
             player.ActiveSlot = -1;
-            UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
             caller.Reply("Removed all Pokemon from the party", new Color(255, 240, 20));
             return;
         }
@@ -60,6 +57,6 @@ public class PartyClearCommand : DebugCommand
         for (var i = slotIndex + 1; i < player.Party.Length; i++) player.Party[i - 1] = player.Party[i];
         player.Party[5] = null;
         if (player.ActiveSlot == slotIndex) player.ActiveSlot = -1;
-        UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(player.Party);
+        else if (slotIndex < player.ActiveSlot) player.ActiveSlot--;
     }
 }

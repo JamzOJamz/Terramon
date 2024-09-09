@@ -9,7 +9,7 @@ public abstract class DebugCommand : TerramonCommand
         base.Action(caller, input, args);
         if (!Allowed) return;
         if (ModContent.GetInstance<GameplayConfig>().DebugMode) return;
-        caller.Reply("This command requires Debug Mode to be enabled in the mod config!");
+        caller.Reply("This command requires Debug Mode to be enabled in the mod config!", Color.Red);
         Allowed = false;
     }
 }

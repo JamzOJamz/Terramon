@@ -4,7 +4,6 @@ using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
-using Terramon.Core.Loaders.UILoading;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
@@ -63,7 +62,7 @@ public class TerramonPlayer : ModPlayer
 
     public override void OnEnterWorld()
     {
-        UILoader.GetUIState<PartyDisplay>().UpdateAllSlots(Party);
+        Terramon.ResetPartyUI();
     }
 
     public override void OnRespawn()
@@ -71,7 +70,7 @@ public class TerramonPlayer : ModPlayer
         if (Player.whoAmI != Main.myPlayer) return;
 
         // Reapply companion buff on player respawn
-        if (ActiveSlot >= 0)
+        if (ActiveSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
             Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
     }
 
@@ -81,14 +80,11 @@ public class TerramonPlayer : ModPlayer
 
         // Handle player removing companion buff manually (right-clicking the buff icon)
         if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0 && !Player.dead)
-        {
-            var oldSlot = ActiveSlot;
             ActiveSlot = -1;
-            UILoader.GetUIState<PartyDisplay>().RecalculateSlot(oldSlot);
-        }
-
+        
+        // End the sidebar animation if the player opens their inventory to prevent visual bugs
         if (Main.playerInventory && !_lastPlayerInventory)
-            UILoader.GetUIState<PartyDisplay>().Sidebar.ForceKillAnimation();
+            PartyDisplay.Sidebar.ForceKillAnimation();
 
         _lastPlayerInventory = Main.playerInventory;
 
@@ -127,11 +123,10 @@ public class TerramonPlayer : ModPlayer
     /// </summary>
     public bool AddPartyPokemon(PokemonData data)
     {
+        UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == 6) return false;
         Party[nextIndex] = data;
-        UILoader.GetUIState<PartyDisplay>().UpdateSlot(data, nextIndex);
-        UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
 
         return true;
     }

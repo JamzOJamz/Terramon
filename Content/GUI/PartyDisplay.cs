@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework.Input;
+using System.Text;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Core.Systems;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -16,9 +17,9 @@ namespace Terramon.Content.GUI;
 
 public class PartyDisplay : SmartUIState
 {
-    private readonly PartySidebarSlot[] _partySlots = new PartySidebarSlot[6];
-    public bool IsDraggingSlot;
-    public PartySidebar Sidebar;
+    private static readonly PartySidebarSlot[] PartySlots = new PartySidebarSlot[6];
+    public static bool IsDraggingSlot { get; set; }
+    public static PartySidebar Sidebar { get; private set; }
 
     public override bool Visible =>
         !Main.playerInventory && !Main.LocalPlayer.dead && TerramonPlayer.LocalPlayer.HasChosenStarter;
@@ -30,75 +31,90 @@ public class PartyDisplay : SmartUIState
 
     public override void OnInitialize()
     {
-        Sidebar = new PartySidebar(new Vector2(200, 486))
+        Sidebar = new PartySidebar(new Vector2(120, 486))
         {
             VAlign = 0.5f
         };
         Sidebar.Left.Set(-1, 0f);
-        for (var i = 0; i < _partySlots.Length; i++)
+        for (var i = 0; i < PartySlots.Length; i++)
         {
             var slot = new PartySidebarSlot(this, i);
             slot.Top.Set(71 * i + 12 * i - 2, 0f);
             Sidebar.Append(slot);
-            _partySlots[i] = slot;
+            PartySlots[i] = slot;
         }
 
         Append(Sidebar);
     }
 
-    public void UpdateSlot(PokemonData data, int index)
+    private static void UpdateSlot(PokemonData data, int index)
     {
-        _partySlots[index].SetData(data);
+        PartySlots[index].SetData(data);
     }
 
-    public void RecalculateSlot(int index)
+    public static void RecalculateSlot(int index)
     {
-        _partySlots[index].SetData(_partySlots[index].Data);
+        PartySlots[index].SetData(PartySlots[index].Data);
     }
 
-    public void UpdateAllSlots(PokemonData[] partyData)
+    public static void UpdateAllSlots(PokemonData[] partyData)
     {
-        for (var i = 0; i < _partySlots.Length; i++) UpdateSlot(partyData[i], i);
+        for (var i = 0; i < PartySlots.Length; i++) UpdateSlot(partyData[i], i);
     }
 
-    public void RecalculateAllSlots()
+    public static void ClearAllSlots()
     {
-        for (var i = 0; i < _partySlots.Length; i++) RecalculateSlot(i);
+        for (var i = 0; i < PartySlots.Length; i++) UpdateSlot(null, i);
     }
 
-    public void ClearAllSlots()
-    {
-        for (var i = 0; i < _partySlots.Length; i++) UpdateSlot(null, i);
-    }
-
-    public void SwapSlotIndexes(int index1, int index2)
+    public static void SwapSlotIndexes(int index1, int index2)
     {
         TerramonPlayer.LocalPlayer.SwapParty(index1, index2);
-        _partySlots[index1].Index = index2;
-        _partySlots[index2].Index = index1;
-        var slot1 = _partySlots[index1];
-        var slot2 = _partySlots[index2];
-        _partySlots[index1] = slot2;
-        _partySlots[index2] = slot1;
+        PartySlots[index1].Index = index2;
+        PartySlots[index2].Index = index1;
+        var slot1 = PartySlots[index1];
+        var slot2 = PartySlots[index2];
+        PartySlots[index1] = slot2;
+        PartySlots[index2] = slot1;
 
-        _partySlots[index2].PlayIndexSound();
+        PartySlots[index2].PlayIndexSound();
+    }
+
+    public void StopDragging()
+    {
+        foreach (var slot in PartySlots)
+            slot.RightMouseUp(null);
+        Recalculate();
     }
 
     public override void SafeUpdate(GameTime gameTime)
     {
+        var player = TerramonPlayer.LocalPlayer;
+        
+        // Update inventory slots even if it is not visible
+        var inventoryParty = UILoader.GetUIState<InventoryParty>();
+        if (!inventoryParty.Visible) inventoryParty.SafeUpdate(gameTime);
+        
+        foreach (var slot in PartySlots)
+        {
+            var partyData = player.Party[slot.Index];
+
+            if ((slot.Data == null && partyData != null) ||
+                (slot.Data != null && partyData == null) ||
+                (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname, out _)))
+                UpdateSlot(partyData, slot.Index);
+        }
+
         Recalculate();
     }
 }
 
-public class PartySidebar : UIContainer
+public sealed class PartySidebar(Vector2 size) : UIContainer(size)
 {
     private bool _isToggled = true;
     private bool _keyUp = true;
     private ITweener _toggleTween;
-
-    public PartySidebar(Vector2 size) : base(size)
-    {
-    }
 
     public override void Update(GameTime gameTime)
     {
@@ -110,7 +126,7 @@ public class PartySidebar : UIContainer
         Elements.CopyTo(elementsStatic);
         foreach (var element in elementsStatic) element.Update(gameTime);
 
-        var openKey = Main.keyState.IsKeyDown(Keys.F);
+        var openKey = KeybindSystem.ToggleSidebarKeybind.Current;
         switch (openKey)
         {
             case true when _keyUp:
@@ -159,7 +175,9 @@ public class PartySidebarSlot : UIImage
     private readonly PartyDisplay _partyDisplay;
     private bool _dragging;
     private UIBlendedImage _genderIcon;
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
     private UIBlendedImage _heldItemBox;
+#pragma warning restore CS0649
     private int _index;
     private bool _isActiveSlot;
     private bool _isHovered;
@@ -169,11 +187,11 @@ public class PartySidebarSlot : UIImage
     private Vector2 _offset;
     private ITweener _snapTween;
     private UIBlendedImage _spriteBox;
+    public PokemonData CloneData;
     public PokemonData Data;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
-        "Terramon/Assets/GUI/Party/SidebarClosed",
-        AssetRequestMode.ImmediateLoad))
+        "Terramon/Assets/GUI/Party/SidebarClosed"))
     {
         _partyDisplay = partyDisplay;
         Index = index;
@@ -200,7 +218,7 @@ public class PartySidebarSlot : UIImage
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
-        if (!IsMouseHovering || Data == null || _partyDisplay.IsDraggingSlot) return;
+        if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
         var hoverText =
             Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover" + (_isActiveSlot ? "Active" : string.Empty));
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
@@ -237,7 +255,7 @@ public class PartySidebarSlot : UIImage
         {
             DragEnd();
         }
-        else if (IsMouseHovering)
+        else if (IsMouseHovering && Data != null)
         {
             var s = _isActiveSlot
                 ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.5f }
@@ -246,13 +264,22 @@ public class PartySidebarSlot : UIImage
             if (!_isActiveSlot)
             {
                 var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID))
-                    { Volume = 0.7f };
+                    { Volume = 0.6f };
                 SoundEngine.PlaySound(cry);
             }
 
-            TerramonPlayer.LocalPlayer.ActiveSlot = _isActiveSlot ? -1 : Index;
-            // Recalculates slots in order to update textures
-            _partyDisplay.RecalculateAllSlots();
+            if (_isActiveSlot)
+            {
+                TerramonPlayer.LocalPlayer.ActiveSlot = -1;
+                PartyDisplay.RecalculateSlot(Index);
+            }
+            else
+            {
+                var oldSlot = TerramonPlayer.LocalPlayer.ActiveSlot;
+                TerramonPlayer.LocalPlayer.ActiveSlot = Index;
+                if (oldSlot != -1) PartyDisplay.RecalculateSlot(oldSlot);
+                PartyDisplay.RecalculateSlot(Index);
+            }
         }
     }
 
@@ -278,27 +305,31 @@ public class PartySidebarSlot : UIImage
     {
         if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
         PlayIndexSound();
-        _partyDisplay.Sidebar.BringSlotToTop(this);
+        PartyDisplay.Sidebar.BringSlotToTop(this);
         _offset = new Vector2(evt.MousePosition.X - Left.Pixels, evt.MousePosition.Y - Top.Pixels);
         _dragging = true;
-        _partyDisplay.IsDraggingSlot = true;
+        PartyDisplay.IsDraggingSlot = true;
         _snapTween?.Kill();
     }
 
     private void DragEnd()
     {
         if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
-        if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
+        if (ModContent.GetInstance<ClientConfig>().ReducedAudio && _partyDisplay.Visible)
             SoundEngine.PlaySound(SoundID.Tink);
         _dragging = false;
         _justEndedDragging = true;
-        _partyDisplay.IsDraggingSlot = false;
+        PartyDisplay.IsDraggingSlot = false;
         SnapPosition(Index);
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+
+        // Handle player removing companion buff manually (right-clicking the buff icon)
+        if (_isActiveSlot && TerramonPlayer.LocalPlayer.ActiveSlot != Index)
+            PartyDisplay.RecalculateSlot(Index);
 
         if (_monitorCursor)
             //check if mouse has travelled minimum distance in order to enter drag
@@ -309,7 +340,7 @@ public class PartySidebarSlot : UIImage
             }
 
         var transparentColor = Color.White * 0.45f;
-        if (_partyDisplay.IsDraggingSlot)
+        if (PartyDisplay.IsDraggingSlot)
         {
             if (!_dragging)
             {
@@ -317,7 +348,7 @@ public class PartySidebarSlot : UIImage
                 Color = transparentColor;
                 _nameText.TextColor = transparentColor;
                 _levelText.TextColor = transparentColor;
-                _heldItemBox.Color = transparentColor;
+                //_heldItemBox.Color = transparentColor;
                 _spriteBox.Color = transparentColor;
                 ((UIImage)_spriteBox.Children.ElementAt(0)).Color = transparentColor;
                 _genderIcon.Color = transparentColor;
@@ -331,34 +362,34 @@ public class PartySidebarSlot : UIImage
             switch (yOff)
             {
                 case >= 45.5f when Index == 0:
-                    _partyDisplay.SwapSlotIndexes(0, 1);
+                    PartyDisplay.SwapSlotIndexes(0, 1);
                     break;
                 case < 45.5f when Index == 1:
-                    _partyDisplay.SwapSlotIndexes(1, 0);
+                    PartyDisplay.SwapSlotIndexes(1, 0);
                     break;
                 case >= 128.5f when Index == 1:
-                    _partyDisplay.SwapSlotIndexes(1, 2);
+                    PartyDisplay.SwapSlotIndexes(1, 2);
                     break;
                 case < 128.5f when Index == 2:
-                    _partyDisplay.SwapSlotIndexes(2, 1);
+                    PartyDisplay.SwapSlotIndexes(2, 1);
                     break;
                 case >= 211.5f when Index == 2:
-                    _partyDisplay.SwapSlotIndexes(2, 3);
+                    PartyDisplay.SwapSlotIndexes(2, 3);
                     break;
                 case < 211.5f when Index == 3:
-                    _partyDisplay.SwapSlotIndexes(3, 2);
+                    PartyDisplay.SwapSlotIndexes(3, 2);
                     break;
                 case >= 294.5f when Index == 3:
-                    _partyDisplay.SwapSlotIndexes(3, 4);
+                    PartyDisplay.SwapSlotIndexes(3, 4);
                     break;
                 case < 294.5f when Index == 4:
-                    _partyDisplay.SwapSlotIndexes(4, 3);
+                    PartyDisplay.SwapSlotIndexes(4, 3);
                     break;
                 case >= 377.5f when Index == 4:
-                    _partyDisplay.SwapSlotIndexes(4, 5);
+                    PartyDisplay.SwapSlotIndexes(4, 5);
                     break;
                 case < 377.5f when Index == 5:
-                    _partyDisplay.SwapSlotIndexes(5, 4);
+                    PartyDisplay.SwapSlotIndexes(5, 4);
                     break;
             }
 
@@ -369,13 +400,13 @@ public class PartySidebarSlot : UIImage
             Color = Color.White;
             _nameText.TextColor = Color.White;
             _levelText.TextColor = Color.White;
-            _heldItemBox.Color = Color.White;
+            //_heldItemBox.Color = Color.White;
             _spriteBox.Color = Color.White;
             ((UIImage)_spriteBox.Children.ElementAt(0)).Color = Color.White;
             _genderIcon.Color = Color.White;
         }
 
-        if (IsMouseHovering && !_partyDisplay.IsDraggingSlot)
+        if (IsMouseHovering && !PartyDisplay.IsDraggingSlot)
         {
             if (Data == null) return;
             Main.LocalPlayer.mouseInterface = true;
@@ -395,28 +426,31 @@ public class PartySidebarSlot : UIImage
 
     private void UpdateSprite(bool selected = false)
     {
-        var spritePath = "Terramon/Assets/GUI/Party/SidebarOpen";
+        var spritePath = new StringBuilder("Terramon/Assets/GUI/Party/");
+
         if (Data != null)
         {
-            if (selected)
-                spritePath += "_Selected";
-            if (_isActiveSlot)
-                spritePath += "Active";
+            spritePath.Append("SidebarOpen");
+
+            if (selected) spritePath.Append("_Selected");
+
+            if (_isActiveSlot) spritePath.Append("Active");
         }
         else
         {
-            spritePath = "Terramon/Assets/GUI/Party/SidebarClosed";
+            spritePath.Append("SidebarClosed");
         }
 
-        SetImage(ModContent.Request<Texture2D>(spritePath,
+        SetImage(ModContent.Request<Texture2D>(spritePath.ToString(),
             AssetRequestMode.ImmediateLoad));
     }
 
     public void SetData(PokemonData data)
     {
         Data = data;
+        CloneData = data?.ShallowCopy();
         _isActiveSlot = TerramonPlayer.LocalPlayer.ActiveSlot == Index;
-        UpdateSprite(IsMouseHovering && !_partyDisplay.IsDraggingSlot);
+        UpdateSprite(IsMouseHovering && !PartyDisplay.IsDraggingSlot);
         _heldItemBox?.Remove();
         _spriteBox?.Remove();
         _genderIcon?.Remove();
@@ -429,11 +463,11 @@ public class PartySidebarSlot : UIImage
         {
             _nameText.SetText(data.DisplayName);
             _levelText.SetText("Lv. " + data.Level);
-            _heldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>(
+            /*_heldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>(
                 "Terramon/Assets/GUI/Party/HeldItemBox" + (_isActiveSlot ? "Active" : string.Empty),
                 AssetRequestMode.ImmediateLoad));
             _heldItemBox.Top.Set(25, 0f);
-            _heldItemBox.Left.Set(8, 0f);
+            _heldItemBox.Left.Set(8, 0f);*/
             _spriteBox = new UIBlendedImage(ModContent.Request<Texture2D>(
                 "Terramon/Assets/GUI/Party/SpriteBox" + (_isActiveSlot ? "Active" : string.Empty),
                 AssetRequestMode.ImmediateLoad));
@@ -455,7 +489,7 @@ public class PartySidebarSlot : UIImage
                 AssetRequestMode.ImmediateLoad));
             _genderIcon.Top.Set(57, 0f);
             _genderIcon.Left.Set(87, 0f);
-            Append(_heldItemBox);
+            //Append(_heldItemBox);
             Append(_spriteBox);
             Append(_genderIcon);
         }

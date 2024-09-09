@@ -1,85 +1,67 @@
-global using Microsoft.Xna.Framework;
-global using Microsoft.Xna.Framework.Graphics;
-global using Terramon.Core;
-global using Terraria;
-global using Terraria.ModLoader;
 using System.IO;
-using Terramon.Content.Configs;
-using Terramon.Content.Items.KeyItems;
+using EasyPacketsLib;
+using Terramon.Content.GUI;
 
 namespace Terramon;
 
 public class Terramon : Mod
 {
-    public static Terramon Instance => ModContent.GetInstance<Terramon>();
-
-    public static DatabaseV2 DatabaseV2 { get; private set; }
-    
     /*
      * TODO:
      * This will be removed at a later date.
      * It exists because there are Pokémon in the DB that shouldn't be loaded as mod content (yet).
      */
     public const ushort MaxPokemonID = 151;
+    public static Terramon Instance => ModContent.GetInstance<Terramon>();
 
-    public static bool RollShiny(Player player)
+    public static DatabaseV2 DatabaseV2 { get; private set; }
+
+    public static void ResetPartyUI(bool fullClear = false)
     {
-        var shinyChance = ModContent.GetInstance<GameplayConfig>().ShinySpawnRate;
-        var rolls = player.HasItemInInventoryOrOpenVoidBag(ModContent.ItemType<ShinyCharm>()) ? 3 : 1;
-        for (var i = 0; i < rolls; i++)
+        if (fullClear)
         {
-            if (Main.rand.NextBool(shinyChance))
-                return true;
+            PartyDisplay.ClearAllSlots();
+            InventoryParty.ClearAllSlots();
         }
-
-        return false;
+        else
+        {
+            var partyData = TerramonPlayer.LocalPlayer.Party;
+            PartyDisplay.UpdateAllSlots(partyData); // Update the party sidebar display
+            InventoryParty.UpdateAllSlots(partyData); // Update the inventory party display
+        }
     }
-    
+
     public override void HandlePacket(BinaryReader reader, int whoAmI)
     {
-        EasyPacketsLib.EasyPacketDLL.HandlePacket(reader, whoAmI);
+        EasyPacketDLL.HandlePacket(reader, whoAmI);
+    }
+
+    private void SetupCrossModCompatibility()
+    {
+        if (Main.dedServ) return;
+
+        // Wikithis compatibility
+        if (!ModLoader.TryGetMod("Wikithis", out var wikiThis)) return;
+        wikiThis.Call(0, this, "https://terrariamods.wiki.gg/wiki/Terramon_Mod/{}");
+        wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
     }
 
     public override void Load()
     {
-        /*var modLoaderAssembly = typeof(ModContent).Assembly;
-        var uiModItemInitialize = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
-            ?.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
-        MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);*/
-
         // Load the database
-        var dbStream = GetFileStream("Assets/Data/PokemonDB.json");
+        var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
-        
+
         // Register the mod in EasyPacketsLib
-        EasyPacketsLib.EasyPacketDLL.RegisterMod(this);
+        EasyPacketDLL.RegisterMod(this);
+
+        // Setup cross-mod compatibility
+        SetupCrossModCompatibility();
     }
 
     public override void Unload()
     {
         DatabaseV2 = null;
-        EasyPacketsLib.EasyPacketDLL.Unload();
+        EasyPacketDLL.Unload();
     }
-    
-    /*private static void UIModItemInitialize_Detour(orig_UIModItemInitialize orig, object self)
-    {
-        orig(self);
-        var modLoaderAssembly = typeof(ModContent).Assembly;
-        var modNameField = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
-            ?.GetField("_modName", BindingFlags.NonPublic | BindingFlags.Instance);
-        var modIconField = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
-            ?.GetField("_modIcon", BindingFlags.NonPublic | BindingFlags.Instance);
-        var modName = ((UIText)modNameField?.GetValue(self))?.Text;
-        if (modName == null || !modName.StartsWith("Terramon Mod")) return;
-        var modIcon = (UIImage)modIconField?.GetValue(self);
-        var iconPath = ModContent.GetInstance<ClientConfig>().ModIconType switch
-        {
-            ModIconType.Alternate => "icon_alt",
-            ModIconType.Classic => "icon_classic",
-            _ => "icon"
-        };
-        modIcon?.SetImage(ModContent.Request<Texture2D>("Terramon/" + iconPath, AssetRequestMode.ImmediateLoad));
-    }*/
-
-    //private delegate void orig_UIModItemInitialize(object self);
 }
