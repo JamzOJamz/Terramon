@@ -73,7 +73,7 @@ internal class UILoader : ModSystem
     /// <param name="index">Where this layer should be inserted</param>
     /// <param name="visible">The logic dictating the visibility of this layer</param>
     /// <param name="scale">The scale settings this layer should scale with</param>
-    private static void AddLayer(IList<GameInterfaceLayer> layers, UIElement state, int index, bool visible,
+    private static void AddLayer(List<GameInterfaceLayer> layers, UIState state, int index, bool visible,
         InterfaceScaleType scale)
     {
         var name = state == null ? "Unknown" : state.ToString();
