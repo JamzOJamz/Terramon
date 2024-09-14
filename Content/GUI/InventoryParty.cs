@@ -192,11 +192,19 @@ internal sealed class CustomPartyItemSlot : UIImage
         {
             var schema = Terramon.DatabaseV2.GetPokemon(data.ID);
             var hp = data.HP;
-            var currentLevelExp = ExperienceLookupTable.GetLevelTotalExp(data.Level, schema.GrowthRate);
-            var nextLevelExp = ExperienceLookupTable.GetLevelTotalExp((byte)(data.Level + 1), schema.GrowthRate);
-            var toNextLevel = nextLevelExp - currentLevelExp;
+            if (data.Level < Terramon.MaxPokemonLevel)
+            {
+                var currentLevelExp = ExperienceLookupTable.GetLevelTotalExp(data.Level, schema.GrowthRate);
+                var nextLevelExp = ExperienceLookupTable.GetLevelTotalExp((byte)(data.Level + 1), schema.GrowthRate);
+                var toNextLevel = nextLevelExp - currentLevelExp;
+                _tooltipText = $"HP: {hp}/{hp}\nEXP: 0/{toNextLevel}"; // [c/80B9F1:Frozen]
+            }
+            else
+            {
+                _tooltipText = $"HP: {hp}/{hp}\nEXP: MAX";
+            }
+
             _tooltipName = $"[c/E8E8F4:{data.DisplayName} (Lv. {data.Level})]";
-            _tooltipText = $"HP: {hp}/{hp}\nEXP: 0/{toNextLevel}"; // [c/80B9F1:Frozen]
             _minispriteImage = new UIImage(ModContent.Request<Texture2D>(
                 $"Terramon/Assets/Pokemon/{schema.Identifier}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
                 AssetRequestMode.ImmediateLoad))

@@ -20,7 +20,8 @@
     }
     Visuals:
     {
-      LightStrength: 0.5
+      LightColor: "1, 0.95, 0.8"
+      LightStrength: 0.6
       DamperAmount: 0.5
       DustID: 6
       DustFrequency: 45

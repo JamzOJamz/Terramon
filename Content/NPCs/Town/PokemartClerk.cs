@@ -237,7 +237,7 @@ public class PokemartClerk : ModNPC
             if (activePokemonData == null) return;
             var queuedEvolution = activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp);
             if (queuedEvolution == 0) return;
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
             Main.npcChatText = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionCongrats",
                 activePokemonData.DisplayName, Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution));
             activePokemonData.EvolveInto(queuedEvolution);

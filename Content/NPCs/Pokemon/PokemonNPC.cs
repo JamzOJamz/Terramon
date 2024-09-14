@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -6,6 +7,7 @@ using System.Text;
 using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.NPCComponents;
@@ -16,61 +18,45 @@ using Terraria.Localization;
 namespace Terramon.Content.NPCs.Pokemon;
 
 [Autoload(false)]
-public class PokemonNPC(ushort useId, string useName) : ModNPC
+public class PokemonNPC(ushort id, string identifier) : ModNPC
 {
     private static Dictionary<ushort, JToken> _schemaCache;
     private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
-    private bool _hasGenderDifference;
+    private static BitArray _hasGenderDifference;
+    private static MethodInfo _enableComponentMethod;
     private Asset<Texture2D> _mainTexture;
     private int _shinySparkleTimer;
-    public ushort UseId { get; } = useId;
+    public ushort ID { get; } = id;
     public PokemonData Data { get; set; }
 
     protected override bool CloneNewInstances => true;
 
-    public override string Name { get; } = useName + "NPC";
+    public override string Name { get; } = identifier + "NPC";
 
-    public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(UseId);
+    public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(ID);
 
-    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + useName;
+    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + identifier;
 
     public override void SetDefaults()
     {
-        NPC.defense = int.MaxValue;
         NPC.lifeMax = 100;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.value = 0f;
         NPC.knockBackResist = 0.75f;
-        NPC.despawnEncouraged = true;
+        NPC.despawnEncouraged = ModContent.GetInstance<GameplayConfig>().EncourageDespawning;
         NPC.friendly = true;
 
-        // Load gender-specific texture if it exists.
-        _hasGenderDifference = ModContent.HasAsset(Texture + "F");
+        // Start a stopwatch to measure the time it takes to apply all components.
+        // var stopwatch = Stopwatch.StartNew();
 
-        // Load glowmask texture if it exists.
-        if (!_glowTextureCache.ContainsKey(UseId))
-            if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
-                _glowTextureCache[UseId] = glowTex;
-
-        // TODO: Optimize.
-        if (!_schemaCache.TryGetValue(UseId, out var npcSchema))
-        {
-            var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{useName}.hjson");
-            using var hjsonReader = new StreamReader(hjsonStream);
-            var jsonText = HjsonValue.Load(hjsonReader).ToString();
-            hjsonReader.Close();
-            var schema = JObject.Parse(jsonText);
-            if (!schema.TryGetValue("NPC", out var value)) return;
-            npcSchema = value;
-            _schemaCache.Add(UseId, npcSchema);
-        }
-
-        var mi = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
-        foreach (var component in npcSchema!.Children<JProperty>())
+        foreach (var component in _schemaCache[ID].Children<JProperty>())
         {
             var componentType = Mod.Code.GetType($"Terramon.Content.NPCs.NPC{component.Name}");
-            if (componentType == null) continue;
-            var enableComponentRef = mi!.MakeGenericMethod(componentType);
+            if (componentType == null)
+                // Remove the component from the schema if it doesn't exist.
+                // _schemaCache[ID].First(x => x.Path == component.Path).Remove();
+                continue;
+            var enableComponentRef = _enableComponentMethod.MakeGenericMethod(componentType);
             var instancedComponent = enableComponentRef.Invoke(null, [NPC, null]);
             foreach (var prop in component.Value.Children<JProperty>())
             {
@@ -79,13 +65,27 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
                 fieldInfo.SetValue(instancedComponent, prop.Value.ToObject(fieldInfo.FieldType));
             }
         }
+
+        // Stop the stopwatch and log the time taken to apply all components.
+        // stopwatch.Stop();
+        // Mod.Logger.Debug("Time taken to apply components: " + stopwatch.Elapsed + "ms");
+    }
+
+    public override void SetStaticDefaults()
+    {
+        // Load gender-specific texture if it exists.
+        _hasGenderDifference[ID - 1] = ModContent.HasAsset(Texture + "F");
+
+        // Load glowmask texture if it exists.
+        if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
+            _glowTextureCache[ID] = glowTex;
     }
 
     public override void OnSpawn(IEntitySource source)
     {
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
         var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
-        Data = PokemonData.Create(Main.player[spawningPlayer], UseId, 5);
+        Data = PokemonData.Create(Main.player[spawningPlayer], ID, 5);
         NPC.netUpdate = true;
     }
 
@@ -95,7 +95,7 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
         {
             var pathBuilder = new StringBuilder(Texture);
 
-            if (_hasGenderDifference && Data?.Gender == Gender.Female)
+            if (_hasGenderDifference[ID - 1] && Data?.Gender == Gender.Female)
                 pathBuilder.Append('F');
             if (!string.IsNullOrEmpty(Data?.Variant))
                 pathBuilder.Append('_').Append(Data.Variant);
@@ -114,7 +114,7 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
             NPC.frame, drawColor, NPC.rotation,
             frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
 
-        if (_glowTextureCache.TryGetValue(UseId, out var glowTexture))
+        if (_glowTextureCache.TryGetValue(ID, out var glowTexture))
             spriteBatch.Draw(glowTexture.Value,
                 NPC.Center - screenPos +
                 new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
@@ -132,7 +132,7 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
     {
         Data ??= new PokemonData
         {
-            ID = UseId,
+            ID = ID,
             Level = 5
         };
         Data.NetRead(reader);
@@ -168,6 +168,17 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
         return projectile.ModProjectile is BasePkballProjectile;
     }
 
+    /*public override bool CanBeHitByNPC(NPC attacker)
+    {
+        return false;
+    }*/
+
+    public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+    {
+        if (projectile.ModProjectile is BasePkballProjectile)
+            modifiers.HideCombatText();
+    }
+
     public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
     {
         return false;
@@ -187,20 +198,38 @@ public class PokemonNPC(ushort useId, string useName) : ModNPC
             Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x / 2, y / 2);
             Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
         }
-        
+
         NPC.active = false;
         NPC.netUpdate = true;
     }
 
     public override void Load()
     {
-        _schemaCache = new Dictionary<ushort, JToken>();
-        _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
+        // First time loading any PokemonNPC, initialize static fields.
+        if (_schemaCache == null)
+        {
+            _schemaCache = new Dictionary<ushort, JToken>();
+            _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
+            _hasGenderDifference = new BitArray(Math.Min(Terramon.MaxPokemonID, Terramon.DatabaseV2.Pokemon.Count));
+            _enableComponentMethod = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
+        }
+
+        // Load schema from HJSON file and cache it.
+        var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{identifier}.hjson");
+        using var hjsonReader = new StreamReader(hjsonStream);
+        var jsonText = HjsonValue.Load(hjsonReader).ToString();
+        hjsonReader.Close();
+        var schema = JObject.Parse(jsonText);
+        if (!schema.TryGetValue("NPC", out var value)) return;
+        _schemaCache.Add(ID, value);
     }
 
     public override void Unload()
     {
+        if (_schemaCache == null) return;
         _schemaCache = null;
         _glowTextureCache = null;
+        _hasGenderDifference = null;
+        _enableComponentMethod = null;
     }
 }

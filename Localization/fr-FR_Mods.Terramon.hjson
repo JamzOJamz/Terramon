@@ -35,6 +35,11 @@ Configs: {
 			// Label: Wild Pokémon Spawning
 			// Tooltip: Whether or not wild Pokémon should spawn in the world
 		}
+
+		EncourageDespawning: {
+			// Label: Encourage Despawning
+			// Tooltip: Whether or not to encourage wild Pokémon to despawn when leaving an area to make room for new spawns
+		}
 	}
 
 	ClientConfig: {
@@ -341,6 +346,51 @@ Items: {
 	// RedApricorn.DisplayName: Red Apricorn
 	// WhiteApricorn.DisplayName: White Apricorn
 	// YellowApricorn.DisplayName: Yellow Apricorn
+
+	ExpCandyXS: {
+		// DisplayName: Exp. Candy XS
+		/* Tooltip:
+			'''
+			A candy that is packed with energy.
+			If consumed, it grants a Pokémon a very small number of Exp. Points.
+			''' */
+	}
+
+	ExpCandyS: {
+		// DisplayName: Exp. Candy S
+		/* Tooltip:
+			'''
+			A candy that is packed with energy.
+			If consumed, it grants a Pokémon a small number of Exp. Points.
+			''' */
+	}
+
+	ExpCandyM: {
+		// DisplayName: Exp. Candy M
+		/* Tooltip:
+			'''
+			A candy that is packed with energy.
+			If consumed, it grants a Pokémon a moderate number of Exp. Points.
+			''' */
+	}
+
+	ExpCandyL: {
+		// DisplayName: Exp. Candy L
+		/* Tooltip:
+			'''
+			A candy that is packed with energy.
+			If consumed, it grants a Pokémon a large number of Exp. Points.
+			''' */
+	}
+
+	ExpCandyXL: {
+		// DisplayName: Exp. Candy XL
+		/* Tooltip:
+			'''
+			A candy that is packed with energy.
+			If consumed, it grants a Pokémon a very large number of Exp. Points.
+			''' */
+	}
 }
 
 Tiles: {
@@ -418,5 +468,5 @@ Misc: {
 	// ItemNoEffect: It won't have any effect on {0}.
 	// PokemonEvolved: "{0} evolved into {1}!"
 	// PokemonEvolutionReady: "{0} seems ready to evolve!"
-	// RareCandyUse: "{0} was elevated to level {1}!"
+	// RareCandyUse: "{0} grew to Lv. {1}!"
 }

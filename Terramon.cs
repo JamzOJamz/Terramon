@@ -12,6 +12,12 @@ public class Terramon : Mod
      * It exists because there are Pokémon in the DB that shouldn't be loaded as mod content (yet).
      */
     public const ushort MaxPokemonID = 151;
+
+    /// <summary>
+    ///     The maximum level a Pokémon can reach.
+    /// </summary>
+    public const ushort MaxPokemonLevel = 100;
+
     public static Terramon Instance => ModContent.GetInstance<Terramon>();
 
     public static DatabaseV2 DatabaseV2 { get; private set; }

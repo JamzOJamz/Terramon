@@ -41,6 +41,8 @@ public abstract class NPCAIComponent : NPCComponent
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
         if (!Enabled) return;
+        
+        modifiers.FinalDamage *= float.Epsilon;
 
         npc.velocity.X = 0;
     }
