@@ -19,7 +19,7 @@
         {
           Overworld: true
           DayTime: true
-          Chance: undefined
+          Chance: 0.1
         }
       ]
     }
