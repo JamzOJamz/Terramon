@@ -8,8 +8,14 @@
     WalkingBehaviour: {}
     SpawnController:
     {
-      Condition: OverworldDaySlime
-      Chance: 0.1
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.1
+        }
+      ]
     }
   }
   Projectile: {}

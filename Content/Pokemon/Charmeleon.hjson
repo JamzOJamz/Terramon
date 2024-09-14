@@ -15,8 +15,14 @@
     }
     SpawnController:
     {
-      Condition: OverworldDaySlime
-      Chance: 0.05
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.05
+        }
+      ]
     }
     Visuals:
     {
