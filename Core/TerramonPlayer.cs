@@ -21,6 +21,7 @@ public class TerramonPlayer : ModPlayer
 
     public bool HasChosenStarter;
     public PokemonData[] Party { get; } = new PokemonData[6];
+    public QuestManager Quests { get; } = new();
 
     public int ActiveSlot
     {
