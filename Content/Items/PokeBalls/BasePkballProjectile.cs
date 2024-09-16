@@ -396,6 +396,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
         var player = TerramonPlayer.LocalPlayer;
+        player.Quests.TrackProgress(new QuestCondition{ UseItem = PokeballItem, PokemonId = _capture.UseId, PokemonType = Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0] });
         var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.UseId, out var entry) &&
                                            entry.Status == PokedexEntryStatus.Registered;
         var addSuccess = player.AddPartyPokemon(_capture.Data);

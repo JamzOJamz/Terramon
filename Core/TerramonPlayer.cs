@@ -21,7 +21,7 @@ public class TerramonPlayer : ModPlayer
 
     public bool HasChosenStarter;
     public PokemonData[] Party { get; } = new PokemonData[6];
-    public QuestManager Quests { get; } = new();
+    public QuestManager Quests { get; } = new QuestManager();
 
     public int ActiveSlot
     {
@@ -111,6 +111,12 @@ public class TerramonPlayer : ModPlayer
             _premierBonusCount -= item.stack;
 
         return item.type != ModContent.ItemType<MasterBallItem>() && base.CanSellItem(vendor, shopInventory, item);
+    }
+
+    public override bool OnPickup(Item item)
+    {
+        Quests.TrackGatherProgress(true);
+        return base.OnPickup(item);
     }
 
     public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
