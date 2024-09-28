@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.UI;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -58,7 +59,7 @@ public abstract class BasePkballTile : ModTile
     {
         if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return base.PreDraw(i, j, spriteBatch);
         Main.tile[i, j].TileFrameX = e.Open ? (short)18 : (short)0;
-
+        
         return base.PreDraw(i, j, spriteBatch);
     }
 
@@ -77,10 +78,14 @@ public abstract class BasePkballTile : ModTile
 
         player.noThrow = 2;
         player.cursorItemIconEnabled = true;
-        if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e) && !e.Item.IsAir)
+        if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e) && !e.Item.IsAir && !e.Disposable)
+        {
             player.cursorItemIconID = e.Item.type;
+            player.cursorItemIconText = "  x" + e.Item.stack;
+        }
         else
             player.cursorItemIconID = DropItem;
+        
     }
 
     public override bool RightClick(int i, int j)
@@ -90,31 +95,26 @@ public abstract class BasePkballTile : ModTile
         if (!player.IsWithinSnappngRangeToTile(i, j,
                 MaxInteractDistance)) return false; // Avoid being able to trigger it from long range
         if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return false;
+        
         SoundEngine.PlaySound(SoundID.Mech);
-        if (e.Open) //when closing
+        
+        if (e.Open) //when pokeball is open, insert item + close
         {
-            if (!player.HeldItem.IsAir && player.HeldItem.ModItem is not BasePkballItem)
-            {
-                e.Item = player.HeldItem.Clone();
-                e.Item.stack = player.HeldItem.stack;
-                player.HeldItem.stack -= player.HeldItem.stack;
-            }
-
+            e.TryAddItem(player);
             e.Open = false;
         }
-        else //when opening
+        else if (!e.TryAddItem(player)) //when closed, try adding items, otherwise open it
         {
-            if (!e.Item.IsAir)
+            if (e.TryOpen() && !e.Item.IsAir)
             {
-                player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
-                e.Item = new Item();
+                var item = player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
+                e.Item.TurnToAir();
             }
-
-            e.Open = true;
-
-            if (e.Disposable)
-                WorldGen.KillTile(i, j);
         }
+        
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+            Mod.SendPacket(new SyncPkballTileRpc(e.Item, e.Open, e.Disposable, (byte)player.whoAmI, new Point16(i, j)), -1, Main.myPlayer,
+                true);
 
         return true;
     }
@@ -132,9 +132,6 @@ public abstract class BasePkballTile : ModTile
         {
             yield return new Item(DropItem);
         }
-
-
-        ModContent.GetInstance<BasePkballEntity>().Kill(i, j);
     }
 }
 
@@ -169,6 +166,42 @@ public class BasePkballEntity : ModTileEntity
         return placedEntity;
     }
 
+    public bool TryAddItem(Player player)
+    {
+        if (player.HeldItem.IsAir) return false;
+
+        if (Open || (!Disposable && player.HeldItem.type == Item.type))
+        {
+            if (player.HeldItem.maxStack <= Item.stack) return false;
+
+            if (Item.IsAir)
+            {
+                Item = player.HeldItem.Clone();
+                Item.stack = 1;
+            }
+            else
+                Item.stack++;
+
+            player.HeldItem.stack -= 1;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TryOpen()
+    {
+        if (Disposable && !Item.IsAir)
+        {
+            WorldGen.KillTile(Position.X, Position.Y);
+            Kill(Position.X, Position.Y); //kill entity after tile so tile can correctly drop items
+            return false;
+        }
+
+        Open = true;
+        return true;
+    }
+
     public override void OnNetPlace()
     {
         NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
@@ -190,14 +223,14 @@ public class BasePkballEntity : ModTileEntity
 
     public override void SaveData(TagCompound tag)
     {
-        tag.Set("pkballTile", Item.SerializeData());
+        tag.Set("pkballItem" , Item.SerializeData());
         tag.Set("pkballOpen", Open);
         tag.Set("pkballDisposable", Disposable);
     }
 
     public override void LoadData(TagCompound tag)
     {
-        Item = tag.Get<Item>("pkballTile");
+        Item = tag.Get<Item>("pkballItem");
         Open = tag.GetBool("pkballOpen");
         Disposable = tag.GetBool("pkballDisposable");
     }

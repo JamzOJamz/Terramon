@@ -2,6 +2,7 @@
     <Import Project="..\tModLoader.targets"/>
     <PropertyGroup>
         <AssemblyName>Terramon</AssemblyName>
+        <TargetFramework>net8.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
