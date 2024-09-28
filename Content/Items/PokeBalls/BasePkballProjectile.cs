@@ -174,7 +174,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         // Drop the item when the projectile is destroyed
         var item = 0;
-        if (Main.rand.NextBool(DropItemChanceDenominator))
+        if (!Projectile.shimmerWet && Main.rand.NextBool(DropItemChanceDenominator))
             item = Item.NewItem(Projectile.GetSource_DropAsItem(), Projectile.getRect(), PokeballItem);
 
         // Sync the drop for multiplayer
