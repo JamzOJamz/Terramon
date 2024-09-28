@@ -94,7 +94,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon) Projectile.velocity.Y = -oldVelocity.Y;
 
             Projectile.velocity.Y *= 0.7f;
-            Projectile.velocity.X *= 0.5f;
+            Projectile.velocity.X *= 0.55f;
 
             if (Projectile.velocity.Length() < 1.5f)
                 _bounces = 0;
@@ -390,30 +390,30 @@ internal abstract class BasePkballProjectile : ModProjectile
         // Don't run this code on other clients
         if (Projectile.owner != Main.myPlayer) return;
 
-        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/ls_catch_fanfare"));
+        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
 
         Projectile.Kill();
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
         var player = TerramonPlayer.LocalPlayer;
-        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.UseId, out var entry) &&
+        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.ID, out var entry) &&
                                            entry.Status == PokedexEntryStatus.Registered;
         var addSuccess = player.AddPartyPokemon(_capture.Data);
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
-                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0]), _capture.DisplayName));
+                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0]), _capture.DisplayName));
         }
         else
         {
             var box = player.TransferPokemonToPC(_capture.Data);
             Main.NewText(box != null
                 ? Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPC",
-                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0]),
+                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0]),
                     _capture.DisplayName,
                     box.GivenName ?? player.GetDefaultNameForPCBox(box), player.Player.name)
                 : Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPCNoRoom",
-                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.UseId).Types[0]),
+                    TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0]),
                     _capture.DisplayName,
                     player.Player.name));
         }
@@ -431,7 +431,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         // Register as seen in the player's Pokedex
         var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
-        ownerPlayer.UpdatePokedex(_capture.UseId, PokedexEntryStatus.Seen);
+        ownerPlayer.UpdatePokedex(_capture.ID, PokedexEntryStatus.Seen);
 
         AIState = (float)ActionState.Catch;
         AITimer = 0;

@@ -5,7 +5,8 @@
     {
       DrawOffsetY: -2
     }
-    BounceBehaviour: {
+    BounceBehaviour:
+    {
       BounceMinRange: -3.5
       BounceMaxRange: -2.75
       BounceFrequency: 8
@@ -16,8 +17,14 @@
     }
     SpawnController:
     {
-      Condition: OverworldDaySlime
-      Chance: 0.1
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.1
+        }
+      ]
     }
   }
   Projectile: {}

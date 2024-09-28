@@ -86,8 +86,11 @@ public class NPCWalkingBehaviour : NPCAIComponent
         {
             if (_collideTimer < 10)
                 NPC.velocity.Y = -2f;
-            else if (NPC.velocity.Y == 0) AIWalkDir *= -1;
-
+            else if (NPC.velocity.Y == 0)
+            {
+                AIWalkDir *= -1;
+                _collideTimer = 0;
+            }
             _collideTimer++;
         }
         else

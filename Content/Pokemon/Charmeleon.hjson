@@ -15,12 +15,19 @@
     }
     SpawnController:
     {
-      Condition: OverworldDaySlime
-      Chance: 0.05
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.05
+        }
+      ]
     }
     Visuals:
     {
-      LightStrength: 0.45
+      LightColor: "1, 0.95, 0.8"
+      LightStrength: 0.5
       DamperAmount: 0.5
       DustID: 6
       DustFrequency: 45

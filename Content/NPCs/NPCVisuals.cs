@@ -15,7 +15,6 @@ namespace Terramon.Content.NPCs;
 /// </summary>
 public class NPCVisuals : NPCComponent
 {
-    //TODO: Vector3 (or Color) and Vector2 support in hjson
     public Vector3 LightColor = Vector3.One;
     public float LightStrength = 0f;
     public float DamperAmount = 0; //0 = no effect, 1 = full effect

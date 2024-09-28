@@ -10,6 +10,9 @@ public class GameplayConfig : ModConfig
     [Header("Spawning")] [DefaultValue(true)]
     public bool AllowPokemonSpawning;
     
+    [DefaultValue(true)]
+    public bool EncourageDespawning;
+    
     [DefaultValue(4096)] [Range(1, int.MaxValue)]
     public int ShinySpawnRate;
     

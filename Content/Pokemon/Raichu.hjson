@@ -6,7 +6,7 @@
       Width: 32
       Height: 30
     }
-    WalkingBehaviour: 
+    WalkingBehaviour:
     {
       WalkSpeed: 1.1
       FrameCount: 5
@@ -16,8 +16,14 @@
     }
     SpawnController:
     {
-      Condition: OverworldDaySlime
-      Chance: 0.05
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.05
+        }
+      ]
     }
   }
   Projectile: {}

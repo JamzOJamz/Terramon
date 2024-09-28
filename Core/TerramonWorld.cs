@@ -19,13 +19,14 @@ public class TerramonWorld : ModSystem
     ///     This is useful for preventing dissonance when playing longer sounds that would overlap with background music.
     /// </summary>
     /// <param name="style">The sound style containing the parameters for the sound to be played.</param>
-    public static void PlaySoundOverBGM(in SoundStyle style)
+    /// <param name="volumeMultiplier">The multiplier for quieting the background music volume.</param>
+    public static void PlaySoundOverBGM(in SoundStyle style, float volumeMultiplier = 0.45f)
     {
         var slotId = SoundEngine.PlaySound(style);
-        if (!(Main.musicVolume > 0f)) return;
+        if (Main.musicVolume <= 0) return;
         _originalMusicVolume = Main.musicVolume;
         _currentSlotId = slotId;
-        Main.musicVolume = Main.soundVolume / 2.5f;
+        Main.musicVolume = Main.soundVolume * volumeMultiplier;
     }
 
     public void UpdateWorldDex(int id, PokedexEntryStatus status, string lastUpdatedBy = null, bool force = false)

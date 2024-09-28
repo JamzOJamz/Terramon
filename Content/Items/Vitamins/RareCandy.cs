@@ -27,13 +27,19 @@ public class RareCandy : Vitamin
 
     protected override bool AffectedByPokemonDirectUse(PokemonData data)
     {
-        return data.Level < 100;
+        return data.Level < Terramon.MaxPokemonLevel;
     }
 
     protected override void PokemonDirectUse(Player player, PokemonData data)
     {
         if (player.whoAmI != Main.myPlayer)
         {
+            for (var j = 0; j < 40; j++)
+            {
+                var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
+                var d = Dust.NewDustPerfect(player.Center + speed * 26, DustID.FrostHydra);
+                d.noGravity = true;
+            }
             SoundEngine.PlaySound(SoundID.Item4, player.position);
             return;
         }
@@ -41,18 +47,27 @@ public class RareCandy : Vitamin
         data.LevelUp();
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level),
-            new Color(73, 158, 255));
-        var queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
-        if (queuedEvolution == 0)
+            Color.White);
+        
+        // Test effect
+        CombatText.NewText(player.getRect(), Color.White, $"Lv. {data.Level - 1} > {data.Level}");
+        SoundEngine.PlaySound(SoundID.Item20);
+        for (var j = 0; j < 40; j++)
         {
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
-            return;
+            var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
+            var d = Dust.NewDustPerfect(player.Center + speed * 26, DustID.FrostHydra);
+            d.noGravity = true;
         }
-
+        
+        SoundEngine.PlaySound(SoundID.Item2, player.position);
+        SoundEngine.PlaySound(SoundID.Item4, player.position);
+        
+        var queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
+        if (queuedEvolution == 0) return;
+        
         if (ModContent.GetInstance<ClientConfig>().FastEvolution)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
             Main.NewText(
                 Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
                     Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution)), new Color(50, 255, 130));
@@ -61,7 +76,6 @@ public class RareCandy : Vitamin
         }
         else
         {
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
             Main.NewText(
                 Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolutionReady", data.DisplayName),
                 new Color(50, 255, 130));
