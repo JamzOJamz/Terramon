@@ -358,24 +358,22 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         CatchModifier = ChangeCatchModifier(target); //Change modifier (can take into account values like pokemon type)
 
-        const float
-            catchChance =
-                0.5f; //Terramon.Database.GetPokemon(capture.useId) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
-        //TODO: pull actual data from pokemon when possible
+        float catchChance = (Terramon.DatabaseV2.GetPokemon(_capture.ID).CatchRate / 255) * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
         if (_catchRandom < catchChance * CatchModifier)
             return true;
 
-        const float split = (1 - catchChance) /
+        float split = (1 - catchChance) /
                             4; //Determine amount of times pokeball will rock (based on closeness to successful catch)
 
-        _catchTries = random switch
-        {
-            < catchChance + split * 1 => 3,
-            < catchChance + split * 2 => 2,
-            < catchChance + split * 3 => 1,
-            _ => 0
-        };
+        if (random < catchChance + split * 1)
+            _catchTries = 3;
+        else if (random < catchChance + split * 2)
+            _catchTries = 2;
+        else if (random < catchChance + split * 3)
+            _catchTries = 1;
+        else
+            _catchTries = 0;
 
         return false;
     }
