@@ -12,10 +12,10 @@ namespace Terramon.Content.Packets;
 /// <summary>
 ///     A packet to be sent whenever the contents of a Poké Ball tile are modified.
 /// </summary>
-public readonly struct SyncPkballTileRpc(Item myItem, bool isOpen, bool isDisposable, byte player, Point16 tileCoords)
+public readonly struct SyncPkballTileRpc(Item item, bool isOpen, bool isDisposable, byte player, Point16 tileCoords)
     : IEasyPacket<SyncPkballTileRpc>, IEasyPacketHandler<SyncPkballTileRpc>
 {
-    private readonly Item _item = myItem;
+    private readonly Item _item = item;
     private readonly bool _isOpen = isOpen;
     private readonly bool _isDisposable = isDisposable;
     
@@ -44,7 +44,7 @@ public readonly struct SyncPkballTileRpc(Item myItem, bool isOpen, bool isDispos
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
             var tile = TileUtils.TryGetTileEntityAs<BasePkballEntity>(packet._tileCoords.X, packet._tileCoords.Y, out var e);
-            e.Item = myItem;
+            e.Item = packet._item;
             e.Disposable = packet._isDisposable;
             
             if (packet._isOpen)
