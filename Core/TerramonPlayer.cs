@@ -4,6 +4,8 @@ using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Core.Systems;
+using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
@@ -74,6 +76,12 @@ public class TerramonPlayer : ModPlayer
             Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
     }
 
+    public override void ProcessTriggers(TriggersSet triggersSet)
+    {
+        if (KeybindSystem.OpenPokedexKeybind.JustPressed)
+            HubUI.ToggleActive();
+    }
+
     public override void PreUpdate()
     {
         if (Player.whoAmI != Main.myPlayer) return;
@@ -81,7 +89,7 @@ public class TerramonPlayer : ModPlayer
         // Handle player removing companion buff manually (right-clicking the buff icon)
         if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0 && !Player.dead)
             ActiveSlot = -1;
-        
+
         // End the sidebar animation if the player opens their inventory to prevent visual bugs
         if (Main.playerInventory && !_lastPlayerInventory)
             PartyDisplay.Sidebar.ForceKillAnimation();
@@ -151,7 +159,7 @@ public class TerramonPlayer : ModPlayer
 
     public bool UpdatePokedex(ushort id, PokedexEntryStatus status, bool force = false)
     {
-        ModContent.GetInstance<TerramonWorld>().UpdateWorldDex(id, status, Player.name, force);
+        TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
         if (!hasEntry) return false;
         if (!force && entry.Status >= status) return false;

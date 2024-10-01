@@ -21,6 +21,9 @@ public class NPCVariants : NPCComponent
     public override void OnSpawn(NPC npc, IEntitySource source)
     {
         base.OnSpawn(npc, source);
+        
+        if (!Enabled) return;
+        
         var modNpc = (PokemonNPC)npc.ModNPC;
 
         //TODO: add array, iterate through each variant, etc.

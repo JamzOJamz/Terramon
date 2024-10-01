@@ -8,7 +8,7 @@
     }
     WalkingBehaviour:
     {
-      WalkSpeed: 1.1
+      WalkSpeed: 1.05
       FrameCount: 5
       FrameTime: 5
       AnimationType: IdleForward

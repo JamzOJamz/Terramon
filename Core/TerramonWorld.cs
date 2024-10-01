@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using ReLogic.Utilities;
 using Terramon.Content.Buffs;
 using Terraria.Audio;
@@ -10,8 +11,9 @@ public class TerramonWorld : ModSystem
 {
     private static SlotId _currentSlotId;
     private static float _originalMusicVolume;
-    private static bool _isPlayingSoundLastFrame;
-    private PokedexService _worldDex;
+    private static bool _soundEndedLastFrame;
+    private static float _lastMusicVolume;
+    private static PokedexService _worldDex;
 
     /// <summary>
     ///     Plays a sound while temporarily lowering the background music volume.
@@ -27,9 +29,11 @@ public class TerramonWorld : ModSystem
         _originalMusicVolume = Main.musicVolume;
         _currentSlotId = slotId;
         Main.musicVolume = Main.soundVolume * volumeMultiplier;
+        _lastMusicVolume = Main.musicVolume;
     }
 
-    public void UpdateWorldDex(int id, PokedexEntryStatus status, string lastUpdatedBy = null, bool force = false)
+    public static void UpdateWorldDex(int id, PokedexEntryStatus status, string lastUpdatedBy = null,
+        bool force = false)
     {
         if (_worldDex == null) return;
         var hasEntry = _worldDex.Entries.TryGetValue(id, out var entry);
@@ -38,23 +42,6 @@ public class TerramonWorld : ModSystem
         if (entry.Status != PokedexEntryStatus.Registered)
             entry.LastUpdatedBy = lastUpdatedBy;
         entry.Status = status;
-    }
-
-    public override void PostUpdateEverything()
-    {
-        if (!SoundEngine.TryGetActiveSound(_currentSlotId, out var activeSound))
-        {
-            if (!_isPlayingSoundLastFrame) return;
-            _isPlayingSoundLastFrame = false;
-            _currentSlotId = default;
-            
-            Tween.To(() => Main.musicVolume, x => { Main.musicVolume = x; }, _originalMusicVolume, 0.75f);
-
-            return;
-        }
-
-        if (!activeSound.IsPlaying) return;
-        _isPlayingSoundLastFrame = true;
     }
 
     public override void PreSaveAndQuit()
@@ -105,4 +92,42 @@ public class TerramonWorld : ModSystem
             _worldDex.Entries[id] = new PokedexEntry(status, lastUpdatedBy);
         }
     }
+
+    public override void Load()
+    {
+        var mainDoUpdateMethod = typeof(Main).GetMethod("DoUpdate", BindingFlags.NonPublic | BindingFlags.Instance);
+        MonoModHooks.Add(mainDoUpdateMethod, MainDoUpdate_Detour);
+    }
+
+    private static void MainDoUpdate_Detour(OrigMainDoUpdate orig, object self, ref GameTime gameTime)
+    {
+        orig(self, ref gameTime);
+    
+        // Update all active tweens
+        Tween.DoUpdate();
+
+        if (Main.musicVolume != _lastMusicVolume)
+        {
+            // Volume is changed by something else, abort the fade
+            _currentSlotId = default;
+            _soundEndedLastFrame = false;
+        }
+
+        if (!SoundEngine.TryGetActiveSound(_currentSlotId, out var activeSound))
+        {
+            if (!_soundEndedLastFrame) return;
+            _soundEndedLastFrame = false;
+            _currentSlotId = default;
+
+            // Fade back in the music volume
+            Tween.To(() => Main.musicVolume, x => { Main.musicVolume = x; }, _originalMusicVolume, 0.75f);
+
+            return;
+        }
+
+        if (!activeSound.IsPlaying) return;
+        _soundEndedLastFrame = true;
+    }
+
+    private delegate void OrigMainDoUpdate(object self, ref GameTime gameTime);
 }

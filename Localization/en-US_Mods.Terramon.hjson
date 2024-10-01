@@ -95,7 +95,10 @@ Configs: {
 	}
 }
 
-Keybinds.ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
+Keybinds: {
+	ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
+	OpenPokedex.DisplayName: Pokédex
+}
 
 GUI: {
 	Starter: {

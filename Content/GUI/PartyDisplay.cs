@@ -22,7 +22,7 @@ public class PartyDisplay : SmartUIState
     public static PartySidebar Sidebar { get; private set; }
 
     public override bool Visible =>
-        !Main.playerInventory && !Main.LocalPlayer.dead && TerramonPlayer.LocalPlayer.HasChosenStarter;
+        !Main.playerInventory && !Main.LocalPlayer.dead && TerramonPlayer.LocalPlayer.HasChosenStarter && !HubUI.Active;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -90,11 +90,11 @@ public class PartyDisplay : SmartUIState
     public override void SafeUpdate(GameTime gameTime)
     {
         var player = TerramonPlayer.LocalPlayer;
-        
+
         // Update inventory slots even if it is not visible
         var inventoryParty = UILoader.GetUIState<InventoryParty>();
         if (!inventoryParty.Visible) inventoryParty.SafeUpdate(gameTime);
-        
+
         foreach (var slot in PartySlots)
         {
             var partyData = player.Party[slot.Index];
@@ -235,7 +235,7 @@ public class PartySidebarSlot : UIImage
         {
             SoundPath = "Terramon/Sounds/button_smm",
             Pitch = (float)_index / -15 + 0.6f,
-            Volume = 0.3f
+            Volume = 0.2925f
         };
         SoundEngine.PlaySound(s);
     }
@@ -258,13 +258,13 @@ public class PartySidebarSlot : UIImage
         else if (IsMouseHovering && Data != null)
         {
             var s = _isActiveSlot
-                ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.5f }
-                : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.8f };
+                ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.35f }
+                : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f };
             SoundEngine.PlaySound(s);
             if (!_isActiveSlot)
             {
                 var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID))
-                    { Volume = 0.6f };
+                    { Volume = 0.2525f };
                 SoundEngine.PlaySound(cry);
             }
 

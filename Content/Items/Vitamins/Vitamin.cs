@@ -9,7 +9,7 @@ public abstract class Vitamin : TerramonItem
 
     public override string Texture => "Terramon/Assets/Items/Vitamins/" + GetType().Name;
 
-    protected override bool HasPokemonDirectUse => true;
+    public override bool HasPokemonDirectUse => true;
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {

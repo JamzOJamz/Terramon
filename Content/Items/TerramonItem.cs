@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Terramon.Content.GUI;
 using Terramon.Helpers;
 using Terraria.ID;
 using Terraria.Localization;
@@ -23,7 +22,7 @@ public abstract class TerramonItem : ModItem
     /// <summary>
     ///     Whether this item can have an effect when used directly on a Pokémon.
     /// </summary>
-    protected virtual bool HasPokemonDirectUse => false;
+    public virtual bool HasPokemonDirectUse => false;
 
     /// <summary>
     ///     The rarity of the item. Defaults to White.
@@ -80,7 +79,7 @@ public abstract class TerramonItem : ModItem
     ///     <see cref="PokemonDirectUse" /> will not be called. By default returns true.
     /// </summary>
     /// <param name="data">The Pokémon to check.</param>
-    protected virtual bool AffectedByPokemonDirectUse(PokemonData data)
+    public virtual bool AffectedByPokemonDirectUse(PokemonData data)
     {
         return true;
     }
@@ -91,7 +90,7 @@ public abstract class TerramonItem : ModItem
     /// </summary>
     /// <param name="player">The player using the item.</param>
     /// <param name="data">The Pokémon the item is being used on.</param>
-    protected virtual void PokemonDirectUse(Player player, PokemonData data)
+    public virtual void PokemonDirectUse(Player player, PokemonData data)
     {
     }
 }

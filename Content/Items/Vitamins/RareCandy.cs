@@ -25,12 +25,12 @@ public class RareCandy : Vitamin
         Item.height = 28;
     }
 
-    protected override bool AffectedByPokemonDirectUse(PokemonData data)
+    public override bool AffectedByPokemonDirectUse(PokemonData data)
     {
         return data.Level < Terramon.MaxPokemonLevel;
     }
 
-    protected override void PokemonDirectUse(Player player, PokemonData data)
+    public override void PokemonDirectUse(Player player, PokemonData data)
     {
         if (player.whoAmI != Main.myPlayer)
         {
@@ -59,7 +59,6 @@ public class RareCandy : Vitamin
             d.noGravity = true;
         }
         
-        SoundEngine.PlaySound(SoundID.Item2, player.position);
         SoundEngine.PlaySound(SoundID.Item4, player.position);
         
         var queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);

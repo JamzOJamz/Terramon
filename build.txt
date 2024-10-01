@@ -3,4 +3,4 @@ homepage = https://terramon.carrd.co
 author = The Terramon Team
 version = 0.1
 dllReferences = EasyPacketsLib
-buildIgnore = .gitignore, .sln,.csproj, *.user, obj*, bin*, .vs*, Properties*, .git*, Content\Scripts\*, Assets\Data\PokemonDB.json, Assets\Items\PokeBalls\PokeBallAtlas.png, */_Unused/*
+buildIgnore = .gitignore, .sln,.csproj, *.user, obj*, bin*, .vs*, Properties*, .git*, Content\Scripts\*, Assets\Data\PokemonDB.json, */_Unused/*

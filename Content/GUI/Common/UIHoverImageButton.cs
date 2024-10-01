@@ -1,5 +1,4 @@
 using ReLogic.Content;
-using Terraria.GameContent.UI.Elements;
 
 namespace Terramon.Content.GUI.Common;
 
@@ -21,7 +20,8 @@ public class UIHoverImageButton(Asset<Texture2D> texture, string text) : Transfo
     {
         if (!_isActivated) return;
         base.DrawSelf(spriteBatch);
-        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
-        if (IsMouseHovering) Main.hoverItemName = text;
+        if (!ContainsPoint(Main.MouseScreen)) return;
+        Main.LocalPlayer.mouseInterface = true;
+        Main.hoverItemName = text;
     }
 }

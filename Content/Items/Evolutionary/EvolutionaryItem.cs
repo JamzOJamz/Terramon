@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Terramon.Content.Configs;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -17,7 +18,7 @@ public abstract class EvolutionaryItem : TerramonItem
     /// </summary>
     public virtual EvolutionTrigger Trigger => EvolutionTrigger.DirectUse;
 
-    protected override bool HasPokemonDirectUse => Trigger == EvolutionTrigger.DirectUse;
+    public override bool HasPokemonDirectUse => Trigger == EvolutionTrigger.DirectUse;
 
     public override void SetStaticDefaults()
     {
@@ -45,21 +46,26 @@ public abstract class EvolutionaryItem : TerramonItem
         return 0;
     }
 
-    protected override bool AffectedByPokemonDirectUse(PokemonData data)
+    public override bool AffectedByPokemonDirectUse(PokemonData data)
     {
         return GetEvolvedSpecies(data) != 0;
     }
 
-    protected override void PokemonDirectUse(Player player, PokemonData data)
+    public override void PokemonDirectUse(Player player, PokemonData data)
     {
         if (player.whoAmI != Main.myPlayer) return;
         var evolvedSpecies = GetEvolvedSpecies(data);
+        var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies);
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies)), new Color(50, 255, 130));
+                evolvedSpeciesName), new Color(50, 255, 130));
         data.EvolveInto(evolvedSpecies);
         TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-        player.GetModPlayer<TerramonPlayer>().UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered);
+        var justRegistered = player.GetModPlayer<TerramonPlayer>()
+            .UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered);
+        if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
+            new Color(159, 162, 173));
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)

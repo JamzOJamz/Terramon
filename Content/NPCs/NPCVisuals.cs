@@ -29,6 +29,8 @@ public class NPCVisuals : NPCComponent
     public override void AI(NPC npc)
     {
         base.AI(npc);
+        
+        if (!Enabled || ((PokemonNPC)npc.ModNPC).PlasmaState) return;
 
         if (LightStrength > 0)
             Lighting.AddLight(npc.Center, LightColor * LightStrength * (Main.raining || npc.wet ? 1 - DamperAmount : 1));

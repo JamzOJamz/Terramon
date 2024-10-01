@@ -1,19 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Terramon.Core.Loaders.UILoading;
-using Terraria.UI;
 
 namespace Terramon.Core;
 
-public class Tween : SmartUIState
+public class Tween
 {
-    public static readonly List<ITweener> ActiveTweens = new();
-    public override bool Visible => true;
-
-    public override int InsertionIndex(List<GameInterfaceLayer> layers)
-    {
-        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
-    }
+    public static readonly List<ITweener> ActiveTweens = [];
 
     public static ITweener To<T>(Func<T> getter, Action<T> setter, T endValue,
         float time) where T : struct
@@ -37,8 +29,11 @@ public class Tween : SmartUIState
         ActiveTweens.Add(tweener);
         return tweener;
     }
-
-    public override void SafeUpdate(GameTime gameTime)
+    
+    /// <summary>
+    ///     Updates all active tweens. Should be called once per frame.
+    /// </summary>
+    public static void DoUpdate()
     {
         for (var i = 0; i < ActiveTweens.Count; i++)
             if (!ActiveTweens[i].Update())

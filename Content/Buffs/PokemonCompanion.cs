@@ -41,7 +41,7 @@ public class PokemonCompanion : ModBuff
         gd.Clear(Color.Transparent);
 
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Matrix.Identity);
 
         var player = TerramonPlayer.LocalPlayer;
 

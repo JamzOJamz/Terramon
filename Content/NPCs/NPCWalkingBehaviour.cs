@@ -1,4 +1,5 @@
 using System;
+using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
 
@@ -35,7 +36,7 @@ public class NPCWalkingBehaviour : NPCAIComponent
 
     public override void AI(NPC npc)
     {
-        if (!Enabled) return;
+        if (!Enabled || PlasmaState) return;
         
         // Smooth walking over slopes
         Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed,
@@ -137,7 +138,7 @@ public class NPCWalkingBehaviour : NPCAIComponent
     /// </summary>
     public override void FindFrame(NPC npc, int frameHeight)
     {
-        if (!Enabled) return;
+        if (!Enabled || PlasmaState) return;
 
         if (AIState == (float)ActionState.Idle && !NPC.IsABestiaryIconDummy)
         {

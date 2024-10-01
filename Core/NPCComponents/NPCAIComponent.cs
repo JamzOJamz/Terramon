@@ -1,4 +1,5 @@
 using System.IO;
+using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -24,6 +25,11 @@ public abstract class NPCAIComponent : NPCComponent
     ///     The NPC this component is attached to.
     /// </summary>
     protected NPC NPC { get; private set; }
+
+    /// <summary>
+    ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).PlasmaState</c>.
+    /// </summary>
+    protected bool PlasmaState => ((PokemonNPC)NPC.ModNPC).PlasmaState;
     
     protected override void OnEnabled(NPC npc)
     {

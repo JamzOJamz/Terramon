@@ -73,18 +73,28 @@ internal class UILoader : ModSystem
     /// <param name="index">Where this layer should be inserted</param>
     /// <param name="visible">The logic dictating the visibility of this layer</param>
     /// <param name="scale">The scale settings this layer should scale with</param>
-    private static void AddLayer(List<GameInterfaceLayer> layers, UIState state, int index, bool visible,
-        InterfaceScaleType scale)
+    private static void AddLayer(List<GameInterfaceLayer> layers, SmartUIState state, int index, bool visible,
+        InterfaceScaleType scale = InterfaceScaleType.UI)
     {
-        var name = state == null ? "Unknown" : state.ToString();
-        layers.Insert(index, new LegacyGameInterfaceLayer($"{nameof(Terramon)}: " + name,
+        layers.Insert(index, new LegacyGameInterfaceLayer(GetLayerName(state),
             delegate
             {
                 if (visible)
                     state?.Draw(Main.spriteBatch);
 
                 return true;
-            }, InterfaceScaleType.UI));
+            }, scale));
+    }
+
+    /// <summary>
+    ///     Gets the interface layer name for the provided SmartUIState instance.
+    ///     If the state is null, a default value "Unknown" is returned.
+    /// </summary>
+    /// <param name="state">The SmartUIState instance to get the interface layer name of</param>
+    public static string GetLayerName(SmartUIState state)
+    {
+        var name = state == null ? "Unknown" : state.ToString();
+        return $"{nameof(Terramon)}: {name}";
     }
 
     /// <summary>
@@ -124,6 +134,9 @@ internal class UILoader : ModSystem
 
         foreach (var state in _uiStates)
             AddLayer(layers, state, state.InsertionIndex(layers), state.Visible, state.Scale);
+
+        foreach (var state in _uiStates)
+            state.InformLayers(layers);
     }
 
     public override void UpdateUI(GameTime gameTime)

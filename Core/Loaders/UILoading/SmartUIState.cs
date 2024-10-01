@@ -34,6 +34,13 @@ public abstract class SmartUIState : UIState
     /// <param name="layers">The vanilla UI layers</param>
     /// <returns>The insertion index of this UI state</returns>
     public abstract int InsertionIndex(List<GameInterfaceLayer> layers);
+    
+    /// <summary>
+    ///     Allows you to edit interface layers before they are drawn
+    /// </summary>
+    public virtual void InformLayers(List<GameInterfaceLayer> layers)
+    {
+    }
 
     /// <summary>
     ///     Allows you to unload anything that might need to be unloaded

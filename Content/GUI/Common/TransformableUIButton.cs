@@ -7,11 +7,12 @@ namespace Terramon.Content.GUI.Common;
 
 public class TransformableUIButton : UIElement
 {
-    public float Rotation { get; set; }
+    private Asset<Texture2D> _borderTexture;
+    private bool _borderTextureIsOverlay = true;
+    private bool _justHovered;
     private Asset<Texture2D> _texture;
     private float _visibilityActive = 1f;
     private float _visibilityInactive = 0.4f;
-    private Asset<Texture2D> _borderTexture;
 
     protected TransformableUIButton(Asset<Texture2D> texture)
     {
@@ -20,9 +21,13 @@ public class TransformableUIButton : UIElement
         Height.Set(_texture.Height(), 0f);
     }
 
-    public void SetHoverImage(Asset<Texture2D> texture)
+    public float Rotation { get; set; }
+
+    public void SetHoverImage(Asset<Texture2D> texture, bool isOverlay = true)
     {
         _borderTexture = texture;
+        if (texture == null) return;
+        _borderTextureIsOverlay = isOverlay;
     }
 
     public void SetImage(Asset<Texture2D> texture)
@@ -35,15 +40,42 @@ public class TransformableUIButton : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         var dimensions = GetDimensions();
-        spriteBatch.Draw(_texture.Value, dimensions.Center(), null, Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation, _texture.Frame().Size() / 2f, 1f, SpriteEffects.None, 0f);
-        if (_borderTexture != null && IsMouseHovering)
-            spriteBatch.Draw(_borderTexture.Value, dimensions.Center(), null, Color.White, Rotation, _borderTexture.Frame().Size() / 2f, 1f, SpriteEffects.None, 0f);
+        
+        // TODO: Less code duplication here, I can't think of a good proper way to do this right now
+        if (_borderTextureIsOverlay)
+        {
+            spriteBatch.Draw(_texture.Value, dimensions.Center(), null,
+                Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation,
+                _texture.Frame().Size() / 2f, 1f, SpriteEffects.None, 0f);
+            if (_borderTexture != null && ContainsPoint(Main.MouseScreen) && !IgnoresMouseInteraction)
+                spriteBatch.Draw(_borderTexture.Value, dimensions.Center(), null, Color.White, Rotation,
+                    _borderTexture.Frame().Size() / 2f, 1f, SpriteEffects.None, 0f);
+        }
+        else
+        {
+            if (_borderTexture == null || !ContainsPoint(Main.MouseScreen) || IgnoresMouseInteraction)
+                spriteBatch.Draw(_texture.Value, dimensions.Center(), null,
+                    Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation,
+                    _texture.Frame().Size() / 2f, 1f, SpriteEffects.None, 0f);
+            else
+                spriteBatch.Draw(_borderTexture.Value, dimensions.Center(), null, Color.White, Rotation,
+                    _borderTexture.Frame().Size() / 2f, 1f, SpriteEffects.None, 0f);
+        }
     }
 
-    public override void MouseOver(UIMouseEvent evt)
+    public override void Update(GameTime gameTime)
     {
-        base.MouseOver(evt);
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        base.Update(gameTime);
+
+        if (ContainsPoint(Main.MouseScreen) && !_justHovered)
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            _justHovered = true;
+        }
+        else if (!ContainsPoint(Main.MouseScreen))
+        {
+            _justHovered = false;
+        }
     }
 
     public void SetVisibility(float whenActive, float whenInactive)
