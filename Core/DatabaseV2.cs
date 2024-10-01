@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
+using Terramon.ID;
 using Terraria.Localization;
 
 // ReSharper disable InconsistentNaming
@@ -80,10 +81,10 @@ public class DatabaseV2
             set => Identifier = value;
         }
 
-        public List<byte> Types { get; set; }
+        public List<TypeID> Types { get; set; }
 
         [JsonProperty("t")]
-        private List<byte> b_Types
+        private List<TypeID> b_Types
         {
             set => Types = value;
         }

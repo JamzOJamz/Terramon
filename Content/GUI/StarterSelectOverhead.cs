@@ -173,7 +173,7 @@ public class StarterButton : UIHoverImage
             player.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
                 Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value,
-                TypeID.GetColor(Terramon.DatabaseV2.GetPokemon(pokemon).Types[0]),
+                Terramon.DatabaseV2.GetPokemon(pokemon).Types[0].GetColor(),
                 Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
             );
             Main.NewText(chosenMessage);

@@ -1,6 +1,6 @@
 ﻿using ReLogic.Content;
 
-namespace Terramon;
+namespace Terramon.Content.Menus;
 
 public class TerramonMenu : ModMenu
 {
