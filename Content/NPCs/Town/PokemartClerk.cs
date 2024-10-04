@@ -173,10 +173,10 @@ public class PokemartClerk : ModNPC
             var pokemonType = Terramon.DatabaseV2.GetPokemon(activePokemonData.ID).Types[0];
             switch (pokemonType)
             {
-                case TypeID.Grass:
+                case PokemonType.Grass:
                     chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonGrass"));
                     break;
-                case TypeID.Ice:
+                case PokemonType.Ice:
                     chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonIce"));
                     break;
             }

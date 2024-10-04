@@ -81,10 +81,10 @@ public class DatabaseV2
             set => Identifier = value;
         }
 
-        public List<TypeID> Types { get; set; }
+        public List<PokemonType> Types { get; set; }
 
         [JsonProperty("t")]
-        private List<TypeID> b_Types
+        private List<PokemonType> b_Types
         {
             set => Types = value;
         }
