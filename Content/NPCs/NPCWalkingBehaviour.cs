@@ -2,6 +2,7 @@ using System;
 using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
+using Terraria.GameContent;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
