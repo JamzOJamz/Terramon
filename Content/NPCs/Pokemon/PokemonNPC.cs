@@ -84,6 +84,13 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
         // Load glowmask texture if it exists.
         if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
             _glowTextureCache[ID] = glowTex;
+
+        // Hide from the bestiary (they will appear in the Pokédex instead)
+        var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers
+        {
+            Hide = true
+        };
+        NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -273,10 +280,10 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
             Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x / 2, y / 2);
             Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
         }
-        
+
         // Enable plasma state
         PlasmaState = true;
-        
+
         // Set velocity to move towards pokeball
         _plasmaStateVelocity = (pokeballPos - NPC.Center).ToRotation().ToRotationVector2() * 2f;
 
