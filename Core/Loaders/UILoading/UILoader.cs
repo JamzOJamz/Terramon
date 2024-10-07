@@ -12,7 +12,7 @@ namespace Terramon.Core.Loaders.UILoading;
 internal class UILoader : ModSystem
 {
     /// <summary>
-    ///     The collection of automatically craetaed UserInterfaces for SmartUIStates.
+    ///     The collection of automatically created UserInterfaces for SmartUIStates.
     /// </summary>
     private static List<UserInterface> _userInterfaces = [];
 
