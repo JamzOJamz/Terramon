@@ -4,6 +4,7 @@ using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -285,7 +286,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                 _tooltipText = $"HP: {hp}/{hp}\nEXP: MAX";
             }
 
-            _tooltipName = $"[c/E8E8F4:{data.DisplayName} (Lv. {data.Level})]";
+            _tooltipName = $"{data.DisplayName} (Lv. {data.Level})";
             _minispriteImage = new UIImage(ModContent.Request<Texture2D>(
                 $"Terramon/Assets/Pokemon/{schema.Identifier}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
                 AssetRequestMode.ImmediateLoad))
@@ -327,6 +328,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             TooltipOverlay.SetName(_tooltipName);
             TooltipOverlay.SetTooltip(_tooltipText);
             TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
+            if (Data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
         }
 
         base.Draw(spriteBatch);

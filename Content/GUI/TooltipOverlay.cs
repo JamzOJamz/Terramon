@@ -11,6 +11,7 @@ namespace Terramon.Content.GUI;
 public class TooltipOverlay : SmartUIState, ILoadable
 {
     private static string _text = string.Empty;
+    private static Color _color = new(232, 232, 244);
     private static string _tooltip = string.Empty;
     private static Asset<Texture2D> _icon;
 
@@ -39,6 +40,11 @@ public class TooltipOverlay : SmartUIState, ILoadable
     public static void SetName(string newName)
     {
         _text = newName;
+    }
+    
+    public static void SetColor(Color newColor)
+    {
+        _color = newColor;
     }
 
     public static void SetTooltip(string newTooltip)
@@ -90,7 +96,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
             pos.X += 22;
         }
 
-        Utils.DrawBorderString(Main.spriteBatch, _text, pos, Color.White);
+        Utils.DrawBorderString(Main.spriteBatch, _text, pos, _color);
         pos.Y += ChatManager.GetStringSize(font, _text, Vector2.One).Y + 4;
         if (_icon != null)
             pos.X -= 22;
@@ -101,6 +107,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
     private static void Reset()
     {
         _text = string.Empty;
+        _color = new Color(232, 232, 244);
         _tooltip = string.Empty;
         _icon = null;
     }
