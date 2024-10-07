@@ -191,7 +191,8 @@ public class InventoryParty : SmartUIState
             if ((slot.Data == null && partyData != null) ||
                 (slot.Data != null && partyData == null) ||
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
-                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname, out _)))
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname | PokemonData.BitIsShiny,
+                    out _)))
                 UpdateSlot(partyData, slot.Index);
         }
 

@@ -1,33 +1,38 @@
 using System;
 using System.IO;
+using Terramon.Core.NPCComponents;
+using Terramon.Helpers;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 
-namespace Terramon.Content.AI;
+namespace Terramon.Content.NPCs;
 
-public class WanderingHoverAi(NPC npc) : AIController(npc)
+/// <summary>
+///     A <see cref="NPCComponent" /> for adding bouncing AI to an NPC.
+/// </summary>
+public sealed class NPCWanderingHoverBehaviour : NPCAIComponent
 {
     private float _endTime;
-
     private float _moveSpeed = 0.5f;
     private float _startTime;
-
+    
     private ref float AIState => ref NPC.ai[0];
     private ref float AITimer => ref NPC.ai[1];
     private ref float AIMoveDirectionX => ref NPC.ai[2];
     private ref float AIMoveDirectionY => ref NPC.ai[3];
 
-    public override void AI()
+    public override void SetDefaults(NPC npc)
     {
-        switch (AIState)
-        {
-            case (float)ActionState.Hover:
-                Hover();
-                break;
-        }
+        base.SetDefaults(npc);
+        if (!Enabled) return;
+        
+        npc.noGravity = true;
     }
 
-    private void Hover()
+    public override void AI(NPC npc)
     {
+        if (!Enabled || PlasmaState) return;
+        
         AITimer++;
         if (AITimer == 1 || AITimer % 260 == 0)
         {
@@ -40,13 +45,13 @@ public class WanderingHoverAi(NPC npc) : AIController(npc)
                 var tile = Main.tile[tileCoords.X, tileCoords.Y];
                 var tileSolid = tile.HasTile && Main.tileSolid[tile.TileType];
                 var angle = tileSolid
-                    ? Main.rand.NextFloat(MathHelper.Pi, MathHelper.TwoPi)
-                    : Main.rand.NextFloat(0f, MathHelper.Pi);
+                    ? Random.NextFloat(MathHelper.Pi, MathHelper.TwoPi)
+                    : Random.NextFloat(0f, MathHelper.Pi);
                 var direction =
                     new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
                 AIMoveDirectionX = direction.X;
                 AIMoveDirectionY = direction.Y;
-                _moveSpeed = Main.rand.NextFloat(0.5f, 1.25f) / (tileSolid ? 1f : 1.5f);
+                _moveSpeed = Random.NextFloat(0.5f, 1.25f) / (tileSolid ? 1f : 1.5f);
                 NPC.netUpdate = true;
             }
         }
@@ -63,43 +68,30 @@ public class WanderingHoverAi(NPC npc) : AIController(npc)
         NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
     }
 
-    public override void SendExtraAI(BinaryWriter writer)
+    public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
     {
-        base.SendExtraAI(writer);
-        writer.Write(_moveSpeed);
+        if (!Enabled) return;
+        
+        base.SendExtraAI(npc, bitWriter, binaryWriter);
+        binaryWriter.Write(_moveSpeed);
     }
 
-    public override void ReceiveExtraAI(BinaryReader reader)
+    public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
     {
-        base.ReceiveExtraAI(reader);
-        _moveSpeed = reader.ReadSingle();
+        if (!Enabled) return;
+        
+        base.ReceiveExtraAI(npc, bitReader, binaryReader);
+        _moveSpeed = binaryReader.ReadSingle();
     }
 
-    public override void FindFrame(int frameHeight)
+    public override void FindFrame(NPC npc, int frameHeight)
     {
+        if (!Enabled || PlasmaState) return;
+        
         NPC.frameCounter++;
-        switch (NPC.frameCounter)
-        {
-            case < FrameSpeed:
-                NPC.frame.Y = (int)Frame.One * frameHeight;
-                break;
-            case < FrameSpeed * 2:
-                NPC.frame.Y = (int)Frame.Two * frameHeight;
-                break;
-            default:
-                NPC.frameCounter = 0;
-                break;
-        }
-    }
-
-    private enum ActionState
-    {
-        Hover
-    }
-
-    private enum Frame
-    {
-        One,
-        Two
+        if (NPC.frameCounter < FrameTime * FrameCount)
+            NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+        else
+            NPC.frameCounter = 0;
     }
 }

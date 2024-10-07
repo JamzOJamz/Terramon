@@ -6,11 +6,10 @@
       Width: 30
       Height: 34
     }
-    WalkingBehaviour:
+    WanderingHoverBehaviour:
     {
       FrameCount: 6
-      FrameTime: 5
-      IsClassic: false
+      FrameTime: 3
     }
     SpawnController:
     {

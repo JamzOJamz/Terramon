@@ -191,7 +191,7 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
         if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
         if (PlasmaState)
         {
-            var lightIntensity = 0.5f - _plasmaStateTime / 70f;
+            var lightIntensity = 0.57f - _plasmaStateTime / 70f;
             if (lightIntensity > 0)
                 Lighting.AddLight(NPC.Center, 178f / 255f * lightIntensity, 223f / 255f * lightIntensity,
                     lightIntensity);
