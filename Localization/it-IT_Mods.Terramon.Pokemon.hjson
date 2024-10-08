@@ -1,754 +1,754 @@
 Bulbasaur: {
 	DisplayName: Bulbasaur
-	Species: Seed Pokémon
+	Species: Pokémon Seme
 }
 
 Ivysaur: {
 	DisplayName: Ivysaur
-	Species: Seed Pokémon
+	Species: Pokémon Seme
 }
 
 Venusaur: {
 	DisplayName: Venusaur
-	Species: Seed Pokémon
+	Species: Pokémon Seme
 }
 
 Charmander: {
 	DisplayName: Charmander
-	Species: Lizard Pokémon
+	Species: Pokémon Lucertola
 }
 
 Charmeleon: {
 	DisplayName: Charmeleon
-	Species: Flame Pokémon
+	Species: Pokémon Fiamma
 }
 
 Charizard: {
 	DisplayName: Charizard
-	Species: Flame Pokémon
+	Species: Pokémon Fiamma
 }
 
 Squirtle: {
 	DisplayName: Squirtle
-	Species: Tiny Turtle Pokémon
+	Species: Pokémon Tartaghina
 }
 
 Wartortle: {
 	DisplayName: Wartortle
-	Species: Turtle Pokémon
+	Species: Pokémon Tartaruga
 }
 
 Blastoise: {
 	DisplayName: Blastoise
-	Species: Shellfish Pokémon
+	Species: Pokémon Crostaceo
 }
 
 Caterpie: {
 	DisplayName: Caterpie
-	Species: Worm Pokémon
+	Species: Pokémon Baco
 }
 
 Metapod: {
 	DisplayName: Metapod
-	Species: Cocoon Pokémon
+	Species: Pokémon Bozzolo
 }
 
 Butterfree: {
 	DisplayName: Butterfree
-	Species: Butterfly Pokémon
+	Species: Pokémon Farfalla
 }
 
 Weedle: {
 	DisplayName: Weedle
-	Species: Hairy Bug Pokémon
+	Species: Pokémon Millepiedi
 }
 
 Kakuna: {
 	DisplayName: Kakuna
-	Species: Cocoon Pokémon
+	Species: Pokémon Bozzolo
 }
 
 Beedrill: {
 	DisplayName: Beedrill
-	Species: Poison Bee Pokémon
+	Species: Pokémon Velenape
 }
 
 Pidgey: {
 	DisplayName: Pidgey
-	Species: Tiny Bird Pokémon
+	Species: Pokémon Uccellino
 }
 
 Pidgeotto: {
 	DisplayName: Pidgeotto
-	Species: Bird Pokémon
+	Species: Pokémon Uccello
 }
 
 Pidgeot: {
 	DisplayName: Pidgeot
-	Species: Bird Pokémon
+	Species: Pokémon Uccello
 }
 
 Rattata: {
 	DisplayName: Rattata
-	Species: Mouse Pokémon
+	Species: Pokémon Topo
 }
 
 Raticate: {
 	DisplayName: Raticate
-	Species: Mouse Pokémon
+	Species: Pokémon Topo
 }
 
 Spearow: {
 	DisplayName: Spearow
-	Species: Tiny Bird Pokémon
+	Species: Pokémon Uccellino
 }
 
 Fearow: {
 	DisplayName: Fearow
-	Species: Beak Pokémon
+	Species: Pokémon Becco
 }
 
 Ekans: {
 	DisplayName: Ekans
-	Species: Snake Pokémon
+	Species: Pokémon Serpente
 }
 
 Arbok: {
 	DisplayName: Arbok
-	Species: Cobra Pokémon
+	Species: Pokémon Cobra
 }
 
 Pikachu: {
 	DisplayName: Pikachu
-	Species: Mouse Pokémon
+	Species: Pokémon Topo
 }
 
 Raichu: {
 	DisplayName: Raichu
-	Species: Mouse Pokémon
+	Species: Pokémon Topo
 }
 
 Sandshrew: {
 	DisplayName: Sandshrew
-	Species: Mouse Pokémon
+	Species: Pokémon Topo
 }
 
 Sandslash: {
 	DisplayName: Sandslash
-	Species: Mouse Pokémon
+	Species: Pokémon Topo
 }
 
 NidoranF: {
 	DisplayName: Nidoran♀
-	Species: Poison Pin Pokémon
+	Species: Pokémon Velenago
 }
 
 Nidorina: {
 	DisplayName: Nidorina
-	Species: Poison Pin Pokémon
+	Species: Pokémon Velenago
 }
 
 Nidoqueen: {
 	DisplayName: Nidoqueen
-	Species: Drill Pokémon
+	Species: Pokémon Trapano
 }
 
 NidoranM: {
 	DisplayName: Nidoran♂
-	Species: Poison Pin Pokémon
+	Species: Pokémon Velenago
 }
 
 Nidorino: {
 	DisplayName: Nidorino
-	Species: Poison Pin Pokémon
+	Species: Pokémon Velenago
 }
 
 Nidoking: {
 	DisplayName: Nidoking
-	Species: Drill Pokémon
+	Species: Pokémon Trapano
 }
 
 Clefairy: {
 	DisplayName: Clefairy
-	Species: Fairy Pokémon
+	Species: Pokémon Fata
 }
 
 Clefable: {
 	DisplayName: Clefable
-	Species: Fairy Pokémon
+	Species: Pokémon Fata
 }
 
 Vulpix: {
 	DisplayName: Vulpix
-	Species: Fox Pokémon
+	Species: Pokémon Volpe
 }
 
 Ninetales: {
 	DisplayName: Ninetales
-	Species: Fox Pokémon
+	Species: Pokémon Volpe
 }
 
 Jigglypuff: {
 	DisplayName: Jigglypuff
-	Species: Balloon Pokémon
+	Species: Pokémon Pallone
 }
 
 Wigglytuff: {
 	DisplayName: Wigglytuff
-	Species: Balloon Pokémon
+	Species: Pokémon Pallone
 }
 
 Zubat: {
 	DisplayName: Zubat
-	Species: Bat Pokémon
+	Species: Pokémon Pipistrello
 }
 
 Golbat: {
 	DisplayName: Golbat
-	Species: Bat Pokémon
+	Species: Pokémon Pipistrello
 }
 
 Oddish: {
 	DisplayName: Oddish
-	Species: Weed Pokémon
+	Species: Pokémon Malerba
 }
 
 Gloom: {
 	DisplayName: Gloom
-	Species: Weed Pokémon
+	Species: Pokémon Malerba
 }
 
 Vileplume: {
 	DisplayName: Vileplume
-	Species: Flower Pokémon
+	Species: Pokémon Fiore
 }
 
 Paras: {
 	DisplayName: Paras
-	Species: Mushroom Pokémon
+	Species: Pokémon Fungo
 }
 
 Parasect: {
 	DisplayName: Parasect
-	Species: Mushroom Pokémon
+	Species: Pokémon Fungo
 }
 
 Venonat: {
 	DisplayName: Venonat
-	Species: Insect Pokémon
+	Species: Pokémon Insetto
 }
 
 Venomoth: {
 	DisplayName: Venomoth
-	Species: Poison Moth Pokémon
+	Species: Pokémon Velentarma
 }
 
 Diglett: {
 	DisplayName: Diglett
-	Species: Mole Pokémon
+	Species: Pokémon Talpa
 }
 
 Dugtrio: {
 	DisplayName: Dugtrio
-	Species: Mole Pokémon
+	Species: Pokémon Talpa
 }
 
 Meowth: {
 	DisplayName: Meowth
-	Species: Scratch Cat Pokémon
+	Species: Pokémon Graffimiao
 }
 
 Persian: {
 	DisplayName: Persian
-	Species: Classy Cat Pokémon
+	Species: Pokémon Nobilgatto
 }
 
 Psyduck: {
 	DisplayName: Psyduck
-	Species: Duck Pokémon
+	Species: Pokémon Papero
 }
 
 Golduck: {
 	DisplayName: Golduck
-	Species: Duck Pokémon
+	Species: Pokémon Papero
 }
 
 Mankey: {
 	DisplayName: Mankey
-	Species: Pig Monkey Pokémon
+	Species: Pokémon Suinpanzé
 }
 
 Primeape: {
 	DisplayName: Primeape
-	Species: Pig Monkey Pokémon
+	Species: Pokémon Suinpanzé
 }
 
 Growlithe: {
 	DisplayName: Growlithe
-	Species: Puppy Pokémon
+	Species: Pokémon Cagnolino
 }
 
 Arcanine: {
 	DisplayName: Arcanine
-	Species: Legendary Pokémon
+	Species: Pokémon Leggenda
 }
 
 Poliwag: {
 	DisplayName: Poliwag
-	Species: Tadpole Pokémon
+	Species: Pokémon Girino
 }
 
 Poliwhirl: {
 	DisplayName: Poliwhirl
-	Species: Tadpole Pokémon
+	Species: Pokémon Girino
 }
 
 Poliwrath: {
 	DisplayName: Poliwrath
-	Species: Tadpole Pokémon
+	Species: Pokémon Girino
 }
 
 Abra: {
 	DisplayName: Abra
-	Species: Psi Pokémon
+	Species: Pokémon Psico
 }
 
 Kadabra: {
 	DisplayName: Kadabra
-	Species: Psi Pokémon
+	Species: Pokémon Psico
 }
 
 Alakazam: {
 	DisplayName: Alakazam
-	Species: Psi Pokémon
+	Species: Pokémon Psico
 }
 
 Machop: {
 	DisplayName: Machop
-	Species: Superpower Pokémon
+	Species: Pokémon Megaforza
 }
 
 Machoke: {
 	DisplayName: Machoke
-	Species: Superpower Pokémon
+	Species: Pokémon Megaforza
 }
 
 Machamp: {
 	DisplayName: Machamp
-	Species: Superpower Pokémon
+	Species: Pokémon Megaforza
 }
 
 Bellsprout: {
 	DisplayName: Bellsprout
-	Species: Flower Pokémon
+	Species: Pokémon Fiore
 }
 
 Weepinbell: {
 	DisplayName: Weepinbell
-	Species: Flycatcher Pokémon
+	Species: Pokémon Moschivoro
 }
 
 Victreebel: {
 	DisplayName: Victreebel
-	Species: Flycatcher Pokémon
+	Species: Pokémon Moschivoro
 }
 
 Tentacool: {
 	DisplayName: Tentacool
-	Species: Jellyfish Pokémon
+	Species: Pokémon Medusa
 }
 
 Tentacruel: {
 	DisplayName: Tentacruel
-	Species: Jellyfish Pokémon
+	Species: Pokémon Medusa
 }
 
 Geodude: {
 	DisplayName: Geodude
-	Species: Rock Pokémon
+	Species: Pokémon Roccia
 }
 
 Graveler: {
 	DisplayName: Graveler
-	Species: Rock Pokémon
+	Species: Pokémon Roccia
 }
 
 Golem: {
 	DisplayName: Golem
-	Species: Megaton Pokémon
+	Species: Pokémon Megatone
 }
 
 Ponyta: {
 	DisplayName: Ponyta
-	Species: Fire Horse Pokémon
+	Species: Pokémon Cavalfuoco
 }
 
 Rapidash: {
 	DisplayName: Rapidash
-	Species: Fire Horse Pokémon
+	Species: Pokémon Cavalfuoco
 }
 
 Slowpoke: {
 	DisplayName: Slowpoke
-	Species: Dopey Pokémon
+	Species: Pokémon Ronfone
 }
 
 Slowbro: {
 	DisplayName: Slowbro
-	Species: Hermit Crab Pokémon
+	Species: Pokémon Paguro
 }
 
 Magnemite: {
 	DisplayName: Magnemite
-	Species: Magnet Pokémon
+	Species: Pokémon Calamita
 }
 
 Magneton: {
 	DisplayName: Magneton
-	Species: Magnet Pokémon
+	Species: Pokémon Calamita
 }
 
 Farfetchd: {
 	DisplayName: Farfetch’d
-	Species: Wild Duck Pokémon
+	Species: Pokémon Selvanatra
 }
 
 Doduo: {
 	DisplayName: Doduo
-	Species: Twin Bird Pokémon
+	Species: Pokémon Biuccello
 }
 
 Dodrio: {
 	DisplayName: Dodrio
-	Species: Triple Bird Pokémon
+	Species: Pokémon Triuccello
 }
 
 Seel: {
 	DisplayName: Seel
-	Species: Sea Lion Pokémon
+	Species: Pokémon Otaria
 }
 
 Dewgong: {
 	DisplayName: Dewgong
-	Species: Sea Lion Pokémon
+	Species: Pokémon Otaria
 }
 
 Grimer: {
 	DisplayName: Grimer
-	Species: Sludge Pokémon
+	Species: Pokémon Melma
 }
 
 Muk: {
 	DisplayName: Muk
-	Species: Sludge Pokémon
+	Species: Pokémon Melma
 }
 
 Shellder: {
 	DisplayName: Shellder
-	Species: Bivalve Pokémon
+	Species: Pokémon Bivalve
 }
 
 Cloyster: {
 	DisplayName: Cloyster
-	Species: Bivalve Pokémon
+	Species: Pokémon Bivalve
 }
 
 Gastly: {
 	DisplayName: Gastly
-	Species: Gas Pokémon
+	Species: Pokémon Gas
 }
 
 Haunter: {
 	DisplayName: Haunter
-	Species: Gas Pokémon
+	Species: Pokémon Gas
 }
 
 Gengar: {
 	DisplayName: Gengar
-	Species: Shadow Pokémon
+	Species: Pokémon Ombra
 }
 
 Onix: {
 	DisplayName: Onix
-	Species: Rock Snake Pokémon
+	Species: Pokémon Serpesasso
 }
 
 Drowzee: {
 	DisplayName: Drowzee
-	Species: Hypnosis Pokémon
+	Species: Pokémon Ipnosi
 }
 
 Hypno: {
 	DisplayName: Hypno
-	Species: Hypnosis Pokémon
+	Species: Pokémon Ipnosi
 }
 
 Krabby: {
 	DisplayName: Krabby
-	Species: River Crab Pokémon
+	Species: Pokémon Granchio
 }
 
 Kingler: {
 	DisplayName: Kingler
-	Species: Pincer Pokémon
+	Species: Pokémon Chela
 }
 
 Voltorb: {
 	DisplayName: Voltorb
-	Species: Ball Pokémon
+	Species: Pokémon Ball
 }
 
 Electrode: {
 	DisplayName: Electrode
-	Species: Ball Pokémon
+	Species: Pokémon Ball
 }
 
 Exeggcute: {
 	DisplayName: Exeggcute
-	Species: Egg Pokémon
+	Species: Pokémon Uovo
 }
 
 Exeggutor: {
 	DisplayName: Exeggutor
-	Species: Coconut Pokémon
+	Species: Pokémon Nocecocco
 }
 
 Cubone: {
 	DisplayName: Cubone
-	Species: Lonely Pokémon
+	Species: Pokémon Solitario
 }
 
 Marowak: {
 	DisplayName: Marowak
-	Species: Bone Keeper Pokémon
+	Species: Pokémon Guardaossi
 }
 
 Hitmonlee: {
 	DisplayName: Hitmonlee
-	Species: Kicking Pokémon
+	Species: Pokémon Tiracalci
 }
 
 Hitmonchan: {
 	DisplayName: Hitmonchan
-	Species: Punching Pokémon
+	Species: Pokémon Tirapugni
 }
 
 Lickitung: {
 	DisplayName: Lickitung
-	Species: Licking Pokémon
+	Species: Pokémon Linguaccia
 }
 
 Koffing: {
 	DisplayName: Koffing
-	Species: Poison Gas Pokémon
+	Species: Pokémon Velenuvola
 }
 
 Weezing: {
 	DisplayName: Weezing
-	Species: Poison Gas Pokémon
+	Species: Pokémon Velenuvola
 }
 
 Rhyhorn: {
 	DisplayName: Rhyhorn
-	Species: Spikes Pokémon
+	Species: Pokémon Punzoni
 }
 
 Rhydon: {
 	DisplayName: Rhydon
-	Species: Drill Pokémon
+	Species: Pokémon Trapano
 }
 
 Chansey: {
 	DisplayName: Chansey
-	Species: Egg Pokémon
+	Species: Pokémon Uovo
 }
 
 Tangela: {
 	DisplayName: Tangela
-	Species: Vine Pokémon
+	Species: Pokémon Liana
 }
 
 Kangaskhan: {
 	DisplayName: Kangaskhan
-	Species: Parent Pokémon
+	Species: Pokémon Genitore
 }
 
 Horsea: {
 	DisplayName: Horsea
-	Species: Dragon Pokémon
+	Species: Pokémon Drago
 }
 
 Seadra: {
 	DisplayName: Seadra
-	Species: Dragon Pokémon
+	Species: Pokémon Drago
 }
 
 Goldeen: {
 	DisplayName: Goldeen
-	Species: Goldfish Pokémon
+	Species: Pokémon Pescerosso
 }
 
 Seaking: {
 	DisplayName: Seaking
-	Species: Goldfish Pokémon
+	Species: Pokémon Pescerosso
 }
 
 Staryu: {
 	DisplayName: Staryu
-	Species: Star Shape Pokémon
+	Species: Pokémon Stella
 }
 
 Starmie: {
 	DisplayName: Starmie
-	Species: Mysterious Pokémon
+	Species: Pokémon Misterioso
 }
 
 MrMime: {
 	DisplayName: Mr. Mime
-	Species: Barrier Pokémon
+	Species: Pokémon Barriera
 }
 
 Scyther: {
 	DisplayName: Scyther
-	Species: Mantis Pokémon
+	Species: Pokémon Mantide
 }
 
 Jynx: {
 	DisplayName: Jynx
-	Species: Human Shape Pokémon
+	Species: Pokémon Umanoide
 }
 
 Electabuzz: {
 	DisplayName: Electabuzz
-	Species: Electric Pokémon
+	Species: Pokémon Elettrico
 }
 
 Magmar: {
 	DisplayName: Magmar
-	Species: Spitfire Pokémon
+	Species: Pokémon Sputafuoco
 }
 
 Pinsir: {
 	DisplayName: Pinsir
-	Species: Stag Beetle Pokémon
+	Species: Pokémon Cervolante
 }
 
 Tauros: {
 	DisplayName: Tauros
-	Species: Wild Bull Pokémon
+	Species: Pokémon Torobrado
 }
 
 Magikarp: {
 	DisplayName: Magikarp
-	Species: Fish Pokémon
+	Species: Pokémon Pesce
 }
 
 Gyarados: {
 	DisplayName: Gyarados
-	Species: Atrocious Pokémon
+	Species: Pokémon Atroce
 }
 
 Lapras: {
 	DisplayName: Lapras
-	Species: Transport Pokémon
+	Species: Pokémon Trasporto
 }
 
 Ditto: {
 	DisplayName: Ditto
-	Species: Transform Pokémon
+	Species: Pokémon Mutante
 }
 
 Eevee: {
 	DisplayName: Eevee
-	Species: Evolution Pokémon
+	Species: Pokémon Evoluzione
 }
 
 Vaporeon: {
 	DisplayName: Vaporeon
-	Species: Bubble Jet Pokémon
+	Species: Pokémon Bollajet
 }
 
 Jolteon: {
 	DisplayName: Jolteon
-	Species: Lightning Pokémon
+	Species: Pokémon Luminoso
 }
 
 Flareon: {
 	DisplayName: Flareon
-	Species: Flame Pokémon
+	Species: Pokémon Fiamma
 }
 
 Porygon: {
 	DisplayName: Porygon
-	Species: Virtual Pokémon
+	Species: Pokémon Virtuale
 }
 
 Omanyte: {
 	DisplayName: Omanyte
-	Species: Spiral Pokémon
+	Species: Pokémon Spirale
 }
 
 Omastar: {
 	DisplayName: Omastar
-	Species: Spiral Pokémon
+	Species: Pokémon Spirale
 }
 
 Kabuto: {
 	DisplayName: Kabuto
-	Species: Shellfish Pokémon
+	Species: Pokémon Crostaceo
 }
 
 Kabutops: {
 	DisplayName: Kabutops
-	Species: Shellfish Pokémon
+	Species: Pokémon Crostaceo
 }
 
 Aerodactyl: {
 	DisplayName: Aerodactyl
-	Species: Fossil Pokémon
+	Species: Pokémon Fossile
 }
 
 Snorlax: {
 	DisplayName: Snorlax
-	Species: Sleeping Pokémon
+	Species: Pokémon Sonno
 }
 
 Articuno: {
 	DisplayName: Articuno
-	Species: Freeze Pokémon
+	Species: Pokémon Gelo
 }
 
 Zapdos: {
 	DisplayName: Zapdos
-	Species: Electric Pokémon
+	Species: Pokémon Elettrico
 }
 
 Moltres: {
 	DisplayName: Moltres
-	Species: Flame Pokémon
+	Species: Pokémon Fiamma
 }
 
 Dratini: {
 	DisplayName: Dratini
-	Species: Dragon Pokémon
+	Species: Pokémon Drago
 }
 
 Dragonair: {
 	DisplayName: Dragonair
-	Species: Dragon Pokémon
+	Species: Pokémon Drago
 }
 
 Dragonite: {
 	DisplayName: Dragonite
-	Species: Dragon Pokémon
+	Species: Pokémon Drago
 }
 
 Mewtwo: {
 	DisplayName: Mewtwo
-	Species: Genetic Pokémon
+	Species: Pokémon Genetico
 }
 
 Mew: {
 	DisplayName: Mew
-	Species: New Species Pokémon
+	Species: Pokémon Novaspecie
 }

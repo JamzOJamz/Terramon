@@ -1,0 +1,754 @@
+Bulbasaur: {
+	DisplayName: 妙蛙种子
+	Species: 种子宝可梦
+}
+
+Ivysaur: {
+	DisplayName: 妙蛙草
+	Species: 种子宝可梦
+}
+
+Venusaur: {
+	DisplayName: 妙蛙花
+	Species: 种子宝可梦
+}
+
+Charmander: {
+	DisplayName: 小火龙
+	Species: 蜥蜴宝可梦
+}
+
+Charmeleon: {
+	DisplayName: 火恐龙
+	Species: 火焰宝可梦
+}
+
+Charizard: {
+	DisplayName: 喷火龙
+	Species: 火焰宝可梦
+}
+
+Squirtle: {
+	DisplayName: 杰尼龟
+	Species: 小龟宝可梦
+}
+
+Wartortle: {
+	DisplayName: 卡咪龟
+	Species: 龟宝可梦
+}
+
+Blastoise: {
+	DisplayName: 水箭龟
+	Species: 甲壳宝可梦
+}
+
+Caterpie: {
+	DisplayName: 绿毛虫
+	Species: 虫宝宝宝可梦
+}
+
+Metapod: {
+	DisplayName: 铁甲蛹
+	Species: 蛹宝可梦
+}
+
+Butterfree: {
+	DisplayName: 巴大蝶
+	Species: 蝴蝶宝可梦
+}
+
+Weedle: {
+	DisplayName: 独角虫
+	Species: 毛毛虫宝可梦
+}
+
+Kakuna: {
+	DisplayName: 铁壳蛹
+	Species: 蛹宝可梦
+}
+
+Beedrill: {
+	DisplayName: 大针蜂
+	Species: 毒蜂宝可梦
+}
+
+Pidgey: {
+	DisplayName: 波波
+	Species: 小鸟宝可梦
+}
+
+Pidgeotto: {
+	DisplayName: 比比鸟
+	Species: 鸟宝可梦
+}
+
+Pidgeot: {
+	DisplayName: 大比鸟
+	Species: 鸟宝可梦
+}
+
+Rattata: {
+	DisplayName: 小拉达
+	Species: 鼠宝可梦
+}
+
+Raticate: {
+	DisplayName: 拉达
+	Species: 鼠宝可梦
+}
+
+Spearow: {
+	DisplayName: 烈雀
+	Species: 小鸟宝可梦
+}
+
+Fearow: {
+	DisplayName: 大嘴雀
+	Species: 鸟嘴宝可梦
+}
+
+Ekans: {
+	DisplayName: 阿柏蛇
+	Species: 蛇宝可梦
+}
+
+Arbok: {
+	DisplayName: 阿柏怪
+	Species: 眼镜蛇宝可梦
+}
+
+Pikachu: {
+	DisplayName: 皮卡丘
+	Species: 鼠宝可梦
+}
+
+Raichu: {
+	DisplayName: 雷丘
+	Species: 鼠宝可梦
+}
+
+Sandshrew: {
+	DisplayName: 穿山鼠
+	Species: 鼠宝可梦
+}
+
+Sandslash: {
+	DisplayName: 穿山王
+	Species: 鼠宝可梦
+}
+
+NidoranF: {
+	DisplayName: 尼多兰
+	Species: 毒针宝可梦
+}
+
+Nidorina: {
+	DisplayName: 尼多娜
+	Species: 毒针宝可梦
+}
+
+Nidoqueen: {
+	DisplayName: 尼多后
+	Species: 钻锥宝可梦
+}
+
+NidoranM: {
+	DisplayName: 尼多朗
+	Species: 毒针宝可梦
+}
+
+Nidorino: {
+	DisplayName: 尼多力诺
+	Species: 毒针宝可梦
+}
+
+Nidoking: {
+	DisplayName: 尼多王
+	Species: 钻锥宝可梦
+}
+
+Clefairy: {
+	DisplayName: 皮皮
+	Species: 妖精宝可梦
+}
+
+Clefable: {
+	DisplayName: 皮可西
+	Species: 妖精宝可梦
+}
+
+Vulpix: {
+	DisplayName: 六尾
+	Species: 狐狸宝可梦
+}
+
+Ninetales: {
+	DisplayName: 九尾
+	Species: 狐狸宝可梦
+}
+
+Jigglypuff: {
+	DisplayName: 胖丁
+	Species: 气球宝可梦
+}
+
+Wigglytuff: {
+	DisplayName: 胖可丁
+	Species: 气球宝可梦
+}
+
+Zubat: {
+	DisplayName: 超音蝠
+	Species: 蝙蝠宝可梦
+}
+
+Golbat: {
+	DisplayName: 大嘴蝠
+	Species: 蝙蝠宝可梦
+}
+
+Oddish: {
+	DisplayName: 走路草
+	Species: 杂草宝可梦
+}
+
+Gloom: {
+	DisplayName: 臭臭花
+	Species: 杂草宝可梦
+}
+
+Vileplume: {
+	DisplayName: 霸王花
+	Species: 花宝可梦
+}
+
+Paras: {
+	DisplayName: 派拉斯
+	Species: 蘑菇宝可梦
+}
+
+Parasect: {
+	DisplayName: 派拉斯特
+	Species: 蘑菇宝可梦
+}
+
+Venonat: {
+	DisplayName: 毛球
+	Species: 昆虫宝可梦
+}
+
+Venomoth: {
+	DisplayName: 摩鲁蛾
+	Species: 毒蛾宝可梦
+}
+
+Diglett: {
+	DisplayName: 地鼠
+	Species: 鼹鼠宝可梦
+}
+
+Dugtrio: {
+	DisplayName: 三地鼠
+	Species: 鼹鼠宝可梦
+}
+
+Meowth: {
+	DisplayName: 喵喵
+	Species: 妖怪猫宝可梦
+}
+
+Persian: {
+	DisplayName: 猫老大
+	Species: 暹罗猫宝可梦
+}
+
+Psyduck: {
+	DisplayName: 可达鸭
+	Species: 鸭宝可梦
+}
+
+Golduck: {
+	DisplayName: 哥达鸭
+	Species: 鸭宝可梦
+}
+
+Mankey: {
+	DisplayName: 猴怪
+	Species: 猪猴宝可梦
+}
+
+Primeape: {
+	DisplayName: 火暴猴
+	Species: 猪猴宝可梦
+}
+
+Growlithe: {
+	DisplayName: 卡蒂狗
+	Species: 小狗宝可梦
+}
+
+Arcanine: {
+	DisplayName: 风速狗
+	Species: 传说宝可梦
+}
+
+Poliwag: {
+	DisplayName: 蚊香蝌蚪
+	Species: 蝌蚪宝可梦
+}
+
+Poliwhirl: {
+	DisplayName: 蚊香君
+	Species: 蝌蚪宝可梦
+}
+
+Poliwrath: {
+	DisplayName: 蚊香泳士
+	Species: 蝌蚪宝可梦
+}
+
+Abra: {
+	DisplayName: 凯西
+	Species: 念力宝可梦
+}
+
+Kadabra: {
+	DisplayName: 勇基拉
+	Species: 念力宝可梦
+}
+
+Alakazam: {
+	DisplayName: 胡地
+	Species: 念力宝可梦
+}
+
+Machop: {
+	DisplayName: 腕力
+	Species: 怪力宝可梦
+}
+
+Machoke: {
+	DisplayName: 豪力
+	Species: 怪力宝可梦
+}
+
+Machamp: {
+	DisplayName: 怪力
+	Species: 怪力宝可梦
+}
+
+Bellsprout: {
+	DisplayName: 喇叭芽
+	Species: 花宝可梦
+}
+
+Weepinbell: {
+	DisplayName: 口呆花
+	Species: 捕蝇宝可梦
+}
+
+Victreebel: {
+	DisplayName: 大食花
+	Species: 捕蝇宝可梦
+}
+
+Tentacool: {
+	DisplayName: 玛瑙水母
+	Species: 水母宝可梦
+}
+
+Tentacruel: {
+	DisplayName: 毒刺水母
+	Species: 水母宝可梦
+}
+
+Geodude: {
+	DisplayName: 小拳石
+	Species: 岩石宝可梦
+}
+
+Graveler: {
+	DisplayName: 隆隆石
+	Species: 岩石宝可梦
+}
+
+Golem: {
+	DisplayName: 隆隆岩
+	Species: 重量级宝可梦
+}
+
+Ponyta: {
+	DisplayName: 小火马
+	Species: 火马宝可梦
+}
+
+Rapidash: {
+	DisplayName: 烈焰马
+	Species: 火马宝可梦
+}
+
+Slowpoke: {
+	DisplayName: 呆呆兽
+	Species: 憨憨宝可梦
+}
+
+Slowbro: {
+	DisplayName: 呆壳兽
+	Species: 寄居蟹宝可梦
+}
+
+Magnemite: {
+	DisplayName: 小磁怪
+	Species: 磁铁宝可梦
+}
+
+Magneton: {
+	DisplayName: 三合一磁怪
+	Species: 磁铁宝可梦
+}
+
+Farfetchd: {
+	DisplayName: 大葱鸭
+	Species: 黄嘴鸭宝可梦
+}
+
+Doduo: {
+	DisplayName: 嘟嘟
+	Species: 两头鸟宝可梦
+}
+
+Dodrio: {
+	DisplayName: 嘟嘟利
+	Species: 三头鸟宝可梦
+}
+
+Seel: {
+	DisplayName: 小海狮
+	Species: 海狮宝可梦
+}
+
+Dewgong: {
+	DisplayName: 白海狮
+	Species: 海狮宝可梦
+}
+
+Grimer: {
+	DisplayName: 臭泥
+	Species: 污泥宝可梦
+}
+
+Muk: {
+	DisplayName: 臭臭泥
+	Species: 污泥宝可梦
+}
+
+Shellder: {
+	DisplayName: 大舌贝
+	Species: 双壳贝宝可梦
+}
+
+Cloyster: {
+	DisplayName: 刺甲贝
+	Species: 双壳贝宝可梦
+}
+
+Gastly: {
+	DisplayName: 鬼斯
+	Species: 气体状宝可梦
+}
+
+Haunter: {
+	DisplayName: 鬼斯通
+	Species: 气体状宝可梦
+}
+
+Gengar: {
+	DisplayName: 耿鬼
+	Species: 影子宝可梦
+}
+
+Onix: {
+	DisplayName: 大岩蛇
+	Species: 岩蛇宝可梦
+}
+
+Drowzee: {
+	DisplayName: 催眠貘
+	Species: 催眠宝可梦
+}
+
+Hypno: {
+	DisplayName: 引梦貘人
+	Species: 催眠宝可梦
+}
+
+Krabby: {
+	DisplayName: 大钳蟹
+	Species: 清水蟹宝可梦
+}
+
+Kingler: {
+	DisplayName: 巨钳蟹
+	Species: 钳子宝可梦
+}
+
+Voltorb: {
+	DisplayName: 霹雳电球
+	Species: 球宝可梦
+}
+
+Electrode: {
+	DisplayName: 顽皮雷弹
+	Species: 球宝可梦
+}
+
+Exeggcute: {
+	DisplayName: 蛋蛋
+	Species: 蛋宝可梦
+}
+
+Exeggutor: {
+	DisplayName: 椰蛋树
+	Species: 椰子宝可梦
+}
+
+Cubone: {
+	DisplayName: 卡拉卡拉
+	Species: 孤独宝可梦
+}
+
+Marowak: {
+	DisplayName: 嘎啦嘎啦
+	Species: 爱骨宝可梦
+}
+
+Hitmonlee: {
+	DisplayName: 飞腿郎
+	Species: 踢腿宝可梦
+}
+
+Hitmonchan: {
+	DisplayName: 快拳郎
+	Species: 拳击宝可梦
+}
+
+Lickitung: {
+	DisplayName: 大舌头
+	Species: 舔舔宝可梦
+}
+
+Koffing: {
+	DisplayName: 瓦斯弹
+	Species: 毒气宝可梦
+}
+
+Weezing: {
+	DisplayName: 双弹瓦斯
+	Species: 毒气宝可梦
+}
+
+Rhyhorn: {
+	DisplayName: 独角犀牛
+	Species: 尖尖宝可梦
+}
+
+Rhydon: {
+	DisplayName: 钻角犀兽
+	Species: 钻锥宝可梦
+}
+
+Chansey: {
+	DisplayName: 吉利蛋
+	Species: 蛋宝可梦
+}
+
+Tangela: {
+	DisplayName: 蔓藤怪
+	Species: 藤蔓状宝可梦
+}
+
+Kangaskhan: {
+	DisplayName: 袋兽
+	Species: 亲子宝可梦
+}
+
+Horsea: {
+	DisplayName: 墨海马
+	Species: 龙宝可梦
+}
+
+Seadra: {
+	DisplayName: 海刺龙
+	Species: 龙宝可梦
+}
+
+Goldeen: {
+	DisplayName: 角金鱼
+	Species: 金鱼宝可梦
+}
+
+Seaking: {
+	DisplayName: 金鱼王
+	Species: 金鱼宝可梦
+}
+
+Staryu: {
+	DisplayName: 海星星
+	Species: 星形宝可梦
+}
+
+Starmie: {
+	DisplayName: 宝石海星
+	Species: 谜宝可梦
+}
+
+MrMime: {
+	DisplayName: 魔墙人偶
+	Species: 屏障宝可梦
+}
+
+Scyther: {
+	DisplayName: 飞天螳螂
+	Species: 螳螂宝可梦
+}
+
+Jynx: {
+	DisplayName: 迷唇姐
+	Species: 人形宝可梦
+}
+
+Electabuzz: {
+	DisplayName: 电击兽
+	Species: 电击宝可梦
+}
+
+Magmar: {
+	DisplayName: 鸭嘴火兽
+	Species: 吐火宝可梦
+}
+
+Pinsir: {
+	DisplayName: 凯罗斯
+	Species: 锹形虫宝可梦
+}
+
+Tauros: {
+	DisplayName: 肯泰罗
+	Species: 暴牛宝可梦
+}
+
+Magikarp: {
+	DisplayName: 鲤鱼王
+	Species: 鱼宝可梦
+}
+
+Gyarados: {
+	DisplayName: 暴鲤龙
+	Species: 凶恶宝可梦
+}
+
+Lapras: {
+	DisplayName: 拉普拉斯
+	Species: 乘载宝可梦
+}
+
+Ditto: {
+	DisplayName: 百变怪
+	Species: 变身宝可梦
+}
+
+Eevee: {
+	DisplayName: 伊布
+	Species: 进化宝可梦
+}
+
+Vaporeon: {
+	DisplayName: 水伊布
+	Species: 吐泡宝可梦
+}
+
+Jolteon: {
+	DisplayName: 雷伊布
+	Species: 雷宝可梦
+}
+
+Flareon: {
+	DisplayName: 火伊布
+	Species: 火宝可梦
+}
+
+Porygon: {
+	DisplayName: 多边兽
+	Species: 虚拟宝可梦
+}
+
+Omanyte: {
+	DisplayName: 菊石兽
+	Species: 漩涡宝可梦
+}
+
+Omastar: {
+	DisplayName: 多刺菊石兽
+	Species: 漩涡宝可梦
+}
+
+Kabuto: {
+	DisplayName: 化石盔
+	Species: 甲壳宝可梦
+}
+
+Kabutops: {
+	DisplayName: 镰刀盔
+	Species: 甲壳宝可梦
+}
+
+Aerodactyl: {
+	DisplayName: 化石翼龙
+	Species: 化石宝可梦
+}
+
+Snorlax: {
+	DisplayName: 卡比兽
+	Species: 瞌睡宝可梦
+}
+
+Articuno: {
+	DisplayName: 急冻鸟
+	Species: 冰冻宝可梦
+}
+
+Zapdos: {
+	DisplayName: 闪电鸟
+	Species: 电击宝可梦
+}
+
+Moltres: {
+	DisplayName: 火焰鸟
+	Species: 火焰宝可梦
+}
+
+Dratini: {
+	DisplayName: 迷你龙
+	Species: 龙宝可梦
+}
+
+Dragonair: {
+	DisplayName: 哈克龙
+	Species: 龙宝可梦
+}
+
+Dragonite: {
+	DisplayName: 快龙
+	Species: 龙宝可梦
+}
+
+Mewtwo: {
+	DisplayName: 超梦
+	Species: 基因宝可梦
+}
+
+Mew: {
+	DisplayName: 梦幻
+	Species: 新种宝可梦
+}
