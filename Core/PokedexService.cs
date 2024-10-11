@@ -31,7 +31,7 @@ public class PokedexService
 
 public enum PokedexEntryStatus : byte
 {
-    Undiscovered = 0,
-    Seen = 1,
-    Registered = 2
+    Undiscovered,
+    Seen,
+    Registered
 }

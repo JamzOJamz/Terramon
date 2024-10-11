@@ -23,42 +23,15 @@ internal class NPCLoot : GlobalNPC
             return;
         }
 
-        var amount = 0;
-        switch (npc.type)
+        var amount = npc.type switch
         {
-            case NPCID.KingSlime:
-            case NPCID.Deerclops:
-            case NPCID.QueenBee:
-            case NPCID.Spazmatism:
-            case NPCID.Retinazer:
-                amount = 3;
-                break;
-
-            case NPCID.EyeofCthulhu:
-            case NPCID.SkeletronHead:
-            case NPCID.BrainofCthulhu:
-                amount = 5;
-                break;
-
-            case NPCID.WallofFlesh:
-            case NPCID.QueenSlimeBoss:
-            case NPCID.SkeletronPrime:
-            case NPCID.TheDestroyer:
-                amount = 7;
-                break;
-
-            case NPCID.Plantera:
-            case NPCID.Golem:
-            case NPCID.DukeFishron:
-                amount = 9;
-                break;
-
-            case NPCID.HallowBoss:
-            case NPCID.CultistBoss:
-            case NPCID.MoonLordHead:
-                amount = 11;
-                break;
-        }
+            NPCID.KingSlime or NPCID.Deerclops or NPCID.QueenBee or NPCID.Spazmatism or NPCID.Retinazer => 3,
+            NPCID.EyeofCthulhu or NPCID.SkeletronHead or NPCID.BrainofCthulhu => 5,
+            NPCID.WallofFlesh or NPCID.QueenSlimeBoss or NPCID.SkeletronPrime or NPCID.TheDestroyer => 7,
+            NPCID.Plantera or NPCID.Golem or NPCID.DukeFishron => 9,
+            NPCID.HallowBoss or NPCID.CultistBoss or NPCID.MoonLordHead => 11,
+            _ => 0
+        };
 
         if (Main.expertMode)
             amount = (int)(amount * 1.5);

@@ -291,7 +291,7 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
         {
             _schemaCache = new Dictionary<ushort, JToken>();
             _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
-            _hasGenderDifference = new BitArray(Math.Min(Terramon.MaxPokemonID, Terramon.DatabaseV2.Pokemon.Count));
+            _hasGenderDifference = new BitArray(Terramon.LoadedPokemonCount);
             _enableComponentMethod = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
             if (Main.netMode != NetmodeID.Server)
                 GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =

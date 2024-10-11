@@ -221,7 +221,9 @@ public class PartySidebarSlot : UIImage
         base.DrawSelf(spriteBatch);
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
         var hoverText =
-            Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHover" + (_isActiveSlot ? "Active" : string.Empty));
+            Language.GetTextValue(_isActiveSlot
+                ? "Mods.Terramon.GUI.Party.SlotHoverActive"
+                : "Mods.Terramon.GUI.Party.SlotHover");
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
             hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
         Main.hoverItemName = hoverText;
@@ -264,7 +266,7 @@ public class PartySidebarSlot : UIImage
             SoundEngine.PlaySound(s);
             if (!_isActiveSlot)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(Data.ID))
+                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
                     { Volume = 0.2525f };
                 SoundEngine.PlaySound(cry);
             }
@@ -463,7 +465,7 @@ public class PartySidebarSlot : UIImage
         else
         {
             _nameText.SetText(data.DisplayName);
-            _levelText.SetText("Lv. " + data.Level);
+            _levelText.SetText(Language.GetText("Mods.Terramon.GUI.Party.LevelDisplay").WithFormatArgs(data.Level));
             /*_heldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>(
                 "Terramon/Assets/GUI/Party/HeldItemBox" + (_isActiveSlot ? "Active" : string.Empty),
                 AssetRequestMode.ImmediateLoad));
@@ -475,7 +477,7 @@ public class PartySidebarSlot : UIImage
             _spriteBox.Top.Set(10, 0f);
             _spriteBox.Left.Set(59, 0f);
             var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(data.ID)}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
+                $"Terramon/Assets/Pokemon/{data.InternalName}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
                 AssetRequestMode.ImmediateLoad))
             {
                 ImageScale = 0.7f

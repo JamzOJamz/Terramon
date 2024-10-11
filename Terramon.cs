@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using EasyPacketsLib;
 using Terramon.Content.GUI;
@@ -17,6 +18,12 @@ public class Terramon : Mod
     ///     The maximum level a Pokémon can reach.
     /// </summary>
     public const ushort MaxPokemonLevel = 100;
+    
+    /// <summary>
+    ///     The amount of Pokémon that have actually been loaded into the game.
+    ///     This is the minimum of the amount of Pokémon in the database and <see cref="MaxPokemonID"/>.
+    /// </summary>
+    public static int LoadedPokemonCount => Math.Min(MaxPokemonID, DatabaseV2.Pokemon.Count);
 
     public static Terramon Instance => ModContent.GetInstance<Terramon>();
 

@@ -101,8 +101,8 @@ public class TerramonPlayer : ModPlayer
         if (premierBonus > 0)
         {
             Main.NewText(premierBonus == 1
-                ? Language.GetTextValue("Mods.Terramon.GUI.Shop.PremierBonus")
-                : Language.GetTextValue("Mods.Terramon.GUI.Shop.PremierBonusPlural", premierBonus));
+                ? Language.GetTextValue("Mods.Terramon.GUI.NPCShop.PremierBonus")
+                : Language.GetTextValue("Mods.Terramon.GUI.NPCShop.PremierBonusPlural", premierBonus));
 
             Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), ModContent.ItemType<PremierBallItem>(),
                 premierBonus);
@@ -175,7 +175,7 @@ public class TerramonPlayer : ModPlayer
 
     public string GetDefaultNameForPCBox(PCBox box)
     {
-        return "Box " + (_pc.Boxes.IndexOf(box) + 1);
+        return Language.GetTextValue("Mods.Terramon.Misc.PCBoxDefaultName", _pc.Boxes.IndexOf(box) + 1);
     }
 
     public override void SaveData(TagCompound tag)

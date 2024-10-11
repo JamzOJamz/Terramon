@@ -11,11 +11,11 @@ public class DexEditCommand : DebugCommand
     public override string Command
         => "dexedit";
 
-    public override string Usage
-        => "/dexedit <id> <status>";
-
     public override string Description
         => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Description");
+
+    public override string Usage
+        => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Usage");
 
     protected override int MinimumArgumentCount => 2;
 
@@ -27,29 +27,32 @@ public class DexEditCommand : DebugCommand
         var hasValidId = int.TryParse(args[0], out var id);
         if (!hasValidId)
         {
-            caller.Reply("Failed to parse ID argument as integer", Color.Red);
+            caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.DexEdit.ParseErrorID"), ChatColorRed);
             return;
         }
 
         var hasValidStatus = int.TryParse(args[1], out var status);
         if (!hasValidStatus)
         {
-            caller.Reply("Failed to parse status argument as integer", Color.Red);
+            caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.DexEdit.ParseErrorStatus"), ChatColorRed);
             return;
         }
 
         var statusName = Enum.GetName((PokedexEntryStatus)status);
         if (statusName == null)
         {
-            caller.Reply("Status argument is out of range", Color.Red);
+            caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.DexEdit.StatusOutOfRange"), ChatColorRed);
             return;
         }
 
         var player = caller.Player.GetModPlayer<TerramonPlayer>();
         var success = player.UpdatePokedex((ushort)id, (PokedexEntryStatus)status, true);
         if (success)
-            caller.Reply($"Successfully set Pokédex entry {id} to status {statusName}", new Color(255, 240, 20));
+            caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Success", id, statusName),
+                ChatColorYellow);
         else
-            caller.Reply($"Pokédex entry {id} is out of range", Color.Red);
+            caller.Reply(
+                Language.GetTextValue("Mods.Terramon.Commands.DexEdit.IDOutOfRange", id, Terramon.LoadedPokemonCount),
+                ChatColorRed);
     }
 }

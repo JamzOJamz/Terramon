@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Terramon.Content.Commands;
 using Terramon.Helpers;
 using Terraria.ID;
 using Terraria.Localization;
@@ -54,13 +55,13 @@ public abstract class TerramonItem : ModItem
         var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         if (activePokemonData == null)
         {
-            player.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), new Color(255, 240, 20));
+            player.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), TerramonCommand.ChatColorYellow);
             return false;
         }
 
         if (AffectedByPokemonDirectUse(activePokemonData)) return true;
         player.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),
-            new Color(255, 240, 20));
+            TerramonCommand.ChatColorYellow);
         return false;
     }
 

@@ -8,11 +8,11 @@ public class DexStatusCommand : TerramonCommand
     public override string Command
         => "dexstatus";
 
-    public override string Usage
-        => "/dexstatus <id>";
-
     public override string Description
         => "View the status of a Pokemon in your Pokedex";
+
+    public override string Usage
+        => "/dexstatus <id>";
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
@@ -39,3 +39,4 @@ public class DexStatusCommand : TerramonCommand
         caller.Reply($"Status of Pokédex entry {id} is {PokedexEntryStatus.Search.GetName(dex.Entries[(ushort)id])}");
     }
 }*/
+

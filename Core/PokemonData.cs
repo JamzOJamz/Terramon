@@ -36,6 +36,16 @@ public class PokemonData : TagSerializable
     /// </summary>
     public string DisplayName =>
         string.IsNullOrEmpty(Nickname) ? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value : Nickname;
+    
+    /// <summary>
+    ///     The localized name of the Pokémon.
+    /// </summary>
+    public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value;
+    
+    /// <summary>
+    ///     The internal name of the Pokémon. This is unaffected by localization.
+    /// </summary>
+    public string InternalName => Terramon.DatabaseV2.GetPokemonName(ID);
 
     public ushort HP =>
         (ushort)(Math.Floor(2 * Terramon.DatabaseV2.GetPokemon(ID).Stats.HP * Level / 100f) + Level + 10);

@@ -11,7 +11,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.UI;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -107,7 +106,7 @@ public abstract class BasePkballTile : ModTile
         {
             if (e.TryOpen() && !e.Item.IsAir)
             {
-                var item = player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
+                //var item = player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
                 e.Item.TurnToAir();
             }
         }

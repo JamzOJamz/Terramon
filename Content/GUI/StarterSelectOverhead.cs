@@ -40,6 +40,10 @@ public class StarterSelectOverhead : SmartUIState
         NationalDexID.Litten,
         NationalDexID.Popplio
     ];
+    
+    private readonly LocalizedText _titleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
+    private readonly LocalizedText _subtitleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Subtitle");
+    private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
 
     private UIBlendedImage _background;
     private UIText _hintText;
@@ -84,8 +88,8 @@ public class StarterSelectOverhead : SmartUIState
             VAlign = 0.19f
         };
 
-        _titleText = new UIText("Welcome to the world of Pokémon! Thank you for installing the Terramon mod!");
-        var subText = new UIText("Now, please choose your starter Pokémon!");
+        _titleText = new UIText(_titleLocalizedText);
+        var subText = new UIText(_subtitleLocalizedText);
         _titleText.HAlign = 0.5f;
         subText.Top.Set(26, 0);
         subText.HAlign = 0.5f;
@@ -93,7 +97,7 @@ public class StarterSelectOverhead : SmartUIState
         _starterPanel.Append(_titleText);
 
         _background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background"));
-        _hintText = new UIText("(Press Backspace to Close)", 0.85f)
+        _hintText = new UIText(_hintLocalizedText, 0.85f)
         {
             HAlign = 0.5f,
             Top = { Pixels = 281 },
@@ -151,8 +155,8 @@ public class StarterButton : UIHoverImage
 {
     public StarterButton(Asset<Texture2D> texture, ushort pokemon) : base(texture,
         Terramon.DatabaseV2.IsAvailableStarter(pokemon)
-            ? Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
-            : Language.GetTextValue("Mods.Terramon.GUI.Starter.ComingSoon"))
+            ? Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon)
+            : Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon"))
     {
         if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon)) return;
         var cacheHoverTexture = ModContent.Request<Texture2D>(

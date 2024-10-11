@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Terramon.Content.GUI;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Items.Vanity;
@@ -131,7 +130,7 @@ public class PokemartClerk : ModNPC
             "Steven",
             "Xavier",
             "Asher",
-            Language.GetTextValue("Mods.Terramon.Pokemon.Pikachu.DisplayName"),
+            "Pikachu",
             "Lance"
         ];
     }
@@ -154,7 +153,7 @@ public class PokemartClerk : ModNPC
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Dedication", Main.worldName));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.NoBattleRip"));
 
-        if (NPC.GivenName == Language.GetTextValue("Mods.Terramon.Pokemon.Pikachu.DisplayName"))
+        if (NPC.GivenName == "Pikachu")
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.BadName"));
 
         //only add chat about Pokemon if it exists
@@ -162,7 +161,7 @@ public class PokemartClerk : ModNPC
         {
             //TODO: Add Pokemon nickname here + later text (nickname would replace second GetLocalizedPokemonName)
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello",
-                Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID),
+                activePokemonData.LocalizedName,
                 activePokemonData.DisplayName));
 
             /*if (pokemon.data.Nickname == null)
@@ -224,7 +223,8 @@ public class PokemartClerk : ModNPC
         var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
         var activePokemonData = player.GetActivePokemon();
         if (activePokemonData != null && activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp) != 0)
-            button2 = "Evolve " + activePokemonData.DisplayName;
+            button2 = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.EvolveButton",
+                activePokemonData.DisplayName);
     }
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
