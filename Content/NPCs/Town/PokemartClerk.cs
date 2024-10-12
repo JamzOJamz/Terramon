@@ -159,7 +159,6 @@ public class PokemartClerk : ModNPC
         //only add chat about Pokemon if it exists
         if (activePokemonData != null)
         {
-            //TODO: Add Pokemon nickname here + later text (nickname would replace second GetLocalizedPokemonName)
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonHello",
                 activePokemonData.LocalizedName,
                 activePokemonData.DisplayName));
@@ -212,8 +211,6 @@ public class PokemartClerk : ModNPC
 
         return chat; // chat is implicitly cast to a string.
     }
-
-    //TODO: Add optional evolution function back (Fast Evolution config = false) in case players want to level up Pokemon without evolving
 
     public override void SetChatButtons(ref string button, ref string button2)
     {
