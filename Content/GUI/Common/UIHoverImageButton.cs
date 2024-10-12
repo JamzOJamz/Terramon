@@ -1,14 +1,31 @@
 using ReLogic.Content;
+using Terraria.Localization;
 
 namespace Terramon.Content.GUI.Common;
 
-public class UIHoverImageButton(Asset<Texture2D> texture, string text) : TransformableUIButton(texture)
+public class UIHoverImageButton : TransformableUIButton
 {
     private bool _isActivated = true;
+    private object _text;
+    
+    public UIHoverImageButton(Asset<Texture2D> texture, string text) : base(texture)
+    {
+        _text = text;
+    }
+    
+    public UIHoverImageButton(Asset<Texture2D> texture, LocalizedText text) : base(texture)
+    {
+        _text = text;
+    }
 
     public void SetHoverText(string hoverText)
     {
-        text = hoverText;
+        _text = hoverText;
+    }
+    
+    public void SetHoverText(LocalizedText hoverText)
+    {
+        _text = hoverText;
     }
 
     public void SetIsActive(bool active)
@@ -22,6 +39,6 @@ public class UIHoverImageButton(Asset<Texture2D> texture, string text) : Transfo
         base.DrawSelf(spriteBatch);
         if (!ContainsPoint(Main.MouseScreen)) return;
         Main.LocalPlayer.mouseInterface = true;
-        Main.hoverItemName = text;
+        Main.hoverItemName = _text.ToString();
     }
 }

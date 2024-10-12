@@ -11,7 +11,7 @@ namespace Terramon.Content.NPCs;
 /// <summary>
 ///     A <see cref="NPCComponent" /> for adding bouncing AI to an NPC.
 /// </summary>
-public class NPCBounceBehaviour : NPCAIComponent
+public sealed class NPCBounceBehaviour : NPCAIComponent
 {
     private bool _hasFirstDir;
     public float BounceFrequency = 50f;
@@ -19,8 +19,6 @@ public class NPCBounceBehaviour : NPCAIComponent
     public float BounceMinRange = -7f;
     public float ChangeDirectionChance = 1f;
     public float FallSpeedMultiplier = 1f;
-    public int FrameCount = 2;
-    public int FrameTime = 10;
     public float HorizontalSpeedMax = 3.5f;
     public float HorizontalSpeedMin = 2f;
     public float JumpSpeedMultiplier = 1f;
@@ -30,14 +28,6 @@ public class NPCBounceBehaviour : NPCAIComponent
     private ref float AITimer => ref NPC.ai[1];
     private ref float AIJumpVelocity => ref NPC.ai[2];
     private ref float AIJumpDirection => ref NPC.ai[3];
-
-    public override void SetDefaults(NPC npc)
-    {
-        base.SetDefaults(npc);
-        if (!Enabled) return;
-
-        Main.npcFrameCount[npc.type] = FrameCount;
-    }
 
     public override void AI(NPC npc)
     {

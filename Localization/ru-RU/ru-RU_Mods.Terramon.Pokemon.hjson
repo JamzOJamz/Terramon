@@ -1,0 +1,754 @@
+Bulbasaur: {
+	DisplayName: Бульбазавр
+	Species: Seed Pokémon
+}
+
+Ivysaur: {
+	DisplayName: Айвизавр
+	Species: Seed Pokémon
+}
+
+Venusaur: {
+	DisplayName: Венузавр
+	Species: Seed Pokémon
+}
+
+Charmander: {
+	DisplayName: Чармандер
+	Species: Lizard Pokémon
+}
+
+Charmeleon: {
+	DisplayName: Чармелеон
+	Species: Flame Pokémon
+}
+
+Charizard: {
+	DisplayName: Чаризард
+	Species: Flame Pokémon
+}
+
+Squirtle: {
+	DisplayName: Сквиртл
+	Species: Tiny Turtle Pokémon
+}
+
+Wartortle: {
+	DisplayName: Вартортл
+	Species: Turtle Pokémon
+}
+
+Blastoise: {
+	DisplayName: Бластойз
+	Species: Shellfish Pokémon
+}
+
+Caterpie: {
+	DisplayName: Катерпи
+	Species: Worm Pokémon
+}
+
+Metapod: {
+	DisplayName: Метапод
+	Species: Cocoon Pokémon
+}
+
+Butterfree: {
+	DisplayName: Баттерфри
+	Species: Butterfly Pokémon
+}
+
+Weedle: {
+	DisplayName: Видл
+	Species: Hairy Bug Pokémon
+}
+
+Kakuna: {
+	DisplayName: Какуна
+	Species: Cocoon Pokémon
+}
+
+Beedrill: {
+	DisplayName: Бидрилл
+	Species: Poison Bee Pokémon
+}
+
+Pidgey: {
+	DisplayName: Пиджи
+	Species: Tiny Bird Pokémon
+}
+
+Pidgeotto: {
+	DisplayName: Пиджеотто
+	Species: Bird Pokémon
+}
+
+Pidgeot: {
+	DisplayName: Пиджеот
+	Species: Bird Pokémon
+}
+
+Rattata: {
+	DisplayName: Раттата
+	Species: Mouse Pokémon
+}
+
+Raticate: {
+	DisplayName: Ратикейт
+	Species: Mouse Pokémon
+}
+
+Spearow: {
+	DisplayName: Спироу
+	Species: Tiny Bird Pokémon
+}
+
+Fearow: {
+	DisplayName: Фироу
+	Species: Beak Pokémon
+}
+
+Ekans: {
+	DisplayName: Эканс
+	Species: Snake Pokémon
+}
+
+Arbok: {
+	DisplayName: Арбок
+	Species: Cobra Pokémon
+}
+
+Pikachu: {
+	DisplayName: Пикачу
+	Species: Mouse Pokémon
+}
+
+Raichu: {
+	DisplayName: Райчу
+	Species: Mouse Pokémon
+}
+
+Sandshrew: {
+	DisplayName: Сэндшрю
+	Species: Mouse Pokémon
+}
+
+Sandslash: {
+	DisplayName: Сэндслэш
+	Species: Mouse Pokémon
+}
+
+NidoranF: {
+	DisplayName: Нидоран♀
+	Species: Poison Pin Pokémon
+}
+
+Nidorina: {
+	DisplayName: Нидорина
+	Species: Poison Pin Pokémon
+}
+
+Nidoqueen: {
+	DisplayName: Нидоквин
+	Species: Drill Pokémon
+}
+
+NidoranM: {
+	DisplayName: Нидоран♂
+	Species: Poison Pin Pokémon
+}
+
+Nidorino: {
+	DisplayName: Нидорино
+	Species: Poison Pin Pokémon
+}
+
+Nidoking: {
+	DisplayName: Нидокинг
+	Species: Drill Pokémon
+}
+
+Clefairy: {
+	DisplayName: Клефэйри
+	Species: Fairy Pokémon
+}
+
+Clefable: {
+	DisplayName: Клефейбл
+	Species: Fairy Pokémon
+}
+
+Vulpix: {
+	DisplayName: Валпикс
+	Species: Fox Pokémon
+}
+
+Ninetales: {
+	DisplayName: Найнтэйлс
+	Species: Fox Pokémon
+}
+
+Jigglypuff: {
+	DisplayName: Джигглипафф
+	Species: Balloon Pokémon
+}
+
+Wigglytuff: {
+	DisplayName: Вигглитафф
+	Species: Balloon Pokémon
+}
+
+Zubat: {
+	DisplayName: Зубат
+	Species: Bat Pokémon
+}
+
+Golbat: {
+	DisplayName: Голбат
+	Species: Bat Pokémon
+}
+
+Oddish: {
+	DisplayName: Оддиш
+	Species: Weed Pokémon
+}
+
+Gloom: {
+	DisplayName: Глум
+	Species: Weed Pokémon
+}
+
+Vileplume: {
+	DisplayName: Вайлплюм
+	Species: Flower Pokémon
+}
+
+Paras: {
+	DisplayName: Парас
+	Species: Mushroom Pokémon
+}
+
+Parasect: {
+	DisplayName: Парасект
+	Species: Mushroom Pokémon
+}
+
+Venonat: {
+	DisplayName: Венонат
+	Species: Insect Pokémon
+}
+
+Venomoth: {
+	DisplayName: Веномот
+	Species: Poison Moth Pokémon
+}
+
+Diglett: {
+	DisplayName: Диглетт
+	Species: Mole Pokémon
+}
+
+Dugtrio: {
+	DisplayName: Дагтрио
+	Species: Mole Pokémon
+}
+
+Meowth: {
+	DisplayName: Мяут
+	Species: Scratch Cat Pokémon
+}
+
+Persian: {
+	DisplayName: Персиан
+	Species: Classy Cat Pokémon
+}
+
+Psyduck: {
+	DisplayName: Псайдак
+	Species: Duck Pokémon
+}
+
+Golduck: {
+	DisplayName: Голдак
+	Species: Duck Pokémon
+}
+
+Mankey: {
+	DisplayName: Манки
+	Species: Pig Monkey Pokémon
+}
+
+Primeape: {
+	DisplayName: Праймейп
+	Species: Pig Monkey Pokémon
+}
+
+Growlithe: {
+	DisplayName: Гроулит
+	Species: Puppy Pokémon
+}
+
+Arcanine: {
+	DisplayName: Арканайн
+	Species: Legendary Pokémon
+}
+
+Poliwag: {
+	DisplayName: Поливаг
+	Species: Tadpole Pokémon
+}
+
+Poliwhirl: {
+	DisplayName: Поливирл
+	Species: Tadpole Pokémon
+}
+
+Poliwrath: {
+	DisplayName: Поливрат
+	Species: Tadpole Pokémon
+}
+
+Abra: {
+	DisplayName: Абра
+	Species: Psi Pokémon
+}
+
+Kadabra: {
+	DisplayName: Кадабра
+	Species: Psi Pokémon
+}
+
+Alakazam: {
+	DisplayName: Алаказам
+	Species: Psi Pokémon
+}
+
+Machop: {
+	DisplayName: Мачоп
+	Species: Superpower Pokémon
+}
+
+Machoke: {
+	DisplayName: Мачоук
+	Species: Superpower Pokémon
+}
+
+Machamp: {
+	DisplayName: Мачамп
+	Species: Superpower Pokémon
+}
+
+Bellsprout: {
+	DisplayName: Беллспраут
+	Species: Flower Pokémon
+}
+
+Weepinbell: {
+	DisplayName: Випинбелл
+	Species: Flycatcher Pokémon
+}
+
+Victreebel: {
+	DisplayName: Виктрибел
+	Species: Flycatcher Pokémon
+}
+
+Tentacool: {
+	DisplayName: Тентакул
+	Species: Jellyfish Pokémon
+}
+
+Tentacruel: {
+	DisplayName: Тентакрул
+	Species: Jellyfish Pokémon
+}
+
+Geodude: {
+	DisplayName: Геодуд
+	Species: Rock Pokémon
+}
+
+Graveler: {
+	DisplayName: Гравелер
+	Species: Rock Pokémon
+}
+
+Golem: {
+	DisplayName: Голем
+	Species: Megaton Pokémon
+}
+
+Ponyta: {
+	DisplayName: Понита
+	Species: Fire Horse Pokémon
+}
+
+Rapidash: {
+	DisplayName: Рапидаш
+	Species: Fire Horse Pokémon
+}
+
+Slowpoke: {
+	DisplayName: Слоупок
+	Species: Dopey Pokémon
+}
+
+Slowbro: {
+	DisplayName: Слоубро
+	Species: Hermit Crab Pokémon
+}
+
+Magnemite: {
+	DisplayName: Магнемайт
+	Species: Magnet Pokémon
+}
+
+Magneton: {
+	DisplayName: Магнетон
+	Species: Magnet Pokémon
+}
+
+Farfetchd: {
+	DisplayName: Farfetch’d
+	Species: Wild Duck Pokémon
+}
+
+Doduo: {
+	DisplayName: Додуо
+	Species: Twin Bird Pokémon
+}
+
+Dodrio: {
+	DisplayName: Додрио
+	Species: Triple Bird Pokémon
+}
+
+Seel: {
+	DisplayName: Сил
+	Species: Sea Lion Pokémon
+}
+
+Dewgong: {
+	DisplayName: Дьюгонг
+	Species: Sea Lion Pokémon
+}
+
+Grimer: {
+	DisplayName: Граймер
+	Species: Sludge Pokémon
+}
+
+Muk: {
+	DisplayName: Мак
+	Species: Sludge Pokémon
+}
+
+Shellder: {
+	DisplayName: Шеллдер
+	Species: Bivalve Pokémon
+}
+
+Cloyster: {
+	DisplayName: Клойстер
+	Species: Bivalve Pokémon
+}
+
+Gastly: {
+	DisplayName: Гастли
+	Species: Gas Pokémon
+}
+
+Haunter: {
+	DisplayName: Хонтер
+	Species: Gas Pokémon
+}
+
+Gengar: {
+	DisplayName: Генгар
+	Species: Shadow Pokémon
+}
+
+Onix: {
+	DisplayName: Оникс
+	Species: Rock Snake Pokémon
+}
+
+Drowzee: {
+	DisplayName: Драузи
+	Species: Hypnosis Pokémon
+}
+
+Hypno: {
+	DisplayName: Гипно
+	Species: Hypnosis Pokémon
+}
+
+Krabby: {
+	DisplayName: Крабби
+	Species: River Crab Pokémon
+}
+
+Kingler: {
+	DisplayName: Кинглер
+	Species: Pincer Pokémon
+}
+
+Voltorb: {
+	DisplayName: Волторб
+	Species: Ball Pokémon
+}
+
+Electrode: {
+	DisplayName: Электрод
+	Species: Ball Pokémon
+}
+
+Exeggcute: {
+	DisplayName: Эксегкьют
+	Species: Egg Pokémon
+}
+
+Exeggutor: {
+	DisplayName: Экзегкьютор
+	Species: Coconut Pokémon
+}
+
+Cubone: {
+	DisplayName: Кьюбон
+	Species: Lonely Pokémon
+}
+
+Marowak: {
+	DisplayName: Маровак
+	Species: Bone Keeper Pokémon
+}
+
+Hitmonlee: {
+	DisplayName: Хитмонли
+	Species: Kicking Pokémon
+}
+
+Hitmonchan: {
+	DisplayName: Хитмончан
+	Species: Punching Pokémon
+}
+
+Lickitung: {
+	DisplayName: Ликитанг
+	Species: Licking Pokémon
+}
+
+Koffing: {
+	DisplayName: Коффинг
+	Species: Poison Gas Pokémon
+}
+
+Weezing: {
+	DisplayName: Визинг
+	Species: Poison Gas Pokémon
+}
+
+Rhyhorn: {
+	DisplayName: Райхорн
+	Species: Spikes Pokémon
+}
+
+Rhydon: {
+	DisplayName: Райдон
+	Species: Drill Pokémon
+}
+
+Chansey: {
+	DisplayName: Ченси
+	Species: Egg Pokémon
+}
+
+Tangela: {
+	DisplayName: Тангела
+	Species: Vine Pokémon
+}
+
+Kangaskhan: {
+	DisplayName: Кангасхан
+	Species: Parent Pokémon
+}
+
+Horsea: {
+	DisplayName: Хорси
+	Species: Dragon Pokémon
+}
+
+Seadra: {
+	DisplayName: Сидра
+	Species: Dragon Pokémon
+}
+
+Goldeen: {
+	DisplayName: Голдин
+	Species: Goldfish Pokémon
+}
+
+Seaking: {
+	DisplayName: Сикинг
+	Species: Goldfish Pokémon
+}
+
+Staryu: {
+	DisplayName: Старью
+	Species: Star Shape Pokémon
+}
+
+Starmie: {
+	DisplayName: Старми
+	Species: Mysterious Pokémon
+}
+
+MrMime: {
+	DisplayName: Мистер Майм
+	Species: Barrier Pokémon
+}
+
+Scyther: {
+	DisplayName: Скайтер
+	Species: Mantis Pokémon
+}
+
+Jynx: {
+	DisplayName: Джинкс
+	Species: Human Shape Pokémon
+}
+
+Electabuzz: {
+	DisplayName: Электабазз
+	Species: Electric Pokémon
+}
+
+Magmar: {
+	DisplayName: Магмар
+	Species: Spitfire Pokémon
+}
+
+Pinsir: {
+	DisplayName: Пинсир
+	Species: Stag Beetle Pokémon
+}
+
+Tauros: {
+	DisplayName: Таурос
+	Species: Wild Bull Pokémon
+}
+
+Magikarp: {
+	DisplayName: Мэджикарп
+	Species: Fish Pokémon
+}
+
+Gyarados: {
+	DisplayName: Гиарадос
+	Species: Atrocious Pokémon
+}
+
+Lapras: {
+	DisplayName: Лапрас
+	Species: Transport Pokémon
+}
+
+Ditto: {
+	DisplayName: Дитто
+	Species: Transform Pokémon
+}
+
+Eevee: {
+	DisplayName: Иви
+	Species: Evolution Pokémon
+}
+
+Vaporeon: {
+	DisplayName: Вапореон
+	Species: Bubble Jet Pokémon
+}
+
+Jolteon: {
+	DisplayName: Джолтеон
+	Species: Lightning Pokémon
+}
+
+Flareon: {
+	DisplayName: Флареон
+	Species: Flame Pokémon
+}
+
+Porygon: {
+	DisplayName: Поригон
+	Species: Virtual Pokémon
+}
+
+Omanyte: {
+	DisplayName: Оманайт
+	Species: Spiral Pokémon
+}
+
+Omastar: {
+	DisplayName: Омастар
+	Species: Spiral Pokémon
+}
+
+Kabuto: {
+	DisplayName: Кабуто
+	Species: Shellfish Pokémon
+}
+
+Kabutops: {
+	DisplayName: Кабутопс
+	Species: Shellfish Pokémon
+}
+
+Aerodactyl: {
+	DisplayName: Аэродактиль
+	Species: Fossil Pokémon
+}
+
+Snorlax: {
+	DisplayName: Снорлакс
+	Species: Sleeping Pokémon
+}
+
+Articuno: {
+	DisplayName: Артикуно
+	Species: Freeze Pokémon
+}
+
+Zapdos: {
+	DisplayName: Запдос
+	Species: Electric Pokémon
+}
+
+Moltres: {
+	DisplayName: Молтрес
+	Species: Flame Pokémon
+}
+
+Dratini: {
+	DisplayName: Дратини
+	Species: Dragon Pokémon
+}
+
+Dragonair: {
+	DisplayName: Драгонэйр
+	Species: Dragon Pokémon
+}
+
+Dragonite: {
+	DisplayName: Драгонайт
+	Species: Dragon Pokémon
+}
+
+Mewtwo: {
+	DisplayName: Мьюту
+	Species: Genetic Pokémon
+}
+
+Mew: {
+	DisplayName: Мью
+	Species: New Species Pokémon
+}

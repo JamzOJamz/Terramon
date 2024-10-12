@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using ReLogic.Content;
+using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -17,12 +19,18 @@ namespace Terramon.Content.GUI;
 public class InventoryParty : SmartUIState
 {
     private static readonly CustomPartyItemSlot[] CustomSlots = new CustomPartyItemSlot[6];
-
     private static readonly Asset<Texture2D> PartySlotBallTexture;
     private static readonly Asset<Texture2D> PartySlotBallGreyedTexture;
     private static readonly Asset<Texture2D> PartySlotBallHoverTexture;
     private static readonly Asset<Texture2D> PokedexButtonTexture;
     private static readonly Asset<Texture2D> PokedexButtonHoverAltTexture;
+
+    private readonly LocalizedText _hidePartyLocalizedText = Language.GetText("Mods.Terramon.GUI.Inventory.HideParty");
+
+    private readonly LocalizedText _openPokedexLocalizedText =
+        Language.GetText("Mods.Terramon.GUI.Inventory.OpenPokedex");
+
+    private readonly LocalizedText _showPartyLocalizedText = Language.GetText("Mods.Terramon.GUI.Inventory.ShowParty");
 
     private bool _isCompressed;
     private UIHoverImageButton _openPokedexButton;
@@ -60,11 +68,11 @@ public class InventoryParty : SmartUIState
         if (reducedMotion)
         {
             _isCompressed = true;
-            _toggleSlotsButton = new UIHoverImageButton(PartySlotBallGreyedTexture, "Show Party");
+            _toggleSlotsButton = new UIHoverImageButton(PartySlotBallGreyedTexture, _showPartyLocalizedText);
         }
         else
         {
-            _toggleSlotsButton = new UIHoverImageButton(PartySlotBallTexture, "Hide Party");
+            _toggleSlotsButton = new UIHoverImageButton(PartySlotBallTexture, _hidePartyLocalizedText);
         }
 
         _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
@@ -84,7 +92,7 @@ public class InventoryParty : SmartUIState
         Append(container);
 
         // Add Pokédex button
-        _openPokedexButton = new UIHoverImageButton(PokedexButtonTexture, "Open Pokédex");
+        _openPokedexButton = new UIHoverImageButton(PokedexButtonTexture, _openPokedexLocalizedText);
         _openPokedexButton.SetHoverImage(PokedexButtonHoverAltTexture, false);
         _openPokedexButton.SetVisibility(1, 1);
         _openPokedexButton.OnLeftClick += (_, _) => { HubUI.ToggleActive(); };
@@ -103,7 +111,7 @@ public class InventoryParty : SmartUIState
         var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
         if (reducedMotion)
         {
-            _toggleSlotsButton.SetHoverText(_isCompressed ? "Show Party" : "Hide Party");
+            _toggleSlotsButton.SetHoverText(_isCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
             foreach (var slot in CustomSlots)
                 slot.Color = Color.White * (1 - startingAlpha);
             return;
@@ -124,7 +132,7 @@ public class InventoryParty : SmartUIState
             .SetEase(Ease.OutExpo);
         _toggleTween.OnComplete = () =>
         {
-            _toggleSlotsButton.SetHoverText(_isCompressed ? "Show Party" : "Hide Party");
+            _toggleSlotsButton.SetHoverText(_isCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
             _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
             IgnoresMouseInteraction = false;
         };
@@ -191,7 +199,8 @@ public class InventoryParty : SmartUIState
             if ((slot.Data == null && partyData != null) ||
                 (slot.Data != null && partyData == null) ||
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
-                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname, out _)))
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname | PokemonData.BitIsShiny,
+                    out _)))
                 UpdateSlot(partyData, slot.Index);
         }
 
@@ -250,7 +259,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         if (!item.AffectedByPokemonDirectUse(Data))
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", Data.DisplayName),
-                new Color(255, 240, 20));
+                TerramonCommand.ChatColorYellow);
             return;
         }
 
@@ -277,14 +286,16 @@ internal sealed class CustomPartyItemSlot : UIImage
                 var currentLevelExp = ExperienceLookupTable.GetLevelTotalExp(data.Level, schema.GrowthRate);
                 var nextLevelExp = ExperienceLookupTable.GetLevelTotalExp((byte)(data.Level + 1), schema.GrowthRate);
                 var toNextLevel = nextLevelExp - currentLevelExp;
-                _tooltipText = $"HP: {hp}/{hp}\nEXP: 0/{toNextLevel}"; // [c/80B9F1:Frozen]
+                _tooltipText =
+                    Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltip", hp, hp,
+                        toNextLevel); // [c/80B9F1:Frozen]
             }
             else
             {
-                _tooltipText = $"HP: {hp}/{hp}\nEXP: MAX";
+                _tooltipText = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipMaxLevel", hp, hp);
             }
 
-            _tooltipName = $"[c/E8E8F4:{data.DisplayName} (Lv. {data.Level})]";
+            _tooltipName = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotName", data.DisplayName, data.Level);
             _minispriteImage = new UIImage(ModContent.Request<Texture2D>(
                 $"Terramon/Assets/Pokemon/{schema.Identifier}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
                 AssetRequestMode.ImmediateLoad))
@@ -326,6 +337,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             TooltipOverlay.SetName(_tooltipName);
             TooltipOverlay.SetTooltip(_tooltipText);
             TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
+            if (Data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
         }
 
         base.Draw(spriteBatch);

@@ -1,0 +1,754 @@
+Bulbasaur: {
+	DisplayName: Bisasam
+	Species: Samen-Pokémon
+}
+
+Ivysaur: {
+	DisplayName: Bisaknosp
+	Species: Samen-Pokémon
+}
+
+Venusaur: {
+	DisplayName: Bisaflor
+	Species: Samen-Pokémon
+}
+
+Charmander: {
+	DisplayName: Glumanda
+	Species: Echsen-Pokémon
+}
+
+Charmeleon: {
+	DisplayName: Glutexo
+	Species: Flammen-Pokémon
+}
+
+Charizard: {
+	DisplayName: Glurak
+	Species: Flammen-Pokémon
+}
+
+Squirtle: {
+	DisplayName: Schiggy
+	Species: Minikröten-Pokémon
+}
+
+Wartortle: {
+	DisplayName: Schillok
+	Species: Kröten-Pokémon
+}
+
+Blastoise: {
+	DisplayName: Turtok
+	Species: Panzertier-Pokémon
+}
+
+Caterpie: {
+	DisplayName: Raupy
+	Species: Wurm-Pokémon
+}
+
+Metapod: {
+	DisplayName: Safcon
+	Species: Kokon-Pokémon
+}
+
+Butterfree: {
+	DisplayName: Smettbo
+	Species: Falter-Pokémon
+}
+
+Weedle: {
+	DisplayName: Hornliu
+	Species: Raupe
+}
+
+Kakuna: {
+	DisplayName: Kokuna
+	Species: Kokon
+}
+
+Beedrill: {
+	DisplayName: Bibor
+	Species: Giftbiene
+}
+
+Pidgey: {
+	DisplayName: Taubsi
+	Species: Kleinvogel
+}
+
+Pidgeotto: {
+	DisplayName: Tauboga
+	Species: Vogel
+}
+
+Pidgeot: {
+	DisplayName: Tauboss
+	Species: Vogel
+}
+
+Rattata: {
+	DisplayName: Rattfratz
+	Species: Maus
+}
+
+Raticate: {
+	DisplayName: Rattikarl
+	Species: Maus
+}
+
+Spearow: {
+	DisplayName: Habitak
+	Species: Kleinvogel
+}
+
+Fearow: {
+	DisplayName: Ibitak
+	Species: Pickvogel
+}
+
+Ekans: {
+	DisplayName: Rettan
+	Species: Schlange
+}
+
+Arbok: {
+	DisplayName: Arbok
+	Species: Kobra
+}
+
+Pikachu: {
+	DisplayName: Pikachu
+	Species: Maus-Pokémon
+}
+
+Raichu: {
+	DisplayName: Raichu
+	Species: Maus-Pokémon
+}
+
+Sandshrew: {
+	DisplayName: Sandan
+	Species: Maus-Pokémon
+}
+
+Sandslash: {
+	DisplayName: Sandamer
+	Species: Maus-Pokémon
+}
+
+NidoranF: {
+	DisplayName: Nidoran♀
+	Species: Giftdorn-Pokémon
+}
+
+Nidorina: {
+	DisplayName: Nidorina
+	Species: Giftdorn-Pokémon
+}
+
+Nidoqueen: {
+	DisplayName: Nidoqueen
+	Species: Bohrer-Pokémon
+}
+
+NidoranM: {
+	DisplayName: Nidoran♂
+	Species: Giftdorn-Pokémon
+}
+
+Nidorino: {
+	DisplayName: Nidorino
+	Species: Giftdorn-Pokémon
+}
+
+Nidoking: {
+	DisplayName: Nidoking
+	Species: Bohrer-Pokémon
+}
+
+Clefairy: {
+	DisplayName: Piepi
+	Species: Feen-Pokémon
+}
+
+Clefable: {
+	DisplayName: Pixi
+	Species: Feen-Pokémon
+}
+
+Vulpix: {
+	DisplayName: Vulpix
+	Species: Fuchs-Pokémon
+}
+
+Ninetales: {
+	DisplayName: Vulnona
+	Species: Fuchs-Pokémon
+}
+
+Jigglypuff: {
+	DisplayName: Pummeluff
+	Species: Ballon-Pokémon
+}
+
+Wigglytuff: {
+	DisplayName: Knuddeluff
+	Species: Ballon-Pokémon
+}
+
+Zubat: {
+	DisplayName: Zubat
+	Species: Fledermaus-Pokémon
+}
+
+Golbat: {
+	DisplayName: Golbat
+	Species: Fledermaus-Pokémon
+}
+
+Oddish: {
+	DisplayName: Myrapla
+	Species: Unkraut-Pokémon
+}
+
+Gloom: {
+	DisplayName: Duflor
+	Species: Unkraut-Pokémon
+}
+
+Vileplume: {
+	DisplayName: Giflor
+	Species: Blumen-Pokémon
+}
+
+Paras: {
+	DisplayName: Paras
+	Species: Pilz
+}
+
+Parasect: {
+	DisplayName: Parasek
+	Species: Pilz
+}
+
+Venonat: {
+	DisplayName: Bluzuk
+	Species: Insekt
+}
+
+Venomoth: {
+	DisplayName: Omot
+	Species: Giftmotte
+}
+
+Diglett: {
+	DisplayName: Digda
+	Species: Maulwurf-Pokémon
+}
+
+Dugtrio: {
+	DisplayName: Digdri
+	Species: Maulwurf-Pokémon
+}
+
+Meowth: {
+	DisplayName: Mauzi
+	Species: Katzen-Pokémon
+}
+
+Persian: {
+	DisplayName: Snobilikat
+	Species: Rassekatzen-Pokémon
+}
+
+Psyduck: {
+	DisplayName: Enton
+	Species: Enten-Pokémon
+}
+
+Golduck: {
+	DisplayName: Entoron
+	Species: Enten-Pokémon
+}
+
+Mankey: {
+	DisplayName: Menki
+	Species: Schwein/Affe
+}
+
+Primeape: {
+	DisplayName: Rasaff
+	Species: Schwein/Affe
+}
+
+Growlithe: {
+	DisplayName: Fukano
+	Species: Welpen-Pokémon
+}
+
+Arcanine: {
+	DisplayName: Arkani
+	Species: Legendär-Pokémon
+}
+
+Poliwag: {
+	DisplayName: Quapsel
+	Species: Kaulquappen-Pokémon
+}
+
+Poliwhirl: {
+	DisplayName: Quaputzi
+	Species: Kaulquappen-Pokémon
+}
+
+Poliwrath: {
+	DisplayName: Quappo
+	Species: Kaulquappen-Pokémon
+}
+
+Abra: {
+	DisplayName: Abra
+	Species: Psi-Pokémon
+}
+
+Kadabra: {
+	DisplayName: Kadabra
+	Species: Psi-Pokémon
+}
+
+Alakazam: {
+	DisplayName: Simsala
+	Species: Psi-Pokémon
+}
+
+Machop: {
+	DisplayName: Machollo
+	Species: Kraftprotz-Pokémon
+}
+
+Machoke: {
+	DisplayName: Maschock
+	Species: Kraftprotz-Pokémon
+}
+
+Machamp: {
+	DisplayName: Machomei
+	Species: Kraftprotz-Pokémon
+}
+
+Bellsprout: {
+	DisplayName: Knofensa
+	Species: Blume
+}
+
+Weepinbell: {
+	DisplayName: Ultrigaria
+	Species: Fliegentod
+}
+
+Victreebel: {
+	DisplayName: Sarzenia
+	Species: Fliegentod
+}
+
+Tentacool: {
+	DisplayName: Tentacha
+	Species: Quallen-Pokémon
+}
+
+Tentacruel: {
+	DisplayName: Tentoxa
+	Species: Quallen-Pokémon
+}
+
+Geodude: {
+	DisplayName: Kleinstein
+	Species: Gestein
+}
+
+Graveler: {
+	DisplayName: Georok
+	Species: Gestein
+}
+
+Golem: {
+	DisplayName: Geowaz
+	Species: Urgestein
+}
+
+Ponyta: {
+	DisplayName: Ponita
+	Species: Feuerpferd-Pokémon
+}
+
+Rapidash: {
+	DisplayName: Gallopa
+	Species: Feuerpferd-Pokémon
+}
+
+Slowpoke: {
+	DisplayName: Flegmon
+	Species: Schnarcher-Pokémon
+}
+
+Slowbro: {
+	DisplayName: Lahmus
+	Species: Symbiose-Pokémon
+}
+
+Magnemite: {
+	DisplayName: Magnetilo
+	Species: Magnet-Pokémon
+}
+
+Magneton: {
+	DisplayName: Magneton
+	Species: Magnet-Pokémon
+}
+
+Farfetchd: {
+	DisplayName: Porenta
+	Species: Wildenten-Pokémon
+}
+
+Doduo: {
+	DisplayName: Dodu
+	Species: Duovogel
+}
+
+Dodrio: {
+	DisplayName: Dodri
+	Species: Trivogel
+}
+
+Seel: {
+	DisplayName: Jurob
+	Species: Seehund
+}
+
+Dewgong: {
+	DisplayName: Jugong
+	Species: Seehund
+}
+
+Grimer: {
+	DisplayName: Sleima
+	Species: Schlamm
+}
+
+Muk: {
+	DisplayName: Sleimok
+	Species: Schlamm
+}
+
+Shellder: {
+	DisplayName: Muschas
+	Species: Muschel-Pokémon
+}
+
+Cloyster: {
+	DisplayName: Austos
+	Species: Muschel-Pokémon
+}
+
+Gastly: {
+	DisplayName: Nebulak
+	Species: Gas-Pokémon
+}
+
+Haunter: {
+	DisplayName: Alpollo
+	Species: Gas-Pokémon
+}
+
+Gengar: {
+	DisplayName: Gengar
+	Species: Schatten-Pokémon
+}
+
+Onix: {
+	DisplayName: Onix
+	Species: Felsnatter-Pokémon
+}
+
+Drowzee: {
+	DisplayName: Traumato
+	Species: Hypnose
+}
+
+Hypno: {
+	DisplayName: Hypno
+	Species: Hypnose
+}
+
+Krabby: {
+	DisplayName: Krabby
+	Species: Krabben-Pokémon
+}
+
+Kingler: {
+	DisplayName: Kingler
+	Species: Kneifer-Pokémon
+}
+
+Voltorb: {
+	DisplayName: Voltobal
+	Species: Ball
+}
+
+Electrode: {
+	DisplayName: Lektrobal
+	Species: Ball
+}
+
+Exeggcute: {
+	DisplayName: Owei
+	Species: Ei-Pokémon
+}
+
+Exeggutor: {
+	DisplayName: Kokowei
+	Species: Palmfrucht-Pokémon
+}
+
+Cubone: {
+	DisplayName: Tragosso
+	Species: Einsam-Pokémon
+}
+
+Marowak: {
+	DisplayName: Knogga
+	Species: Knochenfan-Pokémon
+}
+
+Hitmonlee: {
+	DisplayName: Kicklee
+	Species: Kicker-Pokémon
+}
+
+Hitmonchan: {
+	DisplayName: Nockchan
+	Species: Puncher-Pokémon
+}
+
+Lickitung: {
+	DisplayName: Schlurp
+	Species: Schlecker-Pokémon
+}
+
+Koffing: {
+	DisplayName: Smogon
+	Species: Giftwolken-Pokémon
+}
+
+Weezing: {
+	DisplayName: Smogmog
+	Species: Giftwolken-Pokémon
+}
+
+Rhyhorn: {
+	DisplayName: Rihorn
+	Species: Stachler-Pokémon
+}
+
+Rhydon: {
+	DisplayName: Rizeros
+	Species: Bohrer-Pokémon
+}
+
+Chansey: {
+	DisplayName: Chaneira
+	Species: Ei-Pokémon
+}
+
+Tangela: {
+	DisplayName: Tangela
+	Species: Ranken-Pokémon
+}
+
+Kangaskhan: {
+	DisplayName: Kangama
+	Species: Muttertier-Pokémon
+}
+
+Horsea: {
+	DisplayName: Seeper
+	Species: Drachen-Pokémon
+}
+
+Seadra: {
+	DisplayName: Seemon
+	Species: Drachen-Pokémon
+}
+
+Goldeen: {
+	DisplayName: Goldini
+	Species: Goldfisch-Pokémon
+}
+
+Seaking: {
+	DisplayName: Golking
+	Species: Goldfisch-Pokémon
+}
+
+Staryu: {
+	DisplayName: Sterndu
+	Species: Sternform-Pokémon
+}
+
+Starmie: {
+	DisplayName: Starmie
+	Species: Mysteriös-Pokémon
+}
+
+MrMime: {
+	DisplayName: Pantimos
+	Species: Sperren-Pokémon
+}
+
+Scyther: {
+	DisplayName: Sichlor
+	Species: Mantis-Pokémon
+}
+
+Jynx: {
+	DisplayName: Rossana
+	Species: Humanotyp-Pokémon
+}
+
+Electabuzz: {
+	DisplayName: Elektek
+	Species: Elektro-Pokémon
+}
+
+Magmar: {
+	DisplayName: Magmar
+	Species: Brenner-Pokémon
+}
+
+Pinsir: {
+	DisplayName: Pinsir
+	Species: Kneifkäfer-Pokémon
+}
+
+Tauros: {
+	DisplayName: Tauros
+	Species: Wildbullen-Pokémon
+}
+
+Magikarp: {
+	DisplayName: Karpador
+	Species: Fisch-Pokémon
+}
+
+Gyarados: {
+	DisplayName: Garados
+	Species: Grausam-Pokémon
+}
+
+Lapras: {
+	DisplayName: Lapras
+	Species: Transport-Pokémon
+}
+
+Ditto: {
+	DisplayName: Ditto
+	Species: Transform-Pokémon
+}
+
+Eevee: {
+	DisplayName: Evoli
+	Species: Evolutions-Pokémon
+}
+
+Vaporeon: {
+	DisplayName: Aquana
+	Species: Blubbblasen-Pokémon
+}
+
+Jolteon: {
+	DisplayName: Blitza
+	Species: Blitz-Pokémon
+}
+
+Flareon: {
+	DisplayName: Flamara
+	Species: Feuer-Pokémon
+}
+
+Porygon: {
+	DisplayName: Porygon
+	Species: Virtuell-Pokémon
+}
+
+Omanyte: {
+	DisplayName: Amonitas
+	Species: Spiralen-Pokémon
+}
+
+Omastar: {
+	DisplayName: Amoroso
+	Species: Spiralen-Pokémon
+}
+
+Kabuto: {
+	DisplayName: Kabuto
+	Species: Schaltier-Pokémon
+}
+
+Kabutops: {
+	DisplayName: Kabutops
+	Species: Schaltier-Pokémon
+}
+
+Aerodactyl: {
+	DisplayName: Aerodactyl
+	Species: Fossil-Pokémon
+}
+
+Snorlax: {
+	DisplayName: Relaxo
+	Species: Tagträumer-Pokémon
+}
+
+Articuno: {
+	DisplayName: Arktos
+	Species: Eis-Pokémon
+}
+
+Zapdos: {
+	DisplayName: Zapdos
+	Species: Elektro-Pokémon
+}
+
+Moltres: {
+	DisplayName: Lavados
+	Species: Flammen-Pokémon
+}
+
+Dratini: {
+	DisplayName: Dratini
+	Species: Drachen-Pokémon
+}
+
+Dragonair: {
+	DisplayName: Dragonir
+	Species: Drachen-Pokémon
+}
+
+Dragonite: {
+	DisplayName: Dragoran
+	Species: Drachen-Pokémon
+}
+
+Mewtwo: {
+	DisplayName: Mewtu
+	Species: Genmutanten-Pokémon
+}
+
+Mew: {
+	DisplayName: Mew
+	Species: Neue Art-Pokémon
+}

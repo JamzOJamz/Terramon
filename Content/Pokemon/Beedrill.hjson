@@ -3,9 +3,14 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 30
+      Height: 34
     }
-    WalkingBehaviour: {}
+    WanderingHoverBehaviour:
+    {
+      FrameCount: 6
+      FrameTime: 3
+    }
     SpawnController:
     {
       Conditions:

@@ -198,7 +198,7 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
         if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
         if (PlasmaState)
         {
-            var lightIntensity = 0.5f - _plasmaStateTime / 70f;
+            var lightIntensity = 0.57f - _plasmaStateTime / 70f;
             if (lightIntensity > 0)
                 Lighting.AddLight(NPC.Center, 178f / 255f * lightIntensity, 223f / 255f * lightIntensity,
                     lightIntensity);
@@ -298,7 +298,7 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
         {
             _schemaCache = new Dictionary<ushort, JToken>();
             _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
-            _hasGenderDifference = new BitArray(Math.Min(Terramon.MaxPokemonID, Terramon.DatabaseV2.Pokemon.Count));
+            _hasGenderDifference = new BitArray(Terramon.LoadedPokemonCount);
             _enableComponentMethod = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
             if (Main.netMode != NetmodeID.Server)
                 GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =

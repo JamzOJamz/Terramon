@@ -1,47 +1,73 @@
-Commands.DexEdit.Description: Forcefully sets Pokédex entry statuses
+Buffs: {
+	PokemonCompanion: {
+		DisplayName: Pokémon companion
+		Description: "{0} is following you around!"
+	}
+}
 
-Configs: {
-	GameplayConfig: {
-		DisplayName: Gameplay Settings
+Commands: {
+	RequiresDebugMode: This command requires Debug Mode to be enabled in the mod config!
 
-		Headers: {
-			Miscellaneous: Miscellaneous
-			Advanced: Advanced
-			Spawning: Spawning
-			Visuals: Visuals
-		}
-
-		ShinyLockedStarters: {
-			Label: Shiny-Locked Starters
-			Tooltip: Prevents starter Pokémon from being Shiny
-		}
-
-		ShinySpawnRate: {
-			Label: Shiny Spawn Rate
-			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)
-		}
-
-		FastAnimations: {
-			Label: Fast Animations
-			Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
-		}
-
-		DebugMode: {
-			Label: Debug Mode
-			Tooltip: Allows the use of certain debug commands that can also be used to cheat
-		}
-
-		AllowPokemonSpawning: {
-			Label: Wild Pokémon Spawning
-			Tooltip: Whether or not wild Pokémon should spawn in the world
-		}
-
-		EncourageDespawning: {
-			Label: Encourage Despawning
-			Tooltip: Whether or not to encourage wild Pokémon to despawn when leaving an area to make room for new spawns
-		}
+	DexEdit: {
+		Description: Forcefully sets Pokédex entry statuses
+		Usage: /dexedit <id> <status>
+		ParseErrorID: Failed to parse ID argument as integer
+		ParseErrorStatus: Failed to parse status argument as integer
+		StatusOutOfRange: Status argument is out of range (0-2)
+		IDOutOfRange: Pokédex entry {0} is out of range (1-{1})
+		Success: Successfully set Pokédex entry {0} to status {1}
 	}
 
+	Nickname: {
+		Description: Sets the nickname of a Pokémon
+		Usage: /nickname <set|clear> <nickname>
+
+		Set: {
+			NoActivePokemon: No Pokémon is currently active
+			NoNicknameProvided: No nickname provided
+			NicknameTooLong: Nickname must be 12 characters or less (including spaces)
+			SameNickname: Nickname is already set to that value
+			SuccessNew: Set {0}'s nickname to {1}
+			SuccessUpdate: Changed {0}'s nickname from {1} to {2}
+		}
+
+		Clear: {
+			NoNicknameSet: No nickname is currently set for this Pokémon
+			Success: Cleared {0}'s nickname
+		}
+
+		InvalidSubcommand: Invalid subcommand. Use \"set\" or \"clear\"
+	}
+
+	Party: {
+		ParseErrorSlot: Failed to parse slot argument as integer
+		SlotOutOfRange: Slot argument is out of range (1-6)
+	}
+
+	PartyClear: {
+		Description: Removes the specified Pokémon from your party
+		Usage: /partyclear <slot|all>
+		NoPokemonInSlot: No Pokémon found in slot {0}
+		Success: Removed {0} from the party
+		SuccessAll: Removed all Pokémon from the party
+	}
+
+	PartyData: {
+		Description: Logs info for the specified Pokémon in your party
+		Usage: /partydata <slot>
+		NoPokemonInSlot: No Pokémon data available for slot {0}
+		Success: Pokémon data for slot {0} written to client.log
+	}
+
+	PokeClear: {
+		Description: Clears all active Pokémon NPCs in the world
+		Usage: /pokeclear
+		Success: Cleared {0} Pokémon NPC(s)
+		SuccessByPlayer: "{0} cleared {1} Pokémon NPC(s)"
+	}
+}
+
+Configs: {
 	ClientConfig: {
 		DisplayName: Client Settings
 
@@ -76,42 +102,92 @@ Configs: {
 			Tooltip: Changes the mod icon
 		}
 
-		RainbowBuffText: {
-			Label: Rainbow Buff Text
-			Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
-		}
-
 		AnimatedModIcon: {
 			Label: Animated Mod Icon
 			Tooltip: Animates the mod's icon in the Mods menu when the mod is enabled
 		}
+
+		RainbowBuffText: {
+			Label: Rainbow Buff Text
+			Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+		}
 	}
 
-	ModIconType: {
-		Tooltip: ""
-		Main.Label: Main
-		Alternate.Label: Alternate
-		Classic.Label: Classic
-	}
-}
+	GameplayConfig: {
+		DisplayName: Gameplay Settings
 
-Keybinds: {
-	ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
-	OpenPokedex.DisplayName: Pokédex
+		Headers: {
+			Spawning: Spawning
+			Visuals: Visuals
+			Miscellaneous: Miscellaneous
+			Advanced: Advanced
+		}
+
+		AllowPokemonSpawning: {
+			Label: Wild Pokémon Spawning
+			Tooltip: Whether or not wild Pokémon should spawn in the world
+		}
+
+		EncourageDespawning: {
+			Label: Encourage Despawning
+			Tooltip: Whether or not to encourage wild Pokémon to despawn when leaving an area to make room for new spawns
+		}
+
+		ShinySpawnRate: {
+			Label: Shiny Spawn Rate
+			Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)
+		}
+
+		FastAnimations: {
+			Label: Fast Animations
+			Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
+		}
+
+		ShinyLockedStarters: {
+			Label: Shiny-Locked Starters
+			Tooltip: Prevents starter Pokémon from being Shiny
+		}
+
+		DebugMode: {
+			Label: Debug Mode
+			Tooltip: Allows the use of certain debug commands that can also be used to cheat
+		}
+	}
 }
 
 GUI: {
-	Starter: {
-		ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
-		ComingSoon: Coming soon...
+	Inventory: {
+		ShowParty: Show Party
+		HideParty: Hide Party
+		OpenPokedex: Open Pokédex
+		SlotName: "{0} (Lv. {1})"
+		SlotTooltip:
+			'''
+			HP: {0}/{1}
+			EXP: 0/{2}
+			'''
+		SlotTooltipMaxLevel:
+			'''
+			HP: {0}/{1}
+			EXP: MAX
+			'''
 	}
 
-	Shop: {
+	Starter: {
+		Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
+		Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+		Hint: (Press Back to close)
+		ComingSoon: Coming soon...
+		ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+	}
+
+	NPCShop: {
 		PremierBonus: You got a Premier Ball as an added bonus!
 		PremierBonusPlural: You got {0} Premier Balls as an added bonus!
 	}
 
 	Party: {
+		LevelDisplay: Lv. {0}
 		SlotHover: Left click to send out
 		SlotHoverActive: Left click to recall
 		SlotHoverExtra:
@@ -396,6 +472,11 @@ Items: {
 	}
 }
 
+Keybinds: {
+	ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
+	OpenPokedex.DisplayName: Pokédex
+}
+
 Tiles: {
 	MusicBoxCenter.MapEntry: Music Box
 	MusicBoxWildBattle.MapEntry: Music Box
@@ -405,6 +486,7 @@ NPCs: {
 	PokemartClerk: {
 		DisplayName: Poké Mart Clerk
 		BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
+		EvolveButton: Evolve {0}
 
 		TownNPCMood: {
 			Content: I rather enjoy my living space.
@@ -452,13 +534,6 @@ NPCs: {
 	}
 }
 
-Buffs: {
-	PokemonCompanion: {
-		DisplayName: Pokémon companion
-		Description: "{0} is following you around!"
-	}
-}
-
 WorldGen.ItemsPass: Scattering candies
 
 Misc: {
@@ -466,6 +541,7 @@ Misc: {
 	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
 	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
 	PokedexRegistered: "{0}'s data was added to the Pokédex."
+	PCBoxDefaultName: Box {0}
 	RequireStarter: Choose a starter Pokémon first!
 	NoActivePokemon: You need to have an active Pokémon to do that!
 	ItemNoEffect: It won't have any effect on {0}.

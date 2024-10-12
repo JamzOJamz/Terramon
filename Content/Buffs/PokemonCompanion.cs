@@ -77,7 +77,9 @@ public class PokemonCompanion : ModBuff
     public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
     {
         var player = TerramonPlayer.LocalPlayer;
-        tip = Description.Format(player.GetActivePokemon()?.DisplayName);
+        var activePokemon = player.GetActivePokemon();
+        if (activePokemon != null)
+            tip = string.Format(tip, activePokemon.DisplayName);
         if (ModContent.GetInstance<ClientConfig>().RainbowBuffText)
             rare = ItemRarityID.Expert;
     }

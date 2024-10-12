@@ -1,0 +1,754 @@
+Bulbasaur: {
+	DisplayName: Bulbasaur
+	Species: Pokémon Semilla
+}
+
+Ivysaur: {
+	DisplayName: Ivysaur
+	Species: Pokémon Semilla
+}
+
+Venusaur: {
+	DisplayName: Venusaur
+	Species: Pokémon Semilla
+}
+
+Charmander: {
+	DisplayName: Charmander
+	Species: Pokémon Lagartija
+}
+
+Charmeleon: {
+	DisplayName: Charmeleon
+	Species: Pokémon Llama
+}
+
+Charizard: {
+	DisplayName: Charizard
+	Species: Pokémon Llama
+}
+
+Squirtle: {
+	DisplayName: Squirtle
+	Species: Pokémon Tortuguita
+}
+
+Wartortle: {
+	DisplayName: Wartortle
+	Species: Pokémon Tortuga
+}
+
+Blastoise: {
+	DisplayName: Blastoise
+	Species: Pokémon Armazón
+}
+
+Caterpie: {
+	DisplayName: Caterpie
+	Species: Pokémon Gusano
+}
+
+Metapod: {
+	DisplayName: Metapod
+	Species: Pokémon Capullo
+}
+
+Butterfree: {
+	DisplayName: Butterfree
+	Species: Pokémon Mariposa
+}
+
+Weedle: {
+	DisplayName: Weedle
+	Species: Pokémon Oruga
+}
+
+Kakuna: {
+	DisplayName: Kakuna
+	Species: Pokémon Capullo
+}
+
+Beedrill: {
+	DisplayName: Beedrill
+	Species: Pokémon Abeja Veneno
+}
+
+Pidgey: {
+	DisplayName: Pidgey
+	Species: Pokémon Pajarito
+}
+
+Pidgeotto: {
+	DisplayName: Pidgeotto
+	Species: Pokémon Pájaro
+}
+
+Pidgeot: {
+	DisplayName: Pidgeot
+	Species: Pokémon Pájaro
+}
+
+Rattata: {
+	DisplayName: Rattata
+	Species: Pokémon Ratón
+}
+
+Raticate: {
+	DisplayName: Raticate
+	Species: Pokémon Ratón
+}
+
+Spearow: {
+	DisplayName: Spearow
+	Species: Pokémon Pajarito
+}
+
+Fearow: {
+	DisplayName: Fearow
+	Species: Pokémon Pico
+}
+
+Ekans: {
+	DisplayName: Ekans
+	Species: Pokémon Serpiente
+}
+
+Arbok: {
+	DisplayName: Arbok
+	Species: Pokémon Cobra
+}
+
+Pikachu: {
+	DisplayName: Pikachu
+	Species: Pokémon Ratón
+}
+
+Raichu: {
+	DisplayName: Raichu
+	Species: Pokémon Ratón
+}
+
+Sandshrew: {
+	DisplayName: Sandshrew
+	Species: Pokémon Ratón
+}
+
+Sandslash: {
+	DisplayName: Sandslash
+	Species: Pokémon Ratón
+}
+
+NidoranF: {
+	DisplayName: Nidoran♀
+	Species: Pokémon Pin Veneno
+}
+
+Nidorina: {
+	DisplayName: Nidorina
+	Species: Pokémon Pin Veneno
+}
+
+Nidoqueen: {
+	DisplayName: Nidoqueen
+	Species: Pokémon Taladro
+}
+
+NidoranM: {
+	DisplayName: Nidoran♂
+	Species: Pokémon Pin Veneno
+}
+
+Nidorino: {
+	DisplayName: Nidorino
+	Species: Pokémon Pin Veneno
+}
+
+Nidoking: {
+	DisplayName: Nidoking
+	Species: Pokémon Taladro
+}
+
+Clefairy: {
+	DisplayName: Clefairy
+	Species: Pokémon Hada
+}
+
+Clefable: {
+	DisplayName: Clefable
+	Species: Pokémon Hada
+}
+
+Vulpix: {
+	DisplayName: Vulpix
+	Species: Pokémon Zorro
+}
+
+Ninetales: {
+	DisplayName: Ninetales
+	Species: Pokémon Zorro
+}
+
+Jigglypuff: {
+	DisplayName: Jigglypuff
+	Species: Pokémon Globo
+}
+
+Wigglytuff: {
+	DisplayName: Wigglytuff
+	Species: Pokémon Globo
+}
+
+Zubat: {
+	DisplayName: Zubat
+	Species: Pokémon Murciélago
+}
+
+Golbat: {
+	DisplayName: Golbat
+	Species: Pokémon Murciélago
+}
+
+Oddish: {
+	DisplayName: Oddish
+	Species: Pokémon Hierbajo
+}
+
+Gloom: {
+	DisplayName: Gloom
+	Species: Pokémon Hierbajo
+}
+
+Vileplume: {
+	DisplayName: Vileplume
+	Species: Pokémon Flor
+}
+
+Paras: {
+	DisplayName: Paras
+	Species: Pokémon Hongo
+}
+
+Parasect: {
+	DisplayName: Parasect
+	Species: Pokémon Hongo
+}
+
+Venonat: {
+	DisplayName: Venonat
+	Species: Pokémon Insecto
+}
+
+Venomoth: {
+	DisplayName: Venomoth
+	Species: Pokémon Polilla Ven.
+}
+
+Diglett: {
+	DisplayName: Diglett
+	Species: Pokémon Topo
+}
+
+Dugtrio: {
+	DisplayName: Dugtrio
+	Species: Pokémon Topo
+}
+
+Meowth: {
+	DisplayName: Meowth
+	Species: Pokémon Gato Araña
+}
+
+Persian: {
+	DisplayName: Persian
+	Species: Pokémon Gato Fino
+}
+
+Psyduck: {
+	DisplayName: Psyduck
+	Species: Pokémon Pato
+}
+
+Golduck: {
+	DisplayName: Golduck
+	Species: Pokémon Pato
+}
+
+Mankey: {
+	DisplayName: Mankey
+	Species: Pokémon Mono Cerdo
+}
+
+Primeape: {
+	DisplayName: Primeape
+	Species: Pokémon Mono Cerdo
+}
+
+Growlithe: {
+	DisplayName: Growlithe
+	Species: Pokémon Perrito
+}
+
+Arcanine: {
+	DisplayName: Arcanine
+	Species: Pokémon Leyenda
+}
+
+Poliwag: {
+	DisplayName: Poliwag
+	Species: Pokémon Renacuajo
+}
+
+Poliwhirl: {
+	DisplayName: Poliwhirl
+	Species: Pokémon Renacuajo
+}
+
+Poliwrath: {
+	DisplayName: Poliwrath
+	Species: Pokémon Renacuajo
+}
+
+Abra: {
+	DisplayName: Abra
+	Species: Pokémon Psi
+}
+
+Kadabra: {
+	DisplayName: Kadabra
+	Species: Pokémon Psi
+}
+
+Alakazam: {
+	DisplayName: Alakazam
+	Species: Pokémon Psi
+}
+
+Machop: {
+	DisplayName: Machop
+	Species: Pokémon Superpoder
+}
+
+Machoke: {
+	DisplayName: Machoke
+	Species: Pokémon Superpoder
+}
+
+Machamp: {
+	DisplayName: Machamp
+	Species: Pokémon Superpoder
+}
+
+Bellsprout: {
+	DisplayName: Bellsprout
+	Species: Pokémon Flor
+}
+
+Weepinbell: {
+	DisplayName: Weepinbell
+	Species: Pokémon Matamoscas
+}
+
+Victreebel: {
+	DisplayName: Victreebel
+	Species: Pokémon Matamoscas
+}
+
+Tentacool: {
+	DisplayName: Tentacool
+	Species: Pokémon Medusa
+}
+
+Tentacruel: {
+	DisplayName: Tentacruel
+	Species: Pokémon Medusa
+}
+
+Geodude: {
+	DisplayName: Geodude
+	Species: Pokémon Roca
+}
+
+Graveler: {
+	DisplayName: Graveler
+	Species: Pokémon Roca
+}
+
+Golem: {
+	DisplayName: Golem
+	Species: Pokémon Megatón
+}
+
+Ponyta: {
+	DisplayName: Ponyta
+	Species: Pokémon Caballo Fuego
+}
+
+Rapidash: {
+	DisplayName: Rapidash
+	Species: Pokémon Caballo Fuego
+}
+
+Slowpoke: {
+	DisplayName: Slowpoke
+	Species: Pokémon Atontado
+}
+
+Slowbro: {
+	DisplayName: Slowbro
+	Species: Pokémon Ermitaño
+}
+
+Magnemite: {
+	DisplayName: Magnemite
+	Species: Pokémon Imán
+}
+
+Magneton: {
+	DisplayName: Magneton
+	Species: Pokémon Imán
+}
+
+Farfetchd: {
+	DisplayName: Farfetch’d
+	Species: Pokémon Pato Salvaje
+}
+
+Doduo: {
+	DisplayName: Doduo
+	Species: Pokémon Ave Gemela
+}
+
+Dodrio: {
+	DisplayName: Dodrio
+	Species: Pokémon Ave Triple
+}
+
+Seel: {
+	DisplayName: Seel
+	Species: Pokémon León Marino
+}
+
+Dewgong: {
+	DisplayName: Dewgong
+	Species: Pokémon León Marino
+}
+
+Grimer: {
+	DisplayName: Grimer
+	Species: Pokémon Lodo
+}
+
+Muk: {
+	DisplayName: Muk
+	Species: Pokémon Lodo
+}
+
+Shellder: {
+	DisplayName: Shellder
+	Species: Pokémon Bivalvo
+}
+
+Cloyster: {
+	DisplayName: Cloyster
+	Species: Pokémon Bivalvo
+}
+
+Gastly: {
+	DisplayName: Gastly
+	Species: Pokémon Gas
+}
+
+Haunter: {
+	DisplayName: Haunter
+	Species: Pokémon Gas
+}
+
+Gengar: {
+	DisplayName: Gengar
+	Species: Pokémon Sombra
+}
+
+Onix: {
+	DisplayName: Onix
+	Species: Pokémon Serpiente Roca
+}
+
+Drowzee: {
+	DisplayName: Drowzee
+	Species: Pokémon Hipnosis
+}
+
+Hypno: {
+	DisplayName: Hypno
+	Species: Pokémon Hipnosis
+}
+
+Krabby: {
+	DisplayName: Krabby
+	Species: Pokémon Cangrejo
+}
+
+Kingler: {
+	DisplayName: Kingler
+	Species: Pokémon Tenaza
+}
+
+Voltorb: {
+	DisplayName: Voltorb
+	Species: Pokémon Bola
+}
+
+Electrode: {
+	DisplayName: Electrode
+	Species: Pokémon Bola
+}
+
+Exeggcute: {
+	DisplayName: Exeggcute
+	Species: Pokémon Huevo
+}
+
+Exeggutor: {
+	DisplayName: Exeggutor
+	Species: Pokémon Coco
+}
+
+Cubone: {
+	DisplayName: Cubone
+	Species: Pokémon Solitario
+}
+
+Marowak: {
+	DisplayName: Marowak
+	Species: Pokémon Apilahueso
+}
+
+Hitmonlee: {
+	DisplayName: Hitmonlee
+	Species: Pokémon Patada
+}
+
+Hitmonchan: {
+	DisplayName: Hitmonchan
+	Species: Pokémon Puñetazo
+}
+
+Lickitung: {
+	DisplayName: Lickitung
+	Species: Pokémon Lametazo
+}
+
+Koffing: {
+	DisplayName: Koffing
+	Species: Pokémon Gas Venenoso
+}
+
+Weezing: {
+	DisplayName: Weezing
+	Species: Pokémon Gas Venenoso
+}
+
+Rhyhorn: {
+	DisplayName: Rhyhorn
+	Species: Pokémon Clavos
+}
+
+Rhydon: {
+	DisplayName: Rhydon
+	Species: Pokémon Taladro
+}
+
+Chansey: {
+	DisplayName: Chansey
+	Species: Pokémon Huevo
+}
+
+Tangela: {
+	DisplayName: Tangela
+	Species: Pokémon Enredadera
+}
+
+Kangaskhan: {
+	DisplayName: Kangaskhan
+	Species: Pokémon Maternal
+}
+
+Horsea: {
+	DisplayName: Horsea
+	Species: Pokémon Dragón
+}
+
+Seadra: {
+	DisplayName: Seadra
+	Species: Pokémon Dragón
+}
+
+Goldeen: {
+	DisplayName: Goldeen
+	Species: Pokémon Pez Color
+}
+
+Seaking: {
+	DisplayName: Seaking
+	Species: Pokémon Pez Color
+}
+
+Staryu: {
+	DisplayName: Staryu
+	Species: Pokémon Estrella
+}
+
+Starmie: {
+	DisplayName: Starmie
+	Species: Pokémon Misterioso
+}
+
+MrMime: {
+	DisplayName: Mr. Mime
+	Species: Pokémon Barrera
+}
+
+Scyther: {
+	DisplayName: Scyther
+	Species: Pokémon Mantis
+}
+
+Jynx: {
+	DisplayName: Jynx
+	Species: Pokémon Forma Humana
+}
+
+Electabuzz: {
+	DisplayName: Electabuzz
+	Species: Pokémon Eléctrico
+}
+
+Magmar: {
+	DisplayName: Magmar
+	Species: Pokémon Escupefuego
+}
+
+Pinsir: {
+	DisplayName: Pinsir
+	Species: Pokémon Escarabajo
+}
+
+Tauros: {
+	DisplayName: Tauros
+	Species: Pokémon Toro Bravo
+}
+
+Magikarp: {
+	DisplayName: Magikarp
+	Species: Pokémon Pez
+}
+
+Gyarados: {
+	DisplayName: Gyarados
+	Species: Pokémon Atrocidad
+}
+
+Lapras: {
+	DisplayName: Lapras
+	Species: Pokémon Transporte
+}
+
+Ditto: {
+	DisplayName: Ditto
+	Species: Pokémon Transformación
+}
+
+Eevee: {
+	DisplayName: Eevee
+	Species: Pokémon Evolución
+}
+
+Vaporeon: {
+	DisplayName: Vaporeon
+	Species: Pokémon Burbuja
+}
+
+Jolteon: {
+	DisplayName: Jolteon
+	Species: Pokémon Relámpago
+}
+
+Flareon: {
+	DisplayName: Flareon
+	Species: Pokémon Llama
+}
+
+Porygon: {
+	DisplayName: Porygon
+	Species: Pokémon Virtual
+}
+
+Omanyte: {
+	DisplayName: Omanyte
+	Species: Pokémon Espiral
+}
+
+Omastar: {
+	DisplayName: Omastar
+	Species: Pokémon Espiral
+}
+
+Kabuto: {
+	DisplayName: Kabuto
+	Species: Pokémon Armazón
+}
+
+Kabutops: {
+	DisplayName: Kabutops
+	Species: Pokémon Armazón
+}
+
+Aerodactyl: {
+	DisplayName: Aerodactyl
+	Species: Pokémon Fósil
+}
+
+Snorlax: {
+	DisplayName: Snorlax
+	Species: Pokémon Dormir
+}
+
+Articuno: {
+	DisplayName: Articuno
+	Species: Pokémon Congelar
+}
+
+Zapdos: {
+	DisplayName: Zapdos
+	Species: Pokémon Eléctrico
+}
+
+Moltres: {
+	DisplayName: Moltres
+	Species: Pokémon Llama
+}
+
+Dratini: {
+	DisplayName: Dratini
+	Species: Pokémon Dragón
+}
+
+Dragonair: {
+	DisplayName: Dragonair
+	Species: Pokémon Dragón
+}
+
+Dragonite: {
+	DisplayName: Dragonite
+	Species: Pokémon Dragón
+}
+
+Mewtwo: {
+	DisplayName: Mewtwo
+	Species: Pokémon Genético
+}
+
+Mew: {
+	DisplayName: Mew
+	Species: Pokémon Nueva Especie
+}

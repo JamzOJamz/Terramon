@@ -1,28 +1,3 @@
-Hoppip: {
-	DisplayName: Hoppip
-	Species: Cottonweed Pokémon
-}
-
-Marill: {
-	DisplayName: Marill
-	Species: Aqua Mouse Pokémon
-}
-
-Golbat: {
-	DisplayName: Golbat
-	Species: Bat Pokémon
-}
-
-Abra: {
-	DisplayName: Abra
-	Species: Psi Pokémon
-}
-
-Aerodactyl: {
-	DisplayName: Aerodactyl
-	Species: Fossil Pokémon
-}
-
 Bulbasaur: {
 	DisplayName: Bulbasaur
 	Species: Seed Pokémon
@@ -111,96 +86,6 @@ Pidgeotto: {
 Pidgeot: {
 	DisplayName: Pidgeot
 	Species: Bird Pokémon
-}
-
-Chikorita: {
-	DisplayName: Chikorita
-	Species: Leaf Pokémon
-}
-
-Cyndaquil: {
-	DisplayName: Cyndaquil
-	Species: Fire Mouse Pokémon
-}
-
-Totodile: {
-	DisplayName: Totodile
-	Species: Big Jaw Pokémon
-}
-
-Treecko: {
-	DisplayName: Treecko
-	Species: Wood Gecko Pokémon
-}
-
-Torchic: {
-	DisplayName: Torchic
-	Species: Chick Pokémon
-}
-
-Mudkip: {
-	DisplayName: Mudkip
-	Species: Mud Fish Pokémon
-}
-
-Turtwig: {
-	DisplayName: Turtwig
-	Species: Tiny Leaf Pokémon
-}
-
-Chimchar: {
-	DisplayName: Chimchar
-	Species: Chimp Pokémon
-}
-
-Piplup: {
-	DisplayName: Piplup
-	Species: Penguin Pokémon
-}
-
-Snivy: {
-	DisplayName: Snivy
-	Species: Grass Snake Pokémon
-}
-
-Tepig: {
-	DisplayName: Tepig
-	Species: Fire Pig Pokémon
-}
-
-Oshawott: {
-	DisplayName: Oshawott
-	Species: Sea Otter Pokémon
-}
-
-Chespin: {
-	DisplayName: Chespin
-	Species: Spiny Nut Pokémon
-}
-
-Fennekin: {
-	DisplayName: Fennekin
-	Species: Fox Pokémon
-}
-
-Froakie: {
-	DisplayName: Froakie
-	Species: Bubble Frog Pokémon
-}
-
-Rowlet: {
-	DisplayName: Rowlet
-	Species: Grass Quill Pokémon
-}
-
-Litten: {
-	DisplayName: Litten
-	Species: Fire Cat Pokémon
-}
-
-Popplio: {
-	DisplayName: Popplio
-	Species: Sea Lion Pokémon
 }
 
 Rattata: {
@@ -318,6 +203,11 @@ Zubat: {
 	Species: Bat Pokémon
 }
 
+Golbat: {
+	DisplayName: Golbat
+	Species: Bat Pokémon
+}
+
 Oddish: {
 	DisplayName: Oddish
 	Species: Weed Pokémon
@@ -416,6 +306,11 @@ Poliwhirl: {
 Poliwrath: {
 	DisplayName: Poliwrath
 	Species: Tadpole Pokémon
+}
+
+Abra: {
+	DisplayName: Abra
+	Species: Psi Pokémon
 }
 
 Kadabra: {
@@ -806,6 +701,11 @@ Kabuto: {
 Kabutops: {
 	DisplayName: Kabutops
 	Species: Shellfish Pokémon
+}
+
+Aerodactyl: {
+	DisplayName: Aerodactyl
+	Species: Fossil Pokémon
 }
 
 Snorlax: {

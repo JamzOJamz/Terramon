@@ -1,5 +1,4 @@
 using System;
-using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
 
@@ -12,12 +11,10 @@ namespace Terramon.Content.NPCs;
 /// <summary>
 ///     A <see cref="NPCComponent" /> for adding basic walking AI to an NPC.
 /// </summary>
-public class NPCWalkingBehaviour : NPCAIComponent
+public sealed class NPCWalkingBehaviour : NPCAIComponent
 {
     private int _collideTimer;
     public string AnimationType = "StraightForward";
-    public int FrameCount = 2;
-    public int FrameTime = 10;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
     public int StopFrequency = 225;
     public float WalkSpeed = 1f;
@@ -25,14 +22,6 @@ public class NPCWalkingBehaviour : NPCAIComponent
     private ref float AIState => ref NPC.ai[0];
     private ref float AITimer => ref NPC.ai[1];
     private ref float AIWalkDir => ref NPC.ai[2];
-
-    public override void SetDefaults(NPC npc)
-    {
-        base.SetDefaults(npc);
-        if (!Enabled) return;
-
-        Main.npcFrameCount[npc.type] = FrameCount;
-    }
 
     public override void AI(NPC npc)
     {

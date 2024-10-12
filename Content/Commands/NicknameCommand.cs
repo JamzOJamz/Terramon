@@ -1,4 +1,4 @@
-using Terramon.Content.GUI;
+using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
 
@@ -15,11 +15,11 @@ public class NicknameCommand : TerramonCommand
     public override string Command
         => "nickname";
 
-    public override string Usage
-        => "/nickname <set/clear> <nickname>";
-
     public override string Description
-        => "Changes the nickname of your currently active Pokémon";
+        => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Description");
+
+    public override string Usage
+        => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Usage");
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
@@ -30,7 +30,7 @@ public class NicknameCommand : TerramonCommand
         var activePokemonData = player.GetActivePokemon();
         if (activePokemonData == null)
         {
-            caller.Reply("No Pokémon is currently active", Color.Red);
+            caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Nickname.Set.NoActivePokemon"), ChatColorRed);
             return;
         }
 
@@ -41,44 +41,52 @@ public class NicknameCommand : TerramonCommand
                 // Make sure a nickname has been provided
                 if (string.IsNullOrEmpty(nick))
                 {
-                    caller.Reply("No nickname provided", Color.Red);
+                    caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Nickname.Set.NoNicknameProvided"),
+                        ChatColorRed);
                     return;
                 }
 
                 // Make sure the nickname is not too long (12 characters max)
                 if (nick.Length > MaxNicknameLength)
                 {
-                    caller.Reply("Nickname must be 12 characters or less (including spaces)", Color.Red);
+                    caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Nickname.Set.NicknameTooLong"),
+                        ChatColorRed);
                     return;
                 }
 
                 // Make sure the nickname is not the same as the current one
                 if (activePokemonData.Nickname == nick)
                 {
-                    caller.Reply("Nickname is already set to that value", Color.Red);
+                    caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Nickname.Set.SameNickname"),
+                        ChatColorRed);
                     return;
                 }
 
                 // Set the nickname
                 caller.Reply(string.IsNullOrEmpty(activePokemonData.Nickname)
-                        ? $"Set {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname to {nick}"
-                        : $"Changed {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname from {activePokemonData.Nickname} to {nick}",
-                    new Color(255, 240, 20));
+                        ? Language.GetTextValue("Mods.Terramon.Commands.Nickname.Set.SuccessNew",
+                            activePokemonData.LocalizedName, nick)
+                        : Language.GetTextValue("Mods.Terramon.Commands.Nickname.Set.SuccessUpdate",
+                            activePokemonData.LocalizedName, activePokemonData.Nickname, nick),
+                    ChatColorYellow);
                 activePokemonData.Nickname = nick;
                 break;
             case "clear":
                 if (string.IsNullOrEmpty(activePokemonData.Nickname))
                 {
-                    caller.Reply("No nickname set for this Pokémon", Color.Red);
+                    caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Nickname.Clear.NoNicknameSet"),
+                        ChatColorRed);
                     return;
                 }
 
-                caller.Reply($"Cleared {Terramon.DatabaseV2.GetLocalizedPokemonName(activePokemonData.ID)}'s nickname",
-                    new Color(255, 240, 20));
+                caller.Reply(
+                    Language.GetTextValue("Mods.Terramon.Commands.Nickname.Clear.Success",
+                        activePokemonData.LocalizedName),
+                    ChatColorYellow);
                 activePokemonData.Nickname = null;
                 break;
             default:
-                caller.Reply("Invalid subcommand. Use 'set' or 'clear'", Color.Red);
+                caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Nickname.InvalidSubcommand"), ChatColorRed);
                 return;
         }
     }
