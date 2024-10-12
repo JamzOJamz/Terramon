@@ -86,7 +86,7 @@ public class InventoryParty : SmartUIState
             var slot = new CustomPartyItemSlot(i);
             if (reducedMotion) slot.Color = Color.White * 0f;
             CustomSlots[i] = slot;
-            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 52, 52, container);
+            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 48, 48, container);
         }
 
         Append(container);
