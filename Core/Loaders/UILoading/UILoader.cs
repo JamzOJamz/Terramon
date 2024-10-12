@@ -26,6 +26,23 @@ internal class UILoader : ModSystem
         Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "1");
     }
 
+    private static GameTime _gameTime;
+
+    public override void Load()
+    {
+        On_Main.DoUpdate += static (On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime) =>
+        {
+            _gameTime = gameTime;
+            orig(self, ref gameTime);
+        };
+        
+        On_Main.DoUpdateInWorld += static (orig, self, sw) =>
+        {
+            orig(self, sw);
+            UpdateUI(_gameTime);
+        };
+    }
+
     /// <summary>
     ///     Uses reflection to scan through and find all types extending SmartUIState that arent abstract, and loads an
     ///     instance of them.
@@ -139,7 +156,7 @@ internal class UILoader : ModSystem
             state.InformLayers(layers);*/
     }
 
-    public override void UpdateUI(GameTime gameTime)
+    private new static void UpdateUI(GameTime gameTime)
     {
         var index = 0;
         for (; index < _userInterfaces.Count; index++)

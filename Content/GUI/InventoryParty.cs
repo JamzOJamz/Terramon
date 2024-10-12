@@ -48,7 +48,7 @@ public class InventoryParty : SmartUIState
     }
 
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !HubUI.Active &&
+                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -86,7 +86,7 @@ public class InventoryParty : SmartUIState
             var slot = new CustomPartyItemSlot(i);
             if (reducedMotion) slot.Color = Color.White * 0f;
             CustomSlots[i] = slot;
-            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 48, 48, container);
+            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 52, 52, container);
         }
 
         Append(container);

@@ -219,6 +219,7 @@ public class PartySidebarSlot : UIImage
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         base.DrawSelf(spriteBatch);
+        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
         var hoverText =
             Language.GetTextValue(_isActiveSlot
@@ -411,9 +412,7 @@ public class PartySidebarSlot : UIImage
 
         if (IsMouseHovering && !PartyDisplay.IsDraggingSlot)
         {
-            if (Data == null) return;
-            Main.LocalPlayer.mouseInterface = true;
-            if (_isHovered) return;
+            if (Data == null || _isHovered) return;
             _isHovered = true;
             if (!_justEndedDragging) SoundEngine.PlaySound(SoundID.MenuTick);
             UpdateSprite(true);

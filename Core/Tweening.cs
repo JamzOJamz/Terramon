@@ -29,7 +29,7 @@ public class Tween
         ActiveTweens.Add(tweener);
         return tweener;
     }
-    
+
     /// <summary>
     ///     Updates all active tweens. Should be called once per frame.
     /// </summary>
@@ -67,8 +67,22 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
     public bool Update()
     {
         if (_killed) return false;
-        var t = (Main.timeForVisualEffects - StartTime) /
-                (EndTime - StartTime);
+        const double maxTime = 216000.0;
+        double timeDiff;
+
+        if (EndTime >= StartTime)
+            // Normal case: No wrap-around
+            timeDiff = EndTime - StartTime;
+        else
+            // Wrap-around case: EndTime < StartTime
+            timeDiff = maxTime - StartTime + EndTime;
+
+        var t = (Main.timeForVisualEffects - StartTime) / timeDiff;
+
+        // Handle the case where Main.timeForVisualEffects is also wrapped
+        if (Main.timeForVisualEffects < StartTime) t = (Main.timeForVisualEffects + maxTime - StartTime) / timeDiff;
+
+        // Clamp t to the [0, 1] range
         t = Math.Clamp(t, 0, 1);
         t = ApplyEasing(_ease, t);
         switch (StartValue, EndValue)
