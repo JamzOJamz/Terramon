@@ -12,7 +12,7 @@ public class LinkingCord : EvolutionaryItem
         base.SetDefaults();
         Item.width = 32;
         Item.height = 36;
-        Item.value = Item.buyPrice(silver: 30);
+        Item.value = Item.buyPrice(gold: 5);
     }
     
     public override ushort GetEvolvedSpecies(PokemonData data)

@@ -1,4 +1,5 @@
-﻿using Terramon.Content.Items.Vitamins;
+﻿using Terramon.Content.Items.Evolutionary;
+using Terramon.Content.Items.Vitamins;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -6,13 +7,11 @@ namespace Terramon.Content.Items;
 
 internal class NPCLoot : GlobalNPC
 {
-    /* TODO: Add this back once link cable item exists
     public override void ModifyShop(NPCShop shop)
     {
         if (shop.NpcType == NPCID.Mechanic)
-            shop.Add<LinkCable>();
+            shop.Add<LinkingCord>();
     }
-    */
 
     public override void ModifyNPCLoot(NPC npc, Terraria.ModLoader.NPCLoot npcLoot)
     {
