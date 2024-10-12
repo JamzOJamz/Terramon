@@ -95,7 +95,7 @@ public class InventoryParty : SmartUIState
         _openPokedexButton = new UIHoverImageButton(PokedexButtonTexture, _openPokedexLocalizedText);
         _openPokedexButton.SetHoverImage(PokedexButtonHoverAltTexture, false);
         _openPokedexButton.SetVisibility(1, 1);
-        _openPokedexButton.OnLeftClick += (_, _) => { HubUI.ToggleActive(); };
+        _openPokedexButton.OnLeftClick += (_, _) => { HubUI.SetActive(true); };
         AddElement(_openPokedexButton, 30, 262, 30, 36);
     }
 

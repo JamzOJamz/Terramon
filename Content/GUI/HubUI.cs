@@ -3,32 +3,42 @@ using System.Reflection;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
 
 public class HubUI : SmartUIState
 {
+    private static bool _playerInventoryOpen;
+
     static HubUI()
     {
         var playerToggleInvMethod = typeof(Player).GetMethod("ToggleInv", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(playerToggleInvMethod, PlayerToggleInv_Detour);
-        var mainDrawInterfaceResourcesBuffsMethod = typeof(Main).GetMethod("DrawInterface_Resources_Buffs", BindingFlags.Instance | BindingFlags.Public);
-        MonoModHooks.Add(mainDrawInterfaceResourcesBuffsMethod, MainDrawInterfaceResourcesBuffs_Detour);
     }
 
     public static bool Active { get; private set; }
-
     public override bool Visible => Active;
-    
-    private static bool _playerInventoryOpen;
 
-    private static void SetActive(bool active)
+    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    {
+        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+    }
+
+    public static void SetActive(bool active)
     {
         if (Active == active) return;
         if (!Active && active) _playerInventoryOpen = Main.playerInventory;
+        if (active)
+            IngameFancyUI.OpenUIState(UILoader.GetUIState<HubUI>());
+        else
+            IngameFancyUIClose();
+        if (Active && !active) Main.playerInventory = _playerInventoryOpen;
         Active = active;
-        if (_playerInventoryOpen) Main.playerInventory = !active;
         SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Sounds/dex_open" : "Terramon/Sounds/dex_close")
         {
             Volume = 0.48f
@@ -40,39 +50,34 @@ public class HubUI : SmartUIState
         SetActive(!Active);
     }
 
-    public override int InsertionIndex(List<GameInterfaceLayer> layers)
-    {
-        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-    }
-
-    public override void InformLayers(List<GameInterfaceLayer> layers)
-    {
-        // Don't do anything if the hub UI is not active
-        if (!Active) return;
-
-        var highIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
-
-        // Iterate all layers below this one and disable them
-        for (var i = highIndex - 1; i >= 0; i--)
-        {
-            var t = layers[i];
-            if (t.Name is "Vanilla: Resource Bars" or "Vanilla: Mouse Text" or "Vanilla: Interface Logic 1"
-                    or "Vanilla: Interface Logic 2" or "Vanilla: Interface Logic 3" or "Vanilla: Interface Logic 4" ||
-                t.Name == UILoader.GetLayerName(this))
-                continue;
-            t.Active = false;
-        }
-    }
-
     public override void OnInitialize()
     {
-        var panel = new UIPanel();
-        panel.Left.Set(0, 0);
-        panel.Top.Set(0, 0);
-        panel.Width.Set(200, 0);
-        panel.Height.Set(200, 0);
+        var backPanel = new UITextPanel<LocalizedText>(Language.GetText("UI.Back"), 0.7f, true)
+        {
+            HAlign = 0.5f
+        };
+        backPanel.Width.Set(440f, 0);
+        backPanel.Height.Set(50f, 0);
+        backPanel.Top.Set(-74f, 1f);
+        backPanel.OnMouseOver += FadedMouseOver;
+        backPanel.OnMouseOut += FadedMouseOut;
+        backPanel.OnLeftClick += (_, _) => { SetActive(false); };
+        backPanel.SetSnapPoint("Back", 0);
 
-        Append(panel);
+        Append(backPanel);
+    }
+
+    private static void FadedMouseOver(UIMouseEvent evt, UIElement listeningElement)
+    {
+        SoundEngine.PlaySound(SoundID.MenuTick);
+        ((UIPanel)evt.Target).BackgroundColor = new Color(73, 94, 171);
+        ((UIPanel)evt.Target).BorderColor = Colors.FancyUIFatButtonMouseOver;
+    }
+
+    private static void FadedMouseOut(UIMouseEvent evt, UIElement listeningElement)
+    {
+        ((UIPanel)evt.Target).BackgroundColor = new Color(63, 82, 151) * 0.8f;
+        ((UIPanel)evt.Target).BorderColor = Color.Black;
     }
 
     public override void SafeUpdate(GameTime gameTime)
@@ -81,7 +86,35 @@ public class HubUI : SmartUIState
         var inventoryParty = UILoader.GetUIState<InventoryParty>();
         if (!inventoryParty.Visible) inventoryParty.Recalculate();
 
-        //Recalculate();
+        Recalculate();
+    }
+
+    /// <summary>
+    ///     The same as <see cref="IngameFancyUI.Close" /> but does not play the <see cref="SoundID.MenuClose" /> sound.
+    /// </summary>
+    private static void IngameFancyUIClose()
+    {
+        Main.inFancyUI = false;
+        //SoundEngine.PlaySound(SoundID.MenuClose); // Commented out to prevent the sound from playing
+        var flag = !Main.gameMenu;
+        var flag2 = Main.InGameUI.CurrentState is not UIVirtualKeyboard;
+        var flag3 = false;
+        var keyboardContext = UIVirtualKeyboard.KeyboardContext;
+        if ((uint)(keyboardContext - 2) <= 1u)
+            flag3 = true;
+
+        if (flag && !(flag2 || flag3))
+            flag = false;
+
+        if (flag)
+            Main.playerInventory = true;
+
+        if (!Main.gameMenu && Main.InGameUI.CurrentState is UIEmotesMenu)
+            Main.playerInventory = false;
+
+        Main.LocalPlayer.releaseInventory = false;
+        Main.InGameUI.SetState(null);
+        UILinkPointNavigator.Shortcuts.FANCYUI_SPECIAL_INSTRUCTIONS = 0;
     }
 
     /// <summary>
@@ -99,14 +132,4 @@ public class HubUI : SmartUIState
     }
 
     private delegate void OrigPlayerToggleInv(object self);
-    
-    /// <summary>
-    ///     Prevents the game from drawing buff icons beneath the hotbar while the hub UI is active.
-    /// </summary>
-    private static void MainDrawInterfaceResourcesBuffs_Detour(OrigMainDrawInterfaceResourcesBuffs orig, object self)
-    {
-        if (!Active) orig(self);
-    }
-    
-    private delegate void OrigMainDrawInterfaceResourcesBuffs(object self);
 }

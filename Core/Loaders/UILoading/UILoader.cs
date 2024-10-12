@@ -135,8 +135,8 @@ internal class UILoader : ModSystem
         foreach (var state in _uiStates)
             AddLayer(layers, state, state.InsertionIndex(layers), state.Visible, state.Scale);
 
-        foreach (var state in _uiStates)
-            state.InformLayers(layers);
+        /*foreach (var state in _uiStates)
+            state.InformLayers(layers);*/
     }
 
     public override void UpdateUI(GameTime gameTime)

@@ -256,7 +256,6 @@ public class PokemartClerk : ModNPC
         npcShop.Register(); // Name of this shop tab
     }
 
-
     // Make this Town NPC teleport to the King and/or Queen statue when triggered.
     public override bool CanGoToStatue(bool toKingStatue)
     {
