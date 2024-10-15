@@ -16,6 +16,8 @@ namespace Terramon.Content.GUI;
 
 public class StarterSelectOverhead : SmartUIState
 {
+    private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
+
     private readonly ushort[] _starters =
     [
         NationalDexID.Bulbasaur,
@@ -40,10 +42,10 @@ public class StarterSelectOverhead : SmartUIState
         NationalDexID.Litten,
         NationalDexID.Popplio
     ];
-    
-    private readonly LocalizedText _titleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
+
     private readonly LocalizedText _subtitleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Subtitle");
-    private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
+
+    private readonly LocalizedText _titleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
 
     private UIBlendedImage _background;
     private UIText _hintText;
@@ -53,7 +55,8 @@ public class StarterSelectOverhead : SmartUIState
     private UIText _titleText;
 
     public override bool Visible =>
-        !Main.playerInventory && !Main.LocalPlayer.dead && !TerramonPlayer.LocalPlayer.HasChosenStarter &&
+        !Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
+        !TerramonPlayer.LocalPlayer.HasChosenStarter &&
         Main.LocalPlayer.talkNPC < 0;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)

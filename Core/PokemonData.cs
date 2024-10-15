@@ -4,6 +4,7 @@ using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
+using Terraria.Localization;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -40,7 +41,7 @@ public class PokemonData : TagSerializable
     /// <summary>
     ///     The localized name of the Pokémon.
     /// </summary>
-    public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value;
+    public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(ID);
     
     /// <summary>
     ///     The internal name of the Pokémon. This is unaffected by localization.

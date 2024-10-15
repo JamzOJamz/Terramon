@@ -4,6 +4,7 @@ using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terraria.GameInput;
 using Terraria.Localization;
@@ -64,7 +65,7 @@ public class TerramonPlayer : ModPlayer
 
     public override void OnEnterWorld()
     {
-        Terramon.ResetPartyUI();
+        Terramon.RefreshPartyUI();
     }
 
     public override void OnRespawn()
@@ -78,7 +79,7 @@ public class TerramonPlayer : ModPlayer
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
-        if (KeybindSystem.OpenPokedexKeybind.JustPressed)
+        if (HasChosenStarter && KeybindSystem.OpenPokedexKeybind.JustPressed)
             HubUI.ToggleActive();
     }
 
@@ -161,10 +162,10 @@ public class TerramonPlayer : ModPlayer
     {
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
-        if (!hasEntry) return false;
-        if (!force && entry.Status >= status) return false;
-        entry.Status = status;
-
+        if (hasEntry)
+            if (entry.Status < status || force)
+                entry.Status = status;
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(pokemon: id);
         return true;
     }
 
@@ -226,7 +227,12 @@ public class TerramonPlayer : ModPlayer
         const string tagName = "pokedex";
         if (!tag.ContainsKey(tagName)) return;
         var entries = tag.GetList<int[]>(tagName);
-        foreach (var entry in entries) UpdatePokedex((ushort)entry[0], (PokedexEntryStatus)entry[1]);
+        foreach (var entry in entries)
+            // If the entry is not in the database, force create it (backwards compatibility so saves don't get overwritten)
+            if (!_pokedex.Entries.ContainsKey(entry[0]))
+                _pokedex.Entries.Add(entry[0], new PokedexEntry((PokedexEntryStatus)entry[1]) { Unlisted = true });
+            else
+                UpdatePokedex((ushort)entry[0], (PokedexEntryStatus)entry[1], true);
     }
 
     private void SavePC(TagCompound tag)

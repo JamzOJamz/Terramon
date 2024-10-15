@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using EasyPacketsLib;
 using Terramon.Content.GUI;
+using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon;
 
@@ -28,20 +29,25 @@ public class Terramon : Mod
     public static Terramon Instance => ModContent.GetInstance<Terramon>();
 
     public static DatabaseV2 DatabaseV2 { get; private set; }
-
-    public static void ResetPartyUI(bool fullClear = false)
+    
+    /// <summary>
+    ///     Forces a full refresh of the party UI (<see cref="PartyDisplay"/> and <see cref="InventoryParty"/>), updating all slots.
+    /// </summary>
+    public static void RefreshPartyUI()
     {
-        if (fullClear)
-        {
-            PartyDisplay.ClearAllSlots();
-            InventoryParty.ClearAllSlots();
-        }
-        else
-        {
-            var partyData = TerramonPlayer.LocalPlayer.Party;
-            PartyDisplay.UpdateAllSlots(partyData); // Update the party sidebar display
-            InventoryParty.UpdateAllSlots(partyData); // Update the inventory party display
-        }
+        var partyData = TerramonPlayer.LocalPlayer.Party;
+        PartyDisplay.UpdateAllSlots(partyData); // Update the party sidebar display
+        InventoryParty.UpdateAllSlots(partyData); // Update the inventory party display
+    }
+
+    /// <summary>
+    ///     Resets UI states for reuse. Called when the player leaves the world, in <see cref="TerramonWorld.PreSaveAndQuit"/>.
+    /// </summary>
+    public static void ResetUI()
+    {
+        PartyDisplay.ClearAllSlots();
+        InventoryParty.ClearAllSlots();
+        UILoader.GetUIState<HubUI>().ResetPokedex();
     }
 
     public override void HandlePacket(BinaryReader reader, int whoAmI)

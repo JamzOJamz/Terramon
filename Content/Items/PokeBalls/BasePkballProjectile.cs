@@ -367,7 +367,9 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         CatchModifier = ChangeCatchModifier(target); //Change modifier (can take into account values like pokemon type)
 
-        var catchChance = Terramon.DatabaseV2.GetPokemon(_capture.ID).CatchRate / 255f * 0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
+        var catchChance =
+            Terramon.DatabaseV2.GetPokemon(_capture.ID).CatchRate / 255f *
+            0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
         if (_catchRandom < catchChance * CatchModifier)
             return true;
@@ -488,6 +490,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             var newPoke = (PokemonNPC)Main.npc[newNPC].ModNPC;
             newPoke.Data = _capture.Data;
             newPoke.NPC.spriteDirection = _capture.NPC.spriteDirection;
+            newPoke.NPC.FindFrame();
             //newPoke.isShimmer = capture.isShimmer;
             //newPoke.level = capture.level;
             //newPoke.catchAttempts = capture.catchAttempts + 1;

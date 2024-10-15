@@ -86,7 +86,7 @@ public class InventoryParty : SmartUIState
             var slot = new CustomPartyItemSlot(i);
             if (reducedMotion) slot.Color = Color.White * 0f;
             CustomSlots[i] = slot;
-            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 52, 52, container);
+            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 50, 50, container);
         }
 
         Append(container);
@@ -95,7 +95,7 @@ public class InventoryParty : SmartUIState
         _openPokedexButton = new UIHoverImageButton(PokedexButtonTexture, _openPokedexLocalizedText);
         _openPokedexButton.SetHoverImage(PokedexButtonHoverAltTexture, false);
         _openPokedexButton.SetVisibility(1, 1);
-        _openPokedexButton.OnLeftClick += (_, _) => { HubUI.SetActive(true); };
+        _openPokedexButton.OnLeftClick += (_, _) => HubUI.SetActive(true);
         AddElement(_openPokedexButton, 30, 262, 30, 36);
     }
 

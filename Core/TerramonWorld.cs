@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Reflection;
 using ReLogic.Utilities;
 using Terramon.Content.Buffs;
+using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.ModLoader.IO;
 
@@ -44,9 +44,14 @@ public class TerramonWorld : ModSystem
         entry.Status = status;
     }
 
+    public static PokedexService GetWorldDex()
+    {
+        return _worldDex;
+    }
+
     public override void PreSaveAndQuit()
     {
-        Terramon.ResetPartyUI(true);
+        Terramon.ResetUI();
         Main.LocalPlayer.ClearBuff(ModContent.BuffType<PokemonCompanion>());
     }
 
@@ -95,14 +100,16 @@ public class TerramonWorld : ModSystem
 
     public override void Load()
     {
-        var mainDoUpdateMethod = typeof(Main).GetMethod("DoUpdate", BindingFlags.NonPublic | BindingFlags.Instance);
-        MonoModHooks.Add(mainDoUpdateMethod, MainDoUpdate_Detour);
+        On_Main.DoUpdate += MainDoUpdate_Detour;
     }
 
-    private static void MainDoUpdate_Detour(OrigMainDoUpdate orig, object self, ref GameTime gameTime)
+    private static void MainDoUpdate_Detour(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
     {
+        // Set GameTime and MousePosition for UILoader
+        UILoader.GameTime = gameTime;
+
         orig(self, ref gameTime);
-    
+
         // Update all active tweens
         Tween.DoUpdate();
 
@@ -128,6 +135,4 @@ public class TerramonWorld : ModSystem
         if (!activeSound.IsPlaying) return;
         _soundEndedLastFrame = true;
     }
-
-    private delegate void OrigMainDoUpdate(object self, ref GameTime gameTime);
 }

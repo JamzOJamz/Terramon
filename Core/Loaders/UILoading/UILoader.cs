@@ -21,25 +21,20 @@ internal class UILoader : ModSystem
     /// </summary>
     private static List<SmartUIState> _uiStates = [];
 
+    public static GameTime GameTime { get; set; }
+    private static Vector2 _mousePosition;
+
     public static void UpdateApplication(IEnumerable<Type> changedTypes)
     {
         Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "1");
     }
 
-    private static GameTime _gameTime;
-
     public override void Load()
     {
-        On_Main.DoUpdate += static (On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime) =>
-        {
-            _gameTime = gameTime;
-            orig(self, ref gameTime);
-        };
-        
         On_Main.DoUpdateInWorld += static (orig, self, sw) =>
         {
             orig(self, sw);
-            UpdateUI(_gameTime);
+            UpdateUI_Custom(GameTime);
         };
     }
 
@@ -156,8 +151,11 @@ internal class UILoader : ModSystem
             state.InformLayers(layers);*/
     }
 
-    private new static void UpdateUI(GameTime gameTime)
+    private static void UpdateUI_Custom(GameTime gameTime)
     {
+        var currentMousePosition = Main.MouseScreen;
+        Main.mouseX = (int)_mousePosition.X;
+        Main.mouseY = (int)_mousePosition.Y;
         var index = 0;
         for (; index < _userInterfaces.Count; index++)
         {
@@ -170,5 +168,13 @@ internal class UILoader : ModSystem
             if (smartUiState.Visible)
                 eachState.Update(gameTime);
         }
+
+        Main.mouseX = (int)currentMousePosition.X;
+        Main.mouseY = (int)currentMousePosition.Y;
+    }
+
+    public override void UpdateUI(GameTime gameTime)
+    {
+        _mousePosition = Main.MouseScreen;
     }
 }
