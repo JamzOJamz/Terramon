@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items.KeyItems;
+using Terramon.Content.NPCs;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
@@ -890,7 +891,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _dexNoText.SetText($"No. {pokemon}");
         _monNameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon));
         _header.Color = Color.White;
-        _preview.IDToDraw = PokemonEntityLoader.IDToNPCType[pokemon];
+        _preview.IDToDraw = pokemon;
     }
 }
 
@@ -900,7 +901,7 @@ internal sealed class PokedexPreviewCanvas : UIImage
 
     private NPC _dummyNPCForDrawing;
 
-    private int _idToDraw;
+    private ushort _idToDraw;
 
     static PokedexPreviewCanvas()
     {
@@ -914,18 +915,20 @@ internal sealed class PokedexPreviewCanvas : UIImage
         Color = Color.Transparent;
     }
 
-    public int IDToDraw
+    public ushort IDToDraw
     {
         set
         {
+            _idToDraw = value;
             Color = value == 0 ? Color.Transparent : Color.White;
+            if (value == 0 || !PokemonEntityLoader.IDToNPCType.TryGetValue(value, out var type))
+                return;
             _dummyNPCForDrawing = new NPC
             {
                 IsABestiaryIconDummy = true
             };
-            _dummyNPCForDrawing.SetDefaults_ForNetId(value, 1);
-            _dummyNPCForDrawing.netID = value;
-            _idToDraw = value;
+            _dummyNPCForDrawing.SetDefaults_ForNetId(type, 1);
+            _dummyNPCForDrawing.netID = type;
         }
     }
 
@@ -940,16 +943,13 @@ internal sealed class PokedexPreviewCanvas : UIImage
     {
         base.DrawSelf(spriteBatch);
         if (_idToDraw == 0) return;
-        if (_dummyNPCForDrawing.type == NPCID.None)
-        {
-            var type = PokemonEntityLoader.IDToNPCType[1];
-            _dummyNPCForDrawing.SetDefaults_ForNetId(type, 1);
-            _dummyNPCForDrawing.netID = type;
-        }
 
         var position = GetOuterDimensions().Position();
         position.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
         position.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height - 16);
+        if (_dummyNPCForDrawing.GetGlobalNPC<NPCWanderingHoverBehaviour>()
+            .Enabled) // Draw the NPC a bit higher if it is a flying Pokémon
+            position.Y -= 6;
         Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -position);
     }
 }
