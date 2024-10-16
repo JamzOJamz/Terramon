@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items.KeyItems;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
@@ -36,7 +37,7 @@ public class HubUI : SmartUIState
     private UIPanel _caughtSeenPanel;
     private UIHoverImageButton _filterButton;
     private UIPanel _mainPanel;
-    private UIPanel _overviewPanel;
+    private PokedexOverviewPanel _overviewPanel;
 
     private float _pokedexCompletionPercentage;
     private PokedexPageDisplay _pokedexPage;
@@ -86,10 +87,10 @@ public class HubUI : SmartUIState
         if (Active == active) return;
         Active = active;
         var hubState = UILoader.GetUIState<HubUI>();
+        hubState.RefreshPokedex(closeOverview: !active);
         if (active)
         {
             _playerInventoryOpen = Main.playerInventory;
-            hubState.RefreshPokedex();
             IngameFancyUI.OpenUIState(hubState);
         }
         else
@@ -190,7 +191,7 @@ public class HubUI : SmartUIState
             if (_worldDexMode) _filterButton.SetHoverText("Show World Dex");
             _filterButton.SetImage(_worldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
             _filterButton.SetHoverImage(_worldDexMode ? WorldDexFilterHoverTexture : PlayerDexFilterHoverTexture);
-            RefreshPokedex();
+            RefreshPokedex(closeOverview: true);
         };
         _mainPanel.Append(_filterButton);
 
@@ -270,22 +271,11 @@ public class HubUI : SmartUIState
         _mainPanel.Append(_pokedexPage);
 
         // Pokémon overview panel
-        _overviewPanel = new UIPanel
+        _overviewPanel = new PokedexOverviewPanel
         {
-            Width = { Pixels = 380 },
-            Height = { Pixels = 694 },
             Left = { Pixels = 490 },
-            Top = { Pixels = 114 },
-            BackgroundColor = new Color(37, 49, 90)
+            Top = { Pixels = 114 }
         };
-        var overviewList = new UIList
-        {
-            ListPadding = 10f
-        };
-        AddElement(overviewList, 0, 0, 380, 694, _overviewPanel);
-        var overviewScroll = new UIScrollbar();
-        overviewScroll.SetView(100f, 1000f);
-        overviewList.SetScrollbar(overviewScroll);
         _mainPanel.Append(_overviewPanel);
 
         #endregion
@@ -337,8 +327,12 @@ public class HubUI : SmartUIState
         Recalculate();
     }
 
-    public void RefreshPokedex(ushort pokemon = 0)
+    public void RefreshPokedex(ushort pokemon = 0, bool closeOverview = false)
     {
+        // Close the Pokémon overview panel if requested
+        if (closeOverview)
+            _overviewPanel.SetCurrentEntry(0);
+
         // Get the player's Pokédex
         var pokedex =
             _worldDexMode
@@ -398,6 +392,11 @@ public class HubUI : SmartUIState
         _filterButton.SetImage(PlayerDexFilterTexture);
         _filterButton.SetHoverImage(PlayerDexFilterHoverTexture);
         RefreshPokedex();
+    }
+
+    public void SetCurrentPokedexEntry(ushort pokemon)
+    {
+        _overviewPanel.SetCurrentEntry(pokemon);
     }
 
     public override void Recalculate()
@@ -641,6 +640,11 @@ internal sealed class PokedexEntryIcon : UIPanel
         BackgroundColor = new Color(34, 42, 79);
         OnMouseOver += FadedMouseOver;
         OnMouseOut += FadedMouseOut;
+        OnLeftClick += (_, _) =>
+        {
+            if (_entry?.Status == PokedexEntryStatus.Undiscovered) return;
+            UILoader.GetUIState<HubUI>().SetCurrentPokedexEntry(ID);
+        };
         /*var miniTexture =
             ModContent.Request<Texture2D>(
                 $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini");
@@ -813,5 +817,139 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         {
             Volume = 0.325f
         });
+    }
+}
+
+internal sealed class PokedexOverviewPanel : UIPanel
+{
+    private static readonly Asset<Texture2D> OverviewHeaderTexture;
+    private readonly UIText _dexNoText;
+    private readonly UIImage _header;
+    private readonly BetterUIText _monNameText;
+    private readonly PokedexPreviewCanvas _preview;
+
+    static PokedexOverviewPanel()
+    {
+        OverviewHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewHeader");
+    }
+
+    public PokedexOverviewPanel()
+    {
+        Width.Set(380, 0);
+        Height.Set(694, 0);
+        BackgroundColor = new Color(37, 49, 90);
+        SetPadding(0);
+        _header = new UIImage(OverviewHeaderTexture)
+        {
+            Width = { Percent = 1f },
+            Height = { Pixels = 62 },
+            Color = Color.Transparent
+        };
+        Append(_header);
+        _dexNoText = new UIText(string.Empty, 0.84f)
+        {
+            Left = { Pixels = 10 },
+            Top = { Pixels = 8 }
+        };
+        Append(_dexNoText);
+        _monNameText = new BetterUIText(string.Empty, 0.46f, true)
+        {
+            HAlign = 0.48f,
+            Top = { Pixels = 22 }
+        };
+        Append(_monNameText);
+        _preview = new PokedexPreviewCanvas
+        {
+            Left = { Pixels = 49 },
+            Top = { Pixels = 76 }
+        };
+        Append(_preview);
+        var overviewList = new UIList
+        {
+            Width = { Percent = 1f },
+            Height = { Percent = 1f },
+            ListPadding = 10f
+        };
+        Append(overviewList);
+        var overviewScroll = new UIScrollbar();
+        overviewScroll.SetView(100f, 1000f);
+        overviewList.SetScrollbar(overviewScroll);
+    }
+
+    public void SetCurrentEntry(ushort pokemon)
+    {
+        if (pokemon == 0)
+        {
+            _dexNoText.SetText(string.Empty);
+            _monNameText.SetText(string.Empty);
+            _header.Color = Color.Transparent;
+            _preview.IDToDraw = 0;
+            return;
+        }
+
+        _dexNoText.SetText($"No. {pokemon}");
+        _monNameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon));
+        _header.Color = Color.White;
+        _preview.IDToDraw = PokemonEntityLoader.IDToNPCType[pokemon];
+    }
+}
+
+internal sealed class PokedexPreviewCanvas : UIImage
+{
+    private static readonly Asset<Texture2D> OverviewPreviewTexture;
+
+    private NPC _dummyNPCForDrawing;
+
+    private int _idToDraw;
+
+    static PokedexPreviewCanvas()
+    {
+        OverviewPreviewTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewPreview");
+    }
+
+    public PokedexPreviewCanvas() : base(OverviewPreviewTexture)
+    {
+        Width.Set(274, 0);
+        Height.Set(138, 0);
+        Color = Color.Transparent;
+    }
+
+    public int IDToDraw
+    {
+        set
+        {
+            Color = value == 0 ? Color.Transparent : Color.White;
+            _dummyNPCForDrawing = new NPC
+            {
+                IsABestiaryIconDummy = true
+            };
+            _dummyNPCForDrawing.SetDefaults_ForNetId(value, 1);
+            _dummyNPCForDrawing.netID = value;
+            _idToDraw = value;
+        }
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+        if (_idToDraw == 0) return;
+        _dummyNPCForDrawing.FindFrame();
+    }
+
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        base.DrawSelf(spriteBatch);
+        if (_idToDraw == 0) return;
+        if (_dummyNPCForDrawing.type == NPCID.None)
+        {
+            var type = PokemonEntityLoader.IDToNPCType[1];
+            _dummyNPCForDrawing.SetDefaults_ForNetId(type, 1);
+            _dummyNPCForDrawing.netID = type;
+        }
+
+        var position = GetOuterDimensions().Position();
+        position.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
+        position.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height - 16);
+        Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -position);
     }
 }

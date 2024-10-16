@@ -4,7 +4,6 @@ using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
-using Terraria.Localization;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
