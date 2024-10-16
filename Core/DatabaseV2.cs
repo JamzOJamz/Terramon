@@ -140,12 +140,30 @@ public class DatabaseV2
         }
         
         [JsonProperty("genderRate")]
-        public sbyte GenderRatio { get; set; }
+        public sbyte GenderRatio { get; set; } = -1;
 
         [JsonProperty("g")]
         private sbyte b_GenderRatio
         {
             set => GenderRatio = value;
+        }
+
+        [JsonProperty("height")]
+        public ushort Height { get; set; }
+        
+        [JsonProperty("h")]
+        private ushort b_Height
+        {
+            set => Height = value;
+        }
+        
+        [JsonProperty("weight")]
+        public ushort Weight { get; set; }
+        
+        [JsonProperty("w")]
+        private ushort b_Weight
+        {
+            set => Weight = value;
         }
     }
 
