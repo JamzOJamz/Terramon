@@ -2,6 +2,7 @@ using System.Linq;
 using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
@@ -21,6 +22,7 @@ public class TerramonPlayer : ModPlayer
 
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
+    private bool _receivedShinyCharm;
 
     public bool HasChosenStarter;
     public PokemonData[] Party { get; } = new PokemonData[6];
@@ -162,11 +164,26 @@ public class TerramonPlayer : ModPlayer
     {
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
+        var entryUpdated = false;
         if (hasEntry)
             if (entry.Status < status || force)
+            {
                 entry.Status = status;
-        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(pokemon: id);
-        return true;
+                entryUpdated = true;
+            }
+
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id);
+        if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
+            _pokedex.RegisteredCount == Terramon.LoadedPokemonCount && !_receivedShinyCharm)
+            GiveShinyCharmReward();
+        return force ? hasEntry : entryUpdated;
+    }
+
+    private void GiveShinyCharmReward()
+    {
+        Player.QuickSpawnItem(Player.GetSource_GiftOrReward(),
+            ModContent.ItemType<ShinyCharm>());
+        _receivedShinyCharm = true;
     }
 
     public PCBox TransferPokemonToPC(PokemonData data)
@@ -181,7 +198,10 @@ public class TerramonPlayer : ModPlayer
 
     public override void SaveData(TagCompound tag)
     {
-        tag["starterChosen"] = HasChosenStarter;
+        if (HasChosenStarter)
+            tag["starterChosen"] = HasChosenStarter;
+        if (_receivedShinyCharm)
+            tag["shinyReward"] = _receivedShinyCharm;
         if (ActiveSlot >= 0)
             tag["activeSlot"] = ActiveSlot;
         SaveParty(tag);
@@ -191,7 +211,10 @@ public class TerramonPlayer : ModPlayer
 
     public override void LoadData(TagCompound tag)
     {
-        HasChosenStarter = tag.GetBool("starterChosen");
+        if (tag.TryGet("starterChosen", out bool starterChosen))
+            HasChosenStarter = starterChosen;
+        if (tag.TryGet("shinyReward", out bool shinyReward))
+            _receivedShinyCharm = shinyReward;
         if (tag.TryGet("activeSlot", out int slot))
             ActiveSlot = slot;
         LoadParty(tag);
