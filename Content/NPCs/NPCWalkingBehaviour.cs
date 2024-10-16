@@ -147,10 +147,10 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
                     NPC.frameCounter = 0;
                 break;
             case "IdleForward": // Same as StraightForward, but skips the first frame (which is idle only)
-                if (NPC.frameCounter < FrameTime * FrameCount)
-                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+                if (NPC.frameCounter < FrameTime * (FrameCount - 1))
+                    NPC.frame.Y = ((int)Math.Floor(NPC.frameCounter / FrameTime) + 1) * frameHeight;
                 else
-                    NPC.frameCounter = FrameTime;
+                    NPC.frameCounter = 0;
                 break;
             case "Alternate": // Alternates between frame sequences
                 var cycleLength = FrameCount + 1;
