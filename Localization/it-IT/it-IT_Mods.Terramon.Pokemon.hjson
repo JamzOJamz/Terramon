@@ -1,754 +1,905 @@
 Bulbasaur: {
 	DisplayName: Bulbasaur
 	Species: Pokémon Seme
+	// DexEntry: A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.
 }
 
 Ivysaur: {
 	DisplayName: Ivysaur
 	Species: Pokémon Seme
+	// DexEntry: There is a plant bulb on its back. When it absorbs nutrients, the bulb is said to blossom into a large flower.
 }
 
 Venusaur: {
 	DisplayName: Venusaur
 	Species: Pokémon Seme
+	// DexEntry: By spreading the broad petals of its flower and catching the sun's rays, it fills its body with power.
 }
 
 Charmander: {
 	DisplayName: Charmander
 	Species: Pokémon Lucertola
+	// DexEntry: The flame on its tail indicates Charmander's life force. If it is healthy, the flame burns brightly.
 }
 
 Charmeleon: {
 	DisplayName: Charmeleon
 	Species: Pokémon Fiamma
+	// DexEntry: It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.
 }
 
 Charizard: {
 	DisplayName: Charizard
 	Species: Pokémon Fiamma
+	// DexEntry: When expelling a blast of superhot fire, the red flame at the tip of its tail burns more intensely.
 }
 
 Squirtle: {
 	DisplayName: Squirtle
 	Species: Pokémon Tartaghina
+	// DexEntry: It shelters itself in its shell, then strikes back with spouts of water at every opportunity.
 }
 
 Wartortle: {
 	DisplayName: Wartortle
 	Species: Pokémon Tartaruga
+	// DexEntry: When tapped, this Pokémon will pull in its head, but its tail will still stick out a little bit.
 }
 
 Blastoise: {
 	DisplayName: Blastoise
 	Species: Pokémon Crostaceo
+	// DexEntry: It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.
 }
 
 Caterpie: {
 	DisplayName: Caterpie
 	Species: Pokémon Baco
+	// DexEntry: For protection, it releases a horrible stench from the antennae on its head to drive away enemies.
 }
 
 Metapod: {
 	DisplayName: Metapod
 	Species: Pokémon Bozzolo
+	// DexEntry: A steel-hard shell protects its tender body. It quietly endures hardships while awaiting evolution.
 }
 
 Butterfree: {
 	DisplayName: Butterfree
 	Species: Pokémon Farfalla
+	// DexEntry: It loves the honey of flowers and can locate flower patches that have even tiny amounts of pollen.
 }
 
 Weedle: {
 	DisplayName: Weedle
 	Species: Pokémon Millepiedi
+	// DexEntry: Often found in forests and grasslands. It has a sharp, toxic barb of around two inches on top of its head.
 }
 
 Kakuna: {
 	DisplayName: Kakuna
 	Species: Pokémon Bozzolo
+	// DexEntry: Almost incapable of moving, this Pokémon can only harden its shell to protect itself when it is in danger.
 }
 
 Beedrill: {
 	DisplayName: Beedrill
 	Species: Pokémon Velenape
+	// DexEntry: It has three poisonous stingers on its forelegs and its tail. They are used to jab its enemy repeatedly.
 }
 
 Pidgey: {
 	DisplayName: Pidgey
 	Species: Pokémon Uccellino
+	// DexEntry: A common sight in forests and woods. It flaps its wings at ground level to kick up blinding sand.
 }
 
 Pidgeotto: {
 	DisplayName: Pidgeotto
 	Species: Pokémon Uccello
+	// DexEntry: The claws on its feet are well developed. It can carry prey such as an Exeggcute to its nest over 60 miles away.
 }
 
 Pidgeot: {
 	DisplayName: Pidgeot
 	Species: Pokémon Uccello
+	// DexEntry: When hunting, it skims the surface of water at high speed to pick off unwary prey such as Magikarp.
 }
 
 Rattata: {
 	DisplayName: Rattata
 	Species: Pokémon Topo
+	// DexEntry: Living wherever there is food available, it ceaselessly scavenges for edibles the entire day.
 }
 
 Raticate: {
 	DisplayName: Raticate
 	Species: Pokémon Topo
+	// DexEntry: It whittles its constantly growing fangs by gnawing on hard things. It can chew apart cinder walls.
 }
 
 Spearow: {
 	DisplayName: Spearow
 	Species: Pokémon Uccellino
+	// DexEntry: Very protective of its territory, it flaps its short wings busily to dart around at high speed.
 }
 
 Fearow: {
 	DisplayName: Fearow
 	Species: Pokémon Becco
+	// DexEntry: With its huge and magnificent wings, it can keep aloft without ever having to land for rest.
 }
 
 Ekans: {
 	DisplayName: Ekans
 	Species: Pokémon Serpente
+	// DexEntry: The older it gets, the longer it grows. At night, it wraps its long body around tree branches to rest.
 }
 
 Arbok: {
 	DisplayName: Arbok
 	Species: Pokémon Cobra
+	// DexEntry: The pattern on its belly appears to be a frightening face. Weak foes will flee just at the sight of the pattern.
 }
 
 Pikachu: {
 	DisplayName: Pikachu
 	Species: Pokémon Topo
+	// DexEntry: It raises its tail to check its surroundings. The tail is sometimes struck by lightning in this pose.
 }
 
 Raichu: {
 	DisplayName: Raichu
 	Species: Pokémon Topo
+	// DexEntry: When its electricity builds, its muscles are stimulated, and it becomes more aggressive than usual.
 }
 
 Sandshrew: {
 	DisplayName: Sandshrew
 	Species: Pokémon Topo
+	// DexEntry: It burrows and lives underground. If threatened, it curls itself up into a ball for protection.
 }
 
 Sandslash: {
 	DisplayName: Sandslash
 	Species: Pokémon Topo
+	// DexEntry: If it digs at an incredible pace, it may snap off its spikes and claws. They grow back in a day.
 }
 
 NidoranF: {
 	DisplayName: Nidoran♀
 	Species: Pokémon Velenago
+	// DexEntry: Although small, its venomous barbs render this Pokémon dangerous. The female has smaller horns.
 }
 
 Nidorina: {
 	DisplayName: Nidorina
 	Species: Pokémon Velenago
+	// DexEntry: The female has a gentle temperament. It emits ultrasonic cries that have the power to befuddle foes.
 }
 
 Nidoqueen: {
 	DisplayName: Nidoqueen
 	Species: Pokémon Trapano
+	// DexEntry: It uses its scaly, rugged body to seal the entrance of its nest and protect its young from predators.
 }
 
 NidoranM: {
 	DisplayName: Nidoran♂
 	Species: Pokémon Velenago
+	// DexEntry: It scans its surroundings by raising its ears out of the grass. Its toxic horn is for protection.
 }
 
 Nidorino: {
 	DisplayName: Nidorino
 	Species: Pokémon Velenago
+	// DexEntry: It raises its big ears to check its surroundings. If it senses anything, it attacks immediately.
 }
 
 Nidoking: {
 	DisplayName: Nidoking
 	Species: Pokémon Trapano
+	// DexEntry: It is recognized by its rock-hard hide and its extended horn. Be careful with the horn, as it contains venom.
 }
 
 Clefairy: {
 	DisplayName: Clefairy
 	Species: Pokémon Fata
+	// DexEntry: It is said that happiness will come to those who see a gathering of Clefairy dancing under a full moon.
 }
 
 Clefable: {
 	DisplayName: Clefable
 	Species: Pokémon Fata
+	// DexEntry: Its hearing is so acute it can hear a pin drop over half a mile away. It lives on quiet mountains.
 }
 
 Vulpix: {
 	DisplayName: Vulpix
 	Species: Pokémon Volpe
+	// DexEntry: When it is born, it has just one snow-white tail. The tail splits from its tip as it grows older.
 }
 
 Ninetales: {
 	DisplayName: Ninetales
 	Species: Pokémon Volpe
+	// DexEntry: It has nine long tails and fur that gleams gold. It is said to live for 1,000 years.
 }
 
 Jigglypuff: {
 	DisplayName: Jigglypuff
 	Species: Pokémon Pallone
+	// DexEntry: It captivates foes with its huge, round eyes, then lulls them to sleep by singing a soothing melody.
 }
 
 Wigglytuff: {
 	DisplayName: Wigglytuff
 	Species: Pokémon Pallone
+	// DexEntry: Their fur feels so good that if two of them snuggle together, they won't want to be separated.
 }
 
 Zubat: {
 	DisplayName: Zubat
 	Species: Pokémon Pipistrello
+	// DexEntry: Even though it has no eyes, it can sense obstacles using ultrasonic waves it emits from its mouth.
 }
 
 Golbat: {
 	DisplayName: Golbat
 	Species: Pokémon Pipistrello
+	// DexEntry: Once it bites, it will not stop draining energy from the victim even if it gets too heavy to fly.
 }
 
 Oddish: {
 	DisplayName: Oddish
 	Species: Pokémon Malerba
+	// DexEntry: During the day, it stays in the cold underground to avoid the sun. It grows by bathing in moonlight.
 }
 
 Gloom: {
 	DisplayName: Gloom
 	Species: Pokémon Malerba
+	// DexEntry: Smells incredibly foul! However, around one out of a thousand people enjoy sniffing its nose-bending stink.
 }
 
 Vileplume: {
 	DisplayName: Vileplume
 	Species: Pokémon Fiore
+	// DexEntry: The larger its petals, the more toxic pollen it contains. Its big head is heavy and hard to hold up.
 }
 
 Paras: {
 	DisplayName: Paras
 	Species: Pokémon Fungo
+	// DexEntry: Growing out of the bug's back are mushrooms called tochukaso. The mushrooms grow with the bug host.
 }
 
 Parasect: {
 	DisplayName: Parasect
 	Species: Pokémon Fungo
+	// DexEntry: A mushroom grown larger than the host's body controls Parasect. It scatters poisonous spores.
 }
 
 Venonat: {
 	DisplayName: Venonat
 	Species: Pokémon Insetto
+	// DexEntry: Its big eyes are actually clusters of tiny eyes. At night, its kind is drawn by light.
 }
 
 Venomoth: {
 	DisplayName: Venomoth
 	Species: Pokémon Velentarma
+	// DexEntry: The scales it scatters will paralyze anyone who touches them, making that person unable to stand.
 }
 
 Diglett: {
 	DisplayName: Diglett
 	Species: Pokémon Talpa
+	// DexEntry: Lives about one yard underground where it feeds on plant roots. It sometimes appears aboveground.
 }
 
 Dugtrio: {
 	DisplayName: Dugtrio
 	Species: Pokémon Talpa
+	// DexEntry: In battle, it digs through the ground and strikes the unsuspecting foe from an unexpected direction.
 }
 
 Meowth: {
 	DisplayName: Meowth
 	Species: Pokémon Graffimiao
+	// DexEntry: It is nocturnal in nature. If it spots something shiny, its eyes glitter brightly.
 }
 
 Persian: {
 	DisplayName: Persian
 	Species: Pokémon Nobilgatto
+	// DexEntry: Although its fur has many admirers, it is tough to raise as a pet because of its fickle meanness.
 }
 
 Psyduck: {
 	DisplayName: Psyduck
 	Species: Pokémon Papero
+	// DexEntry: It is constantly wracked by a headache. When the headache turns intense, it begins using mysterious powers.
 }
 
 Golduck: {
 	DisplayName: Golduck
 	Species: Pokémon Papero
+	// DexEntry: It appears by waterways at dusk. It may use telekinetic powers if its forehead glows mysteriously.
 }
 
 Mankey: {
 	DisplayName: Mankey
 	Species: Pokémon Suinpanzé
+	// DexEntry: It's unsafe to approach if it gets violently enraged for no reason and can't distinguish friends from foes.
 }
 
 Primeape: {
 	DisplayName: Primeape
 	Species: Pokémon Suinpanzé
+	// DexEntry: It stops being angry only when nobody else is around. To view this moment is very difficult.
 }
 
 Growlithe: {
 	DisplayName: Growlithe
 	Species: Pokémon Cagnolino
+	// DexEntry: Very friendly and faithful to people. It will try to repel enemies by barking and biting.
 }
 
 Arcanine: {
 	DisplayName: Arcanine
 	Species: Pokémon Leggenda
+	// DexEntry: A Pokémon that has long been admired for its beauty. It runs agilely as if on wings.
 }
 
 Poliwag: {
 	DisplayName: Poliwag
 	Species: Pokémon Girino
+	// DexEntry: Its slick black skin is thin and damp. A part of its internal organs can be seen through the skin as a spiral pattern.
 }
 
 Poliwhirl: {
 	DisplayName: Poliwhirl
 	Species: Pokémon Girino
+	// DexEntry: It can live in or out of water. When out of water, it constantly sweats to keep its body slimy.
 }
 
 Poliwrath: {
 	DisplayName: Poliwrath
 	Species: Pokémon Girino
+	// DexEntry: With its extremely tough muscles, it can keep swimming in the Pacific Ocean without resting.
 }
 
 Abra: {
 	DisplayName: Abra
 	Species: Pokémon Psico
+	// DexEntry: It sleeps for 18 hours a day. It uses a variety of extrasensory powers even while asleep.
 }
 
 Kadabra: {
 	DisplayName: Kadabra
 	Species: Pokémon Psico
+	// DexEntry: When it uses its psychic power, it emits strong alpha waves that can ruin precision devices.
 }
 
 Alakazam: {
 	DisplayName: Alakazam
 	Species: Pokémon Psico
+	// DexEntry: Its brain cells multiply continually until it dies. As a result, it remembers everything.
 }
 
 Machop: {
 	DisplayName: Machop
 	Species: Pokémon Megaforza
+	// DexEntry: It hefts a Graveler repeatedly to strengthen its entire body. It uses every type of martial arts.
 }
 
 Machoke: {
 	DisplayName: Machoke
 	Species: Pokémon Megaforza
+	// DexEntry: Its muscular body is so powerful, it must wear a power-save belt to be able to regulate its motions.
 }
 
 Machamp: {
 	DisplayName: Machamp
 	Species: Pokémon Megaforza
+	// DexEntry: Its four ruggedly developed arms can launch a flurry of 1,000 punches in just two seconds.
 }
 
 Bellsprout: {
 	DisplayName: Bellsprout
 	Species: Pokémon Fiore
+	// DexEntry: Even though its body is extremely skinny, it is blindingly fast when catching its prey.
 }
 
 Weepinbell: {
 	DisplayName: Weepinbell
 	Species: Pokémon Moschivoro
+	// DexEntry: The leafy parts act as cutters for slashing foes. It spits a fluid that dissolves everything.
 }
 
 Victreebel: {
 	DisplayName: Victreebel
 	Species: Pokémon Moschivoro
+	// DexEntry: Said to live in huge colonies deep in jungles, although no one has ever returned from there.
 }
 
 Tentacool: {
 	DisplayName: Tentacool
 	Species: Pokémon Medusa
+	// DexEntry: Its body is virtually composed of water. It shoots strange beams from its crystal-like eyes.
 }
 
 Tentacruel: {
 	DisplayName: Tentacruel
 	Species: Pokémon Medusa
+	// DexEntry: The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.
 }
 
 Geodude: {
 	DisplayName: Geodude
 	Species: Pokémon Roccia
+	// DexEntry: Found in fields and mountains. Mistaking them for boulders, people often step or trip on them.
 }
 
 Graveler: {
 	DisplayName: Graveler
 	Species: Pokémon Roccia
+	// DexEntry: With a free and uncaring nature, it doesn't mind if pieces break off while it rolls down mountains.
 }
 
 Golem: {
 	DisplayName: Golem
 	Species: Pokémon Megatone
+	// DexEntry: It tumbles down mountains, leaving grooves from peak to base. Stay clear of these grooves.
 }
 
 Ponyta: {
 	DisplayName: Ponyta
 	Species: Pokémon Cavalfuoco
+	// DexEntry: As a newborn, it can barely stand. However, through galloping, its legs are made tougher and faster.
 }
 
 Rapidash: {
 	DisplayName: Rapidash
 	Species: Pokémon Cavalfuoco
+	// DexEntry: Very competitive, this Pokémon will chase anything that moves fast in the hopes of racing it.
 }
 
 Slowpoke: {
 	DisplayName: Slowpoke
 	Species: Pokémon Ronfone
+	// DexEntry: It is always vacantly lost in thought, but no one knows what it is thinking about. It is good at fishing with its tail.
 }
 
 Slowbro: {
 	DisplayName: Slowbro
 	Species: Pokémon Paguro
+	// DexEntry: An attached Shellder won't let go because of the tasty flavor that oozes out of its tail.
 }
 
 Magnemite: {
 	DisplayName: Magnemite
 	Species: Pokémon Calamita
+	// DexEntry: The units at the sides of its body generate antigravity energy to keep it aloft in the air.
 }
 
 Magneton: {
 	DisplayName: Magneton
 	Species: Pokémon Calamita
+	// DexEntry: A linked cluster formed of several Magnemite. It discharges powerful magnetic waves at high voltage.
 }
 
 Farfetchd: {
 	DisplayName: Farfetch’d
 	Species: Pokémon Selvanatra
+	// DexEntry: The plant stalk it holds is its weapon. The stalk is used like a sword to cut all sorts of things.
 }
 
 Doduo: {
 	DisplayName: Doduo
 	Species: Pokémon Biuccello
+	// DexEntry: A two-headed Pokémon that was discovered as a sudden mutation. It runs at a pace of over 60 miles per hour.
 }
 
 Dodrio: {
 	DisplayName: Dodrio
 	Species: Pokémon Triuccello
+	// DexEntry: An enemy that takes its eyes off any of the three heads--even for a second--will get pecked severely.
 }
 
 Seel: {
 	DisplayName: Seel
 	Species: Pokémon Otaria
+	// DexEntry: A Pokémon that lives on icebergs. It swims in the sea using the point on its head to break up ice.
 }
 
 Dewgong: {
 	DisplayName: Dewgong
 	Species: Pokémon Otaria
+	// DexEntry: Its body is covered with a pure white fur. The colder the weather, the more active it becomes.
 }
 
 Grimer: {
 	DisplayName: Grimer
 	Species: Pokémon Melma
+	// DexEntry: Sludge exposed to X-rays from the moon transformed into Grimer. It loves feeding on filthy things.
 }
 
 Muk: {
 	DisplayName: Muk
 	Species: Pokémon Melma
+	// DexEntry: They love to gather in smelly areas where sludge accumulates, making the stench around them worse.
 }
 
 Shellder: {
 	DisplayName: Shellder
 	Species: Pokémon Bivalve
+	// DexEntry: Its hard shell repels any kind of attack. It is vulnerable only when its shell is open.
 }
 
 Cloyster: {
 	DisplayName: Cloyster
 	Species: Pokémon Bivalve
+	// DexEntry: Cloyster that live in seas with harsh tidal currents grow large, sharp spikes on their shells.
 }
 
 Gastly: {
 	DisplayName: Gastly
 	Species: Pokémon Gas
+	// DexEntry: Its body is made of gas. Despite lacking substance, it can envelop an opponent of any size and cause suffocation.
 }
 
 Haunter: {
 	DisplayName: Haunter
 	Species: Pokémon Gas
+	// DexEntry: If you get the feeling of being watched in darkness when nobody is around, Haunter is there.
 }
 
 Gengar: {
 	DisplayName: Gengar
 	Species: Pokémon Ombra
+	// DexEntry: It hides in shadows. It is said that if Gengar is hiding, it cools the area by nearly 10 degrees Fahrenheit.
 }
 
 Onix: {
 	DisplayName: Onix
 	Species: Pokémon Serpesasso
+	// DexEntry: Burrows at high speed in search of food. The tunnels it leaves are used as homes by Diglett.
 }
 
 Drowzee: {
 	DisplayName: Drowzee
 	Species: Pokémon Ipnosi
+	// DexEntry: Puts enemies to sleep, then eats their dreams. Occasionally gets sick from eating only bad dreams.
 }
 
 Hypno: {
 	DisplayName: Hypno
 	Species: Pokémon Ipnosi
+	// DexEntry: It carries a pendulum-like device. There once was an incident in which it took away a child it hypnotized.
 }
 
 Krabby: {
 	DisplayName: Krabby
 	Species: Pokémon Granchio
+	// DexEntry: If it senses danger approaching, it cloaks itself with bubbles from its mouth so it will look bigger.
 }
 
 Kingler: {
 	DisplayName: Kingler
 	Species: Pokémon Chela
+	// DexEntry: Its large and hard pincer has 10,000-horsepower strength. However, being so big, it is unwieldy to move.
 }
 
 Voltorb: {
 	DisplayName: Voltorb
 	Species: Pokémon Ball
+	// DexEntry: It was discovered when Poké Balls were introduced. It is said that there is some connection.
 }
 
 Electrode: {
 	DisplayName: Electrode
 	Species: Pokémon Ball
+	// DexEntry: It explodes in response to even minor stimuli. It is feared, with the nickname of "The Bomb Ball."
 }
 
 Exeggcute: {
 	DisplayName: Exeggcute
 	Species: Pokémon Uovo
+	// DexEntry: Its six eggs converse using telepathy. They can quickly gather if they become separated.
 }
 
 Exeggutor: {
 	DisplayName: Exeggutor
 	Species: Pokémon Nocecocco
+	// DexEntry: Its three heads think independently. However, they are friendly and never appear to squabble.
 }
 
 Cubone: {
 	DisplayName: Cubone
 	Species: Pokémon Solitario
+	// DexEntry: It wears the skull of its dead mother on its head. When it becomes lonesome, it is said to cry loudly.
 }
 
 Marowak: {
 	DisplayName: Marowak
 	Species: Pokémon Guardaossi
+	// DexEntry: It is small and was originally very weak. Its temperament turned ferocious when it began using bones.
 }
 
 Hitmonlee: {
 	DisplayName: Hitmonlee
 	Species: Pokémon Tiracalci
+	// DexEntry: The legs freely contract and stretch. The stretchy legs allow it to hit a distant foe with a rising kick.
 }
 
 Hitmonchan: {
 	DisplayName: Hitmonchan
 	Species: Pokémon Tirapugni
+	// DexEntry: The arm-twisting punches it throws pulverize even concrete. It rests after three minutes of fighting.
 }
 
 Lickitung: {
 	DisplayName: Lickitung
 	Species: Pokémon Linguaccia
+	// DexEntry: Its long tongue, slathered with a gooey saliva, sticks to anything, so it is very useful.
 }
 
 Koffing: {
 	DisplayName: Koffing
 	Species: Pokémon Velenuvola
+	// DexEntry: Its thin, balloon-like body is inflated by horribly toxic gases. It reeks when it is nearby.
 }
 
 Weezing: {
 	DisplayName: Weezing
 	Species: Pokémon Velenuvola
+	// DexEntry: If one of the twin Koffing inflates, the other one deflates. It constantly mixes its poisonous gases.
 }
 
 Rhyhorn: {
 	DisplayName: Rhyhorn
 	Species: Pokémon Punzoni
+	// DexEntry: Strong, but not too bright, this Pokémon can shatter even a skyscraper with its charging Tackles.
 }
 
 Rhydon: {
 	DisplayName: Rhydon
 	Species: Pokémon Trapano
+	// DexEntry: Protected by an armor-like hide, it is capable of living in molten lava of 3,600 degrees Fahrenheit.
 }
 
 Chansey: {
 	DisplayName: Chansey
 	Species: Pokémon Uovo
+	// DexEntry: It is said to deliver happiness. Being compassionate, it shares its eggs with injured people.
 }
 
 Tangela: {
 	DisplayName: Tangela
 	Species: Pokémon Liana
+	// DexEntry: Many writhing vines cover it, so its true identity remains unknown. The blue vines grow its whole life long.
 }
 
 Kangaskhan: {
 	DisplayName: Kangaskhan
 	Species: Pokémon Genitore
+	// DexEntry: It raises its offspring in its belly pouch. It lets the baby out to play only when it feels safe.
 }
 
 Horsea: {
 	DisplayName: Horsea
 	Species: Pokémon Drago
+	// DexEntry: Known to shoot down flying bugs with precision blasts of ink from the surface of the water.
 }
 
 Seadra: {
 	DisplayName: Seadra
 	Species: Pokémon Drago
+	// DexEntry: Its body bristles with sharp spikes. Carelessly trying to touch it could cause fainting from the spikes.
 }
 
 Goldeen: {
 	DisplayName: Goldeen
 	Species: Pokémon Pescerosso
+	// DexEntry: It swims at a steady 5 knots. If it senses danger, it will strike back with its sharp horn.
 }
 
 Seaking: {
 	DisplayName: Seaking
 	Species: Pokémon Pescerosso
+	// DexEntry: In the autumn spawning season, they can be seen swimming powerfully up rivers and creeks.
 }
 
 Staryu: {
 	DisplayName: Staryu
 	Species: Pokémon Stella
+	// DexEntry: Even if its body is torn, it can regenerate as long as the glowing central core remains intact.
 }
 
 Starmie: {
 	DisplayName: Starmie
 	Species: Pokémon Misterioso
+	// DexEntry: Its central core glows with the seven colors of the rainbow. Some people value the core as a gem.
 }
 
 MrMime: {
 	DisplayName: Mr. Mime
 	Species: Pokémon Barriera
+	// DexEntry: Emanations from its fingertips solidify the air into invisible walls that repel even harsh attacks.
 }
 
 Scyther: {
 	DisplayName: Scyther
 	Species: Pokémon Mantide
+	// DexEntry: It tears and shreds prey with its wickedly sharp scythes. It very rarely spreads its wings to fly.
 }
 
 Jynx: {
 	DisplayName: Jynx
 	Species: Pokémon Umanoide
+	// DexEntry: It wiggles its hips as it walks. It can cause people to dance in unison with it.
 }
 
 Electabuzz: {
 	DisplayName: Electabuzz
 	Species: Pokémon Elettrico
+	// DexEntry: Electricity runs across the surface of its body. In darkness, its entire body glows a whitish blue.
 }
 
 Magmar: {
 	DisplayName: Magmar
 	Species: Pokémon Sputafuoco
+	// DexEntry: Found near the mouth of a volcano. This fire-breather's body temperature is nearly 2,200 degrees Fahrenheit.
 }
 
 Pinsir: {
 	DisplayName: Pinsir
 	Species: Pokémon Cervolante
+	// DexEntry: It grips prey with its pincers until the prey is torn in half. What it can't tear, it tosses far.
 }
 
 Tauros: {
 	DisplayName: Tauros
 	Species: Pokémon Torobrado
+	// DexEntry: After heightening its will to fight by whipping itself with its three tails, it charges at full speed.
 }
 
 Magikarp: {
 	DisplayName: Magikarp
 	Species: Pokémon Pesce
+	// DexEntry: It is virtually worthless in terms of both power and speed. It is the most weak and pathetic Pokémon in the world.
 }
 
 Gyarados: {
 	DisplayName: Gyarados
 	Species: Pokémon Atroce
+	// DexEntry: In ancient literature, there is a record of a Gyarados that razed a village when violence flared.
 }
 
 Lapras: {
 	DisplayName: Lapras
 	Species: Pokémon Trasporto
+	// DexEntry: They have gentle hearts. Because they rarely fight, many have been caught. Their number has dwindled.
 }
 
 Ditto: {
 	DisplayName: Ditto
 	Species: Pokémon Mutante
+	// DexEntry: It has the ability to reconstitute its entire cellular structure to transform into whatever it sees.
 }
 
 Eevee: {
 	DisplayName: Eevee
 	Species: Pokémon Evoluzione
+	// DexEntry: A rare Pokémon that adapts to harsh environments by taking on different evolutionary forms.
 }
 
 Vaporeon: {
 	DisplayName: Vaporeon
 	Species: Pokémon Bollajet
+	// DexEntry: It prefers beautiful shores. With cells similar to water molecules, it could melt in water.
 }
 
 Jolteon: {
 	DisplayName: Jolteon
 	Species: Pokémon Luminoso
+	// DexEntry: Every hair on its body starts to stand sharply on end if it becomes charged with electricity.
 }
 
 Flareon: {
 	DisplayName: Flareon
 	Species: Pokémon Fiamma
+	// DexEntry: It has a flame sac in its body. Its body temperature tops 1,650 degrees Fahrenheit before battle.
 }
 
 Porygon: {
 	DisplayName: Porygon
 	Species: Pokémon Virtuale
+	// DexEntry: A man-made Pokémon that came about as a result of research. It is programmed with only basic motions.
 }
 
 Omanyte: {
 	DisplayName: Omanyte
 	Species: Pokémon Spirale
+	// DexEntry: A prehistoric Pokémon that lived in the primordial sea, it swims by twisting its 10 tentacles about.
 }
 
 Omastar: {
 	DisplayName: Omastar
 	Species: Pokémon Spirale
+	// DexEntry: Its tentacles are highly developed as if they are hands and feet. As soon as it ensnares prey, it bites.
 }
 
 Kabuto: {
 	DisplayName: Kabuto
 	Species: Pokémon Crostaceo
+	// DexEntry: It is thought to have inhabited beaches 300 million years ago. It is protected by a stiff shell.
 }
 
 Kabutops: {
 	DisplayName: Kabutops
 	Species: Pokémon Crostaceo
+	// DexEntry: In the water, it tucks in its limbs to become more compact, then it wiggles its shell to swim fast.
 }
 
 Aerodactyl: {
 	DisplayName: Aerodactyl
 	Species: Pokémon Fossile
+	// DexEntry: It was regenerated from a dinosaur's genetic matter that was found in amber. It flies with high-pitched cries.
 }
 
 Snorlax: {
 	DisplayName: Snorlax
 	Species: Pokémon Sonno
+	// DexEntry: It is not satisfied unless it eats over 880 pounds of food every day. When it is done eating, it goes promptly to sleep.
 }
 
 Articuno: {
 	DisplayName: Articuno
 	Species: Pokémon Gelo
+	// DexEntry: A legendary bird Pokémon. It can create blizzards by freezing moisture in the air.
 }
 
 Zapdos: {
 	DisplayName: Zapdos
 	Species: Pokémon Elettrico
+	// DexEntry: A legendary bird Pokémon that is said to appear from clouds while dropping enormous lightning bolts.
 }
 
 Moltres: {
 	DisplayName: Moltres
 	Species: Pokémon Fiamma
+	// DexEntry: It is said to be the legendary bird Pokémon of fire. Every flap of its wings creates a dazzling flare of flames.
 }
 
 Dratini: {
 	DisplayName: Dratini
 	Species: Pokémon Drago
+	// DexEntry: It is called the "Mirage Pokémon" because so few have seen it. Its shed skin has been found.
 }
 
 Dragonair: {
 	DisplayName: Dragonair
 	Species: Pokémon Drago
+	// DexEntry: Its crystalline orbs appear to give this Pokémon the power to freely control the weather.
 }
 
 Dragonite: {
 	DisplayName: Dragonite
 	Species: Pokémon Drago
+	// DexEntry: It can fly in spite of its big and bulky physique. It circles the globe in just 16 hours.
 }
 
 Mewtwo: {
 	DisplayName: Mewtwo
 	Species: Pokémon Genetico
+	// DexEntry: It was created by a scientist after years of horrific gene-splicing and DNA-engineering experiments.
 }
 
 Mew: {
 	DisplayName: Mew
 	Species: Pokémon Novaspecie
+	// DexEntry: Because it can use all kinds of moves, many scientists believe Mew to be the ancestor of Pokémon.
 }
