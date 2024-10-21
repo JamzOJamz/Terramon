@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using EasyPacketsLib;
 using ReLogic.Utilities;
 using Terramon.Content.Buffs;
+using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
@@ -33,7 +36,7 @@ public class TerramonWorld : ModSystem
     }
 
     public static void UpdateWorldDex(int id, PokedexEntryStatus status, string lastUpdatedBy = null,
-        bool force = false)
+        bool force = false, bool netSend = true)
     {
         if (_worldDex == null) return;
         var hasEntry = _worldDex.Entries.TryGetValue(id, out var entry);
@@ -42,6 +45,9 @@ public class TerramonWorld : ModSystem
         if (entry.Status != PokedexEntryStatus.Registered)
             entry.LastUpdatedBy = lastUpdatedBy;
         entry.Status = status;
+        if (netSend && Main.netMode == NetmodeID.MultiplayerClient) // Sync the World Dex on all clients in multiplayer
+            Terramon.Instance.SendPacket(new UpdateWorldDexRpc((byte)Main.myPlayer, (ushort)id, status),
+                ignoreClient: Main.myPlayer, forward: true);
     }
 
     public static PokedexService GetWorldDex()

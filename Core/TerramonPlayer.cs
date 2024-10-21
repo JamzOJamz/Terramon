@@ -85,6 +85,15 @@ public class TerramonPlayer : ModPlayer
             HubUI.ToggleActive();
     }
 
+    public override void PostUpdate()
+    {
+        // If more than one instance of the companion buff is present, remove all but the first one (weird bug)
+        var buffIndexes = Player.buffType.ToList().FindAll(i => i == ModContent.BuffType<PokemonCompanion>());
+        if (buffIndexes.Count <= 1) return;
+        for (var i = 1; i < buffIndexes.Count; i++)
+            Player.DelBuff(buffIndexes[i]);
+    }
+
     public override void PreUpdate()
     {
         if (Player.whoAmI != Main.myPlayer) return;
@@ -198,10 +207,7 @@ public class TerramonPlayer : ModPlayer
 
     public override void SaveData(TagCompound tag)
     {
-        if (HasChosenStarter)
-            tag["starterChosen"] = HasChosenStarter;
-        if (_receivedShinyCharm)
-            tag["shinyReward"] = _receivedShinyCharm;
+        tag["flags"] = (byte)new BitsByte(HasChosenStarter, _receivedShinyCharm);
         if (ActiveSlot >= 0)
             tag["activeSlot"] = ActiveSlot;
         SaveParty(tag);
@@ -211,10 +217,13 @@ public class TerramonPlayer : ModPlayer
 
     public override void LoadData(TagCompound tag)
     {
-        if (tag.TryGet("starterChosen", out bool starterChosen))
-            HasChosenStarter = starterChosen;
-        if (tag.TryGet("shinyReward", out bool shinyReward))
-            _receivedShinyCharm = shinyReward;
+        if (tag.ContainsKey("flags"))
+        {
+            BitsByte flags = tag.GetByte("flags");
+            HasChosenStarter = flags[0];
+            _receivedShinyCharm = flags[1];
+        }
+
         if (tag.TryGet("activeSlot", out int slot))
             ActiveSlot = slot;
         LoadParty(tag);

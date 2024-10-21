@@ -13,7 +13,7 @@ public class UIHoverImage : UIImage
         _hoverText = hoverText;
     }
 
-    protected UIHoverImage(Asset<Texture2D> texture, LocalizedText hoverText) : base(texture)
+    public UIHoverImage(Asset<Texture2D> texture, LocalizedText hoverText) : base(texture)
     {
         _hoverText = hoverText;
     }

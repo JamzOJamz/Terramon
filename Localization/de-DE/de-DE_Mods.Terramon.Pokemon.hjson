@@ -1,905 +1,905 @@
 Bulbasaur: {
 	DisplayName: Bisasam
 	Species: Samen-Pokémon
-	// DexEntry: A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.
+	DexEntry: Dieses Pokémon trägt von Geburt an einen Samen auf dem Rücken, der mit ihm keimt und wächst.
 }
 
 Ivysaur: {
 	DisplayName: Bisaknosp
 	Species: Samen-Pokémon
-	// DexEntry: There is a plant bulb on its back. When it absorbs nutrients, the bulb is said to blossom into a large flower.
+	DexEntry: Es trägt eine Knospe auf seinem Rücken. Nimmt es Nahrung zu sich, soll aus der Knospe eine große blühende Blume werden.
 }
 
 Venusaur: {
 	DisplayName: Bisaflor
 	Species: Samen-Pokémon
-	// DexEntry: By spreading the broad petals of its flower and catching the sun's rays, it fills its body with power.
+	DexEntry: Es spreizt die breiten Blätter seiner Blüte, um seinen Körper mit Sonnenenergie zu durchfluten.
 }
 
 Charmander: {
 	DisplayName: Glumanda
 	Species: Echsen-Pokémon
-	// DexEntry: The flame on its tail indicates Charmander's life force. If it is healthy, the flame burns brightly.
+	DexEntry: Die Flamme auf seiner Schweifspitze zeigt die Lebensenergie an. Ist es gesund, leuchtet sie hell.
 }
 
 Charmeleon: {
 	DisplayName: Glutexo
 	Species: Flammen-Pokémon
-	// DexEntry: It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.
+	DexEntry: Es schlägt im Kampf mit seinem Schwanz nach seinen Gegnern. Anschließend zerfetzt es die Gegner mit seinen scharfen Klauen.
 }
 
 Charizard: {
 	DisplayName: Glurak
 	Species: Flammen-Pokémon
-	// DexEntry: When expelling a blast of superhot fire, the red flame at the tip of its tail burns more intensely.
+	DexEntry: Wenn dieses Pokémon einen Strahl glühenden Feuers speit, leuchtet seine Schwanzspitze auf.
 }
 
 Squirtle: {
 	DisplayName: Schiggy
 	Species: Minikröten-Pokémon
-	// DexEntry: It shelters itself in its shell, then strikes back with spouts of water at every opportunity.
+	DexEntry: Es zieht sich in seinen Panzer zurück und greift dann mit Wasserstrahlen seine Gegner an.
 }
 
 Wartortle: {
 	DisplayName: Schillok
 	Species: Kröten-Pokémon
-	// DexEntry: When tapped, this Pokémon will pull in its head, but its tail will still stick out a little bit.
+	DexEntry: Bei Gefahr zieht dieses Pokémon seinen Kopf ein. Die Schwanzspitze ragt jedoch aus dem Panzer heraus.
 }
 
 Blastoise: {
 	DisplayName: Turtok
 	Species: Panzertier-Pokémon
-	// DexEntry: It crushes its foe under its heavy body to cause fainting. In a pinch, it will withdraw inside its shell.
+	DexEntry: Es begräbt seine Gegner mit seinem enormen Körpergewicht. Wenn es in einer aussichtslosen Lage steckt, zieht es sich in seinen Panzer zurück.
 }
 
 Caterpie: {
 	DisplayName: Raupy
 	Species: Wurm-Pokémon
-	// DexEntry: For protection, it releases a horrible stench from the antennae on its head to drive away enemies.
+	DexEntry: Als Schutz vor Feinden sondert es einen übel riechenden Gestank mit seinen Antennen ab.
 }
 
 Metapod: {
 	DisplayName: Safcon
 	Species: Kokon-Pokémon
-	// DexEntry: A steel-hard shell protects its tender body. It quietly endures hardships while awaiting evolution.
+	DexEntry: Der stahlharte Panzer schützt seinen zarten Körper. Es wartet geduldig auf seine Entwicklung.
 }
 
 Butterfree: {
 	DisplayName: Smettbo
 	Species: Falter-Pokémon
-	// DexEntry: It loves the honey of flowers and can locate flower patches that have even tiny amounts of pollen.
+	DexEntry: Es liebt Blütenhonig. Es findet selbst Blumen, die sehr wenig Pollen haben.
 }
 
 Weedle: {
 	DisplayName: Hornliu
 	Species: Raupe
-	// DexEntry: Often found in forests and grasslands. It has a sharp, toxic barb of around two inches on top of its head.
+	DexEntry: Es lebt bevorzugt in Wäldern und in hohem Gras. Auf dem Kopf trägt es einen circa 5 cm langen, spitzen, giftigen Stachel.
 }
 
 Kakuna: {
 	DisplayName: Kokuna
 	Species: Kokon
-	// DexEntry: Almost incapable of moving, this Pokémon can only harden its shell to protect itself when it is in danger.
+	DexEntry: Dieses Pokémon kann sich kaum bewegen. Bei drohender Gefahr verhärtet es seinen Panzer.
 }
 
 Beedrill: {
 	DisplayName: Bibor
 	Species: Giftbiene
-	// DexEntry: It has three poisonous stingers on its forelegs and its tail. They are used to jab its enemy repeatedly.
+	DexEntry: Dieses Pokémon verfügt über drei Giftstachel. Es kann seine Gegner damit wiederholt stechen.
 }
 
 Pidgey: {
 	DisplayName: Taubsi
 	Species: Kleinvogel
-	// DexEntry: A common sight in forests and woods. It flaps its wings at ground level to kick up blinding sand.
+	DexEntry: Ein vorwiegend in Wäldern lebendes Pokémon, das zur Verteidigung mit den Flügeln Sand aufwirbelt.
 }
 
 Pidgeotto: {
 	DisplayName: Tauboga
 	Species: Vogel
-	// DexEntry: The claws on its feet are well developed. It can carry prey such as an Exeggcute to its nest over 60 miles away.
+	DexEntry: Die Krallen an seinen Füßen sind sehr ausgeprägt. Es kann sogar ein Owei zu seinem Nest in 100 km Entfernung tragen.
 }
 
 Pidgeot: {
 	DisplayName: Tauboss
 	Species: Vogel
-	// DexEntry: When hunting, it skims the surface of water at high speed to pick off unwary prey such as Magikarp.
+	DexEntry: Dieses Pokémon schnellt bei der Jagd blitzschnell unter Wasser, um seine ahnungslose Beute zu fangen.
 }
 
 Rattata: {
 	DisplayName: Rattfratz
 	Species: Maus
-	// DexEntry: Living wherever there is food available, it ceaselessly scavenges for edibles the entire day.
+	DexEntry: Es baut sein Nest, wo es Futter findet. Es ist den ganzen Tag auf der Suche nach etwas Essbarem.
 }
 
 Raticate: {
 	DisplayName: Rattikarl
 	Species: Maus
-	// DexEntry: It whittles its constantly growing fangs by gnawing on hard things. It can chew apart cinder walls.
+	DexEntry: Es wetzt seine ständig wachsenden Zähne an harten Dingen. Es kann Wände aus Beton zernagen.
 }
 
 Spearow: {
 	DisplayName: Habitak
 	Species: Kleinvogel
-	// DexEntry: Very protective of its territory, it flaps its short wings busily to dart around at high speed.
+	DexEntry: Es beschützt sein Gebiet stets vor Eindringlingen. Daher fliegt es ständig wild umher.
 }
 
 Fearow: {
 	DisplayName: Ibitak
 	Species: Pickvogel
-	// DexEntry: With its huge and magnificent wings, it can keep aloft without ever having to land for rest.
+	DexEntry: Mit seinen riesigen Flügeln kann dieses Pokémon nahezu pausenlos in der Luft bleiben.
 }
 
 Ekans: {
 	DisplayName: Rettan
 	Species: Schlange
-	// DexEntry: The older it gets, the longer it grows. At night, it wraps its long body around tree branches to rest.
+	DexEntry: Mit dem Alter wird der Körper dieses Pokémon immer länger. Es schläft um Äste gewickelt.
 }
 
 Arbok: {
 	DisplayName: Arbok
 	Species: Kobra
-	// DexEntry: The pattern on its belly appears to be a frightening face. Weak foes will flee just at the sight of the pattern.
+	DexEntry: Das Muster auf seinem Bauch ähnelt einer Fratze. Schwache Gegner nehmen bereits beim Anblick Reißaus.
 }
 
 Pikachu: {
 	DisplayName: Pikachu
 	Species: Maus-Pokémon
-	// DexEntry: It raises its tail to check its surroundings. The tail is sometimes struck by lightning in this pose.
+	DexEntry: Es streckt seinen Schweif nach oben, um seine Umgebung zu prüfen. Häufig fährt ein Blitz hinein.
 }
 
 Raichu: {
 	DisplayName: Raichu
 	Species: Maus-Pokémon
-	// DexEntry: When its electricity builds, its muscles are stimulated, and it becomes more aggressive than usual.
+	DexEntry: Wenn es sich auflädt, zucken seine Muskeln und es wird aggressiver und kampflustiger.
 }
 
 Sandshrew: {
 	DisplayName: Sandan
 	Species: Maus-Pokémon
-	// DexEntry: It burrows and lives underground. If threatened, it curls itself up into a ball for protection.
+	DexEntry: Es gräbt und lebt im Erdboden. Bei Gefahr rollt es sich zum Schutz zu einem Ball zusammen.
 }
 
 Sandslash: {
 	DisplayName: Sandamer
 	Species: Maus-Pokémon
-	// DexEntry: If it digs at an incredible pace, it may snap off its spikes and claws. They grow back in a day.
+	DexEntry: Wenn es schnell gräbt, können seine Stacheln und Krallen abbrechen. Sie wachsen binnen eines Tages nach.
 }
 
 NidoranF: {
 	DisplayName: Nidoran♀
 	Species: Giftdorn-Pokémon
-	// DexEntry: Although small, its venomous barbs render this Pokémon dangerous. The female has smaller horns.
+	DexEntry: Dieses Pokémon ist sehr klein, verfügt aber über starke Gifte. Das Weibchen hat ein kleineres Horn.
 }
 
 Nidorina: {
 	DisplayName: Nidorina
 	Species: Giftdorn-Pokémon
-	// DexEntry: The female has a gentle temperament. It emits ultrasonic cries that have the power to befuddle foes.
+	DexEntry: Das Weibchen ist ausgeglichener. Es stößt Schreie im Ultraschallwellenbereich aus, die den Gegner verwirren können.
 }
 
 Nidoqueen: {
 	DisplayName: Nidoqueen
 	Species: Bohrer-Pokémon
-	// DexEntry: It uses its scaly, rugged body to seal the entrance of its nest and protect its young from predators.
+	DexEntry: Es benutzt seinen schuppigen Körper, um den Höhleneingang als Schutz für seine Jungen zu sperren.
 }
 
 NidoranM: {
 	DisplayName: Nidoran♂
 	Species: Giftdorn-Pokémon
-	// DexEntry: It scans its surroundings by raising its ears out of the grass. Its toxic horn is for protection.
+	DexEntry: Es untersucht die Umgebung, indem es die Ohren spitzt und lauscht. Sein giftiges Horn schützt es.
 }
 
 Nidorino: {
 	DisplayName: Nidorino
 	Species: Giftdorn-Pokémon
-	// DexEntry: It raises its big ears to check its surroundings. If it senses anything, it attacks immediately.
+	DexEntry: Es überwacht mit seinen riesigen Ohren die Umgebung. Registriert es eine Bewegung, greift es an.
 }
 
 Nidoking: {
 	DisplayName: Nidoking
 	Species: Bohrer-Pokémon
-	// DexEntry: It is recognized by its rock-hard hide and its extended horn. Be careful with the horn, as it contains venom.
+	DexEntry: Seine steinharte Haut und sein ausgeprägtes Horn sind seine Markenzeichen. Achte auf das Horn, denn es enthält Gift.
 }
 
 Clefairy: {
 	DisplayName: Piepi
 	Species: Feen-Pokémon
-	// DexEntry: It is said that happiness will come to those who see a gathering of Clefairy dancing under a full moon.
+	DexEntry: Eine Ansammlung von Piepi bei Vollmond tanzen zu sehen, soll Freude verheißen.
 }
 
 Clefable: {
 	DisplayName: Pixi
 	Species: Feen-Pokémon
-	// DexEntry: Its hearing is so acute it can hear a pin drop over half a mile away. It lives on quiet mountains.
+	DexEntry: Es kann eine Nadel hören, die in 1 km Entfernung zu Boden fällt. Es lebt in der Stille der Berge.
 }
 
 Vulpix: {
 	DisplayName: Vulpix
 	Species: Fuchs-Pokémon
-	// DexEntry: When it is born, it has just one snow-white tail. The tail splits from its tip as it grows older.
+	DexEntry: Dieses Pokémon hat bei seiner Geburt nur einen Schweif, der sich mit zunehmendem Alter aufspaltet.
 }
 
 Ninetales: {
 	DisplayName: Vulnona
 	Species: Fuchs-Pokémon
-	// DexEntry: It has nine long tails and fur that gleams gold. It is said to live for 1,000 years.
+	DexEntry: Es hat neun lange Schweife und sein Fell glänzt gülden. Man sagt, es soll 1 000 Jahre alt werden.
 }
 
 Jigglypuff: {
 	DisplayName: Pummeluff
 	Species: Ballon-Pokémon
-	// DexEntry: It captivates foes with its huge, round eyes, then lulls them to sleep by singing a soothing melody.
+	DexEntry: Es fesselt die Gegner mit seinen großen, runden Augen und versetzt sie in Schlaf, indem es eine beruhigende Melodie singt.
 }
 
 Wigglytuff: {
 	DisplayName: Knuddeluff
 	Species: Ballon-Pokémon
-	// DexEntry: Their fur feels so good that if two of them snuggle together, they won't want to be separated.
+	DexEntry: Sein Fell ist so flauschig, dass, wenn zwei zusammenstehen, sie nicht getrennt werden möchten.
 }
 
 Zubat: {
 	DisplayName: Zubat
 	Species: Fledermaus-Pokémon
-	// DexEntry: Even though it has no eyes, it can sense obstacles using ultrasonic waves it emits from its mouth.
+	DexEntry: Obwohl es keine Augen hat, kann es Hindernisse mithilfe von Ultraschallwellen wahrnehmen.
 }
 
 Golbat: {
 	DisplayName: Golbat
 	Species: Fledermaus-Pokémon
-	// DexEntry: Once it bites, it will not stop draining energy from the victim even if it gets too heavy to fly.
+	DexEntry: Dieses Pokémon saugt dem Gegner selbst dann noch Energie ab, wenn es zu schwer zum Fliegen wird.
 }
 
 Oddish: {
 	DisplayName: Myrapla
 	Species: Unkraut-Pokémon
-	// DexEntry: During the day, it stays in the cold underground to avoid the sun. It grows by bathing in moonlight.
+	DexEntry: Tagsüber versteckt es sich in der kalten Erde, um die Sonne zu meiden. Es wächst im Mondschein.
 }
 
 Gloom: {
 	DisplayName: Duflor
 	Species: Unkraut-Pokémon
-	// DexEntry: Smells incredibly foul! However, around one out of a thousand people enjoy sniffing its nose-bending stink.
+	DexEntry: Dieses Pokémon sondert einen übelriechenden Geruch ab. Trotzdem halten einige Leute es im Haus.
 }
 
 Vileplume: {
 	DisplayName: Giflor
 	Species: Blumen-Pokémon
-	// DexEntry: The larger its petals, the more toxic pollen it contains. Its big head is heavy and hard to hold up.
+	DexEntry: Je größer die Blütenblätter, desto mehr giftige Pollen sind in der Blüte enthalten.
 }
 
 Paras: {
 	DisplayName: Paras
 	Species: Pilz
-	// DexEntry: Growing out of the bug's back are mushrooms called tochukaso. The mushrooms grow with the bug host.
+	DexEntry: Auf seinem Rücken wachsen Pilze, die man Tochukaso nennt. Die Pilze wachsen mit ihrem Wirt.
 }
 
 Parasect: {
 	DisplayName: Parasek
 	Species: Pilz
-	// DexEntry: A mushroom grown larger than the host's body controls Parasect. It scatters poisonous spores.
+	DexEntry: Parasek wird von einem Pilz, der größer als das Pokémon ist, kontrolliert. Er gibt Giftsporen ab.
 }
 
 Venonat: {
 	DisplayName: Bluzuk
 	Species: Insekt
-	// DexEntry: Its big eyes are actually clusters of tiny eyes. At night, its kind is drawn by light.
+	DexEntry: Seine großen Augen bestehen aus vielen kleinen Augen. Nachts wird es von Licht angezogen.
 }
 
 Venomoth: {
 	DisplayName: Omot
 	Species: Giftmotte
-	// DexEntry: The scales it scatters will paralyze anyone who touches them, making that person unable to stand.
+	DexEntry: Wer die von ihm verstreuten Schuppen berührt, wird gelähmt und muss sich setzen.
 }
 
 Diglett: {
 	DisplayName: Digda
 	Species: Maulwurf-Pokémon
-	// DexEntry: Lives about one yard underground where it feeds on plant roots. It sometimes appears aboveground.
+	DexEntry: Dieses Pokémon lebt 1 m unter der Erde. Es frisst Wurzeln und kommt selten an die Oberfläche.
 }
 
 Dugtrio: {
 	DisplayName: Digdri
 	Species: Maulwurf-Pokémon
-	// DexEntry: In battle, it digs through the ground and strikes the unsuspecting foe from an unexpected direction.
+	DexEntry: Im Kampf gräbt es sich ein und attackiert den Gegner aus einer unvorhersehbaren Richtung.
 }
 
 Meowth: {
 	DisplayName: Mauzi
 	Species: Katzen-Pokémon
-	// DexEntry: It is nocturnal in nature. If it spots something shiny, its eyes glitter brightly.
+	DexEntry: Ein nachtaktives Pokémon. Sieht es etwas Schimmerndes, fangen seine Augen an zu glänzen.
 }
 
 Persian: {
 	DisplayName: Snobilikat
 	Species: Rassekatzen-Pokémon
-	// DexEntry: Although its fur has many admirers, it is tough to raise as a pet because of its fickle meanness.
+	DexEntry: Dieses Pokémon hat sehr schönes Fell. Es ist jedoch ein schwer erziehbares Haustier.
 }
 
 Psyduck: {
 	DisplayName: Enton
 	Species: Enten-Pokémon
-	// DexEntry: It is constantly wracked by a headache. When the headache turns intense, it begins using mysterious powers.
+	DexEntry: Es wird permanent von Kopfschmerzen geplagt. Wird der Schmerz stärker, setzt es geheimnisvolle Kräfte ein.
 }
 
 Golduck: {
 	DisplayName: Entoron
 	Species: Enten-Pokémon
-	// DexEntry: It appears by waterways at dusk. It may use telekinetic powers if its forehead glows mysteriously.
+	DexEntry: Es taucht bei Sonnenuntergang am Wasser auf. Leuchtet seine Stirn, setzt es telekinetische Kräfte ein.
 }
 
 Mankey: {
 	DisplayName: Menki
 	Species: Schwein/Affe
-	// DexEntry: It's unsafe to approach if it gets violently enraged for no reason and can't distinguish friends from foes.
+	DexEntry: Da es grundlos angreift und nicht zwischen Freund oder Feind unterscheidet, ist es sehr gefährlich.
 }
 
 Primeape: {
 	DisplayName: Rasaff
 	Species: Schwein/Affe
-	// DexEntry: It stops being angry only when nobody else is around. To view this moment is very difficult.
+	DexEntry: In ganz seltenen Fällen beruhigt sich dieses sehr jähzornige Pokémon und ist für einen Moment friedlich.
 }
 
 Growlithe: {
 	DisplayName: Fukano
 	Species: Welpen-Pokémon
-	// DexEntry: Very friendly and faithful to people. It will try to repel enemies by barking and biting.
+	DexEntry: Es ist sehr freundlich und bleibt den Menschen treu. Durch Bellen und Beißen versucht es, Gegner zu verscheuchen.
 }
 
 Arcanine: {
 	DisplayName: Arkani
 	Species: Legendär-Pokémon
-	// DexEntry: A Pokémon that has long been admired for its beauty. It runs agilely as if on wings.
+	DexEntry: Dieses Pokémon trägt ein wunderschönes Fell. Es ist obendrein schnell und sehr wendig.
 }
 
 Poliwag: {
 	DisplayName: Quapsel
 	Species: Kaulquappen-Pokémon
-	// DexEntry: Its slick black skin is thin and damp. A part of its internal organs can be seen through the skin as a spiral pattern.
+	DexEntry: Seine glatte, schwarze Haut ist dünn und feucht. Teilweise sind seine Innereien als spiralförmige Muster sichtbar.
 }
 
 Poliwhirl: {
 	DisplayName: Quaputzi
 	Species: Kaulquappen-Pokémon
-	// DexEntry: It can live in or out of water. When out of water, it constantly sweats to keep its body slimy.
+	DexEntry: Dieses Pokémon kann im Wasser und auch an Land leben. An Land schwitzt es sich den Körper nass.
 }
 
 Poliwrath: {
 	DisplayName: Quappo
 	Species: Kaulquappen-Pokémon
-	// DexEntry: With its extremely tough muscles, it can keep swimming in the Pacific Ocean without resting.
+	DexEntry: Es hat extrem starke Muskeln und kann durch den Ozean schwimmen, ohne sich ausruhen zu müssen.
 }
 
 Abra: {
 	DisplayName: Abra
 	Species: Psi-Pokémon
-	// DexEntry: It sleeps for 18 hours a day. It uses a variety of extrasensory powers even while asleep.
+	DexEntry: Es schläft 18 Stunden am Tag. Währenddessen setzt es eine Vielzahl zusätzlicher sensorischer Kräfte ein.
 }
 
 Kadabra: {
 	DisplayName: Kadabra
 	Species: Psi-Pokémon
-	// DexEntry: When it uses its psychic power, it emits strong alpha waves that can ruin precision devices.
+	DexEntry: Setzt es seine Psycho-Kräfte ein, sondert es Alphawellen ab, die Präzisionsgeräten schaden können.
 }
 
 Alakazam: {
 	DisplayName: Simsala
 	Species: Psi-Pokémon
-	// DexEntry: Its brain cells multiply continually until it dies. As a result, it remembers everything.
+	DexEntry: Seine Gehirnzellen vervielfachen sich sein ganzes Leben lang. Daher kann es sich immer an alles erinnern.
 }
 
 Machop: {
 	DisplayName: Machollo
 	Species: Kraftprotz-Pokémon
-	// DexEntry: It hefts a Graveler repeatedly to strengthen its entire body. It uses every type of martial arts.
+	DexEntry: Es hebt Georok hoch, um seinen Körper zu trainieren. Außerdem übt es sich in jeder Art von Kampfsport.
 }
 
 Machoke: {
 	DisplayName: Maschock
 	Species: Kraftprotz-Pokémon
-	// DexEntry: Its muscular body is so powerful, it must wear a power-save belt to be able to regulate its motions.
+	DexEntry: Dieses Pokémon ist superstark. Es kann sich nur mit einem Kraft regulierenden Gürtel bewegen.
 }
 
 Machamp: {
 	DisplayName: Machomei
 	Species: Kraftprotz-Pokémon
-	// DexEntry: Its four ruggedly developed arms can launch a flurry of 1,000 punches in just two seconds.
+	DexEntry: Seine markigen Arme können innerhalb von nur zwei Sekunden 1 000 Schläge verteilen.
 }
 
 Bellsprout: {
 	DisplayName: Knofensa
 	Species: Blume
-	// DexEntry: Even though its body is extremely skinny, it is blindingly fast when catching its prey.
+	DexEntry: Obwohl sein Körper sehr schmal ist, schnappt es blitzschnell nach Beute.
 }
 
 Weepinbell: {
 	DisplayName: Ultrigaria
 	Species: Fliegentod
-	// DexEntry: The leafy parts act as cutters for slashing foes. It spits a fluid that dissolves everything.
+	DexEntry: Die Blätter werden eingesetzt, um Gegner aufzuschlitzen. Dieses Pokémon spuckt eine Flüssigkeit, die alles auflöst.
 }
 
 Victreebel: {
 	DisplayName: Sarzenia
 	Species: Fliegentod
-	// DexEntry: Said to live in huge colonies deep in jungles, although no one has ever returned from there.
+	DexEntry: Dieses Pokémon soll in großen Kolonien tief im Dschungel leben, doch niemand kann dies bestätigen.
 }
 
 Tentacool: {
 	DisplayName: Tentacha
 	Species: Quallen-Pokémon
-	// DexEntry: Its body is virtually composed of water. It shoots strange beams from its crystal-like eyes.
+	DexEntry: Sein Körper besteht aus Wasser. Aus seinen kristallartigen Augen verschießt es eigenartige Strahlen.
 }
 
 Tentacruel: {
 	DisplayName: Tentoxa
 	Species: Quallen-Pokémon
-	// DexEntry: The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.
+	DexEntry: Dieses Pokémon kann die Tentakel bei der Jagd ausfahren, um die Beute leichter zu fangen.
 }
 
 Geodude: {
 	DisplayName: Kleinstein
 	Species: Gestein
-	// DexEntry: Found in fields and mountains. Mistaking them for boulders, people often step or trip on them.
+	DexEntry: Wanderer stolpern in den Bergen häufig über dieses Pokémon, da es wie ein Stein aussieht.
 }
 
 Graveler: {
 	DisplayName: Georok
 	Species: Gestein
-	// DexEntry: With a free and uncaring nature, it doesn't mind if pieces break off while it rolls down mountains.
+	DexEntry: Es ist ihm völlig gleichgültig, wenn Stücke aus ihm herausbrechen, während es Berge hinabrollt.
 }
 
 Golem: {
 	DisplayName: Geowaz
 	Species: Urgestein
-	// DexEntry: It tumbles down mountains, leaving grooves from peak to base. Stay clear of these grooves.
+	DexEntry: Sie rollen Berge hinunter und hinterlassen Spurrillen. Halte dich von diesen Rillen fern.
 }
 
 Ponyta: {
 	DisplayName: Ponita
 	Species: Feuerpferd-Pokémon
-	// DexEntry: As a newborn, it can barely stand. However, through galloping, its legs are made tougher and faster.
+	DexEntry: Neugeboren kann es kaum stehen. Durch das Galoppieren werden seine Beine aber schneller und kräftiger.
 }
 
 Rapidash: {
 	DisplayName: Gallopa
 	Species: Feuerpferd-Pokémon
-	// DexEntry: Very competitive, this Pokémon will chase anything that moves fast in the hopes of racing it.
+	DexEntry: Dieses Pokémon verfolgt schnelle Objekte in der Hoffnung, ein Wettrennen gegen sie zu gewinnen.
 }
 
 Slowpoke: {
 	DisplayName: Flegmon
 	Species: Schnarcher-Pokémon
-	// DexEntry: It is always vacantly lost in thought, but no one knows what it is thinking about. It is good at fishing with its tail.
+	DexEntry: Es ist stets in Gedanken versunken und niemand weiß, worüber es nachdenkt. Es kann mit seiner Rute gut angeln.
 }
 
 Slowbro: {
 	DisplayName: Lahmus
 	Species: Symbiose-Pokémon
-	// DexEntry: An attached Shellder won't let go because of the tasty flavor that oozes out of its tail.
+	DexEntry: Das Muschas an seiner Rute lässt nicht locker, da ein leckerer Geschmack aus seiner Rute strömt.
 }
 
 Magnemite: {
 	DisplayName: Magnetilo
 	Species: Magnet-Pokémon
-	// DexEntry: The units at the sides of its body generate antigravity energy to keep it aloft in the air.
+	DexEntry: Die Magneten an seinem Körper erzeugen ein Antigravitationsfeld, um es ständig in der Schwebe zu halten.
 }
 
 Magneton: {
 	DisplayName: Magneton
 	Species: Magnet-Pokémon
-	// DexEntry: A linked cluster formed of several Magnemite. It discharges powerful magnetic waves at high voltage.
+	DexEntry: Schließen sich mehrere Magnetilo zusammen, entsteht dieses Pokémon. Es entlädt kräftige Hochspannungsmagnetwellen.
 }
 
 Farfetchd: {
 	DisplayName: Porenta
 	Species: Wildenten-Pokémon
-	// DexEntry: The plant stalk it holds is its weapon. The stalk is used like a sword to cut all sorts of things.
+	DexEntry: Dieses Pokémon nutzt eine Lauchstange als Waffe. Es setzt sie wie ein Schwert ein.
 }
 
 Doduo: {
 	DisplayName: Dodu
 	Species: Duovogel
-	// DexEntry: A two-headed Pokémon that was discovered as a sudden mutation. It runs at a pace of over 60 miles per hour.
+	DexEntry: Dieses zweiköpfige Pokémon gilt als plötzliche Mutation. Es rennt bis zu 100 km/h schnell.
 }
 
 Dodrio: {
 	DisplayName: Dodri
 	Species: Trivogel
-	// DexEntry: An enemy that takes its eyes off any of the three heads--even for a second--will get pecked severely.
+	DexEntry: Lässt ein Feind auch nur einen der drei Köpfe für nur eine Sekunde aus den Augen, wird er sofort gepickt.
 }
 
 Seel: {
 	DisplayName: Jurob
 	Species: Seehund
-	// DexEntry: A Pokémon that lives on icebergs. It swims in the sea using the point on its head to break up ice.
+	DexEntry: Dieses Pokémon lebt auf Eisbergen. Es schwimmt im Eiswasser und bricht das Eis mithilfe seines Horns.
 }
 
 Dewgong: {
 	DisplayName: Jugong
 	Species: Seehund
-	// DexEntry: Its body is covered with a pure white fur. The colder the weather, the more active it becomes.
+	DexEntry: Sein Körper ist mit reinem, weißem Fell überzogen. Je kälter es wird, desto aktiver wird dieses Pokémon.
 }
 
 Grimer: {
 	DisplayName: Sleima
 	Species: Schlamm
-	// DexEntry: Sludge exposed to X-rays from the moon transformed into Grimer. It loves feeding on filthy things.
+	DexEntry: Schlamm, der Röntgenstrahlung vom Mond ausgesetzt war, wurde zu Sleima. Es isst am liebsten dreckige Dinge.
 }
 
 Muk: {
 	DisplayName: Sleimok
 	Species: Schlamm
-	// DexEntry: They love to gather in smelly areas where sludge accumulates, making the stench around them worse.
+	DexEntry: Sie treffen sich an stinkenden Orten, an denen der Schleim sich türmt. Dies merkt man am Gestank.
 }
 
 Shellder: {
 	DisplayName: Muschas
 	Species: Muschel-Pokémon
-	// DexEntry: Its hard shell repels any kind of attack. It is vulnerable only when its shell is open.
+	DexEntry: Eine harte Schale schützt dieses Pokémon. Nur wenn es diese öffnet, wird es verwundbar.
 }
 
 Cloyster: {
 	DisplayName: Austos
 	Species: Muschel-Pokémon
-	// DexEntry: Cloyster that live in seas with harsh tidal currents grow large, sharp spikes on their shells.
+	DexEntry: Austos, die im Meer mit starker Strömung leben, werden groß und entwickeln scharfe Stacheln.
 }
 
 Gastly: {
 	DisplayName: Nebulak
 	Species: Gas-Pokémon
-	// DexEntry: Its body is made of gas. Despite lacking substance, it can envelop an opponent of any size and cause suffocation.
+	DexEntry: Es hat einen gasförmigen Körper. Es kann jeden Gegner mit Giftgas einnebeln und dadurch ersticken.
 }
 
 Haunter: {
 	DisplayName: Alpollo
 	Species: Gas-Pokémon
-	// DexEntry: If you get the feeling of being watched in darkness when nobody is around, Haunter is there.
+	DexEntry: Falls du im Dunkeln das Gefühl hast, beobachtet zu werden und niemand ist zu sehen, ist es bestimmt Alpollo.
 }
 
 Gengar: {
 	DisplayName: Gengar
 	Species: Schatten-Pokémon
-	// DexEntry: It hides in shadows. It is said that if Gengar is hiding, it cools the area by nearly 10 degrees Fahrenheit.
+	DexEntry: Es versteckt sich im Schatten. Man sagt, wenn sich ein Gengar versteckt, kühlt es sich um 5 °C ab.
 }
 
 Onix: {
 	DisplayName: Onix
 	Species: Felsnatter-Pokémon
-	// DexEntry: Burrows at high speed in search of food. The tunnels it leaves are used as homes by Diglett.
+	DexEntry: Dieses Pokémon gräbt auf seiner Suche nach Futter lange Tunnel, in denen sich später Digda einnisten.
 }
 
 Drowzee: {
 	DisplayName: Traumato
 	Species: Hypnose
-	// DexEntry: Puts enemies to sleep, then eats their dreams. Occasionally gets sick from eating only bad dreams.
+	DexEntry: Traumato versetzt Gegner in den Schlaf und frisst deren Träume. Von Alpträumen wird ihm aber übel.
 }
 
 Hypno: {
 	DisplayName: Hypno
 	Species: Hypnose
-	// DexEntry: It carries a pendulum-like device. There once was an incident in which it took away a child it hypnotized.
+	DexEntry: Es trägt ein Pendel. Man berichtet von einem Vorfall, bei dem es ein Kind mitnahm, das es zuvor hypnotisiert hatte.
 }
 
 Krabby: {
 	DisplayName: Krabby
 	Species: Krabben-Pokémon
-	// DexEntry: If it senses danger approaching, it cloaks itself with bubbles from its mouth so it will look bigger.
+	DexEntry: Wittert es Gefahr, hüllt es sich in Blasen aus seinem Maul, um größer zu erscheinen.
 }
 
 Kingler: {
 	DisplayName: Kingler
 	Species: Kneifer-Pokémon
-	// DexEntry: Its large and hard pincer has 10,000-horsepower strength. However, being so big, it is unwieldy to move.
+	DexEntry: Die Kraft seiner großen und harten Schere entspricht 10 000 PS. Durch die Größe ist sie aber auch äußerst unhandlich und sperrig.
 }
 
 Voltorb: {
 	DisplayName: Voltobal
 	Species: Ball
-	// DexEntry: It was discovered when Poké Balls were introduced. It is said that there is some connection.
+	DexEntry: Es wurde entdeckt, als man Pokébälle einführte. Es scheint, als gäbe es da einen Zusammenhang.
 }
 
 Electrode: {
 	DisplayName: Lektrobal
 	Species: Ball
-	// DexEntry: It explodes in response to even minor stimuli. It is feared, with the nickname of "The Bomb Ball."
+	DexEntry: Es explodiert schon bei kleinsten Reizen. Sein Spitzname „Die Bombenkugel“ spiegelt die Furcht der Menschen wider.
 }
 
 Exeggcute: {
 	DisplayName: Owei
 	Species: Ei-Pokémon
-	// DexEntry: Its six eggs converse using telepathy. They can quickly gather if they become separated.
+	DexEntry: Die sechs Eier kommunizieren telepathisch. Werden sie getrennt, finden sie sich schnell wieder.
 }
 
 Exeggutor: {
 	DisplayName: Kokowei
 	Species: Palmfrucht-Pokémon
-	// DexEntry: Its three heads think independently. However, they are friendly and never appear to squabble.
+	DexEntry: Seine drei Köpfe denken unabhängig voneinander. Dennoch sind sie nett zueinander und streiten nie.
 }
 
 Cubone: {
 	DisplayName: Tragosso
 	Species: Einsam-Pokémon
-	// DexEntry: It wears the skull of its dead mother on its head. When it becomes lonesome, it is said to cry loudly.
+	DexEntry: Es trägt den Schädel seiner verstorbenen Mutter auf seinem Kopf. Fühlt es sich einsam, soll es laut weinen.
 }
 
 Marowak: {
 	DisplayName: Knogga
 	Species: Knochenfan-Pokémon
-	// DexEntry: It is small and was originally very weak. Its temperament turned ferocious when it began using bones.
+	DexEntry: Es ist klein und war ursprünglich sehr schwach. Erst als es anfing Knochen einzusetzen, wurde es wild.
 }
 
 Hitmonlee: {
 	DisplayName: Kicklee
 	Species: Kicker-Pokémon
-	// DexEntry: The legs freely contract and stretch. The stretchy legs allow it to hit a distant foe with a rising kick.
+	DexEntry: Die Beine ziehen und strecken sich unabhängig voneinander. Mit seinen dehnbaren Beinen kann es einen entfernten Gegner treffen.
 }
 
 Hitmonchan: {
 	DisplayName: Nockchan
 	Species: Puncher-Pokémon
-	// DexEntry: The arm-twisting punches it throws pulverize even concrete. It rests after three minutes of fighting.
+	DexEntry: Die Schläge, die es austeilt, können Beton pulverisieren. Es muss sich im Kampf alle drei Minuten ausruhen.
 }
 
 Lickitung: {
 	DisplayName: Schlurp
 	Species: Schlecker-Pokémon
-	// DexEntry: Its long tongue, slathered with a gooey saliva, sticks to anything, so it is very useful.
+	DexEntry: Seine Zunge ist mit klebrigem Speichel bedeckt, der überall haftet. Dies ist sehr nützlich.
 }
 
 Koffing: {
 	DisplayName: Smogon
 	Species: Giftwolken-Pokémon
-	// DexEntry: Its thin, balloon-like body is inflated by horribly toxic gases. It reeks when it is nearby.
+	DexEntry: Sein dünner, ballonartiger Körper ist mit schrecklichem Giftgas gefüllt. Es verbreitet einen heftigen Gestank, wenn es in der Nähe ist.
 }
 
 Weezing: {
 	DisplayName: Smogmog
 	Species: Giftwolken-Pokémon
-	// DexEntry: If one of the twin Koffing inflates, the other one deflates. It constantly mixes its poisonous gases.
+	DexEntry: Pumpt sich eines der zwei Smogon auf, lässt das andere Luft ab. So findet ein Giftgasaustausch statt.
 }
 
 Rhyhorn: {
 	DisplayName: Rihorn
 	Species: Stachler-Pokémon
-	// DexEntry: Strong, but not too bright, this Pokémon can shatter even a skyscraper with its charging Tackles.
+	DexEntry: Stark, aber nicht allzu klug, kann dieses Pokémon sogar Hochhäuser mit seinem Tackle-Angriff zum Einsturz bringen.
 }
 
 Rhydon: {
 	DisplayName: Rizeros
 	Species: Bohrer-Pokémon
-	// DexEntry: Protected by an armor-like hide, it is capable of living in molten lava of 3,600 degrees Fahrenheit.
+	DexEntry: Durch seine panzerähnliche Körperhülle kann es in bis zu 2 000 °C heißer Lava leben.
 }
 
 Chansey: {
 	DisplayName: Chaneira
 	Species: Ei-Pokémon
-	// DexEntry: It is said to deliver happiness. Being compassionate, it shares its eggs with injured people.
+	DexEntry: Man sagt, es bringe Glück. Es ist sehr mitfühlend und teilt seine Eier mit Verletzten.
 }
 
 Tangela: {
 	DisplayName: Tangela
 	Species: Ranken-Pokémon
-	// DexEntry: Many writhing vines cover it, so its true identity remains unknown. The blue vines grow its whole life long.
+	DexEntry: Aufgrund der Ranken, die seinen Körper bedecken, kennt keiner seine wahre Form. Die blauen Ranken wachsen immer weiter.
 }
 
 Kangaskhan: {
 	DisplayName: Kangama
 	Species: Muttertier-Pokémon
-	// DexEntry: It raises its offspring in its belly pouch. It lets the baby out to play only when it feels safe.
+	DexEntry: Sein Nachwuchs wächst in seinem Beutel heran. Nur wenn es sicher ist, darf das Junge aus dem Beutel.
 }
 
 Horsea: {
 	DisplayName: Seeper
 	Species: Drachen-Pokémon
-	// DexEntry: Known to shoot down flying bugs with precision blasts of ink from the surface of the water.
+	DexEntry: Dieses Pokémon schießt mit Tinte auf über der Wasseroberfläche fliegende Insekten.
 }
 
 Seadra: {
 	DisplayName: Seemon
 	Species: Drachen-Pokémon
-	// DexEntry: Its body bristles with sharp spikes. Carelessly trying to touch it could cause fainting from the spikes.
+	DexEntry: Sein Körper ist mit scharfen Stacheln gespickt. Wenn man sorglos ist und es berührt, kann man durch die Stacheln bewusstlos werden.
 }
 
 Goldeen: {
 	DisplayName: Goldini
 	Species: Goldfisch-Pokémon
-	// DexEntry: It swims at a steady 5 knots. If it senses danger, it will strike back with its sharp horn.
+	DexEntry: Es schwimmt mit fünf Knoten. Wird es angegriffen, wehrt es sich mit seinem scharfen Horn.
 }
 
 Seaking: {
 	DisplayName: Golking
 	Species: Goldfisch-Pokémon
-	// DexEntry: In the autumn spawning season, they can be seen swimming powerfully up rivers and creeks.
+	DexEntry: Im Herbst, zur Paarungszeit, sieht man diese Pokémon kraftvoll Bäche und Flüsse hinaufschwimmen.
 }
 
 Staryu: {
 	DisplayName: Sterndu
 	Species: Sternform-Pokémon
-	// DexEntry: Even if its body is torn, it can regenerate as long as the glowing central core remains intact.
+	DexEntry: Auch wenn sein Körper nicht mehr intakt ist, kann es sich regenerieren, wenn der Kern leuchtet.
 }
 
 Starmie: {
 	DisplayName: Starmie
 	Species: Mysteriös-Pokémon
-	// DexEntry: Its central core glows with the seven colors of the rainbow. Some people value the core as a gem.
+	DexEntry: Der Kern dieses Pokémon leuchtet in den Farben des Regenbogens. Sein Kern gilt als Edelstein.
 }
 
 MrMime: {
 	DisplayName: Pantimos
 	Species: Sperren-Pokémon
-	// DexEntry: Emanations from its fingertips solidify the air into invisible walls that repel even harsh attacks.
+	DexEntry: Seine Fingerspitzen sondern etwas ab, das die Luft zu einer schützenden Wand werden lässt.
 }
 
 Scyther: {
 	DisplayName: Sichlor
 	Species: Mantis-Pokémon
-	// DexEntry: It tears and shreds prey with its wickedly sharp scythes. It very rarely spreads its wings to fly.
+	DexEntry: Es zerreißt und zerkleinert seine Beute mit seinen unglaublich scharfen Sicheln. Selten breitet es seine Flügel aus, um zu fliegen.
 }
 
 Jynx: {
 	DisplayName: Rossana
 	Species: Humanotyp-Pokémon
-	// DexEntry: It wiggles its hips as it walks. It can cause people to dance in unison with it.
+	DexEntry: Der beschwingte Gang dieses Pokémon bezaubert Zuschauer und lässt sie im Takt dazu tanzen.
 }
 
 Electabuzz: {
 	DisplayName: Elektek
 	Species: Elektro-Pokémon
-	// DexEntry: Electricity runs across the surface of its body. In darkness, its entire body glows a whitish blue.
+	DexEntry: Elektrizität bedeckt seinen Körper. Im Dunkeln erstrahlt es in einem bläulichen Ton.
 }
 
 Magmar: {
 	DisplayName: Magmar
 	Species: Brenner-Pokémon
-	// DexEntry: Found near the mouth of a volcano. This fire-breather's body temperature is nearly 2,200 degrees Fahrenheit.
+	DexEntry: Es wurde in der Nähe eines Vulkans gefunden. Die Körpertemperatur dieses Feuerspuckers liegt bei fast 1 200 °C.
 }
 
 Pinsir: {
 	DisplayName: Pinsir
 	Species: Kneifkäfer-Pokémon
-	// DexEntry: It grips prey with its pincers until the prey is torn in half. What it can't tear, it tosses far.
+	DexEntry: Es hält seine Beute mit seiner Zange fest und teilt sie dann. Was es nicht teilen kann, wirft es fort.
 }
 
 Tauros: {
 	DisplayName: Tauros
 	Species: Wildbullen-Pokémon
-	// DexEntry: After heightening its will to fight by whipping itself with its three tails, it charges at full speed.
+	DexEntry: Es kämpft mit vollem Einsatz, nachdem es sich mit seinen drei Schweifen auspeitschte, um sich anzustacheln.
 }
 
 Magikarp: {
 	DisplayName: Karpador
 	Species: Fisch-Pokémon
-	// DexEntry: It is virtually worthless in terms of both power and speed. It is the most weak and pathetic Pokémon in the world.
+	DexEntry: Es ist nutzlos, was Kraft und Geschwindigkeit angeht. Dieses ist das schwächste und erbärmlichste Pokémon der Welt.
 }
 
 Gyarados: {
 	DisplayName: Garados
 	Species: Grausam-Pokémon
-	// DexEntry: In ancient literature, there is a record of a Gyarados that razed a village when violence flared.
+	DexEntry: In alten Schriften wird von einem Garados berichtet, das in einem Wutanfall ein Dorf zerstörte.
 }
 
 Lapras: {
 	DisplayName: Lapras
 	Species: Transport-Pokémon
-	// DexEntry: They have gentle hearts. Because they rarely fight, many have been caught. Their number has dwindled.
+	DexEntry: Sie sind gutmütig. Da sie selten kämpfen, wurden sie oft gefangen. Ihre Anzahl ist stark reduziert.
 }
 
 Ditto: {
 	DisplayName: Ditto
 	Species: Transform-Pokémon
-	// DexEntry: It has the ability to reconstitute its entire cellular structure to transform into whatever it sees.
+	DexEntry: Es kann seine Zellstruktur so verändern, dass es sich in alles verwandeln kann, was es sieht.
 }
 
 Eevee: {
 	DisplayName: Evoli
 	Species: Evolutions-Pokémon
-	// DexEntry: A rare Pokémon that adapts to harsh environments by taking on different evolutionary forms.
+	DexEntry: Ein seltenes Pokémon, das sich seiner Umgebung anpasst, indem es sich in unterschiedliche Formen entwickelt.
 }
 
 Vaporeon: {
 	DisplayName: Aquana
 	Species: Blubbblasen-Pokémon
-	// DexEntry: It prefers beautiful shores. With cells similar to water molecules, it could melt in water.
+	DexEntry: Es liebt schöne Ufer. Da seine Zellstruktur Wassermolekülen ähnlich ist, kann es mit Wasser verschmelzen.
 }
 
 Jolteon: {
 	DisplayName: Blitza
 	Species: Blitz-Pokémon
-	// DexEntry: Every hair on its body starts to stand sharply on end if it becomes charged with electricity.
+	DexEntry: Lädt es sich mit Elektrizität auf, steht jedes einzelne seiner Körperhaare steil nach oben.
 }
 
 Flareon: {
 	DisplayName: Flamara
 	Species: Feuer-Pokémon
-	// DexEntry: It has a flame sac in its body. Its body temperature tops 1,650 degrees Fahrenheit before battle.
+	DexEntry: In seinem Körper befindet sich eine Flamme. Seine Körpertemperatur liegt vor dem Kampf bei 900 °C.
 }
 
 Porygon: {
 	DisplayName: Porygon
 	Species: Virtuell-Pokémon
-	// DexEntry: A man-made Pokémon that came about as a result of research. It is programmed with only basic motions.
+	DexEntry: Ein künstlich produziertes Pokémon, welches das Ergebnis von Forschungen ist. Es ist simpel aufgebaut.
 }
 
 Omanyte: {
 	DisplayName: Amonitas
 	Species: Spiralen-Pokémon
-	// DexEntry: A prehistoric Pokémon that lived in the primordial sea, it swims by twisting its 10 tentacles about.
+	DexEntry: Ein prähistorisches Pokémon, das zur Urzeit im Wasser lebte. Es schwimmt, indem es seine zehn Tentakel bewegt.
 }
 
 Omastar: {
 	DisplayName: Amoroso
 	Species: Spiralen-Pokémon
-	// DexEntry: Its tentacles are highly developed as if they are hands and feet. As soon as it ensnares prey, it bites.
+	DexEntry: Seine Tentakel sind hoch entwickelt und es setzt sie ähnlich Händen und Füßen ein. Sobald es Beute ergriffen hat, beißt es zu.
 }
 
 Kabuto: {
 	DisplayName: Kabuto
 	Species: Schaltier-Pokémon
-	// DexEntry: It is thought to have inhabited beaches 300 million years ago. It is protected by a stiff shell.
+	DexEntry: Man geht davon aus, dass dieses Pokémon vor 300 Millionen Jahren die Strände bevölkerte.
 }
 
 Kabutops: {
 	DisplayName: Kabutops
 	Species: Schaltier-Pokémon
-	// DexEntry: In the water, it tucks in its limbs to become more compact, then it wiggles its shell to swim fast.
+	DexEntry: Im Wasser zieht es seine Beine an und bewegt seinen Panzer, um so schneller schwimmen zu können.
 }
 
 Aerodactyl: {
 	DisplayName: Aerodactyl
 	Species: Fossil-Pokémon
-	// DexEntry: It was regenerated from a dinosaur's genetic matter that was found in amber. It flies with high-pitched cries.
+	DexEntry: In Bernstein eingeschlossenes genetisches Material eines Dinosauriers war der Ursprung dieses Pokémon. Beim Fliegen schreit es schrill.
 }
 
 Snorlax: {
 	DisplayName: Relaxo
 	Species: Tagträumer-Pokémon
-	// DexEntry: It is not satisfied unless it eats over 880 pounds of food every day. When it is done eating, it goes promptly to sleep.
+	DexEntry: Es ist erst satt, wenn es über 400 kg Nahrung am Tag gefressen hat. Ist es mit dem Essen fertig, schläft es sofort ein.
 }
 
 Articuno: {
 	DisplayName: Arktos
 	Species: Eis-Pokémon
-	// DexEntry: A legendary bird Pokémon. It can create blizzards by freezing moisture in the air.
+	DexEntry: Ein Legendäres Vogel-Pokémon. Es kann Blizzards verursachen, indem es Feuchtigkeit gefriert.
 }
 
 Zapdos: {
 	DisplayName: Zapdos
 	Species: Elektro-Pokémon
-	// DexEntry: A legendary bird Pokémon that is said to appear from clouds while dropping enormous lightning bolts.
+	DexEntry: Ein Legendäres Vogel-Pokémon, das im Sturzflug aus den Wolken bricht und Blitze schleudert.
 }
 
 Moltres: {
 	DisplayName: Lavados
 	Species: Flammen-Pokémon
-	// DexEntry: It is said to be the legendary bird Pokémon of fire. Every flap of its wings creates a dazzling flare of flames.
+	DexEntry: Dieses Pokémon ist der Legendäre Feuervogel. Sein Flügelschlag entfacht ein helles Feuermeer.
 }
 
 Dratini: {
 	DisplayName: Dratini
 	Species: Drachen-Pokémon
-	// DexEntry: It is called the "Mirage Pokémon" because so few have seen it. Its shed skin has been found.
+	DexEntry: Man nennt es „Illusion-Pokémon“, denn nur wenige haben es gesehen. Nur seine Haut wurde oft gefunden.
 }
 
 Dragonair: {
 	DisplayName: Dragonir
 	Species: Drachen-Pokémon
-	// DexEntry: Its crystalline orbs appear to give this Pokémon the power to freely control the weather.
+	DexEntry: Die kristallenen Bälle an seinem Schweif ermöglichen es ihm, das Wetter zu beeinflussen.
 }
 
 Dragonite: {
 	DisplayName: Dragoran
 	Species: Drachen-Pokémon
-	// DexEntry: It can fly in spite of its big and bulky physique. It circles the globe in just 16 hours.
+	DexEntry: Trotz seines wuchtigen und massiven Körpers kann es fliegen. Es umrundet den Erdball in nur 16 Stunden.
 }
 
 Mewtwo: {
 	DisplayName: Mewtu
 	Species: Genmutanten-Pokémon
-	// DexEntry: It was created by a scientist after years of horrific gene-splicing and DNA-engineering experiments.
+	DexEntry: Dieses Pokémon ist das Resultat eines jahrelangen und skrupellosen Experimentes.
 }
 
 Mew: {
 	DisplayName: Mew
 	Species: Neue Art-Pokémon
-	// DexEntry: Because it can use all kinds of moves, many scientists believe Mew to be the ancestor of Pokémon.
+	DexEntry: Es beherrscht alle möglichen Attacken, daher sieht man in ihm den Vorfahren aller Pokémon.
 }

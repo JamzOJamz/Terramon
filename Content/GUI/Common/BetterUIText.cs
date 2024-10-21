@@ -38,8 +38,8 @@ public class BetterUIText : UIElement
         WrappedTextBottomPadding = 20f;
         InternalSetText(text, textScale, large);
     }
-
-    public BetterUIText(LocalizedText text, float textScale = 1f, bool large = false)
+    
+    public BetterUIText(object text, float textScale = 1f, bool large = false)
     {
         TextOriginX = 0.5f;
         TextOriginY = 0f;

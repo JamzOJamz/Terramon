@@ -106,7 +106,7 @@ public class InventoryParty : SmartUIState
         SoundEngine.PlaySound(_isCompressed ? SoundID.MenuOpen : SoundID.MenuClose);
         _isCompressed = !_isCompressed;
         _toggleSlotsButton.SetImage(_isCompressed ? PartySlotBallGreyedTexture : PartySlotBallTexture);
-        var startingAlpha = _isCompressed ? 1f : 0f;
+        var startingAlpha = (float)_isCompressed.ToInt();
 
         var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
         if (reducedMotion)
@@ -144,7 +144,7 @@ public class InventoryParty : SmartUIState
                 slot.Color = newColor;
                 slot.Update(null);
             }
-        }, _isCompressed ? 0f : 1f, 0.35f);
+        }, (!_isCompressed).ToInt(), 0.35f);
     }
 
     private static void UpdateSlot(PokemonData data, int index)

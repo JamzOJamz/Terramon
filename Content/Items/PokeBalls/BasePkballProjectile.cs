@@ -411,18 +411,18 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
-                Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetColor(), _capture.DisplayName));
+                Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetHexColor(), _capture.DisplayName));
         }
         else
         {
             var box = player.TransferPokemonToPC(_capture.Data);
             Main.NewText(box != null
                 ? Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPC",
-                    Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetColor(),
+                    Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetHexColor(),
                     _capture.DisplayName,
                     box.GivenName ?? player.GetDefaultNameForPCBox(box), player.Player.name)
                 : Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPCNoRoom",
-                    Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetColor(),
+                    Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetHexColor(),
                     _capture.DisplayName,
                     player.Player.name));
         }

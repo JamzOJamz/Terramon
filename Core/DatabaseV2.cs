@@ -75,6 +75,16 @@ public class DatabaseV2
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
     }
+    
+    public LocalizedText GetPokemonDexEntry(ushort id)
+    {
+        return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
+    }
+    
+    public string GetPokemonDexEntryDirect(ushort id)
+    {
+        return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
+    }
 
     public bool IsAvailableStarter(ushort id)
     {

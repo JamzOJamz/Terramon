@@ -17,6 +17,12 @@ namespace Terramon.Content.NPCs;
 /// </summary>
 public class NPCSpawnController : NPCComponent
 {
+    /// <summary>
+    ///     A constant multiplier for balancing the spawn rates of Pokémon to vanilla NPCs.
+    ///     Best value determined through testing, may need to be adjusted.
+    /// </summary>
+    private const float ConstantSpawnMultiplier = 1.25f; // Seems to work well
+
     // Dictionary to track the counts of each SpawnCondition
     private static readonly Dictionary<string, int> ConditionCount = new();
 
@@ -72,7 +78,8 @@ public class NPCSpawnController : NPCComponent
                     continue;
                 if (condition.DayTime.HasValue && condition.DayTime.Value != Main.dayTime)
                     continue;
-                pool[type] = condition.Chance * (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f);
+                pool[type] = condition.Chance * (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f) *
+                             ConstantSpawnMultiplier;
                 typesAdded.Add(type);
                 break;
             }
@@ -97,7 +104,9 @@ public class NPCSpawnController : NPCComponent
         // Divides the spawn chance by the condition count to provide a more balanced spawn rate for Pokémon
         // Also takes into account the player's buffs, reducing the spawn chance if they have a Water Candle or Battle Potion
         var finalComputedChance = condition.Chance * spawnController.Chance /
-            ConditionCount[spawnController.Condition] * (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f);
+                                  ConditionCount[spawnController.Condition] *
+                                  (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f) *
+                                  ConstantSpawnMultiplier;
 
         // If the final computed chance is less than or equal to 0, don't add the NPC to the spawn pool
         if (finalComputedChance <= 0) return false;

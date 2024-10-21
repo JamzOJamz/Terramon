@@ -62,7 +62,7 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
         {
             if (Random.NextFloat() <= ChangeDirectionChance || !_hasFirstDir)
             {
-                AIJumpDirection = Random.NextBool() ? 1 : -1;
+                AIJumpDirection = Random.NextBool().ToDirectionInt();
                 if (!_hasFirstDir) _hasFirstDir = true;
             }
 
@@ -74,7 +74,7 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
                     AIJumpDirection = 1;
             }
 
-            NPC.netUpdate = true;
+            //NPC.netUpdate = true;
         }
 
         NPC.spriteDirection = (int)AIJumpDirection * -1;
@@ -91,7 +91,7 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
             NPC.velocity.Y = Random.NextFloat(BounceMinRange, BounceMaxRange);
             var jumpStrength = Random.NextFloat(HorizontalSpeedMin, HorizontalSpeedMax);
             AIJumpVelocity = AIJumpDirection == 1 ? -jumpStrength : jumpStrength;
-            NPC.netUpdate = true;
+            //NPC.netUpdate = true;
         }
         
         if (MathF.Abs(NPC.velocity.X) < 0.1f || AITimer == 1) NPC.velocity.X = AIJumpVelocity;

@@ -8,6 +8,7 @@ using Terramon.Content.Items.KeyItems;
 using Terramon.Content.NPCs;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
@@ -51,6 +52,9 @@ public class HubUI : SmartUIState
 
     static HubUI()
     {
+        // Don't run this on the server
+        if (Main.dedServ) return;
+        
         EmptyTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyTabHeader");
         EmptyTabHeaderAltTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyTabHeaderAlt");
         PokedexTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexTabHeader");
@@ -71,6 +75,13 @@ public class HubUI : SmartUIState
                 return;
             }
 
+            orig(self);
+        };
+        
+        // Mimic bestiary behaviour (this should not run if the hub UI is active)
+        On_Player.LookForTileInteractions += static (orig, self) =>
+        {
+            if (Active) return;
             orig(self);
         };
     }
@@ -123,7 +134,8 @@ public class HubUI : SmartUIState
         #region Tabs
 
         // Pokédex tab
-        var pokedexTabHeader = new HubTabHeader("Pokédex", 93, new Vector2(51, 15), PokedexTabHeaderTexture,
+        var pokedexTabHeader = new HubTabHeader(Language.GetText("Mods.Terramon.Keybinds.OpenPokedex.DisplayName"), 93,
+            new Vector2(51, 15), PokedexTabHeaderTexture,
             PokedexTabIconTexture);
         AddElement(pokedexTabHeader, -12, -12, 227, 66, _mainPanel);
 
@@ -165,7 +177,7 @@ public class HubUI : SmartUIState
         {
             BackgroundColor = new Color(37, 49, 90) * 0.95f
         };
-        _rangeText = new UIText($"Showing No. 1-54 ({Terramon.LoadedPokemonCount})", 0.92f)
+        _rangeText = new UIText(string.Empty, 0.92f)
         {
             HAlign = 0.5f,
             VAlign = 0.5f,
@@ -176,7 +188,7 @@ public class HubUI : SmartUIState
         AddElement(_rangePanel, 104, 65, (int)_rangeText.MinWidth.Pixels, 38, _mainPanel);
 
         // Filter button
-        _filterButton = new UIHoverImageButton(PlayerDexFilterTexture, "Show player Pokédex")
+        _filterButton = new UIHoverImageButton(PlayerDexFilterTexture, string.Empty)
         {
             Left = { Pixels = -38 - 6, Percent = 1f },
             Top = { Pixels = 65 },
@@ -189,7 +201,8 @@ public class HubUI : SmartUIState
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
             _worldDexMode = !_worldDexMode;
-            if (_worldDexMode) _filterButton.SetHoverText("Show World Dex");
+            if (_worldDexMode)
+                _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.WorldDexFilter"));
             _filterButton.SetImage(_worldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
             _filterButton.SetHoverImage(_worldDexMode ? WorldDexFilterHoverTexture : PlayerDexFilterHoverTexture);
             RefreshPokedex(closeOverview: true);
@@ -204,7 +217,7 @@ public class HubUI : SmartUIState
         _caughtSeenPanel.SetPadding(0);
         _caughtSeenPanel.PaddingLeft = 13;
         _caughtSeenPanel.PaddingRight = 13;
-        var caughtBallIcon = new UIHoverImage(BallIconTexture, "Obtained")
+        var caughtBallIcon = new UIHoverImage(BallIconTexture, Language.GetText("Mods.Terramon.GUI.Pokedex.Obtained"))
         {
             Top = { Pixels = 4 },
             Left = { Pixels = -3 },
@@ -225,7 +238,7 @@ public class HubUI : SmartUIState
             IgnoresMouseInteraction = true
         };
         _caughtSeenPanel.Append(_caughtAmountText);
-        _seenBallIcon = new UIHoverImage(BallIconEmptyTexture, "Seen")
+        _seenBallIcon = new UIHoverImage(BallIconEmptyTexture, Language.GetText("Mods.Terramon.GUI.Pokedex.Seen"))
         {
             Top = { Pixels = 4 },
             Left = { Pixels = (int)_caughtAmountText.MinWidth.Pixels + 41 },
@@ -255,7 +268,7 @@ public class HubUI : SmartUIState
         {
             BackgroundColor = new Color(37, 49, 90) * 0.95f
         };
-        _progressText = new UIText("0% Completion", 0.92f)
+        _progressText = new UIText(string.Empty, 0.92f)
         {
             HAlign = 0.5f,
             VAlign = 0.5f,
@@ -323,7 +336,9 @@ public class HubUI : SmartUIState
             : Color.White;
 
         // Update the Pokédex filter button's hover text
-        if (!_worldDexMode) _filterButton.SetHoverText($"Show {Main.LocalPlayer.name}'s Pokédex");
+        if (!_worldDexMode)
+            _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.PlayerDexFilter",
+                Main.LocalPlayer.name));
 
         Recalculate();
     }
@@ -332,7 +347,7 @@ public class HubUI : SmartUIState
     {
         // Close the Pokémon overview panel if requested
         if (closeOverview)
-            _overviewPanel.SetCurrentEntry(0);
+            _overviewPanel.SetCurrentEntry(0, PokedexEntryStatus.Undiscovered);
 
         // Get the player's Pokédex
         var pokedex =
@@ -342,15 +357,23 @@ public class HubUI : SmartUIState
 
         // Update the Pokémon page entries
         if (pokemon == 0)
+        {
             _pokedexPage.UpdateAllEntries(pokedex);
+        }
         else
-            _pokedexPage.UpdateEntry(pokemon, pokedex.Entries.GetValueOrDefault(pokemon));
+        {
+            var entry = pokedex.Entries.GetValueOrDefault(pokemon);
+            _pokedexPage.UpdateEntry(pokemon, entry);
+            if (_overviewPanel.Pokemon == pokemon)
+                _overviewPanel.SetCurrentEntry(pokemon, entry.Status);
+        }
 
         if (pokemon == 0)
         {
             // Update the range text
             var range = _pokedexPage.GetPageRange();
-            _rangeText.SetText($"Showing No. {range.Item1}-{range.Item2} ({Terramon.LoadedPokemonCount})");
+            _rangeText.SetText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.ShowingRange", range.Item1, range.Item2,
+                Terramon.LoadedPokemonCount));
             _rangePanel.Width.Set((int)_rangeText.MinWidth.Pixels, 0f);
         }
 
@@ -361,7 +384,8 @@ public class HubUI : SmartUIState
         _caughtAmountText.SetText(registeredCount.ToString());
         var completion = pokedex.RegisteredCount * 100f / Terramon.LoadedPokemonCount;
         if (completion > 100) completion = 100; // Just in case
-        _progressText.SetText($"{completion:0.##}% Completion", 0.92f, false);
+        var completionFmtString = Language.GetTextValue("Mods.Terramon.GUI.Pokedex.Completion", $"{completion:0.##}");
+        _progressText.SetText(completionFmtString, 0.92f, false);
         _progressText.TextColor = completion == 100 ? ModContent.GetInstance<KeyItemRarity>().RarityColor : Color.White;
         _pokedexCompletionPercentage = completion;
 
@@ -378,7 +402,7 @@ public class HubUI : SmartUIState
         {
             var diff = minWidth - fillWidth;
             // Scale the progress text to fit the new width
-            _progressText.SetText($"{completion:0.##}% Completion", 0.92f - diff / 300f, false);
+            _progressText.SetText(completionFmtString, 0.92f - diff / 300f, false);
         }
 
         _progressPanel.Width.Set(fillWidth, 0f);
@@ -395,9 +419,9 @@ public class HubUI : SmartUIState
         RefreshPokedex();
     }
 
-    public void SetCurrentPokedexEntry(ushort pokemon)
+    public void SetCurrentPokedexEntry(ushort pokemon, PokedexEntryStatus status)
     {
-        _overviewPanel.SetCurrentEntry(pokemon);
+        _overviewPanel.SetCurrentEntry(pokemon, status);
     }
 
     public override void Recalculate()
@@ -414,8 +438,8 @@ public class HubUI : SmartUIState
         // Resize the Pokédex page display based on the main panel's height
         if (_pokedexPage == null || _pokedexPage.Height.Pixels == mainPanelHeight - 140) return;
         _pokedexPage.Height.Set(mainPanelHeight - 140, 0f);
-        _pokedexPage.Reset(true);
-        if (Active) RefreshPokedex();
+        _pokedexPage.Reset();
+        if (Active) RefreshPokedex(closeOverview: true);
     }
 
     /// <summary>
@@ -456,10 +480,10 @@ internal sealed class HubTabHeader : UIImage
     private bool _headerAssetLoaded;
     private bool _iconAssetLoaded;
 
-    public HubTabHeader(string title, float headerX, Vector2 iconPos, Asset<Texture2D> headerTexture,
+    public HubTabHeader(object title, float headerX, Vector2 iconPos, Asset<Texture2D> headerTexture,
         Asset<Texture2D> iconTexture) : base(headerTexture)
     {
-        _locked = title == "???";
+        _locked = title.ToString() == "???";
         _headerAsset = headerTexture;
         _iconAsset = iconTexture;
 
@@ -558,7 +582,7 @@ internal sealed class PokedexPageDisplay : UIElement
             Math.Min(_startItemIndex + _rows * _cols, Terramon.LoadedPokemonCount));
     }
 
-    public void Reset(bool changedHeight = false)
+    public void Reset()
     {
         // Delete all the current entries
         foreach (var entry in _entries)
@@ -644,7 +668,7 @@ internal sealed class PokedexEntryIcon : UIPanel
         OnLeftClick += (_, _) =>
         {
             if (_entry?.Status == PokedexEntryStatus.Undiscovered) return;
-            UILoader.GetUIState<HubUI>().SetCurrentPokedexEntry(ID);
+            UILoader.GetUIState<HubUI>().SetCurrentPokedexEntry(ID, _entry!.Status);
         };
         /*var miniTexture =
             ModContent.Request<Texture2D>(
@@ -753,10 +777,10 @@ internal sealed class PokedexEntryIcon : UIPanel
             switch (_entry.Status)
             {
                 case PokedexEntryStatus.Registered:
-                    useHoverText += $"\n[c/FFE745:Obtained by {_entry.LastUpdatedBy}]";
+                    useHoverText += Language.GetTextValue("Mods.Terramon.GUI.Pokedex.ObtainedBy", _entry.LastUpdatedBy);
                     break;
                 case PokedexEntryStatus.Seen:
-                    useHoverText += $"\n[c/FFE745:Seen by {_entry.LastUpdatedBy}]";
+                    useHoverText += Language.GetTextValue("Mods.Terramon.GUI.Pokedex.SeenBy", _entry.LastUpdatedBy);
                     break;
                 case PokedexEntryStatus.Undiscovered:
                 default:
@@ -824,14 +848,33 @@ internal sealed class PokedexPageButton : UIHoverImageButton
 internal sealed class PokedexOverviewPanel : UIPanel
 {
     private static readonly Asset<Texture2D> OverviewHeaderTexture;
+    private static readonly Asset<Texture2D> OverviewDividerTexture;
+    private readonly UIPanel _dexEntryPanel;
+    private readonly UIText _dexEntryText;
     private readonly UIText _dexNoText;
+    private readonly UIImage _divider;
     private readonly UIImage _header;
+    private readonly UIText _heightText;
+    private readonly UIContainer _heightWeightContainer;
+    private readonly UIList _list;
     private readonly BetterUIText _monNameText;
     private readonly PokedexPreviewCanvas _preview;
+    private readonly UIScrollbar _scrollBar;
+    private readonly UIPanel _speciesPanel;
+    private readonly UIText _speciesText;
+    private readonly UIText _weightText;
+    private PokedexEntryStatus _status;
+    private UIPanel _mainTypePanel;
+    private UIText _mainTypeText;
+    private UIPanel _altTypePanel;
+    private UIText _altTypeText;
+    private UIContainer _typeContainer;
+    private UIContainer _dexEntryContainer;
 
     static PokedexOverviewPanel()
     {
         OverviewHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewHeader");
+        OverviewDividerTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewDivider");
     }
 
     public PokedexOverviewPanel()
@@ -840,6 +883,168 @@ internal sealed class PokedexOverviewPanel : UIPanel
         Height.Set(694, 0);
         BackgroundColor = new Color(37, 49, 90);
         SetPadding(0);
+        _list = new UIList
+        {
+            Top = { Pixels = 58 },
+            Width = { Percent = 1f },
+            Height = { Pixels = 634 },
+            ListPadding = 0f
+        };
+        _preview = new PokedexPreviewCanvas
+        {
+            Left = { Pixels = 43 },
+            MarginTop = 18
+        };
+        _list.Add(_preview);
+        _divider = new UIImage(OverviewDividerTexture)
+        {
+            Width = { Pixels = 361 },
+            Height = { Pixels = 6 },
+            Left = { Pixels = 2 },
+            MarginTop = 34,
+            Color = Color.Transparent
+        };
+        _list.Add(_divider);
+        _speciesPanel = new UIPanel
+        {
+            Width = { Pixels = 307 },
+            Height = { Pixels = 38 },
+            Left = { Pixels = 25 },
+            MarginTop = -22,
+            BackgroundColor = new Color(50, 62, 114)
+        };
+        _speciesText = new UIText(string.Empty, 0.84f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f
+        };
+        _speciesPanel.Append(_speciesText);
+        //Append(_speciesPanel);
+        _typeContainer = new UIContainer(new Vector2(307, 48))
+        {
+            Left = { Pixels = 25 },
+            MarginTop = 18
+        };
+        var typePanel = new UIPanel
+        {
+            Width = { Pixels = 307 },
+            Height = { Pixels = 48 },
+            BackgroundColor = new Color(37, 49, 90)
+        };
+        var typeDesc = new UIText("Type", 0.84f)
+        {
+            VAlign = 0.5f
+        };
+        typePanel.Append(typeDesc);
+        _typeContainer.Append(typePanel);
+        _mainTypePanel = new UIPanel
+        {
+            Width = { Pixels = 78 },
+            Height = { Pixels = 28 },
+            Left = { Pixels = 131 },
+            Top = { Pixels = 10 },
+            BackgroundColor = new Color(206, 207, 206)
+        };
+        _mainTypeText = new UIText(string.Empty, 0.8f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f
+        };
+        _mainTypePanel.Append(_mainTypeText);
+        _typeContainer.Append(_mainTypePanel);
+        _altTypePanel = new UIPanel
+        {
+            Width = { Pixels = 78 },
+            Height = { Pixels = 28 },
+            Left = { Pixels = 219 },
+            Top = { Pixels = 10 },
+            BackgroundColor = new Color(206, 207, 206)
+        };
+        _altTypeText = new UIText(string.Empty, 0.8f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f
+        };
+        _altTypePanel.Append(_altTypeText);
+        _typeContainer.Append(_altTypePanel);
+        //_list.Add(typeContainer);
+        _dexEntryContainer = new UIContainer(new Vector2(307, 113))
+        {
+            Left = { Pixels = 25 },
+            MarginTop = 18,
+            MarginBottom = 18
+        };
+        _dexEntryPanel = new UIPanel
+        {
+            Width = { Pixels = 307 },
+            Height = { Pixels = 90 },
+            Top = { Pixels = 23 },
+            BackgroundColor = new Color(37, 49, 90)
+        };
+        var dexEntryDesc = new UIText(Language.GetText("Mods.Terramon.GUI.Pokedex.Entry"), 0.84f)
+        {
+            Left = { Pixels = 1 },
+        };
+        _dexEntryContainer.Append(dexEntryDesc);
+        _dexEntryText = new UIText(string.Empty, 0.84f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f,
+            Width = { Percent = 1f },
+            MarginTop = 25,
+            IsWrapped = true
+        };
+        _dexEntryPanel.Append(_dexEntryText);
+        _dexEntryContainer.Append(_dexEntryPanel);
+        //_list.Add(_dexEntryContainer);
+        _heightWeightContainer = new UIContainer(new Vector2(307, 60))
+        {
+            Left = { Pixels = 25 },
+            MarginTop = 18
+        };
+        var heightPanel = new UIPanel
+        {
+            Width = { Pixels = 144 },
+            Height = { Pixels = 38 },
+            Top = { Pixels = 22 },
+            BackgroundColor = new Color(37, 49, 90)
+        };
+        heightPanel.SetPadding(0);
+        var heightDesc = new UIText(Language.GetText("Mods.Terramon.GUI.Pokedex.Height"), 0.84f)
+        {
+            Left = { Pixels = 1 }
+        };
+        _heightWeightContainer.Append(heightDesc);
+        _heightText = new UIText("0.0 m (0′00″)", 0.84f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f
+        };
+        heightPanel.Append(_heightText);
+        _heightWeightContainer.Append(heightPanel);
+        var weightPanel = new UIPanel
+        {
+            Width = { Pixels = 144 },
+            Height = { Pixels = 38 },
+            Top = { Pixels = 22 },
+            Left = { Pixels = 163 },
+            BackgroundColor = new Color(37, 49, 90)
+        };
+        weightPanel.SetPadding(0);
+        var weightDesc = new UIText(Language.GetText("Mods.Terramon.GUI.Pokedex.Weight"), 0.84f)
+        {
+            Left = { Pixels = 164 }
+        };
+        _heightWeightContainer.Append(weightDesc);
+        _weightText = new UIText("0.0 kg (0.0 lbs)", 0.84f)
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f
+        };
+        weightPanel.Append(_weightText);
+        _heightWeightContainer.Append(weightPanel);
+        //_list.Add(heightWeightContainer);
+        Append(_list);
         _header = new UIImage(OverviewHeaderTexture)
         {
             Width = { Percent = 1f },
@@ -853,45 +1058,118 @@ internal sealed class PokedexOverviewPanel : UIPanel
             Top = { Pixels = 8 }
         };
         Append(_dexNoText);
-        _monNameText = new BetterUIText(string.Empty, 0.46f, true)
+        _monNameText = new BetterUIText(string.Empty, 0.405f, true)
         {
-            HAlign = 0.48f,
+            HAlign = 0.47f,
             Top = { Pixels = 22 }
         };
         Append(_monNameText);
-        _preview = new PokedexPreviewCanvas
-        {
-            Left = { Pixels = 49 },
-            Top = { Pixels = 76 }
-        };
-        Append(_preview);
-        var overviewList = new UIList
-        {
-            Width = { Percent = 1f },
-            Height = { Percent = 1f },
-            ListPadding = 10f
-        };
-        Append(overviewList);
-        var overviewScroll = new UIScrollbar();
-        overviewScroll.SetView(100f, 1000f);
-        overviewList.SetScrollbar(overviewScroll);
+        _scrollBar = new UIScrollbar();
+        _scrollBar.Height.Set(-22, 1f);
+        _scrollBar.HAlign = 1f;
+        _scrollBar.VAlign = 1f;
+        _scrollBar.MarginRight = 5;
+        _scrollBar.MarginBottom = 11;
+        _scrollBar.SetView(100f, 1000f);
+        _list.SetScrollbar(_scrollBar);
+        Append(_scrollBar);
     }
 
-    public void SetCurrentEntry(ushort pokemon)
+    public ushort Pokemon { get; private set; }
+
+    public override void Recalculate()
     {
+        base.Recalculate();
+
+        _list.Height.Set(Height.Pixels - 60, 0);
+    }
+
+    public void SetCurrentEntry(ushort pokemon, PokedexEntryStatus status)
+    {
+        if (Pokemon == pokemon && _status == status) return;
+        Pokemon = pokemon;
+        _status = status;
+
+        // Remove list items so they are not added multiple times
+        _list.Remove(_dexEntryContainer);
+        _list.Remove(_heightWeightContainer);
+        _list.Remove(_typeContainer);
+        _list.Remove(_speciesPanel);
+
         if (pokemon == 0)
         {
             _dexNoText.SetText(string.Empty);
             _monNameText.SetText(string.Empty);
             _header.Color = Color.Transparent;
+            _divider.Color = Color.Transparent;
             _preview.IDToDraw = 0;
+            _scrollBar.Height.Set(-22, 1f);
             return;
         }
 
-        _dexNoText.SetText($"No. {pokemon}");
-        _monNameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon));
+        _dexNoText.SetText($"{Language.GetTextValue("Mods.Terramon.GUI.Pokedex.NumberPrefix")} {pokemon:000}");
+        _monNameText.SetText(Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(pokemon));
+        if (status == PokedexEntryStatus.Registered)
+        {
+            var schema = Terramon.DatabaseV2.GetPokemon(pokemon);
+            // Play Pokémon cry
+            var cry = new SoundStyle("Terramon/Sounds/Cries/" + schema.Identifier)
+                { Volume = 0.21f };
+            SoundEngine.PlaySound(cry);
+            _speciesText.SetText(Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon));
+            _dexEntryText.SetText(Terramon.DatabaseV2.GetPokemonDexEntryDirect(pokemon));
+            var heightInMeters = schema.Height / 10f; // Convert from decimeters to meters
+            var heightInInches = schema.Height * 3.937f; // Convert from decimeters to inches
+            var feet = (int)(heightInInches / 12); // Get the number of feet
+            var inches = (int)Math.Round(heightInInches % 12); // Get the remaining inches
+            _heightText.SetText($"{heightInMeters:0.0} m ({feet}′{inches:00}″)");
+            var weightInKg = schema.Weight / 10f; // Convert from hectograms to kilograms
+            var weightInLbs = schema.Weight * 0.220462f; // Convert from hectograms to pounds
+            var weightFmtString = $"{weightInKg:0.0} kg ({weightInLbs:0.0} lbs)";
+            _weightText.SetText(weightFmtString, 0.84f, false);
+            var minWidth = (int)_weightText.MinWidth.Pixels;
+            if (minWidth > 122) // If larger than containing panel width (144 - 2 * 11)
+            {
+                var diff = minWidth - 122;
+                // Scale the progress text to fit the new width
+                _weightText.SetText(weightFmtString, 0.84f - diff / 172f, false);
+            }
+            // Types
+            var mainType = schema.Types[0];
+            _mainTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{mainType.ToString()}"));
+            _mainTypePanel.BackgroundColor = mainType.GetColor();
+            var dualType = schema.Types.Count > 1;
+            if (dualType)
+            {
+                var altType = schema.Types[1];
+                _altTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{altType.ToString()}"));
+                _altTypePanel.BackgroundColor = altType.GetColor();
+            } else
+            {
+                _altTypeText.SetText("");
+                _altTypePanel.BackgroundColor = new Color(50, 62, 114);
+            }
+        }
+        else
+        {
+            _speciesText.SetText("???");
+            _dexEntryText.SetText("???");
+            _heightText.SetText("???");
+            _weightText.SetText("???");
+            _mainTypePanel.BackgroundColor = new Color(50, 62, 114);
+            _altTypePanel.BackgroundColor = new Color(50, 62, 114);
+            _mainTypeText.SetText(string.Empty);
+            _altTypeText.SetText(string.Empty);
+        }
+
+        _list.Add(_speciesPanel);
+        _list.Add(_typeContainer);
+        _list.Add(_heightWeightContainer);
+        _list.Add(_dexEntryContainer);
         _header.Color = Color.White;
+        _divider.Color = Color.White;
         _preview.IDToDraw = pokemon;
+        _scrollBar.Height.Set(-80, 1f);
     }
 }
 
@@ -917,6 +1195,7 @@ internal sealed class PokedexPreviewCanvas : UIImage
 
     public ushort IDToDraw
     {
+        get => _idToDraw;
         set
         {
             _idToDraw = value;
@@ -946,7 +1225,7 @@ internal sealed class PokedexPreviewCanvas : UIImage
 
         var position = GetOuterDimensions().Position();
         position.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
-        position.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height - 16);
+        position.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height + 2);
         if (_dummyNPCForDrawing.GetGlobalNPC<NPCWanderingHoverBehaviour>()
             .Enabled) // Draw the NPC a bit higher if it is a flying Pokémon
             position.Y -= 6;

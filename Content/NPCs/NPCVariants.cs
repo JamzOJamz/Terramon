@@ -33,7 +33,7 @@ public class NPCVariants : NPCComponent
 
         var condition = Condition switch
         {
-            "Christmas" => Main.xMas ? 1 : 0,
+            "Christmas" => Main.xMas.ToInt(),
             _ => 1 //if no condition given assume it should happen always
         };
 
