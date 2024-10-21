@@ -849,7 +849,6 @@ internal sealed class PokedexOverviewPanel : UIPanel
 {
     private static readonly Asset<Texture2D> OverviewHeaderTexture;
     private static readonly Asset<Texture2D> OverviewDividerTexture;
-    private readonly UIPanel _dexEntryPanel;
     private readonly UIText _dexEntryText;
     private readonly UIText _dexNoText;
     private readonly UIImage _divider;
@@ -864,12 +863,12 @@ internal sealed class PokedexOverviewPanel : UIPanel
     private readonly UIText _speciesText;
     private readonly UIText _weightText;
     private PokedexEntryStatus _status;
-    private UIPanel _mainTypePanel;
-    private UIText _mainTypeText;
-    private UIPanel _altTypePanel;
-    private UIText _altTypeText;
-    private UIContainer _typeContainer;
-    private UIContainer _dexEntryContainer;
+    private readonly UIPanel _mainTypePanel;
+    private readonly UIText _mainTypeText;
+    private readonly UIPanel _altTypePanel;
+    private readonly UIText _altTypeText;
+    private readonly UIContainer _typeContainer;
+    private readonly UIContainer _dexEntryContainer;
 
     static PokedexOverviewPanel()
     {
@@ -974,7 +973,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
             MarginTop = 18,
             MarginBottom = 18
         };
-        _dexEntryPanel = new UIPanel
+        var dexEntryPanel = new UIPanel
         {
             Width = { Pixels = 307 },
             Height = { Pixels = 90 },
@@ -994,8 +993,8 @@ internal sealed class PokedexOverviewPanel : UIPanel
             MarginTop = 25,
             IsWrapped = true
         };
-        _dexEntryPanel.Append(_dexEntryText);
-        _dexEntryContainer.Append(_dexEntryPanel);
+        dexEntryPanel.Append(_dexEntryText);
+        _dexEntryContainer.Append(dexEntryPanel);
         //_list.Add(_dexEntryContainer);
         _heightWeightContainer = new UIContainer(new Vector2(307, 60))
         {
