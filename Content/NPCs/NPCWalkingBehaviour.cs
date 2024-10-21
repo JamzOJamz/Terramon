@@ -51,7 +51,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         }
 
         if (NPC.velocity.X != 0)
-            NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
+            NPC.spriteDirection = (NPC.velocity.X > 0).ToDirectionInt();
 
         if (AITimer != 120) return;
         AIState = (float)ActionState.Walking;
@@ -64,7 +64,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         switch (AITimer)
         {
             case 1:
-                AIWalkDir = Random.NextBool() ? 1 : -1;
+                AIWalkDir = Random.NextBool().ToDirectionInt();
                 break;
             case >= 120 when Random.Next(StopFrequency) == 0:
                 AIState = (float)ActionState.Idle;
@@ -119,7 +119,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
                 NPC.velocity.X = 0;
         }
 
-        NPC.spriteDirection = AIWalkDir == 1 ? 1 : -1;
+        NPC.spriteDirection = (int)AIWalkDir;
     }
 
     /// <summary>
@@ -147,10 +147,10 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
                     NPC.frameCounter = 0;
                 break;
             case "IdleForward": // Same as StraightForward, but skips the first frame (which is idle only)
-                if (NPC.frameCounter < FrameTime * FrameCount)
-                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+                if (NPC.frameCounter < FrameTime * (FrameCount - 1))
+                    NPC.frame.Y = ((int)Math.Floor(NPC.frameCounter / FrameTime) + 1) * frameHeight;
                 else
-                    NPC.frameCounter = FrameTime;
+                    NPC.frameCounter = 0;
                 break;
             case "Alternate": // Alternates between frame sequences
                 var cycleLength = FrameCount + 1;

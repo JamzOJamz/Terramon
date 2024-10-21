@@ -56,6 +56,7 @@ public class AnimatedIconSystem : ModSystem
 
         var uiModItemInitialize = uiModItemType!.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);
+        
         var uiModsUpdate = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIMods")
             ?.GetMethod("Update", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModsUpdate, UIModsUpdate_Detour);

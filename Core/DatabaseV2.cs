@@ -60,10 +60,30 @@ public class DatabaseV2
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");
     }
+    
+    public string GetLocalizedPokemonNameDirect(ushort id)
+    {
+        return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");
+    }
 
     public LocalizedText GetPokemonSpecies(ushort id)
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
+    }
+    
+    public string GetPokemonSpeciesDirect(ushort id)
+    {
+        return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
+    }
+    
+    public LocalizedText GetPokemonDexEntry(ushort id)
+    {
+        return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
+    }
+    
+    public string GetPokemonDexEntryDirect(ushort id)
+    {
+        return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
     }
 
     public bool IsAvailableStarter(ushort id)
@@ -130,12 +150,30 @@ public class DatabaseV2
         }
         
         [JsonProperty("genderRate")]
-        public sbyte GenderRatio { get; set; }
+        public sbyte GenderRatio { get; set; } = -1;
 
         [JsonProperty("g")]
         private sbyte b_GenderRatio
         {
             set => GenderRatio = value;
+        }
+
+        [JsonProperty("height")]
+        public ushort Height { get; set; }
+        
+        [JsonProperty("h")]
+        private ushort b_Height
+        {
+            set => Height = value;
+        }
+        
+        [JsonProperty("weight")]
+        public ushort Weight { get; set; }
+        
+        [JsonProperty("w")]
+        private ushort b_Weight
+        {
+            set => Weight = value;
         }
     }
 

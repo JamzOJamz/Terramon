@@ -1,3 +1,5 @@
+using Terramon.Helpers;
+
 namespace Terramon.ID;
 
 public enum PokemonType : byte
@@ -29,7 +31,7 @@ public static class PokemonTypeExtensions
     ///     If the type is not recognized, returns white.
     ///     <para>Example: <c>TypeID.Fire.GetColor()</c> returns <c>"ed6657"</c></para>
     /// </summary>
-    public static string GetColor(this PokemonType type)
+    public static string GetHexColor(this PokemonType type)
     {
         return type switch
         {
@@ -53,5 +55,15 @@ public static class PokemonTypeExtensions
             PokemonType.Fairy => "f5a2f5",
             _ => "ffffff"
         };
+    }
+    
+    /// <summary>
+    ///     Returns the color of the type as a <see cref="Color"/>.
+    ///     If the type is not recognized, returns white.
+    ///     <para>Example: <c>TypeID.Fire.GetColor()</c> returns <c>new Color(237, 102, 87)</c></para>
+    /// </summary>
+    public static Color GetColor(this PokemonType type)
+    {
+        return ColorUtils.FromHex(int.Parse(type.GetHexColor(), System.Globalization.NumberStyles.HexNumber));
     }
 }

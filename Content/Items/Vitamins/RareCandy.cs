@@ -67,11 +67,16 @@ public class RareCandy : Vitamin
         if (ModContent.GetInstance<ClientConfig>().FastEvolution)
         {
             TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            var queuedEvolutionName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queuedEvolution);
             Main.NewText(
                 Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                    Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution)), new Color(50, 255, 130));
+                    queuedEvolutionName), new Color(50, 255, 130));
             data.EvolveInto(queuedEvolution);
-            player.GetModPlayer<TerramonPlayer>().UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+            var justRegistered = player.GetModPlayer<TerramonPlayer>()
+                .UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+            if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", queuedEvolutionName),
+                new Color(159, 162, 173));
         }
         else
         {

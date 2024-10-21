@@ -48,7 +48,7 @@ public class InventoryParty : SmartUIState
     }
 
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !HubUI.Active &&
+                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -86,7 +86,7 @@ public class InventoryParty : SmartUIState
             var slot = new CustomPartyItemSlot(i);
             if (reducedMotion) slot.Color = Color.White * 0f;
             CustomSlots[i] = slot;
-            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 52, 52, container);
+            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 50, 50, container);
         }
 
         Append(container);
@@ -95,7 +95,7 @@ public class InventoryParty : SmartUIState
         _openPokedexButton = new UIHoverImageButton(PokedexButtonTexture, _openPokedexLocalizedText);
         _openPokedexButton.SetHoverImage(PokedexButtonHoverAltTexture, false);
         _openPokedexButton.SetVisibility(1, 1);
-        _openPokedexButton.OnLeftClick += (_, _) => { HubUI.ToggleActive(); };
+        _openPokedexButton.OnLeftClick += (_, _) => HubUI.SetActive(true);
         AddElement(_openPokedexButton, 30, 262, 30, 36);
     }
 
@@ -106,7 +106,7 @@ public class InventoryParty : SmartUIState
         SoundEngine.PlaySound(_isCompressed ? SoundID.MenuOpen : SoundID.MenuClose);
         _isCompressed = !_isCompressed;
         _toggleSlotsButton.SetImage(_isCompressed ? PartySlotBallGreyedTexture : PartySlotBallTexture);
-        var startingAlpha = _isCompressed ? 1f : 0f;
+        var startingAlpha = (float)_isCompressed.ToInt();
 
         var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
         if (reducedMotion)
@@ -144,7 +144,7 @@ public class InventoryParty : SmartUIState
                 slot.Color = newColor;
                 slot.Update(null);
             }
-        }, _isCompressed ? 0f : 1f, 0.35f);
+        }, (!_isCompressed).ToInt(), 0.35f);
     }
 
     private static void UpdateSlot(PokemonData data, int index)

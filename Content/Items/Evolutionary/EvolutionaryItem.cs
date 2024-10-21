@@ -55,7 +55,7 @@ public abstract class EvolutionaryItem : TerramonItem
     {
         if (player.whoAmI != Main.myPlayer) return;
         var evolvedSpecies = GetEvolvedSpecies(data);
-        var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonName(evolvedSpecies);
+        var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolvedSpecies);
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
                 evolvedSpeciesName), new Color(50, 255, 130));

@@ -65,7 +65,7 @@ public sealed class NPCWanderingHoverBehaviour : NPCAIComponent
                 (AITimer - _startTime) / (_endTime - _startTime))
             : AIMoveDirectionY * _moveSpeed;
         NPC.velocity = new Vector2(useVelX, useVelY);
-        NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
+        NPC.spriteDirection = (NPC.velocity.X > 0).ToDirectionInt();
     }
 
     public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)

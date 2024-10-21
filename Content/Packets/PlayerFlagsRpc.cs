@@ -1,5 +1,5 @@
-using EasyPacketsLib;
 using System.IO;
+using EasyPacketsLib;
 using Terraria.ID;
 
 namespace Terramon.Content.Packets;

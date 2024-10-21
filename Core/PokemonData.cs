@@ -40,7 +40,7 @@ public class PokemonData : TagSerializable
     /// <summary>
     ///     The localized name of the Pokémon.
     /// </summary>
-    public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value;
+    public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(ID);
     
     /// <summary>
     ///     The internal name of the Pokémon. This is unaffected by localization.

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Items.Vanity;
@@ -234,11 +235,15 @@ public class PokemartClerk : ModNPC
             if (activePokemonData == null) return;
             var queuedEvolution = activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp);
             if (queuedEvolution == 0) return;
+            var queuedEvolutionName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queuedEvolution);
             TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
             Main.npcChatText = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionCongrats",
-                activePokemonData.DisplayName, Terramon.DatabaseV2.GetLocalizedPokemonName(queuedEvolution));
+                activePokemonData.DisplayName, queuedEvolutionName);
             activePokemonData.EvolveInto(queuedEvolution);
-            player.UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+            var justRegistered = player.UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+            if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", queuedEvolutionName),
+                new Color(159, 162, 173));
         }
     }
 
@@ -255,7 +260,6 @@ public class PokemartClerk : ModNPC
 
         npcShop.Register(); // Name of this shop tab
     }
-
 
     // Make this Town NPC teleport to the King and/or Queen statue when triggered.
     public override bool CanGoToStatue(bool toKingStatue)

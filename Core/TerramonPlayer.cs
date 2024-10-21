@@ -2,8 +2,10 @@ using System.Linq;
 using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terraria.GameInput;
 using Terraria.Localization;
@@ -20,6 +22,7 @@ public class TerramonPlayer : ModPlayer
 
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
+    private bool _receivedShinyCharm;
 
     public bool HasChosenStarter;
     public PokemonData[] Party { get; } = new PokemonData[6];
@@ -64,7 +67,7 @@ public class TerramonPlayer : ModPlayer
 
     public override void OnEnterWorld()
     {
-        Terramon.ResetPartyUI();
+        Terramon.RefreshPartyUI();
     }
 
     public override void OnRespawn()
@@ -78,8 +81,17 @@ public class TerramonPlayer : ModPlayer
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
-        if (KeybindSystem.OpenPokedexKeybind.JustPressed)
+        if (HasChosenStarter && KeybindSystem.OpenPokedexKeybind.JustPressed)
             HubUI.ToggleActive();
+    }
+
+    public override void PostUpdate()
+    {
+        // If more than one instance of the companion buff is present, remove all but the first one (weird bug)
+        var buffIndexes = Player.buffType.ToList().FindAll(i => i == ModContent.BuffType<PokemonCompanion>());
+        if (buffIndexes.Count <= 1) return;
+        for (var i = 1; i < buffIndexes.Count; i++)
+            Player.DelBuff(buffIndexes[i]);
     }
 
     public override void PreUpdate()
@@ -161,11 +173,26 @@ public class TerramonPlayer : ModPlayer
     {
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
-        if (!hasEntry) return false;
-        if (!force && entry.Status >= status) return false;
-        entry.Status = status;
+        var entryUpdated = false;
+        if (hasEntry)
+            if (entry.Status < status || force)
+            {
+                entry.Status = status;
+                entryUpdated = true;
+            }
 
-        return true;
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id);
+        if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
+            _pokedex.RegisteredCount == Terramon.LoadedPokemonCount && !_receivedShinyCharm)
+            GiveShinyCharmReward();
+        return force ? hasEntry : entryUpdated;
+    }
+
+    private void GiveShinyCharmReward()
+    {
+        Player.QuickSpawnItem(Player.GetSource_GiftOrReward(),
+            ModContent.ItemType<ShinyCharm>());
+        _receivedShinyCharm = true;
     }
 
     public PCBox TransferPokemonToPC(PokemonData data)
@@ -180,7 +207,7 @@ public class TerramonPlayer : ModPlayer
 
     public override void SaveData(TagCompound tag)
     {
-        tag["starterChosen"] = HasChosenStarter;
+        tag["flags"] = (byte)new BitsByte(HasChosenStarter, _receivedShinyCharm);
         if (ActiveSlot >= 0)
             tag["activeSlot"] = ActiveSlot;
         SaveParty(tag);
@@ -190,7 +217,13 @@ public class TerramonPlayer : ModPlayer
 
     public override void LoadData(TagCompound tag)
     {
-        HasChosenStarter = tag.GetBool("starterChosen");
+        if (tag.ContainsKey("flags"))
+        {
+            BitsByte flags = tag.GetByte("flags");
+            HasChosenStarter = flags[0];
+            _receivedShinyCharm = flags[1];
+        }
+
         if (tag.TryGet("activeSlot", out int slot))
             ActiveSlot = slot;
         LoadParty(tag);
@@ -226,7 +259,12 @@ public class TerramonPlayer : ModPlayer
         const string tagName = "pokedex";
         if (!tag.ContainsKey(tagName)) return;
         var entries = tag.GetList<int[]>(tagName);
-        foreach (var entry in entries) UpdatePokedex((ushort)entry[0], (PokedexEntryStatus)entry[1]);
+        foreach (var entry in entries)
+            // If the entry is not in the database, force create it (backwards compatibility so saves don't get overwritten)
+            if (!_pokedex.Entries.ContainsKey(entry[0]))
+                _pokedex.Entries.Add(entry[0], new PokedexEntry((PokedexEntryStatus)entry[1]) { Unlisted = true });
+            else
+                UpdatePokedex((ushort)entry[0], (PokedexEntryStatus)entry[1], true);
     }
 
     private void SavePC(TagCompound tag)

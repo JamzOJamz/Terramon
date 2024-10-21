@@ -196,6 +196,29 @@ GUI: {
 			Click and drag to reorder
 			''' */
 	}
+
+	Pokedex: {
+		// NumberPrefix: No.
+		// ShowingRange: Showing {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		// Obtained: Obtained
+		// Seen: Seen
+		/* ObtainedBy:
+			'''
+
+			[c/FFE745:Obtained by {0}]
+			''' */
+		/* SeenBy:
+			'''
+
+			[c/FFE745:Seen by {0}]
+			''' */
+		// Completion: "{0}% Completion"
+		// PlayerDexFilter: Show {0}'s Pokédex
+		// WorldDexFilter: Show World Dex
+		// Height: Height
+		// Weight: Weight
+		// Entry: Entry
+	}
 }
 
 CommonTooltips: {
@@ -343,7 +366,11 @@ Items: {
 
 	ShinyCharm: {
 		// DisplayName: Shiny Charm
-		// Tooltip: A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
+		/* Tooltip:
+			'''
+			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
+			Received as a reward for obtaining all Pokémon in the Pokédex.
+			''' */
 	}
 
 	FireStone: {
@@ -474,12 +501,33 @@ Items: {
 
 Keybinds: {
 	// ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
-	// OpenPokedex.DisplayName: Pokédex
+	OpenPokedex.DisplayName: Покедекс
 }
 
 Tiles: {
 	// MusicBoxCenter.MapEntry: Music Box
 	// MusicBoxWildBattle.MapEntry: Music Box
+}
+
+Types: {
+	// Normal: Normal
+	// Fire: Fire
+	// Fighting: Fighting
+	// Water: Water
+	// Flying: Flying
+	// Grass: Grass
+	// Poison: Poison
+	// Electric: Electric
+	// Ground: Ground
+	// Psychic: Psychic
+	// Rock: Rock
+	// Ice: Ice
+	// Bug: Bug
+	// Dragon: Dragon
+	// Ghost: Ghost
+	// Dark: Dark
+	// Steel: Steel
+	// Fairy: Fairy
 }
 
 NPCs: {

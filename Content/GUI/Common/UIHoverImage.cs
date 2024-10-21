@@ -8,12 +8,12 @@ public class UIHoverImage : UIImage
 {
     private readonly object _hoverText;
 
-    protected UIHoverImage(Asset<Texture2D> texture, string hoverText) : base(texture)
+    public UIHoverImage(Asset<Texture2D> texture, string hoverText) : base(texture)
     {
         _hoverText = hoverText;
     }
-    
-    protected UIHoverImage(Asset<Texture2D> texture, LocalizedText hoverText) : base(texture)
+
+    public UIHoverImage(Asset<Texture2D> texture, LocalizedText hoverText) : base(texture)
     {
         _hoverText = hoverText;
     }
@@ -22,6 +22,9 @@ public class UIHoverImage : UIImage
     {
         base.DrawSelf(spriteBatch);
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
-        if (IsMouseHovering) Main.hoverItemName = _hoverText.ToString();
+        if (!IsMouseHovering) return;
+        if (Main.inFancyUI) Main.instance.MouseText(_hoverText.ToString());
+        else
+            Main.hoverItemName = _hoverText.ToString();
     }
 }

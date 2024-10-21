@@ -1,6 +1,5 @@
-using EasyPacketsLib;
 using System.IO;
-using MonoMod.Utils;
+using EasyPacketsLib;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -18,7 +17,7 @@ public readonly struct SyncPkballTileRpc(Item item, bool isOpen, bool isDisposab
     private readonly Item _item = item;
     private readonly bool _isOpen = isOpen;
     private readonly bool _isDisposable = isDisposable;
-    
+
     private readonly byte _player = player;
     private readonly Point16 _tileCoords = tileCoords;
 
@@ -32,30 +31,34 @@ public readonly struct SyncPkballTileRpc(Item item, bool isOpen, bool isDisposab
 
     public SyncPkballTileRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        Item i = new Item();
+        var i = new Item();
         i.DeserializeFrom(reader, ItemSerializationContext.Syncing);
-        return new SyncPkballTileRpc(i, reader.ReadBoolean(), reader.ReadBoolean(), reader.ReadByte(), new Point16(reader.ReadInt16(), reader.ReadInt16()));
+        return new SyncPkballTileRpc(i, reader.ReadBoolean(), reader.ReadBoolean(), reader.ReadByte(),
+            new Point16(reader.ReadInt16(), reader.ReadInt16()));
     }
 
     public void Receive(in SyncPkballTileRpc packet, in SenderInfo sender, ref bool handled)
     {
         sender.Mod.Logger.Debug(
-            $"Received SyncPkballTileRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")}");// for player {packet._player}");
+            $"Received SyncPkballTileRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")}"); // for player {packet._player}");
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
-            var tile = TileUtils.TryGetTileEntityAs<BasePkballEntity>(packet._tileCoords.X, packet._tileCoords.Y, out var e);
+            TileUtils.TryGetTileEntityAs<BasePkballEntity>(packet._tileCoords.X, packet._tileCoords.Y, out var e);
+            if (e == null)
+                return;
+
             e.Item = packet._item;
             e.Disposable = packet._isDisposable;
-            
+
             if (packet._isOpen)
                 e.TryOpen();
             else
                 e.Open = true;
-            
+
             var player = Main.player[packet._player];
             player.itemRotation = 0;
             player.SetItemAnimation(18);
-            
+
             SoundEngine.PlaySound(SoundID.Mech, packet._tileCoords.ToWorldCoordinates());
         }
 
