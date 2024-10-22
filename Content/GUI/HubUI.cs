@@ -28,9 +28,8 @@ public class HubUI : SmartUIState
     private static readonly Asset<Texture2D> BallIconTexture;
     private static readonly Asset<Texture2D> BallIconEmptyTexture;
     private static readonly Asset<Texture2D> PlayerDexFilterTexture;
-    private static readonly Asset<Texture2D> PlayerDexFilterHoverTexture;
     private static readonly Asset<Texture2D> WorldDexFilterTexture;
-    private static readonly Asset<Texture2D> WorldDexFilterHoverTexture;
+    public static readonly Asset<Texture2D> SmallButtonHoverTexture;
 
     private static bool _playerInventoryOpen;
 
@@ -54,7 +53,7 @@ public class HubUI : SmartUIState
     {
         // Don't run this on the server
         if (Main.dedServ) return;
-        
+
         EmptyTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyTabHeader");
         EmptyTabHeaderAltTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyTabHeaderAlt");
         PokedexTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexTabHeader");
@@ -62,9 +61,8 @@ public class HubUI : SmartUIState
         BallIconTexture = ModContent.Request<Texture2D>("Terramon/icon_small");
         BallIconEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyBallIcon");
         PlayerDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PlayerDexFilter");
-        PlayerDexFilterHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PlayerDexFilterHover");
         WorldDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/WorldDexFilter");
-        WorldDexFilterHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/WorldDexFilterHover");
+        SmallButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/SmallButtonHover");
 
         // Prevents the player from closing the inventory while the hub UI is active, instead closing the hub UI itself
         On_Player.ToggleInv += static (orig, self) =>
@@ -77,7 +75,7 @@ public class HubUI : SmartUIState
 
             orig(self);
         };
-        
+
         // Mimic bestiary behaviour (this should not run if the hub UI is active)
         On_Player.LookForTileInteractions += static (orig, self) =>
         {
@@ -195,7 +193,7 @@ public class HubUI : SmartUIState
             Width = { Pixels = 38 },
             Height = { Pixels = 38 }
         };
-        _filterButton.SetHoverImage(PlayerDexFilterHoverTexture, false);
+        _filterButton.SetHoverImage(SmallButtonHoverTexture);
         _filterButton.SetVisibility(1f, 1f);
         _filterButton.OnLeftClick += (_, _) =>
         {
@@ -204,7 +202,6 @@ public class HubUI : SmartUIState
             if (_worldDexMode)
                 _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.WorldDexFilter"));
             _filterButton.SetImage(_worldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
-            _filterButton.SetHoverImage(_worldDexMode ? WorldDexFilterHoverTexture : PlayerDexFilterHoverTexture);
             RefreshPokedex(closeOverview: true);
         };
         _mainPanel.Append(_filterButton);
@@ -415,7 +412,6 @@ public class HubUI : SmartUIState
         _pokedexPage.PageIndex = 0; // Resets the Pokédex page to the first page for the next time it is opened
         _worldDexMode = false; // Reset to player's Pokédex mode
         _filterButton.SetImage(PlayerDexFilterTexture);
-        _filterButton.SetHoverImage(PlayerDexFilterHoverTexture);
         RefreshPokedex();
     }
 
@@ -794,9 +790,7 @@ internal sealed class PokedexEntryIcon : UIPanel
 internal sealed class PokedexPageButton : UIHoverImageButton
 {
     private static readonly Asset<Texture2D> PageButtonLeftTexture;
-    private static readonly Asset<Texture2D> PageButtonLeftHoverTexture;
     private static readonly Asset<Texture2D> PageButtonRightTexture;
-    private static readonly Asset<Texture2D> PageButtonRightHoverTexture;
 
     private readonly PokedexPageDisplay _pageDisplay;
     private readonly bool _right;
@@ -804,9 +798,7 @@ internal sealed class PokedexPageButton : UIHoverImageButton
     static PokedexPageButton()
     {
         PageButtonLeftTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PageButtonLeft");
-        PageButtonLeftHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PageButtonLeftHover");
         PageButtonRightTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PageButtonRight");
-        PageButtonRightHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PageButtonRightHover");
     }
 
     /// <summary>
@@ -823,7 +815,7 @@ internal sealed class PokedexPageButton : UIHoverImageButton
     {
         _pageDisplay = pageDisplay;
         _right = right;
-        SetHoverImage(right ? PageButtonRightHoverTexture : PageButtonLeftHoverTexture, false);
+        SetHoverImage(HubUI.SmallButtonHoverTexture);
         SetVisibility(1f, 1f);
     }
 
@@ -849,6 +841,9 @@ internal sealed class PokedexOverviewPanel : UIPanel
 {
     private static readonly Asset<Texture2D> OverviewHeaderTexture;
     private static readonly Asset<Texture2D> OverviewDividerTexture;
+    private readonly UIPanel _altTypePanel;
+    private readonly UIText _altTypeText;
+    private readonly UIContainer _dexEntryContainer;
     private readonly UIText _dexEntryText;
     private readonly UIText _dexNoText;
     private readonly UIImage _divider;
@@ -856,19 +851,16 @@ internal sealed class PokedexOverviewPanel : UIPanel
     private readonly UIText _heightText;
     private readonly UIContainer _heightWeightContainer;
     private readonly UIList _list;
+    private readonly UIPanel _mainTypePanel;
+    private readonly UIText _mainTypeText;
     private readonly BetterUIText _monNameText;
     private readonly PokedexPreviewCanvas _preview;
     private readonly UIScrollbar _scrollBar;
     private readonly UIPanel _speciesPanel;
     private readonly UIText _speciesText;
+    private readonly UIContainer _typeContainer;
     private readonly UIText _weightText;
     private PokedexEntryStatus _status;
-    private readonly UIPanel _mainTypePanel;
-    private readonly UIText _mainTypeText;
-    private readonly UIPanel _altTypePanel;
-    private readonly UIText _altTypeText;
-    private readonly UIContainer _typeContainer;
-    private readonly UIContainer _dexEntryContainer;
 
     static PokedexOverviewPanel()
     {
@@ -982,7 +974,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
         };
         var dexEntryDesc = new UIText(Language.GetText("Mods.Terramon.GUI.Pokedex.Entry"), 0.84f)
         {
-            Left = { Pixels = 1 },
+            Left = { Pixels = 1 }
         };
         _dexEntryContainer.Append(dexEntryDesc);
         _dexEntryText = new UIText(string.Empty, 0.84f)
@@ -1133,6 +1125,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
                 // Scale the progress text to fit the new width
                 _weightText.SetText(weightFmtString, 0.84f - diff / 172f, false);
             }
+
             // Types
             var mainType = schema.Types[0];
             _mainTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{mainType.ToString()}"));
@@ -1143,7 +1136,8 @@ internal sealed class PokedexOverviewPanel : UIPanel
                 var altType = schema.Types[1];
                 _altTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{altType.ToString()}"));
                 _altTypePanel.BackgroundColor = altType.GetColor();
-            } else
+            }
+            else
             {
                 _altTypeText.SetText("");
                 _altTypePanel.BackgroundColor = new Color(50, 62, 114);

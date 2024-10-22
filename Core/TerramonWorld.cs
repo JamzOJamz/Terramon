@@ -71,6 +71,7 @@ public class TerramonWorld : ModSystem
         var entriesList = new List<int[]>();
         foreach (var entry in _worldDex.Entries)
         {
+            if (entry.Value.Status == PokedexEntryStatus.Undiscovered) continue;
             var lastUpdatedBy = entry.Value.LastUpdatedBy;
             var entryDataLength = 2 + (entry.Value.LastUpdatedBy?.Length ?? 0);
             var entryData = new int[entryDataLength];

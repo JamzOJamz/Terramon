@@ -251,7 +251,10 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePokedex(TagCompound tag)
     {
-        tag["pokedex"] = _pokedex.Entries.Select(entry => new[] { entry.Key, (byte)entry.Value.Status }).ToList();
+        tag["pokedex"] = _pokedex.Entries
+            .Where(entry => entry.Value.Status != PokedexEntryStatus.Undiscovered)
+            .Select(entry => new[] { entry.Key, (byte)entry.Value.Status })
+            .ToList();
     }
 
     private void LoadPokedex(TagCompound tag)

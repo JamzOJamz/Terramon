@@ -217,7 +217,7 @@ GUI: {
 		// WorldDexFilter: Show World Dex
 		Height: Taille
 		Weight: Poids
-		// Entry: Entry
+		Entry: Entrée
 	}
 }
 
