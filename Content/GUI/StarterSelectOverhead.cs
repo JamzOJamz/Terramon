@@ -172,21 +172,25 @@ public class StarterButton : UIHoverImage
         OnMouseOut += (_, _) => { SetImage(texture); };
         OnLeftClick += (_, _) =>
         {
-            var player = TerramonPlayer.LocalPlayer;
-            var data = PokemonData.Create(Main.LocalPlayer, pokemon, 5);
+            var player = Main.LocalPlayer;
+            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var data = PokemonData.Create(player, pokemon, 5);
             if (ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters && data.IsShiny)
                 data.IsShiny = false;
-            player.AddPartyPokemon(data, out _);
-            player.HasChosenStarter = true;
+            modPlayer.AddPartyPokemon(data, out _);
+            modPlayer.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
-                Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value,
+                Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon),
                 Terramon.DatabaseV2.GetPokemon(pokemon).Types[0].GetHexColor(),
-                Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon).Value
+                Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(pokemon)
             );
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
-            Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_GiftOrReward(),
-                ModContent.ItemType<PokeBallItem>(), 10);
+            var itemType = ModContent.ItemType<PokeBallItem>();
+            if (player.name == "JamzOJamz") // Developer easter egg
+                itemType = ModContent.ItemType<MasterBallItem>();
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(),
+                itemType, 10);
         };
     }
 }
