@@ -17,6 +17,7 @@ public class TerramonPlayer : ModPlayer
 {
     private readonly PCService _pc = new();
     private readonly PokedexService _pokedex = new();
+    private readonly PokedexService _shinyDex = new();
 
     private int _activeSlot = -1;
 
@@ -60,9 +61,9 @@ public class TerramonPlayer : ModPlayer
         return ActiveSlot >= 0 ? Party[ActiveSlot] : null;
     }
 
-    public PokedexService GetPokedex()
+    public PokedexService GetPokedex(bool shiny = false)
     {
-        return _pokedex;
+        return shiny ? _shinyDex : _pokedex;
     }
 
     public override void OnEnterWorld()
@@ -81,13 +82,13 @@ public class TerramonPlayer : ModPlayer
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
-        if (HasChosenStarter && KeybindSystem.OpenPokedexKeybind.JustPressed)
+        if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
     }
 
     public override void PostUpdate()
     {
-        // If more than one instance of the companion buff is present, remove all but the first one (weird bug)
+        // If more than one instance of the companion buff is present, remove all but the first one (bandaid fix for weird bug)
         var buffIndexes = Player.buffType.ToList().FindAll(i => i == ModContent.BuffType<PokemonCompanion>());
         if (buffIndexes.Count <= 1) return;
         for (var i = 1; i < buffIndexes.Count; i++)
@@ -141,9 +142,11 @@ public class TerramonPlayer : ModPlayer
     /// <summary>
     ///     Adds a Pokémon to the player's party. Returns false if their party is full; otherwise returns true.
     /// </summary>
-    public bool AddPartyPokemon(PokemonData data)
+    /// <param name="data">The Pokémon to add to the party.</param>
+    /// <param name="justRegistered">Whether the Pokémon was just registered in the Pokédex.</param>
+    public bool AddPartyPokemon(PokemonData data, out bool justRegistered)
     {
-        UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
+        justRegistered = UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == 6) return false;
         Party[nextIndex] = data;
@@ -169,7 +172,7 @@ public class TerramonPlayer : ModPlayer
         return 6;
     }
 
-    public bool UpdatePokedex(ushort id, PokedexEntryStatus status, bool force = false)
+    public bool UpdatePokedex(ushort id, PokedexEntryStatus status, bool force = false, bool shiny = false)
     {
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
@@ -181,7 +184,12 @@ public class TerramonPlayer : ModPlayer
                 entryUpdated = true;
             }
 
-        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id);
+        var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
+        if (hasShinyEntry)
+            if (shinyEntry.Status < status || force)
+                shinyEntry.Status = status;
+
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id, shiny);
         if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
             _pokedex.RegisteredCount == Terramon.LoadedPokemonCount && !_receivedShinyCharm)
             GiveShinyCharmReward();
@@ -251,23 +259,20 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePokedex(TagCompound tag)
     {
-        tag["pokedex"] = _pokedex.Entries
-            .Where(entry => entry.Value.Status != PokedexEntryStatus.Undiscovered)
-            .Select(entry => new[] { entry.Key, (byte)entry.Value.Status })
-            .ToList();
+        var pokedexEntries = _pokedex.GetEntriesForSaving();
+        if (pokedexEntries.Count > 0)
+            tag["pokedex"] = pokedexEntries;
+        var shinyDexEntries = _shinyDex.GetEntriesForSaving();
+        if (shinyDexEntries.Count > 0)
+            tag["shinyDex"] = shinyDexEntries;
     }
 
     private void LoadPokedex(TagCompound tag)
     {
         const string tagName = "pokedex";
-        if (!tag.ContainsKey(tagName)) return;
-        var entries = tag.GetList<int[]>(tagName);
-        foreach (var entry in entries)
-            // If the entry is not in the database, force create it (backwards compatibility so saves don't get overwritten)
-            if (!_pokedex.Entries.ContainsKey(entry[0]))
-                _pokedex.Entries.Add(entry[0], new PokedexEntry((PokedexEntryStatus)entry[1]) { Unlisted = true });
-            else
-                UpdatePokedex((ushort)entry[0], (PokedexEntryStatus)entry[1], true);
+        const string shinyTagName = "shinyDex";
+        if (tag.ContainsKey(tagName)) _pokedex.LoadEntries(tag.GetList<int[]>(tagName));
+        if (tag.ContainsKey(shinyTagName)) _shinyDex.LoadEntries(tag.GetList<int[]>(shinyTagName));
     }
 
     private void SavePC(TagCompound tag)

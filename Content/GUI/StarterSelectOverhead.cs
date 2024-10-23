@@ -176,7 +176,7 @@ public class StarterButton : UIHoverImage
             var data = PokemonData.Create(Main.LocalPlayer, pokemon, 5);
             if (ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters && data.IsShiny)
                 data.IsShiny = false;
-            player.AddPartyPokemon(data);
+            player.AddPartyPokemon(data, out _);
             player.HasChosenStarter = true;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
                 Terramon.DatabaseV2.GetPokemonSpecies(pokemon).Value,

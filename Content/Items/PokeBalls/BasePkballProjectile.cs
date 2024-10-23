@@ -405,9 +405,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
         var player = TerramonPlayer.LocalPlayer;
-        var isCaptureRegisteredInPokedex = player.GetPokedex().Entries.TryGetValue(_capture.ID, out var entry) &&
-                                           entry.Status == PokedexEntryStatus.Registered;
-        var addSuccess = player.AddPartyPokemon(_capture.Data);
+        var addSuccess = player.AddPartyPokemon(_capture.Data, out var justRegistered);
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
@@ -427,7 +425,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                     player.Player.name));
         }
 
-        if (isCaptureRegisteredInPokedex ||
+        if (!justRegistered ||
             !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", _capture.DisplayName),
             new Color(159, 162, 173));
@@ -448,7 +446,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         // Register as seen in the player's Pokedex
         var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
-        ownerPlayer.UpdatePokedex(_capture.ID, PokedexEntryStatus.Seen);
+        ownerPlayer.UpdatePokedex(_capture.ID, PokedexEntryStatus.Seen, shiny: _capture.Data?.IsShiny ?? false);
 
         AIState = (float)ActionState.Catch;
         AITimer = 0;

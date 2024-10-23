@@ -73,7 +73,7 @@ public class RareCandy : Vitamin
                     queuedEvolutionName), new Color(50, 255, 130));
             data.EvolveInto(queuedEvolution);
             var justRegistered = player.GetModPlayer<TerramonPlayer>()
-                .UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered);
+                .UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);
             if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", queuedEvolutionName),
                 new Color(159, 162, 173));

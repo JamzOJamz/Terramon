@@ -30,6 +30,7 @@ Trainer vanity
 Mod icon
 
 - cz43 -
+Pokémon sprites
 Linking Cord sprite
 Shiny Charm sprite
 

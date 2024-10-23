@@ -6,6 +6,7 @@ using ReLogic.Content;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items.KeyItems;
 using Terramon.Content.NPCs;
+using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
@@ -29,11 +30,13 @@ public class HubUI : SmartUIState
     private static readonly Asset<Texture2D> BallIconEmptyTexture;
     private static readonly Asset<Texture2D> PlayerDexFilterTexture;
     private static readonly Asset<Texture2D> WorldDexFilterTexture;
+    private static readonly Asset<Texture2D> PlayerShinyDexFilterTexture;
     public static readonly Asset<Texture2D> SmallButtonHoverTexture;
 
     private static bool _playerInventoryOpen;
 
     private static bool _worldDexMode;
+    public static bool ShinyActive;
     private UIText _caughtAmountText;
     private UIPanel _caughtSeenPanel;
     private UIHoverImageButton _filterButton;
@@ -62,6 +65,7 @@ public class HubUI : SmartUIState
         BallIconEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyBallIcon");
         PlayerDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PlayerDexFilter");
         WorldDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/WorldDexFilter");
+        PlayerShinyDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PlayerShinyDexFilter");
         SmallButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/SmallButtonHover");
 
         // Prevents the player from closing the inventory while the hub UI is active, instead closing the hub UI itself
@@ -199,9 +203,20 @@ public class HubUI : SmartUIState
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
             _worldDexMode = !_worldDexMode;
+            ShinyActive = false;
             if (_worldDexMode)
                 _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.WorldDexFilter"));
             _filterButton.SetImage(_worldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
+            RefreshPokedex(closeOverview: true);
+        };
+        _filterButton.OnRightClick += (_, _) =>
+        {
+            if (_worldDexMode) return; // Later
+            var shinyDex = TerramonPlayer.LocalPlayer.GetPokedex(true);
+            if (shinyDex.UndiscoveredCount >= Terramon.LoadedPokemonCount) return;
+            SoundEngine.PlaySound(SoundID.MaxMana);
+            ShinyActive = !ShinyActive;
+            _filterButton.SetImage(ShinyActive ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture);
             RefreshPokedex(closeOverview: true);
         };
         _mainPanel.Append(_filterButton);
@@ -334,7 +349,10 @@ public class HubUI : SmartUIState
 
         // Update the Pokédex filter button's hover text
         if (!_worldDexMode)
-            _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.PlayerDexFilter",
+            _filterButton.SetHoverText(Language.GetTextValue(
+                ShinyActive
+                    ? "Mods.Terramon.GUI.Pokedex.PlayerShinyDexFilter"
+                    : "Mods.Terramon.GUI.Pokedex.PlayerDexFilter",
                 Main.LocalPlayer.name));
 
         Recalculate();
@@ -350,7 +368,7 @@ public class HubUI : SmartUIState
         var pokedex =
             _worldDexMode
                 ? TerramonWorld.GetWorldDex()
-                : TerramonPlayer.LocalPlayer.GetPokedex(); // Neither should not be null here
+                : TerramonPlayer.LocalPlayer.GetPokedex(ShinyActive); // Neither should be null here
 
         // Update the Pokémon page entries
         if (pokemon == 0)
@@ -411,6 +429,7 @@ public class HubUI : SmartUIState
     {
         _pokedexPage.PageIndex = 0; // Resets the Pokédex page to the first page for the next time it is opened
         _worldDexMode = false; // Reset to player's Pokédex mode
+        ShinyActive = false; // Reset to non-shiny mode
         _filterButton.SetImage(PlayerDexFilterTexture);
         RefreshPokedex();
     }
@@ -666,17 +685,6 @@ internal sealed class PokedexEntryIcon : UIPanel
             if (_entry?.Status == PokedexEntryStatus.Undiscovered) return;
             UILoader.GetUIState<HubUI>().SetCurrentPokedexEntry(ID, _entry!.Status);
         };
-        /*var miniTexture =
-            ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini");
-        var icon = new UIImage(miniTexture)
-        {
-            Left = { Pixels = -18 },
-            Top = { Pixels = -6 },
-            Width = { Pixels = 80 },
-            Height = { Pixels = 60 }
-        };
-        Append(icon);*/
         _icon = new UIImage(QuestionMarkTexture)
         {
             Left = { Pixels = 11 },
@@ -729,7 +737,7 @@ internal sealed class PokedexEntryIcon : UIPanel
 
         var miniTexture =
             ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(ID)}_Mini");
+                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(ID)}_Mini{(HubUI.ShinyActive ? "_S" : string.Empty)}");
         _icon.SetImage(miniTexture);
         _icon.Left.Pixels = -18;
         _icon.Top.Pixels = -6;
@@ -1068,6 +1076,13 @@ internal sealed class PokedexOverviewPanel : UIPanel
 
     public ushort Pokemon { get; private set; }
 
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+
+        _monNameText.TextColor = HubUI.ShinyActive ? ModContent.GetInstance<KeyItemRarity>().RarityColor : Color.White;
+    }
+
     public override void Recalculate()
     {
         base.Recalculate();
@@ -1188,7 +1203,6 @@ internal sealed class PokedexPreviewCanvas : UIImage
 
     public ushort IDToDraw
     {
-        get => _idToDraw;
         set
         {
             _idToDraw = value;
@@ -1201,6 +1215,12 @@ internal sealed class PokedexPreviewCanvas : UIImage
             };
             _dummyNPCForDrawing.SetDefaults_ForNetId(type, 1);
             _dummyNPCForDrawing.netID = type;
+            var pokemonNpc = (PokemonNPC)_dummyNPCForDrawing.ModNPC;
+            pokemonNpc.Data = new PokemonData
+            {
+                ID = value,
+                IsShiny = HubUI.ShinyActive
+            };
         }
     }
 

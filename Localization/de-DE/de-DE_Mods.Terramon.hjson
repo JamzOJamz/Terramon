@@ -214,7 +214,9 @@ GUI: {
 			''' */
 		// Completion: "{0}% Completion"
 		// PlayerDexFilter: Show {0}'s Pokédex
+		// PlayerShinyDexFilter: Show {0}'s Shiny Dex
 		// WorldDexFilter: Show World Dex
+		// ShinyWorldDexFilter: Show Shiny World Dex
 		// Height: Height
 		// Weight: Weight
 		// Entry: Entry
