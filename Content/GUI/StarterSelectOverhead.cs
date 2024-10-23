@@ -187,7 +187,7 @@ public class StarterButton : UIHoverImage
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
             var itemType = ModContent.ItemType<PokeBallItem>();
-            if (player.name == "JamzOJamz") // Developer easter egg
+            if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
                 itemType = ModContent.ItemType<MasterBallItem>();
             player.QuickSpawnItem(player.GetSource_GiftOrReward(),
                 itemType, 10);

@@ -146,7 +146,7 @@ public class TerramonPlayer : ModPlayer
     /// <param name="justRegistered">Whether the Pokémon was just registered in the Pokédex.</param>
     public bool AddPartyPokemon(PokemonData data, out bool justRegistered)
     {
-        justRegistered = UpdatePokedex(data.ID, PokedexEntryStatus.Registered);
+        justRegistered = UpdatePokedex(data.ID, PokedexEntryStatus.Registered, shiny: data.IsShiny);
         var nextIndex = NextFreePartyIndex();
         if (nextIndex == 6) return false;
         Party[nextIndex] = data;
@@ -184,10 +184,13 @@ public class TerramonPlayer : ModPlayer
                 entryUpdated = true;
             }
 
-        var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
-        if (hasShinyEntry)
-            if (shinyEntry.Status < status || force)
-                shinyEntry.Status = status;
+        if (shiny)
+        {
+            var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
+            if (hasShinyEntry)
+                if (shinyEntry.Status < status || force)
+                    shinyEntry.Status = status;
+        }
 
         if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id, shiny);
         if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
@@ -304,8 +307,14 @@ public class TerramonPlayer : ModPlayer
 
     public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
     {
-        Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, GetActivePokemon()), toWho, fromWho, !newPlayer);
-        Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), toWho, fromWho, !newPlayer);
+        var activePokemonData = GetActivePokemon();
+        if (activePokemonData != null)
+            Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData), toWho, fromWho);
+        if (HasChosenStarter)
+            Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, true), toWho, fromWho);
+
+        // Request a full sync of the World Dex from the server when joining
+        if (newPlayer) Mod.SendPacket(new RequestWorldDexRpc());
     }
 
     public override void CopyClientState(ModPlayer targetCopy)

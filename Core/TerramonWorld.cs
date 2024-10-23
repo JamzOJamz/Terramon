@@ -46,7 +46,7 @@ public class TerramonWorld : ModSystem
             entry.LastUpdatedBy = lastUpdatedBy;
         entry.Status = status;
         if (netSend && Main.netMode == NetmodeID.MultiplayerClient) // Sync the World Dex on all clients in multiplayer
-            Terramon.Instance.SendPacket(new UpdateWorldDexRpc((byte)Main.myPlayer, (ushort)id, status),
+            Terramon.Instance.SendPacket(new UpdateWorldDexRpc([((ushort)id, entry)]),
                 ignoreClient: Main.myPlayer, forward: true);
     }
 
@@ -77,7 +77,7 @@ public class TerramonWorld : ModSystem
             var entryData = new int[entryDataLength];
             entryData[0] = entry.Key;
             entryData[1] = (byte)entry.Value.Status;
-            if (entryDataLength > 2 && lastUpdatedBy != null)
+            if (entryDataLength > 2) // If there is a lastUpdatedBy string
                 for (var i = 0; i < lastUpdatedBy.Length; i++)
                     entryData[i + 2] = lastUpdatedBy[i];
             entriesList.Add(entryData);

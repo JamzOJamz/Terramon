@@ -7,6 +7,7 @@ public class UIHoverImageButton : TransformableUIButton
 {
     private bool _isActivated = true;
     private object _text;
+    private int _rarity;
 
     public UIHoverImageButton(Asset<Texture2D> texture, string text) : base(texture)
     {
@@ -28,6 +29,11 @@ public class UIHoverImageButton : TransformableUIButton
         _text = hoverText;
     }
 
+    public void SetHoverRarity(int rare)
+    {
+        _rarity = rare;
+    }
+
     public void SetIsActive(bool active)
     {
         _isActivated = active;
@@ -40,7 +46,7 @@ public class UIHoverImageButton : TransformableUIButton
         if (!ContainsPoint(Main.MouseScreen)) return;
         Main.LocalPlayer.mouseInterface = true;
         if (Main.inFancyUI)
-            Main.instance.MouseText(_text.ToString());
+            Main.instance.MouseText(_text.ToString(), _rarity);
         else
             Main.hoverItemName = _text.ToString();
     }

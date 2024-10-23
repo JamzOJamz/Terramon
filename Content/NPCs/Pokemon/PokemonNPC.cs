@@ -225,7 +225,7 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
             return;
         }
 
-        if (Data.IsShiny) ShinyEffect();
+        if (Data is { IsShiny: true }) ShinyEffect();
     }
 
     private void ShinyEffect()

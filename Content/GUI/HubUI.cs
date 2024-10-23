@@ -36,7 +36,6 @@ public class HubUI : SmartUIState
     private static bool _playerInventoryOpen;
 
     private static bool _worldDexMode;
-    public static bool ShinyActive;
     private UIText _caughtAmountText;
     private UIPanel _caughtSeenPanel;
     private UIHoverImageButton _filterButton;
@@ -87,6 +86,8 @@ public class HubUI : SmartUIState
             orig(self);
         };
     }
+
+    public static bool ShinyActive { get; private set; }
 
     public static bool Active { get; private set; }
     public override bool Visible => false; // Vanilla will update/draw this state through IngameFancyUI
@@ -207,6 +208,7 @@ public class HubUI : SmartUIState
             if (_worldDexMode)
                 _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.WorldDexFilter"));
             _filterButton.SetImage(_worldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
+            _filterButton.SetHoverRarity(ItemRarityID.White);
             RefreshPokedex(closeOverview: true);
         };
         _filterButton.OnRightClick += (_, _) =>
@@ -217,6 +219,7 @@ public class HubUI : SmartUIState
             SoundEngine.PlaySound(SoundID.MaxMana);
             ShinyActive = !ShinyActive;
             _filterButton.SetImage(ShinyActive ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture);
+            _filterButton.SetHoverRarity(ShinyActive ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
             RefreshPokedex(closeOverview: true);
         };
         _mainPanel.Append(_filterButton);
@@ -431,6 +434,7 @@ public class HubUI : SmartUIState
         _worldDexMode = false; // Reset to player's Pokédex mode
         ShinyActive = false; // Reset to non-shiny mode
         _filterButton.SetImage(PlayerDexFilterTexture);
+        _filterButton.SetHoverRarity(ItemRarityID.White);
         RefreshPokedex();
     }
 
@@ -791,7 +795,10 @@ internal sealed class PokedexEntryIcon : UIPanel
                     break;
             }
 
-        Main.instance.MouseText(useHoverText);
+        Main.instance.MouseText(useHoverText,
+            _hoverText.ToString() != "???" && HubUI.ShinyActive
+                ? ModContent.RarityType<KeyItemRarity>()
+                : ItemRarityID.White);
     }
 }
 
@@ -1076,12 +1083,12 @@ internal sealed class PokedexOverviewPanel : UIPanel
 
     public ushort Pokemon { get; private set; }
 
-    public override void Update(GameTime gameTime)
+    /*public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
 
         _monNameText.TextColor = HubUI.ShinyActive ? ModContent.GetInstance<KeyItemRarity>().RarityColor : Color.White;
-    }
+    }*/
 
     public override void Recalculate()
     {
