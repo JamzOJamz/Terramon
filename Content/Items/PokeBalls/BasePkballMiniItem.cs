@@ -8,7 +8,7 @@ public abstract class BasePkballMiniItem : TerramonItem
 {
     public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBallMinis;
 
-    protected override bool Obtainable => false;
+    public override bool Obtainable => false;
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 

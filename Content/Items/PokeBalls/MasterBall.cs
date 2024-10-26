@@ -23,7 +23,7 @@ internal class MasterBallMiniItem : BasePkballMiniItem
 
 internal class MasterBallItem : BasePkballItem
 {
-    protected override bool Obtainable => false;
+    public override bool Obtainable => false;
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<MasterBallTile>();

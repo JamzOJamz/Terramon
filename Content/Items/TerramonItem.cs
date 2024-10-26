@@ -18,7 +18,7 @@ public abstract class TerramonItem : ModItem
     ///     Whether this item is legitimately obtainable in-game. If false, the item will have a tooltip indicating it is
     ///     unobtainable.
     /// </summary>
-    protected virtual bool Obtainable => true;
+    public virtual bool Obtainable => true;
 
     /// <summary>
     ///     Whether this item can have an effect when used directly on a Pokémon.
@@ -91,8 +91,11 @@ public abstract class TerramonItem : ModItem
     /// </summary>
     /// <param name="player">The player using the item.</param>
     /// <param name="data">The Pokémon the item is being used on.</param>
-    public virtual void PokemonDirectUse(Player player, PokemonData data)
+    /// <param name="amount">The amount of the item being used.</param>
+    /// <returns>The amount of the item actually used.</returns>
+    public virtual int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
     {
+        return amount;
     }
 }
 

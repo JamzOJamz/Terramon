@@ -20,14 +20,6 @@ internal class PremierBallItem : BasePkballItem
     protected override int PokeballThrow => ModContent.ProjectileType<PremierBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<PremierBallTile>();
     protected override int InGamePrice => 200;
-
-    public override void SetStaticDefaults()
-    {
-        // DisplayName.SetDefault($"Premier Ball");
-        // Tooltip.SetDefault("A somewhat rare Poké Ball that has \nbeen specially made to commemorate an \nevent of some sort.");
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            InGamePrice / 2; //Amount needed to duplicate them in Journey Mode
-    }
 }
 
 public class PremierBallTile : BasePkballTile

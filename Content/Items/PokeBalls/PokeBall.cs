@@ -1,4 +1,5 @@
-﻿using Terramon.Helpers;
+﻿using Terramon.Content.Items.Materials;
+using Terramon.Helpers;
 using Terraria.ID;
 
 namespace Terramon.Content.Items.PokeBalls;
@@ -31,6 +32,15 @@ internal class PokeBallItem : BasePkballItem
     {
         base.SetStaticDefaults();
         ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AetherBallItem>();
+    }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddRecipeGroup(RecipeGroupID.IronBar, 2)
+            .AddIngredient<RedApricorn>()
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }
 

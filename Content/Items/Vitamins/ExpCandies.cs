@@ -6,7 +6,7 @@ namespace Terramon.Content.Items.Vitamins;
 public abstract class ExpCandy : Vitamin
 {
     // To be made obtainable in a future update post-0.1 beta
-    protected override bool Obtainable => false;
+    public override bool Obtainable => false;
 
     protected override int UseRarity { get; } = ModContent.RarityType<ExpCandyRarity>();
 

@@ -43,7 +43,7 @@ public class PokemartClerk : ModNPC
         NPCID.Sets.AttackFrameCount[Type] = 4;
         NPCID.Sets.DangerDetectRange[Type] =
             700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
-        NPCID.Sets.AttackType[Type] = 0;
+        NPCID.Sets.AttackType[Type] = -1;
         NPCID.Sets.AttackTime[Type] =
             90; // The amount of time it takes for the NPC's attack animation to be over once it starts.
         NPCID.Sets.AttackAverageChance[Type] = 30;

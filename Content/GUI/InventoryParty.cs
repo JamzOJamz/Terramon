@@ -255,6 +255,17 @@ internal sealed class CustomPartyItemSlot : UIImage
     public override void LeftClick(UIMouseEvent evt)
     {
         base.LeftClick(evt);
+        UseItem();
+    }
+    
+    public override void RightClick(UIMouseEvent evt)
+    {
+        base.RightClick(evt);
+        UseItem(true);
+    }
+
+    private void UseItem(bool rightClick = false)
+    {
         if (Data == null || Main.mouseItem.ModItem is not TerramonItem { HasPokemonDirectUse: true } item) return;
         if (!item.AffectedByPokemonDirectUse(Data))
         {
@@ -262,9 +273,9 @@ internal sealed class CustomPartyItemSlot : UIImage
                 TerramonCommand.ChatColorYellow);
             return;
         }
-
-        item.PokemonDirectUse(Main.LocalPlayer, Data);
-        Main.mouseItem.stack--;
+        
+        var consume = item.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
+        Main.mouseItem.stack -= consume;
         if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
     }
 

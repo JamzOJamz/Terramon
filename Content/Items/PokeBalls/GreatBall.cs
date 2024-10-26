@@ -1,5 +1,7 @@
-﻿using Terramon.Helpers;
+﻿using Terramon.Content.Items.Materials;
+using Terramon.Helpers;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -20,11 +22,15 @@ internal class GreatBallItem : BasePkballItem
     protected override int PokeballThrow => ModContent.ProjectileType<GreatBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<GreatBallTile>();
     protected override int InGamePrice => 600;
-
-    public override void SetStaticDefaults()
+    
+    public override void AddRecipes()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            InGamePrice / 2; //Amount needed to duplicate them in Journey Mode
+        CreateRecipe()
+            .AddRecipeGroup($"{nameof(Terramon)}:SilverBar", 2)
+            .AddIngredient<BlueApricorn>(2)
+            .AddIngredient<RedApricorn>()
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }
 

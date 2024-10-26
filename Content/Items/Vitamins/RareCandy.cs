@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Terramon.Content.Configs;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Helpers;
@@ -30,7 +31,7 @@ public class RareCandy : Vitamin
         return data.Level < Terramon.MaxPokemonLevel;
     }
 
-    public override void PokemonDirectUse(Player player, PokemonData data)
+    public override int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
     {
         if (player.whoAmI != Main.myPlayer)
         {
@@ -40,17 +41,38 @@ public class RareCandy : Vitamin
                 var d = Dust.NewDustPerfect(player.Center + speed * 26, DustID.FrostHydra);
                 d.noGravity = true;
             }
+
             SoundEngine.PlaySound(SoundID.Item4, player.position);
-            return;
+            return 0;
         }
 
-        data.LevelUp();
+        // Get whether fast evolution is enabled
+        var fastEvolution = ModContent.GetInstance<ClientConfig>().FastEvolution;
+
+        // Level up as many times as possible given the amount used
+        var oldLevel = data.Level;
+        var origSpecies = data.ID;
+        ushort queuedEvolution = 0;
+        var evolutions = new List<ushort>();
+        for (var i = 0; i < amount; i++)
+        {
+            if (!data.LevelUp()) break;
+            // Check if the Pokémon is ready to evolve after leveling up
+            queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
+            if (!fastEvolution || queuedEvolution == 0 || evolutions.Contains(queuedEvolution)) continue;
+            evolutions.Add(queuedEvolution);
+            data.EvolveInto(queuedEvolution);
+            queuedEvolution = 0;
+        }
+
+        data.ID = origSpecies; // Reset the ID to the original species (hacky)
+
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level),
             Color.White);
-        
+
         // Test effect
-        CombatText.NewText(player.getRect(), Color.White, $"Lv. {data.Level - 1} > {data.Level}");
+        CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
         SoundEngine.PlaySound(SoundID.Item20);
         for (var j = 0; j < 40; j++)
         {
@@ -58,32 +80,36 @@ public class RareCandy : Vitamin
             var d = Dust.NewDustPerfect(player.Center + speed * 26, DustID.FrostHydra);
             d.noGravity = true;
         }
-        
+
         SoundEngine.PlaySound(SoundID.Item4, player.position);
-        
-        var queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
-        if (queuedEvolution == 0) return;
-        
-        if (ModContent.GetInstance<ClientConfig>().FastEvolution)
+
+        if (evolutions.Count > 0) // Check if the Pokémon evolved
         {
             TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-            var queuedEvolutionName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queuedEvolution);
-            Main.NewText(
-                Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                    queuedEvolutionName), new Color(50, 255, 130));
-            data.EvolveInto(queuedEvolution);
-            var justRegistered = player.GetModPlayer<TerramonPlayer>()
-                .UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);
-            if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
-            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", queuedEvolutionName),
-                new Color(159, 162, 173));
+            // Iterate through all evolutions
+            foreach (var evolution in evolutions)
+            {
+                var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolution);
+                Main.NewText(
+                    Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
+                        evolvedSpeciesName), new Color(50, 255, 130));
+                data.EvolveInto(evolution);
+                var justRegistered = player.GetModPlayer<TerramonPlayer>()
+                    .UpdatePokedex(evolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);
+                if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages)
+                    continue;
+                Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
+                    new Color(159, 162, 173));
+            }
         }
-        else
+        else if (queuedEvolution != 0) // Check if the Pokémon is ready to evolve
         {
             Main.NewText(
                 Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolutionReady", data.DisplayName),
                 new Color(50, 255, 130));
         }
+
+        return data.Level - oldLevel;
     }
 }
 

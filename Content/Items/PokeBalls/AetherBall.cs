@@ -1,5 +1,4 @@
 ﻿using Terramon.Content.Rarities;
-using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -20,14 +19,6 @@ internal class AetherBallItem : BasePkballItem
     protected override int PokeballThrow => ModContent.ProjectileType<AetherBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<AetherBallTile>();
     protected override int InGamePrice => 200;
-
-    public override void SetStaticDefaults()
-    {
-        // DisplayName.SetDefault($"Premier Ball");
-        // Tooltip.SetDefault("A somewhat rare Poké Ball that has \nbeen specially made to commemorate an \nevent of some sort.");
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            InGamePrice / 2; //Amount needed to duplicate them in Journey Mode
-    }
 }
 
 public class AetherBallTile : BasePkballTile

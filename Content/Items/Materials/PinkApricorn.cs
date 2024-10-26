@@ -4,6 +4,7 @@ namespace Terramon.Content.Items.Materials;
 
 public class PinkApricorn : ApricornItem
 {
+    public override bool Obtainable => false;
     protected override int UseRarity { get; } = ModContent.RarityType<PinkApricornRarity>();
 }
 

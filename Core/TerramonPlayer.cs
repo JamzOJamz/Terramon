@@ -8,6 +8,7 @@ using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
@@ -69,6 +70,9 @@ public class TerramonPlayer : ModPlayer
     public override void OnEnterWorld()
     {
         Terramon.RefreshPartyUI();
+
+        // Request a full sync of the World Dex from the server when joining a host in multiplayer
+        if (Main.netMode == NetmodeID.MultiplayerClient) Mod.SendPacket(new RequestWorldDexRpc());
     }
 
     public override void OnRespawn()
@@ -312,9 +316,6 @@ public class TerramonPlayer : ModPlayer
             Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData), toWho, fromWho);
         if (HasChosenStarter)
             Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, true), toWho, fromWho);
-
-        // Request a full sync of the World Dex from the server when joining
-        if (newPlayer) Mod.SendPacket(new RequestWorldDexRpc());
     }
 
     public override void CopyClientState(ModPlayer targetCopy)

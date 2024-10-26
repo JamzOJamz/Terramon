@@ -24,8 +24,7 @@ public abstract class BasePkballItem : TerramonItem
 
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            InGamePrice / 4; // Amount needed to duplicate them in Journey Mode
+        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
     }
 
     public override void SetDefaults()
@@ -41,7 +40,7 @@ public abstract class BasePkballItem : TerramonItem
         Item.damage = 0;
         Item.autoReuse = false;
         Item.useStyle = ItemUseStyleID.Rapier;
-        Item.value = InGamePrice * 3;
+        Item.value = InGamePrice * 6;
         Item.useTime = 15;
         Item.consumable = true;
     }

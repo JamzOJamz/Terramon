@@ -1,5 +1,7 @@
-﻿using Terramon.Helpers;
+﻿using Terramon.Content.Items.Materials;
+using Terramon.Helpers;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -19,12 +21,16 @@ internal class UltraBallItem : BasePkballItem
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<UltraBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<UltraBallTile>();
-    protected override int InGamePrice => 800;
-
-    public override void SetStaticDefaults()
+    protected override int InGamePrice => 1000;
+    
+    public override void AddRecipes()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] =
-            InGamePrice / 2; //Amount needed to duplicate them in Journey Mode
+        CreateRecipe()
+            .AddRecipeGroup($"{nameof(Terramon)}:GoldBar", 2)
+            .AddIngredient<BlackApricorn>(3)
+            .AddIngredient<YellowApricorn>(2)
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }
 
