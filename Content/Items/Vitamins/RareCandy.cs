@@ -47,16 +47,16 @@ public class RareCandy : Vitamin
         }
 
         // Get whether fast evolution is enabled
-        var fastEvolution = ModContent.GetInstance<ClientConfig>().FastEvolution;
+        var clientConfig = ModContent.GetInstance<ClientConfig>();
+        var fastEvolution = clientConfig.FastEvolution;
 
         // Level up as many times as possible given the amount used
         var oldLevel = data.Level;
         var origSpecies = data.ID;
         ushort queuedEvolution = 0;
         var evolutions = new List<ushort>();
-        for (var i = 0; i < amount; i++)
+        for (var i = 0; i < amount && data.LevelUp(); i++)
         {
-            if (!data.LevelUp()) break;
             // Check if the Pokémon is ready to evolve after leveling up
             queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
             if (!fastEvolution || queuedEvolution == 0 || evolutions.Contains(queuedEvolution)) continue;
@@ -68,8 +68,7 @@ public class RareCandy : Vitamin
         data.ID = origSpecies; // Reset the ID to the original species (hacky)
 
         Main.NewText(
-            Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level),
-            Color.White);
+            Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level));
 
         // Test effect
         CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
@@ -86,6 +85,8 @@ public class RareCandy : Vitamin
         if (evolutions.Count > 0) // Check if the Pokémon evolved
         {
             TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
             // Iterate through all evolutions
             foreach (var evolution in evolutions)
             {
@@ -94,9 +95,9 @@ public class RareCandy : Vitamin
                     Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
                         evolvedSpeciesName), new Color(50, 255, 130));
                 data.EvolveInto(evolution);
-                var justRegistered = player.GetModPlayer<TerramonPlayer>()
-                    .UpdatePokedex(evolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);
-                if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages)
+                var justRegistered =
+                    modPlayer.UpdatePokedex(evolution, PokedexEntryStatus.Registered, shiny: data.IsShiny);
+                if (!justRegistered || !showPokedexRegistrationMessages)
                     continue;
                 Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
                     new Color(159, 162, 173));
@@ -109,7 +110,7 @@ public class RareCandy : Vitamin
                 new Color(50, 255, 130));
         }
 
-        return data.Level - oldLevel;
+        return data.Level - oldLevel; // Actual amount of candies consumed (levels gained)
     }
 }
 

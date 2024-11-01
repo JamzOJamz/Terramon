@@ -13,6 +13,11 @@ public abstract class TerramonItem : ModItem
     ///     The loading priority of this type. Lower values are loaded first.
     /// </summary>
     public virtual ItemLoadPriority LoadPriority => ItemLoadPriority.Unspecified;
+    
+    /// <summary>
+    ///     Used for sorting items within the same load priority. Lower values are loaded first.
+    /// </summary>
+    public virtual int SubLoadPriority => 0;
 
     /// <summary>
     ///     Whether this item is legitimately obtainable in-game. If false, the item will have a tooltip indicating it is

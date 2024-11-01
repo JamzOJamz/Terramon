@@ -19,6 +19,7 @@ internal class MasterBallProjectile : BasePkballProjectile
 internal class MasterBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
+    public override int SubLoadPriority => 4;
 }
 
 internal class MasterBallItem : BasePkballItem
@@ -27,6 +28,7 @@ internal class MasterBallItem : BasePkballItem
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<MasterBallTile>();
+    public override int SubLoadPriority => 4;
 
     public override void SetStaticDefaults()
     {

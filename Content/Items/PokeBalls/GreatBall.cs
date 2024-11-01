@@ -1,6 +1,5 @@
 ﻿using Terramon.Content.Items.Materials;
 using Terramon.Helpers;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 
 namespace Terramon.Content.Items.PokeBalls;
@@ -14,6 +13,7 @@ internal class GreatBallProjectile : BasePkballProjectile
 internal class GreatBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<GreatBallRarity>();
+    public override int SubLoadPriority => 1;
 }
 
 internal class GreatBallItem : BasePkballItem
@@ -22,13 +22,14 @@ internal class GreatBallItem : BasePkballItem
     protected override int PokeballThrow => ModContent.ProjectileType<GreatBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<GreatBallTile>();
     protected override int InGamePrice => 600;
+    public override int SubLoadPriority => 1;
     
     public override void AddRecipes()
     {
         CreateRecipe()
             .AddRecipeGroup($"{nameof(Terramon)}:SilverBar", 2)
             .AddIngredient<BlueApricorn>(2)
-            .AddIngredient<RedApricorn>()
+            .AddIngredient<RedApricorn>(2)
             .AddTile(TileID.Anvils)
             .Register();
     }

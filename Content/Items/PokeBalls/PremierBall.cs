@@ -12,6 +12,7 @@ internal class PremierBallProjectile : BasePkballProjectile
 internal class PremierBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
+    public override int SubLoadPriority => 3;
 }
 
 internal class PremierBallItem : BasePkballItem
@@ -20,6 +21,7 @@ internal class PremierBallItem : BasePkballItem
     protected override int PokeballThrow => ModContent.ProjectileType<PremierBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<PremierBallTile>();
     protected override int InGamePrice => 200;
+    public override int SubLoadPriority => 3;
 }
 
 public class PremierBallTile : BasePkballTile

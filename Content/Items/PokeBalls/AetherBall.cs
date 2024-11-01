@@ -11,6 +11,7 @@ internal class AetherBallProjectile : BasePkballProjectile
 internal class AetherBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
+    public override int SubLoadPriority => 5;
 }
 
 internal class AetherBallItem : BasePkballItem
@@ -19,6 +20,7 @@ internal class AetherBallItem : BasePkballItem
     protected override int PokeballThrow => ModContent.ProjectileType<AetherBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<AetherBallTile>();
     protected override int InGamePrice => 200;
+    public override int SubLoadPriority => 5;
 }
 
 public class AetherBallTile : BasePkballTile

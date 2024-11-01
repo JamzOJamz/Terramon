@@ -14,7 +14,7 @@ public class TerramonItemLoader : ModSystem
             select (TerramonItem)Activator.CreateInstance(t, null)).ToList();
 
         // Sort items by the priority property
-        var sortedItems = items.OrderBy(item => item.LoadPriority);
+        var sortedItems = items.OrderBy(item => item.LoadPriority).ThenBy(item => item.SubLoadPriority);
 
         // Add sorted items to the mod content
         foreach (var item in sortedItems) Mod.AddContent(item);
