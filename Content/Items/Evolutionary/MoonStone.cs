@@ -1,7 +1,6 @@
-using Terramon.Content.Items.Materials;
 using Terramon.ID;
 
-namespace Terramon.Content.Items.Evolutionary;
+namespace Terramon.Content.Items;
 
 public class MoonStone : EvolutionaryItem
 {

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using EasyPacketsLib;
 using ReLogic.Utilities;
-using Terramon.Content.Buffs;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
@@ -28,10 +27,12 @@ public class TerramonWorld : ModSystem
     public static void PlaySoundOverBGM(in SoundStyle style, float volumeMultiplier = 0.45f)
     {
         var slotId = SoundEngine.PlaySound(style);
-        if (Main.musicVolume <= 0) return;
+        if (Main.soundVolume <= 0) return;
+        var reducedVolume = Main.soundVolume * volumeMultiplier;
+        if (Main.musicVolume <= reducedVolume) return;
         _originalMusicVolume = Main.musicVolume;
         _currentSlotId = slotId;
-        Main.musicVolume = Main.soundVolume * volumeMultiplier;
+        Main.musicVolume = reducedVolume;
         _lastMusicVolume = Main.musicVolume;
     }
 
@@ -58,7 +59,6 @@ public class TerramonWorld : ModSystem
     public override void PreSaveAndQuit()
     {
         Terramon.ResetUI();
-        Main.LocalPlayer.ClearBuff(ModContent.BuffType<PokemonCompanion>());
     }
 
     public override void ClearWorld()

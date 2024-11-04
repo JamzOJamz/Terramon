@@ -8,7 +8,7 @@ namespace Terramon.Content.Packets;
 /// <summary>
 ///     A packet for synchronizing a player's <see cref="TerramonPlayer.Party" /> with all clients.
 /// </summary>
-[Obsolete("This packet is no longer used. Use SetActivePokemonRpc instead.")]
+[Obsolete("This packet is no longer used. Use UpdateActivePokemonRpc instead.")]
 public readonly struct PartySyncRpc(byte player, byte index, PokemonData data)
     : IEasyPacket<PartySyncRpc>, IEasyPacketHandler<PartySyncRpc>
 {

@@ -1,6 +1,4 @@
-﻿using Terramon.Content.Items.Evolutionary;
-using Terramon.Content.Items.Vitamins;
-using Terraria.GameContent.ItemDropRules;
+﻿using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
 namespace Terramon.Content.Items;

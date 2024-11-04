@@ -1,6 +1,6 @@
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.Materials;
+namespace Terramon.Content.Items;
 
 public abstract class ApricornItem : Material
 {

@@ -403,7 +403,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         Projectile.Kill();
         var ballName = GetType().Name.Split("Projectile")[0];
-        _capture.Data.Ball = (byte)BallID.Search.GetId(ballName);
+        _capture.Data.Ball = Enum.Parse<BallID>(ballName);
         var player = TerramonPlayer.LocalPlayer;
         var addSuccess = player.AddPartyPokemon(_capture.Data, out var justRegistered);
         if (addSuccess)

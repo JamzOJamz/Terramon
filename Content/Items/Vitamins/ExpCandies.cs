@@ -1,7 +1,7 @@
 using Terramon.Helpers;
 using Terraria.ID;
 
-namespace Terramon.Content.Items.Vitamins;
+namespace Terramon.Content.Items;
 
 public abstract class ExpCandy : Vitamin
 {
@@ -9,6 +9,11 @@ public abstract class ExpCandy : Vitamin
     public override bool Obtainable => false;
 
     protected override int UseRarity { get; } = ModContent.RarityType<ExpCandyRarity>();
+    
+    /// <summary>
+    ///     The amount of experience points granted by this Exp. Candy.
+    /// </summary>
+    protected abstract int Points { get; }
 
     public override void SetDefaults()
     {
@@ -19,6 +24,8 @@ public abstract class ExpCandy : Vitamin
 
 public class ExpCandyXS : ExpCandy
 {
+    protected override int Points => 100;
+    
     public override void SetDefaults()
     {
         base.SetDefaults();
@@ -29,6 +36,8 @@ public class ExpCandyXS : ExpCandy
 
 public class ExpCandyS : ExpCandy
 {
+    protected override int Points => 800;
+    
     public override void SetDefaults()
     {
         base.SetDefaults();
@@ -39,6 +48,8 @@ public class ExpCandyS : ExpCandy
 
 public class ExpCandyM : ExpCandy
 {
+    protected override int Points => 3000;
+    
     public override void SetDefaults()
     {
         base.SetDefaults();
@@ -49,6 +60,8 @@ public class ExpCandyM : ExpCandy
 
 public class ExpCandyL : ExpCandy
 {
+    protected override int Points => 10000;
+    
     public override void SetDefaults()
     {
         base.SetDefaults();
@@ -59,6 +72,8 @@ public class ExpCandyL : ExpCandy
 
 public class ExpCandyXL : ExpCandy
 {
+    protected override int Points => 30000;
+    
     public override void SetDefaults()
     {
         base.SetDefaults();

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 
@@ -94,13 +93,10 @@ public class PCService
 /// <summary>
 ///     Class representing an individual PC box capable of storing Pokémon.
 /// </summary>
-public class PCBox : TagSerializable
+public class PCBox
 {
     public const byte Capacity = 30;
 
-    // ReSharper disable once UnusedMember.Global
-    // ReSharper disable once InconsistentNaming
-    public static readonly Func<TagCompound, PCBox> DESERIALIZER = Load;
     private readonly PokemonData[] _slots = new PokemonData[30];
 
     /// <summary>
@@ -134,7 +130,7 @@ public class PCBox : TagSerializable
         return tag;
     }
 
-    private static PCBox Load(TagCompound tag)
+    public static PCBox Load(TagCompound tag)
     {
         var box = new PCBox();
         if (tag.ContainsKey("name"))
@@ -143,7 +139,7 @@ public class PCBox : TagSerializable
         {
             var tagName = $"s{i}";
             if (tag.ContainsKey(tagName))
-                box._slots[i] = tag.Get<PokemonData>(tagName);
+                box._slots[i] = PokemonData.Load(tag.Get<TagCompound>(tagName));
         }
 
         return box;

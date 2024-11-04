@@ -1,7 +1,7 @@
 using Terramon.Helpers;
 using Terramon.ID;
 
-namespace Terramon.Content.Items.Evolutionary;
+namespace Terramon.Content.Items;
 
 public class LinkingCord : EvolutionaryItem
 {

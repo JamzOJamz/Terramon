@@ -2,7 +2,7 @@ using System.Linq;
 using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
-using Terramon.Content.Items.KeyItems;
+using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
@@ -78,6 +78,8 @@ public class TerramonPlayer : ModPlayer
     public override void OnRespawn()
     {
         if (Player.whoAmI != Main.myPlayer) return;
+        
+        Main.NewText("Respawned!");
 
         // Reapply companion buff on player respawn
         if (ActiveSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
@@ -88,15 +90,6 @@ public class TerramonPlayer : ModPlayer
     {
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
-    }
-
-    public override void PostUpdate()
-    {
-        // If more than one instance of the companion buff is present, remove all but the first one (bandaid fix for weird bug)
-        var buffIndexes = Player.buffType.ToList().FindAll(i => i == ModContent.BuffType<PokemonCompanion>());
-        if (buffIndexes.Count <= 1) return;
-        for (var i = 1; i < buffIndexes.Count; i++)
-            Player.DelBuff(buffIndexes[i]);
     }
 
     public override void PreUpdate()
@@ -240,7 +233,7 @@ public class TerramonPlayer : ModPlayer
         }
 
         if (tag.TryGet("activeSlot", out int slot))
-            ActiveSlot = slot;
+            _activeSlot = slot;
         LoadParty(tag);
         LoadPokedex(tag);
         LoadPC(tag);
@@ -251,7 +244,7 @@ public class TerramonPlayer : ModPlayer
         for (var i = 0; i < Party.Length; i++)
         {
             if (Party[i] == null) continue;
-            tag[$"p{i}"] = Party[i];
+            tag[$"p{i}"] = Party[i].SerializeData();
         }
     }
 
@@ -260,7 +253,7 @@ public class TerramonPlayer : ModPlayer
         for (var i = 0; i < Party.Length; i++)
         {
             var tagName = $"p{i}";
-            if (tag.ContainsKey(tagName)) Party[i] = tag.Get<PokemonData>(tagName);
+            if (tag.ContainsKey(tagName)) Party[i] = PokemonData.Load(tag.GetCompound(tagName));
         }
     }
 
@@ -284,7 +277,7 @@ public class TerramonPlayer : ModPlayer
 
     private void SavePC(TagCompound tag)
     {
-        tag["pc"] = _pc.Boxes;
+        tag["pc"] = _pc.Boxes.Select(box => box.SerializeData()).ToList();
     }
 
     private void LoadPC(TagCompound tag)
@@ -292,7 +285,7 @@ public class TerramonPlayer : ModPlayer
         const string tagName = "pc";
         if (!tag.ContainsKey(tagName)) return;
         _pc.Boxes.Clear();
-        var boxes = tag.GetList<PCBox>(tagName);
+        var boxes = tag.GetList<TagCompound>(tagName).Select(PCBox.Load);
         foreach (var box in boxes)
         {
             box.Service = _pc;

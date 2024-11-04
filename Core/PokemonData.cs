@@ -1,8 +1,7 @@
 using System;
 using System.IO;
 using Terramon.Content.Configs;
-using Terramon.Content.Items.Evolutionary;
-using Terramon.Content.Items.KeyItems;
+using Terramon.Content.Items;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
@@ -10,20 +9,16 @@ using Terraria.Utilities;
 
 namespace Terramon.Core;
 
-public class PokemonData : TagSerializable
+public class PokemonData
 {
     private const ushort Version = 0;
-
-    // ReSharper disable once UnusedMember.Global
-    // ReSharper disable once InconsistentNaming
-    public static readonly Func<TagCompound, PokemonData> DESERIALIZER = Load;
 
     private readonly Guid _uniqueId = Guid.NewGuid();
 
     private Item _heldItem;
     private string _ot;
     private uint _personalityValue;
-    public byte Ball = BallID.PokeBall;
+    public BallID Ball = BallID.PokeBall;
     public Gender Gender;
     public ushort ID;
     public bool IsShiny;
@@ -36,12 +31,12 @@ public class PokemonData : TagSerializable
     /// </summary>
     public string DisplayName =>
         string.IsNullOrEmpty(Nickname) ? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value : Nickname;
-    
+
     /// <summary>
     ///     The localized name of the Pokémon.
     /// </summary>
     public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(ID);
-    
+
     /// <summary>
     ///     The internal name of the Pokémon. This is unaffected by localization.
     /// </summary>
@@ -159,7 +154,7 @@ public class PokemonData : TagSerializable
             ["version"] = Version
         };
         if (Ball != BallID.PokeBall)
-            tag["ball"] = Ball;
+            tag["ball"] = (byte)Ball;
         if (IsShiny)
             tag["isShiny"] = true;
         if (!string.IsNullOrEmpty(Nickname))
@@ -171,7 +166,7 @@ public class PokemonData : TagSerializable
         return tag;
     }
 
-    private static PokemonData Load(TagCompound tag)
+    public static PokemonData Load(TagCompound tag)
     {
         // Try to load the tag version. If it doesn't exist, it's version 0.
         var loadedVersion = 0;
@@ -198,7 +193,7 @@ public class PokemonData : TagSerializable
             PersonalityValue = tag.Get<uint>("pv")
         };
         if (tag.TryGet<byte>("ball", out var ball))
-            data.Ball = ball;
+            data.Ball = (BallID)ball;
         if (tag.TryGet<bool>("isShiny", out var isShiny))
             data.IsShiny = isShiny;
         if (tag.TryGet<string>("n", out var nickname))
@@ -283,7 +278,7 @@ public class PokemonData : TagSerializable
 
         if ((fields & BitID) != 0) writer.Write7BitEncodedInt(ID);
         if ((fields & BitLevel) != 0) writer.Write(Level);
-        if ((fields & BitBall) != 0) writer.Write(Ball);
+        if ((fields & BitBall) != 0) writer.Write((byte)Ball);
         if ((fields & BitIsShiny) != 0) writer.Write(IsShiny);
         if ((fields & BitPersonalityValue) != 0) writer.Write(PersonalityValue);
         if ((fields & BitNickname) != 0) writer.Write(Nickname ?? string.Empty);
@@ -303,7 +298,7 @@ public class PokemonData : TagSerializable
 
         if ((fields & BitID) != 0) ID = (ushort)reader.Read7BitEncodedInt();
         if ((fields & BitLevel) != 0) Level = reader.ReadByte();
-        if ((fields & BitBall) != 0) Ball = reader.ReadByte();
+        if ((fields & BitBall) != 0) Ball = (BallID)reader.ReadByte();
         if ((fields & BitIsShiny) != 0) IsShiny = reader.ReadBoolean();
         if ((fields & BitPersonalityValue) != 0) PersonalityValue = reader.ReadUInt32();
         if ((fields & BitNickname) != 0) Nickname = reader.ReadString();

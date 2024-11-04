@@ -1,6 +1,5 @@
 using System.IO;
 using Terramon.Content.NPCs.Pokemon;
-using Terramon.Core.NPCComponents;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
@@ -10,7 +9,7 @@ using Terraria.Utilities;
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBeProtected.Global
 
-namespace Terramon.Content.NPCs;
+namespace Terramon.Core.NPCComponents;
 
 /// <summary>
 ///     A base <see cref="NPCComponent" /> for adding AI to an NPC.

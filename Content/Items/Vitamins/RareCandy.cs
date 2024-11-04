@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using Terramon.Content.Configs;
-using Terramon.Content.Items.Evolutionary;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.Vitamins;
+namespace Terramon.Content.Items;
 
 public class RareCandy : Vitamin
 {

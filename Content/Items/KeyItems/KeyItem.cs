@@ -3,7 +3,7 @@ using Terramon.Content.Rarities;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.KeyItems;
+namespace Terramon.Content.Items;
 
 public abstract class KeyItem : TerramonItem
 {

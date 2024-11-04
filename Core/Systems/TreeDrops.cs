@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using MonoMod.Cil;
-using Terramon.Content.Items.Materials;
+using Terramon.Content.Items;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Utilities;
@@ -50,17 +50,20 @@ public class TreeDropsGlobalTile : GlobalTile
         if (Main.netMode == NetmodeID.MultiplayerClient || WorldGen.noTileActions || WorldGen.gen ||
             type != TileID.Trees || fail || noItem)
             return;
-        
+
         WorldGen.GetTreeBottom(i, j, out var x, out var y);
         var treeType = WorldGen.GetTreeType(Main.tile[x, y].TileType);
         if (treeType is not (TreeTypes.Forest or TreeTypes.Snow or TreeTypes.Hallowed)) return;
-        
+
         var shouldDrop = WorldGen.genRand.NextBool(5);
         if (!shouldDrop) return;
-        
+
         var randomApricorn = ApricornItems[WorldGen.genRand.Next(ApricornItems.Length)].Type;
         Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32,
-            randomApricorn);
+            randomApricorn,
+            randomApricorn == ModContent.ItemType<RedApricorn>() && WorldGen.genRand.NextBool(6, 10)
+                ? 2
+                : 1); // TODO: Red Apricorns should be more common until Apricorn Trees are implemented
     }
 
     private static void HookShakeTree(ILContext il)

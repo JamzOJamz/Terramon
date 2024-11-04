@@ -11,6 +11,7 @@ using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.NPCComponents;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -25,6 +26,8 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
     private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
     private static BitArray _hasGenderDifference;
     private static MethodInfo _enableComponentMethod;
+
+    private int _cryTimer;
     private Asset<Texture2D> _mainTexture;
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
@@ -106,6 +109,8 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
                 Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x / 2, y / 2);
                 Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
             }
+
+            _cryTimer = 10;
         }
 
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -195,6 +200,17 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
 
     public override void AI()
     {
+        if (_cryTimer > 0)
+        {
+            _cryTimer--;
+            if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
+            {
+                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
+                    { Volume = 0.21f };
+                SoundEngine.PlaySound(cry, NPC.position);
+            }
+        }
+
         if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
         if (PlasmaState)
         {

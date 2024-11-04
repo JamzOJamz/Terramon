@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.GUI.Common;
-using Terramon.Content.Items.KeyItems;
+using Terramon.Content.Items;
 using Terramon.Content.NPCs;
 using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.Loaders;
@@ -809,6 +809,8 @@ internal sealed class PokedexPageButton : UIHoverImageButton
 
     private readonly PokedexPageDisplay _pageDisplay;
     private readonly bool _right;
+    private bool _lastXDown;
+    private bool _lastZDown;
 
     static PokedexPageButton()
     {
@@ -834,10 +836,24 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         SetVisibility(1f, 1f);
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        var zDown = Main.keyState.IsKeyDown(Keys.Z);
+        var xDown = Main.keyState.IsKeyDown(Keys.X);
+        if ((zDown && !_lastZDown && !_right) || (xDown && !_lastXDown && _right))
+            ChangePage();
+        _lastZDown = zDown;
+        _lastXDown = xDown;
+    }
+
     public override void LeftClick(UIMouseEvent evt)
     {
         base.LeftClick(evt);
+        ChangePage();
+    }
 
+    private void ChangePage()
+    {
         var currentRange = _pageDisplay.GetPageRange();
         if ((!_right && currentRange.Item1 == 1) ||
             (_right && currentRange.Item2 == Terramon.LoadedPokemonCount)) return;

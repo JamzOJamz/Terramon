@@ -1,7 +1,7 @@
 ﻿using Terraria.GameContent.Creative;
 using Terraria.ID;
 
-namespace Terramon.Content.Items.Vanity;
+namespace Terramon.Content.Items;
 
 [AutoloadEquip(EquipType.Body)]
 public class TrainerTorso : VanityItem

@@ -11,8 +11,8 @@ namespace Terramon.Content.Items.PokeBalls;
 public abstract class BasePkballItem : TerramonItem
 {
     public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBalls;
-    protected virtual int PokeballThrow => ModContent.ProjectileType<BasePkballProjectile>();
-    protected virtual int PokeballTile => ModContent.TileType<BasePkballTile>();
+    protected abstract int PokeballThrow { get; }
+    protected abstract int PokeballTile { get; }
 
     /// <summary>
     ///     The in-game price of the Poké Ball in the core series games measured in Pokémon Dollars. Used for price scaling in

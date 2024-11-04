@@ -50,7 +50,7 @@ public abstract class BasePkballTile : ModTile
     public override void PlaceInWorld(int i, int j, Item item)
     {
         if (Main.netMode != NetmodeID.MultiplayerClient) return;
-        Mod.SendPacket(new PlacedPkballTileRpc((byte)Main.LocalPlayer.whoAmI, new Point16(i, j)), -1, Main.myPlayer,
+        Mod.SendPacket(new PlacedPkballTileRpc(new Point16(i, j)), -1, Main.myPlayer,
             true);
     }
 

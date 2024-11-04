@@ -12,31 +12,29 @@ namespace Terramon.Content.Packets;
 ///     <see cref="Player.altFunctionUse" /> with a <see cref="BasePkballItem" />.
 ///     When received by other multiplayer clients, the sending player's use animation and tile placement sound are played.
 /// </summary>
-public readonly struct PlacedPkballTileRpc(byte player, Point16 tileCoords)
+public readonly struct PlacedPkballTileRpc(Point16 tileCoords)
     : IEasyPacket<PlacedPkballTileRpc>, IEasyPacketHandler<PlacedPkballTileRpc>
 {
-    private readonly byte _player = player;
     private readonly Point16 _tileCoords = tileCoords;
 
     public void Serialise(BinaryWriter writer)
     {
-        writer.Write(_player);
         writer.Write(_tileCoords.X);
         writer.Write(_tileCoords.Y);
     }
 
     public PlacedPkballTileRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        return new PlacedPkballTileRpc(reader.ReadByte(), new Point16(reader.ReadInt16(), reader.ReadInt16()));
+        return new PlacedPkballTileRpc(new Point16(reader.ReadInt16(), reader.ReadInt16()));
     }
 
     public void Receive(in PlacedPkballTileRpc packet, in SenderInfo sender, ref bool handled)
     {
         sender.Mod.Logger.Debug(
-            $"Received PlacedPkballTileRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {packet._player}");
+            $"Received PlacedPkballTileRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {sender.WhoAmI}");
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
-            var player = Main.player[packet._player];
+            var player = Main.player[sender.WhoAmI];
             player.itemRotation = 0;
             player.SetItemAnimation(15);
             SoundEngine.PlaySound(SoundID.Dig, packet._tileCoords.ToWorldCoordinates());

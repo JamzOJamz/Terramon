@@ -1,6 +1,6 @@
 using Terramon.Content.Rarities;
 
-namespace Terramon.Content.Items.Evolutionary;
+namespace Terramon.Content.Items;
 
 public class DuskStone : EvolutionaryItem
 {

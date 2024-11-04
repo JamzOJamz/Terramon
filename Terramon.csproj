@@ -6,9 +6,18 @@
         <LangVersion>latest</LangVersion>
         <OutputType>Exe</OutputType>
     </PropertyGroup>
+
     <ItemGroup>
-      <Reference Include="EasyPacketsLib">
-        <HintPath>lib\EasyPacketsLib.dll</HintPath>
-      </Reference>
+        <Reference Include="EasyPacketsLib">
+            <HintPath>lib\EasyPacketsLib.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Microsoft.Xna.Framework" />
+        <Using Include="Microsoft.Xna.Framework.Graphics" />
+        <Using Include="Terramon.Core" />
+        <Using Include="Terraria" />
+        <Using Include="Terraria.ModLoader" />
     </ItemGroup>
 </Project>

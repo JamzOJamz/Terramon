@@ -499,6 +499,16 @@ Items: {
 			If consumed, it grants a Pokémon a very large number of Exp. Points.
 			'''
 	}
+
+	ShimmerStateDrive: {
+		DisplayName: Shimmer-State Drive
+		Tooltip:
+			'''
+			Permanently unlocks a shared PC box in this world.
+			This allows for easy transfer of Pokémon between players.
+			'Property of the Aether Foundation'
+			'''
+	}
 }
 
 Keybinds: {

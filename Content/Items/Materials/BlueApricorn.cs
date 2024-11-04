@@ -1,6 +1,4 @@
-using Terramon.Content.Items.Vitamins;
-
-namespace Terramon.Content.Items.Materials;
+namespace Terramon.Content.Items;
 
 public class BlueApricorn : ApricornItem
 {

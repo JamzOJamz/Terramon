@@ -5,7 +5,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.Evolutionary;
+namespace Terramon.Content.Items;
 
 public abstract class EvolutionaryItem : TerramonItem
 {

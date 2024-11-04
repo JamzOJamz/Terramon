@@ -1,5 +1,4 @@
-﻿using Terramon.Content.Items.Materials;
-using Terramon.Helpers;
+﻿using Terramon.Helpers;
 using Terraria.ID;
 
 namespace Terramon.Content.Items.PokeBalls;

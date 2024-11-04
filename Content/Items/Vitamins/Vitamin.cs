@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.Vitamins;
+namespace Terramon.Content.Items;
 
 public abstract class Vitamin : TerramonItem
 {
