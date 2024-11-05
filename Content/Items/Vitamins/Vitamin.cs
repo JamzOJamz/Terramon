@@ -1,15 +1,13 @@
 using System.Collections.Generic;
+using Terramon.Core.Loaders;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
+[LoadAfter(typeof(EvolutionaryItem))]
 public abstract class Vitamin : TerramonItem
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.Vitamins;
-
     public override string Texture => "Terramon/Assets/Items/Vitamins/" + GetType().Name;
-
-    public override bool HasPokemonDirectUse => true;
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {

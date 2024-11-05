@@ -7,7 +7,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Events;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
@@ -400,7 +399,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (Projectile.owner != Main.myPlayer) return;
 
         TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-
+        
         Projectile.Kill();
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = Enum.Parse<BallID>(ballName);

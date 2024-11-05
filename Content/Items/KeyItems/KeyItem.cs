@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Terramon.Content.Rarities;
+using Terramon.Core.Loaders;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
+[LoadAfter(typeof(Vitamin))]
 public abstract class KeyItem : TerramonItem
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.KeyItems;
-
     public override string Texture => "Terramon/Assets/Items/KeyItems/" + GetType().Name;
 
     protected override int UseRarity => ModContent.RarityType<KeyItemRarity>();

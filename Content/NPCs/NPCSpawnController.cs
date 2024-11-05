@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Terramon.Content.Configs;
 using Terramon.Core.NPCComponents;
-using Terraria.ID;
 using Terraria.ModLoader.Utilities;
 
 // ReSharper disable UnassignedField.Global

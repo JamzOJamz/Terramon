@@ -1,5 +1,5 @@
-﻿using Terramon.Helpers;
-using Terraria.ID;
+﻿using Terramon.Core.Loaders;
+using Terramon.Helpers;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -9,19 +9,19 @@ internal class UltraBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 2f;
 }
 
+[LoadAfter(typeof(GreatBallMiniItem))]
 internal class UltraBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
-    public override int SubLoadPriority => 2;
 }
 
+[LoadAfter(typeof(GreatBallItem))]
 internal class UltraBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<UltraBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<UltraBallTile>();
     protected override int InGamePrice => 1000;
-    public override int SubLoadPriority => 2;
     
     public override void AddRecipes()
     {

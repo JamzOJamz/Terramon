@@ -1,4 +1,5 @@
 ﻿using Terramon.Content.Rarities;
+using Terramon.Core.Loaders;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -8,19 +9,19 @@ internal class AetherBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 1;
 }
 
+[LoadAfter(typeof(MasterBallMiniItem))]
 internal class AetherBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
-    public override int SubLoadPriority => 5;
 }
 
+[LoadAfter(typeof(MasterBallItem))]
 internal class AetherBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<AetherBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<AetherBallTile>();
     protected override int InGamePrice => 200;
-    public override int SubLoadPriority => 5;
 }
 
 public class AetherBallTile : BasePkballTile

@@ -4,8 +4,6 @@ namespace Terramon.Content.Items;
 
 public abstract class ApricornItem : Material
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.Apricorns;
-    
     [field: CloneByReference]
     public override LocalizedText Tooltip { get; } = Language.GetText("Mods.Terramon.CommonTooltips.Apricorn");
 

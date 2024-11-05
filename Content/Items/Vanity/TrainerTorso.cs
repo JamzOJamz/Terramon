@@ -1,9 +1,10 @@
-﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
+﻿using Terramon.Core.Loaders;
+using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items;
 
 [AutoloadEquip(EquipType.Body)]
+[LoadAfter(typeof(TrainerCap))]
 public class TrainerTorso : VanityItem
 {
     public override void SetStaticDefaults()

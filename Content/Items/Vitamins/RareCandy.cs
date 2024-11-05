@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using Terramon.Content.Configs;
+using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-public class RareCandy : Vitamin
+public class RareCandy : Vitamin, IPokemonDirectUse
 {
     protected override int UseRarity { get; } = ModContent.RarityType<RareCandyRarity>();
 
@@ -25,12 +25,12 @@ public class RareCandy : Vitamin
         Item.height = 28;
     }
 
-    public override bool AffectedByPokemonDirectUse(PokemonData data)
+    public bool AffectedByPokemonDirectUse(PokemonData data)
     {
         return data.Level < Terramon.MaxPokemonLevel;
     }
 
-    public override int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
+    public int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
     {
         if (player.whoAmI != Main.myPlayer)
         {

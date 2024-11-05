@@ -3,7 +3,6 @@ using Terramon.Content.Configs;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace Terramon.Content.Buffs;
 

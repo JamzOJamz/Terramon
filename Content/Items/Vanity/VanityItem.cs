@@ -1,8 +1,10 @@
+using Terramon.Content.Items.PokeBalls;
+using Terramon.Core.Loaders;
+
 namespace Terramon.Content.Items;
 
+[LoadAfter(typeof(BasePkballMiniItem))]
 public abstract class VanityItem : TerramonItem
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.Vanity;
-    
     public override string Texture => "Terramon/Assets/Items/Vanity/" + GetType().Name;
 }

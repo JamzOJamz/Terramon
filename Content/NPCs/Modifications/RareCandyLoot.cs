@@ -1,17 +1,11 @@
-﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
+using Terramon.Content.Items;
+using Terraria.GameContent.ItemDropRules;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.NPCs.Modifications;
 
-internal class NPCLoot : GlobalNPC
+internal class RareCandyLoot : GlobalNPC
 {
-    public override void ModifyShop(NPCShop shop)
-    {
-        if (shop.NpcType == NPCID.Mechanic)
-            shop.Add<LinkingCord>();
-    }
-
-    public override void ModifyNPCLoot(NPC npc, Terraria.ModLoader.NPCLoot npcLoot)
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         if (npc.friendly) return;
         if (!npc.boss)

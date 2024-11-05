@@ -1,6 +1,5 @@
 using ReLogic.Content;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.UI;
 
 namespace Terramon.Content.GUI.Common;

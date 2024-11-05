@@ -1,6 +1,5 @@
 /*
 using Terramon.Content.AI;
-using Terraria.ID;
 using Terraria.ModLoader.Utilities;
 
 namespace Terramon.Content.NPCs.Pokemon;

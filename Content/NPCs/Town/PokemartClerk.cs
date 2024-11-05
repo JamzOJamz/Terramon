@@ -8,7 +8,6 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Utilities;
 using static Terraria.GameContent.Profiles;

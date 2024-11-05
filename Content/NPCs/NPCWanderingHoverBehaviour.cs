@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using Terramon.Core.NPCComponents;
-using Terramon.Helpers;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Content.NPCs;

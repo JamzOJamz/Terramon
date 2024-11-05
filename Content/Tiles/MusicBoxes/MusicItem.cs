@@ -1,14 +1,13 @@
 using Terramon.Content.Items;
+using Terramon.Core.Loaders;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.Utilities;
 
 namespace Terramon.Content.Tiles.MusicBoxes;
 
+[LoadAfter(typeof(KeyItem))]
 public abstract class MusicItem : TerramonItem
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBallMinis;
-    
     public override string Texture => "Terramon/Assets/Tiles/MusicBoxes/" + GetType().Name;
     
     protected override int UseRarity => ItemRarityID.LightRed;

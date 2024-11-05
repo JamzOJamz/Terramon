@@ -8,7 +8,6 @@ using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.UI;
 

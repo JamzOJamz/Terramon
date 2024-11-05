@@ -1,6 +1,5 @@
 using System;
 using Terramon.Core.NPCComponents;
-using Terramon.Helpers;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global

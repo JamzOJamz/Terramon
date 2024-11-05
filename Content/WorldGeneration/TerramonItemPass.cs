@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using Terramon.Content.Items;
 using Terramon.Helpers;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.WorldBuilding;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Core;
 
 public class TerramonItemPass(string name, float loadWeight) : GenPass(name, loadWeight)
 {
@@ -21,15 +21,5 @@ public class TerramonItemPass(string name, float loadWeight) : GenPass(name, loa
         ChestGen.AddChestLoot(ModContent.ItemType<FireStone>(), ChestID.Shadow_Locked, chance: 1000);
         ChestGen.AddChestLoot(ModContent.ItemType<LeafStone>(), ChestID.LivingTrees, chance: 1500);
         ChestGen.AddChestLoot(ModContent.ItemType<MoonStone>(), ChestID.Gold, chance: 250);
-    }
-}
-
-internal class ChestLoot : ModSystem
-{
-    public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
-    {
-        var potsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
-        if (potsIndex != -1)
-            tasks.Insert(potsIndex + 1, new TerramonItemPass("Terramon Items", 237.4298f));
     }
 }

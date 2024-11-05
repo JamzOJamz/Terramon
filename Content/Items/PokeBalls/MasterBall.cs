@@ -1,4 +1,5 @@
 ﻿using Terramon.Content.NPCs.Pokemon;
+using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terraria.GameContent.Creative;
 
@@ -16,19 +17,19 @@ internal class MasterBallProjectile : BasePkballProjectile
     }
 }
 
+[LoadAfter(typeof(PremierBallMiniItem))]
 internal class MasterBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
-    public override int SubLoadPriority => 4;
 }
 
+[LoadAfter(typeof(PremierBallItem))]
 internal class MasterBallItem : BasePkballItem
 {
     public override bool Obtainable => false;
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<MasterBallTile>();
-    public override int SubLoadPriority => 4;
 
     public override void SetStaticDefaults()
     {

@@ -4,12 +4,11 @@ using ReLogic.Utilities;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
 
-public class TerramonWorld : ModSystem
+public partial class TerramonWorld : ModSystem
 {
     private static SlotId _currentSlotId;
     private static float _originalMusicVolume;

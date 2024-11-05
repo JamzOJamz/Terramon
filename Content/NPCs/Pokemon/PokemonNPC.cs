@@ -14,7 +14,6 @@ using Terramon.Core.NPCComponents;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.NPCs.Pokemon;

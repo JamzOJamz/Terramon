@@ -8,7 +8,6 @@ using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terraria.GameInput;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
@@ -78,8 +77,6 @@ public class TerramonPlayer : ModPlayer
     public override void OnRespawn()
     {
         if (Player.whoAmI != Main.myPlayer) return;
-        
-        Main.NewText("Respawned!");
 
         // Reapply companion buff on player respawn
         if (ActiveSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))

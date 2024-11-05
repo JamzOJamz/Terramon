@@ -1,7 +1,6 @@
 using System.IO;
 using Terramon.Content.NPCs.Pokemon;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 

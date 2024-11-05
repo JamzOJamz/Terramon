@@ -18,6 +18,8 @@
         <Using Include="Microsoft.Xna.Framework.Graphics" />
         <Using Include="Terramon.Core" />
         <Using Include="Terraria" />
+        <Using Include="Terraria.ID" />
         <Using Include="Terraria.ModLoader" />
+        <Using Include="Terramon.Helpers.VanillaExtensions" Static="True" />
     </ItemGroup>
 </Project>

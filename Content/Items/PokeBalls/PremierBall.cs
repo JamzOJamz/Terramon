@@ -1,5 +1,5 @@
-﻿using Terramon.Helpers;
-using Terraria.GameContent.Creative;
+﻿using Terramon.Core.Loaders;
+using Terramon.Helpers;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -9,19 +9,19 @@ internal class PremierBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 1;
 }
 
+[LoadAfter(typeof(UltraBallMiniItem))]
 internal class PremierBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
-    public override int SubLoadPriority => 3;
 }
 
+[LoadAfter(typeof(UltraBallItem))]
 internal class PremierBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<PremierBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<PremierBallTile>();
     protected override int InGamePrice => 200;
-    public override int SubLoadPriority => 3;
 }
 
 public class PremierBallTile : BasePkballTile

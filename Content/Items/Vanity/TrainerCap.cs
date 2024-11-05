@@ -1,5 +1,4 @@
 ﻿using Terraria.GameContent.Creative;
-using Terraria.ID;
 
 namespace Terramon.Content.Items;
 

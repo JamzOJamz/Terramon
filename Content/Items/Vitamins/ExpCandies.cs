@@ -1,9 +1,9 @@
+using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
-using Terraria.ID;
 
 namespace Terramon.Content.Items;
 
-public abstract class ExpCandy : Vitamin
+public abstract class ExpCandy : Vitamin, IPokemonDirectUse
 {
     // To be made obtainable in a future update post-0.1 beta
     public override bool Obtainable => false;

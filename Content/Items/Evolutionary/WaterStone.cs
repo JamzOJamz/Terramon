@@ -1,6 +1,5 @@
 using Terramon.Content.Rarities;
 using Terramon.ID;
-using Terraria.ID;
 
 namespace Terramon.Content.Items;
 

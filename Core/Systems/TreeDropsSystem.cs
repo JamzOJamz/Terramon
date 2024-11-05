@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Terramon.Content.Items;
 using Terraria.Enums;
-using Terraria.ID;
 using Terraria.Utilities;
 
 namespace Terramon.Core.Systems;

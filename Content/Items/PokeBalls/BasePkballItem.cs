@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using Terramon.Content.Commands;
-using Terramon.Helpers;
+using Terramon.Core.Loaders;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
 
+[LoadAfter(typeof(ApricornItem))]
 public abstract class BasePkballItem : TerramonItem
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBalls;
     protected abstract int PokeballThrow { get; }
     protected abstract int PokeballTile { get; }
 

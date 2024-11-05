@@ -1,5 +1,4 @@
 using Terramon.Content.Items.PokeBalls;
-using Terraria.ID;
 
 namespace Terramon.Content.Items;
 

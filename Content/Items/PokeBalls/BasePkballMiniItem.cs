@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using Terramon.Content.Tiles.MusicBoxes;
+using Terramon.Core.Loaders;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
 
+[LoadAfter(typeof(MusicItem))]
 public abstract class BasePkballMiniItem : TerramonItem
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.PokeBallMinis;
-
     public override bool Obtainable => false;
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;

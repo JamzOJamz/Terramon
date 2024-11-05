@@ -1,24 +1,23 @@
 using System.Collections.Generic;
 using Terramon.Content.Configs;
+using Terramon.Content.Items.PokeBalls;
+using Terramon.Core.Loaders;
+using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-public abstract class EvolutionaryItem : TerramonItem
+[LoadAfter(typeof(BasePkballItem))]
+public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
 {
-    public override ItemLoadPriority LoadPriority => ItemLoadPriority.EvolutionaryItems;
-
     public override string Texture => "Terramon/Assets/Items/Evolutionary/" + GetType().Name;
 
     /// <summary>
     ///     The trigger method that causes the evolution. Defaults to <see cref="EvolutionTrigger.DirectUse" />.
     /// </summary>
     public virtual EvolutionTrigger Trigger => EvolutionTrigger.DirectUse;
-
-    public override bool HasPokemonDirectUse => Trigger == EvolutionTrigger.DirectUse;
 
     public override void SetStaticDefaults()
     {
@@ -30,7 +29,7 @@ public abstract class EvolutionaryItem : TerramonItem
         base.SetDefaults();
         Item.maxStack = 1;
         Item.value = 50000;
-        if (!HasPokemonDirectUse) return;
+        if (Trigger != EvolutionTrigger.DirectUse) return;
         Item.UseSound = SoundID.Item28;
     }
 
@@ -46,12 +45,12 @@ public abstract class EvolutionaryItem : TerramonItem
         return 0;
     }
 
-    public override bool AffectedByPokemonDirectUse(PokemonData data)
+    public bool AffectedByPokemonDirectUse(PokemonData data)
     {
-        return GetEvolvedSpecies(data) != 0;
+        return Trigger == EvolutionTrigger.DirectUse && GetEvolvedSpecies(data) != 0;
     }
 
-    public override int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
+    public int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
     {
         if (player.whoAmI != Main.myPlayer) return 0;
         var evolvedSpecies = GetEvolvedSpecies(data);

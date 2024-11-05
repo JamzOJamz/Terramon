@@ -6,10 +6,10 @@ using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.UI;
 
@@ -265,15 +265,15 @@ internal sealed class CustomPartyItemSlot : UIImage
 
     private void UseItem(bool rightClick = false)
     {
-        if (Data == null || Main.mouseItem.ModItem is not TerramonItem { HasPokemonDirectUse: true } item) return;
-        if (!item.AffectedByPokemonDirectUse(Data))
+        if (Data == null || Main.mouseItem.ModItem is not IPokemonDirectUse directUseItem) return;
+        if (!directUseItem.AffectedByPokemonDirectUse(Data))
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", Data.DisplayName),
                 TerramonCommand.ChatColorYellow);
             return;
         }
         
-        var consume = item.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
+        var consume = directUseItem.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
         Main.mouseItem.stack -= consume;
         if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
     }
@@ -332,8 +332,8 @@ internal sealed class CustomPartyItemSlot : UIImage
         IgnoresMouseInteraction = Color.A < 255;
         if (Data == null) return;
         _minispriteImage.Color = Color;
-        if (Main.mouseItem.ModItem is TerramonItem { HasPokemonDirectUse: true } item &&
-            item.AffectedByPokemonDirectUse(Data))
+        if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
+            directUseItem.AffectedByPokemonDirectUse(Data))
             SetImage(PartySlotBgClickedTexture);
         else
             SetImage(PartySlotBgTexture);
