@@ -5,8 +5,12 @@ namespace Terramon.Content.Items;
 public class ShimmerStateDrive : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/Miscellaneous/ShimmerStateDrive";
-    public override bool Obtainable => false;
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
+    
+    public override void SetStaticDefaults()
+    {
+        TerramonItemAPI.Sets.Unobtainable.Add(Type);
+    }
 
     public override void SetDefaults()
     {
@@ -23,11 +27,11 @@ public class ShimmerStateDrive : TerramonItem
 
     public override bool? UseItem(Player player)
     {
-        return true;
+        return true; // TODO: Implement once PC is finished
     }
 
     public override bool ConsumeItem(Player player)
     {
-        return false;
+        return false; // Make consumable later
     }
 }

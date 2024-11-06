@@ -1,7 +1,9 @@
+using Terramon.Core.Loaders;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
+[LoadGroup("Apricorns")]
 public abstract class ApricornItem : Material
 {
     [field: CloneByReference]

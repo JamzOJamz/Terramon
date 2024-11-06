@@ -1,20 +1,18 @@
-using System.Collections.Generic;
-using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.Core.Loaders;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
 
-[LoadAfter(typeof(MusicItem))]
+[LoadGroup("PokeBallMinis")]
 public abstract class BasePkballMiniItem : TerramonItem
 {
-    public override bool Obtainable => false;
 
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {
+        TerramonItemAPI.Sets.Unobtainable.Add(Type);
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 

@@ -9,13 +9,13 @@ internal class AetherBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 1;
 }
 
-[LoadAfter(typeof(MasterBallMiniItem))]
+[LoadWeight(5f)] // After MasterBallMiniItem (4f)
 internal class AetherBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
 }
 
-[LoadAfter(typeof(MasterBallItem))]
+[LoadWeight(5f)] // After MasterBallItem (4f)
 internal class AetherBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();

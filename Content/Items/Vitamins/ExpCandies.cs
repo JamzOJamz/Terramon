@@ -5,15 +5,17 @@ namespace Terramon.Content.Items;
 
 public abstract class ExpCandy : Vitamin, IPokemonDirectUse
 {
-    // To be made obtainable in a future update post-0.1 beta
-    public override bool Obtainable => false;
-
     protected override int UseRarity { get; } = ModContent.RarityType<ExpCandyRarity>();
     
     /// <summary>
     ///     The amount of experience points granted by this Exp. Candy.
     /// </summary>
     protected abstract int Points { get; }
+
+    public override void SetStaticDefaults()
+    {
+        TerramonItemAPI.Sets.Unobtainable.Add(Type); // To be made obtainable in a future update post-0.1 beta
+    }
 
     public override void SetDefaults()
     {

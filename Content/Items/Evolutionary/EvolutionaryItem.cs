@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Terramon.Content.Configs;
-using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.Audio;
@@ -9,7 +7,7 @@ using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-[LoadAfter(typeof(BasePkballItem))]
+[LoadGroup("EvolutionaryItems")]
 public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
 {
     public override string Texture => "Terramon/Assets/Items/Evolutionary/" + GetType().Name;

@@ -17,22 +17,22 @@ internal class MasterBallProjectile : BasePkballProjectile
     }
 }
 
-[LoadAfter(typeof(PremierBallMiniItem))]
+[LoadWeight(4f)] // After PremierBallMiniItem (3f)
 internal class MasterBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
 }
 
-[LoadAfter(typeof(PremierBallItem))]
+[LoadWeight(4f)] // After PremierBallItem (3f)
 internal class MasterBallItem : BasePkballItem
 {
-    public override bool Obtainable => false;
     protected override int UseRarity => ModContent.RarityType<MasterBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<MasterBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<MasterBallTile>();
 
     public override void SetStaticDefaults()
     {
+        TerramonItemAPI.Sets.Unobtainable.Add(Type);
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
 }

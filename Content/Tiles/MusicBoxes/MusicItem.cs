@@ -5,7 +5,7 @@ using Terraria.Utilities;
 
 namespace Terramon.Content.Tiles.MusicBoxes;
 
-[LoadAfter(typeof(KeyItem))]
+[LoadGroup("MusicBoxes")]
 public abstract class MusicItem : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Tiles/MusicBoxes/" + GetType().Name;

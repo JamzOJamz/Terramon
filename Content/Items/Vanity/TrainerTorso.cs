@@ -4,7 +4,8 @@ using Terraria.GameContent.Creative;
 namespace Terramon.Content.Items;
 
 [AutoloadEquip(EquipType.Body)]
-[LoadAfter(typeof(TrainerCap))]
+[LoadGroup("TrainerVanity")]
+[LoadWeight(1f)] // After TrainerCap (0f)
 public class TrainerTorso : VanityItem
 {
     public override void SetStaticDefaults()

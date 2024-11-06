@@ -13,7 +13,8 @@ public class TreeDropsSystem : ModSystem
     public override void PostSetupContent()
     {
         TreeDropsGlobalTile.ApricornItems =
-            ModContent.GetContent<ApricornItem>().Where(item => item.Obtainable).ToArray();
+            ModContent.GetContent<ApricornItem>().Where(item => !TerramonItemAPI.Sets.Unobtainable.Contains(item.Type))
+                .ToArray();
     }
 }
 

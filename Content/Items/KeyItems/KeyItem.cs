@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Terramon.Content.Rarities;
 using Terramon.Core.Loaders;
 using Terraria.GameContent.Creative;
@@ -6,7 +5,7 @@ using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-[LoadAfter(typeof(Vitamin))]
+[LoadGroup("KeyItems")]
 public abstract class KeyItem : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/KeyItems/" + GetType().Name;

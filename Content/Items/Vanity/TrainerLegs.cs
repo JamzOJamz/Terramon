@@ -4,7 +4,8 @@ using Terraria.GameContent.Creative;
 namespace Terramon.Content.Items;
 
 [AutoloadEquip(EquipType.Legs)]
-[LoadAfter(typeof(TrainerTorso))]
+[LoadGroup("TrainerVanity")]
+[LoadWeight(2f)] // After TrainerTorso (1f)
 public class TrainerLegs : VanityItem
 {
     public override void SetStaticDefaults()
