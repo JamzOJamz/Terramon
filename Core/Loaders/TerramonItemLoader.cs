@@ -37,9 +37,6 @@ public class TerramonItemLoader : ModSystem
                   t.GetCustomAttributes<AutoloadAttribute>(true).FirstOrDefault()?.Value == false
             select (ModItem)Activator.CreateInstance(t, null)).ToList();
 
-        // Log all items found
-        foreach (var item in items) Mod.Logger.Debug($"Found item: {item.GetType().Name}");
-
         // Group items by LoadGroup, sort each group by LoadWeight, and then flatten the result
         var sortedItems = items
             .GroupBy(item =>
@@ -51,12 +48,12 @@ public class TerramonItemLoader : ModSystem
                 // Find the index of the LoadGroup in TerramonItemAPI.LoadGroups
                 var index = LoadGroupList.IndexOf(loadGroupAttribute.Group);
                 if (index == -1)
-                    throw new InvalidOperationException(
-                        $"Item {item.GetType().Name} has an invalid LoadGroup attribute: {loadGroupAttribute.Group}");
+                    return (int?)null; // Items with no matching LoadGroup should not be loaded
 
                 return index;
             })
-            .OrderBy(group => group.Key) // Sort groups by their index, with no-group items at the end
+            .Where(group => group.Key.HasValue) // Filter out items without a valid LoadGroup
+            .OrderBy(group => group.Key.Value) // Sort groups by their index, with no-group items at the end
             .SelectMany(group => group
                 .OrderBy(item =>
                 {
