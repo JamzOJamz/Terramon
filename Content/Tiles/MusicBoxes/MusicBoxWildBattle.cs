@@ -1,15 +1,7 @@
-using System.Collections.Generic;
-
-
 namespace Terramon.Content.Tiles.MusicBoxes;
 
 public class MusicBoxWildBattle : MusicTile
 {
-    public override IEnumerable<Item> GetItemDrops(int i, int j)
-    {
-        yield return new Item(ModContent.ItemType<MusicItemWildBattle>());
-    }
-
     public override void MouseOver(int i, int j)
     {
         var player = Main.LocalPlayer;

@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.ID;
@@ -178,6 +176,7 @@ public class PokemonData
             case < Version:
                 Terramon.Instance.Logger.Debug("Upgrading PokemonData from version " + loadedVersion + " to " +
                                                Version);
+                //Upgrade(tag, loadedVersion); TODO: Implement upgrade logic
                 break;
             case > Version:
                 Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +

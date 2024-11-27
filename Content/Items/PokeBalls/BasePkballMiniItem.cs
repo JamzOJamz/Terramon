@@ -30,5 +30,4 @@ public abstract class BasePkballMiniItem : TerramonItem
         tooltips.Insert(tooltips.FindIndex(t => t.Name == "Tooltip0"),
             new TooltipLine(Mod, "Vitamin", Language.GetTextValue("Mods.Terramon.CommonTooltips.PokeBallMinis")));
     }
-    
 }

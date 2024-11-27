@@ -233,6 +233,7 @@ CommonTooltips: {
 	KeyItem: Key item
 	Vitamin: Vitamin
 	RightClickPlace: Can be placed using right click
+	PCItems: Accesses the Pokémon Storage System
 	PokeBallMinis:
 		'''
 		'For decorative purposes'
@@ -314,6 +315,21 @@ Items: {
 
 	PremierBallMiniItem: {
 		DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
+		Tooltip: ""
+	}
+
+	CherishBallItem: {
+		DisplayName: Cherish Ball
+		Tooltip:
+			'''
+			A quite rare Poké Ball.
+			It has been specially crafted to commemorate an occasion of some sort.
+			'''
+		CatchRate: 1x catch rate
+	}
+
+	CherishBallMiniItem: {
+		DisplayName: "{$Items.CherishBallItem.DisplayName} (Mini)"
 		Tooltip: ""
 	}
 
@@ -509,6 +525,16 @@ Items: {
 			'Property of the Aether Foundation'
 			'''
 	}
+
+	PCItemRed: {
+		DisplayName: PC (Red)
+		Tooltip: ""
+	}
+
+	PCItemWhite: {
+		DisplayName: PC (White)
+		Tooltip: ""
+	}
 }
 
 Keybinds: {
@@ -519,6 +545,8 @@ Keybinds: {
 Tiles: {
 	MusicBoxCenter.MapEntry: Music Box
 	MusicBoxWildBattle.MapEntry: Music Box
+	PCWhite.MapEntry: P C White
+	PCRed.MapEntry: P C Red
 }
 
 Types: {

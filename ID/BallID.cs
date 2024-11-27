@@ -1,3 +1,4 @@
+// ReSharper disable UnusedMember.Global
 namespace Terramon.ID;
 
 public enum BallID : byte
@@ -7,5 +8,6 @@ public enum BallID : byte
     GreatBall = 3,
     PokeBall = 4,
     PremierBall = 12,
+    CherishBall = 16,
     AetherBall = 255
 }

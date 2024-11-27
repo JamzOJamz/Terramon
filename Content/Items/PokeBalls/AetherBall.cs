@@ -9,16 +9,16 @@ internal class AetherBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 1;
 }
 
-[LoadWeight(5f)] // After MasterBallMiniItem (4f)
+[LoadWeight(6f)] // After CherishBallMiniItem (5f)
 internal class AetherBallMiniItem : BasePkballMiniItem
 {
-    protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
+    protected override int UseRarity => ModContent.RarityType<AetherRarity>();
 }
 
-[LoadWeight(5f)] // After MasterBallItem (4f)
+[LoadWeight(6f)] // After CherishBallItem (5f)
 internal class AetherBallItem : BasePkballItem
 {
-    protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
+    protected override int UseRarity => ModContent.RarityType<AetherRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<AetherBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<AetherBallTile>();
     protected override int InGamePrice => 200;
@@ -27,16 +27,4 @@ internal class AetherBallItem : BasePkballItem
 public class AetherBallTile : BasePkballTile
 {
     protected override int DropItem => ModContent.ItemType<AetherBallItem>();
-}
-
-public class AetherBallRarity : DiscoRarity
-{
-    protected override Color[] Colors { get; } =
-    [
-        new Color(255, 84, 222),
-        new Color(75, 123, 255),
-        new Color(113, 60, 234)
-    ];
-
-    protected override float Time => 2f;
 }

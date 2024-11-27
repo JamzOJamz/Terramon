@@ -1,11 +1,11 @@
-using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Rarities;
 
 namespace Terramon.Content.Items;
 
 public class ShimmerStateDrive : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/Miscellaneous/ShimmerStateDrive";
-    protected override int UseRarity => ModContent.RarityType<AetherBallRarity>();
+    protected override int UseRarity => ModContent.RarityType<AetherRarity>();
     
     public override void SetStaticDefaults()
     {

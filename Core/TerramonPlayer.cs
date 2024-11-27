@@ -1,4 +1,3 @@
-using System.Linq;
 using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
@@ -24,6 +23,8 @@ public class TerramonPlayer : ModPlayer
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
+
+    public int ActivePCTileEntityID = -1;
 
     public bool HasChosenStarter;
     public PokemonData[] Party { get; } = new PokemonData[6];

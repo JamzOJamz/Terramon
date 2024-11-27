@@ -9,13 +9,13 @@ internal class PremierBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 1;
 }
 
-[LoadWeight(3f)] // After UltraBallMiniItem (2f)
+[LoadWeight(4f)] // After MasterBallMiniItem (3f)
 internal class PremierBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();
 }
 
-[LoadWeight(3f)] // After UltraBallItem (2f)
+[LoadWeight(4f)] // After MasterBallItem (3f)
 internal class PremierBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<PremierBallRarity>();

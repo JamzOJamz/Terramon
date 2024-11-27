@@ -24,6 +24,7 @@ public class TerramonItemLoader : ModSystem
         "EvolutionaryItems",
         "Vitamins",
         "KeyItems",
+        "Interactive",
         "MusicBoxes",
         "PokeBallMinis",
         "TrainerVanity"
