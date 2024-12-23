@@ -14,42 +14,98 @@ public class PokemonData
     private readonly Guid _uniqueId = Guid.NewGuid();
 
     private Item _heldItem;
+    private ushort _id;
     private string _ot;
     private uint _personalityValue;
     public BallID Ball = BallID.PokeBall;
     public Gender Gender;
-    public ushort ID;
     public bool IsShiny;
     public byte Level = 1;
     public string Nickname;
     public string Variant;
 
+    public ushort ID
+    {
+        get => _id;
+        set
+        {
+            _id = value;
+            Schema = Terramon.DatabaseV2.GetPokemon(value);
+        }
+    }
+
     /// <summary>
     ///     The display name of the Pokémon. If a nickname is set, it will be used. Otherwise, the localized name will be used.
     /// </summary>
     public string DisplayName =>
-        string.IsNullOrEmpty(Nickname) ? Terramon.DatabaseV2.GetLocalizedPokemonName(ID).Value : Nickname;
+        string.IsNullOrEmpty(Nickname) ? DatabaseV2.GetLocalizedPokemonNameDirect(Schema) : Nickname;
 
     /// <summary>
     ///     The localized name of the Pokémon.
     /// </summary>
-    public string LocalizedName => Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(ID);
+    public string LocalizedName => DatabaseV2.GetLocalizedPokemonNameDirect(Schema);
 
     /// <summary>
     ///     The internal name of the Pokémon. This is unaffected by localization.
     /// </summary>
-    public string InternalName => Terramon.DatabaseV2.GetPokemonName(ID);
+    public string InternalName => Schema.Identifier;
 
-    public ushort HP =>
-        (ushort)(Math.Floor(2 * Terramon.DatabaseV2.GetPokemon(ID).Stats.HP * Level / 100f) + Level + 10);
+    /// <summary>
+    ///     The cached database schema corresponding to this Pokémon's species.
+    ///     This is updated automatically whenever the Pokémon's <see cref="ID" /> changes.
+    /// </summary>
+    public DatabaseV2.PokemonSchema Schema { get; private set; }
+
+    public ushort HP => MaxHP; // TODO: Implement actual HP stat for Pokémon
+
+    public ushort MaxHP =>
+        (ushort)(Math.Floor(2 * Schema.Stats.HP * Level / 100f) + Level + 10);
+
+    /// <summary>
+    ///     The total experience points the Pokémon has gained.
+    /// </summary>
+    public int TotalEXP { get; private set; }
 
     private uint PersonalityValue
     {
         get => _personalityValue;
         set
         {
-            Gender = DetermineGender(ID, value);
+            Gender = DetermineGender(Schema, value);
             _personalityValue = value;
+        }
+    }
+
+    public void GainExperience(int amount, out int levelsGained, out int overflow)
+    {
+        if (Level >= Terramon.MaxPokemonLevel)
+        {
+            levelsGained = 0;
+            overflow = 0;
+            return;
+        }
+
+        var growthRate = Schema.GrowthRate;
+
+        // Increase the total experience points by the specified amount
+        TotalEXP += amount;
+
+        // Clamp the total experience points to an appropriate range
+        var oldTotalEXP = TotalEXP;
+        TotalEXP = Math.Clamp(TotalEXP, 0,
+            ExperienceLookupTable.GetLevelTotalExp(Terramon.MaxPokemonLevel, growthRate));
+        overflow = oldTotalEXP - TotalEXP;
+
+        //Main.NewText("New total EXP: " + TotalEXP);
+
+        // Level up the Pokémon if it has enough experience points
+        levelsGained = 0;
+        while (Level < Terramon.MaxPokemonLevel &&
+               TotalEXP >= ExperienceLookupTable.GetLevelTotalExp(Level + 1, growthRate))
+        {
+            LevelUp(false);
+            //Main.NewText("Level up!");
+            levelsGained++;
         }
     }
 
@@ -57,11 +113,17 @@ public class PokemonData
     ///     Increases the Pokémon's level by 1.
     ///     Returns false if the Pokémon is already at level 100.
     /// </summary>
-    public bool LevelUp()
+    /// <param name="ensureMinimumExperience">
+    ///     Whether to ensure that the Pokémon has at least the minimum experience required
+    ///     for the new level.
+    /// </param>
+    public bool LevelUp(bool ensureMinimumExperience = true)
     {
-        if (Level >= 100)
+        if (Level >= Terramon.MaxPokemonLevel)
             return false;
         Level++;
+        if (ensureMinimumExperience)
+            TotalEXP = Math.Max(TotalEXP, ExperienceLookupTable.GetLevelTotalExp(Level, Schema.GrowthRate));
         return true;
     }
 
@@ -109,6 +171,7 @@ public class PokemonData
         {
             ID = id,
             Level = level,
+            TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, Terramon.DatabaseV2.GetPokemon(id).GrowthRate),
             _ot = player.name,
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
             IsShiny = RollShiny(player)
@@ -126,9 +189,9 @@ public class PokemonData
         return false;
     }
 
-    private static Gender DetermineGender(ushort id, uint pv)
+    private static Gender DetermineGender(DatabaseV2.PokemonSchema schema, uint pv)
     {
-        var genderRatio = Terramon.DatabaseV2.GetPokemon(id).GenderRatio;
+        var genderRatio = schema.GenderRatio;
         return genderRatio >= 0
             ? new FastRandom(pv).Next(8) < genderRatio ? Gender.Female : Gender.Male
             : Gender.Unspecified;
@@ -147,6 +210,7 @@ public class PokemonData
         {
             ["id"] = ID,
             ["lvl"] = Level,
+            ["exp"] = TotalEXP,
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
             ["version"] = Version
@@ -167,22 +231,16 @@ public class PokemonData
     public static PokemonData Load(TagCompound tag)
     {
         // Try to load the tag version. If it doesn't exist, it's version 0.
-        var loadedVersion = 0;
+        ushort loadedVersion = 0;
         if (tag.ContainsKey("version"))
             loadedVersion = tag.Get<ushort>("version");
 
-        switch (loadedVersion)
-        {
-            case < Version:
-                Terramon.Instance.Logger.Debug("Upgrading PokemonData from version " + loadedVersion + " to " +
-                                               Version);
-                //Upgrade(tag, loadedVersion); TODO: Implement upgrade logic
-                break;
-            case > Version:
-                Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +
-                                              ". This may lead to undefined behaviour!");
-                break;
-        }
+        if (loadedVersion > Version)
+            Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +
+                                          ". This may lead to undefined behaviour!");
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+        /*else if (loadedVersion < Version)
+            Upgrade(tag, loadedVersion);*/
 
         var data = new PokemonData
         {
@@ -201,8 +259,35 @@ public class PokemonData
             data.Variant = variant;
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
+        data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
+            ? exp
+            : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
         return data;
     }
+
+    /*private static readonly Dictionary<ushort, Action<TagCompound>> UpgradeSteps = new()
+    {
+        { 0, UpgradeFromV0 }
+    };
+
+    private static void Upgrade(TagCompound tag, ushort oldVersion)
+    {
+        Terramon.Instance.Logger.Debug($"Upgrading PokemonData from version {oldVersion} to {Version}");
+
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+        while (oldVersion < Version)
+        {
+            if (UpgradeSteps.TryGetValue(oldVersion, out var upgrade))
+                upgrade(tag);
+            oldVersion++;
+        }
+
+        tag["version"] = Version;
+    }
+
+    private static void UpgradeFromV0(TagCompound tag) // TODO: Implement upgrade logic when necessary
+    {
+    }*/
 
     #endregion
 
@@ -217,6 +302,7 @@ public class PokemonData
     public const int BitVariant = 1 << 6;
     private const int BitOT = 1 << 7;
     private const int BitHeldItem = 1 << 8;
+    public const int BitEXP = 1 << 9;
 
     public const int AllFieldsBitmask = BitID | BitLevel | BitBall | BitIsShiny | BitPersonalityValue | BitNickname |
                                         BitVariant | BitOT | BitHeldItem;
@@ -245,6 +331,7 @@ public class PokemonData
         if ((compareFields & BitOT) != 0 && _ot != compareData._ot) dirtyFields |= BitOT;
         if ((compareFields & BitHeldItem) != 0 && _heldItem?.type != compareData._heldItem?.type)
             dirtyFields |= BitHeldItem;
+        if ((compareFields & BitEXP) != 0 && TotalEXP != compareData.TotalEXP) dirtyFields |= BitEXP;
 
         return dirtyFields != 0;
     }
@@ -265,6 +352,7 @@ public class PokemonData
         if ((fields & BitVariant) != 0) target.Variant = Variant;
         if ((fields & BitOT) != 0) target._ot = _ot;
         if ((fields & BitHeldItem) != 0) target._heldItem = _heldItem;
+        if ((fields & BitEXP) != 0) target.TotalEXP = TotalEXP;
     }
 
     /// <summary>
@@ -284,6 +372,7 @@ public class PokemonData
         if ((fields & BitVariant) != 0) writer.Write(Variant ?? string.Empty);
         if ((fields & BitOT) != 0) writer.Write(_ot ?? string.Empty);
         if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
+        if ((fields & BitEXP) != 0) writer.Write(TotalEXP);
     }
 
     /// <summary>
@@ -308,6 +397,8 @@ public class PokemonData
             var heldItem = reader.Read7BitEncodedInt();
             _heldItem = heldItem == 0 ? null : new Item(heldItem);
         }
+
+        if ((fields & BitEXP) != 0) TotalEXP = reader.ReadInt32();
 
         return this;
     }

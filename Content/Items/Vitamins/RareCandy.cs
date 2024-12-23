@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Terramon.Content.Configs;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
@@ -69,7 +68,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level));
 
-        // Test effect
+        // Visual feedback effects
         CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
         SoundEngine.PlaySound(SoundID.Item20);
         for (var j = 0; j < 40; j++)
@@ -79,7 +78,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
             d.noGravity = true;
         }
 
-        SoundEngine.PlaySound(SoundID.Item4, player.position);
+        SoundEngine.PlaySound(SoundID.Item4);
 
         if (evolutions.Count > 0) // Check if the Pokémon evolved
         {

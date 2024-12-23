@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Configs;
@@ -178,10 +177,11 @@ public class StarterButton : UIHoverImage
                 data.IsShiny = false;
             modPlayer.AddPartyPokemon(data, out _);
             modPlayer.HasChosenStarter = true;
+            var schema = data.Schema;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
-                Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon),
-                Terramon.DatabaseV2.GetPokemon(pokemon).Types[0].GetHexColor(),
-                Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(pokemon)
+                DatabaseV2.GetPokemonSpeciesDirect(schema),
+                schema.Types[0].GetHexColor(),
+                data.LocalizedName
             );
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);

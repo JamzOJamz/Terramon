@@ -1,0 +1,21 @@
+// Minification rename mapping for the JSON database
+starterMax -> sm
+pokemon -> p
+name -> n
+types -> t
+catchRate -> c
+baseExp -> b
+growthRate -> r
+stats -> s
+evolution -> e
+genderRate -> g
+hp -> h
+attack -> a
+defense -> d
+spAtk -> sa
+spDef -> sd
+speed -> s
+id -> i
+atLevel -> l
+height -> h
+weight -> w

@@ -1,3 +1,4 @@
+// ReSharper disable UnusedMember.Global
 namespace Terramon.Core;
 
 /// <summary>
@@ -18,7 +19,7 @@ public enum ExperienceGroup
 /// </summary>
 internal static class ExperienceLookupTable
 {
-    private static readonly uint[][] ExpLevels =
+    private static readonly int[][] ExpLevels =
     [
         [
             0, 15, 52, 122, 237, 406, 637, 942, 1326, 1800, 2369, 3041, 3822, 4719, 5737, 6881, 8155, 9564, 11111,
@@ -76,8 +77,8 @@ internal static class ExperienceLookupTable
         ]
     ];
     
-    public static uint GetLevelTotalExp(int level, ExperienceGroup group)
+    public static int GetLevelTotalExp(int level, ExperienceGroup group)
     {
-        return ExpLevels[(uint)group][level - 1];
+        return ExpLevels[(int)group][level - 1];
     }
 }

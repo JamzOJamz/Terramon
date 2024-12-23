@@ -196,7 +196,8 @@ public class InventoryParty : SmartUIState
             if ((slot.Data == null && partyData != null) ||
                 (slot.Data != null && partyData == null) ||
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
-                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname | PokemonData.BitIsShiny,
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitEXP | PokemonData.BitNickname |
+                    PokemonData.BitIsShiny,
                     out _)))
                 UpdateSlot(partyData, slot.Index);
         }
@@ -254,7 +255,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         base.LeftClick(evt);
         UseItem();
     }
-    
+
     public override void RightClick(UIMouseEvent evt)
     {
         base.RightClick(evt);
@@ -270,7 +271,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                 TerramonCommand.ChatColorYellow);
             return;
         }
-        
+
         var consume = directUseItem.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
         Main.mouseItem.stack -= consume;
         if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
@@ -287,20 +288,22 @@ internal sealed class CustomPartyItemSlot : UIImage
         _minispriteImage?.Remove();
         if (data != null)
         {
-            var schema = Terramon.DatabaseV2.GetPokemon(data.ID);
+            var schema = data.Schema;
             var hp = data.HP;
+            var maxHp = data.MaxHP;
             if (data.Level < Terramon.MaxPokemonLevel)
             {
-                var currentLevelExp = ExperienceLookupTable.GetLevelTotalExp(data.Level, schema.GrowthRate);
+                var minTotalExp = ExperienceLookupTable.GetLevelTotalExp(data.Level, schema.GrowthRate);
                 var nextLevelExp = ExperienceLookupTable.GetLevelTotalExp((byte)(data.Level + 1), schema.GrowthRate);
-                var toNextLevel = nextLevelExp - currentLevelExp;
+                var pointsToNextLevel = nextLevelExp - minTotalExp;
+                var pointsProgress = data.TotalEXP - minTotalExp;
                 _tooltipText =
-                    Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltip", hp, hp,
-                        toNextLevel); // [c/80B9F1:Frozen]
+                    Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltip", hp, maxHp,
+                        pointsProgress, pointsToNextLevel); // [c/80B9F1:Frozen]
             }
             else
             {
-                _tooltipText = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipMaxLevel", hp, hp);
+                _tooltipText = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipMaxLevel", hp, maxHp);
             }
 
             _tooltipName = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotName", data.DisplayName, data.Level);

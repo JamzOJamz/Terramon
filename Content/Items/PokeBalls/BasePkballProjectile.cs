@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using Terramon.Content.Configs;
+﻿using Terramon.Content.Configs;
 using Terramon.Content.NPCs.Pokemon;
 using Terramon.ID;
 using Terraria.Audio;
@@ -367,7 +365,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         CatchModifier = ChangeCatchModifier(target); //Change modifier (can take into account values like pokemon type)
 
         var catchChance =
-            Terramon.DatabaseV2.GetPokemon(_capture.ID).CatchRate / 255f *
+            _capture.Data.Schema.CatchRate / 255f *
             0.85f; //would / 3 to match game but we can't damage pokemon so that would be too hard
         //Main.NewText($"chance {catchChance * catchModifier}, random {random}");
         if (_catchRandom < catchChance * CatchModifier)
@@ -401,6 +399,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
         
         Projectile.Kill();
+        var schema = _capture.Data.Schema;
         var ballName = GetType().Name.Split("Projectile")[0];
         _capture.Data.Ball = Enum.Parse<BallID>(ballName);
         var player = TerramonPlayer.LocalPlayer;
@@ -408,18 +407,18 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (addSuccess)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.CatchSuccess",
-                Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetHexColor(), _capture.DisplayName));
+                schema.Types[0].GetHexColor(), _capture.DisplayName));
         }
         else
         {
             var box = player.TransferPokemonToPC(_capture.Data);
             Main.NewText(box != null
                 ? Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPC",
-                    Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetHexColor(),
+                    schema.Types[0].GetHexColor(),
                     _capture.DisplayName,
                     box.GivenName ?? player.GetDefaultNameForPCBox(box), player.Player.name)
                 : Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPCNoRoom",
-                    Terramon.DatabaseV2.GetPokemon(_capture.ID).Types[0].GetHexColor(),
+                    schema.Types[0].GetHexColor(),
                     _capture.DisplayName,
                     player.Player.name));
         }

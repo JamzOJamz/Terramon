@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Terramon.Content.Configs;
+﻿using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Tiles.MusicBoxes;
@@ -167,7 +166,8 @@ public class PokemartClerk : ModNPC
             else
                 chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.PokemonNickname", pokemon.));*/
 
-            var pokemonType = Terramon.DatabaseV2.GetPokemon(activePokemonData.ID).Types[0];
+            var pokemonType = activePokemonData.Schema.Types[0];
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
             switch (pokemonType)
             {
                 case PokemonType.Grass:

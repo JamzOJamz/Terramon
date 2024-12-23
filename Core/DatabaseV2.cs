@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices;
+using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Terramon.ID;
 using Terraria.Localization;
@@ -23,10 +21,10 @@ public class DatabaseV2
         set => StarterMax = value;
     }
 
-    [JsonProperty] public Dictionary<ushort, PokemonSchema> Pokemon { get; private set; }
+    [JsonProperty] public ReadOnlyDictionary<ushort, PokemonSchema> Pokemon { get; private set; }
 
     [JsonProperty("p")]
-    private Dictionary<ushort, PokemonSchema> b_Pokemon
+    private ReadOnlyDictionary<ushort, PokemonSchema> b_Pokemon
     {
         set => Pokemon = value;
     }
@@ -39,16 +37,9 @@ public class DatabaseV2
         return db;
     }
 
-    public ushort GetEvolutionAtLevel(ushort id, byte level)
-    {
-        var pokemon = GetPokemon(id);
-        if (pokemon?.Evolution == null) return 0;
-        return pokemon.Evolution.AtLevel <= level && id != pokemon.Evolution.ID ? pokemon.Evolution.ID : (ushort)0;
-    }
-
     public PokemonSchema GetPokemon(ushort id)
     {
-        return CollectionsMarshal.GetValueRefOrNullRef(Pokemon, id);
+        return Pokemon.GetValueOrDefault(id);
     }
 
     public string GetPokemonName(ushort id)
@@ -65,25 +56,42 @@ public class DatabaseV2
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");
     }
+    
+    public static string GetLocalizedPokemonNameDirect(PokemonSchema schema)
+    {
+        return Language.GetTextValue($"Mods.Terramon.Pokemon.{schema.Identifier}.DisplayName");
+    }
 
-    public LocalizedText GetPokemonSpecies(ushort id)
+    /*public LocalizedText GetPokemonSpecies(ushort id)
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
-    }
+    }*/
     
     public string GetPokemonSpeciesDirect(ushort id)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
     }
     
-    public LocalizedText GetPokemonDexEntry(ushort id)
+    public static string GetPokemonSpeciesDirect(PokemonSchema schema)
+    {
+        return Language.GetTextValue($"Mods.Terramon.Pokemon.{schema.Identifier}.Species");
+    }
+    
+    /*public LocalizedText GetPokemonDexEntry(ushort id)
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
-    }
+    }*/
     
     public string GetPokemonDexEntryDirect(ushort id)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
+    }
+    
+    public ushort GetEvolutionAtLevel(ushort id, byte level)
+    {
+        var pokemon = GetPokemon(id);
+        if (pokemon?.Evolution == null) return 0;
+        return pokemon.Evolution.AtLevel <= level && id != pokemon.Evolution.ID ? pokemon.Evolution.ID : (ushort)0;
     }
 
     public bool IsAvailableStarter(ushort id)
@@ -91,9 +99,10 @@ public class DatabaseV2
         return id <= StarterMax;
     }
 
+    [JsonObject(MemberSerialization.OptOut)]
     public class PokemonSchema
     {
-        [JsonProperty("name")] public string Identifier { get; set; }
+        [JsonProperty("name")] public string Identifier { get; private set; }
 
         [JsonProperty("n")]
         private string b_Identifier
@@ -101,7 +110,7 @@ public class DatabaseV2
             set => Identifier = value;
         }
 
-        public List<PokemonType> Types { get; set; }
+        public List<PokemonType> Types { get; private set; }
 
         [JsonProperty("t")]
         private List<PokemonType> b_Types
@@ -109,7 +118,7 @@ public class DatabaseV2
             set => Types = value;
         }
         
-        public byte CatchRate { get; set; } = 45;
+        public byte CatchRate { get; private set; } = 45;
         
         [JsonProperty("c")]
         private byte b_CatchRate
@@ -117,7 +126,7 @@ public class DatabaseV2
             set => CatchRate = value;
         }
 
-        public ushort BaseExp { get; set; } = 45;
+        public ushort BaseExp { get; private set; } = 45;
         
         [JsonProperty("b")]
         private ushort b_BaseExp
@@ -125,7 +134,7 @@ public class DatabaseV2
             set => BaseExp = value;
         }
         
-        public ExperienceGroup GrowthRate { get; set; } = ExperienceGroup.MediumFast;
+        public ExperienceGroup GrowthRate { get; private set; } = ExperienceGroup.MediumFast;
         
         [JsonProperty("r")]
         private ExperienceGroup b_GrowthRate
@@ -133,7 +142,7 @@ public class DatabaseV2
             set => GrowthRate = value;
         }
 
-        public StatsSchema Stats { get; set; }
+        public StatsSchema Stats { get; private set; }
 
         [JsonProperty("s")]
         private StatsSchema b_Stats
@@ -141,7 +150,7 @@ public class DatabaseV2
             set => Stats = value;
         }
 
-        public EvolutionSchema Evolution { get; set; }
+        public EvolutionSchema Evolution { get; private set; }
 
         [JsonProperty("e")]
         private EvolutionSchema b_Evolution
@@ -150,7 +159,7 @@ public class DatabaseV2
         }
         
         [JsonProperty("genderRate")]
-        public sbyte GenderRatio { get; set; } = -1;
+        public sbyte GenderRatio { get; private set; } = -1;
 
         [JsonProperty("g")]
         private sbyte b_GenderRatio
@@ -159,7 +168,7 @@ public class DatabaseV2
         }
 
         [JsonProperty("height")]
-        public ushort Height { get; set; }
+        public ushort Height { get; private set; }
         
         [JsonProperty("h")]
         private ushort b_Height
@@ -168,7 +177,7 @@ public class DatabaseV2
         }
         
         [JsonProperty("weight")]
-        public ushort Weight { get; set; }
+        public ushort Weight { get; private set; }
         
         [JsonProperty("w")]
         private ushort b_Weight

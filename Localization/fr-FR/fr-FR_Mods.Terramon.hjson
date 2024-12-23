@@ -535,6 +535,11 @@ Items: {
 		// DisplayName: PC (White)
 		// Tooltip: ""
 	}
+
+	ErikaPaintingItem: {
+		// DisplayName: Erika's Invitation
+		// Tooltip: "'L. Walter'"
+	}
 }
 
 Keybinds: {
@@ -636,4 +641,5 @@ Misc: {
 	// PokemonEvolved: "{0} evolved into {1}!"
 	// PokemonEvolutionReady: "{0} seems ready to evolve!"
 	// RareCandyUse: "{0} grew to Lv. {1}!"
+	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
 }
