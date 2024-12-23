@@ -8,7 +8,7 @@ internal class RareCandyLoot : GlobalNPC
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         if (!npc.boss) return;
-        
+
         var amount = npc.type switch
         {
             NPCID.KingSlime or NPCID.Deerclops or NPCID.QueenBee or NPCID.Spazmatism or NPCID.Retinazer => 3,
@@ -19,6 +19,7 @@ internal class RareCandyLoot : GlobalNPC
             _ => 0
         };
 
+        if (amount == 0) return;
         if (Main.expertMode)
             amount = (int)(amount * 1.5);
         npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RareCandy>(), minimumDropped: amount,
@@ -27,7 +28,8 @@ internal class RareCandyLoot : GlobalNPC
 
     public override void ModifyGlobalLoot(GlobalLoot globalLoot)
     {
-        globalLoot.Add(ItemDropRule.ByCondition(new RareCandyCommonDropCondition(), ModContent.ItemType<RareCandy>(), 32));
+        globalLoot.Add(ItemDropRule.ByCondition(new RareCandyCommonDropCondition(), ModContent.ItemType<RareCandy>(),
+            32));
     }
 }
 
@@ -37,11 +39,14 @@ internal class RareCandyCommonDropCondition : IItemDropRuleCondition
     {
         return !info.npc.friendly && !info.npc.boss;
     }
-    
+
     public bool CanShowItemDropInUI()
     {
         return false;
     }
 
-    public string GetConditionDescription() => string.Empty;
+    public string GetConditionDescription()
+    {
+        return string.Empty;
+    }
 }
