@@ -141,8 +141,9 @@ public abstract class PCTile : ModTile
             }
         }
 
-        // Open/close the player inventory
-        Main.playerInventory = te.PoweredOn;
+        // Open the player inventory
+        if (te.PoweredOn)
+            Main.playerInventory = true;
 
         return true;
     }
