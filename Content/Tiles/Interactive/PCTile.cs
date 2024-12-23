@@ -1,5 +1,6 @@
 using EasyPacketsLib;
 using ReLogic.Content;
+using Terramon.Content.Commands;
 using Terramon.Content.Packets;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -69,10 +70,18 @@ public abstract class PCTile : ModTile
     {
         if (!TileUtils.TryGetTileEntityAs(i, j, out PCTileEntity te) ||
             (te.PoweredOn && te.User != Main.myPlayer)) return false;
+        
+        // Starter Pokémon should be chosen before using the PC
+        var player = Main.LocalPlayer;
+        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        if (!modPlayer.HasChosenStarter)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), TerramonCommand.ChatColorYellow);
+            return false;
+        }
 
         // If already using a PC, turn off that one first
-        var player = Main.LocalPlayer;
-        var otherPcId = player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID;
+        var otherPcId = modPlayer.ActivePCTileEntityID;
         var differentPc = false;
         if (otherPcId != -1 && otherPcId != te.ID && TileEntity.ByID.TryGetValue(otherPcId, out var otherTe) &&
             otherTe is PCTileEntity { PoweredOn: true } otherPcTe)
