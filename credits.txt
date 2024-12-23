@@ -39,3 +39,6 @@ Pokémon sprites
 Pokémon minisprites
 Sound effects
 The Pokémon franchise
+
+- Little Robot Sound Factory -
+Sound effects (button_locked.wav)

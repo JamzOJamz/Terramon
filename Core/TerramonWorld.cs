@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using EasyPacketsLib;
 using ReLogic.Utilities;
 using Terramon.Content.Packets;

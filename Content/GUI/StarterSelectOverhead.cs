@@ -159,7 +159,18 @@ public class StarterButton : UIHoverImage
             ? Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon)
             : Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon"))
     {
-        if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon)) return;
+        if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon))
+        {
+            OnLeftClick += (_, _) =>
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                {
+                    Volume = 0.125f
+                });
+            };
+            return;
+        }
+        
         var cacheHoverTexture = ModContent.Request<Texture2D>(
             $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini_Highlighted");
         OnMouseOver += (_, _) =>
