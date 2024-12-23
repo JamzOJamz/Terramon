@@ -13,8 +13,8 @@ public class BallAssets : ILoadable
     
     public void Load(Mod mod)
     {
-        _ballIcons = new Asset<Texture2D>[byte.MaxValue];
-        for (var i = 0; i < byte.MaxValue; i++)
+        _ballIcons = new Asset<Texture2D>[byte.MaxValue + 1];
+        for (var i = 0; i <= byte.MaxValue; i++)
         {
             var ballName = Enum.GetName(typeof(BallID), i);
             if (ballName == null) continue;
