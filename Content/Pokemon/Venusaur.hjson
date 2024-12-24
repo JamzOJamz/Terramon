@@ -15,6 +15,7 @@
     }
     SpawnController:
     {
+      Stage: 3
       Conditions:
       [
         {

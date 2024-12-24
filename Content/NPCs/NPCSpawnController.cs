@@ -100,7 +100,7 @@ public class NPCSpawnController : NPCComponent
     public string Condition;
     
     // Simple spawning system fields
-    public int Stage;
+    public SpawningStage Stage;
 
     /// <summary>
     ///     All possible conditions for the NPC to spawn and their respective chances. If any of these conditions are met, the
@@ -113,7 +113,9 @@ public class NPCSpawnController : NPCComponent
 
     public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
     {
-        if (!ModContent.GetInstance<GameplayConfig>().AllowPokemonSpawning) return;
+        var gameplayConfig = ModContent.GetInstance<GameplayConfig>();
+        var spawnRateMultiplier = gameplayConfig.PokemonSpawnRateMultiplier;
+        if (spawnRateMultiplier == 0) return;
 
         // Check for some player buffs that affect spawn rates
         // TODO: Use reflection to access NPC.spawnRate instead
@@ -125,6 +127,7 @@ public class NPCSpawnController : NPCComponent
         {
             if (!component.Enabled) continue;
             var spawnController = (NPCSpawnController)component;
+            if (spawnController.Stage > gameplayConfig.SpawningStage) continue;
 
             // Use simple Pokémon spawning system based on type for now
             // TODO: Implement a more complex system with unique spawn conditions for each Pokémon
@@ -156,14 +159,12 @@ public class NPCSpawnController : NPCComponent
         // Normalize the spawn pool
         var totalTypesAdded = typesAdded.Count;
         foreach (var type in typesAdded)
-            pool[type] /= totalTypesAdded;
+            pool[type] = (pool[type] / totalTypesAdded) * spawnRateMultiplier;
     }
 
     private static bool SimpleEditSpawnPool(IDictionary<int, float> pool, int type, NPCSpawnController spawnController,
         NPCSpawnInfo spawnInfo, bool hasWaterCandle, bool hasBattlePotion)
     {
-        if (spawnController.Stage != 1) return false; // Only spawn first stage Pokémon
-        
         const float chanceMultiplier = 0.125f;
         var spawnChance = 0f;
         var schema = ((PokemonNPC)spawnController.NPC.ModNPC).Schema;

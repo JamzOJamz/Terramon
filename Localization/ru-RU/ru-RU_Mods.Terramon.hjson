@@ -123,9 +123,18 @@ Configs: {
 			// Advanced: Advanced
 		}
 
-		AllowPokemonSpawning: {
-			// Label: Wild Pokémon Spawning
-			// Tooltip: Whether or not wild Pokémon should spawn in the world
+		PokemonSpawnRateMultiplier: {
+			// Label: Pokémon Spawn Rate Multiplier
+			/* Tooltip:
+				'''
+				Multiplies the rate at which Pokémon spawn in the wild
+				[c/F2A754:If set to 0, Pokémon will not spawn at all]
+				''' */
+		}
+
+		SpawningStage: {
+			// Label: Spawning Stage
+			// Tooltip: The stage of Pokémon that can spawn in the wild (higher stages include all lower stages)
 		}
 
 		EncourageDespawning: {
@@ -152,6 +161,14 @@ Configs: {
 			// Label: Debug Mode
 			// Tooltip: Allows the use of certain debug commands that can also be used to cheat
 		}
+	}
+
+	SpawningStage: {
+		// Tooltip: ""
+		// Basic.Label: Unevolved Pokémon/Basic Pokémon
+		// Stage1.Label: First-Evolved/Stage 1 Pokémon
+		// Stage2.Label: Second-Evolved/Stage 2 Pokémon
+		// Legendary.Label: Legendary/Mythical Pokémon
 	}
 }
 
