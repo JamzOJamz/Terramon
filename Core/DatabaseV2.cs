@@ -52,6 +52,11 @@ public class DatabaseV2
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");
     }
     
+    public static LocalizedText GetLocalizedPokemonName(PokemonSchema schema)
+    {
+        return Language.GetText($"Mods.Terramon.Pokemon.{schema.Identifier}.DisplayName");
+    }
+    
     public string GetLocalizedPokemonNameDirect(ushort id)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");

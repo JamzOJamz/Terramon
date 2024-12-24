@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
 using System.Text;
 using Hjson;
@@ -19,7 +16,7 @@ using Terraria.Localization;
 namespace Terramon.Content.NPCs.Pokemon;
 
 [Autoload(false)]
-public class PokemonNPC(ushort id, string identifier) : ModNPC
+public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
 {
     private static Dictionary<ushort, JToken> _schemaCache;
     private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
@@ -31,16 +28,30 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
+
+    /// <summary>
+    ///     The ID of the Pokémon (in the database) that this NPC represents. Not to be confused with the NPC
+    ///     <see cref="NPC.type" />.
+    /// </summary>
     public ushort ID { get; } = id;
+
+    /// <summary>
+    ///     The database schema of the Pokémon that this NPC represents.
+    /// </summary>
+    public DatabaseV2.PokemonSchema Schema { get; } = schema;
+
+    /// <summary>
+    ///     The Pokémon instance data tied to this NPC. This is initialized when the NPC is spawned.
+    /// </summary>
     public PokemonData Data { get; set; }
 
     protected override bool CloneNewInstances => true;
 
-    public override string Name { get; } = identifier + "NPC";
+    public override string Name { get; } = schema.Identifier + "NPC";
 
-    public override LocalizedText DisplayName => Terramon.DatabaseV2.GetLocalizedPokemonName(ID);
+    public override LocalizedText DisplayName => DatabaseV2.GetLocalizedPokemonName(Schema);
 
-    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + identifier;
+    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
 
     public bool PlasmaState { get; private set; }
 
@@ -321,7 +332,7 @@ public class PokemonNPC(ushort id, string identifier) : ModNPC
         }
 
         // Load schema from HJSON file and cache it.
-        var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{identifier}.hjson");
+        var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{Schema.Identifier}.hjson");
         using var hjsonReader = new StreamReader(hjsonStream);
         var jsonText = HjsonValue.Load(hjsonReader).ToString();
         hjsonReader.Close();

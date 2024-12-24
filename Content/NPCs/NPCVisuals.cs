@@ -1,7 +1,5 @@
 ﻿using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
-using Terraria.DataStructures;
-
 
 // ReSharper disable UnassignedField.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
@@ -11,7 +9,7 @@ using Terraria.DataStructures;
 namespace Terramon.Content.NPCs;
 
 /// <summary>
-///     A <see cref="NPCComponent" /> to control the visual behaviour of Pokemon NPCs.
+///     A <see cref="NPCComponent" /> to control the visual behaviour of Pokémon NPCs.
 /// </summary>
 public class NPCVisuals : NPCComponent
 {

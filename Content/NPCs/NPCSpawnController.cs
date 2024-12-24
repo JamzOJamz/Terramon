@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using Terramon.Content.Configs;
+using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
+using Terramon.ID;
 using Terraria.ModLoader.Utilities;
 
 // ReSharper disable UnassignedField.Global
@@ -22,8 +22,78 @@ public class NPCSpawnController : NPCComponent
     /// </summary>
     private const float ConstantSpawnMultiplier = 1.25f; // Seems to work well
 
-    // Dictionary to track the counts of each SpawnCondition
-    private static readonly Dictionary<string, int> ConditionCount = new();
+    // See https://terrariamods.wiki.gg/wiki/Terramon_Mod/Pok%C3%A9mon#Spawning
+    private static readonly Dictionary<PokemonType, Func<NPCSpawnInfo, bool>> SimpleSpawnConditions = new()
+    {
+        {
+            PokemonType.Normal, info => info.Player.ZoneForest // Forest
+        },
+        {
+            PokemonType.Fire, info => info.Player.ZoneUnderworldHeight || info.Player.ZoneMeteor // Hell or Meteorites
+        },
+        {
+            PokemonType.Fighting, info => info.Player.ZoneMeteor || info.Player.ZoneDungeon // Meteorites or Dungeon
+        },
+        {
+            PokemonType.Water, info => info.Player.ZoneBeach || info.Player.ZoneRain // Beach or Rain
+        },
+        {
+            PokemonType.Flying, info => info.Player.ZoneOverworldHeight || info.Player.ZoneSkyHeight // Surface or Space
+        },
+        {
+            PokemonType.Grass, info => info.Player.ZoneJungle || info.Player.ZoneForest // Jungle or Forest
+        },
+        {
+            PokemonType.Poison,
+            info => info.Player.ZoneJungle || info.Player.ZoneCorrupt ||
+                    info.Player.ZoneCrimson // Jungle or Evil biomes
+        },
+        {
+            PokemonType.Electric, info => info.Player.ZoneRain // Rain
+        },
+        {
+            PokemonType.Ground,
+            info => info.Player.ZoneUndergroundDesert || info.Player.ZoneDesert ||
+                    info.Player.ZoneDirtLayerHeight // Desert or Underground
+        },
+        {
+            PokemonType.Psychic,
+            info => info.Player.ZoneGlowshroom || info.Player.ZoneGemCave ||
+                    info.Player.ZoneMarble // Glowing Mushroom biomes, Gem Caves, or Marble Caves
+        },
+        {
+            PokemonType.Rock,
+            info => info.Player.ZoneRockLayerHeight || info.Player.ZoneMeteor || info.Player.ZoneMarble ||
+                    info.Player.ZoneGranite // Underground, Meteorites, Marble Caves, or Granite Caves
+        },
+        {
+            PokemonType.Ice, info => info.Player.ZoneSnow // Snow
+        },
+        {
+            PokemonType.Bug,
+            info => info.Player.ZoneForest || info.Player.ZoneJungle || info.Player.ZoneRain // Forest, Jungle, or Rain
+        },
+        {
+            PokemonType.Dragon,
+            info => info.Player.ZoneSkyHeight ||
+                    (info.Player.ZoneRain && info.Player.ZoneHallow) // Space or Hallow during Rain
+        },
+        {
+            PokemonType.Ghost, info => info.Player.ZoneGraveyard || !Main.dayTime // Graveyard or Night
+        },
+        {
+            PokemonType.Dark, info => info.Player.ZoneCorrupt || info.Player.ZoneCrimson // Evil biomes
+        },
+        {
+            PokemonType.Steel,
+            info => info.Player.ZoneUnderworldHeight || info.Player.ZoneGranite ||
+                    info.Player.ZoneMeteor // Hell, Granite Caves, or Meteorites
+        },
+        {
+            PokemonType.Fairy,
+            info => info.Player.ZoneHallow || info.Player.ZoneGlowshroom // Hallow or Glowing Mushroom biomes
+        }
+    };
 
     // Continue to support legacy system for setting spawn conditions
     public float Chance;
@@ -34,19 +104,9 @@ public class NPCSpawnController : NPCComponent
     ///     NPC will be added to the spawn pool with the specified chance.
     /// </summary>
     /// <remarks>Only the first condition that is met will be the one that is used.</remarks>
-    public CustomCondition[] Conditions;
+    //public CustomCondition[] Conditions;
 
     protected override bool CacheInstances => true;
-
-    public override void SetDefaults(NPC npc)
-    {
-        if (!Instances.ContainsKey(npc.type) && !string.IsNullOrEmpty(Condition) && Chance > 0)
-            // Update the condition count dictionary
-            if (!ConditionCount.TryAdd(Condition, 1))
-                ConditionCount[Condition]++;
-
-        base.SetDefaults(npc);
-    }
 
     public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
     {
@@ -62,7 +122,13 @@ public class NPCSpawnController : NPCComponent
         {
             if (!component.Enabled) continue;
             var spawnController = (NPCSpawnController)component;
-            if (!string.IsNullOrEmpty(spawnController.Condition) && spawnController.Chance > 0)
+
+            // Use simple Pokémon spawning system based on type for now
+            // TODO: Implement a more complex system with unique spawn conditions for each Pokémon
+            if (SimpleEditSpawnPool(pool, type, spawnController, spawnInfo, hasWaterCandle, hasBattlePotion))
+                typesAdded.Add(type);
+
+            /*if (!string.IsNullOrEmpty(spawnController.Condition) && spawnController.Chance > 0)
             {
                 if (LegacyEditSpawnPool(pool, type, spawnController, hasWaterCandle, hasBattlePotion))
                     typesAdded.Add(type);
@@ -81,13 +147,40 @@ public class NPCSpawnController : NPCComponent
                              ConstantSpawnMultiplier;
                 typesAdded.Add(type);
                 break;
-            }
+            }*/
         }
 
         // Normalize the spawn pool
         var totalTypesAdded = typesAdded.Count;
         foreach (var type in typesAdded)
             pool[type] /= totalTypesAdded;
+    }
+
+    private static bool SimpleEditSpawnPool(IDictionary<int, float> pool, int type, NPCSpawnController spawnController,
+        NPCSpawnInfo spawnInfo, bool hasWaterCandle, bool hasBattlePotion)
+    {
+        const float chanceMultiplier = 0.125f;
+        var spawnChance = 0f;
+        var schema = ((PokemonNPC)spawnController.NPC.ModNPC).Schema;
+        var primaryType = schema.Types[0];
+        if (SimpleSpawnConditions.TryGetValue(primaryType, out var primaryCondition))
+        {
+            if (primaryCondition(spawnInfo))
+                spawnChance = 1f;
+            var dualType = schema.Types.Count > 1;
+            if (dualType)
+            {
+                var secondaryType = schema.Types[1];
+                if (SimpleSpawnConditions.TryGetValue(secondaryType, out var secondaryCondition))
+                    if (secondaryCondition(spawnInfo))
+                        spawnChance += 0.5f;
+            }
+        }
+        
+        // Set the spawn chance for the Pokémon NPC in the spawn pool
+        pool[type] = spawnChance * chanceMultiplier * (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f);
+
+        return spawnChance != 0;
     }
 
     private static bool LegacyEditSpawnPool(IDictionary<int, float> pool, int type, NPCSpawnController spawnController,
@@ -100,10 +193,9 @@ public class NPCSpawnController : NPCComponent
             _ => throw new NotImplementedException("Condition not implemented.")
         };
 
-        // Divides the spawn chance by the condition count to provide a more balanced spawn rate for Pokémon
-        // Also takes into account the player's buffs, reducing the spawn chance if they have a Water Candle or Battle Potion
-        var finalComputedChance = condition.Chance * spawnController.Chance /
-                                  ConditionCount[spawnController.Condition] *
+        // Compute the final spawn chance for the Pokémon NPC
+        // Takes into account the player's buffs, reducing the spawn chance if they have a Water Candle or Battle Potion
+        var finalComputedChance = condition.Chance * spawnController.Chance *
                                   (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f) *
                                   ConstantSpawnMultiplier;
 

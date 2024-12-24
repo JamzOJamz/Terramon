@@ -1,4 +1,3 @@
-using System.IO;
 using Terramon.Content.NPCs.Pokemon;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
@@ -27,19 +26,9 @@ public abstract class NPCAIComponent : NPCComponent
     protected FastRandom Random;
 
     /// <summary>
-    ///     The NPC this component is attached to.
-    /// </summary>
-    protected NPC NPC { get; private set; }
-
-    /// <summary>
     ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).PlasmaState</c>.
     /// </summary>
     protected bool PlasmaState => ((PokemonNPC)NPC.ModNPC).PlasmaState;
-    
-    protected override void OnEnabled(NPC npc)
-    {
-        NPC = npc;
-    }
 
     public override void SetDefaults(NPC npc)
     {

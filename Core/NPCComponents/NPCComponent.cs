@@ -15,6 +15,11 @@ public abstract class NPCComponent : GlobalNPC
     public override bool InstancePerEntity => true;
 
     protected virtual bool CacheInstances => false;
+    
+    /// <summary>
+    ///     The NPC this component is attached to.
+    /// </summary>
+    protected NPC NPC { get; private set; }
 
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
@@ -23,10 +28,12 @@ public abstract class NPCComponent : GlobalNPC
 
     protected virtual void OnEnabled(NPC npc)
     {
+        NPC = npc;
     }
 
     protected virtual void OnDisabled(NPC npc)
     {
+        NPC = null;
     }
 
     public void SetEnabled(NPC npc, bool value)
