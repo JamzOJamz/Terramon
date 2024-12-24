@@ -98,6 +98,9 @@ public class NPCSpawnController : NPCComponent
     // Continue to support legacy system for setting spawn conditions
     public float Chance;
     public string Condition;
+    
+    // Simple spawning system fields
+    public int Stage;
 
     /// <summary>
     ///     All possible conditions for the NPC to spawn and their respective chances. If any of these conditions are met, the
@@ -159,24 +162,24 @@ public class NPCSpawnController : NPCComponent
     private static bool SimpleEditSpawnPool(IDictionary<int, float> pool, int type, NPCSpawnController spawnController,
         NPCSpawnInfo spawnInfo, bool hasWaterCandle, bool hasBattlePotion)
     {
+        if (spawnController.Stage != 1) return false; // Only spawn first stage Pokémon
+        
         const float chanceMultiplier = 0.125f;
         var spawnChance = 0f;
         var schema = ((PokemonNPC)spawnController.NPC.ModNPC).Schema;
         var primaryType = schema.Types[0];
-        if (SimpleSpawnConditions.TryGetValue(primaryType, out var primaryCondition))
+        if (SimpleSpawnConditions.TryGetValue(primaryType, out var primaryCondition) && primaryCondition(spawnInfo))
+            spawnChance = 1f;
+
+        var dualType = schema.Types.Count > 1;
+        if (dualType)
         {
-            if (primaryCondition(spawnInfo))
-                spawnChance = 1f;
-            var dualType = schema.Types.Count > 1;
-            if (dualType)
-            {
-                var secondaryType = schema.Types[1];
-                if (SimpleSpawnConditions.TryGetValue(secondaryType, out var secondaryCondition))
-                    if (secondaryCondition(spawnInfo))
-                        spawnChance += 0.5f;
-            }
+            var secondaryType = schema.Types[1];
+            if (SimpleSpawnConditions.TryGetValue(secondaryType, out var secondaryCondition) &&
+                secondaryCondition(spawnInfo))
+                spawnChance += 0.5f;
         }
-        
+
         // Set the spawn chance for the Pokémon NPC in the spawn pool
         pool[type] = spawnChance * chanceMultiplier * (hasWaterCandle ? 0.66f : hasBattlePotion ? 0.5f : 1f);
 

@@ -5,6 +5,7 @@
     WalkingBehaviour: {}
     SpawnController:
     {
+      Stage: 1
       Conditions:
       [
         {
