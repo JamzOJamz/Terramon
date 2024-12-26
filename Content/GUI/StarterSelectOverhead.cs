@@ -165,7 +165,7 @@ public class StarterButton : UIHoverImage
             {
                 SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
                 {
-                    Volume = 0.125f
+                    Volume = 0.23f
                 });
             };
             return;

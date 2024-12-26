@@ -624,7 +624,7 @@ internal sealed class PokedexPageDisplay : UIElement
             var monButton = new PokedexEntryIcon(pokemon)
             {
                 Left = { Pixels = col * (ButtonSize + buttonSpacingX) },
-                Top = { Pixels = row * (ButtonSize + buttonSpacingY) }
+                Top = { Pixels = (int)(row * (ButtonSize + buttonSpacingY)) }
             };
 
             _entries.Add(monButton);
