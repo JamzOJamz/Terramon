@@ -5,7 +5,7 @@
     {
       DrawOffsetY: -2
     }
-    WalkingBehaviour: {}
+    WanderingHoverBehaviour: {}
     SpawnController:
     {
       Stage: 2

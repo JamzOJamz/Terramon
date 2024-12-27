@@ -5,7 +5,16 @@
     {
       DrawOffsetY: -2
     }
-    WalkingBehaviour: {}
+    BounceBehaviour:
+    {
+      BounceMinRange: -3.5
+      BounceMaxRange: -2.75
+      BounceFrequency: 8
+      HorizontalSpeedMin: 1.8
+      HorizontalSpeedMax: 1.8
+      ChangeDirectionChance: 0.5
+      MaxJumpClearance: 16
+    }
     SpawnController:
     {
       Stage: 1
