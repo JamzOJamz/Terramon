@@ -17,19 +17,26 @@ public class Terramon : Mod
     ///     The maximum level a Pokémon can reach.
     /// </summary>
     public const ushort MaxPokemonLevel = 100;
-    
+
     /// <summary>
     ///     The amount of Pokémon that have actually been loaded into the game.
-    ///     This is the minimum of the amount of Pokémon in the database and <see cref="MaxPokemonID"/>.
+    ///     This is the minimum of the amount of Pokémon in the database and <see cref="MaxPokemonID" />.
     /// </summary>
     public static int LoadedPokemonCount => Math.Min(MaxPokemonID, DatabaseV2.Pokemon.Count);
 
     public static Terramon Instance => ModContent.GetInstance<Terramon>();
 
     public static DatabaseV2 DatabaseV2 { get; private set; }
-    
+
     /// <summary>
-    ///     Forces a full refresh of the party UI (<see cref="PartyDisplay"/> and <see cref="InventoryParty"/>), updating all slots.
+    ///     Whether this is the first time the mod has been loaded on the player's system, ever.
+    ///     The only way for one to reset this is to delete the file <c>TerramonHasLoadedBefore.dat</c> in the save directory.
+    /// </summary>
+    public static bool IsFirstTimeLoad { get; private set; }
+
+    /// <summary>
+    ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
+    ///     slots.
     /// </summary>
     public static void RefreshPartyUI()
     {
@@ -39,7 +46,8 @@ public class Terramon : Mod
     }
 
     /// <summary>
-    ///     Resets UI states for reuse. Called when the player leaves the world, in <see cref="TerramonWorld.PreSaveAndQuit"/>.
+    ///     Resets UI states for reuse. Called when the player leaves the world, in <see cref="TerramonWorld.PreSaveAndQuit" />
+    ///     .
     /// </summary>
     public static void ResetUI()
     {
@@ -63,6 +71,15 @@ public class Terramon : Mod
         wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
     }
 
+    private static bool CheckFirstTimeLoad()
+    {
+        var datFilePath = Path.Combine(Main.SavePath, "TerramonHasLoadedBefore.dat");
+        if (File.Exists(datFilePath)) return false;
+
+        File.Create(datFilePath).Close();
+        return true;
+    }
+
     public override void Load()
     {
         // Load the database
@@ -74,6 +91,9 @@ public class Terramon : Mod
 
         // Setup cross-mod compatibility
         SetupCrossModCompatibility();
+
+        // Check if first ever time loading the mod
+        IsFirstTimeLoad = CheckFirstTimeLoad();
     }
 
     public override void Unload()
