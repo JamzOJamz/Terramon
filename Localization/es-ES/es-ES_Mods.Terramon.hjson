@@ -1,183 +1,183 @@
 Buffs: {
 	PokemonCompanion: {
-		// DisplayName: Pokémon companion
-		// Description: "{0} is following you around!"
+		DisplayName: Compañero Pokémon
+		Description: "¡{0} te está acompañando!"
 	}
 }
 
 Commands: {
-	// RequiresDebugMode: This command requires Debug Mode to be enabled in the mod config!
+	RequiresDebugMode: "¡Este comando requiere que el Modo de debug esté activado en la configuración del mod!"
 
 	DexEdit: {
-		// Description: Forcefully sets Pokédex entry statuses
-		// Usage: /dexedit <id> <status>
-		// ParseErrorID: Failed to parse ID argument as integer
-		// ParseErrorStatus: Failed to parse status argument as integer
-		// StatusOutOfRange: Status argument is out of range (0-2)
-		// IDOutOfRange: Pokédex entry {0} is out of range (1-{1})
-		// Success: Successfully set Pokédex entry {0} to status {1}
+		Description: Fuerza el establecimiento de estados para entradas de la Pokédex
+		Usage: /dexedit <id> <estado>
+		ParseErrorID: Error al intentar parsear el argumento de ID como un entero
+		ParseErrorStatus: Error al intentar parsear el argumento de estado como un entero
+		StatusOutOfRange: El argumento de estado está fuera del rango (0-2)
+		IDOutOfRange: La entrada de Pokédex {0} está fuera del rango (1-{1})
+		Success: La entrada de Pokédex {0} ha sido cambiada al estado {1} exitosamente
 	}
 
 	Nickname: {
-		// Description: Sets the nickname of a Pokémon
-		// Usage: /nickname <set|clear> <nickname>
+		Description: Establece el mote de un Pokémon
+		Usage: /nickname <set|clear> <mote>
 
 		Set: {
-			// NoActivePokemon: No Pokémon is currently active
-			// NoNicknameProvided: No nickname provided
-			// NicknameTooLong: Nickname must be 12 characters or less (including spaces)
-			// SameNickname: Nickname is already set to that value
-			// SuccessNew: Set {0}'s nickname to {1}
-			// SuccessUpdate: Changed {0}'s nickname from {1} to {2}
+			NoActivePokemon: No hay Pokémon activo actualmente
+			NoNicknameProvided: No se proporcionó ningún mote
+			NicknameTooLong: El mote debe tener 12 o menos caracteres (incluyendo espacios)
+			SameNickname: El Pokémon ya tiene ese mote
+			SuccessNew: El mote de {0} fue establecido como {1}
+			SuccessUpdate: El mote de {0} fue cambiado de {1} a {2}
 		}
 
 		Clear: {
-			// NoNicknameSet: No nickname is currently set for this Pokémon
-			// Success: Cleared {0}'s nickname
+			NoNicknameSet: El Pokémon no tiene ningún mote actualmente
+			Success: El mote de {0} fue eliminado
 		}
 
-		// InvalidSubcommand: Invalid subcommand. Use \"set\" or \"clear\"
+		InvalidSubcommand: Subcomando inválido. Usa \"set\" o \"clear\"
 	}
 
 	Party: {
-		// ParseErrorSlot: Failed to parse slot argument as integer
-		// SlotOutOfRange: Slot argument is out of range (1-6)
+		ParseErrorSlot: Error al intentar parsear el argumento de ranura como un entero
+		SlotOutOfRange: El argumento de ranura está fuera del rango (1-6)
 	}
 
 	PartyClear: {
-		// Description: Removes the specified Pokémon from your party
-		// Usage: /partyclear <slot|all>
-		// NoPokemonInSlot: No Pokémon found in slot {0}
-		// Success: Removed {0} from the party
-		// SuccessAll: Removed all Pokémon from the party
+		Description: Elimina de tu equipo al Pokémon especificado
+		Usage: /partyclear <ranura|all>
+		NoPokemonInSlot: No hay un Pokémon en la ranura {0}
+		Success: {0} fue eliminado del equipo
+		SuccessAll: Todos los Pokémon fueron eliminados del equipo
 	}
 
 	PartyData: {
-		// Description: Logs info for the specified Pokémon in your party
-		// Usage: /partydata <slot>
-		// NoPokemonInSlot: No Pokémon data available for slot {0}
-		// Success: Pokémon data for slot {0} written to client.log
+		Description: Loguea información para el Pokémon especificado en tu equipo
+		Usage: /partydata <ranura>
+		NoPokemonInSlot: No hay datos acerca del Pokémon para la ranura {0}
+		Success: Datos del Pokémon en la ranura {0} han sido escritos a client.log
 	}
 
 	PokeClear: {
-		// Description: Clears all active Pokémon NPCs in the world
+		Description: Elimina todos los NPCs Pokémon activos en el mundo
 		// Usage: /pokeclear
-		// Success: Cleared {0} Pokémon NPC(s)
-		// SuccessByPlayer: "{0} cleared {1} Pokémon NPC(s)"
+		Success: {0} NPCs Pokémon fueron eliminados
+		SuccessByPlayer: "{0} eliminó {1} NPCs Pokémon"
 	}
 }
 
 Configs: {
 	ClientConfig: {
-		// DisplayName: Client Settings
+		DisplayName: Configuración del cliente
 
 		Headers: {
-			// Miscellaneous: Preferences
-			// GUI: GUI
-			// Accessibility: Accessibility
+			Miscellaneous: Preferencias
+			GUI: Interfaz
+			Accessibility: Accesibilidad
 		}
 
 		FastEvolution: {
-			// Label: Fast Evolution
-			// Tooltip: Whether to automatically evolve Pokémon when using Rare Candy (otherwise speak with the {$NPCs.PokemartClerk.DisplayName})
+			Label: Evolución rápida
+			Tooltip: Decide si un Pokémon debe evolucionar automáticamente al usar Caramelos raros (de lo contrario hablar con el {$NPCs.PokemartClerk.DisplayName})
 		}
 
 		ShowPokedexRegistrationMessages: {
-			// Label: Pokédex Registration Messages
-			// Tooltip: Whether to display a message in chat when a new Pokémon has been registered in the Pokédex
+			Label: Mensaje de registración a la Pokédex
+			Tooltip: Decide si un mensaje debe ser visible en el chat cuando un nuevo Pokémon ha sido registrado a la Pokédex
 		}
 
 		ReducedAudio: {
-			// Label: (Party Sidebar) Reduced Audio
-			// Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
+			Label: (Barra lateral del equipo) Audio reducido
+			Tooltip: Desactiva los tonos musicales al reorganizar Pokémon en la barra lateral
 		}
 
 		ReducedMotion: {
-			// Label: (Inventory Slots) Reduced Motion
-			// Tooltip: Disables the sliding animation when toggling inventory party slots
+			Label: (Ranuras del inventario) Movimiento reducido
+			Tooltip: Desactiva la animación de deslize al activar o desactivar las ranuras de equipo en el inventario
 		}
 
 		ModIconType: {
-			// Label: Mod Icon Type
-			// Tooltip: Changes the mod icon
+			Label: Tipo de icono del mod
+			Tooltip: Cambia el icono del mod
 		}
 
 		AnimatedModIcon: {
-			// Label: Animated Mod Icon
-			// Tooltip: Animates the mod's icon in the Mods menu when the mod is enabled
+			Label: Icono de mod animado
+			Tooltip: Anima el icono del mod en el Menú de mods cuando el mod está activado
 		}
 
 		RainbowBuffText: {
-			// Label: Rainbow Buff Text
-			// Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+			Label: Texto arcoíris para el efecto
+			Tooltip: El nombre del efecto para el Compañero Pokémon irá a través de los colores del arcoíris
 		}
 	}
 
 	GameplayConfig: {
-		// DisplayName: Gameplay Settings
+		DisplayName: Configuración del gameplay
 
 		Headers: {
-			// Spawning: Spawning
-			// Visuals: Visuals
-			// Miscellaneous: Miscellaneous
-			// Advanced: Advanced
+			Spawning: Spawneo
+			Visuals: Efectos visuales
+			Miscellaneous: Miscelánea
+			Advanced: Avanzado
 		}
 
 		PokemonSpawnRateMultiplier: {
-			// Label: Pokémon Spawn Rate Multiplier
-			/* Tooltip:
+			Label: Multiplicador de tasa de spawneo
+			 Tooltip:
 				'''
-				Multiplies the rate at which Pokémon spawn in the wild
-				[c/F2A754:If set to 0, Pokémon will not spawn at all]
-				''' */
+				Multiplica la tasa a la cual los Pokémon salvajes spawnean
+				[c/F2A754:Si es puesta en 0, los Pokémon nunca spawnearán]
+				'''
 		}
 
 		SpawningStage: {
-			// Label: Spawning Stage
-			// Tooltip: The stage of Pokémon that can spawn in the wild (higher stages include all lower stages)
+			Label: Etapa de spawneo
+			Tooltip: La etapa a la cual los Pokémon salvajes pueden spawnear (las etapas más altas incluyen a todas las inferiores)
 		}
 
 		EncourageDespawning: {
-			// Label: Encourage Despawning
-			// Tooltip: Whether or not to encourage wild Pokémon to despawn when leaving an area to make room for new spawns
+			Label: Incentivar el despawneo
+			Tooltip: Decide si los Pokémon salvajes deberían despawnear al abandonar un área para darle más espacio a spawns futuros
 		}
 
 		ShinySpawnRate: {
-			// Label: Shiny Spawn Rate
-			// Tooltip: The rarity of Shiny Pokémon spawning in the wild (1/x)
+			Label: Tasa de spawneo de Pokémon variocolor
+			Tooltip: La rareza de spawneo de Pokémon variocolor salvajes (1/x)
 		}
 
 		FastAnimations: {
-			// Label: Fast Animations
-			// Tooltip: Whether to skip animations for certain events (e.g. catching a Pokémon)
+			Label: Animaciones rápidas
+			Tooltip: Decide si se debe saltar las animaciones para ciertos eventos (p. ej. capturar un Pokémon)
 		}
 
 		ShinyLockedStarters: {
-			// Label: Shiny-Locked Starters
-			// Tooltip: Prevents starter Pokémon from being Shiny
+			Label: Iniciales variocolor prohibidos
+			Tooltip: Previene que los Pokémon iniciales sean variocolor
 		}
 
 		DebugMode: {
-			// Label: Debug Mode
-			// Tooltip: Allows the use of certain debug commands that can also be used to cheat
+			Label: Modo de debug
+			Tooltip: Permite el uso de ciertos comandos de debug que también pueden ser utilizados para hacer trampa
 		}
 	}
 
 	SpawningStage: {
 		// Tooltip: ""
-		// Basic.Label: Unevolved Pokémon/Basic Pokémon
-		// Stage1.Label: First-Evolved/Stage 1 Pokémon
-		// Stage2.Label: Second-Evolved/Stage 2 Pokémon
-		// Legendary.Label: Legendary/Mythical Pokémon
+		Basic.Label: Pokémon sin evolucionar/basicos
+		Stage1.Label:  Pokémon de primera evolución/etapa 1
+		Stage2.Label: Pokémon de segunda evolución/etapa 2
+		Legendary.Label: Pokémon legendarios/singulares
 	}
 }
 
 GUI: {
 	Inventory: {
-		// ShowParty: Show Party
-		// HideParty: Hide Party
-		// OpenPokedex: Open Pokédex
-		// SlotName: "{0} (Lv. {1})"
+		ShowParty: Mostrar equipo
+		HideParty: Esconder equipo
+		OpenPokedex: Abrir Pokédex
+		SlotName: "{0} (Nv. {1})"
 		/* SlotTooltip:
 			'''
 			HP: {0}/{1}
@@ -191,83 +191,83 @@ GUI: {
 	}
 
 	Starter: {
-		// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
-		// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
-		// Hint: (Press Back to close)
-		// ComingSoon: Coming soon...
-		// ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		Title: "Bienvenid@ al mundo de Pokémon! Gracias por instalar Terramon!"
+		Subtitle: "¡Ahora, por favor elige tu Pokémon inicial para comenzar tu aventura!"
+		Hint: (Presiona Atrás para cerrar)
+		ComingSoon: Muy pronto...
+		ChosenMessage: "¡Elegiste el {0} [c/{1}:{2}] como tu Pokémon inicial!"
 	}
 
 	NPCShop: {
-		// PremierBonus: You got a Premier Ball as an added bonus!
-		// PremierBonusPlural: You got {0} Premier Balls as an added bonus!
+		PremierBonus: "¡Obtuviste una Honor Ball como un bono añadido!"
+		PremierBonusPlural: "¡Obtuviste {0} Honor Balls como un bono añadido!"
 	}
 
 	Party: {
-		// LevelDisplay: Lv. {0}
-		// SlotHover: Left click to send out
-		// SlotHoverActive: Left click to recall
-		/* SlotHoverExtra:
+		LevelDisplay: Nv. {0}
+		SlotHover: "<left> para llamar"
+		SlotHoverActive: "<left> para hacer volver"
+		SlotHoverExtra:
 			'''
 
-			Click and drag to reorder
-			''' */
+			Mantén clic y arrastra para reorganizar
+			'''
 	}
 
 	Pokedex: {
 		// NumberPrefix: No.
-		// ShowingRange: Showing {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
-		// Obtained: Obtained
-		// Seen: Seen
-		/* ObtainedBy:
+		ShowingRange: Mostrando {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		Obtained: Obtenido
+		Seen: Visto
+		ObtainedBy:
 			'''
 
-			[c/FFE745:Obtained by {0}]
-			''' */
-		/* SeenBy:
+			[c/FFE745:Obtenido por {0}]
+			'''
+		SeenBy:
 			'''
 
-			[c/FFE745:Seen by {0}]
-			''' */
-		// Completion: "{0}% Completion"
-		// PlayerDexFilter: Show {0}'s Pokédex
-		// PlayerShinyDexFilter: Show {0}'s Shiny Dex
-		// WorldDexFilter: Show World Dex
-		// ShinyWorldDexFilter: Show Shiny World Dex
-		// Height: Height
-		// Weight: Weight
-		// Entry: Entry
+			[c/FFE745:Visto por {0}]
+			'''
+		Completion: "{0}% completado"
+		PlayerDexFilter: Mostrar la Pokédex de {0}
+		PlayerShinyDexFilter: Mostrar la Shiny Dex de {0}
+		WorldDexFilter: Mostrar la World Dex
+		ShinyWorldDexFilter: Mostrar la Shiny World Dex
+		Height: Talla
+		Weight: Peso
+		Entry: Entrada
 	}
 }
 
 CommonTooltips: {
-	/* Apricorn:
+	Bonguri:
 		'''
-		A special fruit seemingly related to berries.
-		Can be used to craft assorted Poké Balls.
-		''' */
-	// EvolutionaryItem: Evolutionary item
-	// KeyItem: Key item
-	// Vitamin: Vitamin
-	// RightClickPlace: Can be placed using right click
-	// PCItems: Accesses the Pokémon Storage System
-	/* PokeBallMinis:
+		Una fruta especial aparentemente relacionada a las bayas.
+		Puede ser usada para fabricar varias Poké Balls.
 		'''
-		'For decorative purposes'
-		Can be placed on item frames
-		''' */
-	// Unobtainable: Unobtainable
+	EvolutionaryItem: Objeto evolutivo
+	KeyItem: Objeto clave
+	Vitamin: Vitamina
+	RightClickPlace: Puede ser colocada con <right>
+	PCItems: Accesses the Pokémon Storage System
+	PokeBallMinis:
+		'''
+		'Para propósitos ornamentales'
+		Puede ser colocada en un marco
+		'''
+	Unobtainable: Inobtenible
 }
 
 Items: {
 	PokeBallItem: {
-		// DisplayName: Poké Ball
-		/* Tooltip:
+		DisplayName: Poké Ball
+		Tooltip:
 			'''
-			A device for catching wild Pokémon.
-			It is thrown like a ball at the target.
-			''' */
-		// CatchRate: 1x catch rate
+			Un dispositivo usado para capturar Pokémon salvajes.
+			Se debe lanzar como una pelota al Pokémon que se desee capturar.
+			'''
+		CatchRate: Tasa de captura de 1x
 	}
 
 	PokeBallMiniItem: {
@@ -276,13 +276,13 @@ Items: {
 	}
 
 	GreatBallItem: {
-		// DisplayName: Great Ball
-		/* Tooltip:
+		DisplayName: Super Ball
+		Tooltip:
 			'''
-			A good, high-performance Poké Ball.
-			Provides a higher Pokémon catch rate than a standard Poké Ball.
-			''' */
-		// CatchRate: 1.5x catch rate
+			Una buena Poké Ball, de alto rendimiento.
+			Posee una tasa de captura más alta que una Poké Ball estándar.
+			'''
+		CatchRate: Tasa de captura de 1.5x
 	}
 
 	GreatBallMiniItem: {
@@ -291,13 +291,13 @@ Items: {
 	}
 
 	UltraBallItem: {
-		// DisplayName: Ultra Ball
-		/* Tooltip:
+		DisplayName: Ultra Ball
+		Tooltip:
 			'''
-			An ultra-high-performance Poké Ball.
-			Provides a higher Pokémon catch rate than a Great Ball.
-			''' */
-		// CatchRate: 2x catch rate
+			Una Poké Ball de ultra-alto rendimiento.
+			Posee una tasa de captura más alta que una Super Ball.
+			'''
+		CatchRate: Tasa de captura de 2x
 	}
 
 	UltraBallMiniItem: {
@@ -306,13 +306,13 @@ Items: {
 	}
 
 	MasterBallItem: {
-		// DisplayName: Master Ball
-		/* Tooltip:
+		DisplayName: Master Ball
+		Tooltip:
 			'''
-			The best Poké Ball with the ultimate level of performance.
-			It will catch any wild Pokémon without fail.
-			''' */
-		// CatchRate: 100% catch rate
+			La mejor Poké Ball con el nivel más alto de rendimiento.
+			Captura a cualquier Pokémon salvaje sin falla.
+			'''
+		CatchRate: Tasa de captura de 100%
 	}
 
 	MasterBallMiniItem: {
@@ -321,13 +321,13 @@ Items: {
 	}
 
 	PremierBallItem: {
-		// DisplayName: Premier Ball
-		/* Tooltip:
+		DisplayName: Honor Ball
+		Tooltip:
 			'''
-			A somewhat rare Poké Ball.
-			It was made as a commemorative item used to celebrate an event of some sort.
-			''' */
-		// CatchRate: 1x catch rate
+			Una Poké Ball poco común.
+			Fue fabricada como un objeto conmemorativo usado para celebrar un evento de algún tipo.
+			'''
+		CatchRate: Tasa de captura de 1x
 	}
 
 	PremierBallMiniItem: {
@@ -336,13 +336,13 @@ Items: {
 	}
 
 	CherishBallItem: {
-		// DisplayName: Cherish Ball
-		/* Tooltip:
+		DisplayName: Gloria Ball
+		Tooltip:
 			'''
-			A quite rare Poké Ball.
-			It has been specially crafted to commemorate an occasion of some sort.
-			''' */
-		// CatchRate: 1x catch rate
+			Una Poké Ball muy poco común.
+			Fue especialmente fabricada para conmemorar una ocasión de algún tipo.
+			'''
+		CatchRate: Tasa de captura de 1x
 	}
 
 	CherishBallMiniItem: {
@@ -351,13 +351,13 @@ Items: {
 	}
 
 	AetherBallItem: {
-		// DisplayName: Aether Ball
-		/* Tooltip:
+		DisplayName: Éter Ball
+		Tooltip:
 			'''
-			An ethereal Poké Ball infused with shimmering energy.
-			It is said to have a calming effect on wild Pokémon.
-			''' */
-		// CatchRate: 1x catch rate
+			Una Poké Ball etérea infundida con energía fulgente.
+			Se dice que tiene un efecto calmante para los Pokémon salvajes.
+			'''
+		CatchRate: Tasa de captura de 1x
 	}
 
 	AetherBallMiniItem: {
@@ -366,230 +366,230 @@ Items: {
 	}
 
 	RareCandy: {
-		// DisplayName: Rare Candy
-		/* Tooltip:
+		DisplayName: Caramelo raro
+		Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it raises a Pokémon's level by one.
-			''' */
+			Un caramelo lleno de energía.
+			Al ser consumido, el nivel de un Pokémon aumenta por uno.
+			'''
 	}
 
 	TrainerCap: {
-		// DisplayName: Pokémon Trainer Cap
-		// Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: Gorra de entrenador de Pokémon
+		Tooltip: "'¡Hazte con todos!'"
 	}
 
 	TrainerTorso: {
-		// DisplayName: Pokémon Trainer Jacket
-		// Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: Chaqueta de entrenador de Pokémon
+		Tooltip: "'¡Hazte con todos!'"
 	}
 
 	TrainerLegs: {
-		// DisplayName: Pokémon Trainer Jeans
-		// Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: Jeans de entrenador de Pokémon
+		Tooltip: "'¡Hazte con todos!'"
 	}
 
 	MusicItemCenter: {
-		// DisplayName: Music Box (Pokémon Center)
+		DisplayName: Caja de música (Pokémon Center)
 		// Tooltip: ""
 	}
 
 	MusicItemWildBattle: {
-		// DisplayName: Music Box (Battle! Wild Pokémon)
+		DisplayName: Caja de música (Battle! Wild Pokémon)
 		// Tooltip: ""
 	}
 
 	ShinyCharm: {
-		// DisplayName: Shiny Charm
-		/* Tooltip:
+		DisplayName: Amuleto iris
+		Tooltip:
 			'''
-			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
-			Received as a reward for obtaining all Pokémon in the Pokédex.
-			''' */
+			Un amuleto que aumenta la probabilidad de encontrar un Pokémon variocolor salvaje.
+			Recibido como un premio al obtener todos los Pokémon en la Pokédex.
+			'''
 	}
 
 	FireStone: {
-		// DisplayName: Fire Stone
-		/* Tooltip:
+		DisplayName: Piedra fuego
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			The stone has a fiery orange heart.
-			''' */
+			Una piedra que hace evolucionar a ciertas especies de Pokémon.
+			La piedra tiene un núcleo rojo como el fuego.
+			'''
 	}
 
 	WaterStone: {
-		// DisplayName: Water Stone
-		/* Tooltip:
+		DisplayName: Piedra agua
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It is the blue of a pool of clear water.
-			''' */
+			Una piedra que hace evolucionar a ciertas especies de Pokémon.
+			Tiene un color azul como el agua limpia.
+			'''
 	}
 
 	ThunderStone: {
-		// DisplayName: Thunder Stone
-		/* Tooltip:
+		DisplayName: Piedra trueno
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			The stone is inscribed with a thunderbolt pattern.
-			''' */
+			Una piedra que hace evolucionar a ciertas especies de Pokémon.
+			Tiene inscrito un patrón de rayos.
+			'''
 	}
 
 	LeafStone: {
-		// DisplayName: Leaf Stone
-		/* Tooltip:
+		DisplayName: Piedra hoja
+		Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve.
-			It has an unmistakable leaf pattern.
-			''' */
+			Tiene un patrón de hoja inequívoco.
+			'''
 	}
 
 	MoonStone: {
-		// DisplayName: Moon Stone
-		/* Tooltip:
+		DisplayName: Piedra lunar
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It is as black as the night sky.
-			''' */
+			Una piedra que hace evolucionar a ciertas especies de Pokémon.
+			Es oscura como el cielo nocturno.
+			'''
 	}
 
 	DuskStone: {
-		// DisplayName: Dusk Stone
-		/* Tooltip:
+		DisplayName: Piedra noche
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It holds shadows as dark as can be.
-			''' */
+			Una piedra que hace evolucionar a ciertas especies de Pokémon.
+			Posee sombras lo más oscuras que has visto.
+			'''
 	}
 
 	IceStone: {
-		// DisplayName: Ice Stone
-		/* Tooltip:
+		DisplayName: Piedra hielo
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It has an unmistakable snowflake pattern.
-			''' */
+			Una piedra que hace evolucionar a ciertas especies de Pokémon.
+			Tiene un patrón inequívoco de un copo de nieve.
+			'''
 	}
 
 	LinkingCord: {
-		// DisplayName: Linking Cord
-		/* Tooltip:
+		DisplayName: Cordón unión
+		Tooltip:
 			'''
-			A cord that makes you feel a strange sense of connection.
-			It's loved by certain Pokémon.
-			''' */
+			Un cordón que te transmite una extraña sensación de conexión.
+			Ciertos Pokémon lo adoran.
+			'''
 	}
 
-	// BlackApricorn.DisplayName: Black Apricorn
-	// BlueApricorn.DisplayName: Blue Apricorn
-	// GreenApricorn.DisplayName: Green Apricorn
-	// PinkApricorn.DisplayName: Pink Apricorn
-	// RedApricorn.DisplayName: Red Apricorn
-	// WhiteApricorn.DisplayName: White Apricorn
-	// YellowApricorn.DisplayName: Yellow Apricorn
+	BlackApricorn.DisplayName: Bonguri negro
+	BlueApricorn.DisplayName: Bonguri azul
+	GreenApricorn.DisplayName: Bonguri verde
+	PinkApricorn.DisplayName: Bonguri rosa
+	RedApricorn.DisplayName: Bonguri rojo
+	WhiteApricorn.DisplayName: Bonguri blanco
+	YellowApricorn.DisplayName: Bonguri amarillo
 
 	ExpCandyXS: {
-		// DisplayName: Exp. Candy XS
-		/* Tooltip:
+		DisplayName: Caramelo experiencia XS
+		Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a very small number of Exp. Points.
-			''' */
+			Un caramelo lleno de energía.
+			Al ser consumido, la experiencía de un Pokémon aumenta por una cantidad muy pequeña.
+			'''
 	}
 
 	ExpCandyS: {
-		// DisplayName: Exp. Candy S
-		/* Tooltip:
+		DisplayName: Caramelo experiencia S
+		Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a small number of Exp. Points.
-			''' */
+			Un caramelo lleno de energía.
+			Al ser consumido, la experiencía de un Pokémon aumenta por una cantidad pequeña.
+			'''
 	}
 
 	ExpCandyM: {
-		// DisplayName: Exp. Candy M
-		/* Tooltip:
+		DisplayName: Caramelo experiencia M
+		Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a moderate number of Exp. Points.
-			''' */
+			Un caramelo lleno de energía.
+			Al ser consumido, la experiencía de un Pokémon aumenta por una cantidad moderada.
+			'''
 	}
 
 	ExpCandyL: {
-		// DisplayName: Exp. Candy L
-		/* Tooltip:
+		DisplayName: Caramelo experiencia L
+		Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a large number of Exp. Points.
-			''' */
+			Un caramelo lleno de energía.
+			Al ser consumido, la experiencía de un Pokémon aumenta por una cantidad grande.
+			'''
 	}
 
 	ExpCandyXL: {
-		// DisplayName: Exp. Candy XL
-		/* Tooltip:
+		DisplayName: Caramelo experiencia XL
+		Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a very large number of Exp. Points.
-			''' */
+			Un caramelo lleno de energía.
+			Al ser consumido, la experiencía de un Pokémon aumenta por una cantidad muy grande.
+			'''
 	}
 
 	ShimmerStateDrive: {
-		// DisplayName: Shimmer-State Drive
-		/* Tooltip:
+		DisplayName: Unidad de estado fúlgido
+		Tooltip:
 			'''
-			Permanently unlocks a shared PC box in this world.
-			This allows for easy transfer of Pokémon between players.
-			'Property of the Aether Foundation'
-			''' */
+			Permanentemente desbloquea un PC compartido en este mundo.
+			Esto permite la transferencia fácil de Pokémon entre jugadores.
+			'Propiedad de la Fundación Æter'
+			'''
 	}
 
 	PCItemRed: {
-		// DisplayName: PC (Red)
+		DisplayName: PC (Rojo)
 		// Tooltip: ""
 	}
 
 	PCItemWhite: {
-		// DisplayName: PC (White)
+		DisplayName: PC (Blanco)
 		// Tooltip: ""
 	}
 
 	ErikaPaintingItem: {
-		// DisplayName: Erika's Invitation
+		DisplayName: La Invitación de Erika
 		// Tooltip: "'L. Walter'"
 	}
 }
 
 Keybinds: {
-	// ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
+	ToggleSidebar.DisplayName: Activar o desactivar la barra lateral
 	// OpenPokedex.DisplayName: Pokédex
 }
 
 Tiles: {
-	// MusicBoxCenter.MapEntry: Music Box
-	// MusicBoxWildBattle.MapEntry: Music Box
-	// PCWhite.MapEntry: P C White
-	// PCRed.MapEntry: P C Red
+	MusicBoxCenter.MapEntry: Caja de música
+	MusicBoxWildBattle.MapEntry: Caja de música
+	PCWhite.MapEntry: PC
+	PCRed.MapEntry: PC
 }
 
 Types: {
-	// Normal: Normal
-	// Fire: Fire
-	// Fighting: Fighting
-	// Water: Water
-	// Flying: Flying
-	// Grass: Grass
-	// Poison: Poison
-	// Electric: Electric
-	// Ground: Ground
-	// Psychic: Psychic
-	// Rock: Rock
-	// Ice: Ice
-	// Bug: Bug
-	// Dragon: Dragon
-	// Ghost: Ghost
-	// Dark: Dark
-	// Steel: Steel
-	// Fairy: Fairy
+	Normal: Normal
+	Fire: Fuego
+	Fighting: Lucha
+	Water: Agua
+	Flying: Volador
+	Grass: Planta
+	Poison: Veneno
+	Electric: Eléctrico
+	Ground: Tierra
+	Psychic: Psíquico
+	Rock: Roca
+	Ice: Hielo
+	Bug: Bicho
+	Dragon: Dragón
+	Ghost: Fantasma
+	Dark: Siniestro
+	Steel: Acero
+	Fairy: Hada
 }
 
 NPCs: {
