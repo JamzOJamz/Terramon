@@ -62,7 +62,7 @@ internal sealed class MenuSocialWidget
             if (_isDiscordClientRunning)
             {
                 FakeItem.SetDefaults(0, true);
-                const string textValue = "[c/FFFFFF:Discord client detected!]\n[c/BDB8C4:Click to go directly to the server!]";
+                const string textValue = "[c/FFFFFF:Discord client detected!]\n[c/BABAC6:Click to go directly to the server!]";
                 FakeItem.SetNameOverride(textValue);
                 FakeItem.type = ItemID.IronPickaxe;
                 FakeItem.scale = 0f;
