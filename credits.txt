@@ -1,14 +1,15 @@
 - JamzOJamz -
-Almost all new code in 0.1 (Beta)
+Programming
 Data for all Pokémon
 GUI code and design
 Multiplayer compatibility
 
 - InfinaMii -
+Programming
 Rare Candy sprite
 Thrown Poké Ball sprites
 Base code for Poké Ball, Pokémon, Evolution
-All Pre-release 0.1 code basically
+Pre-release 0.1
 
 - Jackal Chan -
 Pokémon sprites
