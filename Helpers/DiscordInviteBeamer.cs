@@ -2,30 +2,20 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 
-namespace Terramon.Core.Systems;
+namespace Terramon.Helpers;
 
-public class DiscordInviteBeamer : ModSystem
+internal static class DiscordInviteBeamer
 {
-    private const string TerramonInviteCode = "qDn5eW27c4";
     private const int RpcVersion = 1;
-    private const int ChanceToBeamDenominator = 1;
     private static readonly Tuple<int, int> RpcPortRange = new(6463, 6472);
+    private const int RpcConnectionTimeoutMs = 5000;
 
-    public override void OnModLoad()
-    {
-        if (!Terramon.IsFirstTimeLoad || !Main.rand.NextBool(ChanceToBeamDenominator) || !IsClientRunning())
-            return;
-
-        // Try beaming the invite code to the Discord client
-        Task.Run(() => Send(TerramonInviteCode));
-    }
-
-    private static bool IsClientRunning()
+    public static bool IsClientRunning()
     {
         return Process.GetProcessesByName("Discord").Length > 0;
     }
 
-    private static async Task Send(string inviteCode)
+    public static async Task Send(string inviteCode)
     {
         foreach (var port in Enumerable.Range(RpcPortRange.Item1, RpcPortRange.Item2 - RpcPortRange.Item1 + 1))
         {
@@ -51,8 +41,8 @@ public class DiscordInviteBeamer : ModSystem
 
                 Terramon.Instance.Logger.Debug($"Discord invite {inviteCode} sent to client!");
 
-                // Wait for 5 seconds before closing the connection
-                await Task.Delay(5000);
+                // Wait for X seconds before closing the connection
+                await Task.Delay(RpcConnectionTimeoutMs);
 
                 Terramon.Instance.Logger.Debug("Closing connection...");
 
