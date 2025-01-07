@@ -13,7 +13,7 @@ namespace Terramon.Content.NPCs;
 public sealed class NPCWalkingBehaviour : NPCAIComponent
 {
     private int _collideTimer;
-    public string AnimationType = "StraightForward";
+    public AnimType AnimationType = AnimType.StraightForward;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
     public int StopFrequency = 225;
     public float WalkSpeed = 1f;
@@ -139,19 +139,19 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
 
         switch (AnimationType)
         {
-            case "StraightForward": // Animates all frames in a sequential order
+            case AnimType.StraightForward: // Animates all frames in a sequential order
                 if (NPC.frameCounter < FrameTime * FrameCount)
                     NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
                 else
                     NPC.frameCounter = 0;
                 break;
-            case "IdleForward": // Same as StraightForward, but skips the first frame (which is idle only)
+            case AnimType.IdleForward: // Same as StraightForward, but skips the first frame (which is idle only)
                 if (NPC.frameCounter < FrameTime * (FrameCount - 1))
                     NPC.frame.Y = ((int)Math.Floor(NPC.frameCounter / FrameTime) + 1) * frameHeight;
                 else
                     NPC.frameCounter = 0;
                 break;
-            case "Alternate": // Alternates between frame sequences
+            case AnimType.Alternate: // Alternates between frame sequences
                 var cycleLength = FrameCount + 1;
                 var alternateFrame = (int)(NPC.frameCounter / FrameTime) % cycleLength;
                 NPC.frame.Y = cycleLength switch
@@ -185,5 +185,12 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
     {
         Idle,
         Walking
+    }
+    public enum AnimType : byte
+    {
+        None,
+        StraightForward,
+        IdleForward,
+        Alternate
     }
 }

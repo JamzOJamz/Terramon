@@ -1,12 +1,12 @@
 Buffs: {
 	PokemonCompanion: {
 		DisplayName: Compañero Pokémon
-		Description: "¡{0} te está acompañando!"
+		Description: ¡{0} te está acompañando!
 	}
 }
 
 Commands: {
-	RequiresDebugMode: "¡Este comando requiere que el Modo de debug esté activado en la configuración del mod!"
+	RequiresDebugMode: ¡Este comando requiere que el Modo de debug esté activado en la configuración del mod!
 
 	DexEdit: {
 		Description: Fuerza el establecimiento de estados para entradas de la Pokédex
@@ -48,7 +48,7 @@ Commands: {
 		Description: Elimina de tu equipo al Pokémon especificado
 		Usage: /partyclear <ranura|all>
 		NoPokemonInSlot: No hay un Pokémon en la ranura {0}
-		Success: {0} fue eliminado del equipo
+		Success: "{0} fue eliminado del equipo"
 		SuccessAll: Todos los Pokémon fueron eliminados del equipo
 	}
 
@@ -62,7 +62,7 @@ Commands: {
 	PokeClear: {
 		Description: Elimina todos los NPCs Pokémon activos en el mundo
 		// Usage: /pokeclear
-		Success: {0} NPCs Pokémon fueron eliminados
+		Success: "{0} NPCs Pokémon fueron eliminados"
 		SuccessByPlayer: "{0} eliminó {1} NPCs Pokémon"
 	}
 }
@@ -125,7 +125,7 @@ Configs: {
 
 		PokemonSpawnRateMultiplier: {
 			Label: Multiplicador de tasa de spawneo
-			 Tooltip:
+			Tooltip:
 				'''
 				Multiplica la tasa a la cual los Pokémon salvajes spawnean
 				[c/F2A754:Si es puesta en 0, los Pokémon nunca spawnearán]
@@ -166,7 +166,7 @@ Configs: {
 	SpawningStage: {
 		// Tooltip: ""
 		Basic.Label: Pokémon sin evolucionar/basicos
-		Stage1.Label:  Pokémon de primera evolución/etapa 1
+		Stage1.Label: Pokémon de primera evolución/etapa 1
 		Stage2.Label: Pokémon de segunda evolución/etapa 2
 		Legendary.Label: Pokémon legendarios/singulares
 	}
@@ -191,22 +191,22 @@ GUI: {
 	}
 
 	Starter: {
-		Title: "Bienvenid@ al mundo de Pokémon! Gracias por instalar Terramon!"
-		Subtitle: "¡Ahora, por favor elige tu Pokémon inicial para comenzar tu aventura!"
+		Title: Bienvenid@ al mundo de Pokémon! Gracias por instalar Terramon!
+		Subtitle: ¡Ahora, por favor elige tu Pokémon inicial para comenzar tu aventura!
 		Hint: (Presiona Atrás para cerrar)
 		ComingSoon: Muy pronto...
-		ChosenMessage: "¡Elegiste el {0} [c/{1}:{2}] como tu Pokémon inicial!"
+		ChosenMessage: ¡Elegiste el {0} [c/{1}:{2}] como tu Pokémon inicial!
 	}
 
 	NPCShop: {
-		PremierBonus: "¡Obtuviste una Honor Ball como un bono añadido!"
-		PremierBonusPlural: "¡Obtuviste {0} Honor Balls como un bono añadido!"
+		PremierBonus: ¡Obtuviste una Honor Ball como un bono añadido!
+		PremierBonusPlural: ¡Obtuviste {0} Honor Balls como un bono añadido!
 	}
 
 	Party: {
 		LevelDisplay: Nv. {0}
-		SlotHover: "<left> para llamar"
-		SlotHoverActive: "<left> para hacer volver"
+		SlotHover: <left> para llamar
+		SlotHoverActive: <left> para hacer volver
 		SlotHoverExtra:
 			'''
 
@@ -241,11 +241,11 @@ GUI: {
 }
 
 CommonTooltips: {
-	Bonguri:
+	/* Apricorn:
 		'''
-		Una fruta especial aparentemente relacionada a las bayas.
-		Puede ser usada para fabricar varias Poké Balls.
-		'''
+		A special fruit seemingly related to berries.
+		Can be used to craft assorted Poké Balls.
+		''' */
 	EvolutionaryItem: Objeto evolutivo
 	KeyItem: Objeto clave
 	Vitamin: Vitamina
@@ -641,6 +641,8 @@ NPCs: {
 			// ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
 			// EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
 		}
+
+		// Census.SpawnCondition: Conditions unknown
 	}
 }
 

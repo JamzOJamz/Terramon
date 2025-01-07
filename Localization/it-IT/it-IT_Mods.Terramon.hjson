@@ -641,6 +641,8 @@ NPCs: {
 			// ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
 			// EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
 		}
+
+		// Census.SpawnCondition: Conditions unknown
 	}
 }
 
