@@ -1,5 +1,5 @@
 - JamzOJamz -
-Almost all new code in 1.0
+Almost all new code in 0.1 (Beta)
 Data for all Pokémon
 GUI code and design
 Multiplayer compatibility
@@ -8,7 +8,7 @@ Multiplayer compatibility
 Rare Candy sprite
 Thrown Poké Ball sprites
 Base code for Poké Ball, Pokémon, Evolution
-All 0.1 code basically
+All Pre-release 0.1 code basically
 
 - Jackal Chan -
 Pokémon sprites
