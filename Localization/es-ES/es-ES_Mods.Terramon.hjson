@@ -594,71 +594,71 @@ Types: {
 
 NPCs: {
 	PokemartClerk: {
-		// DisplayName: Poké Mart Clerk
-		// BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
-		// EvolveButton: Evolve {0}
+		DisplayName: Trabajador de Tienda Pokémon
+		BestiaryText: El Trabajador de la Tienda Pokémon es un vendedor dedicado, que se abastece de varios objetos para cualquier necesidad de un entrenador de Pokémon.
+		EvolveButton: Evolucionar a {0}
 
 		TownNPCMood: {
-			// Content: I rather enjoy my living space.
-			// NoHome: I wish I had somewhere to live.
-			// FarFromHome: I miss being back at my home.
-			// LoveSpace: I love how much space there is for wild Pokémon to appear!
-			// DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
-			// HateCrowded: There are way too many people living here!
-			// LikeBiome: There are so many Pokémon to see in {BiomeName}!
-			// DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
-			// LikeNPC: I like {NPCName}. They've helped me out a ton.
-			// DislikeNPC: I find {NPCName} a bit too loud.
-			// HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
-			// LikeNPC_Princess: I like {NPCName}. Who doesn't?
-			// Princess_LovesNPC: I like {NPCName}.
+			Content: Disfruto el lugar donde vivo.
+			NoHome: Quisiera tener un lugar donde vivir.
+			FarFromHome: Extraño estar en casa.
+			LoveSpace: ¡Adoro el espacio que hay para que aparezcan Pokémon salvajes!
+			DislikeCrowded: Aunque hay muchas personas con las que hablar, está un poco apretujado.
+			HateCrowded: ¡Hay demasiadas personas viviendo aquí!
+			LikeBiome: ¡Hay tantos Pokémon por ver en {BiomeName}!
+			DislikeBiome: No me gusta {BiomeName}. ¡Es tan espeluznante y parece que todo quiere atraparte!
+			LikeNPC: Me gusta {NPCName}. Me ha ayudado mucho.
+			DislikeNPC: Pienso que {NPCName} hace mucho ruido.
+			HateNPC: Odio a {NPCName}. Simplemente no respeta a los Pokémon.
+			LikeNPC_Princess: Me gusta {NPCName}. ¿Quién no?
+			Princess_LovesNPC: Me gusta {NPCName}.
 		}
 
 		Dialogue: {
-			// Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
-			// Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
-			// CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
-			// Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
-			// Regions: There are many different regions in the world. One day I hope to visit all of them!
-			// Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
-			// EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
-			// SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
-			// Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
-			// NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
-			// BadName: Now, I know what you're thinking. "That's such a creative name!"
-			// Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
-			// ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
-			// PokemonHello: Is that your {0}? Hi, {1}!
-			// PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
-			// PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
-			// PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
-			// PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
-			// PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
-			// PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
-			// MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
-			// MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
-			// PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
-			// ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
-			// EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
+			Catchem: Hay muchos Pokémon en el mundo, ¡pero necesitarás Poké Balls para capturarlos! Por suerte, tengo algunas para ti.
+			Furret: En Johto tienen una especie de Pokémon llamada Furret. ¡Les encanta caminar!
+			CheckBack: A lo que progreses con tu aventura, venderé nuevas cosas. Vuelve a revisar mi tienda de vez en cuando.
+			Biomes: A diferentes Pokémon les gusta diferentes lugares. ¡Si viajas alrededor, podrías encontrar nuevos Pokémon!
+			Regions: Hay muchas regiones diferentes en el mundo. ¡Algún día espero poder visitarlas todas!
+			Crafting: Convenientemente vendo Poké Balls para que las compres, ¡pero si no tienes suficiente dinero puedes fabricarlas tú mismo con bonguris y hierro!
+			EvolutionStones: Algunos Pokémon solo evolucionan al ser expuestos a ciertas piedras. Son muy poco comúnes.
+			SickBurn: Se ha anunciado un remake de Mobile Creatures. Aunque no estoy seguro de cómo me parece el estilo artístico...
+			Dedication: Desde que los Pokémon empezaron a aparecer en {0}, he dedicado mi vida a ayudar a la gente a aprender más sobre ellos.
+			NoBattleRip: Los Pokémon de por aquí parecen muy pacíficos. No es habitual ver criaturas que se lleven tan bien.
+			BadName: Sé lo que estás pensando. "¡Qué nombre tan creativo!"
+			Shimmer: ¿Te gusta mi atuendo? ¡Parezco un auténtico entrenador de Pokémon!
+			ShimmerQuery: ¿Has oido del Fulgor? ¡Al parecer le puede dar a la gente su propia forma variocolor!
+			PokemonHello: ¿Ese es tu that {0}? ¡Hola, {1}!
+			PokemonGrass: ¿Ese es un Pokémon tipo planta? ¡Esos son mis favoritos!
+			PokemonIce: ¡Un Pokémon de tipo hielo! Siempre me ha encantado verlos.
+			PokemonShiny: ¿Es ese un Pokémon variocolor? ¡Es increíble! Yo quisiera tener uno.
+			PokemonShimmer: Interesante... Tu Pokémon tiene los mismos colores que un Pokémon variocolor, pero nada de... bueno, color variado.
+			PokemonNicknameHowto: ¿Sabías que puedes ponerle un mote a un Pokémon? Escribe "/nickname" en el chat seguido del mote que quieras.
+			PokemonNickname: ¿{0}? ¡Qué nombre tan lindo! Se nota que te importan mucho tus Pokémon.
+			MerchantComment: "{0} puede ser un poco tacaño, pero me ha enseñado todo lo que sé sobre el comercio."
+			MechanicComment: "{0} sabe mucho sobre Poké Balls. ¡Quizá algún día pueda empezar a vender más!"
+			PirateComment: ¿Has probado a hablar con {0}? Nunca entiendo lo que dice.
+			ArmsDealerComment: ¿¿Puedes decirle a {0} que deje de disparar a los Pokémon??
+			EvolutionCongrats: ¡Felicidades! {$Misc.PokemonEvolved}
 		}
 
 		// Census.SpawnCondition: Conditions unknown
 	}
 }
 
-// WorldGen.ItemsPass: Scattering candies
+WorldGen.ItemsPass: Dispersando caramelos
 
 Misc: {
-	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
-	// CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
-	// CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
-	// PokedexRegistered: "{0}'s data was added to the Pokédex."
-	// PCBoxDefaultName: Box {0}
-	// RequireStarter: Choose a starter Pokémon first!
-	// NoActivePokemon: You need to have an active Pokémon to do that!
-	// ItemNoEffect: It won't have any effect on {0}.
-	// PokemonEvolved: "{0} evolved into {1}!"
-	// PokemonEvolutionReady: "{0} seems ready to evolve!"
-	// RareCandyUse: "{0} grew to Lv. {1}!"
-	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	CatchSuccess: ¡Te tengo! ¡[c/{0}:{1}] fue atrapado!
+	CatchSuccessPC: ¡Te tengo! ¡[c/{0}:{1}] fue capturado y transferido a {2} en el PC de {3}!
+	CatchSuccessPCNoRoom: ¡Te tengo! [c/{0}:{1}] fue capturado, ¡pero no había espacio en el PC de {2}!
+	PokedexRegistered: Los datos de {0} fueron añadidos a la Pokédex.
+	PCBoxDefaultName: Caja {0}
+	RequireStarter: ¡Escoge primero un Pokémon inicial!
+	NoActivePokemon: ¡Necesitas tener un Pokémon activo para hacer eso!
+	ItemNoEffect: No tendrá ningún efecto para {0}.
+	PokemonEvolved: ¡{0} evolucionó a {1}!
+	PokemonEvolutionReady: ¡{0} parece listo para evolucionar!
+	RareCandyUse: ¡{0} subió a nivel {1}!
+	ExpCandyUse: ¡Tu Pokémon ha ganado {0} puntos de experiencia!
 }
