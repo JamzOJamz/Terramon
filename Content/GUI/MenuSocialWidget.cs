@@ -47,9 +47,7 @@ internal sealed class MenuSocialWidget
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
 
         // Draw "Join the Discord community" text in blurple below the version number
-        var discordText = "Discord Server";
-        if (_isDiscordClientRunning)
-            discordText += " \u2714"; // Checkmark
+        const string discordText = "Discord Server";
         var discordTextSize = FontAssets.MouseText.Value.MeasureString(discordText);
         discordTextSize.Y *= 0.9f;
         drawPos.Y += 30;
@@ -62,7 +60,7 @@ internal sealed class MenuSocialWidget
             if (_isDiscordClientRunning)
             {
                 FakeItem.SetDefaults(0, true);
-                const string textValue = "[c/FFFFFF:Discord client detected!]\n[c/BABAC6:Click to go directly to the server!]";
+                const string textValue = "[c/FFFFFF:Discord client detected \u2713]\n[c/BABAC6:Click to go directly to the server!]";
                 FakeItem.SetNameOverride(textValue);
                 FakeItem.type = ItemID.IronPickaxe;
                 FakeItem.scale = 0f;

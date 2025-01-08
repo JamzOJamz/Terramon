@@ -52,8 +52,8 @@ public class Terramon : Mod
     }
 
     /// <summary>
-    ///     Resets UI states for reuse. Called when the player leaves the world, in <see cref="TerramonWorld.PreSaveAndQuit" />
-    ///     .
+    ///     Resets UI states for reuse with other players. Called when the player leaves the world in
+    ///     <see cref="TerramonWorld.PreSaveAndQuit" />.
     /// </summary>
     public static void ResetUI()
     {
