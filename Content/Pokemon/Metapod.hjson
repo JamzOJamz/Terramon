@@ -14,7 +14,7 @@
       HorizontalSpeedMin: 0.7
       HorizontalSpeedMax: 0.7
       ChangeDirectionChance: 0.5
-      MaxJumpClearance: 16
+      MaxJumpClearance: 1
       FrameCount: 4
     }
     SpawnController:
