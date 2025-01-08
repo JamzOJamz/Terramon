@@ -42,6 +42,8 @@ internal sealed class MenuSocialWidget
         var drawPos = new Vector2(15, 15);
         if (Main.showFrameRate)
             drawPos.Y += 22;
+        if (ModLoader.HasMod("TerrariaOverhaul"))
+            drawPos.Y = Main.screenHeight / 2f - 74;
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
             $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
