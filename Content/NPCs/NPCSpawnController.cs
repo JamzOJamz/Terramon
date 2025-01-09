@@ -1,5 +1,4 @@
 using Terramon.Content.Configs;
-using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.NPCComponents;
 using Terramon.ID;
 using Terraria.ModLoader.Utilities;

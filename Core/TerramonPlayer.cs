@@ -35,7 +35,7 @@ public class TerramonPlayer : ModPlayer
         set
         {
             // Toggle off dedicated pet slot
-            if (_activeSlot == -1)
+            if (_activeSlot == -1 && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
             _activeSlot = value;
             var buffType = ModContent.BuffType<PokemonCompanion>();

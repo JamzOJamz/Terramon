@@ -1,5 +1,5 @@
 ﻿using Terramon.Content.Configs;
-using Terramon.Content.NPCs.Pokemon;
+using Terramon.Content.NPCs;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -45,7 +45,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
 
     public override LocalizedText DisplayName =>
-        Language.GetText($"Terramon.Items.{GetType().Name.Replace("Projectile", "Item")}.DisplayName");
+        Language.GetText($"Mods.Terramon.Items.{GetType().Name.Replace("Projectile", "Item")}.DisplayName");
 
     private ref float AITimer => ref Projectile.ai[0];
 

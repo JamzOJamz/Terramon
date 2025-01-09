@@ -27,5 +27,15 @@
       ]
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    GenericPet:
+    {
+      WalkSpeedModifier: 0.85
+      FrameCount: 5
+      FrameTime: 9
+      AnimationType: IdleForward
+      IsClassic: false
+    }
+  }
 }

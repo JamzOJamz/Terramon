@@ -1,4 +1,4 @@
-using Terramon.Content.NPCs.Pokemon;
+using Terramon.Content.NPCs;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;

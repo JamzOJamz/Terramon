@@ -36,5 +36,14 @@
       DustOffsetY: 37
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    GenericPet:
+    {
+      WalkSpeedModifier: 0.85
+      FrameCount: 5
+      AnimationType: Alternate
+      IsClassic: false
+    }
+  }
 }

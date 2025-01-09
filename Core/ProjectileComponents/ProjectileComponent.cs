@@ -9,15 +9,15 @@ public abstract class ProjectileComponent : GlobalProjectile
 
     public override bool InstancePerEntity => true;
 
-    protected virtual void OnEnabled(Item item)
+    protected virtual void OnEnabled(Projectile item)
     {
     }
 
-    protected virtual void OnDisabled(Item item)
+    protected virtual void OnDisabled(Projectile item)
     {
     }
 
-    public void SetEnabled(Item item, bool value)
+    public void SetEnabled(Projectile item, bool value)
     {
         if (Enabled == value) return;
 

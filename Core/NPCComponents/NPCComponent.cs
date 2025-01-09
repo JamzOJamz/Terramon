@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using Terramon.Content.NPCs.Pokemon;
+using Terramon.Content.NPCs;
 
 namespace Terramon.Core.NPCComponents;
 
