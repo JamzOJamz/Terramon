@@ -78,10 +78,10 @@ public class ProjectileGenericPet : ProjectileComponent
         {
             case "StraightForward":
                 var frame = proj.CustomFrameCounter / FrameTime % FrameCount;
-                return frame == 0 || (ExtraStopFrame != -1 && frame == ExtraStopFrame);
+                return frame == (IsClassic ? 1 : 0) || (ExtraStopFrame != -1 && frame == ExtraStopFrame);
             case "IdleForward":
                 var idleFrame = proj.CustomFrameCounter / FrameTime % (FrameCount - 1);
-                return idleFrame == 0 || (ExtraStopFrame != -1 && idleFrame == ExtraStopFrame - 1);
+                return idleFrame == 0 || (ExtraStopFrame != -1 && idleFrame == ExtraStopFrame);
             case "Alternate":
                 var cycleLength = FrameCount + 1;
                 var alternateFrame = proj.CustomFrameCounter / FrameTime % cycleLength;
@@ -101,6 +101,12 @@ public class ProjectileGenericPet : ProjectileComponent
 
     private void FindFrame(PokemonPet proj)
     {
+        if (AnimationType == "IdleForward" && Math.Abs(proj.Projectile.velocity.X) <= 0.1f && proj.CustomFrameCounter == 0 || (ExtraStopFrame != -1 && proj.CustomFrameCounter / FrameTime % (FrameCount - 1) == ExtraStopFrame))
+        {
+            proj.Projectile.frame = IsClassic ? 1 : 0;
+            return;
+        }
+        
         switch (AnimationType)
         {
             // Animates all frames in a sequential order

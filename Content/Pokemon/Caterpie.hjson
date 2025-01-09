@@ -29,10 +29,13 @@
   }
   Projectile:
   {
-    Transform:
+    GenericPet:
     {
-      DrawOffsetY: -2
+      WalkSpeedModifier: 0.85
+      FrameCount: 5
+      FrameTime: 7
+      AnimationType: IdleForward
+      IsClassic: false
     }
-    GenericPet: {}
   }
 }

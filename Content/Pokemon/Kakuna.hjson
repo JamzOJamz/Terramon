@@ -32,10 +32,11 @@
   }
   Projectile:
   {
-    Transform:
+    GenericPet:
     {
-      DrawOffsetY: -2
+      WalkSpeedModifier: 0.8
+      FrameCount: 4
+      IsClassic: false
     }
-    GenericPet: {}
   }
 }

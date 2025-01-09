@@ -26,10 +26,10 @@
   }
   Projectile:
   {
-    Transform:
+    FlyingPet:
     {
-      DrawOffsetY: -2
+      FrameCount: 5
+      FrameTime: 4
     }
-    FlyingPet: {}
   }
 }
