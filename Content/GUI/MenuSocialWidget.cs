@@ -59,7 +59,7 @@ internal sealed class MenuSocialWidget
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[0])
                 SoundEngine.PlaySound(SoundID.MenuTick);
-            if (_isDiscordClientRunning)
+            /*if (_isDiscordClientRunning)
             {
                 FakeItem.SetDefaults(0, true);
                 const string textValue = "[c/FFFFFF:Discord client detected \u2713]\n[c/BABAC6:Click to go directly to the server!]";
@@ -70,7 +70,7 @@ internal sealed class MenuSocialWidget
                 Main.HoverItem = FakeItem;
                 Main.instance.MouseText("");
                 Main.mouseText = true;
-            }
+            }*/
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
             {
