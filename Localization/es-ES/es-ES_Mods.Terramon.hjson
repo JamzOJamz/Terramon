@@ -620,7 +620,7 @@ NPCs: {
 			CheckBack: A lo que progreses con tu aventura, venderé nuevas cosas. Vuelve a revisar mi tienda de vez en cuando.
 			Biomes: A diferentes Pokémon les gusta diferentes lugares. ¡Si viajas alrededor, podrías encontrar nuevos Pokémon!
 			Regions: Hay muchas regiones diferentes en el mundo. ¡Algún día espero poder visitarlas todas!
-			Crafting: Convenientemente vendo Poké Balls para que las compres, ¡pero si no tienes suficiente dinero puedes fabricarlas tú mismo con bonguris y hierro!
+			Crafting: Convenientemente vendo Poké Balls para que las compres, ¡pero si no tienes suficiente dinero puedes fabricarlas tú mismo con bonguris y {0}!
 			EvolutionStones: Algunos Pokémon solo evolucionan al ser expuestos a ciertas piedras. Son muy poco comúnes.
 			SickBurn: Se ha anunciado un remake de Mobile Creatures. Aunque no estoy seguro de cómo me parece el estilo artístico...
 			Dedication: Desde que los Pokémon empezaron a aparecer en {0}, he dedicado mi vida a ayudar a la gente a aprender más sobre ellos.

@@ -138,18 +138,20 @@ public class PokemartClerk : ModNPC
         var player = TerramonPlayer.LocalPlayer;
         var activePokemonData = player.GetActivePokemon();
 
-        //TODO: Re-enable dialogue CheckBack when he's given more sales and Crafting when Poke Balls are craftable
+        //TODO: Re-enable dialogue CheckBack when he's given more sales
         var chat = new WeightedRandom<string>();
-        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Catchem"));
+        /*chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Catchem"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Furret"));
         //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.CheckBack"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Biomes"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Regions"));
-        //chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Crafting"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionStones"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.SickBurn"));
         chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Dedication", Main.worldName));
-        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.NoBattleRip"));
+        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.NoBattleRip"));*/
+
+        var itemName = WorldGen.SavedOreTiers.Iron == TileID.Lead ? "MapObject.Lead" : "MapObject.Iron";
+        chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.Crafting", Language.GetTextValue(itemName).ToLower()));
 
         if (NPC.GivenName == "Pikachu")
             chat.Add(Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.BadName"));
