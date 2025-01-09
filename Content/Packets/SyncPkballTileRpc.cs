@@ -25,6 +25,8 @@ public readonly struct SyncPkballTileRpc(Item item, bool isOpen, bool isDisposab
     {
         _item.Serialize(writer, ItemSerializationContext.Syncing);
         writer.Write(_isOpen);
+        writer.Write(_isDisposable);
+        writer.Write(_player);
         writer.Write(_tileCoords.X);
         writer.Write(_tileCoords.Y);
     }
