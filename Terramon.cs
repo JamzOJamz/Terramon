@@ -18,6 +18,11 @@ public class Terramon : Mod
     /// </summary>
     public const ushort MaxPokemonLevel = 100;
 
+    static Terramon()
+    {
+        if (!Main.dedServ) MenuSocialWidget.Setup();
+    }
+
     /// <summary>
     ///     The amount of Pokémon that have actually been loaded into the game.
     ///     This is the minimum of the amount of Pokémon in the database and <see cref="MaxPokemonID" />.
@@ -32,6 +37,7 @@ public class Terramon : Mod
     ///     Whether this is the first time the mod has been loaded on the player's system, ever.
     ///     The only way for one to reset this is to delete the file <c>TerramonHasLoadedBefore.dat</c> in the save directory.
     /// </summary>
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public static bool IsFirstTimeLoad { get; private set; }
 
     /// <summary>
@@ -46,8 +52,8 @@ public class Terramon : Mod
     }
 
     /// <summary>
-    ///     Resets UI states for reuse. Called when the player leaves the world, in <see cref="TerramonWorld.PreSaveAndQuit" />
-    ///     .
+    ///     Resets UI states for reuse with other players. Called when the player leaves the world in
+    ///     <see cref="TerramonWorld.PreSaveAndQuit" />.
     /// </summary>
     public static void ResetUI()
     {
