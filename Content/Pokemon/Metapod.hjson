@@ -3,9 +3,20 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 26
+      Height: 28
     }
-    WalkingBehaviour: {}
+    BounceBehaviour:
+    {
+      BounceMinRange: -2.5
+      BounceMaxRange: -1.75
+      BounceFrequency: 18
+      HorizontalSpeedMin: 0.7
+      HorizontalSpeedMax: 0.7
+      ChangeDirectionChance: 0.5
+      MaxJumpClearance: 1
+      FrameCount: 4
+    }
     SpawnController:
     {
       Stage: 2

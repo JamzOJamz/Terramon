@@ -3,9 +3,16 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 26
+      Height: 34
     }
-    WalkingBehaviour: {}
+    WalkingBehaviour:
+    {
+      FrameCount: 7
+      FrameTime: 8
+      AnimationType: IdleForward
+      IsClassic: false
+    }
     SpawnController:
     {
       Stage: 1
