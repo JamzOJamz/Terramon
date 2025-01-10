@@ -620,7 +620,7 @@ NPCs: {
 			// CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
 			// Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
 			// Regions: There are many different regions in the world. One day I hope to visit all of them!
-			// Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and iron!
+			// Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and {0}!
 			// EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
 			// SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
 			// Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.

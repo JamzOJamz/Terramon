@@ -105,7 +105,7 @@ public abstract class BasePkballTile : ModTile
         {
             if (e.TryOpen() && !e.Item.IsAir)
             {
-                //var item = player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
+                player.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
                 e.Item.TurnToAir();
             }
         }
