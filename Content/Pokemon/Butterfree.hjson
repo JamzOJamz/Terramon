@@ -24,5 +24,12 @@
       ]
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    FlyingPet:
+    {
+      FrameCount: 5
+      FrameTime: 4
+    }
+  }
 }

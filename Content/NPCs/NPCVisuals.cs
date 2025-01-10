@@ -1,5 +1,4 @@
-﻿using Terramon.Content.NPCs.Pokemon;
-using Terramon.Core.NPCComponents;
+﻿using Terramon.Core.NPCComponents;
 
 // ReSharper disable UnassignedField.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global

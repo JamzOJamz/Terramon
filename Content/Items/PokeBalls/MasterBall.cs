@@ -1,4 +1,4 @@
-﻿using Terramon.Content.NPCs.Pokemon;
+﻿using Terramon.Content.NPCs;
 using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terraria.GameContent.Creative;

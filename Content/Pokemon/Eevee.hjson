@@ -26,5 +26,15 @@
       ]
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    GenericPet:
+    {
+      FrameCount: 7
+      FrameTime: 8
+      AnimationType: IdleForward
+      IsClassic: false
+      ExtraStopFrame: 3
+    }
+  }
 }

@@ -3,7 +3,6 @@ using ReLogic.Content;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Content.NPCs;
-using Terramon.Content.NPCs.Pokemon;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
@@ -436,7 +435,7 @@ public class HubUI : SmartUIState
 
     public void SetCurrentPokedexEntry(ushort pokemon, PokedexEntryStatus status)
     {
-        _overviewPanel.SetCurrentEntry(pokemon, status);
+        _overviewPanel.SetCurrentEntry(pokemon, status, true);
     }
 
     public override void Recalculate()
@@ -1109,7 +1108,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _list.Height.Set(Height.Pixels - 60, 0);
     }
 
-    public void SetCurrentEntry(ushort pokemon, PokedexEntryStatus status)
+    public void SetCurrentEntry(ushort pokemon, PokedexEntryStatus status, bool playCry = false)
     {
         if (Pokemon == pokemon && _status == status) return;
         Pokemon = pokemon;
@@ -1138,9 +1137,13 @@ internal sealed class PokedexOverviewPanel : UIPanel
         {
             var schema = Terramon.DatabaseV2.GetPokemon(pokemon);
             // Play Pokémon cry
-            var cry = new SoundStyle("Terramon/Sounds/Cries/" + schema.Identifier)
-                { Volume = 0.21f };
-            SoundEngine.PlaySound(cry);
+            if (playCry)
+            {
+                var cry = new SoundStyle("Terramon/Sounds/Cries/" + schema.Identifier)
+                    { Volume = 0.21f };
+                SoundEngine.PlaySound(cry);
+            }
+
             _speciesText.SetText(Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon));
             _dexEntryText.SetText(Terramon.DatabaseV2.GetPokemonDexEntryDirect(pokemon));
             var heightInMeters = schema.Height / 10f; // Convert from decimeters to meters

@@ -9,7 +9,7 @@
     WanderingHoverBehaviour:
     {
       FrameCount: 6
-      FrameTime: 3
+      FrameTime: 4
     }
     SpawnController:
     {
@@ -24,5 +24,12 @@
       ]
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    FlyingPet:
+    {
+      FrameCount: 6
+      FrameTime: 4
+    }
+  }
 }

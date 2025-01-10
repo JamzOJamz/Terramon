@@ -35,5 +35,13 @@
       DustOffsetY: 10
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    GenericPet:
+    {
+      FrameCount: 3
+      AnimationType: Alternate
+      IsClassic: false
+    }
+  }
 }

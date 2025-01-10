@@ -1,6 +1,6 @@
 using System.IO;
 using EasyPacketsLib;
-using Terramon.Content.NPCs.Pokemon;
+using Terramon.Content.NPCs;
 using Terraria.Localization;
 
 namespace Terramon.Content.Commands;

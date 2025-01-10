@@ -1,5 +1,6 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
+using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.DataStructures;
@@ -27,7 +28,14 @@ public class PokemonCompanion : ModBuff
     public override void Update(Player player, ref int buffIndex)
     {
         // Prevent the buff from expiring
-        player.buffTime[buffIndex] = int.MaxValue;
+        player.buffTime[buffIndex] = 18000;
+
+        // Spawn the pet if needed
+        var id = player.GetModPlayer<TerramonPlayer>().GetActivePokemon()?.ID ?? 0;
+        if (id == 0) return;
+        var unused = false;
+        player.BuffHandle_SpawnPetIfNeededAndSetTime(buffIndex, ref unused,
+            PokemonEntityLoader.IDToPetType[id]);
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)

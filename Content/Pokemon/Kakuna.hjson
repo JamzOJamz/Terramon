@@ -30,5 +30,13 @@
       ]
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    GenericPet:
+    {
+      WalkSpeedModifier: 0.8
+      FrameCount: 4
+      IsClassic: false
+    }
+  }
 }

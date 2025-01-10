@@ -1,49 +1,30 @@
-using System.Collections;
 using System.Reflection;
 using System.Text;
-using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Core.Abstractions;
+using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 
-namespace Terramon.Content.NPCs.Pokemon;
+namespace Terramon.Content.NPCs;
 
 [Autoload(false)]
-public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
+public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity
 {
-    private static Dictionary<ushort, JToken> _schemaCache;
     private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
-    private static BitArray _hasGenderDifference;
-    private static MethodInfo _enableComponentMethod;
 
     private int _cryTimer;
     private Asset<Texture2D> _mainTexture;
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
-
-    /// <summary>
-    ///     The ID of the Pokémon (in the database) that this NPC represents. Not to be confused with the NPC
-    ///     <see cref="NPC.type" />.
-    /// </summary>
-    public ushort ID { get; } = id;
-
-    /// <summary>
-    ///     The database schema of the Pokémon that this NPC represents.
-    /// </summary>
-    public DatabaseV2.PokemonSchema Schema { get; } = schema;
-
-    /// <summary>
-    ///     The Pokémon instance data tied to this NPC. This is initialized when the NPC is spawned.
-    /// </summary>
-    public PokemonData Data { get; set; }
 
     protected override bool CloneNewInstances => true;
 
@@ -55,9 +36,29 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
 
     public bool PlasmaState { get; private set; }
 
+    public ushort ID { get; } = id;
+
+    public DatabaseV2.PokemonSchema Schema { get; } = schema;
+
+    public PokemonData Data { get; set; }
+    
+    public override void SetStaticDefaults()
+    {
+        // Load glowmask texture if it exists.
+        if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
+            _glowTextureCache[ID] = glowTex;
+
+        // Hide from the bestiary (they will appear in the Pokédex instead)
+        var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers
+        {
+            Hide = true
+        };
+        NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+    }
+
     public override void SetDefaults()
     {
-        NPC.lifeMax = 100;
+        NPC.lifeMax = 250;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.value = 0f;
         NPC.knockBackResist = 0.75f;
@@ -67,14 +68,14 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
         // Start a stopwatch to measure the time it takes to apply all components.
         // var stopwatch = Stopwatch.StartNew();
 
-        foreach (var component in _schemaCache[ID].Children<JProperty>())
+        foreach (var component in PokemonEntityLoader.NPCSchemaCache[ID].Children<JProperty>())
         {
             var componentType = Mod.Code.GetType($"Terramon.Content.NPCs.NPC{component.Name}");
             if (componentType == null)
                 // Remove the component from the schema if it doesn't exist.
                 // _schemaCache[ID].First(x => x.Path == component.Path).Remove();
                 continue;
-            var enableComponentRef = _enableComponentMethod.MakeGenericMethod(componentType);
+            var enableComponentRef = NPCComponentExtensions.EnableComponentMethod.MakeGenericMethod(componentType);
             var instancedComponent = enableComponentRef.Invoke(null, [NPC, null]);
             foreach (var prop in component.Value.Children<JProperty>())
             {
@@ -87,23 +88,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
         // Stop the stopwatch and log the time taken to apply all components.
         // stopwatch.Stop();
         // Mod.Logger.Debug("Time taken to apply components: " + stopwatch.Elapsed + "ms");
-    }
-
-    public override void SetStaticDefaults()
-    {
-        // Load gender-specific texture if it exists.
-        _hasGenderDifference[ID - 1] = ModContent.HasAsset(Texture + "F");
-
-        // Load glowmask texture if it exists.
-        if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
-            _glowTextureCache[ID] = glowTex;
-
-        // Hide from the bestiary (they will appear in the Pokédex instead)
-        var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers
-        {
-            Hide = true
-        };
-        NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -135,7 +119,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
         {
             var pathBuilder = new StringBuilder(Texture);
 
-            if (_hasGenderDifference[ID - 1] && Data?.Gender == Gender.Female)
+            if (PokemonEntityLoader.HasGenderDifference[ID - 1] && Data?.Gender == Gender.Female)
                 pathBuilder.Append('F');
             if (!string.IsNullOrEmpty(Data?.Variant))
                 pathBuilder.Append('_').Append(Data.Variant);
@@ -258,7 +242,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
     {
         Lighting.AddLight(NPC.Center, 0.5f, 0.5f, 0.5f);
         _shinySparkleTimer++;
-        if (_shinySparkleTimer < 6) return;
+        if (_shinySparkleTimer < 12) return;
         for (var i = 0; i < 2; i++)
         {
             var dust = Dust.NewDustDirect(
@@ -320,33 +304,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC
     public override void Load()
     {
         // First time loading any PokemonNPC, initialize static fields.
-        if (_schemaCache == null)
-        {
-            _schemaCache = new Dictionary<ushort, JToken>();
-            _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
-            _hasGenderDifference = new BitArray(Terramon.LoadedPokemonCount);
-            _enableComponentMethod = typeof(NPCComponentExtensions).GetMethod("EnableComponent");
-            if (Main.netMode != NetmodeID.Server)
-                GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
-                    new MiscShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FadeToColor"), "FadePass");
-        }
-
-        // Load schema from HJSON file and cache it.
-        var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{Schema.Identifier}.hjson");
-        using var hjsonReader = new StreamReader(hjsonStream);
-        var jsonText = HjsonValue.Load(hjsonReader).ToString();
-        hjsonReader.Close();
-        var schema = JObject.Parse(jsonText);
-        if (!schema.TryGetValue("NPC", out var value)) return;
-        _schemaCache.Add(ID, value);
+        if (_glowTextureCache != null) return;
+        _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
+        if (Main.netMode != NetmodeID.Server)
+            GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
+                new MiscShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FadeToColor"), "FadePass");
     }
 
     public override void Unload()
     {
-        if (_schemaCache == null) return;
-        _schemaCache = null;
         _glowTextureCache = null;
-        _hasGenderDifference = null;
-        _enableComponentMethod = null;
     }
 }

@@ -24,5 +24,13 @@
       ]
     }
   }
-  Projectile: {}
+  Projectile:
+  {
+    GenericPet:
+    {
+      FrameCount: 4
+      IsClassic: false
+      ExtraStopFrame: 2
+    }
+  }
 }
