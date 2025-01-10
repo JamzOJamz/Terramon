@@ -1,3 +1,4 @@
+using System.Reflection;
 using ReLogic.Graphics;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -14,7 +15,7 @@ internal sealed class MenuSocialWidget
     private const string GitHubURL = "https://github.com/JamzOJamz/Terramon";
 
     private static readonly Item FakeItem = new();
-    private static readonly bool[] LastHoveringInteractableText = new bool[4];
+    private static readonly bool[] LastHoveringInteractableText = new bool[5];
     private static DateTime _lastDiscordClientCheck = DateTime.MinValue;
     private const double DiscordClientCheckInterval = 5;
     private static bool _isDiscordClientRunning;
@@ -47,8 +48,45 @@ internal sealed class MenuSocialWidget
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
             $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
+        
+        // Draw Mod Config link text
+        const string configText = "Mod Config";
+        var configTextSize = FontAssets.MouseText.Value.MeasureString(configText);
+        configTextSize.Y *= 0.9f;
+        drawPos.Y += 30;
+        var hoveredConfig = Main.MouseScreen.Between(drawPos, drawPos + configTextSize);
+        if (hoveredConfig)
+        {
+            Main.LocalPlayer.mouseInterface = true;
+            if (!LastHoveringInteractableText[4])
+                SoundEngine.PlaySound(SoundID.MenuTick);
 
-        // Draw "Join the Discord community" text in blurple below the version number
+            if (Main.mouseLeft && Main.mouseLeftRelease)
+            {
+                SoundEngine.PlaySound(SoundID.MenuOpen);
+                Main.mouseLeftRelease = false;
+                
+                var interfaceType = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.UI.Interface");
+                var modConfigList = interfaceType!
+                    .GetField("modConfigList", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null);
+                var modToSelectOnOpen = modConfigList!
+                    .GetType().GetField("ModToSelectOnOpen", BindingFlags.Instance | BindingFlags.Public);
+                modToSelectOnOpen!.SetValue(modConfigList, Terramon.Instance);
+                Main.menuMode = (int)interfaceType.GetField("modConfigListID", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
+            }
+
+            LastHoveringInteractableText[4] = true;
+        }
+        else
+        {
+            LastHoveringInteractableText[4] = false;
+        }
+        
+        DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, configText, drawPos,
+            hoveredConfig ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f,
+            SpriteEffects.None, 0f, alphaMult: 0.76f);
+
+        // Draw Discord Server link text
         const string discordText = "Discord Server";
         var discordTextSize = FontAssets.MouseText.Value.MeasureString(discordText);
         discordTextSize.Y *= 0.9f;

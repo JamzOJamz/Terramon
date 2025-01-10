@@ -9,7 +9,7 @@ namespace Terramon.Helpers;
 /*
  * MIT License
  *
- * Copyright (c) 2023 John Baglio
+ * Copyright (c) 2025 John Baglio
  *
  * https://github.com/absoluteAquarian/SerousCommonLib/blob/master/src/API/Helpers/LocalizationHelper.cs
  *
