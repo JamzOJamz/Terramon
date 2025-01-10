@@ -65,6 +65,11 @@ Commands: {
 		// Success: Cleared {0} Pokémon NPC(s)
 		// SuccessByPlayer: "{0} cleared {1} Pokémon NPC(s)"
 	}
+
+	PC: {
+		// Description: Opens the Pokémon Storage System from anywhere
+		// Usage: /pc
+	}
 }
 
 Configs: {

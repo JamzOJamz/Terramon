@@ -35,6 +35,17 @@ internal class MasterBallItem : BasePkballItem
         TerramonItemAPI.Sets.Unobtainable.Add(Type);
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
     }
+
+    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale,
+        int whoAmI)
+    {
+        Main.GetItemDrawFrame(Item.type, out var itemTexture, out var itemFrame);
+        var drawOrigin = itemFrame.Size() / 2f;
+        var drawPosition = Item.Bottom - Main.screenPosition - new Vector2(0, drawOrigin.Y);
+        spriteBatch.Draw(itemTexture, drawPosition, itemFrame, Color.White, rotation, drawOrigin, scale, SpriteEffects.None, 0);
+        
+        return false;
+    }
 }
 
 public class MasterBallTile : BasePkballTile
