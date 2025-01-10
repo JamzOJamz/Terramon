@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
 
-public class PokeClearCommand : TerramonCommand
+public class PokeClearCommand : DebugCommand
 {
     public override CommandType Type
         => CommandType.World;

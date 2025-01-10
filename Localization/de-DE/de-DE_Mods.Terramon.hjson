@@ -6,7 +6,7 @@ Buffs: {
 }
 
 Commands: {
-	// RequiresDebugMode: This command requires Debug Mode to be enabled in the mod config!
+	// RequiresDebugMode: This command requires Allow Cheat Commands to be enabled in the mod config!
 
 	DexEdit: {
 		// Description: Forcefully sets Pokédex entry statuses
@@ -158,8 +158,12 @@ Configs: {
 		}
 
 		DebugMode: {
-			// Label: Debug Mode
-			// Tooltip: Allows the use of certain debug commands that can also be used to cheat
+			// Label: Allow Cheat Commands
+			/* Tooltip:
+				'''
+				Enables the use of cheat commands (e.g. /pokeclear) in the chat
+				[c/F2A754:May disrupt normal gameplay]
+				''' */
 		}
 	}
 
