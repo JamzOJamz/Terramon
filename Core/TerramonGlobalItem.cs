@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Terraria.Localization;
 
 namespace Terramon.Core;

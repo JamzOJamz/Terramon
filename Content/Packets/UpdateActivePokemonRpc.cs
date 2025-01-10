@@ -1,6 +1,4 @@
-using System.IO;
 using EasyPacketsLib;
-
 
 namespace Terramon.Content.Packets;
 

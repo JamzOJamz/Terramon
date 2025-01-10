@@ -5,17 +5,13 @@ namespace Terramon.Content.Commands;
 
 public class PartyDataCommand : DebugCommand
 {
-    public override CommandType Type
-        => CommandType.Chat;
+    public override CommandType Type => CommandType.Chat;
 
-    public override string Command
-        => "partydata";
+    public override string Command => "partydata";
 
-    public override string Description
-        => Language.GetTextValue("Mods.Terramon.Commands.PartyData.Description");
+    public override string Description => Language.GetTextValue("Mods.Terramon.Commands.PartyData.Description");
 
-    public override string Usage
-        => Language.GetTextValue("Mods.Terramon.Commands.PartyData.Usage");
+    public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.PartyData.Usage");
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

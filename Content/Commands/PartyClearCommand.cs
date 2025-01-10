@@ -1,21 +1,16 @@
-using System;
 using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
 
 public class PartyClearCommand : DebugCommand
 {
-    public override CommandType Type
-        => CommandType.Chat;
+    public override CommandType Type => CommandType.Chat;
 
-    public override string Command
-        => "partyclear";
+    public override string Command => "partyclear";
 
-    public override string Description
-        => Language.GetTextValue("Mods.Terramon.Commands.PartyClear.Description");
+    public override string Description => Language.GetTextValue("Mods.Terramon.Commands.PartyClear.Description");
 
-    public override string Usage
-        => Language.GetTextValue("Mods.Terramon.Commands.PartyClear.Usage");
+    public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.PartyClear.Usage");
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

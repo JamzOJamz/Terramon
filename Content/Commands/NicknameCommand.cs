@@ -9,17 +9,13 @@ public class NicknameCommand : TerramonCommand
     /// </summary>
     private const int MaxNicknameLength = 12;
 
-    public override CommandType Type
-        => CommandType.Chat;
+    public override CommandType Type => CommandType.Chat;
 
-    public override string Command
-        => "nickname";
+    public override string Command => "nickname";
 
-    public override string Description
-        => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Description");
+    public override string Description => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Description");
 
-    public override string Usage
-        => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Usage");
+    public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Usage");
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

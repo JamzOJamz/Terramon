@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using ReLogic.Content;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.GameContent;

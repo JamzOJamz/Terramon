@@ -1,4 +1,3 @@
-using System.IO;
 using EasyPacketsLib;
 using Terramon.Content.NPCs;
 using Terraria.Localization;
@@ -7,17 +6,13 @@ namespace Terramon.Content.Commands;
 
 public class PokeClearCommand : DebugCommand
 {
-    public override CommandType Type
-        => CommandType.World;
+    public override CommandType Type => CommandType.World;
 
-    public override string Command
-        => "pokeclear";
+    public override string Command => "pokeclear";
 
-    public override string Description
-        => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Description");
+    public override string Description => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Description");
 
-    public override string Usage
-        => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Usage");
+    public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Usage");
 
     protected override int MinimumArgumentCount => 0;
 

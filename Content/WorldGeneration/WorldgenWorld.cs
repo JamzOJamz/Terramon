@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Terraria.WorldBuilding;
 
 namespace Terramon.Core;

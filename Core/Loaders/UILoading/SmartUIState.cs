@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Terraria.UI;
 
 namespace Terramon.Core.Loaders.UILoading;

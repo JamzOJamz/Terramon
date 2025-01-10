@@ -1,4 +1,3 @@
-using System;
 using Terramon.Core.NPCComponents;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global

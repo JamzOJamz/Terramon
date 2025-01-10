@@ -1,6 +1,5 @@
 using Terramon.Content.Items.PokeBalls;
 
-
 namespace Terramon.Content.Tiles.MusicBoxes;
 
 public class MusicBoxCenter : MusicTile

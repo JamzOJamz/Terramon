@@ -1,3 +1,4 @@
+using System.Globalization;
 using Terramon.Helpers;
 
 namespace Terramon.ID;
@@ -64,6 +65,6 @@ public static class PokemonTypeExtensions
     /// </summary>
     public static Color GetColor(this PokemonType type)
     {
-        return ColorUtils.FromHex(int.Parse(type.GetHexColor(), System.Globalization.NumberStyles.HexNumber));
+        return ColorUtils.FromHex(int.Parse(type.GetHexColor(), NumberStyles.HexNumber));
     }
 }

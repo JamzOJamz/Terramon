@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;

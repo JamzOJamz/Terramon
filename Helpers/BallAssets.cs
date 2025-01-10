@@ -1,4 +1,3 @@
-using System;
 using ReLogic.Content;
 using Terramon.ID;
 

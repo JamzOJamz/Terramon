@@ -1,21 +1,16 @@
-using System;
 using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
 
 public class DexEditCommand : DebugCommand
 {
-    public override CommandType Type
-        => CommandType.Chat;
+    public override CommandType Type => CommandType.Chat;
 
-    public override string Command
-        => "dexedit";
+    public override string Command => "dexedit";
 
-    public override string Description
-        => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Description");
+    public override string Description => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Description");
 
-    public override string Usage
-        => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Usage");
+    public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Usage");
 
     protected override int MinimumArgumentCount => 2;
 

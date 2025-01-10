@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using ReLogic.Content;
 using Terramon.Content.Configs;

@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Terramon.Content.Items;
