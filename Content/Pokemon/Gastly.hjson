@@ -3,9 +3,14 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 26
+      Height: 26
     }
-    WanderingHoverBehaviour: {}
+    WanderingHoverBehaviour:
+    {
+      FrameCount: 4
+      FrameTime: 6
+    }
     SpawnController:
     {
       Stage: 1
@@ -18,13 +23,20 @@
         }
       ]
     }
+    Visuals:
+    {
+      LightColor: "0.70196, 0.435294, 0.77647"
+      ShinyLightColor: "0.247, 0.42745, 0.9372549"
+      LightStrength: 1
+      DamperAmount: 0.5
+    }
   }
   Projectile:
   {
-    Transform:
+    FlyingPet:
     {
-      DrawOffsetY: -2
+      FrameCount: 4
+      FrameTime: 6
     }
-    FlyingPet: {}
   }
 }

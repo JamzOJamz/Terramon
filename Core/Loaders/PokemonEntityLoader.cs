@@ -1,8 +1,10 @@
 using System.Collections;
 using Hjson;
 using Newtonsoft.Json.Linq;
+using ReLogic.Content;
 using Terramon.Content.NPCs;
 using Terramon.Content.Projectiles;
+using Terraria.Graphics.Shaders;
 
 namespace Terramon.Core.Loaders;
 
@@ -11,6 +13,8 @@ namespace Terramon.Core.Loaders;
 /// </summary>
 public class PokemonEntityLoader : ModSystem
 {
+    public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; }
+    public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; }
     public static Dictionary<ushort, int> IDToNPCType { get; private set; }
     public static Dictionary<ushort, int> IDToPetType { get; private set; }
     public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; }
@@ -21,7 +25,12 @@ public class PokemonEntityLoader : ModSystem
     {
         // The initialization of this array is done here rather than in Load to avoid a null ref exception reading LoadedPokemonCount
         HasGenderDifference = new BitArray(Terramon.LoadedPokemonCount);
-        
+
+        // Load the fade shader for Pokémon
+        if (!Main.dedServ)
+            GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
+                new MiscShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FadeToColor"), "FadePass");
+
         foreach (var (id, pokemon) in Terramon.DatabaseV2.Pokemon)
         {
             if (id > Terramon.MaxPokemonID) continue;
@@ -46,7 +55,14 @@ public class PokemonEntityLoader : ModSystem
         var jsonText = HjsonValue.Load(hjsonReader).ToString();
         hjsonReader.Close();
         var hjsonSchema = JObject.Parse(jsonText);
-        
+
+        // Load glowmask textures if they exist
+        if (ModContent.RequestIfExists<Texture2D>($"Terramon/Assets/Pokemon/{schema.Identifier}_Glow", out var glowTex))
+            GlowTextureCache[id] = glowTex;
+        if (ModContent.RequestIfExists<Texture2D>($"Terramon/Assets/Pokemon/{schema.Identifier}_S_Glow",
+                out var shinyGlowTex))
+            ShinyGlowTextureCache[id] = shinyGlowTex;
+
         // Check if this Pokémon has a gender difference (alternate texture)
         HasGenderDifference[id - 1] = ModContent.HasAsset($"Terramon/Assets/Pokemon/{schema.Identifier}F");
 
@@ -73,6 +89,8 @@ public class PokemonEntityLoader : ModSystem
         IDToPetType = new Dictionary<ushort, int>();
         NPCSchemaCache = new Dictionary<ushort, JToken>();
         PetSchemaCache = new Dictionary<ushort, JToken>();
+        GlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
+        ShinyGlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
     }
 
     public override void Unload()
@@ -82,5 +100,7 @@ public class PokemonEntityLoader : ModSystem
         NPCSchemaCache = null;
         PetSchemaCache = null;
         HasGenderDifference = null;
+        GlowTextureCache = null;
+        ShinyGlowTextureCache = null;
     }
 }

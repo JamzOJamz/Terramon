@@ -5,9 +5,11 @@ using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Projectiles;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -18,8 +20,6 @@ namespace Terramon.Content.NPCs;
 [Autoload(false)]
 public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity
 {
-    private static Dictionary<ushort, Asset<Texture2D>> _glowTextureCache;
-
     private int _cryTimer;
     private Asset<Texture2D> _mainTexture;
     private int _plasmaStateTime;
@@ -41,13 +41,9 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public DatabaseV2.PokemonSchema Schema { get; } = schema;
 
     public PokemonData Data { get; set; }
-    
+
     public override void SetStaticDefaults()
     {
-        // Load glowmask texture if it exists.
-        if (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var glowTex))
-            _glowTextureCache[ID] = glowTex;
-
         // Hide from the bestiary (they will appear in the Pokédex instead)
         var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers
         {
@@ -135,18 +131,30 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         if (_plasmaStateTime <= 20)
         {
+            // Desaturate the lightColor for Gastly
+            var adjustedColor = ID == NationalDexID.Gastly
+                ? PokemonPet.GrayscaleColor(drawColor)
+                : drawColor;
+
             spriteBatch.Draw(_mainTexture.Value,
                 NPC.Center - screenPos +
                 new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
-                NPC.frame, drawColor, NPC.rotation,
+                NPC.frame, adjustedColor, NPC.rotation,
                 frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
 
-            if (_glowTextureCache.TryGetValue(ID, out var glowTexture) && !PlasmaState)
+            var glowCache = Data?.IsShiny ?? false
+                ? PokemonEntityLoader.ShinyGlowTextureCache
+                : PokemonEntityLoader.GlowTextureCache;
+            if (glowCache.TryGetValue(ID, out var glowTexture) && !PlasmaState)
+            {
+                drawColor = Color.White;
+                if (ID == NationalDexID.Gastly) drawColor.A = 128;
                 spriteBatch.Draw(glowTexture.Value,
                     NPC.Center - screenPos +
                     new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4),
-                    NPC.frame, Color.White, NPC.rotation,
+                    NPC.frame, drawColor, NPC.rotation,
                     frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
+            }
         }
 
         if (!PlasmaState) return false;
@@ -299,20 +307,5 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         NPC.noGravity = true; // Disable gravity
         NPC.netUpdate = true;
-    }
-
-    public override void Load()
-    {
-        // First time loading any PokemonNPC, initialize static fields.
-        if (_glowTextureCache != null) return;
-        _glowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
-        if (Main.netMode != NetmodeID.Server)
-            GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
-                new MiscShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FadeToColor"), "FadePass");
-    }
-
-    public override void Unload()
-    {
-        _glowTextureCache = null;
     }
 }

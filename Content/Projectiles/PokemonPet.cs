@@ -8,6 +8,7 @@ using Terramon.Content.Dusts;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Loaders;
 using Terramon.Core.ProjectileComponents;
+using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
@@ -17,6 +18,15 @@ namespace Terramon.Content.Projectiles;
 [Autoload(false)]
 public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProjectile, IPokemonEntity
 {
+    public delegate void CustomFindFrame(PokemonPet proj);
+
+    private ushort _cachedID;
+    private int? _customSpriteDirection;
+    private Asset<Texture2D> _mainTexture;
+    private int _shinySparkleTimer;
+    public int CustomFrameCounter;
+    public CustomFindFrame FindFrame;
+
     static PokemonPet()
     {
         // Don't run this on the server
@@ -40,7 +50,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             var projectile = new Projectile();
             projectile.SetDefaults(PokemonEntityLoader.IDToPetType[activePokemon.ID]);
             projectile.isAPreviewDummy = true;
-            ((PokemonPet)projectile.ModProjectile).Data = activePokemon; // Set the pet's data to the player's active Pokémon (hacky)
+            ((PokemonPet)projectile.ModProjectile).Data =
+                activePokemon; // Set the pet's data to the player's active Pokémon (hacky)
             petProjectiles = [projectile];
         };
         return;
@@ -48,7 +59,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_petProjectiles")]
         static extern ref Projectile[] GetPetProjectiles(UICharacter instance);
     }
-    
+
 
     protected override bool CloneNewInstances => true;
 
@@ -63,12 +74,6 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     public DatabaseV2.PokemonSchema Schema { get; } = schema;
 
     public PokemonData Data { get; set; }
-    
-    private Asset<Texture2D> _mainTexture;
-    public int CustomFrameCounter;
-    private int? _customSpriteDirection;
-    private int _shinySparkleTimer;
-    private ushort _cachedID;
 
     public override void SetStaticDefaults()
     {
@@ -104,7 +109,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Projectile.position.X += direction * 40;
 
         var dust = ModContent.DustType<SummonCloud>();
-        var mainPosition = new Vector2(Projectile.position.X - Projectile.width / 2f, Projectile.position.Y - Projectile.height / 2f);
+        var mainPosition = new Vector2(Projectile.position.X - Projectile.width / 2f,
+            Projectile.position.Y - Projectile.height / 2f);
         Dust.NewDust(new Vector2(mainPosition.X, mainPosition.Y + 4), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X, mainPosition.Y - 4), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X + 4, mainPosition.Y), Projectile.width, Projectile.height, dust);
@@ -113,17 +119,13 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X + 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
-        
+
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
         var owningPlayer = Main.player[Projectile.owner];
         Data = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         _cachedID = ID;
         Projectile.netUpdate = true;
     }
-    
-    public delegate void CustomFindFrame(PokemonPet proj);
-    
-    public CustomFindFrame FindFrame;
 
     public override bool PreDraw(ref Color lightColor)
     {
@@ -141,38 +143,80 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             var path = pathBuilder.ToString();
             _mainTexture = ModContent.Request<Texture2D>(path);
         }
-        
+
         // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
         FindFrame?.Invoke(this);
-        
+
         var projFrameCount = Main.projFrames[Type];
         var sourceRect = _mainTexture.Frame(1, projFrameCount, frameY: Projectile.frame);
         var frameSize = sourceRect.Size();
-        var effects = _customSpriteDirection.HasValue ? _customSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None : Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-        
+        var effects = _customSpriteDirection.HasValue
+            ? _customSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+            : Projectile.spriteDirection == -1
+                ? SpriteEffects.FlipHorizontally
+                : SpriteEffects.None;
+
+        // Desaturate the lightColor for Gastly
+        var adjustedColor = ID == NationalDexID.Gastly
+            ? GrayscaleColor(lightColor)
+            : lightColor;
+
         Main.EntitySpriteDraw(_mainTexture.Value,
             Projectile.Center - Main.screenPosition +
-            new Vector2(0f, Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4), sourceRect, lightColor,
+            new Vector2(0f, Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4),
+            sourceRect, adjustedColor,
+            Projectile.rotation,
+            frameSize / new Vector2(2, 1), Projectile.scale, effects);
+
+        var glowCache = Data?.IsShiny ?? false
+            ? PokemonEntityLoader.ShinyGlowTextureCache
+            : PokemonEntityLoader.GlowTextureCache;
+        if (!glowCache.TryGetValue(ID, out var glowTexture)) return false;
+
+        // Draw the glowmask texture for the pet
+        lightColor = Color.White;
+        if (ID == NationalDexID.Gastly) lightColor.A = 128;
+        Main.EntitySpriteDraw(glowTexture.Value,
+            Projectile.Center - Main.screenPosition +
+            new Vector2(0f, Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4),
+            sourceRect, lightColor,
             Projectile.rotation,
             frameSize / new Vector2(2, 1), Projectile.scale, effects);
 
         return false;
     }
 
+    public static Color GrayscaleColor(Color color)
+    {
+        // Compute luminance using the weighted average formula
+        var grayValue = (int)(0.299f * color.R + 0.587f * color.G + 0.114f * color.B);
+        return new Color(grayValue, grayValue, grayValue, color.A); // Maintain original alpha
+    }
+
     public override void AI()
     {
+        var isShiny = Data is { IsShiny: true };
+
+        if (ID == NationalDexID.Gastly)
+        {
+            var lightColor = isShiny
+                ? new Vector3(63 / 255f, 109 / 255f, 239 / 255f)
+                : new Vector3(179 / 255f, 111 / 255f, 198 / 255f);
+            Lighting.AddLight(Projectile.Center, lightColor * (Main.raining || Projectile.wet ? 1 - 0.5f : 1));
+        }
+
         var owningPlayer = Main.player[Projectile.owner];
         var activePokemon = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
 
         // Handles keeping the pet alive until it should despawn
         if (!owningPlayer.dead && owningPlayer.HasBuff(ModContent.BuffType<PokemonCompanion>()) &&
             activePokemon == Data && activePokemon.ID == _cachedID) Projectile.timeLeft = 2;
-        
+
         if (Projectile.velocity.X != 0) _customSpriteDirection = null;
-        
-        if (Data is { IsShiny: true }) ShinyEffect();
+
+        if (isShiny) ShinyEffect();
     }
-    
+
     private void ShinyEffect()
     {
         Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
@@ -181,7 +225,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         for (var i = 0; i < 2; i++)
         {
             var dust = Dust.NewDustDirect(
-                Projectile.position + new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)), Projectile.width,
+                Projectile.position + new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)),
+                Projectile.width,
                 Projectile.height, DustID.TreasureSparkle);
             dust.velocity = Projectile.velocity;
             dust.noGravity = true;
