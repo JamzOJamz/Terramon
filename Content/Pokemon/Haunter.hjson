@@ -3,9 +3,14 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 36
+      Height: 32
     }
-    WanderingHoverBehaviour: {}
+    WanderingHoverBehaviour:
+    {
+      FrameCount: 4
+      FrameTime: 6
+    }
     SpawnController:
     {
       Stage: 2
@@ -21,10 +26,10 @@
   }
   Projectile:
   {
-    Transform:
+    FlyingPet:
     {
-      DrawOffsetY: -2
+      FrameCount: 4
+      FrameTime: 6
     }
-    FlyingPet: {}
   }
 }

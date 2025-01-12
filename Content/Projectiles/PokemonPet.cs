@@ -24,6 +24,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     private int? _customSpriteDirection;
     private Asset<Texture2D> _mainTexture;
     private int _shinySparkleTimer;
+    private bool _shinyEffectDisabled;
     public int CustomFrameCounter;
     public CustomFindFrame FindFrame;
 
@@ -160,6 +161,12 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         var adjustedColor = ID == NationalDexID.Gastly
             ? GrayscaleColor(lightColor)
             : lightColor;
+        
+        // Disable shiny effect for Haunter if in the dark
+        if (ID == NationalDexID.Haunter)
+        {
+            _shinyEffectDisabled = GrayscaleColor(lightColor).R <= 210;
+        }
 
         Main.EntitySpriteDraw(_mainTexture.Value,
             Projectile.Center - Main.screenPosition +
@@ -201,8 +208,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         {
             var lightColor = isShiny
                 ? new Vector3(63 / 255f, 109 / 255f, 239 / 255f)
-                : new Vector3(179 / 255f, 111 / 255f, 198 / 255f);
-            Lighting.AddLight(Projectile.Center, lightColor * (Main.raining || Projectile.wet ? 1 - 0.5f : 1));
+                : new Vector3(169 / 255f, 124 / 255f, 226 / 255f);
+            Lighting.AddLight(Projectile.Center, lightColor * 1.25f * (Main.raining || Projectile.wet ? 1 - 0.5f : 1));
         }
 
         var owningPlayer = Main.player[Projectile.owner];
@@ -214,7 +221,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
         if (Projectile.velocity.X != 0) _customSpriteDirection = null;
 
-        if (isShiny) ShinyEffect();
+        if (isShiny && !_shinyEffectDisabled) ShinyEffect();
     }
 
     private void ShinyEffect()
