@@ -33,5 +33,10 @@
       IsClassic: false
       ExtraStopFrame: 2
     }
+    Transform:
+    {
+      Width: 24
+      Height: 22
+    }
   }
 }

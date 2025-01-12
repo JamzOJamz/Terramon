@@ -18,10 +18,7 @@
   }
   Projectile:
   {
-    Transform:
-    {
-      DrawOffsetY: -2
-    }
+    Transform: {}
     GenericPet: {}
   }
 }

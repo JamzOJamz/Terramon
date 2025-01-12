@@ -45,5 +45,10 @@
       AnimationType: Alternate
       IsClassic: false
     }
+    Transform:
+    {
+      Width: 24
+      Height: 29
+    }
   }
 }

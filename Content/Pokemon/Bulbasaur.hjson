@@ -33,5 +33,10 @@
       FrameTime: 5
       IsClassic: false
     }
+    Transform:
+    {
+      Width: 28
+      Height: 22
+    }
   }
 }
