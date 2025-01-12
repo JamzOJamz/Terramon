@@ -3,9 +3,17 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 32
+      Height: 38
     }
-    WalkingBehaviour: {}
+    WalkingBehaviour:
+    {
+      WalkSpeed: 0.9
+      FrameCount: 6
+      FrameTime: 6
+      AnimationType: IdleForward
+      IsClassic: false
+    }
     SpawnController:
     {
       Stage: 3
@@ -21,10 +29,12 @@
   }
   Projectile:
   {
-    Transform:
+    GenericPet:
     {
-      DrawOffsetY: -2
+      FrameCount: 6
+      FrameTime: 6
+      AnimationType: IdleForward
+      IsClassic: false
     }
-    GenericPet: {}
   }
 }

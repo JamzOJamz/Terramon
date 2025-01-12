@@ -31,6 +31,7 @@
     {
       WalkSpeedModifier: 0.9
       FrameCount: 4
+      FrameTime: 9
       IsClassic: false
       ExtraStopFrame: 2
     }

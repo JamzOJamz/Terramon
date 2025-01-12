@@ -145,8 +145,11 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             _mainTexture = ModContent.Request<Texture2D>(path);
         }
 
-        // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
-        FindFrame?.Invoke(this);
+        if (Projectile.isAPreviewDummy)
+        {
+            // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
+            FindFrame?.Invoke(this);
+        }
 
         var projFrameCount = Main.projFrames[Type];
         var sourceRect = _mainTexture.Frame(1, projFrameCount, frameY: Projectile.frame);
@@ -162,8 +165,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             ? GrayscaleColor(lightColor)
             : lightColor;
         
-        // Disable shiny effect for Haunter if in the dark
-        if (ID == NationalDexID.Haunter)
+        // Disable shiny effect for Haunter and Gengar if in the dark
+        if (ID is NationalDexID.Haunter or NationalDexID.Gengar)
         {
             _shinyEffectDisabled = GrayscaleColor(lightColor).R <= 210;
         }
@@ -222,6 +225,12 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         if (Projectile.velocity.X != 0) _customSpriteDirection = null;
 
         if (isShiny && !_shinyEffectDisabled) ShinyEffect();
+    }
+
+    public override void PostAI()
+    {
+        // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
+        FindFrame?.Invoke(this);
     }
 
     private void ShinyEffect()

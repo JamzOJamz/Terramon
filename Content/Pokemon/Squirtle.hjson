@@ -29,6 +29,7 @@
     GenericPet:
     {
       FrameCount: 4
+      FrameTime: 8
       IsClassic: false
       ExtraStopFrame: 2
     }
