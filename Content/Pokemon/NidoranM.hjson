@@ -1,7 +1,10 @@
 {
   NPC:
   {
-    Transform: {}
+    Transform:
+    {
+      DrawOffsetY: -2
+    }
     WalkingBehaviour: {}
     SpawnController:
     {
@@ -18,7 +21,10 @@
   }
   Projectile:
   {
-    Transform: {}
+    Transform:
+    {
+      DrawOffsetY: -2
+    }
     GenericPet: {}
   }
 }
