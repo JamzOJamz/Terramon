@@ -7,6 +7,8 @@ using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
 using Terraria.Localization;
@@ -1206,10 +1208,10 @@ internal sealed class PokedexOverviewPanel : UIPanel
 internal sealed class PokedexPreviewCanvas : UIImage
 {
     private static readonly Asset<Texture2D> OverviewPreviewTexture;
-
     private NPC _dummyNPCForDrawing;
-
     private ushort _idToDraw;
+    private UIImage _previewBackground;
+    private UIImage _previewBackgroundOverlay;
 
     static PokedexPreviewCanvas()
     {
@@ -1228,9 +1230,23 @@ internal sealed class PokedexPreviewCanvas : UIImage
         set
         {
             _idToDraw = value;
-            Color = value == 0 ? Color.Transparent : Color.White;
-            if (value == 0 || !PokemonEntityLoader.IDToNPCType.TryGetValue(value, out var type))
+            if (value == 0)
+            {
+                Color = Color.Transparent;
+                _previewBackground.Color = Color.Transparent;
+                _previewBackgroundOverlay.Color = Color.Transparent;
                 return;
+            }
+
+            Color = Color.White;
+            GetBackgroundAssets(value, out var background, out var backgroundColor, out var overlay,
+                out var overlayColor);
+            _previewBackground.SetImage(background);
+            _previewBackground.Color = backgroundColor;
+            _previewBackgroundOverlay.SetImage(overlay ?? TextureAssets.MagicPixel);
+            _previewBackgroundOverlay.Color = overlayColor;
+
+            if (!PokemonEntityLoader.IDToNPCType.TryGetValue(value, out var type)) return;
             _dummyNPCForDrawing = new NPC
             {
                 IsABestiaryIconDummy = true
@@ -1246,6 +1262,36 @@ internal sealed class PokedexPreviewCanvas : UIImage
         }
     }
 
+    public override void OnInitialize()
+    {
+        _previewBackground = new UIImage(TextureAssets.MapBGs[0])
+        {
+            OverrideSamplerState = SamplerState.PointClamp,
+            RemoveFloatingPointsFromDrawPosition = true,
+            ImageScale = 2f,
+            Color = Color.Transparent
+        };
+        var adjustedLeft = _previewBackground.Width.Pixels * 0.5f + 22;
+        var adjustedTop = _previewBackground.Height.Pixels * 0.5f + 4;
+        _previewBackground.Left.Pixels = adjustedLeft;
+        _previewBackground.Top.Pixels = adjustedTop;
+        Append(_previewBackground);
+
+        _previewBackgroundOverlay = new UIImage(TextureAssets.MagicPixel)
+        {
+            Width = _previewBackground.Width,
+            Height = _previewBackground.Height,
+            AllowResizingDimensions = false,
+            OverrideSamplerState = SamplerState.PointClamp,
+            RemoveFloatingPointsFromDrawPosition = true,
+            ImageScale = 2f,
+            Color = Color.Transparent
+        };
+        _previewBackgroundOverlay.Left.Pixels = adjustedLeft;
+        _previewBackgroundOverlay.Top.Pixels = adjustedTop;
+        Append(_previewBackgroundOverlay);
+    }
+
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
@@ -1253,17 +1299,37 @@ internal sealed class PokedexPreviewCanvas : UIImage
         _dummyNPCForDrawing.FindFrame();
     }
 
-    protected override void DrawSelf(SpriteBatch spriteBatch)
+    public override void Draw(SpriteBatch spriteBatch)
     {
-        base.DrawSelf(spriteBatch);
+        base.Draw(spriteBatch);
         if (_idToDraw == 0) return;
 
         var position = GetOuterDimensions().Position();
         position.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
         position.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height + 2);
         if (_dummyNPCForDrawing.GetGlobalNPC<NPCWanderingHoverBehaviour>()
-            .Enabled) // Draw the NPC a bit higher if it is a flying Pokémon
+            .Enabled) // Draw the NPC a bit higher if it's a flying Pokémon
             position.Y -= 6;
         Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -position);
+    }
+
+    private static void GetBackgroundAssets(ushort pokemon, out Asset<Texture2D> background, out Color backgroundColor,
+        out Asset<Texture2D> overlay, out Color overlayColor)
+    {
+        background = TextureAssets.MapBGs[0];
+        var schema = Terramon.DatabaseV2.GetPokemon(pokemon);
+        if (schema.Types[0] == PokemonType.Ghost)
+        {
+            backgroundColor = new Color(35, 40, 40);
+            overlay = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon.GetBackgroundOverlayImage();
+            overlayColor = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon
+                .GetBackgroundOverlayColor() ?? Color.White;
+        }
+        else
+        {
+            backgroundColor = Color.White;
+            overlay = null;
+            overlayColor = Color.Transparent;
+        }
     }
 }
