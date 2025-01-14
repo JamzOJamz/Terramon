@@ -9,13 +9,13 @@ namespace Terramon.Content.Projectiles;
 
 public class ProjectileGenericPet : ProjectileComponent
 {
-    private const float StopThreshold = 0.1f;
     private bool _customAnimationIsWalking;
     public string AnimationType = "StraightForward";
     public int ExtraStopFrame = -1;
     public int FrameCount = 2;
     public int FrameTime = 10;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
+    public float StopThreshold = 0.15f;
     public float WalkSpeedModifier = 1f;
 
     public override void SetDefaults(Projectile proj)
