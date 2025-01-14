@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
@@ -253,26 +254,30 @@ internal sealed class CustomPartyItemSlot : UIImage
     public override void LeftClick(UIMouseEvent evt)
     {
         base.LeftClick(evt);
-        UseItem();
+        if (Data == null) return;
+        if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem)
+            UseItem(directUseItem);
+        else if (Main.mouseItem.IsAir && Main.keyState.IsKeyDown(Keys.LeftShift))
+            HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
     }
 
     public override void RightClick(UIMouseEvent evt)
     {
         base.RightClick(evt);
-        UseItem(true);
+        if (Data != null && Main.mouseItem.ModItem is IPokemonDirectUse directUseItem)
+            UseItem(directUseItem, true);
     }
 
-    private void UseItem(bool rightClick = false)
+    private void UseItem(IPokemonDirectUse item, bool rightClick = false)
     {
-        if (Data == null || Main.mouseItem.ModItem is not IPokemonDirectUse directUseItem) return;
-        if (!directUseItem.AffectedByPokemonDirectUse(Data))
+        if (!item.AffectedByPokemonDirectUse(Data))
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", Data.DisplayName),
                 TerramonCommand.ChatColorYellow);
             return;
         }
 
-        var consume = directUseItem.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
+        var consume = item.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
         Main.mouseItem.stack -= consume;
         if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
     }

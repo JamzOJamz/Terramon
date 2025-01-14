@@ -85,6 +85,7 @@ public class HubUI : SmartUIState
     }
 
     public static bool ShinyActive { get; private set; }
+    public static bool LeftShiftIgnore { get; set; }
 
     public static bool Active { get; private set; }
     public override bool Visible => false; // Vanilla will update/draw this state through IngameFancyUI
@@ -94,7 +95,7 @@ public class HubUI : SmartUIState
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
     }
 
-    public static void SetActive(bool active)
+    public static void SetActive(bool active, bool customSound = true)
     {
         if (Active == active) return;
         Active = active;
@@ -103,6 +104,7 @@ public class HubUI : SmartUIState
         if (active)
         {
             _playerInventoryOpen = Main.playerInventory;
+            hubState.Update(null);
             IngameFancyUI.OpenUIState(hubState);
         }
         else
@@ -111,15 +113,38 @@ public class HubUI : SmartUIState
             Main.playerInventory = _playerInventoryOpen;
         }
 
-        SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Sounds/dex_open" : "Terramon/Sounds/dex_close")
+        if (customSound)
         {
-            Volume = 0.48f
-        });
+            SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Sounds/dex_open" : "Terramon/Sounds/dex_close")
+            {
+                Volume = 0.48f
+            });
+        }
+        else
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+        }
     }
 
     public static void ToggleActive()
     {
         SetActive(!Active);
+    }
+    
+    public static void OpenToPokemon(ushort pokemon, bool isShiny = false)
+    {
+        if (Active) return;
+        
+        var hubState = UILoader.GetUIState<HubUI>();
+        var filterButtonImage = isShiny ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture;
+        var filterButtonRarity = isShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White;
+        _worldDexMode = false;
+        LeftShiftIgnore = true;
+        ShinyActive = isShiny;
+        hubState._filterButton.SetImage(filterButtonImage);
+        hubState._filterButton.SetHoverRarity(filterButtonRarity);
+        SetActive(true, customSound: false);
+        hubState.SetCurrentPokedexEntry(pokemon, PokedexEntryStatus.Registered);
     }
 
     public override void OnInitialize()
@@ -210,9 +235,9 @@ public class HubUI : SmartUIState
         };
         _filterButton.OnRightClick += (_, _) =>
         {
-            if (_worldDexMode) return; // Later
+            if (_worldDexMode) return; // TODO: Later maybe make a Shiny World Dex
             var shinyDex = TerramonPlayer.LocalPlayer.GetPokedex(true);
-            if (shinyDex.UndiscoveredCount >= Terramon.LoadedPokemonCount) return;
+            if (shinyDex.SeenCount == 0 && shinyDex.RegisteredCount == 0) return;
             SoundEngine.PlaySound(SoundID.MaxMana);
             ShinyActive = !ShinyActive;
             _filterButton.SetImage(ShinyActive ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture);
@@ -756,6 +781,7 @@ internal sealed class PokedexEntryIcon : UIPanel
         base.Update(gameTime);
         if (Main.keyState.IsKeyDown(Keys.LeftShift))
         {
+            if (HubUI.LeftShiftIgnore) return;
             _debugText.TextColor = Color.Transparent;
             _debugText.ShadowColor = Color.Transparent;
         }
@@ -763,6 +789,7 @@ internal sealed class PokedexEntryIcon : UIPanel
         {
             _debugText.TextColor = Color.White;
             _debugText.ShadowColor = Color.Black;
+            HubUI.LeftShiftIgnore = false;
         }
     }
 
