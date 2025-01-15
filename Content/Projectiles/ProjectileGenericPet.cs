@@ -42,6 +42,8 @@ public class ProjectileGenericPet : ProjectileComponent
 
     public override void OnSpawn(Projectile projectile, IEntitySource source)
     {
+        if (!Enabled) return;
+        
         // Hardcode the entity's height to 20 (cloned AI compatibility)
         projectile.height = 20;
     }
