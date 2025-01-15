@@ -36,5 +36,10 @@
       AnimationType: IdleForward
       IsClassic: false
     }
+    Transform:
+    {
+      Width: 32
+      Height: 30
+    }
   }
 }

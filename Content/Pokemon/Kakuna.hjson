@@ -38,5 +38,10 @@
       FrameCount: 4
       IsClassic: false
     }
+    Transform:
+    {
+      Width: 20
+      Height: 28
+    }
   }
 }

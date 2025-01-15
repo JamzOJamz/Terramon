@@ -24,7 +24,6 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     private int? _customSpriteDirection;
     private Asset<Texture2D> _mainTexture;
     private int _shinySparkleTimer;
-    private bool _shinyEffectDisabled;
     public int CustomFrameCounter;
     public CustomFindFrame FindFrame;
 
@@ -164,12 +163,6 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         var adjustedColor = ID == NationalDexID.Gastly
             ? GrayscaleColor(lightColor)
             : lightColor;
-        
-        // Disable shiny effect for Haunter and Gengar if in the dark
-        if (ID is NationalDexID.Haunter or NationalDexID.Gengar)
-        {
-            _shinyEffectDisabled = GrayscaleColor(lightColor).R <= 210;
-        }
 
         Main.EntitySpriteDraw(_mainTexture.Value,
             Projectile.Center - Main.screenPosition +
@@ -224,7 +217,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
         if (Projectile.velocity.X != 0) _customSpriteDirection = null;
 
-        if (isShiny && !_shinyEffectDisabled) ShinyEffect();
+        if (isShiny) ShinyEffect();
     }
 
     public override void PostAI()
@@ -235,18 +228,30 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
     private void ShinyEffect()
     {
-        Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
+        if (_mainTexture == null) return;
+        // Disable shiny effect lighting for Haunter and Gengar
+        if (ID != NationalDexID.Haunter && ID != NationalDexID.Gengar) Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
         _shinySparkleTimer++;
         if (_shinySparkleTimer < 12) return;
         for (var i = 0; i < 2; i++)
         {
+            // Spoof projectile width and height to match the texture size
+            var oldWidth = Projectile.width;
+            var oldHeight = Projectile.height;
+            Projectile.width = (int)(_mainTexture.Value.Width * 0.8f);
+            Projectile.height = (int)((float)_mainTexture.Value.Height / Main.projFrames[Type] * 0.8f);
+            
             var dust = Dust.NewDustDirect(
-                Projectile.position + new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)),
+                Projectile.position + new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)) + new Vector2(oldWidth - Projectile.width, oldHeight - Projectile.height),
                 Projectile.width,
                 Projectile.height, DustID.TreasureSparkle);
             dust.velocity = Projectile.velocity;
             dust.noGravity = true;
             dust.scale *= 1f + Main.rand.NextFloat(-0.03f, 0.03f);
+            
+            // Reset projectile width and height to original values
+            Projectile.width = oldWidth;
+            Projectile.height = oldHeight;
         }
 
         _shinySparkleTimer = 0;

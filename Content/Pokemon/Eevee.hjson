@@ -34,7 +34,12 @@
       FrameTime: 7
       AnimationType: IdleForward
       IsClassic: false
-      ExtraStopFrame: 4
+      StopThreshold: 0.4
+    }
+    Transform:
+    {
+      Width: 26
+      Height: 34
     }
   }
 }

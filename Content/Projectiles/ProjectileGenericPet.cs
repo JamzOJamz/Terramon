@@ -9,13 +9,13 @@ namespace Terramon.Content.Projectiles;
 
 public class ProjectileGenericPet : ProjectileComponent
 {
-    private const float StopThreshold = 0.1f;
     private bool _customAnimationIsWalking;
     public string AnimationType = "StraightForward";
     public int ExtraStopFrame = -1;
     public int FrameCount = 2;
     public int FrameTime = 10;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
+    public float StopThreshold = 0.15f;
     public float WalkSpeedModifier = 1f;
 
     public override void SetDefaults(Projectile proj)
@@ -38,6 +38,12 @@ public class ProjectileGenericPet : ProjectileComponent
         var petProj = (PokemonPet)proj.ModProjectile;
         if (IsClassic) petProj.CustomFrameCounter = FrameTime;
         petProj.FindFrame = FindFrame;
+    }
+
+    public override void OnSpawn(Projectile projectile, IEntitySource source)
+    {
+        // Hardcode the entity's height to 20 (cloned AI compatibility)
+        projectile.height = 20;
     }
 
     private void CustomAnimation(Projectile proj, bool walking)

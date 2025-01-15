@@ -31,5 +31,10 @@
       FrameCount: 4
       FrameTime: 6
     }
+    Transform:
+    {
+      Width: 36
+      Height: 32
+    }
   }
 }
