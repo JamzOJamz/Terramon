@@ -25,7 +25,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
-    private bool _shinyEffectDisabled;
 
     protected override bool CloneNewInstances => true;
 
@@ -136,12 +135,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             var adjustedColor = ID == NationalDexID.Gastly
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
-            
-            // Disable shiny effect for Haunter if in the dark
-            if (ID == NationalDexID.Haunter)
-            {
-                _shinyEffectDisabled = PokemonPet.GrayscaleColor(drawColor).R <= 210;
-            }
 
             spriteBatch.Draw(_mainTexture.Value,
                 NPC.Center - screenPos +
@@ -250,12 +243,13 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             return;
         }
 
-        if (Data is { IsShiny: true } && !_shinyEffectDisabled) ShinyEffect();
+        if (Data is { IsShiny: true }) ShinyEffect();
     }
 
     private void ShinyEffect()
     {
-        Lighting.AddLight(NPC.Center, 0.5f, 0.5f, 0.5f);
+        // Disable shiny effect lighting for Haunter and Gengar
+        if (ID != NationalDexID.Haunter && ID != NationalDexID.Gengar) Lighting.AddLight(NPC.Center, 0.5f, 0.5f, 0.5f);
         _shinySparkleTimer++;
         if (_shinySparkleTimer < 12) return;
         for (var i = 0; i < 2; i++)

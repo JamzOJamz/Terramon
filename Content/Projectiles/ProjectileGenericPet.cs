@@ -40,6 +40,12 @@ public class ProjectileGenericPet : ProjectileComponent
         petProj.FindFrame = FindFrame;
     }
 
+    public override void OnSpawn(Projectile projectile, IEntitySource source)
+    {
+        // Hardcode the entity's height to 20 (cloned AI compatibility)
+        projectile.height = 20;
+    }
+
     private void CustomAnimation(Projectile proj, bool walking)
     {
         var petProj = (PokemonPet)proj.ModProjectile;
