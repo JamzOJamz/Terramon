@@ -15,7 +15,7 @@ public class PokemonCompanion : ModBuff
     private Asset<Texture2D> _starIconTexture;
     private Asset<Texture2D> _templateTexture;
 
-    public override string Texture => "Terramon/Assets/Buffs/" + GetType().Name;
+    public override string Texture => "Terraria/Images/Buff";
 
     public override void SetStaticDefaults()
     {
