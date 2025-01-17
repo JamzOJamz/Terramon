@@ -1337,6 +1337,10 @@ internal sealed class PokedexPreviewCanvas : UIImage
         if (_dummyNPCForDrawing.GetGlobalNPC<NPCWanderingHoverBehaviour>()
             .Enabled) // Draw the NPC a bit higher if it's a flying Pokémon
             position.Y -= 6;
+        if (_dummyNPCForDrawing.GetGlobalNPC<NPCWalkingBehaviour>()?.AnimationType ==
+            NPCWalkingBehaviour.AnimType.IdleForward && _dummyNPCForDrawing.frame.Y == 0) // Draw fix for walking Pokémon using IdleForward animation
+            _dummyNPCForDrawing.frame.Y = TextureAssets.Npc[_dummyNPCForDrawing.type].Height() /
+                                          Main.npcFrameCount[_dummyNPCForDrawing.type];
         Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -position);
     }
 

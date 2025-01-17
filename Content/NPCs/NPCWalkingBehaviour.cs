@@ -174,6 +174,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
                     _ => NPC.frame.Y
                 };
                 break;
+            case AnimType.None:
             default:
                 NPC.frame.Y = 0;
                 break;
@@ -185,6 +186,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         Idle,
         Walking
     }
+    
     public enum AnimType : byte
     {
         None,
