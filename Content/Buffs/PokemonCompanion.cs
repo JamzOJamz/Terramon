@@ -4,16 +4,15 @@ using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 
 namespace Terramon.Content.Buffs;
 
 public class PokemonCompanion : ModBuff
 {
-    private const string TemplatePath = "Terramon/Assets/Buffs/BuffTemplate";
     private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
     private static RenderTarget2D _rt;
     private Asset<Texture2D> _starIconTexture;
-    private Asset<Texture2D> _templateTexture;
 
     public override string Texture => "Terraria/Images/Buff";
 
@@ -21,7 +20,6 @@ public class PokemonCompanion : ModBuff
     {
         Main.buffNoTimeDisplay[Type] = true;
         Main.vanityPet[Type] = true;
-        _templateTexture = ModContent.Request<Texture2D>(TemplatePath);
         _starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }
 
@@ -53,7 +51,7 @@ public class PokemonCompanion : ModBuff
         var player = TerramonPlayer.LocalPlayer;
 
         // Draw the template texture
-        spriteBatch.Draw(_templateTexture.Value, Vector2.Zero, new Rectangle(0, 0, 32, 32), Color.White,
+        spriteBatch.Draw(TextureAssets.Buff[Type].Value, Vector2.Zero, new Rectangle(0, 0, 32, 32), Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
         // Draw the pokeball icon
