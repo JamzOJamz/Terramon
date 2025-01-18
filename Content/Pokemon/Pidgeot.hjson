@@ -3,9 +3,14 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 48
+      Height: 38
     }
-    WanderingHoverBehaviour: {}
+    WanderingHoverBehaviour:
+    {
+      FrameCount: 7
+      FrameTime: 6
+    }
     SpawnController:
     {
       Stage: 3
@@ -23,8 +28,13 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 48
+      Height: 38
     }
-    FlyingPet: {}
+    FlyingPet:
+    {
+      FrameCount: 7
+      FrameTime: 6
+    }
   }
 }
