@@ -14,5 +14,5 @@ public class GreenApricorn : ApricornItem
 
 public class GreenApricornRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0x6DBB57);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x6DBB57);
 }

@@ -49,5 +49,5 @@ public class PokeBallTile : BasePkballTile
 
 public class PokeBallRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0xD64A56);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xD64A56);
 }

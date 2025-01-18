@@ -41,5 +41,5 @@ public class UltraBallTile : BasePkballTile
 
 public class UltraBallRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0xF9B643);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xF9B643);
 }

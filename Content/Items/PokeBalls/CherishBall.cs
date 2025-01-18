@@ -37,5 +37,5 @@ public class CherishBallTile : BasePkballTile
 
 public class CherishBallRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0xD3434A);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xD3434A);
 }

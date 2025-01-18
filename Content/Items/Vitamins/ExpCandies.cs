@@ -177,5 +177,5 @@ public class ExpCandyXL : ExpCandy
 
 public class ExpCandyRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0x76C2F2);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x76C2F2);
 }

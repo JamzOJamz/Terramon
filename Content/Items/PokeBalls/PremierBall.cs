@@ -31,5 +31,5 @@ public class PremierBallTile : BasePkballTile
 
 public class PremierBallRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0xC9C9E5);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xC9C9E5);
 }

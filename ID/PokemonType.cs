@@ -65,6 +65,6 @@ public static class PokemonTypeExtensions
     /// </summary>
     public static Color GetColor(this PokemonType type)
     {
-        return ColorUtils.FromHex(int.Parse(type.GetHexColor(), NumberStyles.HexNumber));
+        return ColorUtils.FromHexRGB(uint.Parse(type.GetHexColor(), NumberStyles.HexNumber));
     }
 }

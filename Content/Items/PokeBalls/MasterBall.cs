@@ -56,5 +56,5 @@ public class MasterBallTile : BasePkballTile
 
 public class MasterBallRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0xA460B2);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xA460B2);
 }

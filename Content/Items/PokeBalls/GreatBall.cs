@@ -41,5 +41,5 @@ public class GreatBallTile : BasePkballTile
 
 public class GreatBallRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0x2F9BE0);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x2F9BE0);
 }

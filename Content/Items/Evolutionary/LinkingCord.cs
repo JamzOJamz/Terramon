@@ -30,5 +30,5 @@ public class LinkingCord : EvolutionaryItem
 
 public class LinkingCordRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHex(0x9B94B4);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x9B94B4);
 }
