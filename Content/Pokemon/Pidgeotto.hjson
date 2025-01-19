@@ -9,7 +9,7 @@
     WanderingHoverBehaviour:
     {
       FrameCount: 4
-      FrameTime: 5
+      FrameTime: 6
     }
     SpawnController:
     {
@@ -34,7 +34,7 @@
     FlyingPet:
     {
       FrameCount: 4
-      FrameTime: 5
+      FrameTime: 6
     }
   }
 }

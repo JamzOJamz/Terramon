@@ -3,6 +3,7 @@ using Terramon.Core.NPCComponents;
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ConvertToConstant.Global
+// ReSharper disable once UnassignedField.Global
 
 namespace Terramon.Content.NPCs;
 
@@ -21,6 +22,7 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
     public float HorizontalSpeedMin = 2f;
     public float JumpSpeedMultiplier = 1f;
     public int MaxJumpClearance = -1;
+    public bool AnimateJumpOnly;
 
     private ref float AIState => ref NPC.ai[0];
     private ref float AITimer => ref NPC.ai[1];
@@ -106,6 +108,24 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
     public override void FindFrame(NPC npc, int frameHeight)
     {
         if (!Enabled || PlasmaState) return;
+
+        if (AnimateJumpOnly && !NPC.IsABestiaryIconDummy)
+        {
+            if (AIState == (float)ActionState.Jump)
+            {
+                NPC.frameCounter++;
+                
+                if (NPC.frameCounter < FrameTime * FrameCount)
+                    NPC.frame.Y = (int)Math.Floor(NPC.frameCounter / FrameTime) * frameHeight;
+            } 
+            else
+            {
+                NPC.frameCounter = 0;
+                NPC.frame.Y = 0;
+            }
+            
+            return;
+        }
 
         NPC.frameCounter++;
 

@@ -3,10 +3,14 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 26
+      Height: 24
     }
     BounceBehaviour:
     {
+      FrameCount: 3
+      FrameTime: 7
+      AnimateJumpOnly: true
       BounceMinRange: -3.5
       BounceMaxRange: -2.75
       BounceFrequency: 8
@@ -32,8 +36,14 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 26
+      Height: 24
     }
-    GenericPet: {}
+    GenericPet:
+    {
+      FrameCount: 3
+      FrameTime: 6
+      IsClassic: false
+    }
   }
 }
