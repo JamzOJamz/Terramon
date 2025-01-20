@@ -37,7 +37,6 @@ public class Terramon : Mod
     ///     Whether this is the first time the mod has been loaded on the player's system, ever.
     ///     The only way for one to reset this is to delete the file <c>TerramonHasLoadedBefore.dat</c> in the save directory.
     /// </summary>
-    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public static bool IsFirstTimeLoad { get; private set; }
 
     /// <summary>

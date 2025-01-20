@@ -1,5 +1,6 @@
 using System.Reflection;
 using ReLogic.Graphics;
+using Terramon.Content.Items;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -17,7 +18,7 @@ internal sealed class MenuSocialWidget
     private static readonly Item FakeItem = new();
     private static readonly bool[] LastHoveringInteractableText = new bool[5];
     private static DateTime _lastDiscordClientCheck = DateTime.MinValue;
-    private const double DiscordClientCheckInterval = 5;
+    private const double DiscordClientCheckInterval = 2.5;
     private static bool _isDiscordClientRunning;
 
     public static void Setup()
@@ -132,8 +133,27 @@ internal sealed class MenuSocialWidget
             LastHoveringInteractableText[0] = false;
         }
 
+        var firstTimeLoadWithDiscordClientRunning = _isDiscordClientRunning && Terramon.IsFirstTimeLoad;
+        var discordTextColor = firstTimeLoadWithDiscordClientRunning
+            ? ModContent.GetInstance<KeyItemRarity>().RarityColor
+            : new Color(173, 173, 198);
+
+        if (firstTimeLoadWithDiscordClientRunning && hovered)
+        {
+            const float brightenFactor = 0.7f;
+            
+            // Brighten the color a bit
+            discordTextColor.R = (byte)(discordTextColor.R + (255 - discordTextColor.R) * brightenFactor);
+            discordTextColor.G = (byte)(discordTextColor.G + (255 - discordTextColor.G) * brightenFactor);
+            discordTextColor.B = (byte)(discordTextColor.B + (255 - discordTextColor.B) * brightenFactor);
+        }
+        else if (hovered)
+        {
+            discordTextColor = new Color(237, 246, 255);
+        }
+
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, discordText, drawPos,
-            hovered ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f, SpriteEffects.None,
+            discordTextColor, 0f, Vector2.Zero, 1.02f, SpriteEffects.None,
             0f, alphaMult: 0.76f);
 
         // Draw Terramon Wiki link text
