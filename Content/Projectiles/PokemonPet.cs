@@ -129,20 +129,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
     public override bool PreDraw(ref Color lightColor)
     {
-        if (_mainTexture == null)
-        {
-            var pathBuilder = new StringBuilder(Texture);
-
-            if (PokemonEntityLoader.HasGenderDifference[ID - 1] && Data?.Gender == Gender.Female)
-                pathBuilder.Append('F');
-            if (!string.IsNullOrEmpty(Data?.Variant))
-                pathBuilder.Append('_').Append(Data.Variant);
-            if (Data is { IsShiny: true })
-                pathBuilder.Append("_S");
-
-            var path = pathBuilder.ToString();
-            _mainTexture = ModContent.Request<Texture2D>(path);
-        }
+        _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
 
         if (Projectile.isAPreviewDummy)
         {

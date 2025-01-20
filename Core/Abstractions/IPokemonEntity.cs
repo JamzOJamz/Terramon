@@ -20,4 +20,9 @@ public interface IPokemonEntity
     ///     created in the world.
     /// </summary>
     PokemonData Data { get; set; }
+    
+    /// <summary>
+    ///     The texture path of the Pokémon entity.
+    /// </summary>
+    string Texture { get; }
 }

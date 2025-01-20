@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Text;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Configs;
@@ -111,20 +110,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (_mainTexture == null)
-        {
-            var pathBuilder = new StringBuilder(Texture);
-
-            if (PokemonEntityLoader.HasGenderDifference[ID - 1] && Data?.Gender == Gender.Female)
-                pathBuilder.Append('F');
-            if (!string.IsNullOrEmpty(Data?.Variant))
-                pathBuilder.Append('_').Append(Data.Variant);
-            if (Data is { IsShiny: true })
-                pathBuilder.Append("_S");
-
-            var path = pathBuilder.ToString();
-            _mainTexture = ModContent.Request<Texture2D>(path);
-        }
+        _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
 
         var frameSize = NPC.frame.Size();
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
