@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Text;
 using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.NPCs;
 using Terramon.Content.Projectiles;
+using Terramon.Core.Abstractions;
 using Terraria.Graphics.Shaders;
 
 namespace Terramon.Core.Loaders;
@@ -19,12 +21,15 @@ public class PokemonEntityLoader : ModSystem
     public static Dictionary<ushort, int> IDToPetType { get; private set; }
     public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; }
     public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; }
-    public static BitArray HasGenderDifference { get; private set; }
+    private static BitArray HasGenderDifference { get; set; }
+    private static BitArray HasPetExclusiveTexture { get; set; }
 
     public override void OnModLoad()
     {
-        // The initialization of this array is done here rather than in Load to avoid a null ref exception reading LoadedPokemonCount
-        HasGenderDifference = new BitArray(Terramon.LoadedPokemonCount);
+        // The initialization of these arrays is done here rather than in Load to avoid a null ref exception reading LoadedPokemonCount
+        var loadedPokemonCount = Terramon.LoadedPokemonCount;
+        HasGenderDifference = new BitArray(loadedPokemonCount);
+        HasPetExclusiveTexture = new BitArray(loadedPokemonCount);
 
         // Load the fade shader for Pokémon
         if (!Main.dedServ)
@@ -66,6 +71,9 @@ public class PokemonEntityLoader : ModSystem
         // Check if this Pokémon has a gender difference (alternate texture)
         HasGenderDifference[id - 1] = ModContent.HasAsset($"Terramon/Assets/Pokemon/{schema.Identifier}F");
 
+        // Check if this Pokémon has a pet-exclusive texture
+        HasPetExclusiveTexture[id - 1] = ModContent.HasAsset($"Terramon/Assets/Pokemon/{schema.Identifier}_Pet");
+
         // Load Pokémon NPC
         if (hjsonSchema.TryGetValue("NPC", out var npcSchema))
         {
@@ -82,6 +90,25 @@ public class PokemonEntityLoader : ModSystem
         Mod.AddContent(pet);
         IDToPetType.Add(id, pet.Projectile.type);
     }
+
+    public static Asset<Texture2D> RequestTexture(IPokemonEntity entity)
+    {
+        var pathBuilder = new StringBuilder(entity.Texture);
+        var data = entity.Data;
+        var i = entity.ID - 1;
+        if (HasGenderDifference[i])
+            if ((data != null ? data.Gender == Gender.Female ? 1 : 0 : 0) != 0)
+                pathBuilder.Append('F');
+        if (HasPetExclusiveTexture[i] && entity.GetType() == typeof(PokemonPet))
+            pathBuilder.Append("_Pet");
+        var str = data?.Variant;
+        if (!string.IsNullOrEmpty(str))
+            pathBuilder.Append('_').Append(data.Variant);
+        if (data is { IsShiny: true })
+            pathBuilder.Append("_S");
+        return ModContent.Request<Texture2D>(pathBuilder.ToString());
+    }
+
 
     public override void Load()
     {
@@ -100,6 +127,7 @@ public class PokemonEntityLoader : ModSystem
         NPCSchemaCache = null;
         PetSchemaCache = null;
         HasGenderDifference = null;
+        HasPetExclusiveTexture = null;
         GlowTextureCache = null;
         ShinyGlowTextureCache = null;
     }

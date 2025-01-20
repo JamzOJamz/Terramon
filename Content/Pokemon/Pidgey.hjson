@@ -41,7 +41,7 @@
     }
     GenericPet:
     {
-      FrameCount: 3
+      FrameCount: 4
       FrameTime: 6
       IsClassic: false
     }
