@@ -162,10 +162,6 @@ public class InventoryParty : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
-        var elemUnderMouse = GetElementAt(UserInterface.MousePosition);
-        if (elemUnderMouse != null)
-            Main.NewText(elemUnderMouse.GetType().Name);
-        
         // Move Pokédex button in Journey Mode (to avoid overlap with the Power Menu toggle button)
         if (!ModLoader.HasMod("AutoTrash"))
             switch (Main.GameModeInfo.IsJourneyMode)
