@@ -35,7 +35,7 @@ internal class UILoader : ModSystem
             UpdateUI_Custom(GameTime);
         };
 
-        On_UserInterface.HandleClick += (orig, self, cache, time, down, element) =>
+        /*On_UserInterface.HandleClick += (orig, self, cache, time, down, element) =>
         {
             if (self == GetUIState<InventoryParty>().UserInterface)
             {
@@ -43,7 +43,7 @@ internal class UILoader : ModSystem
             }
             
             orig(self, cache, time, down, element);
-        };
+        };*/
     }
 
     /// <summary>
@@ -173,8 +173,11 @@ internal class UILoader : ModSystem
             if (!smartUiState.Visible && smartUiState.LastVisible)
                 eachState.ResetLasts();
             smartUiState.LastVisible = smartUiState.Visible;
-            if (smartUiState.Visible)
+            if (smartUiState.Visible && smartUiState is InventoryParty)
+            {
+                Main.NewText("Updating InventoryParty " + Main.timeForVisualEffects);
                 eachState.Update(gameTime);
+            }
         }
 
         Main.mouseX = (int)currentMousePosition.X;
