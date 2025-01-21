@@ -14,11 +14,13 @@ internal sealed class MenuSocialWidget
     private const string WikiURL = "https://terrariamods.wiki.gg/wiki/Terramon_Mod";
     private const string YouTubeURL = "https://www.youtube.com/@TerramonMod";
     private const string GitHubURL = "https://github.com/JamzOJamz/Terramon";
+    private const string KoFiURL = "https://ko-fi.com/jamzojamz";
+    private const double DiscordClientCheckInterval = 2.5;
+    private const uint TimesLoadedToDisplayDonateLink = 5;
 
     private static readonly Item FakeItem = new();
-    private static readonly bool[] LastHoveringInteractableText = new bool[5];
+    private static readonly bool[] LastHoveringInteractableText = new bool[6];
     private static DateTime _lastDiscordClientCheck = DateTime.MinValue;
-    private const double DiscordClientCheckInterval = 2.5;
     private static bool _isDiscordClientRunning;
 
     public static void Setup()
@@ -33,7 +35,7 @@ internal sealed class MenuSocialWidget
         // Wait until the mod is loaded by TML
         var mod = Terramon.Instance;
         if (mod == null) return;
-        
+
         // Check if Discord client is open on the player's system every X seconds
         if (DateTime.UtcNow - _lastDiscordClientCheck > TimeSpan.FromSeconds(DiscordClientCheckInterval))
         {
@@ -49,7 +51,47 @@ internal sealed class MenuSocialWidget
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
             $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
-        
+
+        // If the mod has been loaded more than 5 times, display a donation link
+        if (Terramon.TimesLoaded > TimesLoadedToDisplayDonateLink)
+        {
+            // Draw Donate link text
+            const string donateText = "https://ko-fi.com/jamzojamz :)";
+            const string donateHoverText = "https://ko-fi.com/jamzojamz :D";
+            var donateTextSize = FontAssets.MouseText.Value.MeasureString(donateText);
+            donateTextSize.Y *= 0.9f;
+            drawPos.Y += 30;
+            var hoveredDonate = Main.MouseScreen.Between(drawPos, drawPos + donateTextSize);
+            if (hoveredDonate)
+            {
+                Main.LocalPlayer.mouseInterface = true;
+                if (!LastHoveringInteractableText[5])
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+
+                if (Main.mouseLeft && Main.mouseLeftRelease)
+                {
+                    SoundEngine.PlaySound(SoundID.MenuOpen);
+                    Main.mouseLeftRelease = false;
+
+                    Utils.OpenToURL(KoFiURL);
+                }
+
+                LastHoveringInteractableText[5] = true;
+            }
+            else
+            {
+                LastHoveringInteractableText[5] = false;
+            }
+
+            var donateTextColor = ModContent.GetInstance<KeyItemRarity>().RarityColor;
+            if (hoveredDonate) donateTextColor = BrightenColor(donateTextColor, 0.7f);
+
+            DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
+                hoveredDonate ? donateHoverText : donateText, drawPos,
+                donateTextColor, 0f, Vector2.Zero, 1.02f,
+                SpriteEffects.None, 0f, alphaMult: 0.76f);
+        }
+
         // Draw Mod Config link text
         const string configText = "Mod Config";
         var configTextSize = FontAssets.MouseText.Value.MeasureString(configText);
@@ -66,14 +108,16 @@ internal sealed class MenuSocialWidget
             {
                 SoundEngine.PlaySound(SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
-                
+
                 var interfaceType = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.UI.Interface");
                 var modConfigList = interfaceType!
                     .GetField("modConfigList", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null);
                 var modToSelectOnOpen = modConfigList!
                     .GetType().GetField("ModToSelectOnOpen", BindingFlags.Instance | BindingFlags.Public);
                 modToSelectOnOpen!.SetValue(modConfigList, Terramon.Instance);
-                Main.menuMode = (int)interfaceType.GetField("modConfigListID", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
+                Main.menuMode =
+                    (int)interfaceType.GetField("modConfigListID", BindingFlags.Static | BindingFlags.NonPublic)!
+                        .GetValue(null)!;
             }
 
             LastHoveringInteractableText[4] = true;
@@ -82,7 +126,7 @@ internal sealed class MenuSocialWidget
         {
             LastHoveringInteractableText[4] = false;
         }
-        
+
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, configText, drawPos,
             hoveredConfig ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f,
             SpriteEffects.None, 0f, alphaMult: 0.76f);
@@ -115,15 +159,11 @@ internal sealed class MenuSocialWidget
             {
                 SoundEngine.PlaySound(SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
-                
+
                 if (_isDiscordClientRunning)
-                {
                     Task.Run(() => DiscordInviteBeamer.Send(DiscordInviteCode));
-                }
                 else
-                {
                     Utils.OpenToURL(DiscordURL);
-                }
             }
 
             LastHoveringInteractableText[0] = true;
@@ -133,24 +173,15 @@ internal sealed class MenuSocialWidget
             LastHoveringInteractableText[0] = false;
         }
 
-        var firstTimeLoadWithDiscordClientRunning = _isDiscordClientRunning && Terramon.IsFirstTimeLoad;
+        var firstTimeLoadWithDiscordClientRunning = _isDiscordClientRunning && Terramon.TimesLoaded == 1;
         var discordTextColor = firstTimeLoadWithDiscordClientRunning
             ? ModContent.GetInstance<KeyItemRarity>().RarityColor
             : new Color(173, 173, 198);
 
         if (firstTimeLoadWithDiscordClientRunning && hovered)
-        {
-            const float brightenFactor = 0.7f;
-            
-            // Brighten the color a bit
-            discordTextColor.R = (byte)(discordTextColor.R + (255 - discordTextColor.R) * brightenFactor);
-            discordTextColor.G = (byte)(discordTextColor.G + (255 - discordTextColor.G) * brightenFactor);
-            discordTextColor.B = (byte)(discordTextColor.B + (255 - discordTextColor.B) * brightenFactor);
-        }
+            discordTextColor = BrightenColor(discordTextColor, 0.7f);
         else if (hovered)
-        {
             discordTextColor = new Color(237, 246, 255);
-        }
 
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, discordText, drawPos,
             discordTextColor, 0f, Vector2.Zero, 1.02f, SpriteEffects.None,
@@ -294,5 +325,15 @@ internal sealed class MenuSocialWidget
             spriteBatch.DrawString(font, text, position + new Vector2(offX, offY), color, rotation, origin, scale,
                 effects, layerDepth);
         }
+    }
+
+    private static Color BrightenColor(Color color, float brightenFactor)
+    {
+        return new Color(
+            (byte)(color.R + (255 - color.R) * brightenFactor),
+            (byte)(color.G + (255 - color.G) * brightenFactor),
+            (byte)(color.B + (255 - color.B) * brightenFactor),
+            color.A
+        );
     }
 }

@@ -34,10 +34,10 @@ public class Terramon : Mod
     public static DatabaseV2 DatabaseV2 { get; private set; }
 
     /// <summary>
-    ///     Whether this is the first time the mod has been loaded on the player's system, ever.
-    ///     The only way for one to reset this is to delete the file <c>TerramonHasLoadedBefore.dat</c> in the save directory.
+    ///     The amount of times the mod has been loaded by the player.
+    ///     The only way for one to change or reset this is to edit or delete the file <c>TerramonLoadCount.dat</c> in the save directory.
     /// </summary>
-    public static bool IsFirstTimeLoad { get; private set; }
+    public static uint TimesLoaded { get; private set; }
 
     /// <summary>
     ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
@@ -76,13 +76,22 @@ public class Terramon : Mod
         wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
     }
 
-    private static bool CheckFirstTimeLoad()
+    private static uint CheckLoadCount()
     {
-        var datFilePath = Path.Combine(Main.SavePath, "TerramonHasLoadedBefore.dat");
-        if (File.Exists(datFilePath)) return false;
+        var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
+        
+        if (!File.Exists(datFilePath))
+        {
+            File.WriteAllText(datFilePath, "1");
+            return 1;
+        }
+        
+        var count = File.ReadAllText(datFilePath);
+        if (!uint.TryParse(count, out var result)) return 1;
+        result++;
+        File.WriteAllText(datFilePath, result.ToString());
+        return result;
 
-        File.Create(datFilePath).Close();
-        return true;
     }
 
     public override void Load()
@@ -97,8 +106,8 @@ public class Terramon : Mod
         // Setup cross-mod compatibility
         SetupCrossModCompatibility();
 
-        // Check if first ever time loading the mod
-        IsFirstTimeLoad = CheckFirstTimeLoad();
+        // Check how many times the mod has been loaded
+        TimesLoaded = CheckLoadCount();
     }
 
     public override void Unload()
