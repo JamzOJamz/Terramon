@@ -39,16 +39,6 @@ internal class UILoader : ModSystem
             orig(self, sw);
             UpdateUI_Custom(GameTime);
         };
-
-        /*On_UserInterface.HandleClick += (orig, self, cache, time, down, element) =>
-        {
-            if (self == GetUIState<InventoryParty>().UserInterface)
-            {
-                Main.NewText("Attempted to handle click in InventoryParty");
-            }
-
-            orig(self, cache, time, down, element);
-        };*/
     }
 
     /// <summary>
