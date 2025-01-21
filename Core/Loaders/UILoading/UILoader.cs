@@ -1,3 +1,4 @@
+using System.Reflection;
 using Terramon.Content.GUI;
 using Terramon.Helpers;
 using Terraria.UI;
@@ -175,7 +176,9 @@ internal class UILoader : ModSystem
             smartUiState.LastVisible = smartUiState.Visible;
             if (smartUiState.Visible && smartUiState is InventoryParty)
             {
-                Main.NewText("Updating InventoryParty " + Main.timeForVisualEffects);
+                Main.NewText(typeof(UserInterface)
+                    .GetField("_clickDisabledTimeRemaining", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.GetValue(eachState));
                 eachState.Update(gameTime);
             }
         }
