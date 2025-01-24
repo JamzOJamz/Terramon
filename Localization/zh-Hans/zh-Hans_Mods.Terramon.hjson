@@ -571,6 +571,9 @@ Items: {
 Keybinds: {
 	// ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
 	OpenPokedex.DisplayName: 寶可夢圖鑑
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 
 Tiles: {

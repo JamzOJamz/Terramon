@@ -6,6 +6,7 @@ using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -18,7 +19,8 @@ public class TerramonPlayer : ModPlayer
     private readonly PokedexService _pokedex = new();
     private readonly PokedexService _shinyDex = new();
 
-    private int _activeSlot = -1;
+    private bool _hasPokemon = false;
+    private int _activeSlot = 0;
 
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
@@ -31,13 +33,19 @@ public class TerramonPlayer : ModPlayer
 
     public int ActiveSlot
     {
-        get => _activeSlot;
+        get => _hasPokemon ? _activeSlot : -1;
         set
         {
             // Toggle off dedicated pet slot
-            if (_activeSlot == -1 && !Player.miscEquips[0].IsAir)
+            if (!_hasPokemon && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
-            _activeSlot = value;
+            if (value != -1)
+            {
+                _activeSlot = value;
+                _hasPokemon = true;
+            }
+            else
+                _hasPokemon = false;
             var buffType = ModContent.BuffType<PokemonCompanion>();
             var hasBuff = Player.HasBuff(buffType);
             switch (value)
@@ -88,6 +96,53 @@ public class TerramonPlayer : ModPlayer
     {
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
+
+        ProcessActiveMonTriggers();
+    }
+
+    private void ProcessActiveMonTriggers()
+    {
+        bool shouldPlaySound = false;
+
+        if (KeybindSystem.TogglePokemonKeybind.JustPressed)
+        {
+            shouldPlaySound = true;
+            if (_hasPokemon)
+                ActiveSlot = -1;
+            else
+                ActiveSlot = _activeSlot;
+        }
+        else if (KeybindSystem.NextPokemonKeybind.JustPressed)
+        {
+            shouldPlaySound = true;
+            if (_hasPokemon)
+                ActiveSlot = _activeSlot == 5 ? 0 : _activeSlot + 1;
+            else
+                ActiveSlot = _activeSlot;
+        }
+        else if (KeybindSystem.PrevPokemonKeybind.JustPressed)
+        {
+            shouldPlaySound = true;
+            if (_hasPokemon)
+                ActiveSlot = _activeSlot == 0 ? 5 : _activeSlot - 1;
+            else
+                ActiveSlot = _activeSlot;
+        }
+
+        if (shouldPlaySound)
+        {
+            if (_hasPokemon)
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
+                { Volume = 0.2525f });
+            }
+            else
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
+                { Volume = 0.35f });
+            }
+        }
     }
 
     public override void PreUpdate()
@@ -214,8 +269,8 @@ public class TerramonPlayer : ModPlayer
     public override void SaveData(TagCompound tag)
     {
         tag["flags"] = (byte)new BitsByte(HasChosenStarter, _receivedShinyCharm);
-        if (ActiveSlot >= 0)
-            tag["activeSlot"] = ActiveSlot;
+        if (_hasPokemon)
+            tag["activeSlot"] = _activeSlot;
         SaveParty(tag);
         SavePokedex(tag);
         SavePC(tag);
@@ -231,7 +286,10 @@ public class TerramonPlayer : ModPlayer
         }
 
         if (tag.TryGet("activeSlot", out int slot))
+        {
             _activeSlot = slot;
+            _hasPokemon = true;
+        }
         LoadParty(tag);
         LoadPokedex(tag);
         LoadPC(tag);
