@@ -20,9 +20,23 @@ public abstract class PCTile : ModTile
         // Catch the event when the player toggles their inventory
         On_Player.ToggleInv += static (orig, self) =>
         {
-            var otherPcId = TerramonPlayer.LocalPlayer.ActivePCTileEntityID;
-            if (TerramonPlayer.LocalPlayer.ActivePCTileEntityID != -1 &&
-                TileEntity.ByID.TryGetValue(otherPcId, out var entity) && entity is PCTileEntity
+            if (Main.ingameOptionsWindow)
+            {
+                orig(self);
+                return;
+            }
+            
+            var modPlayer = TerramonPlayer.LocalPlayer;
+            var pcId = modPlayer.ActivePCTileEntityID;
+            if (pcId == int.MaxValue) // Opened via /pc command
+            {
+                modPlayer.ActivePCTileEntityID = -1;
+                orig(self);
+                return;
+            }
+
+            if (pcId != -1 &&
+                TileEntity.ByID.TryGetValue(pcId, out var entity) && entity is PCTileEntity
                 {
                     PoweredOn: true
                 } pc)
@@ -49,6 +63,7 @@ public abstract class PCTile : ModTile
         TileObjectData.newTile.HookPostPlaceMyPlayer =
             new PlacementHook(ModContent.GetInstance<PCTileEntity>().Hook_AfterPlacement, -1, 0, true);
         TileObjectData.newTile.UsesCustomCanPlace = true;
+        TileObjectData.newTile.DrawYOffset = 2;
         TileObjectData.addTile(Type);
 
         AddMapEntry(Color.White, CreateMapEntryName());
@@ -70,7 +85,7 @@ public abstract class PCTile : ModTile
     {
         if (!TileUtils.TryGetTileEntityAs(i, j, out PCTileEntity te) ||
             (te.PoweredOn && te.User != Main.myPlayer)) return false;
-        
+
         // Starter Pokémon should be chosen before using the PC
         var player = Main.LocalPlayer;
         var modPlayer = player.GetModPlayer<TerramonPlayer>();
@@ -89,6 +104,9 @@ public abstract class PCTile : ModTile
             otherPcTe.ToggleOnOff();
             differentPc = true;
         }
+        
+        // Exit any active chest UI
+        player.chest = -1;
 
         // Toggle this PC on/off
         te.ToggleOnOff();
@@ -159,7 +177,7 @@ public abstract class PCTile : ModTile
             !te.PoweredOn) return;
         var zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
         if (Main.drawToScreen) zero = Vector2.Zero;
-        var drawPos = new Vector2(leftX * 16 - (int)Main.screenPosition.X + 6,
+        var drawPos = new Vector2(leftX * 16 - (int)Main.screenPosition.X + 4,
             topY * 16 - (int)Main.screenPosition.Y + 10) + zero;
         spriteBatch.Draw(_screenGlowTexture.Value, drawPos, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None,
             0f);

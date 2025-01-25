@@ -1,3 +1,4 @@
+using Terramon.Content.GUI;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
@@ -46,8 +47,13 @@ public class PCService
         var slot = FindEmptySpace();
         if (slot == -1)
             return null;
-        Boxes[slot / PCBox.Capacity][slot % PCBox.Capacity] = data;
-        return Boxes[slot / PCBox.Capacity];
+        var boxIndex = slot / PCBox.Capacity;
+        var boxSlotIndex = slot % PCBox.Capacity;
+        var box = Boxes[boxIndex];
+        box[boxSlotIndex] = data;
+        if (PCInterface.DisplayedBoxIndex == boxIndex)
+            PCInterface.PopulateCustomSlots(box);
+        return box;
     }
 
     /// <summary>

@@ -12,8 +12,8 @@ public abstract class PCItem : TerramonItem
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.width = 20;
-        Item.height = 30;
+        Item.width = 22;
+        Item.height = 32;
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)

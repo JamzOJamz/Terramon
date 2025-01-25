@@ -1,4 +1,5 @@
-﻿using ReLogic.Content;
+﻿using System.Reflection;
+using ReLogic.Content;
 
 namespace Terramon.Content.Menus;
 
@@ -6,7 +7,7 @@ public class TerramonMenu : ModMenu
 {
     public override string DisplayName => "Terramon Mod";
 
-    public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu");
+    //public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu");
 
     public override Asset<Texture2D> Logo =>
         ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo");
@@ -26,5 +27,16 @@ public class TerramonMenu : ModMenu
 
         logoDrawCenter.Y += 16;
         return true;
+    }
+
+    /// <summary>
+    ///     Spoofs the last selected mod menu and sets the current one to Terramon's mod menu.
+    /// </summary>
+    public void ForceSwitchToThis()
+    {
+        var menuLoaderType = typeof(MenuLoader);
+        menuLoaderType.GetField("switchToMenu", BindingFlags.NonPublic | BindingFlags.Static)?.SetValue(null, this);
+        menuLoaderType.GetField("LastSelectedModMenu", BindingFlags.NonPublic | BindingFlags.Static)?
+            .SetValue(null, FullName);
     }
 }

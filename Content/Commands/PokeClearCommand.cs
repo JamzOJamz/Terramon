@@ -14,8 +14,6 @@ public class PokeClearCommand : DebugCommand
 
     public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Usage");
 
-    protected override int MinimumArgumentCount => 0;
-
     public override void Load()
     {
         Mod.AddPacketHandler<PokeClearRpc>(OnPokeClearRpcReceived);

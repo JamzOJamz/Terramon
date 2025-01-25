@@ -17,7 +17,7 @@ public abstract class TerramonCommand : ModCommand
     /// <summary>
     ///     Minimum argument count for the command to be valid
     /// </summary>
-    protected virtual int MinimumArgumentCount => 1;
+    protected virtual int MinimumArgumentCount => 0;
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

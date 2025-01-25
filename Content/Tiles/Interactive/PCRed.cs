@@ -27,4 +27,15 @@ public class PCItemRed : PCItem
         Item.DefaultToPlaceableTile(ModContent.TileType<PCRed>());
         base.SetDefaults();
     }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.Chest, 2)
+            .AddRecipeGroup(RecipeGroupID.IronBar, 4)
+            .AddIngredient(ItemID.Glass, 10)
+            .AddIngredient<PokeBallItem>()
+            .AddTile(TileID.WorkBenches)
+            .Register();
+    }
 }

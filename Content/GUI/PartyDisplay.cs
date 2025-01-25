@@ -471,9 +471,7 @@ public class PartySidebarSlot : UIImage
                 AssetRequestMode.ImmediateLoad));
             _spriteBox.Top.Set(10, 0f);
             _spriteBox.Left.Set(59, 0f);
-            var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{data.InternalName}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
-                AssetRequestMode.ImmediateLoad))
+            var sprite = new UIImage(data.GetMiniSprite())
             {
                 ImageScale = 0.7f
             };

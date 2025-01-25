@@ -1,5 +1,9 @@
+using System.Reflection;
+using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.UI;
 using Terraria.UI.Chat;
@@ -12,6 +16,13 @@ public class TooltipOverlay : SmartUIState, ILoadable
     private static Color _color = new(232, 232, 244);
     private static string _tooltip = string.Empty;
     private static Asset<Texture2D> _icon;
+    private static PokemonData _heldPokemon;
+
+    private static float _heldPokemonScale = 1f;
+    private static bool _heldPokemonScalingUp;
+
+    private static Action<PokemonData> _onReturn;
+    private static Action _onPlace;
 
     public override bool Visible => true;
 
@@ -28,6 +39,80 @@ public class TooltipOverlay : SmartUIState, ILoadable
             orig(self, gameTime);
             Reset();
         };
+
+        On_Main.DrawInterface_40_InteractItemIcon += (orig, self) =>
+        {
+            if (_heldPokemon == null) orig(self);
+        };
+
+        On_Main.DrawPendingMouseText += orig =>
+        {
+            if (_heldPokemon != null)
+            {
+                if (Main.HoverItem.type > ItemID.None)
+                    typeof(Main).GetField("_mouseTextCache", BindingFlags.Instance | BindingFlags.NonPublic)!
+                        .SetValue(Main.instance, null);
+                var mouseItem = Main.mouseItem;
+                Main.mouseItem = new Item
+                {
+                    type = ItemID.IronPickaxe,
+                    stack = 1
+                };
+                Main.HoverItem.type = ItemID.None;
+                orig();
+                Main.mouseItem = mouseItem;
+            }
+            else
+            {
+                orig();
+            }
+        };
+
+        On_Main.TryAllowingToCraftRecipe += (On_Main.orig_TryAllowingToCraftRecipe orig, Recipe recipe, bool crafting,
+            out bool allowCrafting) =>
+        {
+            if (_heldPokemon != null) return allowCrafting = false;
+
+            return orig(recipe, crafting, out allowCrafting);
+        };
+
+        On_ItemSlot.LeftClick_refItem_int += (On_ItemSlot.orig_LeftClick_refItem_int orig, ref Item inv, int context) =>
+        {
+            if (_heldPokemon == null)
+            {
+                orig(ref inv, context);
+            }
+            else
+            {
+                if (inv != Main.LocalPlayer.trashItem) return;
+                if (Main.mouseLeft && Main.mouseLeftRelease)
+                {
+                    if (!Main.keyState.IsKeyDown(Keys.LeftShift))
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                        {
+                            Volume = 0.25f
+                        });
+                    }
+                    else
+                    {
+                        SoundEngine.PlaySound(SoundID.Grab);
+                        ClearHeldPokemon();
+                    }
+                }
+
+                if (_heldPokemon != null)
+                    Main.instance.MouseText(
+                        $"{(Main.keyState.IsKeyDown(Keys.LeftShift) ? "Left" : "Shift")} click to release {_heldPokemon.DisplayName}",
+                        _heldPokemon.IsShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
+            }
+        };
+
+        On_ItemSlot.LeftClick_ItemArray_int_int += (orig, inv, context, slot)
+            =>
+        {
+            if (_heldPokemon == null) orig(inv, context, slot);
+        };
     }
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -39,7 +124,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         _text = newName;
     }
-    
+
     public static void SetColor(Color newColor)
     {
         _color = newColor;
@@ -55,8 +140,42 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _icon = newIcon;
     }
 
+    public static void SetHeldPokemon(PokemonData pokemon, Action<PokemonData> onReturn = null,
+        Action onPlace = null)
+    {
+        _onPlace?.Invoke();
+        _heldPokemon = pokemon;
+        _onReturn = onReturn;
+        _onPlace = onPlace;
+    }
+
+    public static PokemonData GetHeldPokemon()
+    {
+        return _heldPokemon;
+    }
+
+    public static void ClearHeldPokemon(bool ret = false, bool place = true)
+    {
+        if (ret) _onReturn?.Invoke(_heldPokemon);
+        else if (place) _onPlace?.Invoke();
+        _heldPokemon = null;
+        _onReturn = null;
+        _onPlace = null;
+    }
+
+    public static bool IsHoldingPokemon()
+    {
+        return _heldPokemon != null;
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
+        if (_heldPokemon != null)
+        {
+            DrawHeldPokemon(spriteBatch);
+            return;
+        }
+
         if (_text == string.Empty)
             return;
 
@@ -102,11 +221,47 @@ public class TooltipOverlay : SmartUIState, ILoadable
         Utils.DrawBorderString(Main.spriteBatch, _tooltip, pos, new Color(218, 218, 242), 0.9f);
     }
 
+    private static void DrawHeldPokemon(SpriteBatch spriteBatch)
+    {
+        var sprite = _heldPokemon.GetMiniSprite();
+        spriteBatch.Draw(sprite.Value, Main.MouseScreen - new Vector2(7, 2), null, Color.White, 0f, Vector2.Zero,
+            Main.cursorScale * 0.85f, SpriteEffects.None, 0f);
+    }
+
+    public override void SafeUpdate(GameTime gameTime)
+    {
+        if (!Main.mouseItem.IsAir && _heldPokemon != null)
+            ClearHeldPokemon(true);
+
+        var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        if (_heldPokemonScalingUp)
+        {
+            _heldPokemonScale += delta * 0.52f;
+            if (_heldPokemonScale >= 1f)
+            {
+                _heldPokemonScale = 1f;
+                _heldPokemonScalingUp = false;
+            }
+        }
+        else
+        {
+            _heldPokemonScale -= delta * 0.52f;
+            if (_heldPokemonScale <= 0.9f)
+            {
+                _heldPokemonScale = 0.9f;
+                _heldPokemonScalingUp = true;
+            }
+        }
+    }
+
     private static void Reset()
     {
         _text = string.Empty;
         _color = new Color(232, 232, 244);
         _tooltip = string.Empty;
         _icon = null;
+        if (TerramonPlayer.LocalPlayer.ActivePCTileEntityID != -1 || _heldPokemon == null) return;
+        SoundEngine.PlaySound(SoundID.Grab);
+        ClearHeldPokemon(true);
     }
 }

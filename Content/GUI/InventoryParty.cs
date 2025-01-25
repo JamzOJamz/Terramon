@@ -29,11 +29,11 @@ public class InventoryParty : SmartUIState
         Language.GetText("Mods.Terramon.GUI.Inventory.OpenPokedex");
 
     private readonly LocalizedText _showPartyLocalizedText = Language.GetText("Mods.Terramon.GUI.Inventory.ShowParty");
+    private readonly ITweener[] _toggleTweens = new ITweener[3];
 
     private bool _isCompressed;
     private UIHoverImageButton _openPokedexButton;
     private UIHoverImageButton _toggleSlotsButton;
-    private ITweener _toggleTween;
 
     static InventoryParty()
     {
@@ -48,6 +48,8 @@ public class InventoryParty : SmartUIState
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
                                     !Main.LocalPlayer.dead && !Main.inFancyUI &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
+
+    public static bool InPCMode { get; private set; }
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -97,9 +99,64 @@ public class InventoryParty : SmartUIState
         AddElement(_openPokedexButton, 30, 262, 30, 36);
     }
 
+    public void EnterPCMode()
+    {
+        InPCMode = true;
+
+        KillAllTweens();
+
+        _toggleSlotsButton.OnLeftClick -= ToggleSlots;
+        _toggleSlotsButton.OnLeftClick += ToggleSlotsWhenDisabled;
+        _toggleSlotsButton.Rotation = 0;
+
+        if (!_isCompressed)
+        {
+            _toggleSlotsButton.SetImage(PartySlotBallGreyedTexture);
+        }
+        else
+        {
+            // Show party slots when in PC mode even when compressed
+            _toggleSlotsButton.Left.Pixels = 118;
+            _toggleSlotsButton.SetHoverText(_hidePartyLocalizedText);
+            foreach (var slot in CustomSlots)
+                slot.Color = Color.White;
+        }
+    }
+
+    public void ExitPCMode()
+    {
+        InPCMode = false;
+
+        KillAllTweens();
+
+        _toggleSlotsButton.OnLeftClick -= ToggleSlotsWhenDisabled;
+        _toggleSlotsButton.OnLeftClick += ToggleSlots;
+        _toggleSlotsButton.Rotation = 0;
+
+        if (!_isCompressed)
+        {
+            _toggleSlotsButton.SetImage(PartySlotBallTexture);
+        }
+        else
+        {
+            // Hide party slots when exiting PC mode
+            _toggleSlotsButton.Left.Pixels = 404;
+            _toggleSlotsButton.SetHoverText(_showPartyLocalizedText);
+            foreach (var slot in CustomSlots)
+                slot.Color = Color.Transparent;
+        }
+    }
+
+    private void KillAllTweens()
+    {
+        if (_toggleTweens[1] is not { IsRunning: true }) return;
+        foreach (var tween in _toggleTweens)
+            tween.Kill();
+    }
+
     private void ToggleSlots(UIMouseEvent evt, UIElement listeningelement)
     {
-        if (_toggleTween is { IsRunning: true }) return;
+        if (_toggleTweens[1] is { IsRunning: true }) return;
 
         SoundEngine.PlaySound(_isCompressed ? SoundID.MenuOpen : SoundID.MenuClose);
         _isCompressed = !_isCompressed;
@@ -124,17 +181,19 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.Rotation = 0;
         var endRotation = (float)Math.PI * 2f;
         if (!_isCompressed) endRotation *= -1;
-        Tween.To(() => _toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x, endRotation, 0.35f);
-        _toggleTween = Tween.To(() => _toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
+        _toggleTweens[0] = Tween.To(() => _toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x,
+            endRotation, 0.35f);
+        var toggleTween = Tween.To(() => _toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
                 _isCompressed ? 404 : 118, 0.6f)
             .SetEase(Ease.OutExpo);
-        _toggleTween.OnComplete = () =>
+        toggleTween.OnComplete = () =>
         {
             _toggleSlotsButton.SetHoverText(_isCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
             _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
             IgnoresMouseInteraction = false;
         };
-        Tween.To(() => startingAlpha, x =>
+        _toggleTweens[1] = toggleTween;
+        _toggleTweens[2] = Tween.To(() => startingAlpha, x =>
         {
             var newColor = Color.White * x;
             foreach (var slot in CustomSlots)
@@ -143,6 +202,14 @@ public class InventoryParty : SmartUIState
                 slot.Update(null);
             }
         }, (!_isCompressed).ToInt(), 0.35f);
+    }
+
+    private static void ToggleSlotsWhenDisabled(UIMouseEvent evt, UIElement listeningelement)
+    {
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+        {
+            Volume = 0.25f
+        });
     }
 
     private static void UpdateSlot(PokemonData data, int index)
@@ -231,6 +298,8 @@ internal sealed class CustomPartyItemSlot : UIImage
 
     public readonly int Index;
     private UIImage _minispriteImage;
+
+    private bool _pretendToBeEmptyState;
     private string _tooltipName;
     private string _tooltipText;
 
@@ -256,9 +325,12 @@ internal sealed class CustomPartyItemSlot : UIImage
         base.LeftClick(evt);
         if (Data == null) return;
         if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem)
+        {
             UseItem(directUseItem);
-        else if (Main.mouseItem.IsAir && Main.keyState.IsKeyDown(Keys.LeftShift))
-            HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
+        }
+        else if (Main.mouseItem.IsAir)
+        {
+        }
     }
 
     public override void RightClick(UIMouseEvent evt)
@@ -280,6 +352,80 @@ internal sealed class CustomPartyItemSlot : UIImage
         var consume = item.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
         Main.mouseItem.stack -= consume;
         if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
+    }
+
+    private void LeftClickPCMode()
+    {
+        var heldPokemon = TooltipOverlay.GetHeldPokemon();
+        if (Data != null)
+        {
+            // Make sure it's not the only Pokémon in the party
+            if (Index == 0 && heldPokemon == null && TerramonPlayer.LocalPlayer.Party[1] == null)
+            {
+                Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
+                    TerramonCommand.ChatColorYellow);
+                return;
+            }
+
+            // Take or swap the Pokémon from the slot if slot is not empty
+            SoundEngine.PlaySound(SoundID.Grab);
+            if (heldPokemon == Data)
+            {
+                TooltipOverlay.ClearHeldPokemon(place: false);
+                SetData(heldPokemon);
+                _pretendToBeEmptyState = false;
+                return;
+            }
+
+            TooltipOverlay.SetHeldPokemon(Data, _ =>
+            {
+                SetData(Data);
+                _pretendToBeEmptyState = false;
+            }, () =>
+            {
+                if (!_pretendToBeEmptyState) return;
+                var modPlayer = TerramonPlayer.LocalPlayer;
+                modPlayer.Party[Index] = null;
+                modPlayer.ActiveSlot = -1;
+                // Cascade the Pokémon to the left
+                for (var i = Index; i < modPlayer.Party.Length - 1; i++)
+                    modPlayer.Party[i] = modPlayer.Party[i + 1];
+                modPlayer.Party[5] = null;
+                SetData(null);
+                _pretendToBeEmptyState = false;
+            });
+
+            if (heldPokemon != null)
+            {
+                if (TerramonPlayer.LocalPlayer.Party[Index] == null)
+                    TooltipOverlay.ClearHeldPokemon(place: false); // Hack, don't know why but this is needed :D
+                TerramonPlayer.LocalPlayer.Party[Index] = heldPokemon;
+                SetData(heldPokemon);
+            }
+            else
+            {
+                _pretendToBeEmptyState = true;
+                _minispriteImage?.Remove();
+                SetImage(PartySlotBgEmptyTexture);
+            }
+        }
+        else
+        {
+            // Place the held Pokémon into the slot if present and slot is empty
+            if (heldPokemon == null) return;
+            SoundEngine.PlaySound(SoundID.Grab);
+            _pretendToBeEmptyState = false;
+            // Find lowest empty slot searching from the current index - 1
+            var emptySlot = Index;
+            for (var i = Index - 1; i >= 0; i--)
+                if (TerramonPlayer.LocalPlayer.Party[i] == null)
+                    emptySlot = i;
+                else
+                    break;
+            TerramonPlayer.LocalPlayer.Party[emptySlot] = heldPokemon;
+            if (Index < emptySlot) SetData(heldPokemon);
+            TooltipOverlay.ClearHeldPokemon();
+        }
     }
 
     public void SetData(PokemonData data)
@@ -312,9 +458,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             }
 
             _tooltipName = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotName", data.DisplayName, data.Level);
-            _minispriteImage = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{schema.Identifier}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
-                AssetRequestMode.ImmediateLoad))
+            _minispriteImage = new UIImage(data.GetMiniSprite())
             {
                 ImageScale = 0.7f
             };
@@ -341,19 +485,48 @@ internal sealed class CustomPartyItemSlot : UIImage
         if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
             directUseItem.AffectedByPokemonDirectUse(Data))
             SetImage(PartySlotBgClickedTexture);
-        else
+        else if (!_pretendToBeEmptyState)
             SetImage(PartySlotBgTexture);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
-        if (IsMouseHovering && Main.mouseItem.type == ItemID.None && Data != null)
+        if (IsMouseHovering)
         {
-            TooltipOverlay.SetName(_tooltipName);
-            TooltipOverlay.SetTooltip(_tooltipText);
-            TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
-            if (Data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
+            if (Main.mouseItem.IsAir)
+            {
+                if (Data != null)
+                {
+                    if (Main.keyState.IsKeyDown(Keys.O))
+                    {
+                        HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
+                        return;
+                    }
+
+                    TooltipOverlay.SetName(_tooltipName);
+                    var tooltip = _tooltipText;
+                    if (InventoryParty.InPCMode)
+                    {
+                        var key = Data == TerramonPlayer.LocalPlayer.GetActivePokemon()
+                            ? "Mods.Terramon.GUI.Inventory.SlotTooltipPCModeActive"
+                            : "Mods.Terramon.GUI.Inventory.SlotTooltipPCMode";
+                        tooltip += "\n" + Language.GetTextValue(key);
+                    }
+
+                    TooltipOverlay.SetTooltip(tooltip);
+                    TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
+                    if (Data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
+                }
+
+                if (InventoryParty.InPCMode && Main.mouseLeft && Main.mouseLeftRelease)
+                    LeftClickPCMode();
+            }
+            else if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
+                     directUseItem.AffectedByPokemonDirectUse(Data))
+            {
+                Main.instance.MouseText("Use " + Main.mouseItem.Name);
+            }
         }
 
         base.Draw(spriteBatch);

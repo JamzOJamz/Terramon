@@ -1,5 +1,6 @@
 using EasyPacketsLib;
 using ReLogic.Utilities;
+using Terramon.Content.GUI;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
@@ -56,6 +57,9 @@ public partial class TerramonWorld : ModSystem
 
     public override void PreSaveAndQuit()
     {
+        if (TooltipOverlay.IsHoldingPokemon())
+            TooltipOverlay.ClearHeldPokemon(true);
+        
         Terramon.ResetUI();
     }
 
@@ -106,6 +110,7 @@ public partial class TerramonWorld : ModSystem
     public override void Load()
     {
         On_Main.DoUpdate += MainDoUpdate_Detour;
+        On_Main.DoDraw += MainDoDraw_Detour;
     }
 
     private static void MainDoUpdate_Detour(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
@@ -114,9 +119,6 @@ public partial class TerramonWorld : ModSystem
         UILoader.GameTime = gameTime;
 
         orig(self, ref gameTime);
-
-        // Update all active tweens
-        Tween.DoUpdate();
 
         if (Main.musicVolume != _lastMusicVolume)
         {
@@ -139,5 +141,13 @@ public partial class TerramonWorld : ModSystem
 
         if (!activeSound.IsPlaying) return;
         _soundEndedLastFrame = true;
+    }
+    
+    private static void MainDoDraw_Detour(On_Main.orig_DoDraw orig, Main self, GameTime gameTime)
+    {
+        orig(self, gameTime);
+
+        // Update all active tweens
+        Tween.DoUpdate(gameTime);
     }
 }
