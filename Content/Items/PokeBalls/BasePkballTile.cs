@@ -177,8 +177,11 @@ public class BasePkballEntity : ModTileEntity
             }
             else
                 Item.stack++;
-
-            player.HeldItem.stack -= 1;
+            
+            if (Main.mouseItem.type == Item.type)
+                Main.mouseItem.stack--;
+            else if (player.HeldItem.type == Item.type)
+                player.HeldItem.stack--;
             return true;
         }
 
