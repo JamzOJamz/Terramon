@@ -172,6 +172,13 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         if (_heldPokemon != null)
         {
+            if (Main.mouseRight && Main.mouseRightRelease)
+            {
+                SoundEngine.PlaySound(SoundID.Grab);
+                ClearHeldPokemon(ret: true);
+                return;
+            }
+            
             DrawHeldPokemon(spriteBatch);
             return;
         }
