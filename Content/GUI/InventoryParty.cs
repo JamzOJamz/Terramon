@@ -145,6 +145,11 @@ public class InventoryParty : SmartUIState
             foreach (var slot in CustomSlots)
                 slot.Color = Color.Transparent;
         }
+        
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_pc_off")
+        {
+            Volume = 0.54f
+        });
     }
 
     private void KillAllTweens()
@@ -386,7 +391,10 @@ internal sealed class CustomPartyItemSlot : UIImage
                 if (!_pretendToBeEmptyState) return;
                 var modPlayer = TerramonPlayer.LocalPlayer;
                 modPlayer.Party[Index] = null;
-                modPlayer.ActiveSlot = -1;
+                if (modPlayer.ActiveSlot == Index)
+                    modPlayer.ActiveSlot = -1;
+                else
+                    modPlayer.ActiveSlot--;
                 // Cascade the Pokémon to the left
                 for (var i = Index; i < modPlayer.Party.Length - 1; i++)
                     modPlayer.Party[i] = modPlayer.Party[i + 1];
@@ -401,6 +409,10 @@ internal sealed class CustomPartyItemSlot : UIImage
                     TooltipOverlay.ClearHeldPokemon(place: false); // Hack, don't know why but this is needed :D
                 TerramonPlayer.LocalPlayer.Party[Index] = heldPokemon;
                 SetData(heldPokemon);
+                
+                var modPlayer = TerramonPlayer.LocalPlayer;
+                if (modPlayer.ActiveSlot == Index)
+                    modPlayer.ActiveSlot = -1;
             }
             else
             {
