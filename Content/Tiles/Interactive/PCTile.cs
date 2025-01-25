@@ -114,9 +114,9 @@ public abstract class PCTile : ModTile
         // Play the appropriate sound for the action
         if (differentPc)
             SoundEngine.PlaySound(SoundID.MenuTick);
-        else
+        else if (te.PoweredOn)
             SoundEngine.PlaySound(
-                new SoundStyle(te.PoweredOn ? "Terramon/Sounds/ls_pc_on" : "Terramon/Sounds/ls_pc_off")
+                new SoundStyle("Terramon/Sounds/ls_pc_on")
                 {
                     Volume = 0.54f
                 });
