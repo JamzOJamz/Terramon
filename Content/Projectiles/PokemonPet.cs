@@ -106,7 +106,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         // Move ahead of player
         var direction = Main.player[Projectile.owner].direction;
         _customSpriteDirection = direction;
-        Projectile.position.X += direction * 40;
+        Projectile.position.X += direction * (MathF.Abs(Main.player[Projectile.owner].velocity.X) < 1.5f ? 40 : -30);
 
         var dust = ModContent.DustType<SummonCloud>();
         var mainPosition = new Vector2(Projectile.position.X - Projectile.width / 2f,
