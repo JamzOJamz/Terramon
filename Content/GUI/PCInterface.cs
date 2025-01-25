@@ -203,7 +203,7 @@ public class PCInterface : SmartUIState
         _boxNameText.TextColor = DefaultBoxColors[DisplayedBoxIndex % DefaultBoxColors.Length];
     }
 
-    private static void UpdateArrowButtonsHoverText(PCService pcStorage)
+    public static void UpdateArrowButtonsHoverText(PCService pcStorage)
     {
         var hoverText = $"{DisplayedBoxIndex + 1}/{pcStorage.Boxes.Count}";
         _leftArrowButton.SetHoverText(hoverText);

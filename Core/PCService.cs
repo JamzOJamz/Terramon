@@ -77,6 +77,9 @@ public class PCService
         }
 
         for (var i = 0; i < ExpansionBoxes; i++) Boxes.Add(new PCBox { Service = this });
+
+        // Update the PC interface to reflect the new boxes created
+        PCInterface.UpdateArrowButtonsHoverText(this);
     }
 
     /// <summary>
