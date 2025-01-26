@@ -101,7 +101,7 @@ public abstract class PCTile : ModTile
         if (otherPcId != -1 && otherPcId != te.ID && TileEntity.ByID.TryGetValue(otherPcId, out var otherTe) &&
             otherTe is PCTileEntity { PoweredOn: true } otherPcTe)
         {
-            otherPcTe.ToggleOnOff();
+            otherPcTe.ToggleOnOff(true);
             differentPc = true;
         }
         
@@ -216,12 +216,13 @@ public sealed class PCTileEntity : ModTileEntity
     public bool PoweredOn;
     public int User = -1;
 
-    public void ToggleOnOff()
+    public void ToggleOnOff(bool switching = false)
     {
         var player = Main.LocalPlayer; // This method is only ever called on the local client, so this is safe
         PoweredOn = !PoweredOn;
         User = PoweredOn ? player.whoAmI : -1;
-        player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = PoweredOn ? ID : -1;
+        if (!switching)
+            player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = PoweredOn ? ID : -1;
 
         if (Main.netMode == NetmodeID.SinglePlayer)
             return;
