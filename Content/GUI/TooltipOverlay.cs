@@ -17,6 +17,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
     private static string _tooltip = string.Empty;
     private static Asset<Texture2D> _icon;
     private static PokemonData _heldPokemon;
+    private static bool _hoveringTrash;
 
     private static float _heldPokemonScale = 1f;
     private static bool _heldPokemonScalingUp;
@@ -50,8 +51,16 @@ public class TooltipOverlay : SmartUIState, ILoadable
             if (_heldPokemon != null)
             {
                 if (Main.HoverItem.type > ItemID.None)
+                {
                     typeof(Main).GetField("_mouseTextCache", BindingFlags.Instance | BindingFlags.NonPublic)!
                         .SetValue(Main.instance, null);
+                    if (_hoveringTrash)
+                    {
+                        Main.instance.MouseText(
+                            $"{(Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift) ? "Left" : "Shift")} click to release {_heldPokemon.DisplayName}",
+                            _heldPokemon.IsShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
+                    }
+                }
                 var mouseItem = Main.mouseItem;
                 Main.mouseItem = new Item
                 {
@@ -85,25 +94,28 @@ public class TooltipOverlay : SmartUIState, ILoadable
             else
             {
                 if (inv != Main.LocalPlayer.trashItem) return;
+                
+                _hoveringTrash = true;
+                
                 if (Main.mouseLeft && Main.mouseLeftRelease)
                 {
-                    if (!Main.keyState.IsKeyDown(Keys.LeftShift))
+                    if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
+                    {
+                        SoundEngine.PlaySound(SoundID.Grab);
+                        ClearHeldPokemon();
+                    }
+                    else
                     {
                         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
                         {
                             Volume = 0.25f
                         });
                     }
-                    else
-                    {
-                        SoundEngine.PlaySound(SoundID.Grab);
-                        ClearHeldPokemon();
-                    }
                 }
 
-                if (_heldPokemon != null)
+                if (_heldPokemon != null && Main.HoverItem.IsAir)
                     Main.instance.MouseText(
-                        $"{(Main.keyState.IsKeyDown(Keys.LeftShift) ? "Left" : "Shift")} click to release {_heldPokemon.DisplayName}",
+                        $"{(Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift) ? "Left" : "Shift")} click to release {_heldPokemon.DisplayName}",
                         _heldPokemon.IsShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
             }
         };
@@ -175,10 +187,10 @@ public class TooltipOverlay : SmartUIState, ILoadable
             if (Main.mouseRight && Main.mouseRightRelease)
             {
                 SoundEngine.PlaySound(SoundID.Grab);
-                ClearHeldPokemon(ret: true);
+                ClearHeldPokemon(true);
                 return;
             }
-            
+
             DrawHeldPokemon(spriteBatch);
             return;
         }
@@ -267,6 +279,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _color = new Color(232, 232, 244);
         _tooltip = string.Empty;
         _icon = null;
+        _hoveringTrash = false;
         if (TerramonPlayer.LocalPlayer.ActivePCTileEntityID != -1 || _heldPokemon == null) return;
         SoundEngine.PlaySound(SoundID.Grab);
         ClearHeldPokemon(true);

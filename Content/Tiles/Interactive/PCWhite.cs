@@ -32,7 +32,7 @@ public class PCItemWhite : PCItem
     {
         CreateRecipe()
             .AddIngredient(ItemID.Chest, 2)
-            .AddRecipeGroup(RecipeGroupID.IronBar, 4)
+            .AddRecipeGroup(RecipeGroupID.IronBar, 8)
             .AddIngredient(ItemID.Glass, 10)
             .AddIngredient<PremierBallItem>()
             .AddTile(TileID.WorkBenches)

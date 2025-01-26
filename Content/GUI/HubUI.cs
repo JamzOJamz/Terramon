@@ -85,7 +85,7 @@ public class HubUI : SmartUIState
     }
 
     public static bool ShinyActive { get; private set; }
-    public static bool LeftShiftIgnore { get; set; }
+    public static bool ShiftKeyIgnore { get; set; }
 
     public static bool Active { get; private set; }
     public override bool Visible => false; // Vanilla will update/draw this state through IngameFancyUI
@@ -139,7 +139,7 @@ public class HubUI : SmartUIState
         var filterButtonImage = isShiny ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture;
         var filterButtonRarity = isShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White;
         _worldDexMode = false;
-        LeftShiftIgnore = true;
+        ShiftKeyIgnore = true;
         ShinyActive = isShiny;
         hubState._filterButton.SetImage(filterButtonImage);
         hubState._filterButton.SetHoverRarity(filterButtonRarity);
@@ -768,9 +768,9 @@ internal sealed class PokedexEntryIcon : UIPanel
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (Main.keyState.IsKeyDown(Keys.LeftShift))
+        if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
         {
-            if (HubUI.LeftShiftIgnore) return;
+            if (HubUI.ShiftKeyIgnore) return;
             _debugText.TextColor = Color.Transparent;
             _debugText.ShadowColor = Color.Transparent;
         }
@@ -778,7 +778,7 @@ internal sealed class PokedexEntryIcon : UIPanel
         {
             _debugText.TextColor = Color.White;
             _debugText.ShadowColor = Color.Black;
-            HubUI.LeftShiftIgnore = false;
+            HubUI.ShiftKeyIgnore = false;
         }
     }
 

@@ -1,5 +1,7 @@
+using System.Globalization;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using ReLogic.OS;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
@@ -7,6 +9,8 @@ using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
+using Terraria.Initializers;
 using Terraria.Localization;
 using Terraria.UI;
 
@@ -23,7 +27,7 @@ public class PCInterface : SmartUIState
     private static readonly Asset<Texture2D> SmallPageButtonLeftTexture;
     private static readonly Asset<Texture2D> SmallPageButtonRightTexture;
 
-    public static readonly Color[] DefaultBoxColors =
+    private static readonly Color[] DefaultBoxColors =
     [
         new Color(152, 200, 96),
         new Color(94, 218, 229),
@@ -38,6 +42,14 @@ public class PCInterface : SmartUIState
     private static UIText _boxNameText;
     private static UIHoverImageButton _leftArrowButton;
     private static UIHoverImageButton _rightArrowButton;
+    private static PCService _pcService;
+    private static PCColorPicker _colorPicker;
+    private static PCDragBar _boxDragBar;
+    private static PCActionButton _changeColorButton;
+    private static PCActionButton _renameBoxButton;
+    private static UIContainer _container;
+    private static bool _inColorPickerMode;
+    private static bool _pendingColorChange;
 
     static PCInterface()
     {
@@ -61,9 +73,9 @@ public class PCInterface : SmartUIState
 
     public override void OnInitialize()
     {
-        var container = new UIContainer(new Vector2(442, 262));
-        container.Left.Set(120, 0);
-        container.Top.Set(306, 0);
+        _container = new UIContainer(new Vector2(442, 262));
+        _container.Left.Set(120, 0);
+        _container.Top.Set(306, 0);
 
         /*var listViewButton = new UIHoverImageButton(ListViewButtonTexture, "Switch to List View");
         listViewButton.Left.Set(50, 0);
@@ -79,7 +91,7 @@ public class PCInterface : SmartUIState
         {
             var slot = new CustomPCItemSlot();
             CustomSlots[i, j] = slot;
-            AddElement(slot, slotPositionsX[j] - 120, i * 48 - 4, 50, 50, container);
+            AddElement(slot, slotPositionsX[j] - 120, i * 48 - 4, 50, 50, _container);
         }
 
         _boxNameText = new UIText("Box 1")
@@ -88,48 +100,127 @@ public class PCInterface : SmartUIState
         };
         _boxNameText.Left.Set(334, 0);
         _boxNameText.Top.Set(9, 0);
-        container.Append(_boxNameText);
+        _container.Append(_boxNameText);
 
-        var changeColorButton = new PCActionButton("Change Color");
-        changeColorButton.Left.Set(335, 0);
-        changeColorButton.Top.Set(27, 0);
-        container.Append(changeColorButton);
+        _changeColorButton = new PCActionButton("Change Color");
+        _changeColorButton.Left.Set(335, 0);
+        _changeColorButton.Top.Set(27, 0);
+        _changeColorButton.OnLeftClick += (_, _) =>
+        {
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            if (!HasChild(_colorPicker))
+            {
+                _inColorPickerMode = true;
+                _changeColorButton.SetText("Save Color");
+                _renameBoxButton.SetText("Cancel");
+                _colorPicker.SetColor(GetColorForCurrentBox(), GetDefaultColorForCurrentBox());
+                Append(_colorPicker);
+            }
+            else
+            {
+                if (_pendingColorChange)
+                {
+                    var currentColor = _colorPicker.GetColor();
+                    _pcService.Boxes[DisplayedBoxIndex].Color = currentColor;
+                }
 
-        var renameBoxButton = new PCActionButton("Rename");
-        renameBoxButton.Left.Set(335, 0);
-        renameBoxButton.Top.Set(53, 0);
-        container.Append(renameBoxButton);
+                _boxDragBar.Color = Color.Transparent;
+                _inColorPickerMode = false;
+                _pendingColorChange = false;
+                _changeColorButton.SetText("Change Color");
+                _renameBoxButton.SetText("Rename");
+                RemoveChild(_colorPicker);
+            }
+        };
+        _container.Append(_changeColorButton);
+
+        _renameBoxButton = new PCActionButton("Rename");
+        _renameBoxButton.Left.Set(335, 0);
+        _renameBoxButton.Top.Set(53, 0);
+        _renameBoxButton.OnLeftClick += (_, _) =>
+        {
+            if (!_inColorPickerMode) return;
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            _colorPicker.Remove();
+            _boxNameText.TextColor = GetColorForCurrentBox();
+            _boxDragBar.Color = Color.Transparent;
+            _changeColorButton.SetText("Change Color");
+            _renameBoxButton.SetText("Rename");
+            _pendingColorChange = false;
+            _inColorPickerMode = false;
+        };
+        _container.Append(_renameBoxButton);
 
         _leftArrowButton = new UIHoverImageButton(SmallPageButtonLeftTexture, string.Empty);
         _leftArrowButton.SetHoverImage(SmallestButtonHoverTexture);
         _leftArrowButton.SetVisibility(1f, 1f);
         _leftArrowButton.OnLeftClick += (_, _) =>
         {
-            var pcStorage = TerramonPlayer.LocalPlayer.GetPC();
+            if (_pendingColorChange)
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                {
+                    Volume = 0.25f
+                });
+                return;
+            }
+
             DisplayedBoxIndex--;
-            if (DisplayedBoxIndex < 0) DisplayedBoxIndex = pcStorage.Boxes.Count - 1;
-            PopulateCustomSlots(pcStorage.Boxes[DisplayedBoxIndex]);
-            UpdateArrowButtonsHoverText(pcStorage);
+            if (DisplayedBoxIndex < 0) DisplayedBoxIndex = _pcService.Boxes.Count - 1;
+            PopulateCustomSlots(_pcService.Boxes[DisplayedBoxIndex]);
+            UpdateArrowButtonsHoverText();
+
+            if (_inColorPickerMode) _colorPicker.SetColor(GetColorForCurrentBox(), GetDefaultColorForCurrentBox());
         };
-        AddElement(_leftArrowButton, 334, 90, 30, 30, container);
+        AddElement(_leftArrowButton, 334, 90, 30, 30, _container);
 
         _rightArrowButton = new UIHoverImageButton(SmallPageButtonRightTexture, string.Empty);
         _rightArrowButton.SetHoverImage(SmallestButtonHoverTexture);
         _rightArrowButton.SetVisibility(1f, 1f);
         _rightArrowButton.OnLeftClick += (_, _) =>
         {
-            var pcStorage = TerramonPlayer.LocalPlayer.GetPC();
+            if (_pendingColorChange)
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                {
+                    Volume = 0.25f
+                });
+                return;
+            }
+
             DisplayedBoxIndex++;
-            if (DisplayedBoxIndex >= pcStorage.Boxes.Count) DisplayedBoxIndex = 0;
-            PopulateCustomSlots(pcStorage.Boxes[DisplayedBoxIndex]);
-            UpdateArrowButtonsHoverText(pcStorage);
+            if (DisplayedBoxIndex >= _pcService.Boxes.Count) DisplayedBoxIndex = 0;
+            PopulateCustomSlots(_pcService.Boxes[DisplayedBoxIndex]);
+            UpdateArrowButtonsHoverText();
+
+            if (_inColorPickerMode) _colorPicker.SetColor(GetColorForCurrentBox(), GetDefaultColorForCurrentBox());
         };
-        AddElement(_rightArrowButton, 369, 90, 30, 30, container);
+        AddElement(_rightArrowButton, 369, 90, 30, 30, _container);
 
-        var boxDragBar = new PCDragBar();
-        AddElement(boxDragBar, 42, 241, 282, 10, container);
+        _boxDragBar = new PCDragBar();
+        AddElement(_boxDragBar, 42, 241, 282, 10, _container);
 
-        Append(container);
+        Append(_container);
+
+        _colorPicker = new PCColorPicker
+        {
+            HAlign = 0.5f
+        };
+        _colorPicker.OnColorChange += color =>
+        {
+            _boxNameText.TextColor = color;
+            _pendingColorChange = color != GetColorForCurrentBox();
+            if (_pendingColorChange)
+            {
+                _boxDragBar.Color = color;
+                _changeColorButton.SetText("Save Color •");
+            }
+            else
+            {
+                _boxDragBar.Color = Color.Transparent;
+                _changeColorButton.SetText("Save Color");
+            }
+        };
 
         /*var panel = new UIPanel();
         panel.Width.Set(200, 0);
@@ -144,23 +235,43 @@ public class PCInterface : SmartUIState
         Recalculate();
     }
 
+    public override void Recalculate()
+    {
+        base.Recalculate();
+
+        // Reposition the color picker panel relative to the screen height
+        _colorPicker?.Top.Set(Main.screenHeight / 2f + 60, 0f);
+    }
+
     /// <summary>
     ///     Called when the PC interface is opened.
     /// </summary>
     public static void OnOpen()
     {
+        // Clean up the color picker and related UI elements
+        if (_inColorPickerMode)
+        {
+            _colorPicker.Remove();
+            _boxDragBar.Color = Color.Transparent;
+            _changeColorButton.SetText("Change Color");
+            _container.Append(_renameBoxButton);
+            _renameBoxButton.SetText("Rename");
+            _pendingColorChange = false;
+            _inColorPickerMode = false;
+        }
+
         // Enter PC mode in the Inventory Party UI (forces it open and enables PC interactions)
         UILoader.GetUIState<InventoryParty>().EnterPCMode();
 
         // Get the local player's PC storage...
-        var pcStorage = TerramonPlayer.LocalPlayer.GetPC();
+        _pcService = TerramonPlayer.LocalPlayer.GetPC();
 
         // ...and populate the UI with the actively displayed box data
-        var selectedBox = pcStorage.Boxes[DisplayedBoxIndex];
+        var selectedBox = _pcService.Boxes[DisplayedBoxIndex];
         PopulateCustomSlots(selectedBox);
 
         // Update hover text for the arrow buttons
-        UpdateArrowButtonsHoverText(pcStorage);
+        UpdateArrowButtonsHoverText();
     }
 
     /// <summary>
@@ -170,6 +281,15 @@ public class PCInterface : SmartUIState
     {
         // Exit PC mode in the Inventory Party UI (reverts to original state)
         UILoader.GetUIState<InventoryParty>().ExitPCMode();
+
+        // Clear the PC service reference
+        _pcService = null;
+
+        // Play the PC off sound
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_pc_off")
+        {
+            Volume = 0.54f
+        });
     }
 
     public static void ResetToDefault()
@@ -200,14 +320,27 @@ public class PCInterface : SmartUIState
 
         // Update the box name text
         _boxNameText.SetText($"Box {DisplayedBoxIndex + 1}");
-        _boxNameText.TextColor = DefaultBoxColors[DisplayedBoxIndex % DefaultBoxColors.Length];
+
+        if (_boxDragBar.Color == Color.Transparent) _boxNameText.TextColor = GetColorForCurrentBox();
     }
 
-    public static void UpdateArrowButtonsHoverText(PCService pcStorage)
+    public static void UpdateArrowButtonsHoverText()
     {
-        var hoverText = $"{DisplayedBoxIndex + 1}/{pcStorage.Boxes.Count}";
+        if (_pcService == null) return;
+        var hoverText = $"{DisplayedBoxIndex + 1}/{_pcService.Boxes.Count}";
         _leftArrowButton.SetHoverText(hoverText);
         _rightArrowButton.SetHoverText(hoverText);
+    }
+
+    public static Color GetColorForCurrentBox()
+    {
+        var color = _pcService.Boxes[DisplayedBoxIndex].Color;
+        return color == Color.Transparent ? GetDefaultColorForCurrentBox() : color;
+    }
+
+    private static Color GetDefaultColorForCurrentBox()
+    {
+        return DefaultBoxColors[DisplayedBoxIndex % DefaultBoxColors.Length];
     }
 }
 
@@ -302,7 +435,7 @@ internal sealed class CustomPCItemSlot : UIImage
             SoundEngine.PlaySound(SoundID.Grab);
             var boxCopy = _box;
             var indexCopy = _index;
-            TooltipOverlay.SetHeldPokemon(data, onReturn: d =>
+            TooltipOverlay.SetHeldPokemon(data, d =>
             {
                 if (boxCopy != _box)
                 {
@@ -345,7 +478,7 @@ internal sealed class CustomPCItemSlot : UIImage
                     HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
                     return;
                 }
-                
+
                 TooltipOverlay.SetName(_tooltipName);
                 TooltipOverlay.SetTooltip(_tooltipText);
                 TooltipOverlay.SetIcon(BallAssets.GetBallIcon(data.Ball));
@@ -391,7 +524,7 @@ internal sealed class PCActionButton : BetterUIText
     }
 }
 
-internal sealed class PCDragBar() : UIImage(BoxDragBarTexture)
+internal sealed class PCDragBar : UIImage
 {
     private static readonly Asset<Texture2D> BoxDragBarTexture;
 
@@ -400,11 +533,19 @@ internal sealed class PCDragBar() : UIImage(BoxDragBarTexture)
         BoxDragBarTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/BoxDragBar");
     }
 
+    public PCDragBar() : base(BoxDragBarTexture)
+    {
+        Color = Color.Transparent;
+    }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
 
-        base.DrawSelf(spriteBatch);
+        var color = Color;
+        Color = Color.White;
+        base.DrawSelf(spriteBatch); // Draw the drag bar at Color.White
+        Color = color;
 
         var drawRect = GetDimensions().ToRectangle();
         drawRect.X += 2;
@@ -412,6 +553,343 @@ internal sealed class PCDragBar() : UIImage(BoxDragBarTexture)
         drawRect.Width -= 4;
         drawRect.Height -= 4;
         spriteBatch.Draw(TextureAssets.MagicPixel.Value, drawRect,
-            PCInterface.DefaultBoxColors[PCInterface.DisplayedBoxIndex % PCInterface.DefaultBoxColors.Length]);
+            color != Color.Transparent
+                ? color
+                : PCInterface.GetColorForCurrentBox()); // Draw the drag bar at the box color
+    }
+}
+
+internal sealed class PCColorPicker : UIContainer
+{
+    private readonly UIColoredImageButton _copyHexButton;
+    private readonly UIText _hexCodeText;
+    private readonly UIColoredImageButton _pasteHexButton;
+    private readonly UIColoredImageButton _randomColorButton;
+    private readonly BetterUIText _resetToDefaultButton;
+    private Vector3 _currentColorPickerHSL = RgbToScaledHsl(new Color());
+    private Vector3 _defaultColorPickerHSL = RgbToScaledHsl(new Color());
+
+    public PCColorPicker() : base(new Vector2(220, 180))
+    {
+        var invBgColor = new Color(63, 65, 151, 255) * 0.785f;
+
+        var backPanel = new UIPanel
+        {
+            BackgroundColor = invBgColor
+        };
+        backPanel.Width.Set(220f, 0f);
+        backPanel.Height.Set(137f, 0f);
+        backPanel.SetPadding(0f);
+        backPanel.PaddingTop = 3f;
+
+        // Append sliders
+        backPanel.Append(CreateHSLSlider(HSLSliderId.Hue));
+        backPanel.Append(CreateHSLSlider(HSLSliderId.Saturation));
+        backPanel.Append(CreateHSLSlider(HSLSliderId.Luminance));
+
+        _resetToDefaultButton = new BetterUIText("Reset to Default Color", 0.8125f)
+        {
+            TextColor = new Color(100, 100, 100),
+            TextOriginX = 0.5f,
+            TextOriginY = 0.5f,
+            HAlign = 0.5f
+        };
+        _resetToDefaultButton.Top.Set(96f, 0f);
+        _resetToDefaultButton.Width.Set(160f, 0f);
+        _resetToDefaultButton.Height.Set(28f, 0f);
+        _resetToDefaultButton.OnMouseOver += (_, _) =>
+        {
+            if (IsDefaultColor) return;
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.89f, 1f / 12f);
+            _resetToDefaultButton.TextColor = new Color(255, 214, 102);
+            _resetToDefaultButton.ShadowColor = new Color(173, 48, 46);
+        };
+        _resetToDefaultButton.OnMouseOut += (_, _) =>
+        {
+            if (IsDefaultColor) return;
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
+            _resetToDefaultButton.TextColor = new Color(247, 218, 101);
+            _resetToDefaultButton.ShadowColor = Color.Black;
+        };
+        _resetToDefaultButton.OnLeftClick += (_, _) =>
+        {
+            if (IsDefaultColor) return;
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
+            _currentColorPickerHSL = _defaultColorPickerHSL;
+            var color = ScaledHslToRgb(_defaultColorPickerHSL.X, _defaultColorPickerHSL.Y, _defaultColorPickerHSL.Z);
+            OnColorChange?.Invoke(color);
+            _resetToDefaultButton.TextColor = new Color(100, 100, 100);
+            _resetToDefaultButton.ShadowColor = Color.Black;
+            UpdateHexText(color);
+        };
+        backPanel.Append(_resetToDefaultButton);
+
+        Append(backPanel);
+
+        var hexCodePanel = new UIPanel
+        {
+            BackgroundColor = invBgColor
+        };
+        hexCodePanel.Left.Set(120f, 0f);
+        hexCodePanel.Top.Set(148f, 0f);
+        hexCodePanel.Width.Set(100f, 0f);
+        hexCodePanel.Height.Set(32f, 0f);
+
+        _copyHexButton = new UIColoredImageButton(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/Copy"), true);
+        _copyHexButton.Top.Set(148f, 0f);
+        _copyHexButton.OnLeftMouseDown += Click_CopyHex;
+        Append(_copyHexButton);
+
+        _pasteHexButton =
+            new UIColoredImageButton(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/Paste"), true);
+        _pasteHexButton.Top.Set(148f, 0f);
+        _pasteHexButton.Left.Set(40f, 0f);
+        _pasteHexButton.OnLeftMouseDown += Click_PasteHex;
+        Append(_pasteHexButton);
+
+        _randomColorButton =
+            new UIColoredImageButton(Main.Assets.Request<Texture2D>("Images/UI/CharCreation/Randomize"), true);
+        _randomColorButton.Top.Set(148f, 0f);
+        _randomColorButton.Left.Set(80f, 0f);
+        _randomColorButton.OnLeftMouseDown += Click_RandomizeSingleColor;
+        Append(_randomColorButton);
+
+        _hexCodeText = new UIText("#FFFFFF")
+        {
+            HAlign = 0.5f,
+            VAlign = 0.5f
+        };
+        _hexCodeText.Left.Set(-1f, 0f);
+        hexCodePanel.Append(_hexCodeText);
+
+        Append(hexCodePanel);
+    }
+
+    private bool IsDefaultColor => _currentColorPickerHSL == _defaultColorPickerHSL;
+
+    public event Action<Color> OnColorChange;
+
+    public Color GetColor()
+    {
+        return ScaledHslToRgb(_currentColorPickerHSL.X, _currentColorPickerHSL.Y, _currentColorPickerHSL.Z);
+    }
+
+    public void SetColor(Color color, Color defaultColor)
+    {
+        _currentColorPickerHSL = RgbToScaledHsl(color);
+        _defaultColorPickerHSL = RgbToScaledHsl(defaultColor);
+        _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
+        UpdateHexText(color);
+    }
+
+    private void Click_CopyHex(UIMouseEvent evt, UIElement listeningElement)
+    {
+        SoundEngine.PlaySound(SoundID.MenuTick);
+        Platform.Get<IClipboard>().Value = _hexCodeText.Text;
+    }
+
+    private void Click_PasteHex(UIMouseEvent evt, UIElement listeningElement)
+    {
+        SoundEngine.PlaySound(SoundID.MenuTick);
+        var value = Platform.Get<IClipboard>().Value;
+        if (!GetHexColor(value, out var hsl)) return;
+        //ApplyPendingColor(ScaledHslToRgb(hsl.X, hsl.Y, hsl.Z));
+        _currentColorPickerHSL = hsl;
+        var color = ScaledHslToRgb(hsl.X, hsl.Y, hsl.Z);
+        OnColorChange?.Invoke(color);
+        _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
+        UpdateHexText(color);
+        //UpdateColorPickers();
+    }
+
+    private void Click_RandomizeSingleColor(UIMouseEvent evt, UIElement listeningElement)
+    {
+        SoundEngine.PlaySound(SoundID.MenuTick);
+        var randomColorVector = GetRandomColorVector();
+        //ApplyPendingColor(ScaledHslToRgb(randomColorVector.X, randomColorVector.Y, randomColorVector.Z));
+        _currentColorPickerHSL = randomColorVector;
+        var color = ScaledHslToRgb(randomColorVector.X, randomColorVector.Y, randomColorVector.Z);
+        OnColorChange?.Invoke(color);
+        _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
+        UpdateHexText(color);
+        //UpdateColorPickers();
+    }
+
+    private static Vector3 GetRandomColorVector()
+    {
+        return new Vector3(Main.rand.NextFloat(), Main.rand.NextFloat(), Main.rand.NextFloat());
+    }
+
+    private UIColoredSlider CreateHSLSlider(HSLSliderId id)
+    {
+        var uIColoredSlider = CreateHSLSliderButtonBase(id);
+        uIColoredSlider.VAlign = 0f;
+        uIColoredSlider.HAlign = 0f;
+        uIColoredSlider.Width = StyleDimension.FromPixelsAndPercent(-10f, 1f);
+        uIColoredSlider.Top.Set(30 * (int)id, 0f);
+        //uIColoredSlider.OnLeftMouseDown += Click_ColorPicker;
+        uIColoredSlider.SetSnapPoint("Middle", (int)id, null, new Vector2(0f, 20f));
+        return uIColoredSlider;
+    }
+
+    private UIColoredSlider CreateHSLSliderButtonBase(HSLSliderId id)
+    {
+        return id switch
+        {
+            HSLSliderId.Saturation => new UIColoredSlider(LocalizedText.Empty,
+                () => GetHSLSliderPosition(HSLSliderId.Saturation),
+                delegate(float x) { UpdateHSLValue(HSLSliderId.Saturation, x); }, UpdateHSL_S,
+                x => GetHSLSliderColorAt(HSLSliderId.Saturation, x), Color.Transparent),
+            HSLSliderId.Luminance => new UIColoredSlider(LocalizedText.Empty,
+                () => GetHSLSliderPosition(HSLSliderId.Luminance),
+                delegate(float x) { UpdateHSLValue(HSLSliderId.Luminance, x); }, UpdateHSL_L,
+                x => GetHSLSliderColorAt(HSLSliderId.Luminance, x), Color.Transparent),
+            _ => new UIColoredSlider(LocalizedText.Empty, () => GetHSLSliderPosition(HSLSliderId.Hue),
+                delegate(float x) { UpdateHSLValue(HSLSliderId.Hue, x); }, UpdateHSL_H,
+                x => GetHSLSliderColorAt(HSLSliderId.Hue, x), Color.Transparent)
+        };
+    }
+
+    private void UpdateHSL_H()
+    {
+        var value = UILinksInitializer.HandleSliderHorizontalInput(_currentColorPickerHSL.X, 0f, 1f,
+            PlayerInput.CurrentProfile.InterfaceDeadzoneX, 0.35f);
+        UpdateHSLValue(HSLSliderId.Hue, value);
+    }
+
+    private void UpdateHSL_S()
+    {
+        var value = UILinksInitializer.HandleSliderHorizontalInput(_currentColorPickerHSL.Y, 0f, 1f,
+            PlayerInput.CurrentProfile.InterfaceDeadzoneX, 0.35f);
+        UpdateHSLValue(HSLSliderId.Saturation, value);
+    }
+
+    private void UpdateHSL_L()
+    {
+        var value = UILinksInitializer.HandleSliderHorizontalInput(_currentColorPickerHSL.Z, 0f, 1f,
+            PlayerInput.CurrentProfile.InterfaceDeadzoneX, 0.35f);
+        UpdateHSLValue(HSLSliderId.Luminance, value);
+    }
+
+    private float GetHSLSliderPosition(HSLSliderId id)
+    {
+        switch (id)
+        {
+            case HSLSliderId.Hue:
+                return _currentColorPickerHSL.X;
+            case HSLSliderId.Saturation:
+                return _currentColorPickerHSL.Y;
+            case HSLSliderId.Luminance:
+                return _currentColorPickerHSL.Z;
+            default:
+                return 1f;
+        }
+    }
+
+    private void UpdateHSLValue(HSLSliderId id, float value)
+    {
+        switch (id)
+        {
+            case HSLSliderId.Hue:
+                _currentColorPickerHSL.X = value;
+                break;
+            case HSLSliderId.Saturation:
+                _currentColorPickerHSL.Y = value;
+                break;
+            case HSLSliderId.Luminance:
+                _currentColorPickerHSL.Z = value;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(id), id, null);
+        }
+
+        var color = ScaledHslToRgb(_currentColorPickerHSL.X, _currentColorPickerHSL.Y, _currentColorPickerHSL.Z);
+        OnColorChange?.Invoke(color);
+        _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
+
+        UpdateHexText(color);
+    }
+
+    private static Color ScaledHslToRgb(Vector3 hsl)
+    {
+        return ScaledHslToRgb(hsl.X, hsl.Y, hsl.Z);
+    }
+
+    private static Color ScaledHslToRgb(float hue, float saturation, float luminosity)
+    {
+        return Main.hslToRgb(hue, saturation, luminosity * 0.85f + 0.15f);
+    }
+
+    private Color GetHSLSliderColorAt(HSLSliderId id, float pointAt)
+    {
+        return id switch
+        {
+            HSLSliderId.Hue => ScaledHslToRgb(pointAt, 1f, 0.5f),
+            HSLSliderId.Saturation => ScaledHslToRgb(_currentColorPickerHSL.X, pointAt, _currentColorPickerHSL.Z),
+            HSLSliderId.Luminance => ScaledHslToRgb(_currentColorPickerHSL.X, _currentColorPickerHSL.Y, pointAt),
+            _ => Color.White
+        };
+    }
+
+    private void UpdateHexText(Color pendingColor)
+    {
+        _hexCodeText.SetText(GetHexText(pendingColor));
+    }
+
+    private static string GetHexText(Color pendingColor)
+    {
+        return "#" + pendingColor.Hex3().ToUpper();
+    }
+
+    private static Vector3 RgbToScaledHsl(Color color)
+    {
+        var value = Main.rgbToHsl(color);
+        value.Z = (value.Z - 0.15f) / 0.85f;
+        return Vector3.Clamp(value, Vector3.Zero, Vector3.One);
+    }
+
+    private static bool GetHexColor(string hexString, out Vector3 hsl)
+    {
+        if (hexString.StartsWith('#'))
+            hexString = hexString[1..];
+
+        if (hexString.Length <= 6 &&
+            uint.TryParse(hexString, NumberStyles.HexNumber, CultureInfo.CurrentCulture, out var result))
+        {
+            var b = result & 0xFFu;
+            var g = (result >> 8) & 0xFFu;
+            var r = (result >> 16) & 0xFFu;
+            hsl = RgbToScaledHsl(new Color((int)r, (int)g, (int)b));
+            return true;
+        }
+
+        hsl = Vector3.Zero;
+        return false;
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
+
+        var text = string.Empty;
+        if (_copyHexButton.IsMouseHovering)
+            text = Language.GetTextValue("UI.CopyColorToClipboard");
+        if (_pasteHexButton.IsMouseHovering)
+            text = Language.GetTextValue("UI.PasteColorFromClipboard");
+        if (_randomColorButton.IsMouseHovering)
+            text = Language.GetTextValue("UI.RandomizeColor");
+        if (!string.IsNullOrEmpty(text)) Main.instance.MouseText(text);
+
+        base.Draw(spriteBatch);
+    }
+
+    private enum HSLSliderId
+    {
+        Hue,
+        Saturation,
+        Luminance
     }
 }
