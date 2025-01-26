@@ -121,7 +121,9 @@ public class PCInterface : SmartUIState
                 if (_pendingColorChange)
                 {
                     var currentColor = _colorPicker.GetColor();
-                    _pcService.Boxes[DisplayedBoxIndex].Color = currentColor;
+                    _pcService.Boxes[DisplayedBoxIndex].Color = currentColor == GetDefaultColorForCurrentBox()
+                        ? Color.Transparent
+                        : currentColor;
                 }
 
                 _boxDragBar.Color = Color.Transparent;
