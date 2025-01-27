@@ -227,11 +227,6 @@ public class InventoryParty : SmartUIState
         for (var i = 0; i < CustomSlots.Length; i++) UpdateSlot(null, i);
     }
 
-    public static void FixSlotHack(int index)
-    {
-        CustomSlots[index].PretendToBeEmptyState = false;
-    }
-
     public override void SafeUpdate(GameTime gameTime)
     {
         // Move Pokédex button in Journey Mode (to avoid overlap with the Power Menu toggle button)
@@ -307,8 +302,7 @@ internal sealed class CustomPartyItemSlot : UIImage
     private UIImage _minispriteImage;
     private string _tooltipName;
     private string _tooltipText;
-
-    public bool PretendToBeEmptyState;
+    private bool _pretendToBeEmptyState;
 
     static CustomPartyItemSlot()
     {
@@ -391,7 +385,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                 TooltipOverlay.ClearHeldPokemon(place: false);
                 SetData(heldPokemon);
                 _initialSlot = null;
-                PretendToBeEmptyState = false;
+                _pretendToBeEmptyState = false;
                 return;
             }
 
@@ -427,7 +421,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                     TerramonPlayer.LocalPlayer.Party[Index] = d;
                     SetData(d);
                     _initialSlot = null;
-                    PretendToBeEmptyState = false;
+                    _pretendToBeEmptyState = false;
                 }, (d, newSource) =>
                 {
                     /*Main.NewText(
@@ -451,13 +445,13 @@ internal sealed class CustomPartyItemSlot : UIImage
                         if (_initialSlot != null)
                         {
                             _initialSlot.SetData(null);
-                            _initialSlot.PretendToBeEmptyState = false;
+                            _initialSlot._pretendToBeEmptyState = false;
                             _initialSlot = null;
                         }
                         else
                         {
                             SetData(null);
-                            PretendToBeEmptyState = false;
+                            _pretendToBeEmptyState = false;
                         }
                     }
                     else // Overwritten (swapped)
@@ -474,7 +468,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             if (heldPokemon == null) // Initial pickup
             {
                 _initialSlot = this;
-                PretendToBeEmptyState = true;
+                _pretendToBeEmptyState = true;
                 _minispriteImage?.Remove();
                 SetImage(PartySlotBgEmptyTexture);
             }
@@ -509,139 +503,6 @@ internal sealed class CustomPartyItemSlot : UIImage
             if (activePokemon != null)
                 modPlayer.ActiveSlot = Array.IndexOf(modPlayer.Party, activePokemon);
         }
-
-        /*var heldPokemon = TooltipOverlay.GetHeldPokemon(out var heldPokemonSource);
-        if (Data != null)
-        {
-            // Make sure it's not the only Pokémon in the party
-            if (heldPokemon == null && TerramonPlayer.LocalPlayer.Party.Count(d => d != null) == 1)
-            {
-                Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
-                    TerramonCommand.ChatColorYellow);
-                return;
-            }
-
-            // Take or swap the Pokémon from the slot if slot is not empty
-            SoundEngine.PlaySound(SoundID.Grab);
-            if (heldPokemon == Data)
-            {
-                TooltipOverlay.ClearHeldPokemon(place: false);
-                SetData(heldPokemon);
-                PretendToBeEmptyState = false;
-                return;
-            }
-
-            // Special case: Swapping Pokémon within the party
-            /*if (heldPokemonSource == TooltipOverlay.HeldPokemonSource.Party)
-            {
-                var sourceIndex = Array.IndexOf(TerramonPlayer.LocalPlayer.Party, heldPokemon);
-
-                if (sourceIndex != -1)
-                {
-                    if (sourceIndex < Index)
-                    {
-                        var modPlayer = TerramonPlayer.LocalPlayer;
-                        for (var i = sourceIndex; i < Index; i++)
-                            modPlayer.Party[i] = modPlayer.Party[i + 1];
-                        modPlayer.Party[Index] = heldPokemon;
-                        TooltipOverlay.ClearHeldPokemon(place: false);
-                        InventoryParty.FixSlotHack(sourceIndex);
-                        InventoryParty.UpdateAllSlots(modPlayer.Party);
-                        return;
-                    }
-
-                    if (sourceIndex > Index)
-                    {
-                        var modPlayer = TerramonPlayer.LocalPlayer;
-                        for (var i = sourceIndex; i > Index; i--)
-                            modPlayer.Party[i] = modPlayer.Party[i - 1];
-                        modPlayer.Party[Index] = heldPokemon;
-                        TooltipOverlay.ClearHeldPokemon(place: false);
-                        InventoryParty.FixSlotHack(sourceIndex);
-                        InventoryParty.UpdateAllSlots(modPlayer.Party);
-                        return;
-                    }
-                }
-            }
-
-            if (heldPokemon != null)
-            {
-                var modPlayer = TerramonPlayer.LocalPlayer;
-                var activePokemon = modPlayer.GetActivePokemon();
-                if (heldPokemon == activePokemon)
-                    modPlayer.ActiveSlot = Index;
-                else if (Data == activePokemon)
-                {
-                    var indexOfHeldPokemon = Array.IndexOf(modPlayer.Party, heldPokemon);
-                    if (indexOfHeldPokemon != -1)
-                        modPlayer.ActiveSlot = indexOfHeldPokemon;
-                    else modPlayer.ActiveSlot = -1;
-                }
-            }
-
-            TooltipOverlay.SetHeldPokemon(Data, TooltipOverlay.HeldPokemonSource.Party, d =>
-            {
-                Main.NewText($"On return called for index {Index} with data {d?.DisplayName}");
-                TerramonPlayer.LocalPlayer.Party[Index] = d;
-                SetData(d);
-                PretendToBeEmptyState = false;
-            }, d =>
-            {
-                if (!PretendToBeEmptyState) return;
-                Main.NewText($"On place called for index {Index} with data {d?.DisplayName}");
-                var modPlayer = TerramonPlayer.LocalPlayer;
-                if (d == null)
-                {
-                    modPlayer.Party[Index] = null;
-                    SetData(null);
-                    PretendToBeEmptyState = false;
-                }
-                else
-                {
-                    modPlayer.Party[Index] = d;
-                    SetData(d);
-                    _minispriteImage?.Remove();
-                }
-                /*if (modPlayer.ActiveSlot == Index)
-                    modPlayer.ActiveSlot = -1;
-                else if (modPlayer.ActiveSlot > 0)
-                    modPlayer.ActiveSlot--;*/
-        /* Cascade the Pokémon to the left
-        for (var i = Index; i < modPlayer.Party.Length - 1; i++)
-            modPlayer.Party[i] = modPlayer.Party[i + 1];
-        modPlayer.Party[5] = null;
-    });
-
-    if (heldPokemon != null)
-    {
-        var modPlayer = TerramonPlayer.LocalPlayer;
-        /*if (modPlayer.Party[Index] == null)
-            TooltipOverlay.ClearHeldPokemon(place: false); // Hack, don't know why but this is needed :D
-        modPlayer.Party[Index] = heldPokemon;
-        SetData(heldPokemon);
-        /*if (modPlayer.ActiveSlot == Index)
-            modPlayer.ActiveSlot = -1;
-    }
-    else
-    {
-        PretendToBeEmptyState = true;
-        _minispriteImage?.Remove();
-        SetImage(PartySlotBgEmptyTexture);
-    }
-}
-else
-{
-    // Place the held Pokémon into the slot if present and slot is empty
-    if (heldPokemon == null) return;
-    SoundEngine.PlaySound(SoundID.Grab);
-    PretendToBeEmptyState = false;
-    var modPlayer = TerramonPlayer.LocalPlayer;
-    modPlayer.Party[Index] = heldPokemon;
-    if (heldPokemon == modPlayer.GetActivePokemon())
-        modPlayer.ActiveSlot = Index;
-    SetData(heldPokemon);
-    TooltipOverlay.ClearHeldPokemon();
-}*/
     }
 
     public void SetData(PokemonData data)
@@ -701,7 +562,7 @@ else
         if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
             directUseItem.AffectedByPokemonDirectUse(Data))
             SetImage(PartySlotBgClickedTexture);
-        else if (!PretendToBeEmptyState)
+        else if (!_pretendToBeEmptyState)
             SetImage(PartySlotBgTexture);
     }
 
