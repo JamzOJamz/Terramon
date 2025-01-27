@@ -61,6 +61,8 @@ public class PCInterface : SmartUIState
         SmallPageButtonRightTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SmallPageButtonRight");
     }
 
+    public static bool Active => _pcService != null;
+
     public override bool Visible => TerramonPlayer.LocalPlayer.ActivePCTileEntityID != -1 &&
                                     Main.LocalPlayer.chest == -1 && !Main.recBigList;
 
@@ -215,7 +217,7 @@ public class PCInterface : SmartUIState
             if (_pendingColorChange)
             {
                 _boxDragBar.Color = color;
-                _changeColorButton.SetText("Save Color •");
+                _changeColorButton.SetText("Save Color (*)");
             }
             else
             {
@@ -263,7 +265,8 @@ public class PCInterface : SmartUIState
         }
 
         // Enter PC mode in the Inventory Party UI (forces it open and enables PC interactions)
-        UILoader.GetUIState<InventoryParty>().EnterPCMode();
+        if (!InventoryParty.InPCMode)
+            UILoader.GetUIState<InventoryParty>().EnterPCMode();
 
         // Get the local player's PC storage...
         _pcService = TerramonPlayer.LocalPlayer.GetPC();
@@ -282,7 +285,8 @@ public class PCInterface : SmartUIState
     public static void OnClose()
     {
         // Exit PC mode in the Inventory Party UI (reverts to original state)
-        UILoader.GetUIState<InventoryParty>().ExitPCMode();
+        if (InventoryParty.InPCMode)
+            UILoader.GetUIState<InventoryParty>().ExitPCMode();
 
         // Clear the PC service reference
         _pcService = null;
@@ -421,7 +425,7 @@ internal sealed class CustomPCItemSlot : UIImage
 
     private void LeftClick()
     {
-        var heldPokemon = TooltipOverlay.GetHeldPokemon();
+        var heldPokemon = TooltipOverlay.GetHeldPokemon(out _);
         var data = Data;
         if (data == null)
         {
@@ -435,22 +439,25 @@ internal sealed class CustomPCItemSlot : UIImage
         {
             // Take or swap the Pokémon from the slot if slot is not empty and player is not holding an item
             SoundEngine.PlaySound(SoundID.Grab);
-            var boxCopy = _box;
-            var indexCopy = _index;
-            TooltipOverlay.SetHeldPokemon(data, d =>
+            TooltipOverlay.SetHeldPokemon(data, TooltipOverlay.HeldPokemonSource.PC, d =>
             {
-                if (boxCopy != _box)
+                // Check for free space in the box starting from the end
+                var freeSpaceIndex = -1;
+                for (var i = PCBox.Capacity - 1; i >= 0; i--)
+                    if (_box[i] == null)
+                    {
+                        freeSpaceIndex = i;
+                        break;
+                    }
+
+                if (freeSpaceIndex != -1)
                 {
-                    if (boxCopy[indexCopy] == null)
-                        boxCopy[indexCopy] = d;
-                    else boxCopy.Service.StorePokemon(d);
+                    _box[freeSpaceIndex] = d;
+                    if (PCInterface.Active) PCInterface.PopulateCustomSlots(_box);
                 }
                 else
                 {
-                    if (Data == null)
-                        SetData(d);
-                    else
-                        _box.Service.StorePokemon(d);
+                    _box.Service.StorePokemon(d);
                 }
             });
             data = heldPokemon;
@@ -596,7 +603,7 @@ internal sealed class PCColorPicker : UIContainer
             TextOriginY = 0.5f,
             HAlign = 0.5f
         };
-        _resetToDefaultButton.Top.Set(96f, 0f);
+        _resetToDefaultButton.Top.Set(97f, 0f);
         _resetToDefaultButton.Width.Set(160f, 0f);
         _resetToDefaultButton.Height.Set(28f, 0f);
         _resetToDefaultButton.OnMouseOver += (_, _) =>

@@ -12,18 +12,26 @@ namespace Terramon.Content.GUI;
 
 public class TooltipOverlay : SmartUIState, ILoadable
 {
+    public enum HeldPokemonSource
+    {
+        Unspecified,
+        Party,
+        PC
+    }
+
     private static string _text = string.Empty;
     private static Color _color = new(232, 232, 244);
     private static string _tooltip = string.Empty;
     private static Asset<Texture2D> _icon;
     private static PokemonData _heldPokemon;
+    private static HeldPokemonSource _heldPokemonSource;
     private static bool _hoveringTrash;
 
     private static float _heldPokemonScale = 1f;
     private static bool _heldPokemonScalingUp;
 
     private static Action<PokemonData> _onReturn;
-    private static Action _onPlace;
+    private static Action<PokemonData, HeldPokemonSource> _onPlace;
 
     public override bool Visible => true;
 
@@ -55,12 +63,11 @@ public class TooltipOverlay : SmartUIState, ILoadable
                     typeof(Main).GetField("_mouseTextCache", BindingFlags.Instance | BindingFlags.NonPublic)!
                         .SetValue(Main.instance, null);
                     if (_hoveringTrash)
-                    {
                         Main.instance.MouseText(
                             $"{(Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift) ? "Left" : "Shift")} click to release {_heldPokemon.DisplayName}",
                             _heldPokemon.IsShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
-                    }
                 }
+
                 var mouseItem = Main.mouseItem;
                 Main.mouseItem = new Item
                 {
@@ -93,10 +100,10 @@ public class TooltipOverlay : SmartUIState, ILoadable
             }
             else
             {
-                if (inv != Main.LocalPlayer.trashItem) return;
-                
+                if (inv != Main.LocalPlayer.trashItem || !InventoryParty.InPCMode) return;
+
                 _hoveringTrash = true;
-                
+
                 if (Main.mouseLeft && Main.mouseLeftRelease)
                 {
                     if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
@@ -152,25 +159,30 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _icon = newIcon;
     }
 
-    public static void SetHeldPokemon(PokemonData pokemon, Action<PokemonData> onReturn = null,
-        Action onPlace = null)
+    public static void SetHeldPokemon(PokemonData pokemon, HeldPokemonSource source = HeldPokemonSource.Unspecified,
+        Action<PokemonData> onReturn = null,
+        Action<PokemonData, HeldPokemonSource> onPlace = null)
     {
-        _onPlace?.Invoke();
+        _onPlace?.Invoke(pokemon, source);
         _heldPokemon = pokemon;
-        _onReturn = onReturn;
+        if (_heldPokemonSource != source)
+            _onReturn = onReturn;
+        _heldPokemonSource = source;
         _onPlace = onPlace;
     }
 
-    public static PokemonData GetHeldPokemon()
+    public static PokemonData GetHeldPokemon(out HeldPokemonSource source)
     {
+        source = _heldPokemonSource;
         return _heldPokemon;
     }
 
     public static void ClearHeldPokemon(bool ret = false, bool place = true)
     {
         if (ret) _onReturn?.Invoke(_heldPokemon);
-        else if (place) _onPlace?.Invoke();
+        else if (place) _onPlace?.Invoke(null, _heldPokemonSource);
         _heldPokemon = null;
+        _heldPokemonSource = HeldPokemonSource.Unspecified;
         _onReturn = null;
         _onPlace = null;
     }
@@ -280,7 +292,24 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _tooltip = string.Empty;
         _icon = null;
         _hoveringTrash = false;
-        if (TerramonPlayer.LocalPlayer.ActivePCTileEntityID != -1 || _heldPokemon == null) return;
+        var needsClear = false;
+        if (_heldPokemon != null)
+            switch (_heldPokemonSource)
+            {
+                case HeldPokemonSource.Party:
+                    if (!Main.playerInventory && !HubUI.Active)
+                        needsClear = true;
+                    break;
+                case HeldPokemonSource.PC:
+                    if (TerramonPlayer.LocalPlayer.ActivePCTileEntityID == -1)
+                        needsClear = true;
+                    break;
+                case HeldPokemonSource.Unspecified:
+                default:
+                    break;
+            }
+
+        if (!needsClear) return;
         SoundEngine.PlaySound(SoundID.Grab);
         ClearHeldPokemon(true);
     }

@@ -51,7 +51,7 @@ public class PCService
         var boxSlotIndex = slot % PCBox.Capacity;
         var box = Boxes[boxIndex];
         box[boxSlotIndex] = data;
-        if (PCInterface.DisplayedBoxIndex == boxIndex)
+        if (PCInterface.Active && PCInterface.DisplayedBoxIndex == boxIndex)
             PCInterface.PopulateCustomSlots(box);
         return box;
     }
