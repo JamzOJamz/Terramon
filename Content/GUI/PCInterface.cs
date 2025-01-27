@@ -252,8 +252,10 @@ public class PCInterface : SmartUIState
     /// </summary>
     public static void OnOpen()
     {
+        if (InventoryParty.InPCMode) return; // Check to prevent multiple runs
+        
         // Clean up the color picker and related UI elements
-        if (_inColorPickerMode)
+        if (_inColorPickerMode && !_pendingColorChange)
         {
             _colorPicker.Remove();
             _boxDragBar.Color = Color.Transparent;
@@ -263,11 +265,11 @@ public class PCInterface : SmartUIState
             _pendingColorChange = false;
             _inColorPickerMode = false;
         }
-
+            
         // Enter PC mode in the Inventory Party UI (forces it open and enables PC interactions)
         if (!InventoryParty.InPCMode)
             UILoader.GetUIState<InventoryParty>().EnterPCMode();
-
+            
         // Get the local player's PC storage...
         _pcService = TerramonPlayer.LocalPlayer.GetPC();
 
@@ -301,6 +303,16 @@ public class PCInterface : SmartUIState
     public static void ResetToDefault()
     {
         DisplayedBoxIndex = 0;
+        if (_inColorPickerMode)
+        {
+            _colorPicker.Remove();
+            _boxDragBar.Color = Color.Transparent;
+            _changeColorButton.SetText("Change Color");
+            _container.Append(_renameBoxButton);
+            _renameBoxButton.SetText("Rename");
+            _pendingColorChange = false;
+            _inColorPickerMode = false;
+        }
 
         if (InventoryParty.InPCMode)
             UILoader.GetUIState<InventoryParty>().ExitPCMode();
