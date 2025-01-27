@@ -267,8 +267,7 @@ public class PCInterface : SmartUIState
         }
             
         // Enter PC mode in the Inventory Party UI (forces it open and enables PC interactions)
-        if (!InventoryParty.InPCMode)
-            UILoader.GetUIState<InventoryParty>().EnterPCMode();
+        UILoader.GetUIState<InventoryParty>().EnterPCMode();
             
         // Get the local player's PC storage...
         _pcService = TerramonPlayer.LocalPlayer.GetPC();

@@ -1,6 +1,7 @@
 using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Content.Commands;
+using Terramon.Content.GUI;
 using Terramon.Content.Packets;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -79,6 +80,7 @@ public abstract class PCTile : ModTile
         var player = Main.LocalPlayer;
         player.noThrow = 2;
         player.cursorItemIconEnabled = true;
+        TooltipOverlay.SetHoveringAnyPCTile(true);
     }
 
     public override bool RightClick(int i, int j)

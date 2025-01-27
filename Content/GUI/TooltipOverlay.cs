@@ -26,9 +26,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
     private static PokemonData _heldPokemon;
     private static HeldPokemonSource _heldPokemonSource;
     private static bool _hoveringTrash;
-
-    private static float _heldPokemonScale = 1f;
-    private static bool _heldPokemonScalingUp;
+    private static bool _hoveringAnyPCTile;
 
     private static Action<PokemonData> _onReturn;
     private static Action<PokemonData, HeldPokemonSource> _onPlace;
@@ -191,12 +189,17 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         return _heldPokemon != null;
     }
+    
+    public static void SetHoveringAnyPCTile(bool hovering)
+    {
+        _hoveringAnyPCTile = hovering;
+    }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
         if (_heldPokemon != null)
         {
-            if (Main.mouseRight && Main.mouseRightRelease)
+            if (!_hoveringAnyPCTile && Main.mouseRight && Main.mouseRightRelease)
             {
                 SoundEngine.PlaySound(SoundID.Grab);
                 ClearHeldPokemon(true);
@@ -263,26 +266,6 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         if (!Main.mouseItem.IsAir && _heldPokemon != null)
             ClearHeldPokemon(true);
-
-        var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        if (_heldPokemonScalingUp)
-        {
-            _heldPokemonScale += delta * 0.52f;
-            if (_heldPokemonScale >= 1f)
-            {
-                _heldPokemonScale = 1f;
-                _heldPokemonScalingUp = false;
-            }
-        }
-        else
-        {
-            _heldPokemonScale -= delta * 0.52f;
-            if (_heldPokemonScale <= 0.9f)
-            {
-                _heldPokemonScale = 0.9f;
-                _heldPokemonScalingUp = true;
-            }
-        }
     }
 
     private static void Reset()
@@ -292,6 +275,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _tooltip = string.Empty;
         _icon = null;
         _hoveringTrash = false;
+        _hoveringAnyPCTile = false;
         var needsClear = false;
         if (_heldPokemon != null)
             switch (_heldPokemonSource)
