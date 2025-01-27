@@ -55,6 +55,8 @@ public class InventoryParty : SmartUIState
     {
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
     }
+    
+    private static bool _reducedMotion;
 
     public override void OnInitialize()
     {
@@ -64,8 +66,8 @@ public class InventoryParty : SmartUIState
             container.Left.Set(-47, 0f);
 
         // Initialize according to reduced motion setting
-        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
-        if (reducedMotion)
+        _reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        if (_reducedMotion)
         {
             _isCompressed = true;
             _toggleSlotsButton = new UIHoverImageButton(PartySlotBallGreyedTexture, _showPartyLocalizedText);
@@ -78,15 +80,15 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
         _toggleSlotsButton.SetVisibility(1, 1);
         _toggleSlotsButton.OnLeftClick += ToggleSlots;
-        AddElement(_toggleSlotsButton, reducedMotion ? 404 : 118, 262, 36, 36, container);
+        AddElement(_toggleSlotsButton, _reducedMotion ? 404 : 118, 262, 36, 36, container);
 
         int[] slotPositionsX = [158, 206, 254, 301, 349, 396];
         for (var i = 0; i < slotPositionsX.Length; i++)
         {
             var slot = new CustomPartyItemSlot(i);
-            if (reducedMotion) slot.Color = Color.White * 0f;
+            if (_reducedMotion) slot.Color = Color.White * 0f;
             CustomSlots[i] = slot;
-            AddElement(slot, slotPositionsX[i] - (reducedMotion ? 47 : 0), 254, 50, 50, container);
+            AddElement(slot, slotPositionsX[i] - (_reducedMotion ? 47 : 0), 254, 50, 50, container);
         }
 
         Append(container);
@@ -113,14 +115,17 @@ public class InventoryParty : SmartUIState
         {
             _toggleSlotsButton.SetImage(PartySlotBallGreyedTexture);
         }
-        else
+        
+        // Show party slots when in PC mode even when compressed
+        if (!_reducedMotion)
         {
-            // Show party slots when in PC mode even when compressed
             _toggleSlotsButton.Left.Pixels = 118;
-            _toggleSlotsButton.SetHoverText(_hidePartyLocalizedText);
-            foreach (var slot in CustomSlots)
-                slot.Color = Color.White;
+            _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
         }
+        _toggleSlotsButton.SetHoverText(_hidePartyLocalizedText);
+        
+        foreach (var slot in CustomSlots)
+            slot.Color = Color.White;
     }
 
     public void ExitPCMode()
