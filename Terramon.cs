@@ -39,7 +39,7 @@ public class Terramon : Mod
     ///     The only way for one to change or reset this is to edit or delete the file <c>TerramonLoadCount.dat</c> in the save
     ///     directory.
     /// </summary>
-    public static uint TimesLoaded { get; private set; }
+    private static uint TimesLoaded { get; set; }
 
     /// <summary>
     ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
@@ -79,9 +79,10 @@ public class Terramon : Mod
         wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
     }
 
-    private static uint CheckLoadCount()
+    private uint CheckLoadCount()
     {
         var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
+    
         if (!File.Exists(datFilePath))
         {
             using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
@@ -89,10 +90,17 @@ public class Terramon : Mod
             return 1;
         }
 
-        uint result;
-        using (var reader = new BinaryReader(File.Open(datFilePath, FileMode.Open)))
+        uint result = 1;
+
+        try
         {
+            using var reader = new BinaryReader(File.Open(datFilePath, FileMode.Open));
             result = reader.ReadUInt32();
+        }
+        catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
+        {
+            Logger.Warn($"Failed to read load count from file. Resetting to 1. Error: {ex.Message}");
+            result = 1;
         }
 
         result++;
@@ -103,7 +111,6 @@ public class Terramon : Mod
 
         return result;
     }
-
 
     public override void Load()
     {
