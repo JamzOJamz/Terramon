@@ -3,15 +3,15 @@ namespace Terramon.Core.Systems;
 public class KeybindSystem : ModSystem
 {
     public static ModKeybind HubKeybind { get; private set; }
-    public static ModKeybind ToggleSidebarKeybind { get; private set; }
+    public static ModKeybind TogglePartyKeybind { get; private set; }
 
     public override void Load() {
-        ToggleSidebarKeybind = KeybindLoader.RegisterKeybind(Mod, "ToggleSidebar", "F");
+        TogglePartyKeybind = KeybindLoader.RegisterKeybind(Mod, "ToggleParty", "F");
         HubKeybind = KeybindLoader.RegisterKeybind(Mod, "OpenPokedex", "L");
     }
 
     public override void Unload() {
-        ToggleSidebarKeybind = null;
+        TogglePartyKeybind = null;
         HubKeybind = null;
     }
 }

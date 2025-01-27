@@ -88,6 +88,10 @@ public class TerramonPlayer : ModPlayer
     {
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
+
+        if (!KeybindSystem.TogglePartyKeybind.JustPressed) return;
+        var inventoryParty = UILoader.GetUIState<InventoryParty>();
+        if (inventoryParty.Visible) inventoryParty.SimulateToggleSlots();
     }
 
     public override void PreUpdate()

@@ -565,7 +565,7 @@ Items: {
 }
 
 Keybinds: {
-	ToggleSidebar.DisplayName: Activar o desactivar la barra lateral
+	// ToggleParty.DisplayName: Toggle Party GUI
 	// OpenPokedex.DisplayName: Pokédex
 }
 

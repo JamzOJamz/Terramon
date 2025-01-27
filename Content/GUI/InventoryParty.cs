@@ -97,6 +97,11 @@ public class InventoryParty : SmartUIState
         AddElement(_openPokedexButton, 30, 262, 30, 36);
     }
 
+    public void SimulateToggleSlots()
+    {
+        ToggleSlots(null, null);
+    }
+
     private void ToggleSlots(UIMouseEvent evt, UIElement listeningelement)
     {
         if (_toggleTween is { IsRunning: true }) return;

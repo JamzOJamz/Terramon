@@ -123,7 +123,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         Elements.CopyTo(elementsStatic);
         foreach (var element in elementsStatic) element.Update(gameTime);
 
-        var openKey = KeybindSystem.ToggleSidebarKeybind.Current;
+        var openKey = KeybindSystem.TogglePartyKeybind.Current;
         switch (openKey)
         {
             case true when _keyUp:

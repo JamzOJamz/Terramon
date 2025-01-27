@@ -569,7 +569,7 @@ Items: {
 }
 
 Keybinds: {
-	ToggleSidebar.DisplayName: Toggle Party Sidebar GUI
+	ToggleParty.DisplayName: Toggle Party GUI
 	OpenPokedex.DisplayName: Pokédex
 }
 
