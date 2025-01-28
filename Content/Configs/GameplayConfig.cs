@@ -11,7 +11,7 @@ public class GameplayConfig : ModConfig
     [Header("Spawning")] [DefaultValue(1f)] [Range(0f, 2f)]
     public float PokemonSpawnRateMultiplier;
     
-    [DefaultValue(SpawningStage.Basic)]
+    [DefaultValue(SpawningStage.Stage1)]
     public SpawningStage SpawningStage;
     
     [DefaultValue(true)]
