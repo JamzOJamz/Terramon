@@ -67,8 +67,13 @@ Commands: {
 	}
 
 	PC: {
-		// Description: Opens the Pokémon Storage System from anywhere
+		// Description: Opens the Pokémon Storage System (PC) from anywhere
 		// Usage: /pc
+	}
+
+	Dex: {
+		// Description: Opens the Pokédex
+		// Usage: /dex
 	}
 }
 
@@ -197,6 +202,9 @@ GUI: {
 			HP: {0}/{1}
 			EXP: MAX
 			''' */
+		// SlotTooltipPCMode: "[c/FFFFFF:In Party]"
+		// SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
+		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
 	}
 
 	Starter: {
@@ -252,8 +260,8 @@ GUI: {
 CommonTooltips: {
 	/* Apricorn:
 		'''
-		A special fruit seemingly related to berries.
-		Can be used to craft assorted Poké Balls.
+		A special fruit seemingly related to berries
+		Can be used to craft assorted Poké Balls
 		''' */
 	// EvolutionaryItem: Evolutionary item
 	// KeyItem: Key item
@@ -273,8 +281,8 @@ Items: {
 		// DisplayName: Poké Ball
 		/* Tooltip:
 			'''
-			A device for catching wild Pokémon.
-			It is thrown like a ball at the target.
+			A device for catching wild Pokémon
+			It is thrown like a ball at the target
 			''' */
 		// CatchRate: 1x catch rate
 	}
@@ -288,8 +296,8 @@ Items: {
 		// DisplayName: Great Ball
 		/* Tooltip:
 			'''
-			A good, high-performance Poké Ball.
-			Provides a higher Pokémon catch rate than a standard Poké Ball.
+			A good, high-performance Poké Ball
+			Provides a higher Pokémon catch rate than a standard Poké Ball
 			''' */
 		// CatchRate: 1.5x catch rate
 	}
@@ -303,8 +311,8 @@ Items: {
 		// DisplayName: Ultra Ball
 		/* Tooltip:
 			'''
-			An ultra-high-performance Poké Ball.
-			Provides a higher Pokémon catch rate than a Great Ball.
+			An ultra-high-performance Poké Ball
+			Provides a higher Pokémon catch rate than a Great Ball
 			''' */
 		// CatchRate: 2x catch rate
 	}
@@ -318,8 +326,8 @@ Items: {
 		// DisplayName: Master Ball
 		/* Tooltip:
 			'''
-			The best Poké Ball with the ultimate level of performance.
-			It will catch any wild Pokémon without fail.
+			The best Poké Ball with the ultimate level of performance
+			It will catch any wild Pokémon without fail
 			''' */
 		// CatchRate: 100% catch rate
 	}
@@ -333,8 +341,8 @@ Items: {
 		// DisplayName: Premier Ball
 		/* Tooltip:
 			'''
-			A somewhat rare Poké Ball.
-			It was made as a commemorative item used to celebrate an event of some sort.
+			A somewhat rare Poké Ball
+			It was made as a commemorative item used to celebrate an event of some sort
 			''' */
 		// CatchRate: 1x catch rate
 	}
@@ -348,8 +356,8 @@ Items: {
 		// DisplayName: Cherish Ball
 		/* Tooltip:
 			'''
-			A quite rare Poké Ball.
-			It has been specially crafted to commemorate an occasion of some sort.
+			A quite rare Poké Ball
+			It has been specially crafted to commemorate an occasion of some sort
 			''' */
 		// CatchRate: 1x catch rate
 	}
@@ -363,8 +371,8 @@ Items: {
 		// DisplayName: Aether Ball
 		/* Tooltip:
 			'''
-			An ethereal Poké Ball infused with shimmering energy.
-			It is said to have a calming effect on wild Pokémon.
+			An ethereal Poké Ball infused with shimmering energy
+			It is said to have a calming effect on wild Pokémon
 			''' */
 		// CatchRate: 1x catch rate
 	}
@@ -378,8 +386,8 @@ Items: {
 		// DisplayName: Rare Candy
 		/* Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it raises a Pokémon's level by one.
+			A candy that is packed with energy
+			If consumed, it raises a Pokémon's level by one
 			''' */
 	}
 
@@ -412,8 +420,8 @@ Items: {
 		// DisplayName: Shiny Charm
 		/* Tooltip:
 			'''
-			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild.
-			Received as a reward for obtaining all Pokémon in the Pokédex.
+			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild
+			Received as a reward for obtaining all Pokémon in the Pokédex
 			''' */
 	}
 
@@ -421,8 +429,8 @@ Items: {
 		// DisplayName: Fire Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			The stone has a fiery orange heart.
+			A stone used for making certain kinds of Pokémon evolve
+			'It has a fiery orange heart'
 			''' */
 	}
 
@@ -430,8 +438,8 @@ Items: {
 		// DisplayName: Water Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It is the blue of a pool of clear water.
+			A stone used for making certain kinds of Pokémon evolve
+			'It is the blue of a pool of clear water'
 			''' */
 	}
 
@@ -439,8 +447,8 @@ Items: {
 		// DisplayName: Thunder Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			The stone is inscribed with a thunderbolt pattern.
+			A stone used for making certain kinds of Pokémon evolve
+			'It is inscribed with a thunderbolt pattern'
 			''' */
 	}
 
@@ -448,8 +456,8 @@ Items: {
 		// DisplayName: Leaf Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It has an unmistakable leaf pattern.
+			A stone used for making certain kinds of Pokémon evolve
+			'It has an unmistakable leaf pattern'
 			''' */
 	}
 
@@ -457,8 +465,8 @@ Items: {
 		// DisplayName: Moon Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It is as black as the night sky.
+			A stone used for making certain kinds of Pokémon evolve
+			'It resembles the rocky texture of an asteroid'
 			''' */
 	}
 
@@ -466,8 +474,8 @@ Items: {
 		// DisplayName: Dusk Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It holds shadows as dark as can be.
+			A stone used for making certain kinds of Pokémon evolve
+			'It holds shadows as dark as can be'
 			''' */
 	}
 
@@ -475,8 +483,8 @@ Items: {
 		// DisplayName: Ice Stone
 		/* Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve.
-			It has an unmistakable snowflake pattern.
+			A stone used for making certain kinds of Pokémon evolve
+			'It has an unmistakable snowflake pattern'
 			''' */
 	}
 
@@ -484,8 +492,8 @@ Items: {
 		// DisplayName: Linking Cord
 		/* Tooltip:
 			'''
-			A cord that makes you feel a strange sense of connection.
-			It's loved by certain Pokémon.
+			A cord that makes you feel a strange sense of connection
+			'It's loved by certain Pokémon'
 			''' */
 	}
 
@@ -501,8 +509,8 @@ Items: {
 		// DisplayName: Exp. Candy XS
 		/* Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a very small number of Exp. Points.
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a very small number of Exp. Points
 			''' */
 	}
 
@@ -510,8 +518,8 @@ Items: {
 		// DisplayName: Exp. Candy S
 		/* Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a small number of Exp. Points.
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a small number of Exp. Points
 			''' */
 	}
 
@@ -519,8 +527,8 @@ Items: {
 		// DisplayName: Exp. Candy M
 		/* Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a moderate number of Exp. Points.
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a moderate number of Exp. Points
 			''' */
 	}
 
@@ -528,8 +536,8 @@ Items: {
 		// DisplayName: Exp. Candy L
 		/* Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a large number of Exp. Points.
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a large number of Exp. Points
 			''' */
 	}
 
@@ -537,8 +545,8 @@ Items: {
 		// DisplayName: Exp. Candy XL
 		/* Tooltip:
 			'''
-			A candy that is packed with energy.
-			If consumed, it grants a Pokémon a very large number of Exp. Points.
+			A candy that is packed with energy
+			If consumed, it grants a Pokémon a very large number of Exp. Points
 			''' */
 	}
 
@@ -546,8 +554,8 @@ Items: {
 		// DisplayName: Shimmer-State Drive
 		/* Tooltip:
 			'''
-			Permanently unlocks a shared PC box in this world.
-			This allows for easy transfer of Pokémon between players.
+			Permanently unlocks a shared PC box in this world
+			This allows for easy transfer of Pokémon between players
 			'Property of the Aether Foundation'
 			''' */
 	}

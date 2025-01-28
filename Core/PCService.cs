@@ -1,3 +1,4 @@
+using Terramon.Content.GUI;
 using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
@@ -46,8 +47,13 @@ public class PCService
         var slot = FindEmptySpace();
         if (slot == -1)
             return null;
-        Boxes[slot / PCBox.Capacity][slot % PCBox.Capacity] = data;
-        return Boxes[slot / PCBox.Capacity];
+        var boxIndex = slot / PCBox.Capacity;
+        var boxSlotIndex = slot % PCBox.Capacity;
+        var box = Boxes[boxIndex];
+        box[boxSlotIndex] = data;
+        if (PCInterface.Active && PCInterface.DisplayedBoxIndex == boxIndex)
+            PCInterface.PopulateCustomSlots(box);
+        return box;
     }
 
     /// <summary>
@@ -71,6 +77,9 @@ public class PCService
         }
 
         for (var i = 0; i < ExpansionBoxes; i++) Boxes.Add(new PCBox { Service = this });
+
+        // Update the PC interface to reflect the new boxes created
+        PCInterface.UpdateArrowButtonsHoverText();
     }
 
     /// <summary>
@@ -94,19 +103,39 @@ public class PCService
 /// </summary>
 public class PCBox
 {
+    /// <summary>
+    ///     The maximum allowed length for a box's name.
+    /// </summary>
+    public const int MaxNameLength = Chest.MaxNameLength; // 63 characters
+
+    /// <summary>
+    ///     The maximum number of Pokémon that can be stored in a box.
+    /// </summary>
     public const byte Capacity = 30;
 
     private readonly PokemonData[] _slots = new PokemonData[30];
 
+    private string _givenName;
+
     /// <summary>
-    ///     The display name of the box.
+    ///     The user-defined color of the box.
     /// </summary>
-    public string GivenName;
+    public Color Color;
 
     /// <summary>
     ///     The <see cref="PCService" /> that manages this box.
     /// </summary>
     public PCService Service;
+
+    /// <summary>
+    ///     The display name of the box. The name is truncated should it exceed the maximum length of
+    ///     <see cref="MaxNameLength" />.
+    /// </summary>
+    public string GivenName
+    {
+        get => _givenName;
+        set => _givenName = value is { Length: > MaxNameLength } ? value[..MaxNameLength] : value;
+    }
 
     public PokemonData this[int slot]
     {
@@ -123,6 +152,8 @@ public class PCBox
         var tag = new TagCompound();
         if (!string.IsNullOrEmpty(GivenName))
             tag["name"] = GivenName;
+        if (Color != Color.Transparent)
+            tag["color"] = Color;
         for (var i = 0; i < _slots.Length; i++)
             if (_slots[i] != null)
                 tag[$"s{i}"] = _slots[i].SerializeData();
@@ -134,6 +165,8 @@ public class PCBox
         var box = new PCBox();
         if (tag.ContainsKey("name"))
             box.GivenName = tag.GetString("name");
+        if (tag.ContainsKey("color"))
+            box.Color = tag.Get<Color>("color");
         for (var i = 0; i < box._slots.Length; i++)
         {
             var tagName = $"s{i}";

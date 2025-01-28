@@ -16,7 +16,7 @@ internal sealed class MenuSocialWidget
     private const string GitHubURL = "https://github.com/JamzOJamz/Terramon";
     private const string KoFiURL = "https://ko-fi.com/jamzojamz";
     private const double DiscordClientCheckInterval = 2.5;
-    private const uint TimesLoadedToDisplayDonateLink = 5;
+    private const bool DonateLinkEnabled = false;
 
     private static readonly Item FakeItem = new();
     private static readonly bool[] LastHoveringInteractableText = new bool[6];
@@ -52,8 +52,7 @@ internal sealed class MenuSocialWidget
             $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
 
-        // If the mod has been loaded more than 5 times, display a donation link
-        if (Terramon.TimesLoaded > TimesLoadedToDisplayDonateLink)
+        if (DonateLinkEnabled)
         {
             // Draw Donate link text
             const string donateText = "https://ko-fi.com/jamzojamz :)";
@@ -136,8 +135,8 @@ internal sealed class MenuSocialWidget
         var discordTextSize = FontAssets.MouseText.Value.MeasureString(discordText);
         discordTextSize.Y *= 0.9f;
         drawPos.Y += 30;
-        var hovered = Main.MouseScreen.Between(drawPos, drawPos + discordTextSize);
-        if (hovered)
+        var hoveredDiscord = Main.MouseScreen.Between(drawPos, drawPos + discordTextSize);
+        if (hoveredDiscord)
         {
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[0])
@@ -173,18 +172,8 @@ internal sealed class MenuSocialWidget
             LastHoveringInteractableText[0] = false;
         }
 
-        var firstTimeLoadWithDiscordClientRunning = _isDiscordClientRunning && Terramon.TimesLoaded == 1;
-        var discordTextColor = firstTimeLoadWithDiscordClientRunning
-            ? ModContent.GetInstance<KeyItemRarity>().RarityColor
-            : new Color(173, 173, 198);
-
-        if (firstTimeLoadWithDiscordClientRunning && hovered)
-            discordTextColor = BrightenColor(discordTextColor, 0.7f);
-        else if (hovered)
-            discordTextColor = new Color(237, 246, 255);
-
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value, discordText, drawPos,
-            discordTextColor, 0f, Vector2.Zero, 1.02f, SpriteEffects.None,
+            hoveredDiscord ? new Color(237, 246, 255) : new Color(173, 173, 198), 0f, Vector2.Zero, 1.02f, SpriteEffects.None,
             0f, alphaMult: 0.76f);
 
         // Draw Terramon Wiki link text

@@ -18,20 +18,23 @@ public class Tween
         {
             From = from,
             Setter = setter,
-            StartTime = (float)Main.timeForVisualEffects,
-            EndTime = (float)Main.timeForVisualEffects + time * 60,
+            StartTime = (float)SimulationTime,
+            EndTime = (float)SimulationTime + time,
             StartValue = getter.Invoke(from),
             EndValue = endValue
         };
         ActiveTweens.Add(tweener);
         return tweener;
     }
+    
+    public static double SimulationTime { get; private set; }
 
     /// <summary>
     ///     Updates all active tweens. Should be called once per frame.
     /// </summary>
-    public static void DoUpdate()
+    public static void DoUpdate(GameTime gameTime)
     {
+        SimulationTime += gameTime.ElapsedGameTime.TotalSeconds;
         for (var i = 0; i < ActiveTweens.Count; i++)
             if (!ActiveTweens[i].Update())
                 ActiveTweens.RemoveAt(i--);
@@ -64,6 +67,10 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
     public bool Update()
     {
         if (_killed) return false;
+        
+        // Get the current time
+        var currentTime = Tween.SimulationTime; // Main.timeForVisualEffects;
+        
         const double maxTime = 216000.0;
         double timeDiff;
 
@@ -74,10 +81,10 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
             // Wrap-around case: EndTime < StartTime
             timeDiff = maxTime - StartTime + EndTime;
 
-        var t = (Main.timeForVisualEffects - StartTime) / timeDiff;
+        var t = (currentTime - StartTime) / timeDiff;
 
         // Handle the case where Main.timeForVisualEffects is also wrapped
-        if (Main.timeForVisualEffects < StartTime) t = (Main.timeForVisualEffects + maxTime - StartTime) / timeDiff;
+        if (currentTime < StartTime) t = (currentTime + maxTime - StartTime) / timeDiff;
 
         // Clamp t to the [0, 1] range
         t = Math.Clamp(t, 0, 1);
@@ -89,7 +96,7 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
                 break;
         }
 
-        var isComplete = Main.timeForVisualEffects >= EndTime;
+        var isComplete = currentTime >= EndTime;
         if (!isComplete) return true;
         Setter.Invoke(From, EndValue);
         _killed = true;

@@ -165,12 +165,12 @@ public class StarterButton : UIHoverImage
             {
                 SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
                 {
-                    Volume = 0.23f
+                    Volume = 0.25f
                 });
             };
             return;
         }
-        
+
         var cacheHoverTexture = ModContent.Request<Texture2D>(
             $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini_Highlighted");
         OnMouseOver += (_, _) =>

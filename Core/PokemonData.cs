@@ -1,3 +1,4 @@
+using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.ID;
@@ -10,8 +11,6 @@ namespace Terramon.Core;
 public class PokemonData
 {
     private const ushort Version = 0;
-
-    private readonly Guid _uniqueId = Guid.NewGuid();
 
     private Item _heldItem;
     private ushort _id;
@@ -195,6 +194,13 @@ public class PokemonData
         return genderRatio >= 0
             ? new FastRandom(pv).Next(8) < genderRatio ? Gender.Female : Gender.Male
             : Gender.Unspecified;
+    }
+
+    public Asset<Texture2D> GetMiniSprite(AssetRequestMode mode = AssetRequestMode.AsyncLoad)
+    {
+        return ModContent.Request<Texture2D>(
+            $"Terramon/Assets/Pokemon/{Schema.Identifier}{(!string.IsNullOrEmpty(Variant) ? "_" + Variant : string.Empty)}_Mini{(IsShiny ? "_S" : string.Empty)}",
+            mode);
     }
 
     public PokemonData ShallowCopy()

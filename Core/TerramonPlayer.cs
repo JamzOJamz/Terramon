@@ -4,8 +4,10 @@ using Terramon.Content.GUI;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Content.Tiles.Interactive;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -18,15 +20,28 @@ public class TerramonPlayer : ModPlayer
     private readonly PokedexService _pokedex = new();
     private readonly PokedexService _shinyDex = new();
 
+    private int _activePCTileEntityID = -1;
     private int _activeSlot = -1;
 
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
 
-    public int ActivePCTileEntityID = -1;
-
     public bool HasChosenStarter;
+
+    public int ActivePCTileEntityID
+    {
+        get => _activePCTileEntityID;
+        set
+        {
+            _activePCTileEntityID = value;
+            if (value != -1)
+                PCInterface.OnOpen();
+            else
+                PCInterface.OnClose();
+        }
+    }
+
     public PokemonData[] Party { get; } = new PokemonData[6];
 
     public int ActiveSlot
@@ -66,6 +81,11 @@ public class TerramonPlayer : ModPlayer
     {
         return shiny ? _shinyDex : _pokedex;
     }
+    
+    public PCService GetPC()
+    {
+        return _pc;
+    }
 
     public override void OnEnterWorld()
     {
@@ -73,6 +93,29 @@ public class TerramonPlayer : ModPlayer
 
         // Request a full sync of the World Dex from the server when joining a host in multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient) Mod.SendPacket(new RequestWorldDexRpc());
+    }
+
+    public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+    {
+        // Clear active PC when player dies
+        TurnOffUsedPC();
+    }
+
+    private void TurnOffUsedPC()
+    {
+        if (_activePCTileEntityID != int.MaxValue)
+        {
+            if (_activePCTileEntityID != -1 &&
+                TileEntity.ByID.TryGetValue(_activePCTileEntityID, out var entity) && entity is PCTileEntity
+                {
+                    PoweredOn: true
+                } pc)
+                pc.ToggleOnOff();
+        }
+        else
+        {
+            ActivePCTileEntityID = -1;
+        }
     }
 
     public override void OnRespawn()
@@ -94,9 +137,18 @@ public class TerramonPlayer : ModPlayer
         if (inventoryParty.Visible) inventoryParty.SimulateToggleSlots();
     }
 
+    public override void PostUpdateBuffs()
+    {
+        if (TooltipOverlay.IsHoldingPokemon())
+            Player.controlUseItem = false;
+    }
+
     public override void PreUpdate()
     {
         if (Player.whoAmI != Main.myPlayer) return;
+        
+        if ((Player.chest != -1 || (!Main.playerInventory && !HubUI.Active)) && ActivePCTileEntityID != -1)
+            TurnOffUsedPC();
 
         // Handle player removing companion buff manually (right-clicking the buff icon)
         if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0 && !Player.dead)

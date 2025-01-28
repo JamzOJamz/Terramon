@@ -1,5 +1,6 @@
 using EasyPacketsLib;
 using Terramon.Content.GUI;
+using Terramon.Content.Menus;
 using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon;
@@ -35,9 +36,10 @@ public class Terramon : Mod
 
     /// <summary>
     ///     The amount of times the mod has been loaded by the player.
-    ///     The only way for one to change or reset this is to edit or delete the file <c>TerramonLoadCount.dat</c> in the save directory.
+    ///     The only way for one to change or reset this is to edit or delete the file <c>TerramonLoadCount.dat</c> in the save
+    ///     directory.
     /// </summary>
-    public static uint TimesLoaded { get; private set; }
+    private static uint TimesLoaded { get; set; }
 
     /// <summary>
     ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
@@ -58,6 +60,7 @@ public class Terramon : Mod
     {
         PartyDisplay.ClearAllSlots();
         InventoryParty.ClearAllSlots();
+        PCInterface.ResetToDefault();
         UILoader.GetUIState<HubUI>().ResetPokedex();
     }
 
@@ -76,22 +79,37 @@ public class Terramon : Mod
         wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
     }
 
-    private static uint CheckLoadCount()
+    private uint CheckLoadCount()
     {
         var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
-        
+    
         if (!File.Exists(datFilePath))
         {
-            File.WriteAllText(datFilePath, "1");
+            using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
+            writer.Write(1u);
             return 1;
         }
-        
-        var count = File.ReadAllText(datFilePath);
-        if (!uint.TryParse(count, out var result)) return 1;
-        result++;
-        File.WriteAllText(datFilePath, result.ToString());
-        return result;
 
+        uint result = 1;
+
+        try
+        {
+            using var reader = new BinaryReader(File.Open(datFilePath, FileMode.Open));
+            result = reader.ReadUInt32();
+        }
+        catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
+        {
+            Logger.Warn($"Failed to read load count from file. Resetting to 1. Error: {ex.Message}");
+            result = 1;
+        }
+
+        result++;
+        using (var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create)))
+        {
+            writer.Write(result);
+        }
+
+        return result;
     }
 
     public override void Load()
@@ -106,8 +124,15 @@ public class Terramon : Mod
         // Setup cross-mod compatibility
         SetupCrossModCompatibility();
 
+        // Don't run the rest of the method on servers
+        if (Main.dedServ) return;
+
         // Check how many times the mod has been loaded
         TimesLoaded = CheckLoadCount();
+
+        // Check if first ever time loading the mod, and if so, force switch to Terramon's mod menu
+        if (TimesLoaded == 1)
+            ModContent.GetInstance<TerramonMenu>().ForceSwitchToThis();
     }
 
     public override void Unload()
