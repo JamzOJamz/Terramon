@@ -279,4 +279,12 @@ public sealed class PCTileEntity : ModTileEntity
         NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
         return -1;
     }
+
+    public override void OnKill()
+    {
+        var modPlayer = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
+        if (modPlayer.ActivePCTileEntityID != ID) return;
+        PCInterface.SilenceCloseSound = true;
+        modPlayer.ActivePCTileEntityID = -1;
+    }
 }

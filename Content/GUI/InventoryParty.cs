@@ -382,8 +382,14 @@ internal sealed class CustomPartyItemSlot : UIImage
 
             if (heldPokemon == null && TerramonPlayer.LocalPlayer.Party.Count(d => d != null) == 1)
             {
-                Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
-                    TerramonCommand.ChatColorYellow);
+                if (InventoryParty.InPCMode)
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
+                        TerramonCommand.ChatColorYellow);
+                else
+                    SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                    {
+                        Volume = 0.25f
+                    });
                 return;
             }
 

@@ -384,6 +384,8 @@ public class PCInterface : SmartUIState
         // Update hover text for the arrow buttons
         UpdateArrowButtonsHoverText();
     }
+    
+    public static bool SilenceCloseSound { get; set; }
 
     /// <summary>
     ///     Called when the PC interface is closed.
@@ -401,10 +403,16 @@ public class PCInterface : SmartUIState
         _pcService = null;
 
         // Play the PC off sound
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_pc_off")
+        if (!SilenceCloseSound)
         {
-            Volume = 0.54f
-        });
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_pc_off")
+            {
+                Volume = 0.54f
+            });
+        } else
+        {
+            SilenceCloseSound = false;
+        }
     }
 
     public static void ResetToDefault()
