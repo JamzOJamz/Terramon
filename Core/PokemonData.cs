@@ -14,8 +14,10 @@ public class PokemonData
 
     private Item _heldItem;
     private ushort _id;
+    private DateTime? _metDate;
     private string _ot;
     private uint _personalityValue;
+    private string _worldName;
     public BallID Ball = BallID.PokeBall;
     public Gender Gender;
     public bool IsShiny;
@@ -172,6 +174,8 @@ public class PokemonData
             Level = level,
             TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, Terramon.DatabaseV2.GetPokemon(id).GrowthRate),
             _ot = player.name,
+            _metDate = DateTime.Now,
+            _worldName = Main.worldName,
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
             IsShiny = RollShiny(player)
         };
@@ -231,6 +235,10 @@ public class PokemonData
             tag["variant"] = Variant;
         if (_heldItem != null)
             tag["item"] = new ItemDefinition(_heldItem.type);
+        if (_metDate.HasValue)
+            tag["met"] = _metDate.Value.ToBinary();
+        if (!string.IsNullOrEmpty(_worldName))
+            tag["world"] = _worldName;
         return tag;
     }
 
@@ -265,6 +273,10 @@ public class PokemonData
             data.Variant = variant;
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
+        if (tag.TryGet<long>("met", out var metDate))
+            data._metDate = DateTime.FromBinary(metDate);
+        if (tag.TryGet<string>("world", out var worldName))
+            data._worldName = worldName;
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
             ? exp
             : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
@@ -311,7 +323,7 @@ public class PokemonData
     public const int BitEXP = 1 << 9;
 
     public const int AllFieldsBitmask = BitID | BitLevel | BitBall | BitIsShiny | BitPersonalityValue | BitNickname |
-                                        BitVariant | BitOT | BitHeldItem;
+                                        BitVariant | BitOT | BitHeldItem | BitEXP;
 
     /// <summary>
     ///     Determines whether the Pokémon's network state has changed compared to the specified data,
@@ -341,7 +353,6 @@ public class PokemonData
 
         return dirtyFields != 0;
     }
-
 
     /// <summary>
     ///     Copies the network state of this Pokémon to the specified target.

@@ -103,7 +103,7 @@ public class InventoryParty : SmartUIState
 
     public void SimulateToggleSlots()
     {
-        ToggleSlots(null, null);
+        _toggleSlotsButton.LeftClick(null);
     }
 
     public void EnterPCMode()
