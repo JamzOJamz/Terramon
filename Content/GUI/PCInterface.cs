@@ -40,7 +40,7 @@ public class PCInterface : SmartUIState
         new Color(255, 223, 66)
     ];
 
-    private static UIText _boxNameText;
+    private static BetterUIText _boxNameText;
     private static UIHoverImageButton _leftArrowButton;
     private static UIHoverImageButton _rightArrowButton;
     private static PCService _pcService;
@@ -48,12 +48,51 @@ public class PCInterface : SmartUIState
     private static PCDragBar _boxDragBar;
     private static PCActionButton _changeColorButton;
     private static PCActionButton _renameBoxButton;
+    private static PCActionButton _cancelRenameButton;
     private static UIContainer _container;
     private static bool _inColorPickerMode;
     private static bool _pendingColorChange;
+    private static bool _inRenameMode;
+    private static UITextField _textInput;
 
     static PCInterface()
     {
+        On_Main.DoUpdate_Enter_ToggleChat += orig =>
+        {
+            if (_inRenameMode && Main.keyState.IsKeyDown(Keys.Enter) && !Main.keyState.IsKeyDown(Keys.LeftAlt) &&
+                !Main.keyState.IsKeyDown(Keys.RightAlt) && Main.hasFocus) // Submit the rename
+            {
+                Main.chatRelease = false;
+                SoundEngine.PlaySound(SoundID.MenuClose);
+                SetNameForCurrentBox(_textInput?.CurrentValue);
+                _container?.RemoveChild(_cancelRenameButton);
+                _renameBoxButton?.SetText("Rename");
+                if (_boxNameText != null)
+                {
+                    _boxNameText.SetText(GetNameForCurrentBox());
+                    _boxNameText.ShowTypingCaret = false;
+                }
+
+                _textInput?.SetNotTyping();
+                _inRenameMode = false;
+                return;
+            }
+
+            orig();
+        };
+
+        On_IngameOptions.Open += orig =>
+        {
+            ExitRenameMode();
+            orig();
+        };
+
+        On_IngameFancyUI.OpenUIState += (orig, state) =>
+        {
+            ExitRenameMode();
+            orig(state);
+        };
+
         /*ListViewButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/ListViewButton");
         SingleViewButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SingleViewButton");
         SmallerButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SmallerButtonHover");*/
@@ -97,7 +136,7 @@ public class PCInterface : SmartUIState
             AddElement(slot, slotPositionsX[j] - 120, i * 48 - 4, 50, 50, _container);
         }
 
-        _boxNameText = new UIText("Box 1")
+        _boxNameText = new BetterUIText("Box 1")
         {
             TextColor = DefaultBoxColors[0]
         };
@@ -107,9 +146,18 @@ public class PCInterface : SmartUIState
 
         _changeColorButton = new PCActionButton("Change Color");
         _changeColorButton.Left.Set(335, 0);
-        _changeColorButton.Top.Set(27, 0);
+        _changeColorButton.Top.Set(68, 0);
         _changeColorButton.OnLeftClick += (_, _) =>
         {
+            if (_inRenameMode)
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                {
+                    Volume = 0.25f
+                });
+                return;
+            }
+
             SoundEngine.PlaySound(SoundID.MenuTick);
             if (!HasChild(_colorPicker))
             {
@@ -141,11 +189,39 @@ public class PCInterface : SmartUIState
 
         _renameBoxButton = new PCActionButton("Rename");
         _renameBoxButton.Left.Set(335, 0);
-        _renameBoxButton.Top.Set(53, 0);
+        _renameBoxButton.Top.Set(94, 0);
         _renameBoxButton.OnLeftClick += (_, _) =>
         {
-            if (!_inColorPickerMode) return;
             SoundEngine.PlaySound(SoundID.MenuTick);
+
+            if (!_inColorPickerMode)
+            {
+                // Rename the box
+                if (!_container.HasChild(_cancelRenameButton))
+                {
+                    Main.drawingPlayerChat = false;
+                    _container.Append(_cancelRenameButton);
+                    _renameBoxButton.SetText("Save");
+                    _textInput.SetCurrentText(_boxNameText.Text);
+                    _textInput.SetTyping();
+                    _boxNameText.ShowTypingCaret = true;
+                    _inRenameMode = true;
+                }
+                else // Save the new name
+                {
+                    SoundEngine.PlaySound(SoundID.MenuClose);
+                    SetNameForCurrentBox(_textInput.CurrentValue);
+                    _container.RemoveChild(_cancelRenameButton);
+                    _renameBoxButton.SetText("Rename");
+                    _boxNameText.SetText(GetNameForCurrentBox());
+                    _boxNameText.ShowTypingCaret = false;
+                    _textInput.SetNotTyping();
+                    _inRenameMode = false;
+                }
+
+                return;
+            }
+
             _colorPicker.Remove();
             _boxNameText.TextColor = GetColorForCurrentBox();
             _boxDragBar.Color = Color.Transparent;
@@ -156,12 +232,25 @@ public class PCInterface : SmartUIState
         };
         _container.Append(_renameBoxButton);
 
+        _cancelRenameButton = new PCActionButton("Cancel");
+        _cancelRenameButton.Left.Set(335, 0);
+        _cancelRenameButton.Top.Set(120, 0);
+        _cancelRenameButton.OnLeftClick += (_, _) =>
+        {
+            if (_inColorPickerMode || !_inRenameMode) return;
+
+            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(SoundID.MenuClose);
+            ExitRenameMode();
+        };
+
         _leftArrowButton = new UIHoverImageButton(SmallPageButtonLeftTexture, string.Empty);
+        //_leftArrowButton.SetImageScale(14f / 15f);
         _leftArrowButton.SetHoverImage(SmallestButtonHoverTexture);
         _leftArrowButton.SetVisibility(1f, 1f);
         _leftArrowButton.OnLeftClick += (_, _) =>
         {
-            if (_pendingColorChange)
+            if (_pendingColorChange || _inRenameMode)
             {
                 SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
                 {
@@ -177,14 +266,15 @@ public class PCInterface : SmartUIState
 
             if (_inColorPickerMode) _colorPicker.SetColor(GetColorForCurrentBox(), GetDefaultColorForCurrentBox());
         };
-        AddElement(_leftArrowButton, 334, 90, 30, 30, _container);
+        AddElement(_leftArrowButton, 334, 37, 28, 28, _container);
 
         _rightArrowButton = new UIHoverImageButton(SmallPageButtonRightTexture, string.Empty);
+        //_rightArrowButton.SetImageScale(14f / 15f);
         _rightArrowButton.SetHoverImage(SmallestButtonHoverTexture);
         _rightArrowButton.SetVisibility(1f, 1f);
         _rightArrowButton.OnLeftClick += (_, _) =>
         {
-            if (_pendingColorChange)
+            if (_pendingColorChange || _inRenameMode)
             {
                 SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
                 {
@@ -200,7 +290,7 @@ public class PCInterface : SmartUIState
 
             if (_inColorPickerMode) _colorPicker.SetColor(GetColorForCurrentBox(), GetDefaultColorForCurrentBox());
         };
-        AddElement(_rightArrowButton, 369, 90, 30, 30, _container);
+        AddElement(_rightArrowButton, 367, 37, 28, 28, _container);
 
         _boxDragBar = new PCDragBar();
         AddElement(_boxDragBar, 42, 241, 282, 10, _container);
@@ -227,6 +317,9 @@ public class PCInterface : SmartUIState
             }
         };
 
+        _textInput = new UITextField(PCBox.MaxNameLength);
+        Append(_textInput);
+
         /*var panel = new UIPanel();
         panel.Width.Set(200, 0);
         panel.Height.Set(200, 0);
@@ -237,6 +330,17 @@ public class PCInterface : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
+        if (_inRenameMode)
+        {
+            _boxNameText.SetText(_textInput.CurrentValue);
+
+            if (!_textInput.IsTyping)
+            {
+                SoundEngine.PlaySound(SoundID.MenuClose);
+                ExitRenameMode();
+            }
+        }
+
         Recalculate();
     }
 
@@ -254,7 +358,7 @@ public class PCInterface : SmartUIState
     public static void OnOpen()
     {
         if (InventoryParty.InPCMode) return; // Check to prevent multiple runs
-        
+
         // Clean up the color picker and related UI elements
         if (_inColorPickerMode && !_pendingColorChange)
         {
@@ -266,10 +370,10 @@ public class PCInterface : SmartUIState
             _pendingColorChange = false;
             _inColorPickerMode = false;
         }
-            
+
         // Enter PC mode in the Inventory Party UI (forces it open and enables PC interactions)
         UILoader.GetUIState<InventoryParty>().EnterPCMode();
-            
+
         // Get the local player's PC storage...
         _pcService = TerramonPlayer.LocalPlayer.GetPC();
 
@@ -289,6 +393,9 @@ public class PCInterface : SmartUIState
         // Exit PC mode in the Inventory Party UI (reverts to original state)
         if (InventoryParty.InPCMode)
             UILoader.GetUIState<InventoryParty>().ExitPCMode();
+
+        // Clean up the rename mode UI elements
+        ExitRenameMode();
 
         // Clear the PC service reference
         _pcService = null;
@@ -337,7 +444,7 @@ public class PCInterface : SmartUIState
         }
 
         // Update the box name text
-        _boxNameText.SetText($"Box {DisplayedBoxIndex + 1}");
+        _boxNameText.SetText(GetNameForCurrentBox());
 
         if (_boxDragBar.Color == Color.Transparent) _boxNameText.TextColor = GetColorForCurrentBox();
     }
@@ -348,6 +455,29 @@ public class PCInterface : SmartUIState
         var hoverText = $"{DisplayedBoxIndex + 1}/{_pcService.Boxes.Count}";
         _leftArrowButton.SetHoverText(hoverText);
         _rightArrowButton.SetHoverText(hoverText);
+    }
+
+    private static void ExitRenameMode()
+    {
+        if (!_inRenameMode) return;
+        _container.RemoveChild(_cancelRenameButton);
+        _renameBoxButton.SetText("Rename");
+        _boxNameText.SetText(GetNameForCurrentBox());
+        _boxNameText.ShowTypingCaret = false;
+        _boxNameText.Recalculate();
+        _textInput.SetNotTyping();
+        _inRenameMode = false;
+    }
+
+    private static string GetNameForCurrentBox()
+    {
+        var name = _pcService.Boxes[DisplayedBoxIndex].GivenName;
+        return string.IsNullOrEmpty(name) ? $"Box {DisplayedBoxIndex + 1}" : name;
+    }
+
+    private static void SetNameForCurrentBox(string name)
+    {
+        _pcService.Boxes[DisplayedBoxIndex].GivenName = string.IsNullOrEmpty(name) ? null : name;
     }
 
     public static Color GetColorForCurrentBox()

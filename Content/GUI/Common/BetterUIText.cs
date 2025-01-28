@@ -79,6 +79,8 @@ public class BetterUIText : UIElement
 
     public float ShadowSpread { get; set; } = 1.5f;
 
+    public bool ShowTypingCaret { get; set; }
+
     public event Action OnInternalTextChange;
 
     public override void Recalculate()
@@ -128,13 +130,16 @@ public class BetterUIText : UIElement
         var num = TextScale;
         if (DynamicallyScaleDownToWidth && _textSize.X > innerDimensions.Width)
             num *= innerDimensions.Width / _textSize.X;
-
+        
+        var useText = _visibleText;
+        if (ShowTypingCaret && Main.GameUpdateCount % 20 < 10)
+            useText += "|";
         var value = (_isLarge ? FontAssets.DeathText : FontAssets.MouseText).Value;
-        var vector = value.MeasureString(_visibleText);
+        var vector = value.MeasureString(useText);
         var baseColor = ShadowColor * (_color.A / 255f);
         var origin = new Vector2(0f, 0f) * vector;
         var baseScale = new Vector2(num);
-        var snippets = ChatManager.ParseMessage(_visibleText, _color).ToArray();
+        var snippets = ChatManager.ParseMessage(useText, _color).ToArray();
         ChatManager.ConvertNormalSnippets(snippets);
 
         foreach (var t in ShadowDirections)

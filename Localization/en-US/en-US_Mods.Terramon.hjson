@@ -430,7 +430,7 @@ Items: {
 		Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
-			'The stone has a fiery orange heart'
+			'It has a fiery orange heart'
 			'''
 	}
 
@@ -448,7 +448,7 @@ Items: {
 		Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
-			'The stone is inscribed with a thunderbolt pattern'
+			'It is inscribed with a thunderbolt pattern'
 			'''
 	}
 
@@ -466,7 +466,7 @@ Items: {
 		Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
-			'It is as black as the night sky'
+			'It resembles the rocky texture of an asteroid'
 			'''
 	}
 

@@ -106,7 +106,7 @@ public class PCBox
     /// <summary>
     ///     The maximum allowed length for a box's name.
     /// </summary>
-    private const int MaxNameLength = Chest.MaxNameLength; // 63 characters
+    public const int MaxNameLength = Chest.MaxNameLength; // 63 characters
 
     /// <summary>
     ///     The maximum number of Pokémon that can be stored in a box.
@@ -115,12 +115,12 @@ public class PCBox
 
     private readonly PokemonData[] _slots = new PokemonData[30];
 
+    private string _givenName;
+
     /// <summary>
     ///     The user-defined color of the box.
     /// </summary>
     public Color Color;
-
-    private string _givenName;
 
     /// <summary>
     ///     The <see cref="PCService" /> that manages this box.
@@ -134,7 +134,7 @@ public class PCBox
     public string GivenName
     {
         get => _givenName;
-        private set => _givenName = value.Length > MaxNameLength ? value[..MaxNameLength] : value;
+        set => _givenName = value is { Length: > MaxNameLength } ? value[..MaxNameLength] : value;
     }
 
     public PokemonData this[int slot]

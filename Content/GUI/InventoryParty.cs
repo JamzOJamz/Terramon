@@ -23,6 +23,8 @@ public class InventoryParty : SmartUIState
     private static readonly Asset<Texture2D> PokedexButtonTexture;
     private static readonly Asset<Texture2D> PokedexButtonHoverAltTexture;
 
+    private static bool _reducedMotion;
+
     private readonly LocalizedText _hidePartyLocalizedText = Language.GetText("Mods.Terramon.GUI.Inventory.HideParty");
 
     private readonly LocalizedText _openPokedexLocalizedText =
@@ -55,8 +57,6 @@ public class InventoryParty : SmartUIState
     {
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
     }
-    
-    private static bool _reducedMotion;
 
     public override void OnInitialize()
     {
@@ -111,19 +111,17 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.OnLeftClick += ToggleSlotsWhenDisabled;
         _toggleSlotsButton.Rotation = 0;
 
-        if (!_isCompressed)
-        {
-            _toggleSlotsButton.SetImage(PartySlotBallGreyedTexture);
-        }
-        
+        if (!_isCompressed) _toggleSlotsButton.SetImage(PartySlotBallGreyedTexture);
+
         // Show party slots when in PC mode even when compressed
         if (!_reducedMotion)
         {
             _toggleSlotsButton.Left.Pixels = 118;
             _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
         }
+
         _toggleSlotsButton.SetHoverText(_hidePartyLocalizedText);
-        
+
         foreach (var slot in CustomSlots)
             slot.Color = Color.White;
     }
@@ -305,9 +303,9 @@ internal sealed class CustomPartyItemSlot : UIImage
 
     public readonly int Index;
     private UIImage _minispriteImage;
+    private bool _pretendToBeEmptyState;
     private string _tooltipName;
     private string _tooltipText;
-    private bool _pretendToBeEmptyState;
 
     static CustomPartyItemSlot()
     {
@@ -604,7 +602,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                 if (Main.mouseLeft && Main.mouseLeftRelease)
                     LeftClickPCMode();
             }
-            else if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
+            else if (Data != null && Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
                      directUseItem.AffectedByPokemonDirectUse(Data))
             {
                 Main.instance.MouseText("Use " + Main.mouseItem.Name);

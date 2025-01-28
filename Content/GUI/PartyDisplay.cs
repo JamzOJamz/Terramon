@@ -129,7 +129,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
             case true when _keyUp:
             {
                 _keyUp = false;
-                if (Main.drawingPlayerChat) break;
+                if (Main.blockInput) break;
                 _toggleTween?.Kill();
                 if (_isToggled)
                 {
