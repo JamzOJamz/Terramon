@@ -25,8 +25,13 @@ internal class CherishBallItem : BasePkballItem
     
     public override void SetStaticDefaults()
     {
-        TerramonItemAPI.Sets.Unobtainable.Add(Type);
         CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+    }
+
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.value = Item.buyPrice(gold: 10);
     }
 }
 
