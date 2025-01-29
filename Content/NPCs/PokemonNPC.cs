@@ -57,6 +57,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         NPC.HitSound = SoundID.NPCHit1;
         NPC.value = 0f;
         NPC.knockBackResist = 0.75f;
+        NPC.npcSlots = 0.25f;
         NPC.despawnEncouraged = ModContent.GetInstance<GameplayConfig>().EncourageDespawning;
         NPC.friendly = true;
 
