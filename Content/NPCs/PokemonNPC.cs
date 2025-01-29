@@ -154,7 +154,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     _mouseHoverTimer++;
                 else
                     _mouseHoverTimer = 0;
-                if (_mouseHoverTimer == 60) // 1 second
+                if (_mouseHoverTimer == 60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
                 {
                     // Register as seen in the player's Pokédex
                     TerramonPlayer.LocalPlayer.UpdatePokedex(ID, PokedexEntryStatus.Seen,
