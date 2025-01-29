@@ -81,7 +81,7 @@ public class TerramonPlayer : ModPlayer
     {
         return shiny ? _shinyDex : _pokedex;
     }
-    
+
     public PCService GetPC()
     {
         return _pc;
@@ -146,7 +146,7 @@ public class TerramonPlayer : ModPlayer
     public override void PreUpdate()
     {
         if (Player.whoAmI != Main.myPlayer) return;
-        
+
         if ((Player.chest != -1 || (!Main.playerInventory && !HubUI.Active)) && ActivePCTileEntityID != -1)
             TurnOffUsedPC();
 

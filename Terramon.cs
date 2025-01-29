@@ -39,7 +39,7 @@ public class Terramon : Mod
     ///     The only way for one to change or reset this is to edit or delete the file <c>TerramonLoadCount.dat</c> in the save
     ///     directory.
     /// </summary>
-    private static uint TimesLoaded { get; set; }
+    public static uint TimesLoaded { get; private set; }
 
     /// <summary>
     ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
