@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Buffs;
@@ -132,19 +131,31 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
 
         if (Projectile.isAPreviewDummy)
-        {
             // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
             FindFrame?.Invoke(this);
-        }
 
         var projFrameCount = Main.projFrames[Type];
+        var drawPos = Projectile.Center - Main.screenPosition +
+                      new Vector2(0f,
+                          Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4);
         var sourceRect = _mainTexture.Frame(1, projFrameCount, frameY: Projectile.frame);
         var frameSize = sourceRect.Size();
+        var origin = frameSize / new Vector2(2, 1);
         var effects = _customSpriteDirection.HasValue
             ? _customSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
             : Projectile.spriteDirection == -1
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
+
+        // Draw nickname on mouse hover
+        if (!string.IsNullOrEmpty(Data?.Nickname))
+        {
+            var originOffsetDrawPos = drawPos - origin;
+            var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
+                (int)frameSize.Y);
+            if (drawRect.Contains(Main.MouseScreen.ToPoint()))
+                Main.instance.MouseText(Data.Nickname);
+        }
 
         // Desaturate the lightColor for Gastly
         var adjustedColor = ID == NationalDexID.Gastly
@@ -152,11 +163,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             : lightColor;
 
         Main.EntitySpriteDraw(_mainTexture.Value,
-            Projectile.Center - Main.screenPosition +
-            new Vector2(0f, Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4),
+            drawPos,
             sourceRect, adjustedColor,
             Projectile.rotation,
-            frameSize / new Vector2(2, 1), Projectile.scale, effects);
+            origin, Projectile.scale, effects);
 
         var glowCache = Data?.IsShiny ?? false
             ? PokemonEntityLoader.ShinyGlowTextureCache
@@ -167,11 +177,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         lightColor = Color.White;
         if (ID == NationalDexID.Gastly) lightColor.A = 128;
         Main.EntitySpriteDraw(glowTexture.Value,
-            Projectile.Center - Main.screenPosition +
-            new Vector2(0f, Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4),
+            drawPos,
             sourceRect, lightColor,
             Projectile.rotation,
-            frameSize / new Vector2(2, 1), Projectile.scale, effects);
+            origin, Projectile.scale, effects);
 
         return false;
     }
@@ -217,7 +226,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     {
         if (_mainTexture == null) return;
         // Disable shiny effect lighting for Haunter and Gengar
-        if (ID != NationalDexID.Haunter && ID != NationalDexID.Gengar) Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
+        if (ID != NationalDexID.Haunter && ID != NationalDexID.Gengar)
+            Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
         _shinySparkleTimer++;
         if (_shinySparkleTimer < 12) return;
         for (var i = 0; i < 2; i++)
@@ -227,15 +237,16 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             var oldHeight = Projectile.height;
             Projectile.width = (int)(_mainTexture.Value.Width * 0.8f);
             Projectile.height = (int)((float)_mainTexture.Value.Height / Main.projFrames[Type] * 0.8f);
-            
+
             var dust = Dust.NewDustDirect(
-                Projectile.position + new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)) + new Vector2(oldWidth - Projectile.width, oldHeight - Projectile.height),
+                Projectile.position + new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)) +
+                new Vector2(oldWidth - Projectile.width, oldHeight - Projectile.height),
                 Projectile.width,
                 Projectile.height, DustID.TreasureSparkle);
             dust.velocity = Projectile.velocity;
             dust.noGravity = true;
             dust.scale *= 1f + Main.rand.NextFloat(-0.03f, 0.03f);
-            
+
             // Reset projectile width and height to original values
             Projectile.width = oldWidth;
             Projectile.height = oldHeight;
