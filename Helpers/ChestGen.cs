@@ -36,46 +36,12 @@ internal static class ChestGen
     public static void AddChestLoot(int itemID, List<int> chestIDs, int minimumStack = 1, int maximumStack = 1,
         float chance = 1f, bool excludeDuplicates = false)
     {
-        if (maximumStack < minimumStack)
-            maximumStack = minimumStack;
-        if (chance is < 0f or > 1f)
-            chance = 1f;
+        AddChestLoot(itemID, Predicate, minimumStack, maximumStack, chance, excludeDuplicates);
+        return;
 
-        for (var chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
+        bool Predicate(Chest chest)
         {
-            // Skip if chance check fails
-            if (WorldGen.genRand.NextFloat() > chance)
-                continue;
-
-            // Get the current chest and skip if it doesn't exist
-            var chest = Main.chest[chestIndex];
-            if (chest == null || Main.tile[chest.x, chest.y].TileType != TileID.Containers)
-                continue;
-
-            // Skip if chest type is not in the list
-            if (chestIDs != null && !chestIDs.Contains(Main.tile[chest.x, chest.y].TileFrameX / 36))
-                continue;
-
-            for (var inventoryIndex = 0; inventoryIndex < Chest.maxItems; inventoryIndex++)
-            {
-                if (chest.item[inventoryIndex].type == itemID && excludeDuplicates) break;
-                if (!chest.item[inventoryIndex].IsAir && chest.item[inventoryIndex].type != itemID) continue;
-
-                var amount = WorldGen.genRand.Next(minimumStack, maximumStack + 1);
-                if (amount == 0) break;
-
-                if (chest.item[inventoryIndex].IsAir)
-                {
-                    chest.item[inventoryIndex].SetDefaults(itemID);
-                    chest.item[inventoryIndex].stack = amount;
-                }
-                else
-                {
-                    chest.item[inventoryIndex].stack += amount;
-                }
-
-                break;
-            }
+            return chestIDs == null || chestIDs.Contains(Main.tile[chest.x, chest.y].TileFrameX / 36);
         }
     }
 
@@ -99,6 +65,10 @@ internal static class ChestGen
 
         for (var chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
         {
+            // Skip if chance check fails
+            if (WorldGen.genRand.NextFloat() > chance)
+                continue;
+
             // Get the current chest and skip if it doesn't exist or is not a container
             var chest = Main.chest[chestIndex];
             if (chest == null || Main.tile[chest.x, chest.y].TileType != TileID.Containers)
@@ -106,10 +76,6 @@ internal static class ChestGen
 
             // Skip if the chest does not match the predicate condition
             if (!chestPredicate(chest))
-                continue;
-            
-            // Skip if chance check fails
-            if (WorldGen.genRand.NextFloat() > chance)
                 continue;
 
             for (var inventoryIndex = 0; inventoryIndex < Chest.maxItems; inventoryIndex++)
