@@ -38,6 +38,11 @@ public class UIHoverImageButton : TransformableUIButton
     {
         _isActivated = active;
     }
+    
+    public void SetImageScale(float scale)
+    {
+        _scale = scale;
+    }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {

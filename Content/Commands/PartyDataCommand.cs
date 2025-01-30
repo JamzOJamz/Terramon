@@ -12,6 +12,8 @@ public class PartyDataCommand : DebugCommand
     public override string Description => Language.GetTextValue("Mods.Terramon.Commands.PartyData.Description");
 
     public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.PartyData.Usage");
+    
+    protected override int MinimumArgumentCount => 1;
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

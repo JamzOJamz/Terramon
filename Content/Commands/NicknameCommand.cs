@@ -16,6 +16,8 @@ public class NicknameCommand : TerramonCommand
     public override string Description => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Description");
 
     public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.Nickname.Usage");
+    
+    protected override int MinimumArgumentCount => 1;
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {

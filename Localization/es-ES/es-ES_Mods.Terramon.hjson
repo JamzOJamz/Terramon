@@ -61,14 +61,19 @@ Commands: {
 
 	PokeClear: {
 		Description: Elimina todos los NPCs Pokémon activos en el mundo
-		// Usage: /pokeclear
+		Usage: /pokeclear
 		Success: "{0} NPCs Pokémon fueron eliminados"
 		SuccessByPlayer: "{0} eliminó {1} NPCs Pokémon"
 	}
 
 	PC: {
-		// Description: Opens the Pokémon Storage System from anywhere
+		// Description: Opens the Pokémon Storage System (PC) from anywhere
 		// Usage: /pc
+	}
+
+	Dex: {
+		// Description: Opens the Pokédex
+		// Usage: /dex
 	}
 }
 
@@ -193,6 +198,9 @@ GUI: {
 			HP: {0}/{1}
 			EXP: MAX
 			''' */
+		// SlotTooltipPCMode: "[c/FFFFFF:In Party]"
+		// SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
+		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
 	}
 
 	Starter: {
@@ -248,8 +256,8 @@ GUI: {
 CommonTooltips: {
 	/* Apricorn:
 		'''
-		A special fruit seemingly related to berries.
-		Can be used to craft assorted Poké Balls.
+		A special fruit seemingly related to berries
+		Can be used to craft assorted Poké Balls
 		''' */
 	EvolutionaryItem: Objeto evolutivo
 	KeyItem: Objeto clave
@@ -565,7 +573,7 @@ Items: {
 }
 
 Keybinds: {
-	ToggleSidebar.DisplayName: Activar o desactivar la barra lateral
+	// ToggleParty.DisplayName: Toggle Party GUI
 	// OpenPokedex.DisplayName: Pokédex
 	// TogglePokemon.DisplayName: Toggle Active Pokémon
 	// NextPokemon.DisplayName: Summon Next Pokémon

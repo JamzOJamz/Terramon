@@ -97,7 +97,7 @@ public class NPCSpawnController : NPCComponent
     // Continue to support legacy system for setting spawn conditions
     public float Chance;
     public string Condition;
-    
+
     // Simple spawning system fields
     public SpawningStage Stage;
 
@@ -109,6 +109,11 @@ public class NPCSpawnController : NPCComponent
     //public CustomCondition[] Conditions;
 
     protected override bool CacheInstances => true;
+
+    /*public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+    {
+        Main.NewText($"spawnRate: {spawnRate}, maxSpawns: {maxSpawns}");
+    }*/
 
     public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
     {
@@ -158,13 +163,13 @@ public class NPCSpawnController : NPCComponent
         // Normalize the spawn pool
         var totalTypesAdded = typesAdded.Count;
         foreach (var type in typesAdded)
-            pool[type] = (pool[type] / totalTypesAdded) * spawnRateMultiplier;
+            pool[type] = pool[type] / totalTypesAdded * spawnRateMultiplier;
     }
 
     private static bool SimpleEditSpawnPool(IDictionary<int, float> pool, int type, NPCSpawnController spawnController,
         NPCSpawnInfo spawnInfo, bool hasWaterCandle, bool hasBattlePotion)
     {
-        const float chanceMultiplier = 0.125f;
+        const float chanceMultiplier = 7f / 32f; // 0.21875f
         var spawnChance = 0f;
         var schema = ((PokemonNPC)spawnController.NPC.ModNPC).Schema;
         var primaryType = schema.Types[0];
@@ -175,7 +180,8 @@ public class NPCSpawnController : NPCComponent
         if (dualType)
         {
             var secondaryType = schema.Types[1];
-            if (SimpleSpawnConditions.TryGetValue(secondaryType, out var secondaryCondition) &&
+            if (secondaryType != PokemonType.Flying &&
+                SimpleSpawnConditions.TryGetValue(secondaryType, out var secondaryCondition) &&
                 secondaryCondition(spawnInfo))
                 spawnChance += 0.5f;
         }

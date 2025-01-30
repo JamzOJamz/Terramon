@@ -24,7 +24,6 @@ public class BetterUIText : UIElement
     private bool _isWrapped;
     private string _lastTextReference;
     private object _text = "";
-    private float _textScale = 1f;
     private Vector2 _textSize = Vector2.Zero;
     private string _visibleText;
     public bool DynamicallyScaleDownToWidth;
@@ -46,6 +45,8 @@ public class BetterUIText : UIElement
         WrappedTextBottomPadding = 20f;
         InternalSetText(text, textScale, large);
     }
+    
+    public float TextScale { get; private set; } = 1f;
 
     public string Text => _text.ToString();
 
@@ -64,7 +65,7 @@ public class BetterUIText : UIElement
             if (value)
                 MinWidth.Set(0,
                     0); // TML: IsWrapped when true should prevent changing MinWidth, otherwise can't shrink in width due to CreateWrappedText+GetInnerDimensions logic. IsWrapped is false in ctor, so need to undo changes.
-            InternalSetText(_text, _textScale, _isLarge);
+            InternalSetText(_text, TextScale, _isLarge);
         }
     }
 
@@ -78,22 +79,24 @@ public class BetterUIText : UIElement
 
     public float ShadowSpread { get; set; } = 1.5f;
 
+    public bool ShowTypingCaret { get; set; }
+
     public event Action OnInternalTextChange;
 
     public override void Recalculate()
     {
-        InternalSetText(_text, _textScale, _isLarge);
+        InternalSetText(_text, TextScale, _isLarge);
         base.Recalculate();
     }
 
     public void SetText(string text)
     {
-        InternalSetText(text, _textScale, _isLarge);
+        InternalSetText(text, TextScale, _isLarge);
     }
 
     public void SetText(LocalizedText text)
     {
-        InternalSetText(text, _textScale, _isLarge);
+        InternalSetText(text, TextScale, _isLarge);
     }
 
     public void SetText(string text, float textScale, bool large)
@@ -105,6 +108,11 @@ public class BetterUIText : UIElement
     {
         InternalSetText(text, textScale, large);
     }
+    
+    public void SetTextScale(float textScale)
+    {
+        InternalSetText(_text, textScale, _isLarge);
+    }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
@@ -113,22 +121,25 @@ public class BetterUIText : UIElement
         var innerDimensions = GetInnerDimensions();
         var position = innerDimensions.Position();
         if (_isLarge)
-            position.Y -= 10f * _textScale;
+            position.Y -= 10f * TextScale;
         else
-            position.Y -= 2f * _textScale;
+            position.Y -= 2f * TextScale;
 
         position.X += (innerDimensions.Width - _textSize.X) * TextOriginX;
         position.Y += (innerDimensions.Height - _textSize.Y) * TextOriginY;
-        var num = _textScale;
+        var num = TextScale;
         if (DynamicallyScaleDownToWidth && _textSize.X > innerDimensions.Width)
             num *= innerDimensions.Width / _textSize.X;
-
+        
+        var useText = _visibleText;
+        if (ShowTypingCaret && Main.GameUpdateCount % 20 < 10)
+            useText += "|";
         var value = (_isLarge ? FontAssets.DeathText : FontAssets.MouseText).Value;
-        var vector = value.MeasureString(_visibleText);
+        var vector = value.MeasureString(useText);
         var baseColor = ShadowColor * (_color.A / 255f);
         var origin = new Vector2(0f, 0f) * vector;
         var baseScale = new Vector2(num);
-        var snippets = ChatManager.ParseMessage(_visibleText, _color).ToArray();
+        var snippets = ChatManager.ParseMessage(useText, _color).ToArray();
         ChatManager.ConvertNormalSnippets(snippets);
 
         foreach (var t in ShadowDirections)
@@ -141,7 +152,7 @@ public class BetterUIText : UIElement
     private void VerifyTextState()
     {
         if ((object)_lastTextReference != Text)
-            InternalSetText(_text, _textScale, _isLarge);
+            InternalSetText(_text, TextScale, _isLarge);
     }
 
     private void InternalSetText(object text, float textScale, bool large)
@@ -149,10 +160,10 @@ public class BetterUIText : UIElement
         var dynamicSpriteFont = large ? FontAssets.DeathText.Value : FontAssets.MouseText.Value;
         _text = text;
         _isLarge = large;
-        _textScale = textScale;
+        TextScale = textScale;
         _lastTextReference = _text.ToString();
         _visibleText = IsWrapped
-            ? dynamicSpriteFont.CreateWrappedText(_lastTextReference, GetInnerDimensions().Width / _textScale)
+            ? dynamicSpriteFont.CreateWrappedText(_lastTextReference, GetInnerDimensions().Width / TextScale)
             : _lastTextReference;
 
         // TML: Changed to use ChatManager.GetStringSize() since using DynamicSpriteFont.MeasureString() ignores chat tags,

@@ -123,13 +123,13 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         Elements.CopyTo(elementsStatic);
         foreach (var element in elementsStatic) element.Update(gameTime);
 
-        var openKey = KeybindSystem.ToggleSidebarKeybind.Current;
+        var openKey = KeybindSystem.TogglePartyKeybind.Current;
         switch (openKey)
         {
             case true when _keyUp:
             {
                 _keyUp = false;
-                if (Main.drawingPlayerChat) break;
+                if (Main.blockInput) break;
                 _toggleTween?.Kill();
                 if (_isToggled)
                 {
@@ -471,9 +471,7 @@ public class PartySidebarSlot : UIImage
                 AssetRequestMode.ImmediateLoad));
             _spriteBox.Top.Set(10, 0f);
             _spriteBox.Left.Set(59, 0f);
-            var sprite = new UIImage(ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{data.InternalName}{(!string.IsNullOrEmpty(data.Variant) ? "_" + data.Variant : string.Empty)}_Mini{(data.IsShiny ? "_S" : string.Empty)}",
-                AssetRequestMode.ImmediateLoad))
+            var sprite = new UIImage(data.GetMiniSprite())
             {
                 ImageScale = 0.7f
             };

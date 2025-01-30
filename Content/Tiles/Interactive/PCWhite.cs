@@ -27,4 +27,15 @@ public class PCItemWhite : PCItem
         Item.DefaultToPlaceableTile(ModContent.TileType<PCWhite>());
         base.SetDefaults();
     }
+    
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.Chest, 2)
+            .AddRecipeGroup(RecipeGroupID.IronBar, 8)
+            .AddIngredient(ItemID.Glass, 10)
+            .AddIngredient<PremierBallItem>()
+            .AddTile(TileID.WorkBenches)
+            .Register();
+    }
 }

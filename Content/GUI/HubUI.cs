@@ -85,7 +85,7 @@ public class HubUI : SmartUIState
     }
 
     public static bool ShinyActive { get; private set; }
-    public static bool LeftShiftIgnore { get; set; }
+    public static bool ShiftKeyIgnore { get; set; }
 
     public static bool Active { get; private set; }
     public override bool Visible => false; // Vanilla will update/draw this state through IngameFancyUI
@@ -139,7 +139,7 @@ public class HubUI : SmartUIState
         var filterButtonImage = isShiny ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture;
         var filterButtonRarity = isShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White;
         _worldDexMode = false;
-        LeftShiftIgnore = true;
+        ShiftKeyIgnore = true;
         ShinyActive = isShiny;
         hubState._filterButton.SetImage(filterButtonImage);
         hubState._filterButton.SetHoverRarity(filterButtonRarity);
@@ -452,7 +452,7 @@ public class HubUI : SmartUIState
 
     public void ResetPokedex()
     {
-        _pokedexPage.PageIndex = 0; // Resets the Pokédex page to the first page for the next time it is opened
+        _pokedexPage.ReturnToFirstPage(); // Resets the Pokédex page to the first page for the next time it is opened
         _worldDexMode = false; // Reset to player's Pokédex mode
         ShinyActive = false; // Reset to non-shiny mode
         _filterButton.SetImage(PlayerDexFilterTexture);
@@ -577,8 +577,6 @@ internal sealed class PokedexPageDisplay : UIElement
     private readonly List<PokedexEntryIcon> _entries = [];
 
     private int _cols;
-
-    private int _pageIndex;
     private int _rows;
     private int _startItemIndex;
 
@@ -592,29 +590,20 @@ internal sealed class PokedexPageDisplay : UIElement
 
         Reset();
     }
-
-    public int PageIndex
+    
+    public void ChangePage(int direction)
     {
-        get => _pageIndex;
-        set
-        {
-            if (value == 0)
-            {
-                _startItemIndex = 0;
-                _pageIndex = 0;
-                Reset();
-                return;
-            }
-
-            var pageDiff = value - _pageIndex;
-            if (pageDiff == 0) return;
-            _startItemIndex += pageDiff * _rows * _cols;
-            if (_startItemIndex < 0) _startItemIndex = 0;
-            if (_startItemIndex > Terramon.LoadedPokemonCount - 1)
-                _startItemIndex = Terramon.LoadedPokemonCount - _rows * _cols;
-            _pageIndex = value;
-            Reset();
-        }
+        _startItemIndex += direction * _rows * _cols;
+        if (_startItemIndex < 0) _startItemIndex = 0;
+        if (_startItemIndex > Terramon.LoadedPokemonCount - 1)
+            _startItemIndex = Terramon.LoadedPokemonCount - _rows * _cols;
+        Reset();
+    }
+    
+    public void ReturnToFirstPage()
+    {
+        _startItemIndex = 0;
+        Reset();
     }
 
     public Tuple<int, int> GetPageRange()
@@ -779,9 +768,9 @@ internal sealed class PokedexEntryIcon : UIPanel
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
-        if (Main.keyState.IsKeyDown(Keys.LeftShift))
+        if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
         {
-            if (HubUI.LeftShiftIgnore) return;
+            if (HubUI.ShiftKeyIgnore) return;
             _debugText.TextColor = Color.Transparent;
             _debugText.ShadowColor = Color.Transparent;
         }
@@ -789,7 +778,7 @@ internal sealed class PokedexEntryIcon : UIPanel
         {
             _debugText.TextColor = Color.White;
             _debugText.ShadowColor = Color.Black;
-            HubUI.LeftShiftIgnore = false;
+            HubUI.ShiftKeyIgnore = false;
         }
     }
 
@@ -882,7 +871,7 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         if ((!_right && currentRange.Item1 == 1) ||
             (_right && currentRange.Item2 == Terramon.LoadedPokemonCount)) return;
 
-        _pageDisplay.PageIndex += _right.ToDirectionInt(); // -1 for left, 1 for right
+        _pageDisplay.ChangePage(_right.ToDirectionInt()); // -1 for left, 1 for right
         UILoader.GetUIState<HubUI>().RefreshPokedex();
 
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/dex_pageup")
