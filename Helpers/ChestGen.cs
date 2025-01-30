@@ -20,7 +20,9 @@ internal static class ChestGen
     public static void AddChestLoot(int itemID, int chestID = -1, int minimumStack = 1, int maximumStack = 1,
         float chance = 1f, bool excludeDuplicates = false)
     {
-        AddChestLoot(itemID, chestID == -1 ? null : [chestID], minimumStack, maximumStack, chance,
+        AddChestLoot(itemID,
+            chestID == -1 ? _ => true : chest => Main.tile[chest.x, chest.y].TileFrameX / 36 == chestID, minimumStack,
+            maximumStack, chance,
             excludeDuplicates);
     }
 
