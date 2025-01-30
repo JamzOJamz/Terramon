@@ -13,6 +13,8 @@ using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
+namespace Terramon.Core;
+
 public class TerramonPlayer : ModPlayer
 {
     private readonly PCService _pc = new();
