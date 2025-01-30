@@ -13,7 +13,7 @@ public class MOTDSystem : ModPlayer
 
         var mod = Terramon.Instance;
         Main.NewText(
-            $"Thank you for installing {mod.DisplayNameClean} v{mod.Version}! [i:{ModContent.ItemType<PokeBallItem>()}]\n\n" +
+            $"You've installed {mod.DisplayNameClean} v{mod.Version}—enjoy! [i:{ModContent.ItemType<PokeBallItem>()}]\n\n" +
             "[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybinds in the Controls menu.]");
     }
 }
