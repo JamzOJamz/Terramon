@@ -137,14 +137,14 @@ public class TerramonPlayer : ModPlayer
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
+        ProcessActiveMonTriggers();
+        
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
         
         if (!KeybindSystem.TogglePartyKeybind.JustPressed) return;
         var inventoryParty = UILoader.GetUIState<InventoryParty>();
         if (inventoryParty.Visible) inventoryParty.SimulateToggleSlots();
-        
-        ProcessActiveMonTriggers();
     }
 
     private void ProcessActiveMonTriggers()
@@ -176,19 +176,17 @@ public class TerramonPlayer : ModPlayer
                 ActiveSlot = _activeSlot;
         }
 
-        if (shouldPlaySound)
+        if (!shouldPlaySound) return;
+        if (_hasPokemon)
         {
-            if (_hasPokemon)
-            {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
                 { Volume = 0.2525f });
-            }
-            else
-            {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
+        }
+        else
+        {
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
                 { Volume = 0.35f });
-            }
         }
     }
 
