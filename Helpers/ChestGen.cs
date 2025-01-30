@@ -21,7 +21,7 @@ internal static class ChestGen
         float chance = 1f, bool excludeDuplicates = false)
     {
         AddChestLoot(itemID,
-            chestID == -1 ? _ => true : chest => Main.tile[chest.x, chest.y].TileFrameX / 36 == chestID, minimumStack,
+            chestID == -1 ? static _ => true : chest => Main.tile[chest.x, chest.y].TileFrameX / 36 == chestID, minimumStack,
             maximumStack, chance,
             excludeDuplicates);
     }
