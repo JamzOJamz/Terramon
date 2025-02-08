@@ -577,7 +577,7 @@ Items: {
 }
 
 Keybinds: {
-	ToggleParty.DisplayName: Toggle Party GUI
+	ToggleParty.DisplayName: Party
 	OpenPokedex.DisplayName: Pokédex
 }
 
