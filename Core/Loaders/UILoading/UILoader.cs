@@ -39,6 +39,13 @@ internal class UILoader : ModSystem
             orig(self, sw);
             UpdateUI_Custom(GameTime);
         };
+        
+        On_Main.DoUpdate_WhilePaused += static (orig) =>
+        {
+            orig();
+            if (!Main.autoPause) return;
+            UpdateUI_Custom(GameTime);
+        };
     }
 
     /// <summary>
