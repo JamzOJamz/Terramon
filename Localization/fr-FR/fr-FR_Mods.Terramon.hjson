@@ -579,13 +579,14 @@ Items: {
 Keybinds: {
 	// ToggleParty.DisplayName: Party
 	// OpenPokedex.DisplayName: Pokédex
+	// OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
 }
 
 Tiles: {
 	// MusicBoxCenter.MapEntry: Music Box
 	// MusicBoxWildBattle.MapEntry: Music Box
-	// PCWhite.MapEntry: P C White
-	// PCRed.MapEntry: P C Red
+	// PCWhite.MapEntry: PC
+	// PCRed.MapEntry: PC
 }
 
 Types: {

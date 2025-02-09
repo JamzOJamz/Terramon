@@ -26,7 +26,7 @@ public abstract class PCTile : ModTile
                 orig(self);
                 return;
             }
-            
+
             var modPlayer = TerramonPlayer.LocalPlayer;
             var pcId = modPlayer.ActivePCTileEntityID;
             if (pcId == int.MaxValue) // Opened via /pc command
@@ -66,8 +66,6 @@ public abstract class PCTile : ModTile
         TileObjectData.newTile.UsesCustomCanPlace = true;
         TileObjectData.newTile.DrawYOffset = 2;
         TileObjectData.addTile(Type);
-
-        AddMapEntry(Color.White, CreateMapEntryName());
     }
 
     public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -106,7 +104,7 @@ public abstract class PCTile : ModTile
             otherPcTe.ToggleOnOff(true);
             differentPc = true;
         }
-        
+
         // Exit any active chest UI
         player.chest = -1;
 

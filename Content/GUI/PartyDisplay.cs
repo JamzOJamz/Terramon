@@ -217,6 +217,11 @@ public class PartySidebarSlot : UIImage
         base.DrawSelf(spriteBatch);
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
+        if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
+        {
+            HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
+            return;
+        }
         var hoverText =
             Language.GetTextValue(_isActiveSlot
                 ? "Mods.Terramon.GUI.Party.SlotHoverActive"

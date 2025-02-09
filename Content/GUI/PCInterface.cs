@@ -6,6 +6,7 @@ using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -632,7 +633,7 @@ internal sealed class CustomPCItemSlot : UIImage
         {
             if (Main.mouseItem.IsAir && data != null)
             {
-                if (Main.keyState.IsKeyDown(Keys.O))
+                if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
                 {
                     HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
                     return;

@@ -575,6 +575,7 @@ Items: {
 Keybinds: {
 	// ToggleParty.DisplayName: Party
 	// OpenPokedex.DisplayName: Pokédex
+	// OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
 }
 
 Tiles: {

@@ -9,6 +9,7 @@ public class PCRed : PCTile
         base.SetStaticDefaults();
         DustType = DustID.Crimstone;
         RegisterItemDrop(ModContent.ItemType<PCItemRed>());
+        AddMapEntry(ModContent.GetInstance<CherishBallRarity>().RarityColor, CreateMapEntryName());
     }
 
     public override void MouseOver(int i, int j)
