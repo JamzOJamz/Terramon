@@ -679,4 +679,10 @@ Misc: {
 	// PokemonEvolutionReady: "{0} seems ready to evolve!"
 	// RareCandyUse: "{0} grew to Lv. {1}!"
 	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	/* MOTD:
+		'''
+		You've installed {0} v{1}—enjoy! [i:{2}]
+
+		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
+		''' */
 }
