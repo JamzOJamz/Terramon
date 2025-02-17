@@ -1,10 +1,13 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       DrawOffsetY: -2
     }
+  }
+  NPC:
+  {
     WanderingHoverBehaviour: {}
     SpawnController:
     {
@@ -21,10 +24,6 @@
   }
   Projectile:
   {
-    Transform:
-    {
-      DrawOffsetY: -2
-    }
     FlyingPet: {}
   }
 }

@@ -1,11 +1,14 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 26
       Height: 24
     }
+  }
+  NPC:
+  {
     BounceBehaviour:
     {
       FrameCount: 3
@@ -34,11 +37,6 @@
   }
   Projectile:
   {
-    Transform:
-    {
-      Width: 26
-      Height: 24
-    }
     GenericPet:
     {
       FrameCount: 4

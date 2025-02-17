@@ -20,7 +20,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     public delegate void CustomFindFrame(PokemonPet proj);
 
     private ushort _cachedID;
-    private int? _customSpriteDirection;
+    public int? CustomSpriteDirection;
     private Asset<Texture2D> _mainTexture;
     private int _shinySparkleTimer;
     public int CustomFrameCounter;
@@ -104,7 +104,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     {
         // Move ahead of player
         var direction = Main.player[Projectile.owner].direction;
-        _customSpriteDirection = direction;
+        CustomSpriteDirection = direction;
         Projectile.position.X += direction * (MathF.Abs(Main.player[Projectile.owner].velocity.X) < 1.5f ? 40 : -30);
 
         var dust = ModContent.DustType<SummonCloud>();
@@ -141,8 +141,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         var sourceRect = _mainTexture.Frame(1, projFrameCount, frameY: Projectile.frame);
         var frameSize = sourceRect.Size();
         var origin = frameSize / new Vector2(2, 1);
-        var effects = _customSpriteDirection.HasValue
-            ? _customSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+        var effects = CustomSpriteDirection.HasValue
+            ? CustomSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
             : Projectile.spriteDirection == -1
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
@@ -211,7 +211,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         if (!owningPlayer.dead && owningPlayer.HasBuff(ModContent.BuffType<PokemonCompanion>()) &&
             activePokemon == Data && activePokemon.ID == _cachedID) Projectile.timeLeft = 2;
 
-        if (Projectile.velocity.X != 0) _customSpriteDirection = null;
+        if (Projectile.velocity.X != 0) CustomSpriteDirection = null;
 
         if (isShiny) ShinyEffect();
     }

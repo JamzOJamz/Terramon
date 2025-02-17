@@ -1,11 +1,14 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 30
       Height: 32
     }
+  }
+  NPC:
+  {
     WanderingHoverBehaviour:
     {
       FrameCount: 5
@@ -30,11 +33,6 @@
     {
       FrameCount: 5
       FrameTime: 4
-    }
-    Transform:
-    {
-      Width: 30
-      Height: 32
     }
   }
 }

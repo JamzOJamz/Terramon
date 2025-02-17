@@ -12,6 +12,7 @@ namespace Terramon.Content.Projectiles;
 /// </summary>
 public class ProjectileVisuals : ProjectileComponent
 {
+    private int _cachedHeight;
     private float _dustTimer;
     public float DamperAmount = 0; //0 = no effect, 1 = full effect
     public float DustFrequency = 20; //how many frames until dust is spawned
@@ -22,6 +23,13 @@ public class ProjectileVisuals : ProjectileComponent
     public float LightStrength = 0f;
     public Vector3 ShinyLightColor = Vector3.One;
 
+    public override void SetDefaults(Projectile proj)
+    {
+        base.SetDefaults(proj);
+        if (!Enabled) return;
+        _cachedHeight = proj.height;
+    }
+
     public override void AI(Projectile proj)
     {
         base.AI(proj);
@@ -29,6 +37,7 @@ public class ProjectileVisuals : ProjectileComponent
         if (!Enabled) return;
 
         var petProj = (PokemonPet)proj.ModProjectile;
+        //var texture = TextureAssets.Projectile[proj.type].Value;
 
         if (LightStrength > 0)
             Lighting.AddLight(proj.Center,
@@ -38,9 +47,15 @@ public class ProjectileVisuals : ProjectileComponent
         if (DustID <= -1) return;
         if (_dustTimer >= DustFrequency)
         {
-            Dust.NewDust(
-                proj.position + new Vector2(proj.spriteDirection == 1 ? proj.width - DustOffsetX : DustOffsetX,
-                    DustOffsetY), 1, 1, DustID);
+            var effects = petProj.CustomSpriteDirection.HasValue
+                ? petProj.CustomSpriteDirection.Value == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+                : proj.spriteDirection == -1
+                    ? SpriteEffects.FlipHorizontally
+                    : SpriteEffects.None;
+            var yOff = _cachedHeight - proj.height;
+            Dust.NewDustPerfect(proj.position + new Vector2(
+                effects == SpriteEffects.FlipHorizontally ? proj.width - DustOffsetX : DustOffsetX,
+                DustOffsetY - yOff), DustID);
             _dustTimer = 0;
         }
         else

@@ -1,10 +1,13 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       DrawOffsetY: -2
     }
+  }
+  NPC:
+  {
     BounceBehaviour:
     {
       BounceMinRange: -3.5
@@ -30,10 +33,6 @@
   }
   Projectile:
   {
-    Transform:
-    {
-      DrawOffsetY: -2
-    }
     GenericPet: {}
   }
 }

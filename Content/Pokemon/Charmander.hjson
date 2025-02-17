@@ -1,11 +1,24 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 22
       Height: 26
     }
+    Visuals:
+    {
+      LightColor: "1, 0.95, 0.8"
+      LightStrength: 0.4
+      DamperAmount: 0.5
+      DustID: 6
+      DustFrequency: 45
+      DustOffsetX: 17
+      DustOffsetY: 10
+    }
+  }
+  NPC:
+  {
     WalkingBehaviour:
     {
       FrameCount: 3
@@ -24,16 +37,6 @@
         }
       ]
     }
-    Visuals:
-    {
-      LightColor: "1, 0.95, 0.8"
-      LightStrength: 0.4
-      DamperAmount: 0.5
-      DustID: 6
-      DustFrequency: 45
-      DustOffsetX: 17
-      DustOffsetY: 10
-    }
   }
   Projectile:
   {
@@ -42,11 +45,6 @@
       FrameCount: 3
       AnimationType: Alternate
       IsClassic: false
-    }
-    Transform:
-    {
-      Width: 22
-      Height: 26
     }
   }
 }

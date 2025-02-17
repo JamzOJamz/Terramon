@@ -1,11 +1,14 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 20
       Height: 28
     }
+  }
+  NPC:
+  {
     BounceBehaviour:
     {
       BounceMinRange: -2.5
@@ -37,11 +40,6 @@
       WalkSpeedModifier: 0.8
       FrameCount: 4
       IsClassic: false
-    }
-    Transform:
-    {
-      Width: 20
-      Height: 28
     }
   }
 }

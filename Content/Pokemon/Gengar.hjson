@@ -1,11 +1,14 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 32
       Height: 38
     }
+  }
+  NPC:
+  {
     WalkingBehaviour:
     {
       WalkSpeed: 0.9
@@ -35,11 +38,6 @@
       FrameTime: 6
       AnimationType: IdleForward
       IsClassic: false
-    }
-    Transform:
-    {
-      Width: 32
-      Height: 38
     }
   }
 }
