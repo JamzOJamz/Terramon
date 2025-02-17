@@ -13,8 +13,8 @@
       DamperAmount: 0.5
       DustID: 6
       DustFrequency: 45
-      DustOffsetX: 17
-      DustOffsetY: 10
+      DustOffsetX: 21
+      DustOffsetY: 12
     }
   }
   NPC:
