@@ -75,6 +75,11 @@ Commands: {
 		// Description: Opens the Pokédex
 		// Usage: /dex
 	}
+
+	Upgrade: {
+		// Description: Transfer Pokémon from the pre-release version
+		// Usage: /upgrade
+	}
 }
 
 Configs: {
