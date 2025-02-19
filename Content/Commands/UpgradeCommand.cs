@@ -4,6 +4,10 @@ using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
 
+/// <summary>
+///     A <see cref="ModCommand" /> that transfers legacy Pokémon from the pre-release version of Terramon to the new
+///     system.
+/// </summary>
 public class UpgradeCommand : TerramonCommand
 {
     private FieldInfo _basePkballDataField;
@@ -36,7 +40,7 @@ public class UpgradeCommand : TerramonCommand
         if (_basePkballType == null || _pkmnDataType == null)
         {
             caller.Reply(
-                "One or more required legacy types were not found! Please report this issue to the Terramon developers",
+                Language.GetTextValue("Mods.Terramon.Commands.Upgrade.TypeResolveError"),
                 ChatColorRed);
             return;
         }
@@ -70,8 +74,14 @@ public class UpgradeCommand : TerramonCommand
             transferCount++;
             item.TurnToAir();
         }
-
-        caller.Reply($"Successfully upgraded and transferred {transferCount} Pokémon to {player.name}'s PC",
+        
+        if (transferCount == 0)
+        {
+            caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Upgrade.NopUpgrade"), ChatColorRed);
+            return;
+        }
+        
+        caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Upgrade.Success", transferCount, player.name),
             ChatColorYellow);
     }
 

@@ -79,6 +79,9 @@ Commands: {
 	Upgrade: {
 		// Description: Transfer Pokémon from the pre-release version
 		// Usage: /upgrade
+		// TypeResolveError: One or more required legacy types were not found! Please report this issue to the Terramon developers
+		// NopUpgrade: No Pokémon were found in the inventory to upgrade
+		// Success: Successfully upgraded and transferred {0} Pokémon to {1}'s PC
 	}
 }
 
