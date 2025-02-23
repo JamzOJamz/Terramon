@@ -7,7 +7,7 @@ using Terraria.GameContent;
 
 namespace Terramon.Content.GUI;
 
-internal sealed class MenuSocialWidget
+internal static class MenuSocialWidget
 {
     private const string DiscordURL = "https://discord.gg/qDn5eW27c4"; // Terramon Mod, #rules-and-info
     private const string DiscordInviteCode = "qDn5eW27c4";

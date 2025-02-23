@@ -1,6 +1,6 @@
 namespace Terramon.Core;
 
-public class Tween
+public static class Tween
 {
     public static readonly List<ITweener> ActiveTweens = [];
 

@@ -109,6 +109,7 @@ public partial class TerramonWorld : ModSystem
 
     public override void Load()
     {
+        if (Main.dedServ) return;
         On_Main.DoUpdate += MainDoUpdate_Detour;
         On_Main.DoDraw += MainDoDraw_Detour;
     }

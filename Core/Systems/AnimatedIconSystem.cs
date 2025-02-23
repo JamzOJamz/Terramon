@@ -5,6 +5,7 @@ using Terraria.GameContent.UI.Elements;
 
 namespace Terramon.Core.Systems;
 
+[Autoload(Side = ModSide.Client)]
 public class AnimatedIconSystem : ModSystem
 {
     private const int FrameDelay = 12; // 60fps / 12 = 5fps

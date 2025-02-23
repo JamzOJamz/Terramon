@@ -18,6 +18,8 @@ public abstract class PCTile : ModTile
 
     static PCTile()
     {
+        if (Main.dedServ) return;
+        
         // Catch the event when the player toggles their inventory
         On_Player.ToggleInv += static (orig, self) =>
         {
