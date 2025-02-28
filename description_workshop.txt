@@ -5,13 +5,12 @@
 [url=https://terramon.tmod.page/links]Website[/url][/h1]
 The website is where you can find links associated with the mod, all in one place!
 
-[i]For your convenience:[/i]
 [url=https://terramon.wiki]Terramon Wiki[/url] | [url=https://discord.gg/qDn5eW27c4]Discord Server[/url]
 [url=https://www.youtube.com/@TerramonMod]YouTube Channel[/url] | [url=https://github.com/JamzOJamz/Terramon]GitHub (Source Code)[/url]
 
 [h1]ABOUT[/h1]
 
-[i]Hey there, fellow adventurer! Are you ready to start your Pokémon journey?[/i]
+[i]"Hey there, fellow adventurer! Are you ready to start your Pokémon journey?"[/i]
 
 If you enjoy both Terraria and Pokémon, the [b]Terramon Mod[/b] is the perfect crossover! Catch, train, and explore alongside your favorite Pokémon in an experience that blends the best of both worlds.
 
@@ -37,10 +36,10 @@ If you enjoy both Terraria and Pokémon, the [b]Terramon Mod[/b] is the perfect 
 
 [hr][/hr]
 [b][Note][/b]
-This mod is in an early beta stage. Some features, such as Pokémon battling, are not yet implemented, and bugs may be present. Please report any issues and share your feedback on Discord: https://discord.gg/qDn5eW27c4
+This mod is in an early beta stage. Some features, such as Pokemon battling, are not yet implemented, and bugs may be present. Please report any issues and share your feedback on Discord: https://discord.gg/qDn5eW27c4
 
 [b][Disclaimer][/b]
-This fan-made mod acknowledges all rights to Nintendo and Game Freak.
+This is an unofficial, fan-made mod and is not affiliated with, endorsed, sponsored, or approved by Nintendo, Game Freak, or The Pokémon Company. Pokémon and all related trademarks, characters, names, and images are the property of their respective owners. This project is for non-commercial use only, and no copyright or trademark infringement is intended.
 
-[quote=tModLoader TerramonMod]
+[quote=tModLoader Terramon]
 Developed By The Terramon Team[/quote]
