@@ -5,8 +5,7 @@
 [url=https://terramon.tmod.page/links]Website[/url][/h1]
 The website is where you can find links associated with the mod, all in one place!
 
-[url=https://terramon.wiki]Terramon Wiki[/url] | [url=https://discord.gg/qDn5eW27c4]Discord Server[/url]
-[url=https://www.youtube.com/@TerramonMod]YouTube Channel[/url] | [url=https://github.com/JamzOJamz/Terramon]GitHub (Source Code)[/url]
+[url=https://discord.gg/qDn5eW27c4]Discord Server[/url] | [url=https://terramon.wiki]Terramon Wiki[/url] | [url=https://github.com/JamzOJamz/Terramon]GitHub (Source Code)[/url]
 
 [h1]ABOUT[/h1]
 
