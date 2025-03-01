@@ -680,13 +680,13 @@ Misc: {
 	NoActivePokemon: ¡Necesitas tener un Pokémon activo para hacer eso!
 	ItemNoEffect: No tendrá ningún efecto para {0}.
 	PokemonEvolved: ¡{0} evolucionó a {1}!
-	PokemonEvolutionReady: ¡{0} parece listo para evolucionar!
+	PokemonEvolutionReady: ¡Parece que {0} está listo para evolucionar!
 	RareCandyUse: ¡{0} subió a nivel {1}!
 	ExpCandyUse: ¡Tu Pokémon ha ganado {0} puntos de experiencia!
 	MOTD:
 		'''
-		Has instalado {0} v{1}—¡disfrutalo! [i:{2}]
+		Has instalado {0} v{1}—¡disfrútalo! [i:{2}]
 
-		[c/C9C9E5:Asegurate de personalizar el mod a tus gustos en el menú de Configuración de mods, y asigna los comandos de teclas del mod en el menú de Controles.]
+		[c/C9C9E5:Asegúrate de personalizar el mod a tus gustos en el menú de Configuración de mods, y asigna los comandos de teclas del mod en el menú de Controles.]
 		'''
 }
