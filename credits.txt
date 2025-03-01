@@ -17,6 +17,7 @@ Mod logo
 
 - qAngel -
 Pokémon sprites
+es-ES translation
 
 - SmokeEntangles -
 Official soundtrack
@@ -40,6 +41,9 @@ Shiny Charm sprite
 
 - Arcri -
 Mod logo (revised version)
+
+- Cracky -
+de-DE translation
 
 - Game Freak -
 Pokémon sprites
