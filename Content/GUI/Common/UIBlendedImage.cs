@@ -8,11 +8,9 @@ public class UIBlendedImage(Asset<Texture2D> texture) : UIImage(texture)
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState,
-            DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, Main.UIScaleMatrix);
         base.DrawSelf(spriteBatch);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
-            DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
     }
 }
