@@ -118,12 +118,11 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X + 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
-
-        if (Main.netMode == NetmodeID.MultiplayerClient) return;
+        
         var owningPlayer = Main.player[Projectile.owner];
         Data = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         _cachedID = ID;
-        Projectile.netUpdate = true;
+        Projectile.netUpdate = true; // Is this necessary?
     }
 
     public override bool PreDraw(ref Color lightColor)
