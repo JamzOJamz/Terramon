@@ -35,6 +35,7 @@ public class TerramonPlayer : ModPlayer
         set
         {
             _activePCTileEntityID = value;
+            if (Main.myPlayer != Player.whoAmI) return; // Only the local player should handle this
             if (value != -1)
                 PCInterface.OnOpen();
             else
