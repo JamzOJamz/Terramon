@@ -40,14 +40,6 @@ public class ProjectileGenericPet : ProjectileComponent
         petProj.FindFrame = FindFrame;
     }
 
-    public override void OnSpawn(Projectile projectile, IEntitySource source)
-    {
-        if (!Enabled) return;
-        
-        // Hardcode the entity's height to 20 (cloned AI compatibility)
-        projectile.height = 20;
-    }
-
     private void CustomAnimation(Projectile proj, bool walking)
     {
         var petProj = (PokemonPet)proj.ModProjectile;
@@ -62,10 +54,13 @@ public class ProjectileGenericPet : ProjectileComponent
     {
         if (!Enabled) return;
 
+        // Hardcode the entity's height to 20 (cloned AI compatibility)
+        projectile.height = 20;
+
         var petProj = (PokemonPet)projectile.ModProjectile;
 
-        if (projectile.ai[0] != 1 && WalkSpeedModifier < 1f) // If not flying to catch up to player
-            projectile.velocity.X *= WalkSpeedModifier + (1f - WalkSpeedModifier) / 1.5f;
+        /*if (projectile.ai[0] != 1 && WalkSpeedModifier < 1f) // If not flying to catch up to player
+            projectile.velocity.X *= WalkSpeedModifier + (1f - WalkSpeedModifier) / 1.5f;*/
 
         // If the pet is moving, increase the frame counter.
         // If not moving, continue to increase the frame counter until it reaches the end of the current animation cycle.
