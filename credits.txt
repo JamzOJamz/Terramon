@@ -28,8 +28,8 @@ Apricorn sprites
 Evolution stone sprites
 
 - Rocketlauncher269 -
-Poké Mart Clerk NPC
-Trainer vanity
+Poké Mart Clerk NPC sprite sheet
+Trainer vanity set sprites
 
 - Fred -
 Mod icon
