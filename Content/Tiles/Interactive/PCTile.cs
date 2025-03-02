@@ -240,7 +240,7 @@ public sealed class PCTileEntity : ModTileEntity
             case NetmodeID.SinglePlayer when Main.myPlayer == User:
             {
                 // Check if the player is still nearby
-                var player = Main.player[User];
+                var player = Main.LocalPlayer;
                 var pos = player.position;
                 if (player.active && !(Vector2.Distance(Position.ToWorldCoordinates(8, 0), pos) > 94f)) return;
                 PoweredOn = false;

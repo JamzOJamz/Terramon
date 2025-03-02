@@ -28,13 +28,23 @@ public readonly struct ControlPCTileRpc(int id, bool poweredOn)
             $"Received ControlPCTileRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {sender.WhoAmI}");
         if (TileEntity.ByID.TryGetValue(packet._id, out var entity) && entity is PCTileEntity pc)
         {
-            var player = Main.player[sender.WhoAmI];
             pc.PoweredOn = packet._poweredOn;
-            pc.User = packet._poweredOn ? sender.WhoAmI : -1;
-            // Play sound if the PC is being turned off by the server and this player is using it
-            if (Main.netMode == NetmodeID.MultiplayerClient && !packet._poweredOn &&
-                TerramonPlayer.LocalPlayer.ActivePCTileEntityID == packet._id)
+
+            // The server has determined that the PC should be turned off (player out of range)
+            if (sender.WhoAmI == 255 && !packet._poweredOn)
+            {
+                pc.PoweredOn = false;
+                pc.User = -1;
+                var modPlayer = TerramonPlayer.LocalPlayer;
+                if (modPlayer.ActivePCTileEntityID != packet._id) return;
                 SoundEngine.PlaySound(SoundID.MenuClose);
+                modPlayer.ActivePCTileEntityID = -1;
+                return;
+            }
+
+            // Multiplayer client manually toggling the PC
+            var player = Main.player[sender.WhoAmI];
+            pc.User = packet._poweredOn ? sender.WhoAmI : -1;
             player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = packet._poweredOn ? packet._id : -1;
         }
 
