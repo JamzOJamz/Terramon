@@ -42,6 +42,9 @@ Shiny Charm sprite
 - Arcri -
 Mod logo (revised version)
 
+- David F Dev -
+EasyPacketsLib dependency
+
 - Cracky -
 de-DE translation
 

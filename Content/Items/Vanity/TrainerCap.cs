@@ -1,5 +1,4 @@
 ﻿using Terramon.Core.Loaders;
-using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items;
 
@@ -11,7 +10,7 @@ public class TrainerCap : VanityItem
     {
         base.SetStaticDefaults();
         ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

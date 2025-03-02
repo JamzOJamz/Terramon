@@ -2,7 +2,6 @@ using Terramon.Content.Configs;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
@@ -14,7 +13,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+        Item.ResearchUnlockCount = 50;
     }
 
     public override void SetDefaults()

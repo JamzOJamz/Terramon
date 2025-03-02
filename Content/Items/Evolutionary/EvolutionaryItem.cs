@@ -2,7 +2,6 @@ using Terramon.Content.Configs;
 using Terramon.Core.Loaders;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
@@ -19,7 +18,7 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
 
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+        Item.ResearchUnlockCount = 3;
     }
 
     public override void SetDefaults()

@@ -1,5 +1,4 @@
 ﻿using Terramon.Core.Loaders;
-using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items;
 
@@ -11,7 +10,7 @@ public class TrainerLegs : VanityItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()
