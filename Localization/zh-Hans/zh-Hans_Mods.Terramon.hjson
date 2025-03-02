@@ -1,133 +1,133 @@
 Buffs: {
 	PokemonCompanion: {
 		// DisplayName: Pokémon companion
-		// Description: "{0} is following you around!"
+		// Description: "{0} 正在跟着你！"
 	}
 }
 
 Commands: {
-	// RequiresDebugMode: This command requires Allow Cheat Commands to be enabled in the mod config!
+	// RequiresDebugMode: 此指令需要在模组配置中启用允许作弊
 
 	DexEdit: {
-		// Description: Forcefully sets Pokédex entry statuses
-		// Usage: /dexedit <id> <status>
-		// ParseErrorID: Failed to parse ID argument as integer
-		// ParseErrorStatus: Failed to parse status argument as integer
-		// StatusOutOfRange: Status argument is out of range (0-2)
-		// IDOutOfRange: Pokédex entry {0} is out of range (1-{1})
-		// Success: Successfully set Pokédex entry {0} to status {1}
+		// Description: 强制设置宝可梦图鉴条目的状态
+		// Usage: /dexedit <id> <状态>
+		// ParseErrorID: 无法将 ID 参数解析为整数
+		// ParseErrorStatus: 无法将状态参数解析为整数
+		// StatusOutOfRange: 状态参数超出范围（0-2）
+		// IDOutOfRange: 宝可梦图鉴条目 {0} 超出范围（1-{1}）
+		// Success: 成功将宝可梦图鉴条目 {0} 的状态设置为 {1}
 	}
 
 	Nickname: {
-		// Description: Sets the nickname of a Pokémon
-		// Usage: /nickname <set|clear> <nickname>
+		// Description: 设置宝可梦的名称
+		// Usage: /nickname <set|clear> <名称>
 
 		Set: {
-			// NoActivePokemon: No Pokémon is currently active
-			// NoNicknameProvided: No nickname provided
-			// NicknameTooLong: Nickname must be 12 characters or less (including spaces)
-			// SameNickname: Nickname is already set to that value
-			// SuccessNew: Set {0}'s nickname to {1}
-			// SuccessUpdate: Changed {0}'s nickname from {1} to {2}
+		// NoActivePokemon: 当前没有活跃的宝可梦
+		// NoNicknameProvided: 未提供名称
+		// NicknameTooLong: 名称长度必须为 12 个字符或更少（包括空格）
+		// SameNickname: 名称已设置
+		// SuccessNew: 将 {0} 的名称设置为 {1}
+		// SuccessUpdate: 将 {0} 的名称从 {1} 更改为 {2}
 		}
 
 		Clear: {
-			// NoNicknameSet: No nickname is currently set for this Pokémon
-			// Success: Cleared {0}'s nickname
+			// NoNicknameSet: 当前宝可梦未设置名称
+			// Success: 已清除 {0} 的名称
 		}
 
-		// InvalidSubcommand: Invalid subcommand. Use \"set\" or \"clear\"
+		// InvalidSubcommand: 无效的指令。请使用 set 或 clear"
 	}
 
 	Party: {
-		// ParseErrorSlot: Failed to parse slot argument as integer
-		// SlotOutOfRange: Slot argument is out of range (1-6)
+		// ParseErrorSlot: 无法将槽位参数解析为整数
+		// SlotOutOfRange: 槽位参数超出范围（1-6）
 	}
 
 	PartyClear: {
-		// Description: Removes the specified Pokémon from your party
-		// Usage: /partyclear <slot|all>
-		// NoPokemonInSlot: No Pokémon found in slot {0}
-		// Success: Removed {0} from the party
-		// SuccessAll: Removed all Pokémon from the party
+		// Description: 从队伍中移除指定的宝可梦
+		// Usage: /partyclear <槽位|all>
+		// NoPokemonInSlot: 槽位 {0} 中没有宝可梦
+		// Success: 已从队伍中移除 {0}
+		// SuccessAll: 已从队伍中移除所有宝可梦
 	}
 
 	PartyData: {
-		// Description: Logs info for the specified Pokémon in your party
-		// Usage: /partydata <slot>
-		// NoPokemonInSlot: No Pokémon data available for slot {0}
-		// Success: Pokémon data for slot {0} written to client.log
+		// Description: 记录队伍中指定槽位宝可梦的信息
+		// Usage: /partydata <槽位>
+		// NoPokemonInSlot: 槽位 {0} 中没有可用的宝可梦数据
+		// Success: 槽位 {0} 的宝可梦数据已写入 client.log
 	}
 
 	PokeClear: {
-		// Description: Clears all active Pokémon NPCs in the world
+		// Description: 清除世界中所有活跃的宝可梦 NPC
 		// Usage: /pokeclear
-		// Success: Cleared {0} Pokémon NPC(s)
-		// SuccessByPlayer: "{0} cleared {1} Pokémon NPC(s)"
+		// Success: 已清除 {0} 个宝可梦 NPC
+		// SuccessByPlayer: “{0} 清除了 {1} 个宝可梦 NPC”
 	}
 
 	PC: {
-		// Description: Opens the Pokémon Storage System (PC) from anywhere
+		// Description: 随时随地打开宝可梦存储系统（PC）
 		// Usage: /pc
 	}
 
 	Dex: {
-		// Description: Opens the Pokédex
+		// Description: 打开宝可梦图鉴
 		// Usage: /dex
 	}
 
 	Upgrade: {
-		// Description: Transfer Pokémon from the pre-release version
+		// Description: 从预发布版本转移宝可梦
 		// Usage: /upgrade
-		// TypeResolveError: One or more required legacy types were not found! Please report this issue to the Terramon developers
-		// NopUpgrade: No Pokémon were found in the inventory to upgrade
-		// Success: Successfully upgraded and transferred {0} Pokémon to {1}'s PC
+		// TypeResolveError: 未找到一个或多个必需的旧版类型！请将此问题报告给 Terramon 开发者
+		// NopUpgrade: 未在库存中找到可升级的宝可梦
+		// Success: 成功升级并将 {0} 只宝可梦转移到 {1} 的 PC
 	}
 }
 
 Configs: {
 	ClientConfig: {
-		// DisplayName: Client Settings
+		// DisplayName: 客户端设置
 
 		Headers: {
-			// Miscellaneous: Preferences
-			// GUI: GUI
-			// Accessibility: Accessibility
+			// Miscellaneous: 偏好设置
+			// GUI: 图形用户界面
+			// Accessibility: 无障碍功能
 		}
 
 		FastEvolution: {
-			// Label: Fast Evolution
-			// Tooltip: Whether to automatically evolve Pokémon when using Rare Candy (otherwise speak with the {$NPCs.PokemartClerk.DisplayName})
+			// Label: 快速进化
+			// Tooltip: 是否在使用神奇糖果时自动进化宝可梦（否则与 {$NPCs.PokemartClerk.DisplayName} 对话）
 		}
 
 		ShowPokedexRegistrationMessages: {
-			// Label: Pokédex Registration Messages
-			// Tooltip: Whether to display a message in chat when a new Pokémon has been registered in the Pokédex
+			// Label: 宝可梦图鉴注册消息
+			// Tooltip: 当新宝可梦注册到图鉴时，是否在聊天中显示消息
 		}
 
 		ReducedAudio: {
-			// Label: (Party Sidebar) Reduced Audio
-			// Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
+			// Label: （队伍侧边栏）减少音效
+			// Tooltip: 在侧边栏重新排列宝可梦时禁用音乐提示音
 		}
 
 		ReducedMotion: {
-			// Label: (Inventory Slots) Reduced Motion
-			// Tooltip: Disables the sliding animation when toggling inventory party slots
+			// Label: （库存槽位）减少动画
+			// Tooltip: 切换库存队伍槽位时禁用滑动动画
 		}
 
 		ModIconType: {
-			// Label: Mod Icon Type
-			// Tooltip: Changes the mod icon
+			// Label: 模组图标类型
+			// Tooltip: 更改模组图标
 		}
 
 		AnimatedModIcon: {
-			// Label: Animated Mod Icon
-			// Tooltip: Animates the mod's icon in the Mods menu when the mod is enabled
+			// Label: 动态模组图标
+			// Tooltip: 当模组启用时，在模组菜单中显示动态图标
 		}
 
 		RainbowBuffText: {
-			// Label: Rainbow Buff Text
-			// Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+			// Label: 彩虹效果增益文本
+			// Tooltip: 宝可梦伙伴的增益名称将循环显示彩虹颜色
 		}
 	}
 
