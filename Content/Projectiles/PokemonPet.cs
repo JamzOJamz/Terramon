@@ -118,12 +118,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X + 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
-
-        if (Main.netMode == NetmodeID.MultiplayerClient) return;
+        
         var owningPlayer = Main.player[Projectile.owner];
         Data = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         _cachedID = ID;
-        Projectile.netUpdate = true;
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -191,6 +189,24 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         var grayValue = (int)(0.299f * color.R + 0.587f * color.G + 0.114f * color.B);
         return new Color(grayValue, grayValue, grayValue, color.A); // Maintain original alpha
     }
+    
+    public override void SendExtraAI(BinaryWriter writer)
+    {
+        Data.NetWrite(writer, PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant);
+        writer.Write(CustomSpriteDirection.HasValue);
+        if (CustomSpriteDirection.HasValue) writer.Write(CustomSpriteDirection.Value);
+    }
+
+    public override void ReceiveExtraAI(BinaryReader reader)
+    {
+        Data ??= new PokemonData
+        {
+            ID = ID,
+            Level = 5
+        };
+        Data.NetRead(reader);
+        CustomSpriteDirection = reader.ReadBoolean() ? reader.ReadInt32() : null;
+    }
 
     public override void AI()
     {
@@ -211,7 +227,11 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         if (!owningPlayer.dead && owningPlayer.HasBuff(ModContent.BuffType<PokemonCompanion>()) &&
             activePokemon == Data && activePokemon.ID == _cachedID) Projectile.timeLeft = 2;
 
-        if (Projectile.velocity.X != 0) CustomSpriteDirection = null;
+        if (CustomSpriteDirection.HasValue && Projectile.velocity.X != 0)
+        {
+            CustomSpriteDirection = null;
+            Projectile.netUpdate = true;
+        }
 
         if (isShiny) ShinyEffect();
     }
