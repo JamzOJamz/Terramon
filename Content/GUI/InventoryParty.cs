@@ -48,7 +48,7 @@ public class InventoryParty : SmartUIState
     }
 
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
+                                    !Main.LocalPlayer.dead && !Main.inFancyUI && !Main.LocalPlayer.tileEntityAnchor.InUse &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public static bool InPCMode { get; private set; }
