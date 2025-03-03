@@ -352,7 +352,7 @@ Items: {
 			A somewhat rare Poké Ball
 			It was made as a commemorative item used to celebrate an event of some sort
 			''' */
-		// CatchRate: 1x catch rate
+		// CatchRate: 1x 捕捉率
 	}
 
 	PremierBallMiniItem: {
