@@ -1,148 +1,148 @@
 Buffs: {
 	PokemonCompanion: {
-		// DisplayName: Pokémon companion
-		// Description: "{0} 正在跟着你！"
+		DisplayName: Pokémon companion
+		Description: "{0} 正在跟着你！"
 	}
 }
 
 Commands: {
-	// RequiresDebugMode: 此指令需要在模组配置中启用允许作弊
+	RequiresDebugMode: 此指令需要在模组配置中启用允许作弊
 
 	DexEdit: {
-		// Description: 强制设置宝可梦图鉴条目的状态
-		// Usage: /dexedit <id> <状态>
-		// ParseErrorID: 无法将 ID 参数解析为整数
-		// ParseErrorStatus: 无法将状态参数解析为整数
-		// StatusOutOfRange: 状态参数超出范围（0-2）
-		// IDOutOfRange: 宝可梦图鉴条目 {0} 超出范围（1-{1}）
-		// Success: 成功将宝可梦图鉴条目 {0} 的状态设置为 {1}
+		Description: 强制设置宝可梦图鉴条目的状态
+		Usage: /dexedit <id> <状态>
+		ParseErrorID: 无法将 ID 参数解析为整数
+		ParseErrorStatus: 无法将状态参数解析为整数
+		StatusOutOfRange: 状态参数超出范围（0-2）
+		IDOutOfRange: 宝可梦图鉴条目 {0} 超出范围（1-{1}）
+		Success: 成功将宝可梦图鉴条目 {0} 的状态设置为 {1}
 	}
 
 	Nickname: {
-		// Description: 设置宝可梦的名称
-		// Usage: /nickname <set|clear> <名称>
+		Description: 设置宝可梦的名称
+		Usage: /nickname <set|clear> <名称>
 
 		Set: {
-		// NoActivePokemon: 当前没有活跃的宝可梦
-		// NoNicknameProvided: 未提供名称
-		// NicknameTooLong: 名称长度必须为 12 个字符或更少（包括空格）
-		// SameNickname: 名称已设置
-		// SuccessNew: 将 {0} 的名称设置为 {1}
-		// SuccessUpdate: 将 {0} 的名称从 {1} 更改为 {2}
+		NoActivePokemon: 当前没有活跃的宝可梦
+		NoNicknameProvided: 未提供名称
+		NicknameTooLong: 名称长度必须为 12 个字符或更少（包括空格）
+		SameNickname: 名称已设置
+		SuccessNew: 将 {0} 的名称设置为 {1}
+		SuccessUpdate: 将 {0} 的名称从 {1} 更改为 {2}
 		}
 
 		Clear: {
-			// NoNicknameSet: 当前宝可梦未设置名称
-			// Success: 已清除 {0} 的名称
+			NoNicknameSet: 当前宝可梦未设置名称
+			Success: 已清除 {0} 的名称
 		}
 
-		// InvalidSubcommand: 无效的指令。请使用 set 或 clear"
+		InvalidSubcommand: 无效的指令。请使用 set 或 clear"
 	}
 
 	Party: {
-		// ParseErrorSlot: 无法将槽位参数解析为整数
-		// SlotOutOfRange: 槽位参数超出范围（1-6）
+		ParseErrorSlot: 无法将槽位参数解析为整数
+		SlotOutOfRange: 槽位参数超出范围（1-6）
 	}
 
 	PartyClear: {
-		// Description: 从队伍中移除指定的宝可梦
-		// Usage: /partyclear <槽位|all>
-		// NoPokemonInSlot: 槽位 {0} 中没有宝可梦
-		// Success: 已从队伍中移除 {0}
-		// SuccessAll: 已从队伍中移除所有宝可梦
+		Description: 从队伍中移除指定的宝可梦
+		Usage: /partyclear <槽位|all>
+		NoPokemonInSlot: 槽位 {0} 中没有宝可梦
+		Success: 已从队伍中移除 {0}
+		SuccessAll: 已从队伍中移除所有宝可梦
 	}
 
 	PartyData: {
-		// Description: 记录队伍中指定槽位宝可梦的信息
-		// Usage: /partydata <槽位>
-		// NoPokemonInSlot: 槽位 {0} 中没有可用的宝可梦数据
-		// Success: 槽位 {0} 的宝可梦数据已写入 client.log
+		Description: 记录队伍中指定槽位宝可梦的信息
+		Usage: /partydata <槽位>
+		NoPokemonInSlot: 槽位 {0} 中没有可用的宝可梦数据
+		Success: 槽位 {0} 的宝可梦数据已写入 client.log
 	}
 
 	PokeClear: {
-		// Description: 清除世界中所有活跃的宝可梦 NPC
-		// Usage: /pokeclear
-		// Success: 已清除 {0} 个宝可梦 NPC
-		// SuccessByPlayer: “{0} 清除了 {1} 个宝可梦 NPC”
+		Description: 清除世界中所有活跃的宝可梦 NPC
+		Usage: /pokeclear
+		Success: 已清除 {0} 个宝可梦 NPC
+		SuccessByPlayer: “{0} 清除了 {1} 个宝可梦 NPC”
 	}
 
 	PC: {
-		// Description: 随时随地打开宝可梦存储系统（PC）
-		// Usage: /pc
+		Description: 随时随地打开宝可梦存储系统（PC）
+		Usage: /pc
 	}
 
 	Dex: {
-		// Description: 打开宝可梦图鉴
-		// Usage: /dex
+		Description: 打开宝可梦图鉴
+		Usage: /dex
 	}
 
 	Upgrade: {
-		// Description: 从预发布版本转移宝可梦
-		// Usage: /upgrade
-		// TypeResolveError: 未找到一个或多个必需的旧版类型！请将此问题报告给 Terramon 开发者
-		// NopUpgrade: 未在库存中找到可升级的宝可梦
-		// Success: 成功升级并将 {0} 只宝可梦转移到 {1} 的 PC
+		Description: 从预发布版本转移宝可梦
+		Usage: /upgrade
+		TypeResolveError: 未找到一个或多个必需的旧版类型！请将此问题报告给 Terramon 开发者
+		NopUpgrade: 未在库存中找到可升级的宝可梦
+		Success: 成功升级并将 {0} 只宝可梦转移到 {1} 的 PC
 	}
 }
 
 Configs: {
 	ClientConfig: {
-		// DisplayName: 客户端设置
+		DisplayName: 客户端设置
 
 		Headers: {
-			// Miscellaneous: 偏好设置
-			// GUI: 图形用户界面
-			// Accessibility: 无障碍功能
+			Miscellaneous: 偏好设置
+			GUI: 图形用户界面
+			Accessibility: 无障碍功能
 		}
 
 		FastEvolution: {
-			// Label: 快速进化
-			// Tooltip: 是否在使用神奇糖果时自动进化宝可梦（否则与 {$NPCs.PokemartClerk.DisplayName} 对话）
+			Label: 快速进化
+			Tooltip: 是否在使用神奇糖果时自动进化宝可梦（否则与 {$NPCs.PokemartClerk.DisplayName} 对话）
 		}
 
 		ShowPokedexRegistrationMessages: {
-			// Label: 宝可梦图鉴注册消息
-			// Tooltip: 当新宝可梦注册到图鉴时，是否在聊天中显示消息
+			Label: 宝可梦图鉴注册消息
+			Tooltip: 当新宝可梦注册到图鉴时，是否在聊天中显示消息
 		}
 
 		ReducedAudio: {
-			// Label: （队伍侧边栏）减少音效
-			// Tooltip: 在侧边栏重新排列宝可梦时禁用音乐提示音
+			Label: （队伍侧边栏）减少音效
+			Tooltip: 在侧边栏重新排列宝可梦时禁用音乐提示音
 		}
 
 		ReducedMotion: {
-			// Label: （库存槽位）减少动画
-			// Tooltip: 切换库存队伍槽位时禁用滑动动画
+			Label: （库存槽位）减少动画
+			Tooltip: 切换库存队伍槽位时禁用滑动动画
 		}
 
 		ModIconType: {
-			// Label: 模组图标类型
-			// Tooltip: 更改模组图标
+			Label: 模组图标类型
+			Tooltip: 更改模组图标
 		}
 
 		AnimatedModIcon: {
-			// Label: 动态模组图标
-			// Tooltip: 当模组启用时，在模组菜单中显示动态图标
+			Label: 动态模组图标
+			Tooltip: 当模组启用时，在模组菜单中显示动态图标
 		}
 
 		RainbowBuffText: {
-			// Label: 彩虹效果增益文本
-			// Tooltip: 宝可梦伙伴的增益名称将循环显示彩虹颜色
+			Label: 彩虹效果增益文本
+			Tooltip: 宝可梦伙伴的增益名称将循环显示彩虹颜色
 		}
 	}
 
 	GameplayConfig: {
-		// DisplayName: 游戏玩法设置
+		DisplayName: 游戏玩法设置
 
 		Headers: {
-			// Spawning: 概率
-			// Visuals: 视觉效果
-			// Miscellaneous: 其他
-			// Advanced: 高级
+			Spawning: 概率
+			Visuals: 视觉效果
+			Miscellaneous: 其他
+			Advanced: 高级
 		}
 
 		PokemonSpawnRateMultiplier: {
-			// Label: 宝可梦生成概率
+			Label: 宝可梦生成概率
 			/* Tooltip:
 			'''
 			野外宝可梦生成概率
@@ -151,32 +151,32 @@ Configs: {
 		}
 
 		SpawningStage: {
-			// Label: 生成等级
-			// Tooltip: 野外生成的宝可梦等级（更高等级包含所有更低等级）
+			Label: 生成等级
+			Tooltip: 野外生成的宝可梦等级（更高等级包含所有更低等级）
 		}
 
 		EncourageDespawning: {
-			// Label: 刷新
-			// Tooltip: 是否在离开区域时野生宝可梦刷新，以便为新生成的宝可梦腾出空间
+			Label: 刷新
+			Tooltip: 是否在离开区域时野生宝可梦刷新，以便为新生成的宝可梦腾出空间
 		}
 
 		ShinySpawnRate: {
-			// Label: 闪光宝可梦生成概率
-			// Tooltip: 野外闪光宝可梦生成的稀有度（1/x）
+			Label: 闪光宝可梦生成概率
+			Tooltip: 野外闪光宝可梦生成的稀有度（1/x）
 		}
 
 		FastAnimations: {
-			// Label: 快速动画
-			// Tooltip: 是否跳过某些事件的动画（例如捕捉宝可梦）
+			Label: 快速动画
+			Tooltip: 是否跳过某些事件的动画（例如捕捉宝可梦）
 		}
 
 		ShinyLockedStarters: {
-			// Label: 闪光锁定的初始宝可梦
-			// Tooltip: 防止初始宝可梦为闪光形态
+			Label: 闪光锁定的初始宝可梦
+			Tooltip: 防止初始宝可梦为闪光形态
 		}
 
 		DebugMode: {
-			// Label: 允许作弊指令
+			Label: 允许作弊指令
 			/* Tooltip:
 			'''
 			启用聊天中的作弊指令（例如 /pokeclear）
@@ -186,20 +186,20 @@ Configs: {
 	}
 
 	SpawningStage: {
-		// Tooltip: ""
-		// Basic.Label: 未进化宝可梦/基础宝可梦
-		// Stage1.Label: 第一阶段进化/阶段 1 宝可梦
-		// Stage2.Label: 第二阶段进化/阶段 2 宝可梦
-		// Legendary.Label: 传说/幻之宝可梦
+		Tooltip: ""
+		Basic.Label: 未进化宝可梦/基础宝可梦
+		Stage1.Label: 第一阶段进化/阶段 1 宝可梦
+		Stage2.Label: 第二阶段进化/阶段 2 宝可梦
+		Legendary.Label: 传说/幻之宝可梦
 	}
 }
 
 GUI: {
 	Inventory: {
-		// ShowParty: 显示队伍
-		// HideParty: 隐藏队伍
-		// OpenPokedex: 打开宝可梦图鉴
-		// SlotName: “{0} (Lv. {1})”
+		ShowParty: 显示队伍
+		HideParty: 隐藏队伍
+		OpenPokedex: 打开宝可梦图鉴
+		SlotName: “{0} (Lv. {1})”
 		/* SlotTooltip:
 		'''
 		HP: {0}/{1}
@@ -210,28 +210,28 @@ GUI: {
 		HP: {0}/{1}
 		EXP: MAX
 		''' */
-		// SlotTooltipPCMode: “[c/FFFFFF:在队伍中]”
-		// SlotTooltipPCModeActive: “[c/FFFFFF:在队伍中（活跃）]”
-		// CannotRemoveLastPokemon: 你的队伍中必须至少有一只宝可梦！
+		SlotTooltipPCMode: “[c/FFFFFF:在队伍中]”
+		SlotTooltipPCModeActive: “[c/FFFFFF:在队伍中（活跃）]”
+		CannotRemoveLastPokemon: 你的队伍中必须至少有一只宝可梦！
 	}
 
 	Starter: {
-		// Title: 欢迎来到宝可梦的世界！感谢你安装 Terramon 模组！
-		// Subtitle: 现在，请选择你的初始宝可梦，开始你的冒险吧！
-		// Hint: （按下返回键关闭）
-		// ComingSoon: 即将推出...
-		// ChosenMessage: 你选择了 {0} [c/{1}:{2}] 作为你的初始宝可梦！
+		Title: 欢迎来到宝可梦的世界！感谢你安装 Terramon 模组！
+		Subtitle: 现在，请选择你的初始宝可梦，开始你的冒险吧！
+		Hint: （按下返回键关闭）
+		ComingSoon: 即将推出...
+		ChosenMessage: 你选择了 {0} [c/{1}:{2}] 作为你的初始宝可梦！
 	}
 
 	NPCShop: {
-		// PremierBonus: 你获得了 1 个纪念球作为额外奖励！
-		// PremierBonusPlural: 你获得了 {0} 个纪念球作为额外奖励！
+		PremierBonus: 你获得了 1 个纪念球作为额外奖励！
+		PremierBonusPlural: 你获得了 {0} 个纪念球作为额外奖励！
 	}
 
 	Party: {
-		// LevelDisplay: Lv. {0}
-		// SlotHover: 左键点击以派出
-		// SlotHoverActive: 左键点击以召回
+		LevelDisplay: Lv. {0}
+		SlotHover: 左键点击以派出
+		SlotHoverActive: 左键点击以召回
 		/* SlotHoverExtra:
 		'''
 
@@ -240,10 +240,10 @@ GUI: {
 	}
 
 	Pokedex: {
-		// NumberPrefix: No.
-		// ShowingRange: 显示 {$GUI.Pokedex.NumberPrefix} {0}-{1}（{2}）
-		// Obtained: 已获得
-		// Seen: 已遇见
+		NumberPrefix: No.
+		ShowingRange: 显示 {$GUI.Pokedex.NumberPrefix} {0}-{1}（{2}）
+		Obtained: 已获得
+		Seen: 已遇见
 		/* ObtainedBy:
 		'''
 
@@ -254,14 +254,14 @@ GUI: {
 
 		[c/FFE745:由 {0} 遇见]
 		''' */
-		// Completion: “{0}% 完成度”
-		// PlayerDexFilter: 显示 {0} 的宝可梦图鉴
-		// PlayerShinyDexFilter: 显示 {0} 的闪光图鉴
-		// WorldDexFilter: 显示世界图鉴
-		// ShinyWorldDexFilter: 显示闪光世界图鉴
-		// Height: 身高
-		// Weight: 体重
-		// Entry: 图鉴介绍
+		Completion: “{0}% 完成度”
+		PlayerDexFilter: 显示 {0} 的宝可梦图鉴
+		PlayerShinyDexFilter: 显示 {0} 的闪光图鉴
+		WorldDexFilter: 显示世界图鉴
+		ShinyWorldDexFilter: 显示闪光世界图鉴
+		Height: 身高
+		Weight: 体重
+		Entry: 图鉴介绍
 	}
 }
 
@@ -271,127 +271,127 @@ CommonTooltips: {
 	一种似乎与树果相关的特殊果实
 	可用于制作各种精灵球
 	''' /
-	// EvolutionaryItem: 进化道具
-	// KeyItem: 重要道具
-	// Vitamin: 营养剂
-	// RightClickPlace: 可通过右键点击放置
-	// PCItems: 访问宝可梦存储系统
+	EvolutionaryItem: 进化道具
+	KeyItem: 重要道具
+	Vitamin: 营养剂
+	RightClickPlace: 可通过右键点击放置
+	PCItems: 访问宝可梦存储系统
 	/ PokeBallMinis:
 	'''
 	“用于装饰用途”
 	可放置在物品展示框中
 	''' */
-	// Unobtainable: 无法获得
+	Unobtainable: 无法获得
 }
 
 Items: {
 	PokeBallItem: {
-		// DisplayName: 精灵球
+		DisplayName: 精灵球
 		/* Tooltip:
 		'''
 		一种用于捕捉野生宝可梦的设备
 		可以像球一样投掷向目标
 		''' */
-		// CatchRate: 1x 捕捉率
+		CatchRate: 1x 捕捉率
 	}
 
 	PokeBallMiniItem: {
-		// DisplayName: "{$Items.PokeBallItem.DisplayName} (迷你)"
-		// Tooltip: ""
+		DisplayName: "{$Items.PokeBallItem.DisplayName} (迷你)"
+		Tooltip: ""
 	}
 
 	GreatBallItem: {
-		// DisplayName: 超级球
+		DisplayName: 超级球
 		/* Tooltip:
 		'''
 		一种高性能的精灵球
 		比普通精灵球提供更高的宝可梦捕捉率
 		''' */
-		// CatchRate: 1.5x 捕捉率
+		CatchRate: 1.5x 捕捉率
 	}
 
 	GreatBallMiniItem: {
-		// DisplayName: "{$Items.GreatBallItem.DisplayName} (迷你)"
-		// Tooltip: ""
+		DisplayName: "{$Items.GreatBallItem.DisplayName} (迷你)"
+		Tooltip: ""
 	}
 
 	UltraBallItem: {
-		// DisplayName: 高级球
+		DisplayName: 高级球
 		/* Tooltip:
 		'''
 		一种超高性能的精灵球
 		比超级球提供更高的宝可梦捕捉率
 		''' */
-		// CatchRate: 2x 捕捉率
+		CatchRate: 2x 捕捉率
 	}
 
 	UltraBallMiniItem: {
-		// DisplayName: "{$Items.UltraBallItem.DisplayName} (迷你)"
-		// Tooltip: ""
+		DisplayName: "{$Items.UltraBallItem.DisplayName} (迷你)"
+		Tooltip: ""
 	}
 
 	MasterBallItem: {
-		// DisplayName: 大师球
+		DisplayName: 大师球
 		/* Tooltip:
 		'''
 		性能达到顶级的精灵球
 		必定能捕捉任何野生宝可梦
 		''' */
-		// CatchRate: 100% 捕捉率
+		CatchRate: 100% 捕捉率
 	}
 
 	MasterBallMiniItem: {
-		// DisplayName: "{$Items.MasterBallItem.DisplayName} (迷你)"
-		// Tooltip: ""
+		DisplayName: "{$Items.MasterBallItem.DisplayName} (迷你)"
+		Tooltip: ""
 	}
 
 	PremierBallItem: {
-		// DisplayName: Premier Ball
+		DisplayName: Premier Ball
 		/* Tooltip:
 			'''
 			A somewhat rare Poké Ball
 			It was made as a commemorative item used to celebrate an event of some sort
 			''' */
-		// CatchRate: 1x 捕捉率
+		CatchRate: 1x 捕捉率
 	}
 
 	PremierBallMiniItem: {
-		// DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
-		// Tooltip: ""
+		DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
+		Tooltip: ""
 	}
 
 	CherishBallItem: {
-		// DisplayName: Cherish Ball
+		DisplayName: Cherish Ball
 		/* Tooltip:
 			'''
 			A quite rare Poké Ball
 			It has been specially crafted to commemorate an occasion of some sort
 			''' */
-		// CatchRate: 1x catch rate
+		CatchRate: 1x catch rate
 	}
 
 	CherishBallMiniItem: {
-		// DisplayName: "{$Items.CherishBallItem.DisplayName} (Mini)"
-		// Tooltip: ""
+		DisplayName: "{$Items.CherishBallItem.DisplayName} (Mini)"
+		Tooltip: ""
 	}
 
 	AetherBallItem: {
-		// DisplayName: Aether Ball
+		DisplayName: Aether Ball
 		/* Tooltip:
 			'''
 			An ethereal Poké Ball infused with shimmering energy
 			It is said to have a calming effect on wild Pokémon
 			''' */
-		// CatchRate: 1x catch rate
+		CatchRate: 1x catch rate
 	}
 
 	AetherBallMiniItem: {
-		// DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
-		// Tooltip: ""
+		DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
+		Tooltip: ""
 	}
 
 	RareCandy: {
-		// DisplayName: Rare Candy
+		DisplayName: Rare Candy
 		/* Tooltip:
 			'''
 			A candy that is packed with energy
@@ -400,32 +400,32 @@ Items: {
 	}
 
 	TrainerCap: {
-		// DisplayName: Pokémon Trainer Cap
-		// Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: Pokémon Trainer Cap
+		Tooltip: "'Gotta catch 'em all!'"
 	}
 
 	TrainerTorso: {
-		// DisplayName: Pokémon Trainer Jacket
-		// Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: Pokémon Trainer Jacket
+		Tooltip: "'Gotta catch 'em all!'"
 	}
 
 	TrainerLegs: {
-		// DisplayName: Pokémon Trainer Jeans
-		// Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: Pokémon Trainer Jeans
+		Tooltip: "'Gotta catch 'em all!'"
 	}
 
 	MusicItemCenter: {
-		// DisplayName: Music Box (Pokémon Center)
-		// Tooltip: ""
+		DisplayName: Music Box (Pokémon Center)
+		Tooltip: ""
 	}
 
 	MusicItemWildBattle: {
-		// DisplayName: Music Box (Battle! Wild Pokémon)
-		// Tooltip: ""
+		DisplayName: Music Box (Battle! Wild Pokémon)
+		Tooltip: ""
 	}
 
 	ShinyCharm: {
-		// DisplayName: Shiny Charm
+		DisplayName: Shiny Charm
 		/* Tooltip:
 			'''
 			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild
@@ -434,7 +434,7 @@ Items: {
 	}
 
 	FireStone: {
-		// DisplayName: Fire Stone
+		DisplayName: Fire Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -443,7 +443,7 @@ Items: {
 	}
 
 	WaterStone: {
-		// DisplayName: Water Stone
+		DisplayName: Water Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -452,7 +452,7 @@ Items: {
 	}
 
 	ThunderStone: {
-		// DisplayName: Thunder Stone
+		DisplayName: Thunder Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -461,7 +461,7 @@ Items: {
 	}
 
 	LeafStone: {
-		// DisplayName: Leaf Stone
+		DisplayName: Leaf Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -470,7 +470,7 @@ Items: {
 	}
 
 	MoonStone: {
-		// DisplayName: Moon Stone
+		DisplayName: Moon Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -479,7 +479,7 @@ Items: {
 	}
 
 	DuskStone: {
-		// DisplayName: Dusk Stone
+		DisplayName: Dusk Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -488,7 +488,7 @@ Items: {
 	}
 
 	IceStone: {
-		// DisplayName: Ice Stone
+		DisplayName: Ice Stone
 		/* Tooltip:
 			'''
 			A stone used for making certain kinds of Pokémon evolve
@@ -497,7 +497,7 @@ Items: {
 	}
 
 	LinkingCord: {
-		// DisplayName: Linking Cord
+		DisplayName: Linking Cord
 		/* Tooltip:
 			'''
 			A cord that makes you feel a strange sense of connection
@@ -505,16 +505,16 @@ Items: {
 			''' */
 	}
 
-	// BlackApricorn.DisplayName: Black Apricorn
-	// BlueApricorn.DisplayName: Blue Apricorn
-	// GreenApricorn.DisplayName: Green Apricorn
-	// PinkApricorn.DisplayName: Pink Apricorn
-	// RedApricorn.DisplayName: Red Apricorn
-	// WhiteApricorn.DisplayName: White Apricorn
-	// YellowApricorn.DisplayName: Yellow Apricorn
+	BlackApricorn.DisplayName: Black Apricorn
+	BlueApricorn.DisplayName: Blue Apricorn
+	GreenApricorn.DisplayName: Green Apricorn
+	PinkApricorn.DisplayName: Pink Apricorn
+	RedApricorn.DisplayName: Red Apricorn
+	WhiteApricorn.DisplayName: White Apricorn
+	YellowApricorn.DisplayName: Yellow Apricorn
 
 	ExpCandyXS: {
-		// DisplayName: Exp. Candy XS
+		DisplayName: Exp. Candy XS
 		/* Tooltip:
 			'''
 			A candy that is packed with energy
@@ -523,7 +523,7 @@ Items: {
 	}
 
 	ExpCandyS: {
-		// DisplayName: Exp. Candy S
+		DisplayName: Exp. Candy S
 		/* Tooltip:
 			'''
 			A candy that is packed with energy
@@ -532,7 +532,7 @@ Items: {
 	}
 
 	ExpCandyM: {
-		// DisplayName: Exp. Candy M
+		DisplayName: Exp. Candy M
 		/* Tooltip:
 			'''
 			A candy that is packed with energy
@@ -541,7 +541,7 @@ Items: {
 	}
 
 	ExpCandyL: {
-		// DisplayName: Exp. Candy L
+		DisplayName: Exp. Candy L
 		/* Tooltip:
 			'''
 			A candy that is packed with energy
@@ -550,7 +550,7 @@ Items: {
 	}
 
 	ExpCandyXL: {
-		// DisplayName: Exp. Candy XL
+		DisplayName: Exp. Candy XL
 		/* Tooltip:
 			'''
 			A candy that is packed with energy
@@ -559,7 +559,7 @@ Items: {
 	}
 
 	ShimmerStateDrive: {
-		// DisplayName: Shimmer-State Drive
+		DisplayName: Shimmer-State Drive
 		/* Tooltip:
 			'''
 			Permanently unlocks a shared PC box in this world
@@ -569,124 +569,124 @@ Items: {
 	}
 
 	PCItemRed: {
-		// DisplayName: PC (Red)
-		// Tooltip: ""
+		DisplayName: PC (Red)
+		Tooltip: ""
 	}
 
 	PCItemWhite: {
-		// DisplayName: PC (White)
-		// Tooltip: ""
+		DisplayName: PC (White)
+		Tooltip: ""
 	}
 
 	ErikaPaintingItem: {
-		// DisplayName: Erika's Invitation
-		// Tooltip: "'L. Walter'"
+		DisplayName: Erika's Invitation
+		Tooltip: "'L. Walter'"
 	}
 }
 
 Keybinds: {
-	// ToggleParty.DisplayName: Party
+	ToggleParty.DisplayName: Party
 	OpenPokedex.DisplayName: 寶可夢圖鑑
-	// OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
+	OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
 }
 
 Tiles: {
-	// MusicBoxCenter.MapEntry: Music Box
-	// MusicBoxWildBattle.MapEntry: Music Box
-	// PCWhite.MapEntry: PC
-	// PCRed.MapEntry: PC
+	MusicBoxCenter.MapEntry: Music Box
+	MusicBoxWildBattle.MapEntry: Music Box
+	PCWhite.MapEntry: PC
+	PCRed.MapEntry: PC
 }
 
 Types: {
-	// Normal: Normal
-	// Fire: Fire
-	// Fighting: Fighting
-	// Water: Water
-	// Flying: Flying
-	// Grass: Grass
-	// Poison: Poison
-	// Electric: Electric
-	// Ground: Ground
-	// Psychic: Psychic
-	// Rock: Rock
-	// Ice: Ice
-	// Bug: Bug
-	// Dragon: Dragon
-	// Ghost: Ghost
-	// Dark: Dark
-	// Steel: Steel
-	// Fairy: Fairy
+	Normal: Normal
+	Fire: Fire
+	Fighting: Fighting
+	Water: Water
+	Flying: Flying
+	Grass: Grass
+	Poison: Poison
+	Electric: Electric
+	Ground: Ground
+	Psychic: Psychic
+	Rock: Rock
+	Ice: Ice
+	Bug: Bug
+	Dragon: Dragon
+	Ghost: Ghost
+	Dark: Dark
+	Steel: Steel
+	Fairy: Fairy
 }
 
 NPCs: {
 	PokemartClerk: {
-		// DisplayName: Poké Mart Clerk
-		// BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
-		// EvolveButton: Evolve {0}
+		DisplayName: Poké Mart Clerk
+		BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
+		EvolveButton: Evolve {0}
 
 		TownNPCMood: {
-			// Content: I rather enjoy my living space.
-			// NoHome: I wish I had somewhere to live.
-			// FarFromHome: I miss being back at my home.
-			// LoveSpace: I love how much space there is for wild Pokémon to appear!
-			// DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
-			// HateCrowded: There are way too many people living here!
-			// LikeBiome: There are so many Pokémon to see in {BiomeName}!
-			// DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
-			// LikeNPC: I like {NPCName}. They've helped me out a ton.
-			// DislikeNPC: I find {NPCName} a bit too loud.
-			// HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
-			// LikeNPC_Princess: I like {NPCName}. Who doesn't?
-			// Princess_LovesNPC: I like {NPCName}.
+			Content: I rather enjoy my living space.
+			NoHome: I wish I had somewhere to live.
+			FarFromHome: I miss being back at my home.
+			LoveSpace: I love how much space there is for wild Pokémon to appear!
+			DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
+			HateCrowded: There are way too many people living here!
+			LikeBiome: There are so many Pokémon to see in {BiomeName}!
+			DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
+			LikeNPC: I like {NPCName}. They've helped me out a ton.
+			DislikeNPC: I find {NPCName} a bit too loud.
+			HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
+			LikeNPC_Princess: I like {NPCName}. Who doesn't?
+			Princess_LovesNPC: I like {NPCName}.
 		}
 
 		Dialogue: {
-			// Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
-			// Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
-			// CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
-			// Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
-			// Regions: There are many different regions in the world. One day I hope to visit all of them!
-			// Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and {0}!
-			// EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
-			// SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
-			// Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
-			// NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
-			// BadName: Now, I know what you're thinking. "That's such a creative name!"
-			// Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
-			// ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
-			// PokemonHello: Is that your {0}? Hi, {1}!
-			// PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
-			// PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
-			// PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
-			// PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
-			// PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
-			// PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
-			// MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
-			// MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
-			// PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
-			// ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
-			// EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
+			Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
+			Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
+			CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
+			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
+			Regions: There are many different regions in the world. One day I hope to visit all of them!
+			Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and {0}!
+			EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
+			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
+			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
+			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
+			BadName: Now, I know what you're thinking. "That's such a creative name!"
+			Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
+			ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
+			PokemonHello: Is that your {0}? Hi, {1}!
+			PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
+			PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
+			PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
+			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
+			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
+			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
+			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
+			MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
+			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
+			ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
+			EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
 		}
 
-		// Census.SpawnCondition: Conditions unknown
+		Census.SpawnCondition: Conditions unknown
 	}
 }
 
-// WorldGen.ItemsPass: Scattering candies
+WorldGen.ItemsPass: Scattering candies
 
 Misc: {
-	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
-	// CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
-	// CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
-	// PokedexRegistered: "{0}'s data was added to the Pokédex."
-	// PCBoxDefaultName: Box {0}
-	// RequireStarter: Choose a starter Pokémon first!
-	// NoActivePokemon: You need to have an active Pokémon to do that!
-	// ItemNoEffect: It won't have any effect on {0}.
-	// PokemonEvolved: "{0} evolved into {1}!"
-	// PokemonEvolutionReady: "{0} seems ready to evolve!"
-	// RareCandyUse: "{0} grew to Lv. {1}!"
-	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
+	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
+	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
+	PokedexRegistered: "{0}'s data was added to the Pokédex."
+	PCBoxDefaultName: Box {0}
+	RequireStarter: Choose a starter Pokémon first!
+	NoActivePokemon: You need to have an active Pokémon to do that!
+	ItemNoEffect: It won't have any effect on {0}.
+	PokemonEvolved: "{0} evolved into {1}!"
+	PokemonEvolutionReady: "{0} seems ready to evolve!"
+	RareCandyUse: "{0} grew to Lv. {1}!"
+	ExpCandyUse: Your Pokémon gained {0} Exp. Points!
 	/* MOTD:
 		'''
 		You've installed {0} v{1}—enjoy! [i:{2}]
