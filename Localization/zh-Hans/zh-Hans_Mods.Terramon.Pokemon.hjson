@@ -205,205 +205,205 @@ Nidoking: {
 Clefairy: {
 	DisplayName: 皮皮
 	Species: 妖精宝可梦
-	DexEntry: 因外形和动作可爱而深受 大家的喜爱。但或许是由于 数量稀少，它们很难被发现。
+	DexEntry: 在满月的夜晚，不知从何处而来的皮皮们会聚集起来跳舞。沐浴到月光后会浮在空中。
 }
 
 Clefable: {
 	DisplayName: 皮可西
 	Species: 妖精宝可梦
-	DexEntry: 妖精的一种。 似乎非常珍惜自己的世界， 很少在人类面前现身。
+	DexEntry: 妖精的一种，不喜欢被人看见自己的身影。据说生活在幽静的深山里。
 }
 
 Vulpix: {
 	DisplayName: 六尾
 	Species: 狐狸宝可梦
-	DexEntry: 皮毛和尾巴都非常美丽。 随着自身的成长，尾巴的末端 会渐渐分开，数量也会增加。
+	DexEntry: 遭到比自己强大的对手袭击时，会假装受伤来迷惑对手，再趁机逃走。
 }
 
 Ninetales: {
 	DisplayName: 九尾
 	Species: 狐狸宝可梦
-	DexEntry: 传说这种宝可梦 是由９位圣者 合体之后而诞生的。
+	DexEntry: 据传它的９条尾巴里各蕴藏着不同的神秘力量。
 }
 
 Jigglypuff: {
 	DisplayName: 胖丁
 	Species: 气球宝可梦
-	DexEntry: 它会用圆溜溜的大眼睛盯着 对手唱起不可思议的歌曲，这 令人舒服的歌曲会让对手睡着。
+	DexEntry: 当它圆溜溜的大眼睛转动时就会唱起奇妙又令人惬意的歌曲，让人昏昏欲睡。
 }
 
 Wigglytuff: {
 	DisplayName: 胖可丁
 	Species: 气球宝可梦
-	DexEntry: 身体非常有弹性， 当它用力吸气时， 身体可以无限制地膨胀。
+	DexEntry: 拥有细腻的毛皮。注意别惹它生气，否则它会不断膨胀并向你压过来。
 }
 
 Zubat: {
 	DisplayName: 超音蝠
 	Species: 蝙蝠宝可梦
-	DexEntry: 由于需要调查前方的 状况，它会一边从嘴里 发出超音波一边飞行。
+	DexEntry: 因为没有眼珠，所以无法视物。会从口中发出超音波来探测周围的情况。
 }
 
 Golbat: {
 	DisplayName: 大嘴蝠
 	Species: 蝙蝠宝可梦
-	DexEntry: 难以察觉它会从哪里悄悄 接近。它会用尖锐的牙 咬住对手，同时使劲地吸血。
+	DexEntry: 因为它肚子太饿而去咬了钢属性宝可梦，所以偶尔会看见缺了牙的大嘴蝠。
 }
 
 Oddish: {
 	DisplayName: 走路草
 	Species: 杂草宝可梦
-	DexEntry: 要是以为它是普通的草而 将它拔起，就会听到它的叫声。 这让人感到莫名的恐怖。
+	DexEntry: 别名谜行草。据说到了晚上，会用２条根走上长达３００米的距离。
 }
 
 Gloom: {
 	DisplayName: 臭臭花
 	Species: 杂草宝可梦
-	DexEntry: 奇臭无比！即使如此， 一千个人里总会出现 一个人喜欢闻这种味道。
+	DexEntry: 从口中渐渐渗出的不是口水，而是像蜜一样的汁液，被它用来引诱猎物接近。
 }
 
 Vileplume: {
 	DisplayName: 霸王花
 	Species: 花宝可梦
-	DexEntry: 为了散布有毒的花粉 而摇动其巨大的花瓣， 同时发出震耳的响声。
+	DexEntry: 当花苞伴随“砰”的一声绽放时，就会开始散播能引起过敏的毒花粉。
 }
 
 Paras: {
 	DisplayName: 派拉斯
 	Species: 蘑菇宝可梦
-	DexEntry: 它会通过挖洞来从树根里 吸取营养，但大部分营养 都会被背上的蘑菇抢走。
+	DexEntry: 可能是湿气不够，也可能是营养不足，反正阿罗拉的派拉斯背上的蘑菇都长得不怎么样。
 }
 
 Parasect: {
 	DisplayName: 派拉斯特
 	Species: 蘑菇宝可梦
-	DexEntry: 由于虫子的精华不断被吸走， 在思考的似乎已经不是虫子， 而是背上的蘑菇了。
+	DexEntry: 底下的虫子基本上死了，真正的本体是背上的蘑菇。如果蘑菇掉下来，它就不会动了。
 }
 
 Venonat: {
 	DisplayName: 毛球
 	Species: 昆虫宝可梦
-	DexEntry: 在明亮的地方你便能发现它 具有雷达功能的大眼其实是 由许多个小眼睛聚集而成的。
+	DexEntry: 全身上下都会渗出毒物。天黑后就会去捕捉聚在灯光处的小型虫宝可梦。
 }
 
 Venomoth: {
 	DisplayName: 摩鲁蛾
 	Species: 毒蛾宝可梦
-	DexEntry: 如果不小心把它翅膀上的鳞粉 沾到了身上，那不但会很难去除， 更糟的是毒素也会从那里渗入。
+	DexEntry: 翅膀上附着着鳞粉，每次翩翩扇动翅膀，就会播撒剧毒的粉末。
 }
 
 Diglett: {
 	DisplayName: 地鼠
 	Species: 鼹鼠宝可梦
-	DexEntry: 喜欢阴暗的地方。 大部分时间都待在地下， 只有在洞窟里会经常探头出来。
+	DexEntry: 在地下１米左右的地方挖洞前进，靠啃食树根之类的东西生存。偶尔会到地面上露个脸。
 }
 
 Dugtrio: {
 	DisplayName: 三地鼠
 	Species: 鼹鼠宝可梦
-	DexEntry: 三合一的力量能让它们 挖地深至100公里，甚至 有报告说它们会引发地震。
+	DexEntry: ３个脑袋会轮流行动，是为了让周围的土地变得松软而容易挖掘。
 }
 
 Meowth: {
 	DisplayName: 喵喵
 	Species: 妖怪猫宝可梦
-	DexEntry: 貌似一到晚上就精力充沛。 喜欢又圆又亮的东西， 发现了就一定要捡走。
+	DexEntry: 白天一直在睡觉。一到夜晚眼睛就会放光，在自己的地盘徘徊。
 }
 
 Persian: {
 	DisplayName: 猫老大
 	Species: 暹罗猫宝可梦
-	DexEntry: 额头上的宝石闪闪发亮！ 走路的姿态也十分优美， 就像女王一样华丽高贵。
+	DexEntry: 有着漂亮的毛色，很多人想把它当宠物养，但它很爱乱抓，所以很难养熟。
 }
 
 Psyduck: {
 	DisplayName: 可达鸭
 	Species: 鸭宝可梦
-	DexEntry: 一直被头痛困扰。能使用 念力，但不知道那是否是 出于它自己的意识。
+	DexEntry: 一直受到头痛的困扰。在头痛欲裂时，就会开始使用神奇的力量。
 }
 
 Golduck: {
 	DisplayName: 哥达鸭
 	Species: 鸭宝可梦
-	DexEntry: 它靠修长的四肢 和发达的大脚蹼 在湖里优雅地游泳。
+	DexEntry: 当它靠着带有蹼的修长手脚全力游泳时，不知为何额头会闪闪发光。
 }
 
 Mankey: {
 	DisplayName: 猴怪
 	Species: 猪猴宝可梦
-	DexEntry: 身体轻盈，在树上生活。 常因鸡毛蒜皮的小事发火 而飞扑到周围的东西上。
+	DexEntry: 在树上群居的宝可梦。和伙伴分散的猴怪会因寂寞而动不动就生气。
 }
 
 Primeape: {
 	DisplayName: 火暴猴
 	Species: 猪猴宝可梦
-	DexEntry: 只有在谁都不在身边的 时候才不生气，但几乎 没有人目击过这种情况。
+	DexEntry: 仅是感觉到他方的视线都会暴怒起来，然后去追与它对上视线的家伙。
 }
 
 Growlithe: {
 	DisplayName: 卡蒂狗
 	Species: 小狗宝可梦
-	DexEntry: 性格很容易和人亲近， 但是会对进入自己 领地的敌人狂吠。
+	DexEntry: 能毫无畏惧地去对抗比自己更强更大的对手。性格勇敢非常可靠。
 }
 
 Arcanine: {
 	DisplayName: 风速狗
 	Species: 传说宝可梦
-	DexEntry: 东方古老传说中的宝可梦。 曾有不计其数的人为它 轻巧跑动的身姿而倾倒。
+	DexEntry: 根据过去的画卷记载，它在草原上奔驰的姿态俘虏了众多人心。
 }
 
 Poliwag: {
 	DisplayName: 蚊香蝌蚪
 	Species: 蝌蚪宝可梦
-	DexEntry: 漩涡的旋转方向好像会 因出生地区而不同。 比起走路，它更擅长游泳。
+	DexEntry: 腹部的漩涡是透过皮肤所能看到的部分内脏。进食后能看得很清楚。
 }
 
 Poliwhirl: {
 	DisplayName: 蚊香君
 	Species: 蝌蚪宝可梦
-	DexEntry: 据说它会在要被对手 攻击时用腹部的漩涡 让对方睡着，趁机逃跑。
+	DexEntry: ２条腿很发达，虽然可以在地上生活，但不知为何更喜欢生活在水里。
 }
 
 Poliwrath: {
 	DisplayName: 蚊香泳士
 	Species: 蝌蚪宝可梦
-	DexEntry: 他会用全身的肌肉 奋力游泳，连世界级的 选手都甘拜下风。
+	DexEntry: 擅长运用全身肌肉来强而有力地游泳，但不知为何生活在陆地上。
 }
 
 Abra: {
 	DisplayName: 凯西
 	Species: 念力宝可梦
-	DexEntry: 它每天要睡18个小时。 遇到危险时，即使在睡梦中 也可以用瞬间移动来逃脱。
+	DexEntry: 即使是在睡梦中也会使用各种超能力，所以分辨不出它是不是醒着。
 }
 
 Kadabra: {
 	DisplayName: 勇基拉
 	Species: 念力宝可梦
-	DexEntry: 当勇基拉在附近时， 似乎会发生像是 时钟倒转这样的怪事。
+	DexEntry: 会盯着银汤匙来增强并放出精神力量。用金汤匙好像就不行。
 }
 
 Alakazam: {
 	DisplayName: 胡地
 	Species: 念力宝可梦
-	DexEntry: 什么事情都能记住。只要是 曾经体验过的事情就绝对 不会忘记，头脑非常聪明。
+	DexEntry: 手中的汤匙是胡地用超能力生成的。每把汤匙都是这世上独一无二的。
 }
 
 Machop: {
 	DisplayName: 腕力
 	Species: 怪力宝可梦
-	DexEntry: 它体格虽小却力大无比。 不但如此，它还精通各种 格斗技能，实力十分惊人。
+	DexEntry: 全身都是肌肉，虽然只有小孩那么大，却可以扔飞１００个成年人。
 }
 
 Machoke: {
 	DisplayName: 豪力
 	Species: 怪力宝可梦
-	DexEntry: 只要解开系在腰上的 限制它力量的腰带， 豪力就会变得势不可挡。
+	DexEntry: 因为肉体非常强韧，所以戴着力量限制腰带来控制力量。
 }
 
 Machamp: {
 	DisplayName: 怪力
 	Species: 怪力宝可梦
-	DexEntry: 仅靠1只手臂的力量便可 推动一座山。4只手一起 可以打出极为强力的拳击。
+	DexEntry: 能够迅速活动４只手臂，从各个角度毫不停歇地使出拳击或手刀。
 }
 
 Bellsprout: {
