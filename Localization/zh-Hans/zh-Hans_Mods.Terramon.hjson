@@ -63,7 +63,7 @@ Commands: {
 		Description: 清除世界中所有活跃的宝可梦 NPC
 		Usage: /pokeclear
 		Success: 已清除 {0} 个宝可梦 NPC
-		SuccessByPlayer: “{0} 清除了 {1} 个宝可梦 NPC”
+		SuccessByPlayer: "{0} 清除了 {1} 个宝可梦 NPC"
 	}
 
 	PC: {
@@ -97,7 +97,7 @@ Configs: {
 
 		FastEvolution: {
 			Label: 快速进化
-			Tooltip: 是否在使用神奇糖果时自动进化宝可梦（否则与 {$NPCs.PokemartClerk.DisplayName} 对话）
+			Tooltip: 是否在使用神奇糖果时自动进化宝可梦（否则与{$NPCs.PokemartClerk.DisplayName}对话）
 		}
 
 		ShowPokedexRegistrationMessages: {
@@ -143,11 +143,11 @@ Configs: {
 
 		PokemonSpawnRateMultiplier: {
 			Label: 宝可梦生成概率
-			/* Tooltip:
-			'''
-			野外宝可梦生成概率
-			[c/F2A754:如果设置为 0，宝可梦将不会生成]
-			''' */
+			Tooltip:
+				'''
+				野外宝可梦生成概率
+				[c/F2A754:如果设置为 0，宝可梦将不会生成]
+				'''
 		}
 
 		SpawningStage: {
@@ -177,11 +177,11 @@ Configs: {
 
 		DebugMode: {
 			Label: 允许作弊指令
-			/* Tooltip:
-			'''
-			启用聊天中的作弊指令（例如 /pokeclear）
-			[c/F2A754:可能会干扰正常游戏体验]
-			''' */
+			Tooltip:
+				'''
+				启用聊天中的作弊指令（例如 /pokeclear）
+				[c/F2A754:可能会干扰正常游戏体验]
+				''' 
 		}
 	}
 
@@ -199,19 +199,19 @@ GUI: {
 		ShowParty: 显示队伍
 		HideParty: 隐藏队伍
 		OpenPokedex: 打开宝可梦图鉴
-		SlotName: “{0} (Lv. {1})”
-		/* SlotTooltip:
-		'''
-		HP: {0}/{1}
-		EXP: {2}/{3}
-		''' /
-		/ SlotTooltipMaxLevel:
-		'''
-		HP: {0}/{1}
-		EXP: MAX
-		''' */
-		SlotTooltipPCMode: “[c/FFFFFF:在队伍中]”
-		SlotTooltipPCModeActive: “[c/FFFFFF:在队伍中（活跃）]”
+		SlotName: "{0} (Lv. {1})"
+		SlotTooltip:
+			'''
+			HP: {0}/{1}
+			EXP: {2}/{3}
+			'''
+		SlotTooltipMaxLevel:
+			'''
+			HP: {0}/{1}
+			EXP: MAX
+			'''
+		SlotTooltipPCMode: "[c/FFFFFF:在队伍中]"
+		SlotTooltipPCModeActive: "[c/FFFFFF:在队伍中（活跃）]"
 		CannotRemoveLastPokemon: 你的队伍中必须至少有一只宝可梦！
 	}
 
@@ -232,11 +232,11 @@ GUI: {
 		LevelDisplay: Lv. {0}
 		SlotHover: 左键点击以派出
 		SlotHoverActive: 左键点击以召回
-		/* SlotHoverExtra:
-		'''
+		SlotHoverExtra:
+			'''
 
-		点击并拖动以重新排序
-		''' */
+			点击并拖动以重新排序
+			'''
 	}
 
 	Pokedex: {
@@ -244,17 +244,17 @@ GUI: {
 		ShowingRange: 显示 {$GUI.Pokedex.NumberPrefix} {0}-{1}（{2}）
 		Obtained: 已获得
 		Seen: 已遇见
-		/* ObtainedBy:
-		'''
+		ObtainedBy:
+			'''
 
-		[c/FFE745:由 {0} 获得]
-		''' /
-		/ SeenBy:
-		'''
+			[c/FFE745:由 {0} 获得]
+			'''
+		SeenBy:
+			'''
 
-		[c/FFE745:由 {0} 遇见]
-		''' */
-		Completion: “{0}% 完成度”
+			[c/FFE745:由 {0} 遇见]
+			'''
+		Completion: "{0}% 完成度"
 		PlayerDexFilter: 显示 {0} 的宝可梦图鉴
 		PlayerShinyDexFilter: 显示 {0} 的闪光图鉴
 		WorldDexFilter: 显示世界图鉴
@@ -266,32 +266,32 @@ GUI: {
 }
 
 CommonTooltips: {
-	/* Apricorn:
-	'''
-	一种似乎与树果相关的特殊果实
-	可用于制作各种精灵球
-	''' /
+	Apricorn:
+		'''
+		一种似乎与树果相关的特殊果实
+		可用于制作各种精灵球
+		'''
 	EvolutionaryItem: 进化道具
 	KeyItem: 重要道具
 	Vitamin: 营养剂
 	RightClickPlace: 可通过右键点击放置
 	PCItems: 访问宝可梦存储系统
-	/ PokeBallMinis:
-	'''
-	“用于装饰用途”
-	可放置在物品展示框中
-	''' */
+	PokeBallMinis:
+		'''
+		"用于装饰用途"
+		可放置在物品展示框中
+		'''
 	Unobtainable: 无法获得
 }
 
 Items: {
 	PokeBallItem: {
 		DisplayName: 精灵球
-		/* Tooltip:
-		'''
-		一种用于捕捉野生宝可梦的设备
-		可以像球一样投掷向目标
-		''' */
+		Tooltip:
+			'''
+			一种用于捕捉野生宝可梦的设备
+			可以像球一样投掷向目标
+			'''
 		CatchRate: 1x 捕捉率
 	}
 
@@ -302,11 +302,11 @@ Items: {
 
 	GreatBallItem: {
 		DisplayName: 超级球
-		/* Tooltip:
-		'''
-		一种高性能的精灵球
-		比普通精灵球提供更高的宝可梦捕捉率
-		''' */
+		Tooltip:
+			'''
+			一种高性能的精灵球
+			比普通精灵球提供更高的宝可梦捕捉率
+			'''
 		CatchRate: 1.5x 捕捉率
 	}
 
@@ -317,11 +317,11 @@ Items: {
 
 	UltraBallItem: {
 		DisplayName: 高级球
-		/* Tooltip:
-		'''
-		一种超高性能的精灵球
-		比超级球提供更高的宝可梦捕捉率
-		''' */
+		Tooltip:
+			'''
+			一种超高性能的精灵球
+			比超级球提供更高的宝可梦捕捉率
+			'''
 		CatchRate: 2x 捕捉率
 	}
 
@@ -332,11 +332,11 @@ Items: {
 
 	MasterBallItem: {
 		DisplayName: 大师球
-		/* Tooltip:
-		'''
-		性能达到顶级的精灵球
-		必定能捕捉任何野生宝可梦
-		''' */
+		Tooltip:
+			'''
+			性能达到顶级的精灵球
+			必定能捕捉任何野生宝可梦
+			'''
 		CatchRate: 100% 捕捉率
 	}
 
@@ -346,12 +346,12 @@ Items: {
 	}
 
 	PremierBallItem: {
-		DisplayName: Premier Ball
-		/* Tooltip:
+		DisplayName: 纪念球
+		Tooltip:
 			'''
-			A somewhat rare Poké Ball
-			It was made as a commemorative item used to celebrate an event of some sort
-			''' */
+			一种较为稀有的精灵球
+			它是为庆祝某些活动而制作的纪念品
+			'''
 		CatchRate: 1x 捕捉率
 	}
 
@@ -361,112 +361,112 @@ Items: {
 	}
 
 	CherishBallItem: {
-		DisplayName: Cherish Ball
-		/* Tooltip:
+		DisplayName: 贵重球
+		Tooltip:
 			'''
-			A quite rare Poké Ball
-			It has been specially crafted to commemorate an occasion of some sort
-			''' */
-		CatchRate: 1x catch rate
+			一种非常稀有的精灵球
+			它是为纪念某些特殊场合而特别制作的
+			'''
+		CatchRate: 1x 捕捉率
 	}
 
 	CherishBallMiniItem: {
-		DisplayName: "{$Items.CherishBallItem.DisplayName} (Mini)"
+		DisplayName: "{$Items.CherishBallItem.DisplayName} (迷你)"
 		Tooltip: ""
 	}
 
 	AetherBallItem: {
-		DisplayName: Aether Ball
-		/* Tooltip:
+		DisplayName: 以太球
+			Tooltip:
 			'''
-			An ethereal Poké Ball infused with shimmering energy
-			It is said to have a calming effect on wild Pokémon
-			''' */
-		CatchRate: 1x catch rate
+			一种充满闪烁能量的虚幻精灵球
+			据说对野生宝可梦有安抚效果
+			'''
+		CatchRate: 1x 捕捉率
 	}
 
 	AetherBallMiniItem: {
-		DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
+		DisplayName: "{$Items.AetherBallItem.DisplayName} (迷你)"
 		Tooltip: ""
 	}
 
 	RareCandy: {
-		DisplayName: Rare Candy
-		/* Tooltip:
+		DisplayName: 神奇糖果
+		Tooltip:
 			'''
-			A candy that is packed with energy
-			If consumed, it raises a Pokémon's level by one
-			''' */
+			一种充满能量的糖果
+			食用后，宝可梦的等级会提升一级
+			'''
 	}
 
 	TrainerCap: {
-		DisplayName: Pokémon Trainer Cap
-		Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: 宝可梦训练家帽子
+		Tooltip: "一定要收服所有宝可梦！"
 	}
 
 	TrainerTorso: {
-		DisplayName: Pokémon Trainer Jacket
-		Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: 宝可梦训练家夹克
+		Tooltip: "一定要收服所有宝可梦！"
 	}
 
 	TrainerLegs: {
-		DisplayName: Pokémon Trainer Jeans
-		Tooltip: "'Gotta catch 'em all!'"
+		DisplayName: 宝可梦训练家牛仔裤
+		Tooltip: "一定要收服所有宝可梦！"
 	}
 
 	MusicItemCenter: {
-		DisplayName: Music Box (Pokémon Center)
+		DisplayName: 音乐盒（宝可梦中心）
 		Tooltip: ""
 	}
 
 	MusicItemWildBattle: {
-		DisplayName: Music Box (Battle! Wild Pokémon)
+		DisplayName: 音乐盒（对战！野生宝可梦）
 		Tooltip: ""
 	}
 
 	ShinyCharm: {
-		DisplayName: Shiny Charm
-		/* Tooltip:
+		DisplayName: 闪耀护符
+		Tooltip:
 			'''
-			A shiny charm said to increase the chance of finding a Shiny Pokémon in the wild
-			Received as a reward for obtaining all Pokémon in the Pokédex
-			''' */
+			据说能增加在野外遇到闪光宝可梦几率的闪耀护符
+			作为完成宝可梦图鉴的奖励获得
+			'''
 	}
 
 	FireStone: {
-		DisplayName: Fire Stone
-		/* Tooltip:
+		DisplayName: 火之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It has a fiery orange heart'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“它有一颗炽热的橙色核心”
+			'''
 	}
 
 	WaterStone: {
-		DisplayName: Water Stone
-		/* Tooltip:
+		DisplayName: 水之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It is the blue of a pool of clear water'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“它像清澈水池的蓝色”
+			'''
 	}
 
 	ThunderStone: {
-		DisplayName: Thunder Stone
-		/* Tooltip:
+		DisplayName: 雷之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It is inscribed with a thunderbolt pattern'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“上面刻有闪电图案”
+			'''
 	}
 
 	LeafStone: {
-		DisplayName: Leaf Stone
-		/* Tooltip:
+		DisplayName: 叶之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It has an unmistakable leaf pattern'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“它有独特的叶子图案”
+			'''
 	}
 
 	MoonStone: {
@@ -586,7 +586,7 @@ Items: {
 
 Keybinds: {
 	ToggleParty.DisplayName: Party
-	OpenPokedex.DisplayName: 寶可夢圖鑑
+	OpenPokedex.DisplayName: 宝可梦图鉴
 	OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
 }
 

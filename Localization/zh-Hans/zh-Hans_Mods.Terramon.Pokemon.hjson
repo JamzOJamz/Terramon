@@ -409,85 +409,85 @@ Machamp: {
 Bellsprout: {
 	DisplayName: 喇叭芽
 	Species: 花宝可梦
-	DexEntry: 喜欢温度高，有一定 湿度的地方。它会用 身上的藤蔓抓小虫来吃。
+	DexEntry: 只要周围有会动的东西，它随时都会马上作出反应，将细细的藤蔓伸过去。
 }
 
 Weepinbell: {
 	DisplayName: 口呆花
 	Species: 捕蝇宝可梦
-	DexEntry: 它在肚子饿的时候会 吞掉周围会动的东西， 分泌溶解液让其致命。
+	DexEntry: 因为它也能分泌出让溶解液无效的液体，所以自身不会被溶解。
 }
 
 Victreebel: {
 	DisplayName: 大食花
 	Species: 捕蝇宝可梦
-	DexEntry: 用花蜜的香味引诱猎物。 据说被它吞入嘴里的东西， 只要1天就会溶解到连骨头都不剩。
+	DexEntry: 一旦被像蜜一样的香味吸引到它的口中就会无法得救。只会被它的溶解液溶化掉。
 }
 
 Tentacool: {
 	DisplayName: 玛瑙水母
 	Species: 水母宝可梦
-	DexEntry: 有时能在沙滩上发现它 干巴巴的身体，但是 它只要沾到水就能复活。
+	DexEntry: 在潮退后，能看到被留在沙滩上晒得干巴巴的玛瑙水母。
 }
 
 Tentacruel: {
 	DisplayName: 毒刺水母
 	Species: 水母宝可梦
-	DexEntry: 它能让80条触手自由 伸缩，靠缠住猎物后 注入毒素来让其变弱。
+	DexEntry: 很罕见地大量出现时，周围海域的鱼宝可梦会变得一只都不剩。
 }
 
 Geodude: {
 	DisplayName: 小拳石
 	Species: 岩石宝可梦
-	DexEntry: 大多栖息于山路。由于 不留神踩到它会使它 大发雷霆，得多加小心。
+	DexEntry: 不动的时候怎么看都是颗小石头。要是因此不小心踩到它，它就会挥舞拳头大发雷霆。
 }
 
 Graveler: {
 	DisplayName: 隆隆石
 	Species: 岩石宝可梦
-	DexEntry: 常在山路上滚来滚去。 滚动时从来不关心 前面的路上都有什么。
+	DexEntry: 因为走路很慢，所以靠滚来移动。途中遇到什么都不会在意。
 }
 
 Golem: {
 	DisplayName: 隆隆岩
 	Species: 重量级宝可梦
-	DexEntry: 刚蜕皮时浑身都白白的 非常柔软，但是接触到 空气之后会迅速变坚硬。
+	DexEntry: 被如岩盘般坚硬的壳包裹着。１年蜕皮１次来变大。
 }
 
 Ponyta: {
 	DisplayName: 小火马
 	Species: 火马宝可梦
-	DexEntry: 在用力跳跃之后，会 用蹄子和脚上的肌肉 来缓解着地时的撞击。
+	DexEntry: 刚出生的时候不擅长奔跑，但随着和伙伴们不断地赛跑，会逐渐锻炼出强健的脚力。
 }
 
 Rapidash: {
 	DisplayName: 烈焰马
 	Species: 火马宝可梦
-	DexEntry: 总之就是喜欢跑步。如果 发现有谁跑得比自己更快， 就会用尽全力去追赶。
+	DexEntry: 任由燃烧的鬃毛随风飘扬，以每小时２４０公里的速度在大草原自由地驰骋。。
 }
 
 Slowpoke: {
 	DisplayName: 呆呆兽
 	Species: 憨憨宝可梦
-	DexEntry: 非常呆，动作也很缓慢。 从不在意时间的流逝， 过着悠闲的生活。
+	DexEntry: 动作迟缓又呆头呆脑。就算挨打也要过５秒才能感受到疼痛。
 }
 
 Slowbro: {
 	DisplayName: 呆壳兽
 	Species: 寄居蟹宝可梦
-	DexEntry: 在海边悠闲地生活。如果 尾巴上的大舌贝脱落了， 它就会变回呆呆兽。
+	DexEntry: 呆呆兽去海里捕食时，由于被大舌贝咬住尾巴而变成了呆壳兽。
 }
 
 Magnemite: {
 	DisplayName: 小磁怪
 	Species: 磁铁宝可梦
-	DexEntry: 天生就拥有遮断重力 的能力，可以一边发出 电磁波一边在空中移动。
+	DexEntry: 用左右的组件放出的电磁波来屏蔽重力，使自己浮在空中。
 }
 
 Magneton: {
 	DisplayName: 三合一磁怪
 	Species: 磁铁宝可梦
-	DexEntry: 在它发射出神秘电波后， 方圆１千米以内的 气温会上升２度。
+	DexEntry: ３只小磁怪由强大的磁力结合在一起。一靠近它就会感到强烈的耳鸣。
 }
 
 Farfetchd: {
