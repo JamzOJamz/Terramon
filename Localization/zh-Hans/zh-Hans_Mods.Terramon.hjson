@@ -10,7 +10,7 @@ Commands: {
 
 	DexEdit: {
 		Description: 强制设置宝可梦图鉴条目的状态
-		Usage: /dexedit <id> <状态>
+		Usage: /dexedit <id> <status>
 		ParseErrorID: 无法将 ID 参数解析为整数
 		ParseErrorStatus: 无法将状态参数解析为整数
 		StatusOutOfRange: 状态参数超出范围（0-2）
@@ -356,7 +356,7 @@ Items: {
 	}
 
 	PremierBallMiniItem: {
-		DisplayName: "{$Items.PremierBallItem.DisplayName} (Mini)"
+		DisplayName: "{$Items.PremierBallItem.DisplayName} (迷你)"
 		Tooltip: ""
 	}
 
@@ -554,7 +554,7 @@ Items: {
 		Tooltip:
 			'''
 			一种充满能量的糖果
-			食用后，宝可梦会获得大量经验值
+			食用后，宝可梦会获得非常多的经验值
 			'''
 	}
 
