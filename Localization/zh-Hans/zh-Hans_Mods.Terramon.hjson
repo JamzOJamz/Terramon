@@ -470,227 +470,227 @@ Items: {
 	}
 
 	MoonStone: {
-		DisplayName: Moon Stone
-		/* Tooltip:
+		DisplayName: 月之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It resembles the rocky texture of an asteroid'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“它类似于小行星的岩石纹理”
+			'''
 	}
 
 	DuskStone: {
-		DisplayName: Dusk Stone
-		/* Tooltip:
+		DisplayName: 暗之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It holds shadows as dark as can be'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“它蕴含着深邃的阴影”
+			'''
 	}
 
 	IceStone: {
-		DisplayName: Ice Stone
-		/* Tooltip:
+		DisplayName: 冰之石
+		Tooltip:
 			'''
-			A stone used for making certain kinds of Pokémon evolve
-			'It has an unmistakable snowflake pattern'
-			''' */
+			一种用于让某些宝可梦进化的石头
+			“它有独特的雪花图案”
+			'''
 	}
 
 	LinkingCord: {
-		DisplayName: Linking Cord
-		/* Tooltip:
+		DisplayName: 连接绳
+		Tooltip:
 			'''
-			A cord that makes you feel a strange sense of connection
-			'It's loved by certain Pokémon'
-			''' */
+			一种让你感受到奇妙连接感的绳子
+			“某些宝可梦很喜欢它”
+			'''
 	}
 
-	BlackApricorn.DisplayName: Black Apricorn
-	BlueApricorn.DisplayName: Blue Apricorn
-	GreenApricorn.DisplayName: Green Apricorn
-	PinkApricorn.DisplayName: Pink Apricorn
-	RedApricorn.DisplayName: Red Apricorn
-	WhiteApricorn.DisplayName: White Apricorn
-	YellowApricorn.DisplayName: Yellow Apricorn
+	BlackApricorn.DisplayName: 黑球果
+	BlueApricorn.DisplayName: 蓝球果
+	GreenApricorn.DisplayName: 绿球果
+	PinkApricorn.DisplayName: 粉球果
+	RedApricorn.DisplayName: 红球果
+	WhiteApricorn.DisplayName: 白球果
+	YellowApricorn.DisplayName: 黄球果
 
 	ExpCandyXS: {
-		DisplayName: Exp. Candy XS
-		/* Tooltip:
+		DisplayName: 经验糖果 XS
+		Tooltip:
 			'''
-			A candy that is packed with energy
-			If consumed, it grants a Pokémon a very small number of Exp. Points
-			''' */
+			一种充满能量的糖果
+			食用后，宝可梦会获得非常少的经验值
+			'''
 	}
 
 	ExpCandyS: {
-		DisplayName: Exp. Candy S
-		/* Tooltip:
+		DisplayName: 经验糖果 S
+		Tooltip:
 			'''
-			A candy that is packed with energy
-			If consumed, it grants a Pokémon a small number of Exp. Points
-			''' */
+			一种充满能量的糖果
+			食用后，宝可梦会获得少量经验值
+			'''
 	}
 
 	ExpCandyM: {
-		DisplayName: Exp. Candy M
-		/* Tooltip:
+		DisplayName: 经验糖果 M
+		Tooltip:
 			'''
-			A candy that is packed with energy
-			If consumed, it grants a Pokémon a moderate number of Exp. Points
-			''' */
+			一种充满能量的糖果
+			食用后，宝可梦会获得中等经验值
+			'''
 	}
 
 	ExpCandyL: {
-		DisplayName: Exp. Candy L
-		/* Tooltip:
+		DisplayName: 经验糖果 L
+		Tooltip:
 			'''
-			A candy that is packed with energy
-			If consumed, it grants a Pokémon a large number of Exp. Points
-			''' */
+			一种充满能量的糖果
+			食用后，宝可梦会获得大量经验值
+			'''
 	}
 
 	ExpCandyXL: {
-		DisplayName: Exp. Candy XL
-		/* Tooltip:
+		DisplayName: 经验糖果 XL
+		Tooltip:
 			'''
-			A candy that is packed with energy
-			If consumed, it grants a Pokémon a very large number of Exp. Points
-			''' */
+			一种充满能量的糖果
+			食用后，宝可梦会获得大量经验值
+			'''
 	}
 
 	ShimmerStateDrive: {
-		DisplayName: Shimmer-State Drive
-		/* Tooltip:
+		DisplayName: 闪光状态驱动器
+		Tooltip:
 			'''
-			Permanently unlocks a shared PC box in this world
-			This allows for easy transfer of Pokémon between players
-			'Property of the Aether Foundation'
-			''' */
+			永久解锁此世界中的共享PC盒子
+			这使得玩家之间可以轻松转移宝可梦
+			“以太基金会的财产”
+			'''
 	}
 
 	PCItemRed: {
-		DisplayName: PC (Red)
+		DisplayName: PC (红色)
 		Tooltip: ""
 	}
 
 	PCItemWhite: {
-		DisplayName: PC (White)
+		DisplayName: PC (白色)
 		Tooltip: ""
 	}
 
 	ErikaPaintingItem: {
-		DisplayName: Erika's Invitation
+		DisplayName: Erika的邀请函
 		Tooltip: "'L. Walter'"
 	}
 }
 
 Keybinds: {
-	ToggleParty.DisplayName: Party
+	ToggleParty.DisplayName: 队伍
 	OpenPokedex.DisplayName: 宝可梦图鉴
-	OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
+	OpenPokedexEntry.DisplayName: 打开宝可梦的图鉴介绍
 }
 
 Tiles: {
-	MusicBoxCenter.MapEntry: Music Box
-	MusicBoxWildBattle.MapEntry: Music Box
+	MusicBoxCenter.MapEntry: 音乐盒
+	MusicBoxWildBattle.MapEntry: 音乐盒
 	PCWhite.MapEntry: PC
 	PCRed.MapEntry: PC
 }
 
 Types: {
-	Normal: Normal
-	Fire: Fire
-	Fighting: Fighting
-	Water: Water
-	Flying: Flying
-	Grass: Grass
-	Poison: Poison
-	Electric: Electric
-	Ground: Ground
-	Psychic: Psychic
-	Rock: Rock
-	Ice: Ice
-	Bug: Bug
-	Dragon: Dragon
-	Ghost: Ghost
-	Dark: Dark
-	Steel: Steel
-	Fairy: Fairy
+	Normal: 一般
+	Fire: 火
+	Fighting: 格斗
+	Water: 水
+	Flying: 飞行
+	Grass: 草
+	Poison: 毒
+	Electric: 电
+	Ground: 地面
+	Psychic: 超能力
+	Rock: 岩石
+	Ice: 冰
+	Bug: 虫
+	Dragon: 龙
+	Ghost: 幽灵
+	Dark: 恶
+	Steel: 钢
+	Fairy: 妖精
 }
 
 NPCs: {
 	PokemartClerk: {
-		DisplayName: Poké Mart Clerk
-		BestiaryText: The Poké Mart Clerk is a dedicated salesman, stocking all kinds of items for your Pokémon training needs.
-		EvolveButton: Evolve {0}
+		DisplayName: 精灵商店店员
+		BestiaryText: 精灵商店店员是一位专注的销售员，为您提供各种宝可梦训练所需的物品。
+		EvolveButton: 进化 {0}
 
 		TownNPCMood: {
-			Content: I rather enjoy my living space.
-			NoHome: I wish I had somewhere to live.
-			FarFromHome: I miss being back at my home.
-			LoveSpace: I love how much space there is for wild Pokémon to appear!
-			DislikeCrowded: Although there are plenty of people to talk to, it's a bit crowded.
-			HateCrowded: There are way too many people living here!
-			LikeBiome: There are so many Pokémon to see in {BiomeName}!
-			DislikeBiome: I dislike {BiomeName}. It's so creepy and everything is out to get you!
-			LikeNPC: I like {NPCName}. They've helped me out a ton.
-			DislikeNPC: I find {NPCName} a bit too loud.
-			HateNPC: I hate {NPCName}. He just doesn't respect Pokémon.
-			LikeNPC_Princess: I like {NPCName}. Who doesn't?
-			Princess_LovesNPC: I like {NPCName}.
+			Content: 我很喜欢我的居住环境。
+			NoHome: 我希望我能有个家。
+			FarFromHome: 我想念我的家。
+			LoveSpace: 我喜欢这里有这么多空间让野生宝可梦出现！
+			DislikeCrowded: 虽然有很多人可以聊天，但这里有点拥挤。
+			HateCrowded: 这里住的人太多了！
+			LikeBiome: 在 {BiomeName} 可以看到很多宝可梦！
+			DislikeBiome: 我不喜欢 {BiomeName}。这里太可怕了，感觉所有东西都想伤害你！
+			LikeNPC: 我喜欢 {NPCName}。他们帮了我很多忙。
+			DislikeNPC: 我觉得 {NPCName} 有点太吵了。
+			HateNPC: 我讨厌 {NPCName}。他根本不尊重宝可梦。
+			LikeNPC_Princess: 我喜欢 {NPCName}。谁不喜欢呢？
+			Princess_LovesNPC: 我喜欢 {NPCName}。
 		}
 
 		Dialogue: {
-			Catchem: There's a lot of Pokémon out there, but you'll need Poké Balls to catch them! Luckily for you, I have some in stock.
-			Furret: In Johto they have a species of Pokémon called Furrets. They sure do love to walk!
-			CheckBack: As your journey progresses, I'll offer new things. Check back here every so often.
-			Biomes: Different Pokémon like living in different places. If you travel around, you may find new Pokémon!
-			Regions: There are many different regions in the world. One day I hope to visit all of them!
-			Crafting: I conveniently sell Poké Balls for you to buy, but if you're short of cash you can always make your own using apricorns and {0}!
-			EvolutionStones: Some Pokémon only evolve when exposed to certain stones. They're quite rare.
-			SickBurn: A remake of Mobile Creatures has been announced! Though I'm not sure how I feel about the art style...
-			Dedication: Ever since Pokémon started appearing in {0}, I've dedicated my life to helping people learn more about them.
-			NoBattleRip: The Pokémon around here seem very peaceful. It's unusual to see creatures getting along so well.
-			BadName: Now, I know what you're thinking. "That's such a creative name!"
-			Shimmer: Like my outfit? I look just like a real Pokémon Trainer!
-			ShimmerQuery: Have you heard of Shimmer? Apparently it can give people their own shiny form!
-			PokemonHello: Is that your {0}? Hi, {1}!
-			PokemonGrass: Is that a Grass-type Pokémon? Those are my favourite!
-			PokemonIce: An Ice-type Pokémon! I've always loved seeing those.
-			PokemonShiny: Is that a shiny Pokémon? That's incredible! I wish I had one myself.
-			PokemonShimmer: Interesting... Your Pokémon has the same colors as a shiny Pokémon, but none of the... well, shine.
-			PokemonNicknameHowto: Did you know you can give your Pokémon a nickname? Type "/nickname" in the chat alongside the name of your choice.
-			PokemonNickname: "{0}? That's a lovely name! I can tell you care about your Pokémon very much."
-			MerchantComment: "{0} may be a bit greedy, but he has taught me everything I know about commerce."
-			MechanicComment: "{0} knows a lot about Poké Balls. Maybe one day I could start selling more of them!"
-			PirateComment: Have you tried speaking to {0}? I can never understand what he is saying.
-			ArmsDealerComment: Can you tell {0} to stop shooting at the Pokémon??
-			EvolutionCongrats: Congratulations! {$Misc.PokemonEvolved}
+			Catchem: 外面有很多宝可梦，但你需要精灵球来捕捉它们！幸运的是，我这里有一些库存。
+			Furret: 在关都地区有一种叫大尾立的宝可梦。它们真的很喜欢走路！
+			CheckBack: 随着你的冒险进展，我会提供新的物品。时不时回来看看吧。
+			Biomes: 不同的宝可梦喜欢生活在不同的地方。如果你四处旅行，可能会发现新的宝可梦！
+			Regions: 世界上有很多不同的地区。我希望有一天能去所有地方看看！
+			Crafting: 我方便地出售精灵球供你购买，但如果你缺钱，你总是可以用球果和 {0} 自己制作！
+			EvolutionStones: 有些宝可梦只有在接触到某些石头时才会进化。它们非常稀有。
+			SickBurn: 《开放史诗冒险》的重制版已经宣布了！不过我不确定我对它的艺术风格有什么感觉...
+			Dedication: 自从宝可梦开始出现在 {0} 以来，我就致力于帮助人们更多地了解它们。
+			NoBattleRip: 这里的宝可梦似乎非常和平。看到生物们相处得这么好真是少见。
+			BadName: 现在，我知道你在想什么。“这名字真有创意！”
+			Shimmer: 喜欢我的装扮吗？我看起来就像一个真正的宝可梦训练家！
+			ShimmerQuery: 你听说过闪光吗？显然它可以让人们拥有自己的闪光形态！
+			PokemonHello: 那是你的 {0} 吗？嗨，{1}！
+			PokemonGrass: 那是草系宝可梦吗？它们是我的最爱！
+			PokemonIce: 冰系宝可梦！我一直很喜欢看到它们。
+			PokemonShiny: 那是闪光宝可梦吗？太不可思议了！我真希望自己也有一只。
+			PokemonShimmer: 有趣...你的宝可梦颜色和闪光宝可梦一样，但没有那种...嗯，闪光。
+			PokemonNicknameHowto: 你知道你可以给你的宝可梦起昵称吗？在聊天中输入“/nickname”和你想要的名字。
+			PokemonNickname: “{0}？这名字真可爱！我能看出你非常关心你的宝可梦。”
+			MerchantComment: “{0} 可能有点贪心，但他教会了我所有关于商业的知识。”
+			MechanicComment: “{0} 对精灵球了解很多。也许有一天我可以开始卖更多精灵球！”
+			PirateComment: 你试过和 {0} 说话吗？我从来听不懂他在说什么。
+			ArmsDealerComment: 你能告诉 {0} 不要再射击宝可梦了吗？？
+			EvolutionCongrats: 恭喜！{$Misc.PokemonEvolved}
 		}
 
-		Census.SpawnCondition: Conditions unknown
+		Census.SpawnCondition: 未知条件
 	}
 }
 
-WorldGen.ItemsPass: Scattering candies
+WorldGen.ItemsPass: 散落糖果
 
 Misc: {
-	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
-	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
-	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
-	PokedexRegistered: "{0}'s data was added to the Pokédex."
-	PCBoxDefaultName: Box {0}
-	RequireStarter: Choose a starter Pokémon first!
-	NoActivePokemon: You need to have an active Pokémon to do that!
-	ItemNoEffect: It won't have any effect on {0}.
-	PokemonEvolved: "{0} evolved into {1}!"
-	PokemonEvolutionReady: "{0} seems ready to evolve!"
-	RareCandyUse: "{0} grew to Lv. {1}!"
-	ExpCandyUse: Your Pokémon gained {0} Exp. Points!
-	/* MOTD:
+	CatchSuccess: 抓住了！[c/{0}:{1}] 被捕获了！
+	CatchSuccessPC: 抓住了！[c/{0}:{1}] 被捕获并转移到 {2} 的 {3} 的PC中！
+	CatchSuccessPCNoRoom: 抓住了！[c/{0}:{1}] 被捕获了，但 {2} 的PC中没有空间了！
+	PokedexRegistered: “{0} 的数据已被添加到宝可梦图鉴中。”
+	PCBoxDefaultName: 盒子 {0}
+	RequireStarter: 请先选择初始宝可梦！
+	NoActivePokemon: 你需要有一只活跃的宝可梦才能这样做！
+	ItemNoEffect: 这对 {0} 没有任何效果。
+	PokemonEvolved: “{0} 进化为 {1}！”
+	PokemonEvolutionReady: “{0} 似乎准备好进化了！”
+	RareCandyUse: “{0} 提升到了 Lv. {1}！”
+	ExpCandyUse: 你的宝可梦获得了 {0} 点经验值！
+	MOTD:
 		'''
-		You've installed {0} v{1}—enjoy! [i:{2}]
+		你已安装 {0} v{1}——尽情享受吧！[i:{2}]
 
-		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
-		''' */
+		[c/C9C9E5:确保在模组配置菜单中根据你的喜好自定义模组，并在控制菜单中设置按键绑定。]
+		'''
 }
