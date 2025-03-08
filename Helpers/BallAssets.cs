@@ -16,6 +16,7 @@ public class BallAssets : ILoadable
         {
             var id = (int)ballId;
             var path = string.Format(PokeballIconPathFormat, ballId);
+            if (!ModContent.HasAsset(path)) continue;
             _ballIcons[id] = ModContent.Request<Texture2D>(path);
         }
     }
