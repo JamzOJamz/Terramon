@@ -15,7 +15,7 @@ public class PokemonData
     private Item _heldItem;
     private ushort _id;
     private DateTime? _metDate;
-    private byte _metLevel = 0;
+    private byte _metLevel;
     private string _ot;
     private uint _personalityValue;
     private string _worldName;
