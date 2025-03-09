@@ -1,8 +1,10 @@
+using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terramon.ID;
 
 namespace Terramon.Content.Items;
 
+[LoadWeight(0.1f)]
 public class LinkingCord : EvolutionaryItem
 {
     protected override int UseRarity => ModContent.RarityType<LinkingCordRarity>();

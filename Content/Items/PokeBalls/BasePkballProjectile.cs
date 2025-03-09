@@ -33,7 +33,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private float _rotationVelocity;
 
     protected virtual int PokeballItem => ModContent.ItemType<BasePkballItem>();
-    protected virtual float CatchModifier { get; private set; }
+    protected virtual float CatchModifier { get; private set; } = 1f;
 
     /// <summary>
     ///     The denominator (1/x) for the probability of dropping this projectile's respective Poké Ball item,

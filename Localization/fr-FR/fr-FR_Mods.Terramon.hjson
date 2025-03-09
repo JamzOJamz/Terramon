@@ -390,6 +390,21 @@ Items: {
 		// Tooltip: ""
 	}
 
+	DuskBallItem: {
+		// DisplayName: Dusk Ball
+		/* Tooltip:
+			'''
+			A somewhat different Poké Ball
+			It makes it easier to catch wild Pokémon at night
+			''' */
+		// CatchRate: 3x catch rate at night
+	}
+
+	DuskBallMiniItem: {
+		// DisplayName: "{$Items.DuskBallItem.DisplayName} (Mini)"
+		// Tooltip: ""
+	}
+
 	RareCandy: {
 		// DisplayName: Rare Candy
 		/* Tooltip:

@@ -21,7 +21,7 @@ internal class UltraBallItem : BasePkballItem
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
     protected override int PokeballThrow => ModContent.ProjectileType<UltraBallProjectile>();
     protected override int PokeballTile => ModContent.TileType<UltraBallTile>();
-    protected override int InGamePrice => 1000;
+    protected override int InGamePrice => 1200;
     
     public override void AddRecipes()
     {

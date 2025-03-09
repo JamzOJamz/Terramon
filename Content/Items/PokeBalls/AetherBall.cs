@@ -6,16 +6,15 @@ namespace Terramon.Content.Items.PokeBalls;
 internal class AetherBallProjectile : BasePkballProjectile
 {
     protected override int PokeballItem => ModContent.ItemType<AetherBallItem>();
-    protected override float CatchModifier => 1;
 }
 
-[LoadWeight(6f)] // After CherishBallMiniItem (5f)
+[LoadWeight(7f)] // After CherishBallMiniItem (6f)
 internal class AetherBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherRarity>();
 }
 
-[LoadWeight(6f)] // After CherishBallItem (5f)
+[LoadWeight(7f)] // After CherishBallItem (6f)
 internal class AetherBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<AetherRarity>();
