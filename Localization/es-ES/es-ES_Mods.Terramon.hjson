@@ -578,6 +578,11 @@ Items: {
 		DisplayName: La Invitación de Erika
 		// Tooltip: "'L. Walter'"
 	}
+
+	PokeBannerItem: {
+		// DisplayName: "{0} Banner"
+		// Tooltip: Nearby {0} companions grow quicker and unleash stronger attacks
+	}
 }
 
 Keybinds: {

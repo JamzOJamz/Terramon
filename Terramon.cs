@@ -1,6 +1,7 @@
 using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon;
@@ -113,6 +114,10 @@ public class Terramon : Mod
 
     public override void Load()
     {
+        // Load items, then entities
+        AddContent<TerramonItemLoader>();
+        AddContent<PokemonEntityLoader>();
+        
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);

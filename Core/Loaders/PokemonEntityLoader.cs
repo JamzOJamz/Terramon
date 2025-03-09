@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.NPCs;
 using Terramon.Content.Projectiles;
+using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
 using Terraria.Graphics.Shaders;
 
@@ -13,6 +14,7 @@ namespace Terramon.Core.Loaders;
 /// <summary>
 ///     A system that loads handles the manual loading of Pokémon NPCs and pet projectiles.
 /// </summary>
+[Autoload(false)]
 public class PokemonEntityLoader : ModSystem
 {
     public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; }
@@ -102,21 +104,32 @@ public class PokemonEntityLoader : ModSystem
         }
 
         // Load Pokémon pet projectile
-        if (!hjsonSchema.TryGetValue("Projectile", out var petSchema)) return;
-        
-        // Add common components to pet schema
-        if (commonSchema != null)
+        if (hjsonSchema.TryGetValue("Projectile", out var petSchema))
         {
-            foreach (var kvp in commonSchema.Children<JProperty>())
+            // Add common components to pet schema
+            if (commonSchema != null)
             {
-                petSchema[kvp.Name] ??= kvp.Value;
+                foreach (var kvp in commonSchema.Children<JProperty>())
+                {
+                    petSchema[kvp.Name] ??= kvp.Value;
+                }
             }
+        
+            PetSchemaCache.Add(id, petSchema);
+            var pet = new PokemonPet(id, schema);
+            Mod.AddContent(pet);
+            IDToPetType.Add(id, pet.Projectile.type);
         }
         
-        PetSchemaCache.Add(id, petSchema);
-        var pet = new PokemonPet(id, schema);
-        Mod.AddContent(pet);
-        IDToPetType.Add(id, pet.Projectile.type);
+        // Load Pokémon banner
+        if (ModContent.HasAsset($"Terramon/Assets/Tiles/Banners/{schema.Identifier}BannerTile")) LoadBanner(id, schema);
+    }
+    
+    private void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
+    {
+        // Load banner item
+        var banner = new PokeBannerItem(id, schema);
+        Mod.AddContent(banner);
     }
 
     public static Asset<Texture2D> RequestTexture(IPokemonEntity entity)
