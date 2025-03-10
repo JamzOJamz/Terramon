@@ -171,9 +171,9 @@ public class PokeBannerTile : CustomPreviewTile
         Tile below = Framing.GetTileSafely(i, j + 1);
         return below.TileType == Type && below.TileFrameY % 54 == 18;
     }
-    public override bool PreDrawPlacementPreview(TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle? sourceRect, Color color)
+    public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle? sourceRect, Color color)
     {
-        Main.spriteBatch.Draw(texture, position + Vector2.UnitX * 16f, sourceRect, color);
+        sb.Draw(texture, position + Vector2.UnitX * 16f, sourceRect, color);
         return true;
     }
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)

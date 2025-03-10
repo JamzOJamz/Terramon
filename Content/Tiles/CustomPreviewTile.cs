@@ -55,8 +55,8 @@ namespace Terramon.Content.Tiles
                 }
 
                 // right now, the cursor is between the position variable creation and the sourceRect load instructions.
-                // currently, the texture2d is the only thing that is loaded on the stack and consumable, because we consumed the position value earlier when storing it.
-                // for easier branching, we can simply use the texture2d value from the stack and then emit it again later.
+                // currently, the spritebatch and texture2d are the only things that are loaded on the stack and consumable, because we consumed the position value earlier when storing it.
+                // for easier branching, we can simply use the spritebatch and texture2d values from the stack and then emit them again later.
 
                 // load all the necessary values for our method:
 
@@ -69,12 +69,12 @@ namespace Terramon.Content.Tiles
                 // tileobjectpreviewdata
                 c.EmitLdarg1();
 
-                c.EmitDelegate<Func<Texture2D, Vector2, Rectangle?, Color, TileObjectPreviewData, bool>>((t, p, r, c, top) =>
+                c.EmitDelegate<Func<SpriteBatch, Texture2D, Vector2, Rectangle?, Color, TileObjectPreviewData, bool>>((sb, t, p, r, c, top) =>
                 {
                     ModTile modTile = TileLoader.GetTile(top.Type);
                     if (modTile != null && modTile is CustomPreviewTile previewTile)
                     {
-                        return previewTile.PreDrawPlacementPreview(top, t, p, r, c);
+                        return previewTile.PreDrawPlacementPreview(sb, top, t, p, r, c);
                     }
                     return true;
                 });
@@ -85,26 +85,24 @@ namespace Terramon.Content.Tiles
                 var skipLabel = il.DefineLabel();
                 c.EmitBrfalse(skipLabel); // this consumes the bool, so stack is once again balanced
 
-                // >>>>>>>>>>>>>>>>>>> this is just for testing OK, otherwise mod don't load
-                c.MarkLabel(skipLabel);
-
                 // let's load the values we consumed
 
+                // spritebatch
+                c.EmitLdarg0();
                 // texture
                 c.EmitLdloc1();
                 // position
                 c.EmitLdloc(localPosition.Index);
 
-                // >>>>>>>>>>>>>>>>>>>>>>> also tried this it didn't wok
-                //if (!c.TryGotoNext(i => i.MatchLdloc(out _), i => i.MatchLdloc(out _), i => i.MatchLdloc2()))
+                // find the draw call
                 if (!c.TryGotoNext(MoveType.After, i => i.MatchCallvirt<SpriteBatch>("Draw")))
                 {
                     Terramon.Instance.Logger.Warn("ILCustomPreviewDrawing: Couldn't find main draw call");
                     return;
                 }
 
-                // >>>>>>>>>>>>> DOEN'T WORK???
-                //c.MarkLabel(skipLabel);
+                // mark the label to skip the draw call
+                c.MarkLabel(skipLabel);
             }
             catch
             {
@@ -115,13 +113,14 @@ namespace Terramon.Content.Tiles
         /// Runs for each section of the drawn tile inside the placement preview drawing code.
         /// <para>Return false to stop regular drawing.</para>
         /// </summary>
+        /// <param name="sb">The SpriteBatch.</param>
         /// <param name="data">The drawn preview data.</param>
         /// <param name="texture">The drawn texture.</param>
         /// <param name="position">The draw position.</param>
         /// <param name="sourceRect">The frame of the draw.</param>
         /// <param name="color">The color of the draw.</param>
         /// <returns>Whether or not regular drawing should run for this section.</returns>
-        public virtual bool PreDrawPlacementPreview(TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle? sourceRect, Color color)
+        public virtual bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle? sourceRect, Color color)
         {
             return true;
         }
