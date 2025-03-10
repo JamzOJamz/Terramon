@@ -12,6 +12,7 @@ using Terraria.Audio;
 using System.Data;
 using System.Reflection.Metadata;
 using Terramon.Helpers;
+using Terraria;
 
 namespace Terramon.Content.Tiles.Banners;
 
@@ -55,6 +56,8 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema) : Terram
     {
         Item.DefaultToPlaceableTile(ModContent.TileType<PokeBannerTile>(), id - 1);
         base.SetDefaults();
+        Item.width = 12;
+        Item.height = 28;
     }
     public override void SaveData(TagCompound tag)
     {
@@ -108,7 +111,23 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema) : Terram
 
         position += new Vector2(0f, -16f);
         
-        spriteBatch.Draw(_tierOverlay.Value, position, new(tierFrame * width, 0, width, overlay.Height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+        spriteBatch.Draw(_tierOverlay.Value, position, new(tierFrame * width, 0, width, overlay.Height), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+    }
+    public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+    {
+        if (tier == BannerTier.None)
+            return;
+
+        Texture2D overlay = _tierOverlay.Value;
+
+        int tierFrame = ((int)tier) - 1;
+        int width = overlay.Width / 4;
+
+        Vector2 offsetFromCenter = new(0f, 16f);
+
+        Vector2 drawPos = Item.Center - Main.screenPosition;
+
+        spriteBatch.Draw(_tierOverlay.Value, drawPos, new(tierFrame * width, 0, width, overlay.Height), lightColor, rotation, offsetFromCenter, scale, SpriteEffects.None, 0f);
     }
 }
 
@@ -164,6 +183,17 @@ public class PokeBannerTile : CustomPreviewTile
         realTier = (BannerTier)(t.TileFrameY % 54);
         visualTier = (BannerTier)(t.TileFrameX % 18);
     }
+    /// <summary>
+    /// This method will only output the correct values if the provided Tile is the top-left tile of a PokeBannerTile.
+    /// </summary>
+    /// <param name="t">The top-left tile.</param>
+    /// <param name="realTier">The functional tier of the banner tile.</param>
+    /// <param name="visualTier">The visual tier of the banner tile.</param>
+    public static void GetTierData(Tile t, out BannerTier realTier, out BannerTier visualTier)
+    {
+        realTier = (BannerTier)(t.TileFrameY % 54);
+        visualTier = (BannerTier)(t.TileFrameX % 18);
+    }
     public override void PlaceInWorld(int i, int j, Item item)
     {
         if (item.ModItem is PokeBannerItem bannerItem)
@@ -187,6 +217,37 @@ public class PokeBannerTile : CustomPreviewTile
             }
         }
     }
+    public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+    {
+        if (fail || noItem)
+            return;
+
+        Point16 thisPoint = new(i, j);
+        Tile tile = Framing.GetTileSafely(thisPoint);
+        int thing = tile.TileFrameY % 54;
+        Point16 origin = new(i, j - (thing / 18)); // thank you integer division
+
+        if (thisPoint != origin)
+            return;
+
+        Tile topTile = Framing.GetTileSafely(origin);
+        Tile below = Framing.GetTileSafely(origin + new Point16(0, 1));
+
+        int style = Math.Max(TileObjectData.GetTileStyle(below), 0);
+
+        Item drop = new(TileLoader.GetItemDropFromTypeAndStyle(Type, style));
+
+        if (drop.ModItem is PokeBannerItem bannerItem)
+        {
+            GetTierData(topTile, out BannerTier realTier, out BannerTier visualTier);
+
+            bannerItem.tier = realTier;
+            bannerItem.visualTier = visualTier;
+        }
+
+        Item.NewItem(WorldGen.GetItemSource_FromTileBreak(origin.X, origin.Y + 1), origin.X * 16, (origin.Y + 1) * 16, 16, 16, drop);
+    }
+    public override bool CanDrop(int i, int j) => false;
     public bool TopLeftPokeBanner(int i, int j)
     {
         // if top left, the tile below will match this (cuz tileframey will be 18, 72, just any multiple of 54 on top of 18)

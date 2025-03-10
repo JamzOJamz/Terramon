@@ -83,6 +83,14 @@ Commands: {
 		NopUpgrade: Keine Pokémon im Inventar gefunden, die aktualisiert werden können
 		Success: "{0} Pokémon erfolgreich in {1}'s PC übertragen"
 	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
