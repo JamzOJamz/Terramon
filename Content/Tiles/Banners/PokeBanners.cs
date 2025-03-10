@@ -234,7 +234,7 @@ public class PokeBannerTile : CustomPreviewTile
             int width = underlay.Width / 4;
             Rectangle underlayFrame = new(((int)visualTier - 1) * width, 0, width, underlay.Height);
 
-            TileUtils.DrawTileCommon(spriteBatch, i, j, underlay, overrideFrame: underlayFrame);
+            TileUtils.DrawTileCommon(spriteBatch, i, j, underlay, new Vector2(0f, WorldGen.IsBelowANonHammeredPlatform(i, j) ? -10f : -2f), underlayFrame);
         }
         // We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
         return false;
