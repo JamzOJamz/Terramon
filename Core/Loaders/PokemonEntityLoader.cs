@@ -122,7 +122,7 @@ public class PokemonEntityLoader : ModSystem
         }
         
         // Load Pokémon banner
-        if (ModContent.HasAsset($"Terramon/Assets/Tiles/Banners/{schema.Identifier}BannerTile")) LoadBanner(id, schema);
+        if (ModContent.HasAsset($"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner")) LoadBanner(id, schema);
     }
     
     private void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
