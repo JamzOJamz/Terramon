@@ -8,6 +8,10 @@ using Terraria.Enums;
 using Terraria.ModLoader.IO;
 using MonoMod.RuntimeDetour;
 using System.Reflection;
+using Terraria.Audio;
+using System.Data;
+using System.Reflection.Metadata;
+using Terramon.Helpers;
 
 namespace Terramon.Content.Tiles.Banners;
 
@@ -76,6 +80,22 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema) : Terram
         bannerItem.tier = tier;
         return bannerItem;
     }
+    public override void HoldItem(Player player)
+    {
+        if (player.whoAmI != Main.myPlayer)
+            return;
+        if (Main.mouseRight && Main.mouseRightRelease)
+        {
+            CycleVisualTier();
+        }
+    }
+    public void CycleVisualTier()
+    {
+        int upperTier = tier == BannerTier.None ? 4 : (byte)tier;
+        if (++visualTier > (BannerTier)upperTier)
+            visualTier = BannerTier.None;
+        SoundEngine.PlaySound(SoundID.MenuTick);
+    }
     public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         if (tier == BannerTier.None)
@@ -96,9 +116,12 @@ public class PokeBannerTile : CustomPreviewTile
 {
     // max is 226 for reference. after there's 226 banners don't do anything else cuz tiles be smart
     private const int SupportedPokeyMenHorizontal = 6;
-    public override string Texture => $"Terramon/Assets/Tiles/Banners/PokeBannerTile";
+    private static Asset<Texture2D> _tierUnderlay; // hmm yes real words
+    public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile";
     public override void SetStaticDefaults()
     {
+        _tierUnderlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTileTiers");
+
         Main.tileFrameImportant[Type] = true;
         Main.tileNoAttach[Type] = true;
         Main.tileLavaDeath[Type] = false;
@@ -171,10 +194,24 @@ public class PokeBannerTile : CustomPreviewTile
         Tile below = Framing.GetTileSafely(i, j + 1);
         return below.TileType == Type && below.TileFrameY % 54 == 18;
     }
-    public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle? sourceRect, Color color)
+    public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle sourceRect, Color color)
     {
-        sb.Draw(texture, position + Vector2.UnitX * 16f, sourceRect, color);
-        return true;
+        if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem || bannerItem.visualTier == BannerTier.None)
+            return true;
+
+        Rectangle newFrame = new(sourceRect.X, sourceRect.Y + 54, sourceRect.Width, sourceRect.Height);
+
+        if (newFrame.Y % 54 == 0)
+        {
+            Texture2D underlay = _tierUnderlay.Value;
+            int width = underlay.Width / 4;
+            Rectangle underlayFrame = new(((int)bannerItem.visualTier - 1) * width, 0, width, underlay.Height);
+            sb.Draw(_tierUnderlay.Value, position, underlayFrame, color);
+        }
+
+        sb.Draw(texture, position, newFrame, color);
+        
+        return false;
     }
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
     {
@@ -182,33 +219,22 @@ public class PokeBannerTile : CustomPreviewTile
 
         bool topLeft = TopLeftPokeBanner(i, j);
 
-        short oldFrameX = 0;
-        short oldFrameY = 0;
-
         if (topLeft)
         {
-            oldFrameX = tile.TileFrameX;
-            oldFrameY = tile.TileFrameY;
-
-            GetTierData(i, j, out BannerTier realTier, out BannerTier visualTier);
-
-            if (visualTier != BannerTier.None)
-                tile.TileFrameX -= (byte)visualTier;
-
-            if (realTier != BannerTier.None)
-                tile.TileFrameY -= (byte)realTier;
-        }
-
-        if (TileObjectData.IsTopLeft(tile))
-        {
-            // Makes this tile sway in the wind and with player interaction when used with TileID.Sets.MultiTileSway
             Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
         }
-
-        if (topLeft)
+        if (tile.TileFrameY % 54 != 36)
         {
-            tile.TileFrameX = oldFrameX;
-            tile.TileFrameY = oldFrameY;
+            GetTierData(i, j, out BannerTier realTier, out BannerTier visualTier);
+
+            if (visualTier == BannerTier.None)
+                return false;
+
+            Texture2D underlay = _tierUnderlay.Value;
+            int width = underlay.Width / 4;
+            Rectangle underlayFrame = new(((int)visualTier - 1) * width, 0, width, underlay.Height);
+
+            TileUtils.DrawTileCommon(spriteBatch, i, j, underlay, overrideFrame: underlayFrame);
         }
         // We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
         return false;

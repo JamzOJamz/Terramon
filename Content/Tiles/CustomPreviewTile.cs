@@ -4,6 +4,9 @@ using Terraria.DataStructures;
 
 namespace Terramon.Content.Tiles
 {
+    /// <summary>
+    /// Allows for dynamic placement preview draw behavior.
+    /// </summary>
     public abstract class CustomPreviewTile : ModTile
     {
         private static bool _hasHooked = false;
@@ -74,7 +77,7 @@ namespace Terramon.Content.Tiles
                     ModTile modTile = TileLoader.GetTile(top.Type);
                     if (modTile != null && modTile is CustomPreviewTile previewTile)
                     {
-                        return previewTile.PreDrawPlacementPreview(sb, top, t, p, r, c);
+                        return previewTile.PreDrawPlacementPreview(sb, top, t, p, r.Value, c);
                     }
                     return true;
                 });
@@ -120,7 +123,7 @@ namespace Terramon.Content.Tiles
         /// <param name="sourceRect">The frame of the draw.</param>
         /// <param name="color">The color of the draw.</param>
         /// <returns>Whether or not regular drawing should run for this section.</returns>
-        public virtual bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle? sourceRect, Color color)
+        public virtual bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle sourceRect, Color color)
         {
             return true;
         }
