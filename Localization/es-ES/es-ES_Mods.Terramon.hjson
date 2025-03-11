@@ -67,13 +67,21 @@ Commands: {
 	}
 
 	PC: {
-		// Description: Opens the Pokémon Storage System (PC) from anywhere
-		// Usage: /pc
+		Description: Abre el Sistema de almacenamiento Pokémon (PC) desde cualquier lugar
+		Usage: /pc
 	}
 
 	Dex: {
-		// Description: Opens the Pokédex
-		// Usage: /dex
+		Description: Abre la Pokédex
+		Usage: /dex
+	}
+
+	Upgrade: {
+		Description: Transfiere a los Pokémon desde la versión de prelanzamiento
+		Usage: /upgrade
+		TypeResolveError: ¡Uno o más de los tipos heredados requeridos no fueron encontrados! Por favor reporta este problema a los desarrolladores de Terramon
+		NopUpgrade: No se encontraron Pokémon para actualizar en el inventario
+		Success: Se ha actualizado y transferido a {0} Pokémon al PC de {1} exitosamente
 	}
 }
 
@@ -198,9 +206,9 @@ GUI: {
 			HP: {0}/{1}
 			EXP: MAX
 			''' */
-		// SlotTooltipPCMode: "[c/FFFFFF:In Party]"
-		// SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
-		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
+		SlotTooltipPCMode: "[c/FFFFFF:En el equipo]"
+		SlotTooltipPCModeActive: "[c/FFFFFF:En el equipo (Activo)]"
+		CannotRemoveLastPokemon: ¡Tu equipo debe tener al menos un Pokémon!
 	}
 
 	Starter: {
@@ -254,16 +262,16 @@ GUI: {
 }
 
 CommonTooltips: {
-	/* Apricorn:
+	Apricorn:
 		'''
-		A special fruit seemingly related to berries
-		Can be used to craft assorted Poké Balls
-		''' */
+		Una fruta especial aparentemente relacionada a las bayas.
+		Puede ser usada para fabricar varias Poké Balls.
+		'''
 	EvolutionaryItem: Objeto evolutivo
 	KeyItem: Objeto clave
 	Vitamin: Vitamina
 	RightClickPlace: Puede ser colocada con <right>
-	PCItems: Accesses the Pokémon Storage System
+	PCItems: Accede al Sistema de almacenamiento Pokémon
 	PokeBallMinis:
 		'''
 		'Para propósitos ornamentales'
@@ -573,11 +581,9 @@ Items: {
 }
 
 Keybinds: {
-	// ToggleParty.DisplayName: Toggle Party GUI
-	// OpenPokedex.DisplayName: Pokédex
-	// TogglePokemon.DisplayName: Toggle Active Pokémon
-	// NextPokemon.DisplayName: Summon Next Pokémon
-	// PrevPokemon.DisplayName: Summon Previous Pokémon
+	ToggleParty.DisplayName: Equipo
+	OpenPokedex.DisplayName: Pokédex
+	OpenPokedexEntry.DisplayName: Abrir entrada Pokédex para el Pokémon
 }
 
 Tiles: {
@@ -674,7 +680,13 @@ Misc: {
 	NoActivePokemon: ¡Necesitas tener un Pokémon activo para hacer eso!
 	ItemNoEffect: No tendrá ningún efecto para {0}.
 	PokemonEvolved: ¡{0} evolucionó a {1}!
-	PokemonEvolutionReady: ¡{0} parece listo para evolucionar!
+	PokemonEvolutionReady: ¡Parece que {0} está listo para evolucionar!
 	RareCandyUse: ¡{0} subió a nivel {1}!
 	ExpCandyUse: ¡Tu Pokémon ha ganado {0} puntos de experiencia!
+	MOTD:
+		'''
+		Has instalado {0} v{1}—¡disfrútalo! [i:{2}]
+
+		[c/C9C9E5:Asegúrate de personalizar el mod a tus gustos en el menú de Configuración de mods, y asigna los comandos de teclas del mod en el menú de Controles.]
+		'''
 }

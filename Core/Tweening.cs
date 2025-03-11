@@ -1,8 +1,9 @@
 namespace Terramon.Core;
 
-public class Tween
+public static class Tween
 {
     public static readonly List<ITweener> ActiveTweens = [];
+    public const double tweenStep = 1.0d / 60.0d;
 
     public static ITweener To<T>(Func<T> getter, Action<T> setter, T endValue,
         float time) where T : struct
@@ -32,9 +33,9 @@ public class Tween
     /// <summary>
     ///     Updates all active tweens. Should be called once per frame.
     /// </summary>
-    public static void DoUpdate(GameTime gameTime)
+    public static void DoUpdate(double elapsedSeconds)
     {
-        SimulationTime += gameTime.ElapsedGameTime.TotalSeconds;
+        SimulationTime += elapsedSeconds;
         for (var i = 0; i < ActiveTweens.Count; i++)
             if (!ActiveTweens[i].Update())
                 ActiveTweens.RemoveAt(i--);

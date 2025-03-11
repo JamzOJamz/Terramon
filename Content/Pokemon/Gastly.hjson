@@ -1,11 +1,21 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 26
       Height: 26
     }
+    Visuals:
+    {
+      LightColor: "0.662745, 0.48627451, 0.88627451"
+      ShinyLightColor: "0.247, 0.42745, 0.9372549"
+      LightStrength: 1.15
+      DamperAmount: 0.5
+    }
+  }
+  NPC:
+  {
     WanderingHoverBehaviour:
     {
       FrameCount: 4
@@ -23,13 +33,6 @@
         }
       ]
     }
-    Visuals:
-    {
-      LightColor: "0.662745, 0.48627451, 0.88627451"
-      ShinyLightColor: "0.247, 0.42745, 0.9372549"
-      LightStrength: 1.15
-      DamperAmount: 0.5
-    }
   }
   Projectile:
   {
@@ -37,11 +40,6 @@
     {
       FrameCount: 4
       FrameTime: 6
-    }
-    Transform:
-    {
-      Width: 26
-      Height: 26
     }
   }
 }

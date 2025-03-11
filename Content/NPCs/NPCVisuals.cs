@@ -37,9 +37,9 @@ public class NPCVisuals : NPCComponent
         if (DustID <= -1) return;
         if (_dustTimer >= DustFrequency)
         {
-            Dust.NewDust(
+            Dust.NewDustPerfect(
                 npc.position + new Vector2(npc.spriteDirection == 1 ? npc.width - DustOffsetX : DustOffsetX,
-                    DustOffsetY), 1, 1, DustID);
+                    DustOffsetY), DustID);
             _dustTimer = 0;
         }
         else

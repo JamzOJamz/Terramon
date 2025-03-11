@@ -15,6 +15,7 @@ public class PokemonData
     private Item _heldItem;
     private ushort _id;
     private DateTime? _metDate;
+    private byte _metLevel = 0;
     private string _ot;
     private uint _personalityValue;
     private string _worldName;
@@ -175,6 +176,7 @@ public class PokemonData
             TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, Terramon.DatabaseV2.GetPokemon(id).GrowthRate),
             _ot = player.name,
             _metDate = DateTime.Now,
+            _metLevel = level,
             _worldName = Main.worldName,
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
             IsShiny = RollShiny(player)
@@ -237,6 +239,8 @@ public class PokemonData
             tag["item"] = new ItemDefinition(_heldItem.type);
         if (_metDate.HasValue)
             tag["met"] = _metDate.Value.ToBinary();
+        if (_metLevel != 0)
+            tag["metlvl"] = _metLevel;
         if (!string.IsNullOrEmpty(_worldName))
             tag["world"] = _worldName;
         return tag;
@@ -275,6 +279,7 @@ public class PokemonData
             data._heldItem = new Item(itemDefinition.Type);
         if (tag.TryGet<long>("met", out var metDate))
             data._metDate = DateTime.FromBinary(metDate);
+        data._metLevel = tag.TryGet<byte>("metlvl", out var metLevel) ? metLevel : data.Level;
         if (tag.TryGet<string>("world", out var worldName))
             data._worldName = worldName;
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly

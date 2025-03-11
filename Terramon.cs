@@ -99,8 +99,7 @@ public class Terramon : Mod
         }
         catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
         {
-            Logger.Warn($"Failed to read load count from file. Resetting to 1. Error: {ex.Message}");
-            result = 1;
+            Logger.Warn($"Failed to read load count from file! Error: {ex.Message}");
         }
 
         result++;

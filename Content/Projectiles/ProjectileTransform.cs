@@ -11,8 +11,8 @@ namespace Terramon.Content.Projectiles;
 /// </summary>
 public class ProjectileTransform : ProjectileComponent
 {
-    public int Height = 20;
     public int Width = 20;
+    public int Height = 20;
     public int DrawOffsetY = 0;
 
     public override void SetDefaults(Projectile proj)

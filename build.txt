@@ -1,6 +1,6 @@
 displayName = Terramon Mod (Beta)
-homepage = https://terramon.carrd.co
+homepage = https://terramon.tmod.page/links/
 author = The Terramon Team
-version = 0.1
+version = 0.1.2
 dllReferences = EasyPacketsLib
 buildIgnore = .gitignore, .sln,.csproj, *.user, obj*, bin*, .vs*, Properties*, .git*, Content\Scripts\*, Assets\Data\PokemonDB.json, */_Unused/*

@@ -1,10 +1,10 @@
-using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Core.Systems;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -48,7 +48,7 @@ public class InventoryParty : SmartUIState
     }
 
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
+                                    !Main.LocalPlayer.dead && !Main.inFancyUI && !Main.LocalPlayer.tileEntityAnchor.InUse &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public static bool InPCMode { get; private set; }
@@ -589,7 +589,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             {
                 if (Data != null)
                 {
-                    if (Main.keyState.IsKeyDown(Keys.O))
+                    if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
                     {
                         HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
                         return;

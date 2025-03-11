@@ -35,13 +35,19 @@ public class PokemonEntityLoader : ModSystem
         if (!Main.dedServ)
             GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
                 new MiscShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FadeToColor"), "FadePass");
-
+        
+        // Start a stopwatch to measure the time taken to load Pokémon entities
+        //var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        
         foreach (var (id, pokemon) in Terramon.DatabaseV2.Pokemon)
         {
             if (id > Terramon.MaxPokemonID) continue;
             if (!HjsonSchemaExists(pokemon.Identifier)) continue;
             LoadEntities(id, pokemon);
         }
+        
+        /*stopwatch.Stop();
+        Mod.Logger.Info($"Loaded Pokémon entities in {stopwatch.ElapsedMilliseconds}ms");*/
     }
 
     private bool HjsonSchemaExists(string identifier)
@@ -73,10 +79,22 @@ public class PokemonEntityLoader : ModSystem
 
         // Check if this Pokémon has a pet-exclusive texture
         HasPetExclusiveTexture[id - 1] = ModContent.HasAsset($"Terramon/Assets/Pokemon/{schema.Identifier}_Pet");
+        
+        // Get common components
+        var commonSchema = hjsonSchema.GetValue("Common");
 
         // Load Pokémon NPC
         if (hjsonSchema.TryGetValue("NPC", out var npcSchema))
         {
+            // Add common components to NPC schema
+            if (commonSchema != null)
+            {
+                foreach (var kvp in commonSchema.Children<JProperty>())
+                {
+                    npcSchema[kvp.Name] ??= kvp.Value;
+                }
+            }
+            
             NPCSchemaCache.Add(id, npcSchema);
             var npc = new PokemonNPC(id, schema);
             Mod.AddContent(npc);
@@ -85,6 +103,16 @@ public class PokemonEntityLoader : ModSystem
 
         // Load Pokémon pet projectile
         if (!hjsonSchema.TryGetValue("Projectile", out var petSchema)) return;
+        
+        // Add common components to pet schema
+        if (commonSchema != null)
+        {
+            foreach (var kvp in commonSchema.Children<JProperty>())
+            {
+                petSchema[kvp.Name] ??= kvp.Value;
+            }
+        }
+        
         PetSchemaCache.Add(id, petSchema);
         var pet = new PokemonPet(id, schema);
         Mod.AddContent(pet);

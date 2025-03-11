@@ -33,8 +33,21 @@ public class TooltipOverlay : SmartUIState, ILoadable
 
     public override bool Visible => true;
 
+    private static readonly Asset<Texture2D> ReleaseTexture;
+    private static readonly Asset<Texture2D> TrashTexture;
+    
+    static TooltipOverlay()
+    {
+        if (Main.dedServ) return;
+        
+        ReleaseTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Release");
+        TrashTexture = ModContent.Request<Texture2D>("Terraria/Images/Trash");
+    }
+
     public void Load(Mod mod)
     {
+        if (Main.dedServ) return;
+        
         On_Main.DrawInterface += static (orig, self, gameTime) =>
         {
             orig(self, gameTime);
@@ -183,6 +196,8 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _heldPokemonSource = HeldPokemonSource.Unspecified;
         _onReturn = null;
         _onPlace = null;
+
+        TextureAssets.Trash = TrashTexture;
     }
 
     public static bool IsHoldingPokemon()
@@ -199,6 +214,8 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         if (_heldPokemon != null)
         {
+            TextureAssets.Trash = InventoryParty.InPCMode ? ReleaseTexture : TrashTexture;
+            
             if (!_hoveringAnyPCTile && Main.mouseRight && Main.mouseRightRelease)
             {
                 SoundEngine.PlaySound(SoundID.Grab);
@@ -276,6 +293,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _icon = null;
         _hoveringTrash = false;
         _hoveringAnyPCTile = false;
+        
         var needsClear = false;
         if (_heldPokemon != null)
             switch (_heldPokemonSource)

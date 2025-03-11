@@ -154,7 +154,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     _mouseHoverTimer++;
                 else
                     _mouseHoverTimer = 0;
-                if (_mouseHoverTimer == 60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
+                if (_mouseHoverTimer ==
+                    60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
                 {
                     // Register as seen in the player's Pokédex
                     TerramonPlayer.LocalPlayer.UpdatePokedex(ID, PokedexEntryStatus.Seen,
@@ -198,13 +199,21 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
+        var isFirstSync = Data == null;
         Data ??= new PokemonData
         {
             ID = ID,
             Level = 5
         };
+
         Data.NetRead(reader);
         PlasmaState = reader.ReadBoolean();
+
+        if (isFirstSync)
+        {
+            // In multiplayer, load the proper texture after receiving the data from the server
+            _mainTexture = PokemonEntityLoader.RequestTexture(this);
+        }
     }
 
     public override void AI()

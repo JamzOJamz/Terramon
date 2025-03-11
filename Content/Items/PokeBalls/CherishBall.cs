@@ -1,6 +1,5 @@
 using Terramon.Core.Loaders;
 using Terramon.Helpers;
-using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -25,7 +24,7 @@ internal class CherishBallItem : BasePkballItem
     
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

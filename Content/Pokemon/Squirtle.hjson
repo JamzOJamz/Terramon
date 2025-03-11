@@ -1,11 +1,14 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 24
       Height: 22
     }
+  }
+  NPC:
+  {
     WalkingBehaviour:
     {
       FrameCount: 4
@@ -32,11 +35,6 @@
       FrameTime: 8
       IsClassic: false
       ExtraStopFrame: 2
-    }
-    Transform:
-    {
-      Width: 24
-      Height: 22
     }
   }
 }

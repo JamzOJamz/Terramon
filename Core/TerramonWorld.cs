@@ -5,6 +5,7 @@ using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.ModLoader.IO;
+using Terraria.Enums;
 
 namespace Terramon.Core;
 
@@ -109,6 +110,7 @@ public partial class TerramonWorld : ModSystem
 
     public override void Load()
     {
+        if (Main.dedServ) return;
         On_Main.DoUpdate += MainDoUpdate_Detour;
         On_Main.DoDraw += MainDoDraw_Detour;
     }
@@ -147,7 +149,15 @@ public partial class TerramonWorld : ModSystem
     {
         orig(self, gameTime);
 
+        // FrameSkip subtle does very weird stuff with GameTime that causes tweens to randomly go super slow if we don't do this
+        double elapsedTime;
+
+        if (Main.FrameSkipMode == FrameSkipMode.Subtle)
+            elapsedTime = Tween.tweenStep;
+        else
+            elapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
+
         // Update all active tweens
-        Tween.DoUpdate(gameTime);
+        Tween.DoUpdate(elapsedTime);
     }
 }

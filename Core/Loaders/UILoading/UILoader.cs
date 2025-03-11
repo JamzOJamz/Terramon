@@ -34,10 +34,20 @@ internal class UILoader : ModSystem
 
     public override void Load()
     {
+        if (Main.dedServ)
+            return;
+        
         On_Main.DoUpdateInWorld += static (orig, self, sw) =>
         {
             orig(self, sw);
             UpdateUI_Custom(GameTime);
+        };
+        
+        On_Main.DoUpdate_WhilePaused += static (orig) =>
+        {
+            orig();
+            if (!Main.autoPause) return;
+            UpdateUI_Custom(GameTime); // Update UIs when auto-pause is enabled
         };
     }
 

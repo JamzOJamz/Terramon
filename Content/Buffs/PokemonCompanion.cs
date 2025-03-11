@@ -20,7 +20,8 @@ public class PokemonCompanion : ModBuff
     {
         Main.buffNoTimeDisplay[Type] = true;
         Main.vanityPet[Type] = true;
-        _starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
+        if (!Main.dedServ)
+            _starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }
 
     public override void Update(Player player, ref int buffIndex)
@@ -38,6 +39,9 @@ public class PokemonCompanion : ModBuff
 
     public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)
     {
+        // This is necessary to avoid funky RenderTarget stuff with other mods that might set this back to DiscardContents
+        Main.instance.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
+
         spriteBatch.End();
 
         // Use the render target
@@ -92,7 +96,6 @@ public class PokemonCompanion : ModBuff
     public override void Load()
     {
         if (Main.dedServ) return;
-        Main.instance.GraphicsDevice.PresentationParameters.RenderTargetUsage = RenderTargetUsage.PreserveContents;
         Main.QueueMainThreadAction(() => { _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, 32, 32); });
     }
 

@@ -1,7 +1,6 @@
 using Terramon.Content.Commands;
 using Terramon.Core.Loaders;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
@@ -22,7 +21,7 @@ public abstract class BasePkballItem : TerramonItem
 
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+        Item.ResearchUnlockCount = 50;
     }
 
     public override void SetDefaults()

@@ -1,5 +1,4 @@
 using Terramon.Core.Loaders;
-using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
@@ -13,7 +12,7 @@ public abstract class BasePkballMiniItem : TerramonItem
     public override void SetStaticDefaults()
     {
         TerramonItemAPI.Sets.Unobtainable.Add(Type);
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

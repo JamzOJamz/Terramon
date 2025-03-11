@@ -7,7 +7,7 @@ public class TerramonMenu : ModMenu
 {
     public override string DisplayName => "Terramon Mod";
 
-    //public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Menu");
+    public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TitleTheme");
 
     public override Asset<Texture2D> Logo =>
         ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo");

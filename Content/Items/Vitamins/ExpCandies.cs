@@ -2,7 +2,6 @@ using Terramon.Content.Configs;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
@@ -104,7 +103,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+        Item.ResearchUnlockCount = 50;
         TerramonItemAPI.Sets.Unobtainable.Add(Type); // To be made obtainable in a future update post-0.1 beta
     }
 

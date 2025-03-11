@@ -17,6 +17,7 @@ Mod logo
 
 - qAngel -
 Pokémon sprites
+es-ES translation
 
 - SmokeEntangles -
 Official soundtrack
@@ -27,8 +28,8 @@ Apricorn sprites
 Evolution stone sprites
 
 - Rocketlauncher269 -
-Poké Mart Clerk NPC
-Trainer vanity
+Poké Mart Clerk NPC sprite sheet
+Trainer vanity set sprites
 
 - Fred -
 Mod icon
@@ -40,6 +41,15 @@ Shiny Charm sprite
 
 - Arcri -
 Mod logo (revised version)
+
+- jteoh -
+Title theme music
+
+- David F Dev -
+EasyPacketsLib dependency
+
+- Cracky -
+de-DE translation
 
 - Game Freak -
 Pokémon sprites

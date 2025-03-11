@@ -75,6 +75,14 @@ Commands: {
 		// Description: Opens the Pokédex
 		// Usage: /dex
 	}
+
+	Upgrade: {
+		// Description: Transfer Pokémon from the pre-release version
+		// Usage: /upgrade
+		// TypeResolveError: One or more required legacy types were not found! Please report this issue to the Terramon developers
+		// NopUpgrade: No Pokémon were found in the inventory to upgrade
+		// Success: Successfully upgraded and transferred {0} Pokémon to {1}'s PC
+	}
 }
 
 Configs: {
@@ -577,18 +585,16 @@ Items: {
 }
 
 Keybinds: {
-	// ToggleParty.DisplayName: Toggle Party GUI
+	// ToggleParty.DisplayName: Party
 	OpenPokedex.DisplayName: Покедекс
-	// TogglePokemon.DisplayName: Toggle Active Pokémon
-	// NextPokemon.DisplayName: Summon Next Pokémon
-	// PrevPokemon.DisplayName: Summon Previous Pokémon
+	// OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
 }
 
 Tiles: {
 	// MusicBoxCenter.MapEntry: Music Box
 	// MusicBoxWildBattle.MapEntry: Music Box
-	// PCWhite.MapEntry: P C White
-	// PCRed.MapEntry: P C Red
+	// PCWhite.MapEntry: PC
+	// PCRed.MapEntry: PC
 }
 
 Types: {
@@ -681,4 +687,10 @@ Misc: {
 	// PokemonEvolutionReady: "{0} seems ready to evolve!"
 	// RareCandyUse: "{0} grew to Lv. {1}!"
 	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	/* MOTD:
+		'''
+		You've installed {0} v{1}—enjoy! [i:{2}]
+
+		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
+		''' */
 }

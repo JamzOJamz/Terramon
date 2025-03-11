@@ -1,7 +1,6 @@
 ﻿using Terramon.Content.NPCs;
 using Terramon.Core.Loaders;
 using Terramon.Helpers;
-using Terraria.GameContent.Creative;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -33,7 +32,7 @@ internal class MasterBallItem : BasePkballItem
     public override void SetStaticDefaults()
     {
         TerramonItemAPI.Sets.Unobtainable.Add(Type);
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale,

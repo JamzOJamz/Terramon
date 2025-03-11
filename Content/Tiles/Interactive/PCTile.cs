@@ -18,6 +18,8 @@ public abstract class PCTile : ModTile
 
     static PCTile()
     {
+        if (Main.dedServ) return;
+        
         // Catch the event when the player toggles their inventory
         On_Player.ToggleInv += static (orig, self) =>
         {
@@ -26,7 +28,7 @@ public abstract class PCTile : ModTile
                 orig(self);
                 return;
             }
-            
+
             var modPlayer = TerramonPlayer.LocalPlayer;
             var pcId = modPlayer.ActivePCTileEntityID;
             if (pcId == int.MaxValue) // Opened via /pc command
@@ -66,8 +68,6 @@ public abstract class PCTile : ModTile
         TileObjectData.newTile.UsesCustomCanPlace = true;
         TileObjectData.newTile.DrawYOffset = 2;
         TileObjectData.addTile(Type);
-
-        AddMapEntry(Color.White, CreateMapEntryName());
     }
 
     public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -106,7 +106,7 @@ public abstract class PCTile : ModTile
             otherPcTe.ToggleOnOff(true);
             differentPc = true;
         }
-        
+
         // Exit any active chest UI
         player.chest = -1;
 
@@ -240,7 +240,7 @@ public sealed class PCTileEntity : ModTileEntity
             case NetmodeID.SinglePlayer when Main.myPlayer == User:
             {
                 // Check if the player is still nearby
-                var player = Main.player[User];
+                var player = Main.LocalPlayer;
                 var pos = player.position;
                 if (player.active && !(Vector2.Distance(Position.ToWorldCoordinates(8, 0), pos) > 94f)) return;
                 PoweredOn = false;

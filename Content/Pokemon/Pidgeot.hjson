@@ -1,11 +1,14 @@
 {
-  NPC:
+  Common:
   {
     Transform:
     {
       Width: 48
       Height: 38
     }
+  }
+  NPC:
+  {
     WanderingHoverBehaviour:
     {
       FrameCount: 7
@@ -26,11 +29,6 @@
   }
   Projectile:
   {
-    Transform:
-    {
-      Width: 48
-      Height: 38
-    }
     FlyingPet:
     {
       FrameCount: 7

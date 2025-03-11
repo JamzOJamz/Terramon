@@ -11,8 +11,8 @@ namespace Terramon.Content.NPCs;
 /// </summary>
 public class NPCTransform : NPCComponent
 {
-    public int Height = 20;
     public int Width = 20;
+    public int Height = 20;
     public int DrawOffsetY = 0;
 
     public override void SetDefaults(NPC npc)

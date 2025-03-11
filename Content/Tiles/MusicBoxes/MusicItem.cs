@@ -1,6 +1,5 @@
 using Terramon.Content.Items;
 using Terramon.Core.Loaders;
-using Terraria.GameContent.Creative;
 using Terraria.Utilities;
 
 namespace Terramon.Content.Tiles.MusicBoxes;
@@ -14,7 +13,7 @@ public abstract class MusicItem : TerramonItem
 
     public override void SetStaticDefaults()
     {
-        CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        Item.ResearchUnlockCount = 1;
     }
 
     public override void SetDefaults()

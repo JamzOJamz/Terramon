@@ -9,6 +9,7 @@ public class PCWhite : PCTile
         base.SetStaticDefaults();
         DustType = DustID.Silver;
         RegisterItemDrop(ModContent.ItemType<PCItemWhite>());
+        AddMapEntry(ModContent.GetInstance<PremierBallRarity>().RarityColor, CreateMapEntryName());
     }
 
     public override void MouseOver(int i, int j)
@@ -27,7 +28,7 @@ public class PCItemWhite : PCItem
         Item.DefaultToPlaceableTile(ModContent.TileType<PCWhite>());
         base.SetDefaults();
     }
-    
+
     public override void AddRecipes()
     {
         CreateRecipe()
