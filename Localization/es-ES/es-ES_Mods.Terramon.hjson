@@ -83,6 +83,14 @@ Commands: {
 		NopUpgrade: No se encontraron Pokémon para actualizar en el inventario
 		Success: Se ha actualizado y transferido a {0} Pokémon al PC de {1} exitosamente
 	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
@@ -581,7 +589,11 @@ Items: {
 
 	PokeBannerItem: {
 		// DisplayName: "{0} Banner"
-		// Tooltip: Nearby {0} companions grow quicker and unleash stronger attacks
+		/* Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			''' */
 	}
 }
 
