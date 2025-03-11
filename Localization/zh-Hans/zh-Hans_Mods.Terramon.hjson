@@ -23,12 +23,12 @@ Commands: {
 		Usage: /nickname <set|clear> <名称>
 
 		Set: {
-		NoActivePokemon: 当前没有活跃的宝可梦
-		NoNicknameProvided: 未提供名称
-		NicknameTooLong: 名称长度必须为 12 个字符或更少（包括空格）
-		SameNickname: 名称已设置
-		SuccessNew: 将 {0} 的名称设置为 {1}
-		SuccessUpdate: 将 {0} 的名称从 {1} 更改为 {2}
+			NoActivePokemon: 当前没有活跃的宝可梦
+			NoNicknameProvided: 未提供名称
+			NicknameTooLong: 名称长度必须为 12 个字符或更少（包括空格）
+			SameNickname: 名称已设置
+			SuccessNew: 将 {0} 的名称设置为 {1}
+			SuccessUpdate: 将 {0} 的名称从 {1} 更改为 {2}
 		}
 
 		Clear: {
@@ -181,7 +181,7 @@ Configs: {
 				'''
 				启用聊天中的作弊指令（例如 /pokeclear）
 				[c/F2A754:可能会干扰正常游戏体验]
-				''' 
+				'''
 		}
 	}
 
@@ -377,7 +377,7 @@ Items: {
 
 	AetherBallItem: {
 		DisplayName: 以太球
-			Tooltip:
+		Tooltip:
 			'''
 			一种充满闪烁能量的虚幻精灵球
 			据说对野生宝可梦有安抚效果
@@ -401,17 +401,17 @@ Items: {
 
 	TrainerCap: {
 		DisplayName: 宝可梦训练家帽子
-		Tooltip: "一定要收服所有宝可梦！"
+		Tooltip: 一定要收服所有宝可梦！
 	}
 
 	TrainerTorso: {
 		DisplayName: 宝可梦训练家夹克
-		Tooltip: "一定要收服所有宝可梦！"
+		Tooltip: 一定要收服所有宝可梦！
 	}
 
 	TrainerLegs: {
 		DisplayName: 宝可梦训练家牛仔裤
-		Tooltip: "一定要收服所有宝可梦！"
+		Tooltip: 一定要收服所有宝可梦！
 	}
 
 	MusicItemCenter: {
