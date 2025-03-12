@@ -676,6 +676,7 @@ NPCs: {
 }
 
 // WorldGen.ItemsPass: Scattering candies
+// ControllerHints.Release: Release
 
 Misc: {
 	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!

@@ -2,6 +2,7 @@ using Terramon.Content.Configs;
 using Terramon.Content.GUI;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.GameInput;
+using Terraria.Localization;
 using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
@@ -14,6 +15,7 @@ public class UILinkManager : ILoadable
     public void Load(Mod mod)
     {
         SetupPartyUIPage();
+        SetupPCUIPage();
     }
 
     public void Unload() { }
@@ -52,6 +54,9 @@ public class UILinkManager : ILoadable
                 //set slot 47 regardless of autotrash/reduced motion (would otherwise go to bestiary)
                 if (compressedState)
                     invPage.LinkMap[47].Down = 9606;
+                
+                //set navigation from bestiary button to inventoryparty items (rather than inventory slot 47)
+                invPage.LinkMap[310].Up = compressedState || reducedMotion ? 9606 : 9605;
 
                 //set nav input for Pokédex icon
                 if (Main.GameModeInfo.IsJourneyMode)
@@ -124,6 +129,8 @@ public class UILinkManager : ILoadable
                 //add navigation to bestiary button
                 if (i >= 4)
                     partyPage.LinkMap[9600 + i].Down = 310;
+                else //we need to reset this in case it was modified by other methods (the PC)
+                    partyPage.LinkMap[9600 + i].Down = -1;
                 
                 //set controller hints based on slot state
                 var heldPokemon = TooltipOverlay.GetHeldPokemon(out var source);
@@ -131,10 +138,10 @@ public class UILinkManager : ILoadable
                 {
                     if (TerramonPlayer.LocalPlayer.Party[i] != null && heldPokemon != TerramonPlayer.LocalPlayer.Party[i])
                         partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[66].Value, false,
-                        PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                        PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //swap
                     else
                         partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[65].Value, false,
-                            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //place
                 }
                 else if (TerramonPlayer.LocalPlayer.Party[i] != null)
                 {
@@ -142,13 +149,13 @@ public class UILinkManager : ILoadable
                     {
                         if (item.AffectedByPokemonDirectUse(TerramonPlayer.LocalPlayer.Party[i]))
                             partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[79].Value, false,
-                                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //use
                         else
                             partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => "";
                     }
                     else
                         partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[54].Value, false,
-                            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //take
                 }
                 else
                     partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => "";
@@ -192,6 +199,95 @@ public class UILinkManager : ILoadable
             partyPage.LinkMap[9607].Up = hasAutoTrash && Main.GameModeInfo.IsJourneyMode ? 311 : 40;
         };
         
-        UILinkPointNavigator.RegisterPage(partyPage, 2702);
+        UILinkPointNavigator.RegisterPage(partyPage, 2700);
+    }
+
+    private static void SetupPCUIPage()
+    {
+        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        
+        //Add new page to control PC items
+        var pcPage = new UILinkPage();
+        
+        //Add tooltips for special inventory interactions (e.g. switch page)
+        pcPage.OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[56].Value, false, PlayerInput.ProfileGamepadUI.KeyStatus["Inventory"]) + PlayerInput.BuildCommand(Lang.misc[64].Value, true, PlayerInput.ProfileGamepadUI.KeyStatus["HotbarMinus"], PlayerInput.ProfileGamepadUI.KeyStatus["HotbarPlus"]);
+        
+        //add pc slots
+        for (int x = 0; x <= 5; x++) {
+            for (int y = 0; y <= 4; y++)
+            {
+                var pointID = 9610 + (x + y * 6);
+                UILinkPoint newPoint =
+                    new UILinkPoint(pointID, enabled: true, pointID - 1, pointID + 1, pointID - 6, pointID + 6);
+                if (x == 0)
+                    newPoint.Left = -1;
+                if (x == 5)
+                    newPoint.Right = -1;
+                if (y == 5)
+                    newPoint.Down = -1;
+                if (y == 0)
+                    newPoint.Up = 9600 + x;
+                if (reducedMotion)
+                    newPoint.Position -= new Vector2(48, 0);
+                pcPage.LinkMap.Add(pointID, newPoint);
+            }
+        }
+
+        pcPage.UpdateEvent += delegate
+        {
+            for (int x = 0; x <= 5; x++)
+            {
+                for (int y = 0; y <= 4; y++)
+                {
+                    var pointID = 9610 + (x + y * 6);
+                    
+                    //have to set this in UpdateEvent in case gui scale changes
+                    pcPage.LinkMap[pointID].Position = (FirstSlotPos + ((new Vector2(3, 1) + new Vector2(x, y)) * 48)) * Main.UIScale;
+                    
+                    //set controller hints based on slot state
+                    var heldPokemon = TooltipOverlay.GetHeldPokemon(out var source);
+                    var slotContainsPokemon = TerramonPlayer.LocalPlayer.GetPC().Boxes[PCInterface.DisplayedBoxIndex][pointID - 9610] != null;
+                    
+                    if (heldPokemon != null)
+                    {
+                        if (slotContainsPokemon) //TODO: make this work for pretendToBeEmpty
+                            pcPage.LinkMap[pointID].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[66].Value, false,
+                                PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //swap
+                        else
+                            pcPage.LinkMap[pointID].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[65].Value, false,
+                                PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //place
+                    }
+                    else if (slotContainsPokemon)
+                        pcPage.LinkMap[pointID].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[54].Value, false,
+                            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //take
+                    else
+                        pcPage.LinkMap[pointID].OnSpecialInteracts += () => "";
+                }
+            }
+        };
+        
+        UILinkPointNavigator.RegisterPage(pcPage, 2701);
+
+        //Add navigation to the PC from the party slots
+        var partyPage = UILinkPointNavigator.Pages[2700];
+        partyPage.UpdateEvent += delegate
+        {
+            if (!PCInterface.Active) return;
+            for (int i = 9600; i <= 9605; i++)
+                partyPage.LinkMap[i].Down = i + 10;
+        };
+        
+        var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
+        invPage.UpdateEvent += delegate
+        {
+            //modify trash slot hint if a Pokémon is held within the PC
+            if (PCInterface.Active && TooltipOverlay.GetHeldPokemon(out var source) != null)
+                invPage.LinkMap[300].OnSpecialInteracts += () => PlayerInput.BuildCommand(
+                    Language.GetTextValue("Mods.Terramon.ControllerHints.Release"), false,
+                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+            else
+                invPage.LinkMap[300].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[74].Value, false,
+                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+        };
     }
 }
