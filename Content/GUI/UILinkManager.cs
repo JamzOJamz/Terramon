@@ -31,17 +31,20 @@ public class UILinkManager : ILoadable
         var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
         invPage.UpdateEvent += delegate
         {
+            //whether or not the party is functionally compressed
+            var compressedState = InventoryParty.IsCompressed && !InventoryParty.InPCMode;
+            
             //if party is visible, remap slot nav inputs to go to party buttons
             if (Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
                 !Main.LocalPlayer.dead && !Main.inFancyUI && TerramonPlayer.LocalPlayer.HasChosenStarter)
             {
                 //set party slot nav inputs
-                if (!InventoryParty.IsCompressed)
+                if (!compressedState || InventoryParty.InPCMode)
                     for (int i = 43; i <= 48; i++)
                         invPage.LinkMap[i - slotOffset].Down = 9600 + i - 43;
                 
                 //set nav input for collapse button
-                var collapseButtonPoint = (reducedMotion || InventoryParty.IsCompressed) ? 48 : 42;
+                var collapseButtonPoint = (reducedMotion || compressedState) ? 48 : 42;
                 if (hasAutoTrash) collapseButtonPoint -= 1;
                 invPage.LinkMap[collapseButtonPoint].Down = 9606;
 
@@ -104,6 +107,9 @@ public class UILinkManager : ILoadable
         //add update events for new link points (anything that needs changing during runtime)
         partyPage.UpdateEvent += delegate
         {
+            //whether or not the party is functionally compressed
+            var compressedState = InventoryParty.IsCompressed && !InventoryParty.InPCMode;
+            
             //have to set position in case gui scale has changed (even though slot position doesn't)
             for (int i = 0; i <= 5; i++)
             {
@@ -131,12 +137,12 @@ public class UILinkManager : ILoadable
             partyPage.LinkMap[9600].Left = !reducedMotion ? 9606 : Main.GameModeInfo.IsJourneyMode ? 311 : 9607;
 
             //collapse button position + navigation
-            var collapseButtonOffset = (InventoryParty.IsCompressed || reducedMotion) ? 6 : 0;
+            var collapseButtonOffset = compressedState || reducedMotion ? 6 : 0;
             if (hasAutoTrash) collapseButtonOffset =+ 1;
             
             partyPage.LinkMap[9606].Position = (FirstSlotPos + new Vector2(48 * (2 + collapseButtonOffset), 0)) * Main.UIScale;
 
-            if (InventoryParty.IsCompressed || reducedMotion)
+            if (compressedState || reducedMotion)
             {
                 if (hasAutoTrash)
                 {
@@ -159,7 +165,7 @@ public class UILinkManager : ILoadable
             var dexOffset = new Vector2(Main.GameModeInfo.IsJourneyMode && !hasAutoTrash ? 1 : 0, Main.GameModeInfo.IsJourneyMode && hasAutoTrash ? 1 : 0);
             partyPage.LinkMap[9607].Position = (FirstSlotPos + dexOffset * 48) * Main.UIScale;
             
-            partyPage.LinkMap[9607].Right = reducedMotion && !InventoryParty.IsCompressed ? 9600 : 9606;
+            partyPage.LinkMap[9607].Right = reducedMotion && !compressedState ? 9600 : 9606;
             partyPage.LinkMap[9607].Up = hasAutoTrash && Main.GameModeInfo.IsJourneyMode ? 311 : 40;
         };
         
