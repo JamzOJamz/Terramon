@@ -16,75 +16,34 @@ public class UILinkManager : ILoadable
     {
         SetupPartyUIPage();
         SetupPCUIPage();
+        
+        //add delegate to inventory updateevent
+        var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
+        invPage.UpdateEvent += UpdateInventory;
     }
 
-    public void Unload() { }
+    public void Unload()
+    {
+        RemovePage(TerramonPageID.Party);
+        RemovePage(TerramonPageID.PC);
+        UILinkPointNavigator.Pages[GamepadPageID.Inventory].UpdateEvent -= UpdateInventory;
+    }
+
+    private static void RemovePage(int pageId)
+    {
+        foreach (var point in UILinkPointNavigator.Pages[pageId].LinkMap)
+            UILinkPointNavigator.Points.Remove(point.Key);
+        UILinkPointNavigator.Pages.Remove(pageId);
+    }
 
 
     private static void SetupPartyUIPage()
     {
-        //these vars require reload so can be used in UpdateEvent without issues
         var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
         var hasAutoTrash = ModLoader.HasMod("AutoTrash");
         
         var slotOffset = hasAutoTrash ? 1 : 0;
         slotOffset += reducedMotion ? 1 : 0;
-        
-        //get inventory page
-        var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
-        invPage.UpdateEvent += delegate
-        {
-            //whether the party is functionally compressed
-            var compressedState = InventoryParty.IsCompressed && !InventoryParty.InPCMode;
-            
-            //if party is visible, remap slot nav inputs to go to party buttons
-            if (Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                !Main.LocalPlayer.dead && !Main.inFancyUI && TerramonPlayer.LocalPlayer.HasChosenStarter)
-            {
-                //set party slot nav inputs
-                if (!compressedState || InventoryParty.InPCMode)
-                    for (int i = 43; i <= 48; i++)
-                        invPage.LinkMap[i - slotOffset].Down = 9600 + i - 43;
-                
-                //set nav input for collapse button (didn't seem necessary to use GamepadPointID for inventory slots)
-                var collapseButtonPoint = (reducedMotion || compressedState) ? 48 : 42;
-                if (hasAutoTrash) collapseButtonPoint -= 1;
-                invPage.LinkMap[collapseButtonPoint].Down = TerramonPointID.PartyCollapse;
-
-                //set slot 47 regardless of autotrash/reduced motion (would otherwise go to bestiary)
-                if (compressedState)
-                    invPage.LinkMap[47].Down = TerramonPointID.PartyCollapse;
-                
-                //set navigation from bestiary button to inventoryparty items (rather than inventory slot 47)
-                invPage.LinkMap[GamepadPointID.BestiaryMenu].Up = compressedState || reducedMotion ? TerramonPointID.PartyCollapse : TerramonPointID.Party5;
-
-                //set nav input for Pokédex icon
-                if (Main.GameModeInfo.IsJourneyMode)
-                {
-                    if (hasAutoTrash)
-                    {
-                        invPage.LinkMap[GamepadPointID.CreativeMenuToggle].Down = TerramonPointID.HubUI;
-                        invPage.LinkMap[GamepadPointID.CreativeMenuToggle].Right = reducedMotion ? TerramonPointID.Party0 : TerramonPointID.PartyCollapse;
-                    }
-                    else
-                    {
-                        invPage.LinkMap[41].Down = TerramonPointID.HubUI;
-                        invPage.LinkMap[GamepadPointID.CreativeMenuToggle].Right = TerramonPointID.HubUI;
-                    }
-                }
-                else
-                    invPage.LinkMap[40].Down = TerramonPointID.HubUI;
-
-                //Set trash slot left input if auto trash isn't installed
-                if (!hasAutoTrash)
-                {
-                    if (collapseButtonPoint == 48)
-                        invPage.LinkMap[GamepadPointID.TrashItem].Left = TerramonPointID.PartyCollapse;
-                    else
-                        invPage.LinkMap[GamepadPointID.TrashItem].Left = TerramonPointID.Party5;
-                }
-            }
-        };
         
         
         
@@ -226,7 +185,7 @@ public class UILinkManager : ILoadable
                     newPoint.Left = -1;
                 if (x == 5)
                     newPoint.Right = -1;
-                if (y == 5)
+                if (y == 4)
                     newPoint.Down = -1;
                 if (y == 0)
                     newPoint.Up = TerramonPointID.Party0 + x;
@@ -279,19 +238,79 @@ public class UILinkManager : ILoadable
             for (int i = TerramonPointID.Party0; i <= TerramonPointID.Party5; i++)
                 partyPage.LinkMap[i].Down = i + 10;
         };
-        
+    }
+
+    private static void UpdateInventory()
+    {
         var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
-        invPage.UpdateEvent += delegate
+        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        var hasAutoTrash = ModLoader.HasMod("AutoTrash");
+        
+        var slotOffset = hasAutoTrash ? 1 : 0;
+        slotOffset += reducedMotion ? 1 : 0;
+        
+        //whether the party is functionally compressed
+        var compressedState = InventoryParty.IsCompressed && !InventoryParty.InPCMode;
+
+        //if party is visible, remap slot nav inputs to go to party buttons
+        if (Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
+            !Main.LocalPlayer.dead && !Main.inFancyUI && TerramonPlayer.LocalPlayer.HasChosenStarter)
         {
-            //modify trash slot hint if a Pokémon is held within the PC
-            if (PCInterface.Active && TooltipOverlay.GetHeldPokemon(out var source) != null)
-                invPage.LinkMap[GamepadPointID.TrashItem].OnSpecialInteracts += () => PlayerInput.BuildCommand(
-                    Language.GetTextValue("Mods.Terramon.ControllerHints.Release"), false,
-                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+            //set party slot nav inputs
+            if (!compressedState || InventoryParty.InPCMode)
+                for (int i = 43; i <= 48; i++)
+                    invPage.LinkMap[i - slotOffset].Down = 9600 + i - 43;
+
+            //set nav input for collapse button (didn't seem necessary to use GamepadPointID for inventory slots)
+            var collapseButtonPoint = (reducedMotion || compressedState) ? 48 : 42;
+            if (hasAutoTrash) collapseButtonPoint -= 1;
+            invPage.LinkMap[collapseButtonPoint].Down = TerramonPointID.PartyCollapse;
+
+            //set slot 47 regardless of autotrash/reduced motion (would otherwise go to bestiary)
+            if (compressedState)
+                invPage.LinkMap[47].Down = TerramonPointID.PartyCollapse;
+
+            //set navigation from bestiary button to inventoryparty items (rather than inventory slot 47)
+            invPage.LinkMap[GamepadPointID.BestiaryMenu].Up = compressedState || reducedMotion
+                ? TerramonPointID.PartyCollapse
+                : TerramonPointID.Party5;
+
+            //set nav input for Pokédex icon
+            if (Main.GameModeInfo.IsJourneyMode)
+            {
+                if (hasAutoTrash)
+                {
+                    invPage.LinkMap[GamepadPointID.CreativeMenuToggle].Down = TerramonPointID.HubUI;
+                    invPage.LinkMap[GamepadPointID.CreativeMenuToggle].Right =
+                        reducedMotion ? TerramonPointID.Party0 : TerramonPointID.PartyCollapse;
+                }
+                else
+                {
+                    invPage.LinkMap[41].Down = TerramonPointID.HubUI;
+                    invPage.LinkMap[GamepadPointID.CreativeMenuToggle].Right = TerramonPointID.HubUI;
+                }
+            }
             else
-                invPage.LinkMap[GamepadPointID.TrashItem].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[74].Value, false,
-                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
-        };
+                invPage.LinkMap[40].Down = TerramonPointID.HubUI;
+
+            //Set trash slot left input if auto trash isn't installed
+            if (!hasAutoTrash)
+            {
+                if (collapseButtonPoint == 48)
+                    invPage.LinkMap[GamepadPointID.TrashItem].Left = TerramonPointID.PartyCollapse;
+                else
+                    invPage.LinkMap[GamepadPointID.TrashItem].Left = TerramonPointID.Party5;
+            }
+        }
+        
+        //modify trash slot hint if a Pokémon is held within the PC
+        if (PCInterface.Active && TooltipOverlay.GetHeldPokemon(out var source) != null)
+            invPage.LinkMap[GamepadPointID.TrashItem].OnSpecialInteracts += () => PlayerInput.BuildCommand(
+                Language.GetTextValue("Mods.Terramon.ControllerHints.Release"), false,
+                PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+        else
+            invPage.LinkMap[GamepadPointID.TrashItem].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[74].Value, false,
+                PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
     }
 }
 
