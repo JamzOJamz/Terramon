@@ -11,6 +11,7 @@ using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
 
@@ -33,7 +34,7 @@ public class InventoryParty : SmartUIState
     private readonly LocalizedText _showPartyLocalizedText = Language.GetText("Mods.Terramon.GUI.Inventory.ShowParty");
     private readonly ITweener[] _toggleTweens = new ITweener[3];
 
-    private bool _isCompressed;
+    public static bool IsCompressed { get; private set; }
     private UIHoverImageButton _openPokedexButton;
     private UIHoverImageButton _toggleSlotsButton;
 
@@ -69,7 +70,7 @@ public class InventoryParty : SmartUIState
         _reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
         if (_reducedMotion)
         {
-            _isCompressed = true;
+            IsCompressed = true;
             _toggleSlotsButton = new UIHoverImageButton(PartySlotBallGreyedTexture, _showPartyLocalizedText);
         }
         else
@@ -116,7 +117,7 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.OnLeftClick += ToggleSlotsWhenDisabled;
         _toggleSlotsButton.Rotation = 0;
 
-        if (!_isCompressed) _toggleSlotsButton.SetImage(PartySlotBallGreyedTexture);
+        if (!IsCompressed) _toggleSlotsButton.SetImage(PartySlotBallGreyedTexture);
 
         // Show party slots when in PC mode even when compressed
         if (!_reducedMotion)
@@ -141,7 +142,7 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.OnLeftClick += ToggleSlots;
         _toggleSlotsButton.Rotation = 0;
 
-        if (!_isCompressed)
+        if (!IsCompressed)
         {
             _toggleSlotsButton.SetImage(PartySlotBallTexture);
         }
@@ -166,15 +167,15 @@ public class InventoryParty : SmartUIState
     {
         if (_toggleTweens[1] is { IsRunning: true }) return;
 
-        SoundEngine.PlaySound(_isCompressed ? SoundID.MenuOpen : SoundID.MenuClose);
-        _isCompressed = !_isCompressed;
-        _toggleSlotsButton.SetImage(_isCompressed ? PartySlotBallGreyedTexture : PartySlotBallTexture);
-        var startingAlpha = (float)_isCompressed.ToInt();
+        SoundEngine.PlaySound(IsCompressed ? SoundID.MenuOpen : SoundID.MenuClose);
+        IsCompressed = !IsCompressed;
+        _toggleSlotsButton.SetImage(IsCompressed ? PartySlotBallGreyedTexture : PartySlotBallTexture);
+        var startingAlpha = (float)IsCompressed.ToInt();
 
         var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
         if (reducedMotion)
         {
-            _toggleSlotsButton.SetHoverText(_isCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
+            _toggleSlotsButton.SetHoverText(IsCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
             foreach (var slot in CustomSlots)
                 slot.Color = Color.White * (1 - startingAlpha);
             return;
@@ -188,15 +189,15 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.Height.Set(36, 0);
         _toggleSlotsButton.Rotation = 0;
         var endRotation = (float)Math.PI * 2f;
-        if (!_isCompressed) endRotation *= -1;
+        if (!IsCompressed) endRotation *= -1;
         _toggleTweens[0] = Tween.To(() => _toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x,
             endRotation, 0.35f);
         var toggleTween = Tween.To(() => _toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
-                _isCompressed ? 404 : 118, 0.6f)
+                IsCompressed ? 404 : 118, 0.6f)
             .SetEase(Ease.OutExpo);
         toggleTween.OnComplete = () =>
         {
-            _toggleSlotsButton.SetHoverText(_isCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
+            _toggleSlotsButton.SetHoverText(IsCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);
             _toggleSlotsButton.SetHoverImage(PartySlotBallHoverTexture);
             IgnoresMouseInteraction = false;
         };
@@ -209,7 +210,9 @@ public class InventoryParty : SmartUIState
                 slot.Color = newColor;
                 slot.Update(null);
             }
-        }, (!_isCompressed).ToInt(), 0.35f);
+        }, (!IsCompressed).ToInt(), 0.35f);
+        
+        //UILinkPointNavigator.ChangePoint(9607);
     }
 
     private static void ToggleSlotsWhenDisabled(UIMouseEvent evt, UIElement listeningelement)
@@ -303,6 +306,8 @@ internal sealed class CustomPartyItemSlot : UIImage
     private static readonly Asset<Texture2D> PartySlotBgEmptyTexture;
     private static readonly Asset<Texture2D> PartySlotBgTexture;
     private static readonly Asset<Texture2D> PartySlotBgClickedTexture;
+    private static readonly Asset<Texture2D> PartySlotBgEmptyHoverTexture;
+    private static readonly Asset<Texture2D> PartySlotBgHoverTexture;
 
     private static CustomPartyItemSlot _initialSlot;
 
@@ -317,6 +322,8 @@ internal sealed class CustomPartyItemSlot : UIImage
         PartySlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmpty");
         PartySlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBg");
         PartySlotBgClickedTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgClicked");
+        PartySlotBgEmptyHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmptyHover");
+        PartySlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgHover");
     }
 
     public CustomPartyItemSlot(int index) : base(PartySlotBgEmptyTexture)
@@ -571,13 +578,22 @@ internal sealed class CustomPartyItemSlot : UIImage
     {
         base.Update(gameTime);
         IgnoresMouseInteraction = Color.A < 255;
-        if (Data == null) return;
-        _minispriteImage.Color = Color;
-        if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
-            directUseItem.AffectedByPokemonDirectUse(Data))
-            SetImage(PartySlotBgClickedTexture);
-        else if (!_pretendToBeEmptyState)
-            SetImage(PartySlotBgTexture);
+        
+        if (Data != null)
+            _minispriteImage.Color = Color;
+        
+        if (IsMouseHovering && UILinkPointNavigator.InUse)
+            SetImage(_pretendToBeEmptyState || Data == null ? PartySlotBgEmptyHoverTexture : PartySlotBgHoverTexture);
+        else if (Data != null)
+        {
+            if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
+                     directUseItem.AffectedByPokemonDirectUse(Data))
+                SetImage(PartySlotBgClickedTexture);
+            else if (!_pretendToBeEmptyState)
+                SetImage(PartySlotBgTexture);
+        }
+        else
+            SetImage(PartySlotBgEmptyTexture);
     }
 
     public override void Draw(SpriteBatch spriteBatch)

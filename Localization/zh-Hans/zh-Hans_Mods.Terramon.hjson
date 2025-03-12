@@ -588,6 +588,9 @@ Keybinds: {
 	ToggleParty.DisplayName: 队伍
 	OpenPokedex.DisplayName: 宝可梦图鉴
 	OpenPokedexEntry.DisplayName: 打开宝可梦的图鉴介绍
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 
 Tiles: {
