@@ -199,8 +199,8 @@ public class PCInterface : SmartUIState
             
             if (UILinkPointNavigator.InUse)
             {;
-                Main.clrInput(); //TODO: localisation
-                UIVirtualKeyboard uIVirtualKeyboard = new UIVirtualKeyboard("Rename Box", _boxNameText.Text,
+                Main.clrInput();
+                UIVirtualKeyboard uIVirtualKeyboard = new UIVirtualKeyboard(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
                     text =>
                     {
                         SetNameForCurrentBox(text);

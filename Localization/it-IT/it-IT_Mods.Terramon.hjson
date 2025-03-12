@@ -215,6 +215,8 @@ GUI: {
 		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
 	}
 
+	// PC.RenameLabel: Rename Box
+
 	Starter: {
 		// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
 		// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
@@ -263,6 +265,8 @@ GUI: {
 		// Weight: Weight
 		// Entry: Entry
 	}
+
+	// ControllerHints.Release: Release
 }
 
 CommonTooltips: {
@@ -676,7 +680,6 @@ NPCs: {
 }
 
 // WorldGen.ItemsPass: Scattering candies
-// ControllerHints.Release: Release
 
 Misc: {
 	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!

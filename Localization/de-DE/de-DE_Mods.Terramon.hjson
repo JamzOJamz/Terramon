@@ -215,6 +215,8 @@ GUI: {
 		CannotRemoveLastPokemon: Dein Team muss mindestens ein Pokémon enthalten!
 	}
 
+	// PC.RenameLabel: Rename Box
+
 	Starter: {
 		Title: Willkommen in der Welt der Pokémon! Danke, dass du die Terramon-Mod installiert hast!
 		Subtitle: Bitte wähle dein Starter-Pokémon, um dein Abenteuer zu beginnen!
@@ -263,6 +265,8 @@ GUI: {
 		Weight: Gewicht
 		Entry: Eintrag
 	}
+
+	// ControllerHints.Release: Release
 }
 
 CommonTooltips: {
@@ -676,7 +680,6 @@ NPCs: {
 }
 
 WorldGen.ItemsPass: Streut Süßigkeiten
-// ControllerHints.Release: Release
 
 Misc: {
 	CatchSuccess: Geschafft! [c/{0}:{1}] wurde gefangen!
