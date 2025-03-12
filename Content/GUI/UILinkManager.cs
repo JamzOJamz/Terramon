@@ -1,5 +1,6 @@
 using Terramon.Content.Configs;
 using Terramon.Content.GUI;
+using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.GameInput;
 using Terraria.UI.Gamepad;
 
@@ -31,7 +32,7 @@ public class UILinkManager : ILoadable
         var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
         invPage.UpdateEvent += delegate
         {
-            //whether or not the party is functionally compressed
+            //whether the party is functionally compressed
             var compressedState = InventoryParty.IsCompressed && !InventoryParty.InPCMode;
             
             //if party is visible, remap slot nav inputs to go to party buttons
@@ -111,7 +112,7 @@ public class UILinkManager : ILoadable
         //add update events for new link points (anything that needs changing during runtime)
         partyPage.UpdateEvent += delegate
         {
-            //whether or not the party is functionally compressed
+            //whether the party is functionally compressed
             var compressedState = InventoryParty.IsCompressed && !InventoryParty.InPCMode;
             
             //have to set position in case gui scale has changed (even though slot position doesn't)
@@ -125,9 +126,10 @@ public class UILinkManager : ILoadable
                     partyPage.LinkMap[9600 + i].Down = 310;
                 
                 //set controller hints based on slot state
-                if (TooltipOverlay.GetHeldPokemon(out var source) != null)
+                var heldPokemon = TooltipOverlay.GetHeldPokemon(out var source);
+                if (heldPokemon != null)
                 {
-                    if (TerramonPlayer.LocalPlayer.Party[i] == null) //TODO: make this work for slots that are set to appear empty
+                    if (TerramonPlayer.LocalPlayer.Party[i] != null && heldPokemon != TerramonPlayer.LocalPlayer.Party[i])
                         partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[66].Value, false,
                         PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
                     else
@@ -135,8 +137,19 @@ public class UILinkManager : ILoadable
                             PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
                 }
                 else if (TerramonPlayer.LocalPlayer.Party[i] != null)
-                    partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[54].Value, false,
-                        PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                {
+                    if (Main.mouseItem.ModItem is IPokemonDirectUse item)
+                    {
+                        if (item.AffectedByPokemonDirectUse(TerramonPlayer.LocalPlayer.Party[i]))
+                            partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[79].Value, false,
+                                    PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                        else
+                            partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => "";
+                    }
+                    else
+                        partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[54].Value, false,
+                            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+                }
                 else
                     partyPage.LinkMap[9600 + i].OnSpecialInteracts += () => "";
             }
