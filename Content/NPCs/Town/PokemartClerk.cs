@@ -36,8 +36,8 @@ public class PokemartClerk : ModNPC
 
         Main.npcFrameCount[Type] = 26; // The amount of frames the NPC has
         NPCID.Sets.ExtraFramesCount[Type] =
-            9; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
-        NPCID.Sets.AttackFrameCount[Type] = 4;
+            10; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
+        NPCID.Sets.AttackFrameCount[Type] = 5;
         NPCID.Sets.DangerDetectRange[Type] =
             700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
         NPCID.Sets.AttackType[Type] = -1;
