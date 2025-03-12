@@ -11,10 +11,12 @@ using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
 using Terraria.GameInput;
 using Terraria.Initializers;
 using Terraria.Localization;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
 
@@ -194,7 +196,33 @@ public class PCInterface : SmartUIState
         _renameBoxButton.OnLeftClick += (_, _) =>
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-
+            
+            if (UILinkPointNavigator.InUse)
+            {;
+                Main.clrInput(); //TODO: localisation
+                UIVirtualKeyboard uIVirtualKeyboard = new UIVirtualKeyboard("Rename Box", _boxNameText.Text,
+                    text =>
+                    {
+                        SetNameForCurrentBox(text);
+                        _boxNameText.SetText(GetNameForCurrentBox());
+                        UILinkPointNavigator.ChangePoint(TerramonPointID.PCRename);
+                        Main.InGameUI.SetState(null);
+                        Main.inFancyUI = false;
+                    }, delegate
+                    {
+                        ExitRenameMode();
+                        UILinkPointNavigator.ChangePoint(TerramonPointID.PCRename);
+                        Main.InGameUI.SetState(null);
+                        Main.inFancyUI = false;
+                    }, 0, false);
+                
+                uIVirtualKeyboard.SetMaxInputLength(27);
+                Main.InGameUI.SetState(uIVirtualKeyboard);
+                UILinkPointNavigator.GoToDefaultPage(1);
+                Main.inFancyUI = true;
+                return;
+            }
+            
             if (!_inColorPickerMode)
             {
                 // Rename the box
@@ -505,6 +533,8 @@ internal sealed class CustomPCItemSlot : UIImage
 {
     private static readonly Asset<Texture2D> PCSlotBgEmptyTexture;
     private static readonly Asset<Texture2D> PCSlotBgTexture;
+    private static readonly Asset<Texture2D> PCSlotBgEmptyHoverTexture;
+    private static readonly Asset<Texture2D> PCSlotBgHoverTexture;
     private PCBox _box;
     private int _index;
 
@@ -516,6 +546,8 @@ internal sealed class CustomPCItemSlot : UIImage
     {
         PCSlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgEmpty");
         PCSlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBg");
+        PCSlotBgEmptyHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgEmptyHover");
+        PCSlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgHover");
     }
 
     public CustomPCItemSlot() : base(PCSlotBgEmptyTexture)
@@ -623,6 +655,14 @@ internal sealed class CustomPCItemSlot : UIImage
                 SetData(data);
             }
         }
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        if (UILinkPointNavigator.InUse && IsMouseHovering)
+            SetImage(Data != null ? PCSlotBgHoverTexture : PCSlotBgEmptyHoverTexture);
+        else
+            SetImage(Data != null ? PCSlotBgTexture : PCSlotBgEmptyTexture);
     }
 
     public override void Draw(SpriteBatch spriteBatch)

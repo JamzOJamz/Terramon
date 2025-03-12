@@ -61,7 +61,7 @@ public class UILinkManager : ILoadable
         }
         
         //add navigation for party end slots
-        if (!hasAutoTrash)
+        if (!hasAutoTrash && !reducedMotion)
             partyPage.LinkMap[TerramonPointID.Party5].Right = GamepadPointID.TrashItem;
         
         //add other inventory buttons (collapse button and pokedex button)
@@ -131,6 +131,7 @@ public class UILinkManager : ILoadable
             if (hasAutoTrash) collapseButtonOffset =+ 1;
             
             partyPage.LinkMap[TerramonPointID.PartyCollapse].Position = (FirstSlotPos + new Vector2(48 * (2 + collapseButtonOffset), 0)) * Main.UIScale;
+            partyPage.LinkMap[TerramonPointID.PartyCollapse].Left = reducedMotion && !compressedState ? TerramonPointID.Party5 : TerramonPointID.HubUI;
 
             if (compressedState || reducedMotion)
             {
@@ -189,11 +190,22 @@ public class UILinkManager : ILoadable
                     newPoint.Down = -1;
                 if (y == 0)
                     newPoint.Up = TerramonPointID.Party0 + x;
-                if (reducedMotion)
-                    newPoint.Position -= new Vector2(48, 0);
                 pcPage.LinkMap.Add(pointID, newPoint);
             }
         }
+        
+        pcPage.LinkMap.Add(TerramonPointID.PCLeft, new UILinkPoint(TerramonPointID.PCLeft, true,
+            TerramonPointID.PC5, TerramonPointID.PCRight, -1, TerramonPointID.PCColor));
+        pcPage.LinkMap.Add(TerramonPointID.PCRight, new UILinkPoint(TerramonPointID.PCRight, true,
+            TerramonPointID.PCLeft,-1, -1, TerramonPointID.PCColor));
+        pcPage.LinkMap.Add(TerramonPointID.PCColor, new UILinkPoint(TerramonPointID.PCColor, true,
+            TerramonPointID.PC11,-1, TerramonPointID.PCLeft, TerramonPointID.PCRename));
+        pcPage.LinkMap.Add(TerramonPointID.PCRename, new UILinkPoint(TerramonPointID.PCRename, true,
+            TerramonPointID.PC17,-1, TerramonPointID.PCColor, -1));
+
+        pcPage.LinkMap[TerramonPointID.PC5].Right = TerramonPointID.PCLeft;
+        pcPage.LinkMap[TerramonPointID.PC11].Right = TerramonPointID.PCColor;
+        pcPage.LinkMap[TerramonPointID.PC17].Right = TerramonPointID.PCRename;
 
         pcPage.UpdateEvent += delegate
         {
@@ -204,7 +216,7 @@ public class UILinkManager : ILoadable
                     var pointID = TerramonPointID.PC0 + (x + y * 6);
                     
                     //have to set this in UpdateEvent in case gui scale changes
-                    pcPage.LinkMap[pointID].Position = (FirstSlotPos + ((new Vector2(3, 1) + new Vector2(x, y)) * 48)) * Main.UIScale;
+                    pcPage.LinkMap[pointID].Position = (FirstSlotPos + ((new Vector2(reducedMotion ? 2 : 3, 1) + new Vector2(x, y)) * 48)) * Main.UIScale;
                     
                     //set controller hints based on slot state
                     var heldPokemon = TooltipOverlay.GetHeldPokemon(out var source);
@@ -226,6 +238,11 @@ public class UILinkManager : ILoadable
                         pcPage.LinkMap[pointID].OnSpecialInteracts += () => "";
                 }
             }
+
+            pcPage.LinkMap[TerramonPointID.PCLeft].Position = new Vector2(420, 356) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCRight].Position = new Vector2(452, 356) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCColor].Position = new Vector2(420, 390) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCRename].Position = new Vector2(420, 416) * Main.UIScale;
         };
         
         UILinkPointNavigator.RegisterPage(pcPage, TerramonPageID.PC);
@@ -360,4 +377,8 @@ public static class TerramonPointID
     public const int PC27 = 9637;
     public const int PC28 = 9638;
     public const int PC29 = 9639;
+    public const int PCLeft = 9640;
+    public const int PCRight = 9641;
+    public const int PCColor = 9642;
+    public const int PCRename = 9643;
 }
