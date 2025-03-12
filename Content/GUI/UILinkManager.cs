@@ -48,6 +48,10 @@ public class UILinkManager : ILoadable
                 if (hasAutoTrash) collapseButtonPoint -= 1;
                 invPage.LinkMap[collapseButtonPoint].Down = 9606;
 
+                //set slot 47 regardless of autotrash/reduced motion (would otherwise go to bestiary)
+                if (compressedState)
+                    invPage.LinkMap[47].Down = 9606;
+
                 //set nav input for Pokédex icon
                 if (Main.GameModeInfo.IsJourneyMode)
                 {
@@ -116,6 +120,10 @@ public class UILinkManager : ILoadable
                 partyPage.LinkMap[9600 + i].Position =
                     (FirstSlotPos + new Vector2(48 * (3 + i - slotOffset), 0)) * Main.UIScale;
                 
+                //add navigation to bestiary button
+                if (i >= 4)
+                    partyPage.LinkMap[9600 + i].Down = 310;
+                
                 //set controller hints based on slot state
                 if (TooltipOverlay.GetHeldPokemon(out var source) != null)
                 {
@@ -144,6 +152,7 @@ public class UILinkManager : ILoadable
 
             if (compressedState || reducedMotion)
             {
+                partyPage.LinkMap[9606].Down = 310;
                 if (hasAutoTrash)
                 {
                     partyPage.LinkMap[9606].Right = -1;
@@ -157,6 +166,7 @@ public class UILinkManager : ILoadable
             }
             else
             {
+                partyPage.LinkMap[9606].Down = -1;
                 partyPage.LinkMap[9606].Right = 9600;
                 partyPage.LinkMap[9606].Up = 42;
             }
