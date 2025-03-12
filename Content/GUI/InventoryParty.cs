@@ -584,7 +584,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         
         if (IsMouseHovering && UILinkPointNavigator.InUse)
             SetImage(_pretendToBeEmptyState || Data == null ? PartySlotBgEmptyHoverTexture : PartySlotBgHoverTexture);
-        else if (Data != null)
+        else if (!_pretendToBeEmptyState && Data != null)
         {
             if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
                      directUseItem.AffectedByPokemonDirectUse(Data))
