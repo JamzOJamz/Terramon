@@ -3,18 +3,21 @@ using Terramon.Content.GUI;
 using Terraria.GameInput;
 using Terraria.UI.Gamepad;
 
-namespace Terramon.Core.Systems;
+namespace Terramon.Content.GUI;
 
-public class UILinkSystem : ModSystem
+public class UILinkManager : ILoadable
 {
     //reference position for first slot in the row (default Pokédex position)
     private static readonly Vector2 FirstSlotPos = new(51, 291);
     
-    public override void Load()
+    public void Load(Mod mod)
     {
         SetupPartyUIPage();
     }
-    
+
+    public void Unload() { }
+
+
     private static void SetupPartyUIPage()
     {
         //these vars require reload so can be used in UpdateEvent without issues
