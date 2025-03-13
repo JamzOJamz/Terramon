@@ -16,16 +16,30 @@ public class UILinkManager : ILoadable
     {
         SetupPartyUIPage();
         SetupPCUIPage();
+        SetupHubUIPage();
         
         //add delegate to inventory updateevent
         var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
         invPage.UpdateEvent += UpdateInventory;
+        
+        //add hacky page switches
+        var leftPage = new UILinkPage();
+        leftPage.LinkMap.Add(TerramonPointID.HackyPointLeft, new UILinkPoint(TerramonPointID.HackyPointLeft, false, -1, -1, -1, -1));
+        UILinkPointNavigator.RegisterPage(leftPage, TerramonPageID.HackySwitchPageLeft);
+        
+        var rightPage = new UILinkPage();
+        rightPage.LinkMap.Add(TerramonPointID.HackyPointRight, new UILinkPoint(TerramonPointID.HackyPointRight, false, -1, -1, -1, -1));
+        UILinkPointNavigator.RegisterPage(rightPage, TerramonPageID.HackySwitchPageRight);
     }
 
     public void Unload()
     {
         RemovePage(TerramonPageID.Party);
         RemovePage(TerramonPageID.PC);
+        RemovePage(TerramonPageID.HubUI);
+        RemovePage(TerramonPageID.Pokedex);
+        RemovePage(TerramonPageID.HackySwitchPageLeft);
+        RemovePage(TerramonPageID.HackySwitchPageRight);
         UILinkPointNavigator.Pages[GamepadPageID.Inventory].UpdateEvent -= UpdateInventory;
     }
 
@@ -253,7 +267,7 @@ public class UILinkManager : ILoadable
                         pcPage.LinkMap[pointID].OnSpecialInteracts += () => "";
                 }
             }
-
+            
             pcPage.LinkMap[TerramonPointID.PCLeft].Position = (new Vector2(420, 356) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
             pcPage.LinkMap[TerramonPointID.PCRight].Position = (new Vector2(452, 356) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
             pcPage.LinkMap[TerramonPointID.PCColor].Position = (new Vector2(420, 390) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
@@ -270,6 +284,49 @@ public class UILinkManager : ILoadable
             for (int i = TerramonPointID.Party0; i <= TerramonPointID.Party5; i++)
                 partyPage.LinkMap[i].Down = i + 10;
         };
+    }
+
+    //most of the logic + positioning for this page is handled in HubUI as it requires vars we don't have access to
+    private static void SetupHubUIPage()
+    {
+        //Add new page to control HubUI items
+        var hubPage = new UILinkPage();
+
+        hubPage.LinkMap.Add(TerramonPointID.HubTab0, new UILinkPoint(TerramonPointID.HubTab0, true, -1, TerramonPointID.HubTab1, -1, TerramonPointID.PokedexMin));
+        hubPage.LinkMap.Add(TerramonPointID.HubTab1, new UILinkPoint(TerramonPointID.HubTab1, true, TerramonPointID.HubTab0, TerramonPointID.HubTab2, -1, -1));
+        hubPage.LinkMap.Add(TerramonPointID.HubTab2, new UILinkPoint(TerramonPointID.HubTab2, true, TerramonPointID.HubTab1, TerramonPointID.HubTab3, -1, -1));
+        hubPage.LinkMap.Add(TerramonPointID.HubTab3, new UILinkPoint(TerramonPointID.HubTab3, true, TerramonPointID.HubTab2, -1, -1, -1));
+        
+        UILinkPointNavigator.RegisterPage(hubPage, TerramonPageID.HubUI);
+        
+
+        //Add new page to control Pokédex items
+        var pokedexPage = new UILinkPage();
+        pokedexPage.PageOnLeft = TerramonPageID.HackySwitchPageLeft;
+        pokedexPage.PageOnRight = TerramonPageID.HackySwitchPageRight;
+        
+        //i'm setting this for the whole page since it'll apply to every button
+        pokedexPage.OnSpecialInteracts  += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
+            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //select
+
+        for (int i = TerramonPointID.PokedexMin; i <= TerramonPointID.PokedexMax; i++)
+            pokedexPage.LinkMap.Add(i, new UILinkPoint(i, true, i - 1, i + 1, i - 6, i + 6));
+        
+        //TODO: set up to TerramonPointID.HubTab0 when multiple functional tabs exist
+        pokedexPage.LinkMap.Add(TerramonPointID.PokedexLeft, new UILinkPoint(TerramonPointID.PokedexLeft, true,
+            -1, TerramonPointID.PokedexRight, -1, TerramonPointID.PokedexMin));
+        pokedexPage.LinkMap.Add(TerramonPointID.PokedexRight, new UILinkPoint(TerramonPointID.PokedexRight, true,
+            TerramonPointID.PokedexLeft, TerramonPointID.WorldDexToggle, -1, TerramonPointID.PokedexMin + 1));
+        pokedexPage.LinkMap.Add(TerramonPointID.WorldDexToggle, new UILinkPoint(TerramonPointID.WorldDexToggle, true,
+            TerramonPointID.PokedexRight, -1, -1, TerramonPointID.PokedexMin + 5));
+        
+        UILinkPointNavigator.RegisterPage(pokedexPage, TerramonPageID.Pokedex);
+    }
+
+    public static void ResetPokedexSlots()
+    {
+        for (int i = TerramonPointID.PokedexMin; i <= TerramonPointID.PokedexMax; i++)
+            UILinkPointNavigator.Pages[TerramonPageID.Pokedex].LinkMap[i] = new UILinkPoint(i, true, i - 1, i + 1, i - 6, i + 6);
     }
 
     private static void UpdateInventory()
@@ -333,6 +390,14 @@ public class UILinkManager : ILoadable
                 else
                     invPage.LinkMap[GamepadPointID.TrashItem].Left = TerramonPointID.Party5;
             }
+            
+            //Set emote button to loop back around to pokedex button (would otherwise go to trash)
+            if (Main.GameModeInfo.IsJourneyMode)
+                UILinkPointNavigator.Pages[GamepadPageID.Inventory].LinkMap[GamepadPointID.EmoteMenu].Right =
+                    GamepadPointID.CreativeMenuToggle;
+            else
+                UILinkPointNavigator.Pages[GamepadPageID.Inventory].LinkMap[GamepadPointID.EmoteMenu].Right =
+                    TerramonPointID.HubUI;
         }
         
         //modify trash slot hint if a Pokémon is held within the PC
@@ -350,10 +415,16 @@ public static class TerramonPageID
 {
     public const int Party = 2700;
     public const int PC = 2701;
+    public const int HubUI = 2702;
+    public const int Pokedex = 2703;
+    public const int HackySwitchPageLeft = 2798;
+    public const int HackySwitchPageRight = 2799;
 }
 
 public static class TerramonPointID
 {
+    public const int HackyPointLeft = 9598;
+    public const int HackyPointRight = 9599;
     public const int Party0 = 9600;
     public const int Party1 = 9601;
     public const int Party2 = 9602;
@@ -396,4 +467,14 @@ public static class TerramonPointID
     public const int PCRight = 9641;
     public const int PCColor = 9642;
     public const int PCRename = 9643;
+    public const int HubTab0 = 9650;
+    public const int HubTab1 = 9651;
+    public const int HubTab2 = 9652;
+    public const int HubTab3 = 9653;
+    public const int PokedexMin = 9654; //Pokédex is allowed to span 9654-9754
+    public const int PokedexMax = 9754;
+    public const int PokedexLeft = 9755;
+    public const int PokedexRight = 9756;
+    public const int WorldDexToggle = 9757;
+    public const int PokedexScrollbar = 9758;
 }
