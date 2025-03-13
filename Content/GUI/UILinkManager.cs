@@ -49,6 +49,8 @@ public class UILinkManager : ILoadable
         
         //Add new page to control party slot items
         var partyPage = new UILinkPage();
+        partyPage.PageOnLeft = GamepadPageID.CraftSmall;
+        partyPage.PageOnRight = GamepadPageID.Ammo;
         
         //Add tooltips for special inventory interactions (e.g. switch page)
         partyPage.OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[56].Value, false, PlayerInput.ProfileGamepadUI.KeyStatus["Inventory"]) + PlayerInput.BuildCommand(Lang.misc[64].Value, true, PlayerInput.ProfileGamepadUI.KeyStatus["HotbarMinus"], PlayerInput.ProfileGamepadUI.KeyStatus["HotbarPlus"]);
@@ -171,6 +173,8 @@ public class UILinkManager : ILoadable
         
         //Add new page to control PC items
         var pcPage = new UILinkPage();
+        pcPage.PageOnLeft = TerramonPageID.Party;
+        pcPage.PageOnRight = TerramonPageID.Party;
         
         //Add tooltips for special inventory interactions (e.g. switch page)
         pcPage.OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[56].Value, false, PlayerInput.ProfileGamepadUI.KeyStatus["Inventory"]) + PlayerInput.BuildCommand(Lang.misc[64].Value, true, PlayerInput.ProfileGamepadUI.KeyStatus["HotbarMinus"], PlayerInput.ProfileGamepadUI.KeyStatus["HotbarPlus"]);
@@ -196,12 +200,23 @@ public class UILinkManager : ILoadable
         
         pcPage.LinkMap.Add(TerramonPointID.PCLeft, new UILinkPoint(TerramonPointID.PCLeft, true,
             TerramonPointID.PC5, TerramonPointID.PCRight, -1, TerramonPointID.PCColor));
+        pcPage.LinkMap[TerramonPointID.PCLeft].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
+            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+        
         pcPage.LinkMap.Add(TerramonPointID.PCRight, new UILinkPoint(TerramonPointID.PCRight, true,
             TerramonPointID.PCLeft,-1, -1, TerramonPointID.PCColor));
+        pcPage.LinkMap[TerramonPointID.PCRight].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
+            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+        
         pcPage.LinkMap.Add(TerramonPointID.PCColor, new UILinkPoint(TerramonPointID.PCColor, true,
             TerramonPointID.PC11,-1, TerramonPointID.PCLeft, TerramonPointID.PCRename));
+        pcPage.LinkMap[TerramonPointID.PCColor].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
+            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+        
         pcPage.LinkMap.Add(TerramonPointID.PCRename, new UILinkPoint(TerramonPointID.PCRename, true,
             TerramonPointID.PC17,-1, TerramonPointID.PCColor, -1));
+        pcPage.LinkMap[TerramonPointID.PCRename].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
+            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
 
         pcPage.LinkMap[TerramonPointID.PC5].Right = TerramonPointID.PCLeft;
         pcPage.LinkMap[TerramonPointID.PC11].Right = TerramonPointID.PCColor;

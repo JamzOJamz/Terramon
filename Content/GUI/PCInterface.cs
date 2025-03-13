@@ -57,6 +57,7 @@ public class PCInterface : SmartUIState
     private static bool _pendingColorChange;
     private static bool _inRenameMode;
     private static UITextField _textInput;
+    private static bool _hasChangedPage;
 
     static PCInterface()
     {
@@ -359,6 +360,13 @@ public class PCInterface : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
+        //Move the controller cursor to PC slot 0 when the UILinkPointNavigator becomes active
+        if (UILinkPointNavigator.InUse && !_hasChangedPage)
+        {
+            UILinkPointNavigator.ChangePoint(TerramonPointID.PC0);
+            _hasChangedPage = true;
+        }
+            
         if (_inRenameMode)
         {
             _boxNameText.SetText(_textInput.CurrentValue);
@@ -412,6 +420,10 @@ public class PCInterface : SmartUIState
 
         // Update hover text for the arrow buttons
         UpdateArrowButtonsHoverText();
+
+        //mark set page to false (so gamepad page can be correctly set)
+        _hasChangedPage = false;
+
     }
     
     public static bool SilenceCloseSound { get; set; }
