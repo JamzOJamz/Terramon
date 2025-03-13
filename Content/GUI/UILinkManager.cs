@@ -254,10 +254,10 @@ public class UILinkManager : ILoadable
                 }
             }
 
-            pcPage.LinkMap[TerramonPointID.PCLeft].Position = new Vector2(420, 356) * Main.UIScale;
-            pcPage.LinkMap[TerramonPointID.PCRight].Position = new Vector2(452, 356) * Main.UIScale;
-            pcPage.LinkMap[TerramonPointID.PCColor].Position = new Vector2(420, 390) * Main.UIScale;
-            pcPage.LinkMap[TerramonPointID.PCRename].Position = new Vector2(420, 416) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCLeft].Position = (new Vector2(420, 356) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCRight].Position = (new Vector2(452, 356) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCColor].Position = (new Vector2(420, 390) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
+            pcPage.LinkMap[TerramonPointID.PCRename].Position = (new Vector2(420, 416) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
         };
         
         UILinkPointNavigator.RegisterPage(pcPage, TerramonPageID.PC);
