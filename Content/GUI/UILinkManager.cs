@@ -228,13 +228,23 @@ public class UILinkManager : ILoadable
             PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
         
         pcPage.LinkMap.Add(TerramonPointID.PCRename, new UILinkPoint(TerramonPointID.PCRename, true,
-            TerramonPointID.PC17,-1, TerramonPointID.PCColor, -1));
+            TerramonPointID.PC17,-1, TerramonPointID.PCColor, TerramonPointID.PCColorH));
         pcPage.LinkMap[TerramonPointID.PCRename].OnSpecialInteracts += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
             PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);
+        
+        //TODO: add clipboard/random/etc uilinkpoints
+        pcPage.LinkMap.Add(TerramonPointID.PCColorH, new UILinkPoint(TerramonPointID.PCColorH, true,
+            -1, -1, TerramonPointID.PCRename, TerramonPointID.PCColorS));
+        pcPage.LinkMap.Add(TerramonPointID.PCColorS, new UILinkPoint(TerramonPointID.PCColorS, true,
+            -1, -1, TerramonPointID.PCColorH, TerramonPointID.PCColorV));
+        pcPage.LinkMap.Add(TerramonPointID.PCColorV, new UILinkPoint(TerramonPointID.PCColorV, true,
+            -1, -1, TerramonPointID.PCColorS, -1));
 
         pcPage.LinkMap[TerramonPointID.PC5].Right = TerramonPointID.PCLeft;
         pcPage.LinkMap[TerramonPointID.PC11].Right = TerramonPointID.PCColor;
         pcPage.LinkMap[TerramonPointID.PC17].Right = TerramonPointID.PCRename;
+        
+        pcPage.LinkMap[TerramonPointID.PCRename].Down = TerramonPointID.PCColorH;
 
         pcPage.UpdateEvent += delegate
         {
@@ -272,6 +282,18 @@ public class UILinkManager : ILoadable
             pcPage.LinkMap[TerramonPointID.PCRight].Position = (new Vector2(452, 356) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
             pcPage.LinkMap[TerramonPointID.PCColor].Position = (new Vector2(420, 390) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
             pcPage.LinkMap[TerramonPointID.PCRename].Position = (new Vector2(420, 416) + new Vector2(!reducedMotion ? 48 : 0, 0)) * Main.UIScale;
+
+            //color slider code (stolen from vanilla UILinksInitializer lmoa)
+            float interfaceDeadzoneX = PlayerInput.CurrentProfile.InterfaceDeadzoneX;
+            float stickX = PlayerInput.GamepadThumbstickLeft.X;
+            stickX = ((!(stickX < 0f - interfaceDeadzoneX) && !(stickX > interfaceDeadzoneX)) ? 0f : (MathHelper.Lerp(0f, 1f / 120f, (Math.Abs(stickX) - interfaceDeadzoneX) / (1f - interfaceDeadzoneX)) * (float)Math.Sign(stickX)));
+            int currentPoint = UILinkPointNavigator.CurrentPoint;
+            if (currentPoint == TerramonPointID.PCColorH)
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.X = MathHelper.Clamp(TerramonPlayer.LocalPlayer.ColorPickerHSL.X + stickX, 0f, 1f);
+            else if (currentPoint == TerramonPointID.PCColorS)
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Y = MathHelper.Clamp(TerramonPlayer.LocalPlayer.ColorPickerHSL.Y + stickX, 0f, 1f);
+            else if (currentPoint == TerramonPointID.PCColorV)
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Z = MathHelper.Clamp(TerramonPlayer.LocalPlayer.ColorPickerHSL.Z + stickX, 0f, 1f);
         };
         
         UILinkPointNavigator.RegisterPage(pcPage, TerramonPageID.PC);
@@ -391,7 +413,7 @@ public class UILinkManager : ILoadable
                     invPage.LinkMap[GamepadPointID.TrashItem].Left = TerramonPointID.Party5;
             }
             
-            //Set emote button to loop back around to pokedex button (would otherwise go to trash)
+            //Set emote button to loop back around to Pokédex button (would otherwise go to trash)
             if (Main.GameModeInfo.IsJourneyMode)
                 UILinkPointNavigator.Pages[GamepadPageID.Inventory].LinkMap[GamepadPointID.EmoteMenu].Right =
                     GamepadPointID.CreativeMenuToggle;
@@ -467,6 +489,9 @@ public static class TerramonPointID
     public const int PCRight = 9641;
     public const int PCColor = 9642;
     public const int PCRename = 9643;
+    public const int PCColorH = 9644;
+    public const int PCColorS = 9645;
+    public const int PCColorV = 9646;
     public const int HubTab0 = 9650;
     public const int HubTab1 = 9651;
     public const int HubTab2 = 9652;

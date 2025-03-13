@@ -30,6 +30,7 @@ public class TerramonPlayer : ModPlayer
     private bool _receivedShinyCharm;
 
     public bool HasChosenStarter;
+    public Vector3 ColorPickerHSL;
 
     public int ActivePCTileEntityID
     {
