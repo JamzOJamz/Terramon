@@ -133,8 +133,8 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema) : Terram
 
 public class PokeBannerTile : CustomPreviewTile
 {
-    // max is 226 for reference. after there's 226 banners don't do anything else cuz tiles be smart
-    private const int SupportedPokeyMenHorizontal = 6;
+    // max is 227 for reference. after there's 227 banners don't do anything else cuz tiles be smart
+    private const int SupportedPokeyMenHorizontal = 9;
     private static Asset<Texture2D> _tierUnderlay; // hmm yes real words
     public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile";
     public override void SetStaticDefaults()
