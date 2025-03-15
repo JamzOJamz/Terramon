@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.Tiles.Interactive;
 

@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
 
@@ -291,6 +292,7 @@ public class PartySidebarSlot : UIImage
     public override void RightMouseDown(UIMouseEvent evt)
     {
         base.RightMouseDown(evt);
+        if (UILinkPointNavigator.InUse) return;
         DragStart(evt);
     }
 
