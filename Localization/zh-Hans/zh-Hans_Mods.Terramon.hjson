@@ -266,7 +266,10 @@ GUI: {
 		Entry: 图鉴介绍
 	}
 
-	// ControllerHints.Release: Release
+	ControllerHints: {
+		// Release: Release
+		// SwitchPage: Switch page
+	}
 }
 
 CommonTooltips: {

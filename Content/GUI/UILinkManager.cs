@@ -313,6 +313,8 @@ public class UILinkManager : ILoadable
     {
         //Add new page to control HubUI items
         var hubPage = new UILinkPage();
+        
+        hubPage.OnSpecialInteracts  += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false, PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //select
 
         hubPage.LinkMap.Add(TerramonPointID.HubTab0, new UILinkPoint(TerramonPointID.HubTab0, true, -1, TerramonPointID.HubTab1, -1, TerramonPointID.PokedexMin));
         hubPage.LinkMap.Add(TerramonPointID.HubTab1, new UILinkPoint(TerramonPointID.HubTab1, true, TerramonPointID.HubTab0, TerramonPointID.HubTab2, -1, -1));
@@ -328,8 +330,8 @@ public class UILinkManager : ILoadable
         pokedexPage.PageOnRight = TerramonPageID.HackySwitchPageRight;
         
         //i'm setting this for the whole page since it'll apply to every button
-        pokedexPage.OnSpecialInteracts  += () => PlayerInput.BuildCommand(Lang.misc[53].Value, false,
-            PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //select
+        pokedexPage.OnSpecialInteracts  += () => PlayerInput.BuildCommand(Language.GetTextValue("Mods.Terramon.GUI.ControllerHints.SwitchPage"), false, PlayerInput.ProfileGamepadUI.KeyStatus["HotbarMinus"], PlayerInput.ProfileGamepadUI.KeyStatus["HotbarPlus"])
+                                                 + PlayerInput.BuildCommand(Lang.misc[53].Value, false, PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]); //select
 
         for (int i = TerramonPointID.PokedexMin; i <= TerramonPointID.PokedexMax; i++)
             pokedexPage.LinkMap.Add(i, new UILinkPoint(i, true, i - 1, i + 1, i - 6, i + 6));
