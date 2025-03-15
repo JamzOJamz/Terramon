@@ -677,7 +677,29 @@ internal sealed class PokedexPageDisplay : UIElement
             var col = i % _cols;
 
             var pokemon = Terramon.DatabaseV2.Pokemon.Keys.ElementAtOrDefault(i + _startItemIndex);
-            if (pokemon is 0 || pokemon > Terramon.LoadedPokemonCount) break;
+            if (pokemon is 0 || pokemon > Terramon.LoadedPokemonCount)
+            {
+                var id = TerramonPointID.PokedexMin + i;
+                
+                //if page ends early, set edge values
+                if (col != 0 && id <= TerramonPointID.PokedexMax + 1)
+                {
+                    var page = UILinkPointNavigator.Pages[TerramonPageID.Pokedex];
+                    id -= 1;
+                    
+                    page.LinkMap[id].Right = -1;
+                    
+                    //current row
+                    for (int j = 0; j <= col; j++)
+                        page.LinkMap[id - j].Down = -1;
+                    
+                    //row above
+                    for (int j = col; j < _cols; j++)
+                        page.LinkMap[id + j - 6].Down = -1;
+                }
+
+                break;
+            };
 
             var monButton = new PokedexEntryIcon(pokemon)
             {
@@ -718,20 +740,6 @@ internal sealed class PokedexPageDisplay : UIElement
 
                 if (row == _rows - 1)
                     page.LinkMap[pointID].Down = -1;
-
-                //if page ends early, set edge values
-                if (i == (_rows * _cols) - 1 && col < _cols - 1)
-                {
-                    page.LinkMap[pointID].Right = -1;
-                    
-                    //current row
-                    for (int j = 1; j <= col; j++)
-                        page.LinkMap[pointID - j].Down = -1;
-                    
-                    //row above
-                    for (int j = col + 1; j < _cols; j++)
-                        page.LinkMap[pointID + j - 6].Down = -1;
-                }
             }
         }
     }
