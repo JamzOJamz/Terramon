@@ -215,6 +215,8 @@ GUI: {
 		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
 	}
 
+	// PC.RenameLabel: Rename Box
+
 	Starter: {
 		// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
 		// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
@@ -262,6 +264,11 @@ GUI: {
 		Height: Taille
 		Weight: Poids
 		Entry: Entrée
+	}
+
+	ControllerHints: {
+		// Release: Release
+		// SwitchPage: Switch page
 	}
 }
 
@@ -588,6 +595,9 @@ Keybinds: {
 	// ToggleParty.DisplayName: Party
 	// OpenPokedex.DisplayName: Pokédex
 	// OpenPokedexEntry.DisplayName: Open Pokédex Entry For Pokémon
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 
 Tiles: {

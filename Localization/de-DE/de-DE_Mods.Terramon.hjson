@@ -215,6 +215,8 @@ GUI: {
 		CannotRemoveLastPokemon: Dein Team muss mindestens ein Pokémon enthalten!
 	}
 
+	// PC.RenameLabel: Rename Box
+
 	Starter: {
 		Title: Willkommen in der Welt der Pokémon! Danke, dass du die Terramon-Mod installiert hast!
 		Subtitle: Bitte wähle dein Starter-Pokémon, um dein Abenteuer zu beginnen!
@@ -262,6 +264,11 @@ GUI: {
 		Height: Größe
 		Weight: Gewicht
 		Entry: Eintrag
+	}
+
+	ControllerHints: {
+		// Release: Release
+		// SwitchPage: Switch page
 	}
 }
 
@@ -588,6 +595,9 @@ Keybinds: {
 	ToggleParty.DisplayName: Team
 	OpenPokedex.DisplayName: Pokédex
 	OpenPokedexEntry.DisplayName: Pokédex-Eintrag für Pokémon öffnen
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 
 Tiles: {

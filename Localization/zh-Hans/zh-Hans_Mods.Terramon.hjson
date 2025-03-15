@@ -215,6 +215,8 @@ GUI: {
 		CannotRemoveLastPokemon: 你的队伍中必须至少有一只宝可梦！
 	}
 
+	// PC.RenameLabel: Rename Box
+
 	Starter: {
 		Title: 欢迎来到宝可梦的世界！感谢你安装 Terramon 模组！
 		Subtitle: 现在，请选择你的初始宝可梦，开始你的冒险吧！
@@ -262,6 +264,11 @@ GUI: {
 		Height: 身高
 		Weight: 体重
 		Entry: 图鉴介绍
+	}
+
+	ControllerHints: {
+		// Release: Release
+		// SwitchPage: Switch page
 	}
 }
 
@@ -588,6 +595,9 @@ Keybinds: {
 	ToggleParty.DisplayName: 队伍
 	OpenPokedex.DisplayName: 宝可梦图鉴
 	OpenPokedexEntry.DisplayName: 打开宝可梦的图鉴介绍
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 
 Tiles: {

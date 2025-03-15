@@ -11,10 +11,12 @@ using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
 using Terraria.GameInput;
 using Terraria.Initializers;
 using Terraria.Localization;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
 
@@ -55,6 +57,7 @@ public class PCInterface : SmartUIState
     private static bool _pendingColorChange;
     private static bool _inRenameMode;
     private static UITextField _textInput;
+    private static bool _hasChangedPage;
 
     static PCInterface()
     {
@@ -194,9 +197,35 @@ public class PCInterface : SmartUIState
         _renameBoxButton.OnLeftClick += (_, _) =>
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-
+            
             if (!_inColorPickerMode)
             {
+                if (UILinkPointNavigator.InUse)
+                {;
+                    Main.clrInput();
+                    UIVirtualKeyboard uIVirtualKeyboard = new UIVirtualKeyboard(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
+                        text =>
+                        {
+                            SetNameForCurrentBox(text);
+                            _boxNameText.SetText(GetNameForCurrentBox());
+                            UILinkPointNavigator.ChangePoint(TerramonPointID.PCRename);
+                            Main.InGameUI.SetState(null);
+                            Main.inFancyUI = false;
+                        }, delegate
+                        {
+                            ExitRenameMode();
+                            UILinkPointNavigator.ChangePoint(TerramonPointID.PCRename);
+                            Main.InGameUI.SetState(null);
+                            Main.inFancyUI = false;
+                        }, 0, false);
+                
+                    uIVirtualKeyboard.SetMaxInputLength(27);
+                    Main.InGameUI.SetState(uIVirtualKeyboard);
+                    UILinkPointNavigator.GoToDefaultPage(1);
+                    Main.inFancyUI = true;
+                    return;
+                }
+                
                 // Rename the box
                 if (!_container.HasChild(_cancelRenameButton))
                 {
@@ -331,6 +360,13 @@ public class PCInterface : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
+        //Move the controller cursor to PC slot 0 when the UILinkPointNavigator becomes active
+        if (UILinkPointNavigator.InUse && !_hasChangedPage)
+        {
+            UILinkPointNavigator.ChangePoint(TerramonPointID.PC0);
+            _hasChangedPage = true;
+        }
+            
         if (_inRenameMode)
         {
             _boxNameText.SetText(_textInput.CurrentValue);
@@ -384,6 +420,10 @@ public class PCInterface : SmartUIState
 
         // Update hover text for the arrow buttons
         UpdateArrowButtonsHoverText();
+
+        //mark set page to false (so gamepad page can be correctly set)
+        _hasChangedPage = false;
+
     }
     
     public static bool SilenceCloseSound { get; set; }
@@ -505,6 +545,8 @@ internal sealed class CustomPCItemSlot : UIImage
 {
     private static readonly Asset<Texture2D> PCSlotBgEmptyTexture;
     private static readonly Asset<Texture2D> PCSlotBgTexture;
+    private static readonly Asset<Texture2D> PCSlotBgEmptyHoverTexture;
+    private static readonly Asset<Texture2D> PCSlotBgHoverTexture;
     private PCBox _box;
     private int _index;
 
@@ -516,6 +558,8 @@ internal sealed class CustomPCItemSlot : UIImage
     {
         PCSlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgEmpty");
         PCSlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBg");
+        PCSlotBgEmptyHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgEmptyHover");
+        PCSlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgHover");
     }
 
     public CustomPCItemSlot() : base(PCSlotBgEmptyTexture)
@@ -625,6 +669,14 @@ internal sealed class CustomPCItemSlot : UIImage
         }
     }
 
+    public override void Update(GameTime gameTime)
+    {
+        if (UILinkPointNavigator.InUse && IsMouseHovering)
+            SetImage(Data != null ? PCSlotBgHoverTexture : PCSlotBgEmptyHoverTexture);
+        else
+            SetImage(Data != null ? PCSlotBgTexture : PCSlotBgEmptyTexture);
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
         var data = Data;
@@ -726,7 +778,6 @@ internal sealed class PCColorPicker : UIContainer
     private readonly UIColoredImageButton _pasteHexButton;
     private readonly UIColoredImageButton _randomColorButton;
     private readonly BetterUIText _resetToDefaultButton;
-    private Vector3 _currentColorPickerHSL = RgbToScaledHsl(new Color());
     private Vector3 _defaultColorPickerHSL = RgbToScaledHsl(new Color());
 
     public PCColorPicker() : base(new Vector2(220, 180))
@@ -778,7 +829,7 @@ internal sealed class PCColorPicker : UIContainer
             if (IsDefaultColor) return;
             SoundEngine.PlaySound(SoundID.MenuTick);
             Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
-            _currentColorPickerHSL = _defaultColorPickerHSL;
+            TerramonPlayer.LocalPlayer.ColorPickerHSL = _defaultColorPickerHSL;
             var color = ScaledHslToRgb(_defaultColorPickerHSL.X, _defaultColorPickerHSL.Y, _defaultColorPickerHSL.Z);
             OnColorChange?.Invoke(color);
             _resetToDefaultButton.TextColor = new Color(100, 100, 100);
@@ -828,18 +879,18 @@ internal sealed class PCColorPicker : UIContainer
         Append(hexCodePanel);
     }
 
-    private bool IsDefaultColor => _currentColorPickerHSL == _defaultColorPickerHSL;
+    private bool IsDefaultColor => TerramonPlayer.LocalPlayer.ColorPickerHSL == _defaultColorPickerHSL;
 
     public event Action<Color> OnColorChange;
 
     public Color GetColor()
     {
-        return ScaledHslToRgb(_currentColorPickerHSL.X, _currentColorPickerHSL.Y, _currentColorPickerHSL.Z);
+        return ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z);
     }
 
     public void SetColor(Color color, Color defaultColor)
     {
-        _currentColorPickerHSL = RgbToScaledHsl(color);
+        TerramonPlayer.LocalPlayer.ColorPickerHSL = RgbToScaledHsl(color);
         _defaultColorPickerHSL = RgbToScaledHsl(defaultColor);
         _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
         UpdateHexText(color);
@@ -857,7 +908,7 @@ internal sealed class PCColorPicker : UIContainer
         var value = Platform.Get<IClipboard>().Value;
         if (!GetHexColor(value, out var hsl)) return;
         //ApplyPendingColor(ScaledHslToRgb(hsl.X, hsl.Y, hsl.Z));
-        _currentColorPickerHSL = hsl;
+        TerramonPlayer.LocalPlayer.ColorPickerHSL = hsl;
         var color = ScaledHslToRgb(hsl.X, hsl.Y, hsl.Z);
         OnColorChange?.Invoke(color);
         _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
@@ -870,7 +921,7 @@ internal sealed class PCColorPicker : UIContainer
         SoundEngine.PlaySound(SoundID.MenuTick);
         var randomColorVector = GetRandomColorVector();
         //ApplyPendingColor(ScaledHslToRgb(randomColorVector.X, randomColorVector.Y, randomColorVector.Z));
-        _currentColorPickerHSL = randomColorVector;
+        TerramonPlayer.LocalPlayer.ColorPickerHSL = randomColorVector;
         var color = ScaledHslToRgb(randomColorVector.X, randomColorVector.Y, randomColorVector.Z);
         OnColorChange?.Invoke(color);
         _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
@@ -915,21 +966,21 @@ internal sealed class PCColorPicker : UIContainer
 
     private void UpdateHSL_H()
     {
-        var value = UILinksInitializer.HandleSliderHorizontalInput(_currentColorPickerHSL.X, 0f, 1f,
+        var value = UILinksInitializer.HandleSliderHorizontalInput(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, 0f, 1f,
             PlayerInput.CurrentProfile.InterfaceDeadzoneX, 0.35f);
         UpdateHSLValue(HSLSliderId.Hue, value);
     }
 
     private void UpdateHSL_S()
     {
-        var value = UILinksInitializer.HandleSliderHorizontalInput(_currentColorPickerHSL.Y, 0f, 1f,
+        var value = UILinksInitializer.HandleSliderHorizontalInput(TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, 0f, 1f,
             PlayerInput.CurrentProfile.InterfaceDeadzoneX, 0.35f);
         UpdateHSLValue(HSLSliderId.Saturation, value);
     }
 
     private void UpdateHSL_L()
     {
-        var value = UILinksInitializer.HandleSliderHorizontalInput(_currentColorPickerHSL.Z, 0f, 1f,
+        var value = UILinksInitializer.HandleSliderHorizontalInput(TerramonPlayer.LocalPlayer.ColorPickerHSL.Z, 0f, 1f,
             PlayerInput.CurrentProfile.InterfaceDeadzoneX, 0.35f);
         UpdateHSLValue(HSLSliderId.Luminance, value);
     }
@@ -939,11 +990,11 @@ internal sealed class PCColorPicker : UIContainer
         switch (id)
         {
             case HSLSliderId.Hue:
-                return _currentColorPickerHSL.X;
+                return TerramonPlayer.LocalPlayer.ColorPickerHSL.X;
             case HSLSliderId.Saturation:
-                return _currentColorPickerHSL.Y;
+                return TerramonPlayer.LocalPlayer.ColorPickerHSL.Y;
             case HSLSliderId.Luminance:
-                return _currentColorPickerHSL.Z;
+                return TerramonPlayer.LocalPlayer.ColorPickerHSL.Z;
             default:
                 return 1f;
         }
@@ -954,23 +1005,35 @@ internal sealed class PCColorPicker : UIContainer
         switch (id)
         {
             case HSLSliderId.Hue:
-                _currentColorPickerHSL.X = value;
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.X = value;
                 break;
             case HSLSliderId.Saturation:
-                _currentColorPickerHSL.Y = value;
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Y = value;
                 break;
             case HSLSliderId.Luminance:
-                _currentColorPickerHSL.Z = value;
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Z = value;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(id), id, null);
         }
 
-        var color = ScaledHslToRgb(_currentColorPickerHSL.X, _currentColorPickerHSL.Y, _currentColorPickerHSL.Z);
+        var color = ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL);
         OnColorChange?.Invoke(color);
         _resetToDefaultButton.TextColor = !IsDefaultColor ? new Color(247, 218, 101) : new Color(100, 100, 100);
 
         UpdateHexText(color);
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        //update colors if controller is modifying them
+        //(won't trigger automatically due to sliders not being interacted with directly)
+        if (UILinkPointNavigator.InUse)
+        {
+            var color = ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL);
+            OnColorChange?.Invoke(color);
+            UpdateHexText(color);
+        }
     }
 
     private static Color ScaledHslToRgb(Vector3 hsl)
@@ -988,8 +1051,8 @@ internal sealed class PCColorPicker : UIContainer
         return id switch
         {
             HSLSliderId.Hue => ScaledHslToRgb(pointAt, 1f, 0.5f),
-            HSLSliderId.Saturation => ScaledHslToRgb(_currentColorPickerHSL.X, pointAt, _currentColorPickerHSL.Z),
-            HSLSliderId.Luminance => ScaledHslToRgb(_currentColorPickerHSL.X, _currentColorPickerHSL.Y, pointAt),
+            HSLSliderId.Saturation => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, pointAt, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z),
+            HSLSliderId.Luminance => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, pointAt),
             _ => Color.White
         };
     }
