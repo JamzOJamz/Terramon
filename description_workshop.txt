@@ -1,5 +1,4 @@
-[img]https://i.imgur.com/oxcaFHk.png[/img]
-[img]https://i.imgur.com/D5gfQnj.png[/img]
+[img]https://i.imgur.com/Bwg0Chn.gif[/img] [i]"Hey there, fellow adventurer! Are you ready to start your Pokémon journey?"[/i]
 
 [h1]Check out the website for the Terramon Mod!
 [url=https://terramon.tmod.page/links]Website[/url][/h1]
@@ -9,23 +8,21 @@ The website is where you can find links associated with the mod, all in one plac
 
 [h1]ABOUT[/h1]
 
-[i]"Hey there, fellow adventurer! Are you ready to start your Pokémon journey?"[/i]
-
 If you enjoy both Terraria and Pokémon, the [b]Terramon Mod[/b] is the perfect crossover! Catch, train, and explore alongside your favorite Pokémon in an experience that blends the best of both worlds.
 
 [h2]FEATURES[/h2]
 
-[b]• 150+ Pokémon to find and catch, including their Shiny forms[/b]
+• [b]150+ Pokémon[/b] to find and catch, [b]including their ✨Shiny✨ forms[/b]
 
-[b]• Several different Poké Balls with interactive mechanics[/b]
+• Several different [b]Poké Balls[/b] with [b]interactive mechanics[/b]
 
-[b]• A brand new Town NPC, the Poké Mart Clerk[/b]
+• A [b]brand new Town NPC[/b], the [b]Poké Mart Clerk[/b]
 
-[b]• Custom user interface (UI) elements designed to match Terraria’s vanilla style[/b]
+• [b]Custom user interface (UI)[/b] elements designed to match Terraria’s vanilla style
 
-[b]• Vanity and other decorative items[/b]
+• [b]Vanity[/b] and other [b]decorative items[/b]
 
-[b]• Limited multiplayer compatibility[/b]
+• Limited [b]multiplayer compatibility[/b]
 
 ...and more!
 
