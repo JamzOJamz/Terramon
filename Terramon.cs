@@ -19,6 +19,8 @@ public class Terramon : Mod
     /// </summary>
     public const ushort MaxPokemonLevel = 100;
 
+    private static readonly string _savePath = Path.Combine(Main.SavePath, nameof(Terramon));
+
     static Terramon()
     {
         if (!Main.dedServ) MenuSocialWidget.Setup();
@@ -81,13 +83,26 @@ public class Terramon : Mod
 
     private uint CheckLoadCount()
     {
-        var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
-    
+        var datFilePath = Path.Combine(_savePath, "LoadCount.dat");
+
         if (!File.Exists(datFilePath))
         {
-            using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
-            writer.Write(1u);
-            return 1;
+            var legacyDatFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
+            if (!File.Exists(legacyDatFilePath))
+            {
+                using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
+                writer.Write(1u);
+                return 1;
+            }
+
+            try
+            {
+                File.Move(legacyDatFilePath, datFilePath);
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"Failed to move legacy load count file! Error: {ex.Message}");
+            }
         }
 
         uint result = 1;
@@ -113,6 +128,9 @@ public class Terramon : Mod
 
     public override void Load()
     {
+        // Create the save directory if it doesn't exist
+        Directory.CreateDirectory(_savePath);
+        
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
