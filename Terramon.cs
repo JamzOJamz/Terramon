@@ -143,7 +143,8 @@ public class Terramon : Mod
 
         if (IOFile.Exists(showdownPath)) return;
 
-        Interface.loadMods.SubProgressText = Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator", 0);
+        Interface.loadMods.SubProgressText =
+            Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator", 0);
 
         using var client = new HttpClient();
         using var memoryStream = new MemoryStream();
