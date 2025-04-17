@@ -143,16 +143,24 @@ public class Terramon : Mod
         if (IOFile.Exists(showdownPath)) return;
 
         ModLoadingProgressHelper.SetLoadingSubProgressText(
-            Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator"));
+            Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator", 0));
 
         using var client = new HttpClient();
-        var response = client.GetAsync(ShowdownArchiveLink).Result;
-
-        if (!response.IsSuccessStatusCode)
-            throw new InvalidOperationException($"Failed to download Pokémon Showdown! Error: {response.ReasonPhrase}");
-
         using var memoryStream = new MemoryStream();
-        response.Content.CopyToAsync(memoryStream).Wait();
+        try
+        {
+            client.DownloadAsync(ShowdownArchiveLink, memoryStream, new Progress<float>(progress =>
+            {
+                ModLoadingProgressHelper.SetLoadingSubProgressText(
+                    Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator",
+                        MathF.Round(progress * 100f, 1)));
+            })).Wait();
+        }
+        catch (AggregateException ex) when (ex.InnerException is HttpRequestException httpEx)
+        {
+            throw new InvalidOperationException($"Failed to download Pokémon Showdown! Error: {httpEx.Message}");
+        }
+
         memoryStream.Seek(0, SeekOrigin.Begin);
 
         using var archiveFile = new ArchiveFile(memoryStream, SevenZipFormat.Zip);
@@ -176,7 +184,6 @@ public class Terramon : Mod
 
         ModLoadingProgressHelper.SetLoadingSubProgressText(string.Empty);
     }
-
 
     public override void Load()
     {
