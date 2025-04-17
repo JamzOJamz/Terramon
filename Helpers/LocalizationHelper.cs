@@ -36,12 +36,6 @@ namespace Terramon.Helpers;
 /// </summary>
 public static class LocalizationHelper
 {
-    private static readonly MethodInfo LocalizationLoader_LoadTranslations =
-        typeof(LocalizationLoader).GetMethod("LoadTranslations", BindingFlags.NonPublic | BindingFlags.Static);
-
-    private static readonly MethodInfo LocalizedText_SetValue =
-        typeof(LocalizedText).GetMethod("SetValue", BindingFlags.NonPublic | BindingFlags.Instance);
-
     /// <summary>
     ///     Forces the localization for the given mod to be loaded for use with <see cref="Language" />.
     /// </summary>
@@ -49,12 +43,9 @@ public static class LocalizationHelper
     public static void ForceLoadModHJsonLocalization(Mod mod)
     {
         var lang = LanguageManager.Instance;
-        foreach (var (key, value) in (LocalizationLoader_LoadTranslations.Invoke(null,
-                     [mod, Language.ActiveCulture]) as List<(string key, string value)>)!)
+        foreach (var (key, value) in LocalizationLoader.LoadTranslations(mod, Language.ActiveCulture))
         {
-            var text = lang.GetText(key);
-            LocalizedText_SetValue.Invoke(text,
-                [value]); // can only set the value of existing keys. Cannot register new keys.
+            lang.GetText(key).SetValue(value);
         }
     }
 }
