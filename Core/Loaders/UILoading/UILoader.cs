@@ -60,9 +60,6 @@ internal class UILoader : ModSystem
         if (Main.dedServ)
             return;
 
-        // Localization should be loaded before UIStates initialization
-        LocalizationHelper.ForceLoadModHJsonLocalization(Mod);
-
         _userInterfaces = [];
         _uiStates = [];
 

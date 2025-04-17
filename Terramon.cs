@@ -1,7 +1,11 @@
 using EasyPacketsLib;
+using SevenZipExtractor;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
+using Terraria.Localization;
+using IOFile = System.IO.File;
 
 namespace Terramon;
 
@@ -19,7 +23,12 @@ public class Terramon : Mod
     /// </summary>
     public const ushort MaxPokemonLevel = 100;
 
-    private static readonly string _savePath = Path.Combine(Main.SavePath, nameof(Terramon));
+    private const string ShowdownArchiveLink =
+        "https://github.com/JamzOJamz/pokemon-showdown/releases/download/0.1/pokemon-showdown-win.zip";
+
+    private const string DatabaseFile = "Assets/Data/PokemonDB-min.json";
+
+    private static readonly string SavePath = Path.Combine(Main.SavePath, nameof(Terramon));
 
     static Terramon()
     {
@@ -83,21 +92,22 @@ public class Terramon : Mod
 
     private uint CheckLoadCount()
     {
-        var datFilePath = Path.Combine(_savePath, "LoadCount.dat");
+        var loadCountDataPath = Path.Combine(SavePath, "LoadCount.dat");
 
-        if (!File.Exists(datFilePath))
+        if (!IOFile.Exists(loadCountDataPath))
         {
-            var legacyDatFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
-            if (!File.Exists(legacyDatFilePath))
+            var legacyLoadCountDataPath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
+
+            if (!IOFile.Exists(legacyLoadCountDataPath))
             {
-                using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
+                using var writer = new BinaryWriter(IOFile.Open(loadCountDataPath, FileMode.Create));
                 writer.Write(1u);
                 return 1;
             }
 
             try
             {
-                File.Move(legacyDatFilePath, datFilePath);
+                IOFile.Move(legacyLoadCountDataPath, loadCountDataPath);
             }
             catch (Exception ex)
             {
@@ -109,7 +119,7 @@ public class Terramon : Mod
 
         try
         {
-            using var reader = new BinaryReader(File.Open(datFilePath, FileMode.Open));
+            using var reader = new BinaryReader(IOFile.Open(loadCountDataPath, FileMode.Open));
             result = reader.ReadUInt32();
         }
         catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
@@ -118,7 +128,7 @@ public class Terramon : Mod
         }
 
         result++;
-        using (var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create)))
+        using (var writer = new BinaryWriter(IOFile.Open(loadCountDataPath, FileMode.Create)))
         {
             writer.Write(result);
         }
@@ -126,13 +136,61 @@ public class Terramon : Mod
         return result;
     }
 
+    private void EnsureShowdownDownloaded()
+    {
+        var showdownPath = Path.Combine(SavePath, "pokemon-showdown.exe");
+
+        if (IOFile.Exists(showdownPath)) return;
+
+        ModLoadingProgressHelper.SetLoadingSubProgressText(
+            Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator"));
+
+        using var client = new HttpClient();
+        var response = client.GetAsync(ShowdownArchiveLink).Result;
+
+        if (!response.IsSuccessStatusCode)
+            throw new InvalidOperationException($"Failed to download Pokémon Showdown! Error: {response.ReasonPhrase}");
+
+        using var memoryStream = new MemoryStream();
+        response.Content.CopyToAsync(memoryStream).Wait();
+        memoryStream.Seek(0, SeekOrigin.Begin);
+
+        using var archiveFile = new ArchiveFile(memoryStream, SevenZipFormat.Zip);
+        var extracted = false;
+        foreach (var entry in archiveFile.Entries)
+        {
+            if (entry.FileName != "pokemon-showdown.exe") continue;
+
+            using var fileStream = IOFile.Create(showdownPath);
+            entry.Extract(fileStream);
+            extracted = true;
+            break;
+        }
+
+        if (!extracted) throw new InvalidOperationException("Failed to extract Pokémon Showdown executable!");
+
+        if (IOFile.Exists(showdownPath))
+            Logger.Info("Pokémon Showdown downloaded successfully!");
+        else
+            throw new InvalidOperationException("Pokémon Showdown was not found after extraction!");
+
+        ModLoadingProgressHelper.SetLoadingSubProgressText(string.Empty);
+    }
+
+
     public override void Load()
     {
         // Create the save directory if it doesn't exist
-        Directory.CreateDirectory(_savePath);
-        
+        Directory.CreateDirectory(SavePath);
+
+        // Localization should be loaded as early as possible
+        LocalizationHelper.ForceLoadModHJsonLocalization(this);
+
+        // Makes sure that the Pokémon Showdown executable is present to support turn-based battle functionality
+        if (OperatingSystem.IsWindows()) EnsureShowdownDownloaded();
+
         // Load the database
-        var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
+        var dbStream = GetFileStream(DatabaseFile);
         DatabaseV2 = DatabaseV2.Parse(dbStream);
 
         // Register the mod in EasyPacketsLib
