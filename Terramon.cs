@@ -5,6 +5,7 @@ using Terramon.Content.Menus;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terraria.Localization;
+using Terraria.ModLoader.UI;
 using IOFile = System.IO.File;
 
 namespace Terramon;
@@ -142,8 +143,7 @@ public class Terramon : Mod
 
         if (IOFile.Exists(showdownPath)) return;
 
-        ModLoadingProgressHelper.SetLoadingSubProgressText(
-            Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator", 0));
+        Interface.loadMods.SubProgressText = Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator", 0);
 
         using var client = new HttpClient();
         using var memoryStream = new MemoryStream();
@@ -151,9 +151,9 @@ public class Terramon : Mod
         {
             client.DownloadAsync(ShowdownArchiveLink, memoryStream, new Progress<float>(progress =>
             {
-                ModLoadingProgressHelper.SetLoadingSubProgressText(
-                    Language.GetTextValue("Mods.Terramon.Loading.DownloadingBattleSimulator",
-                        MathF.Round(progress * 100f, 1)));
+                Interface.loadMods.SubProgressText = Language.GetTextValue(
+                    "Mods.Terramon.Loading.DownloadingBattleSimulator",
+                    MathF.Round(progress * 100f, 1));
             })).Wait();
         }
         catch (AggregateException ex) when (ex.InnerException is HttpRequestException httpEx)
@@ -182,7 +182,7 @@ public class Terramon : Mod
         else
             throw new InvalidOperationException("Pokémon Showdown was not found after extraction!");
 
-        ModLoadingProgressHelper.SetLoadingSubProgressText(string.Empty);
+        Interface.loadMods.SubProgressText = "";
     }
 
     public override void Load()
