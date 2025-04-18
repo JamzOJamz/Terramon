@@ -1,0 +1,686 @@
+Buffs: {
+	PokemonCompanion: {
+		DisplayName: 파트너 포켓몬
+		Description: "{0}이(가) 당신을 따라옵니다!"
+	}
+}
+
+Commands: {
+	RequiresDebugMode: 이 명령어를 사용하려면 모드 설정에서 치트 명령어를 활성화해야 합니다!
+
+	DexEdit: {
+		Description: 포켓몬 도감 상태를 강제로 설정합니다
+		Usage: /dexedit <id> <status>
+		ParseErrorID: ID 인수를 정수로 구문 분석하지 못했습니다
+		ParseErrorStatus: 상태 인수를 정수로 구문 분석하지 못했습니다
+		StatusOutOfRange: 상태 인수가 범위를 벗어났습니다 (0-2)
+		IDOutOfRange: 포켓몬 도감 항목 {0}이 범위를 벗어났습니다 (1-{1})
+		Success: 포켓몬 도감에 {0}을 상태 {1}로 성공적으로 설정했습니다
+	}
+
+	Nickname: {
+		Description: 포켓몬의 이름을 설정합니다
+		Usage: /nickname <set|clear> <nickname>
+
+		Set: {
+			NoActivePokemon: 현재 활성화된 포켓몬이 없습니다
+			NoNicknameProvided: 지정된 이름이 없습니다
+			NicknameTooLong: 이름은 12자 이하여야 합니다 (공백 포함)
+			SameNickname: 이름이 이미 그렇게 설정되어 있습니다
+			SuccessNew: 내 {0}의 이름을 {1}로 바꿨다
+			SuccessUpdate: 내 {0}의 이름을 {1}에서 {2}로 바꿨다
+		}
+
+		Clear: {
+			NoNicknameSet: 현재 이 포켓몬의 이름은 정해지지 않았습니다
+			Success: 내 {0}의 이름을 지웠다
+		}
+
+		InvalidSubcommand: 하위 명령어기 잘못됨. /nickname <set|clear> <nickname>
+	}
+
+	Party: {
+		ParseErrorSlot: 슬롯 인수를 정수로 구문 분석하지 못했습니다
+		SlotOutOfRange: 슬롯 인수가 범위를 벗어났습니다 (1-6)
+	}
+
+	PartyClear: {
+		Description: 파티에서 지정된 포켓몬을 제거합니다
+		Usage: /partyclear <slot|all>
+		NoPokemonInSlot: 슬롯 {0}에서 포켓몬을 찾을 수 없습니다
+		Success: 파티에서 {0} 삭제됨
+		SuccessAll: 파티에서 모든 포켓몬을 제거했습니다
+	}
+
+	PartyData: {
+		Description: 파티에서 지정된 포켓몬에 대한 정보를 기록합니다
+		Usage: /partydata <slot>
+		NoPokemonInSlot: 슬롯 {0}에 사용할 수 있는 포켓몬 데이터가 없습니다
+		Success: 슬롯 {0}의 포켓몬 데이터가 client.log에 기록되었습니다
+	}
+
+	PokeClear: {
+		Description: 세계에서 모든 활성화된 포켓몬을 제거합니다
+		Usage: /pokeclear
+		Success: 포켓몬 {0}마리가 제거됨
+		SuccessByPlayer: 유저 {0}가 포켓몬 {1}마리를 제거함
+	}
+
+	PC: {
+		Description: 어디서든 포켓몬 저장 시스템(PC)을 엽니다
+		Usage: /pc
+	}
+
+	Dex: {
+		Description: 도감 열기
+		Usage: /dex
+	}
+
+	Upgrade: {
+		Description: 출시 전 버전에서 포켓몬 옮기기
+		Usage: /upgrade
+		TypeResolveError: 하나 이상의 필수 레거시 유형을 찾을 수 없습니다! 이 문제를 테라몬 개발자에게 보고해 주세요
+		NopUpgrade: 업그레이드할 포켓몬을 인벤토리에서 찾을 수 없습니다
+		Success: 내 PC에서 {0} 포켓몬을 업그레이드하고 전송하는데 성공했습니다
+	}
+}
+
+Configs: {
+	ClientConfig: {
+		DisplayName: 클라이언트 설정
+
+		Headers: {
+			Miscellaneous: 우선권
+			GUI: GUI
+			Accessibility: 접근성
+		}
+
+		FastEvolution: {
+			Label: 빠른 진화
+			Tooltip: 이상한 사탕을 사용할 때 포켓몬을 자동으로 진화시킬지 여부 (혹은 {$NPCs.PokemartClerk.DisplayName}와 대화)
+		}
+
+		ShowPokedexRegistrationMessages: {
+			Label: 포켓몬 도감 등록 메세지
+			Tooltip: 포켓몬이 포켓몬 도감에 새로 등록되었을 때 채팅에 메시지를 표시할지 여부
+		}
+
+		ReducedAudio: {
+			Label: (파티 사운드바) 소리 감소
+			Tooltip: 사이드바에서 포켓몬을 재배치할 때 음악을 비활성화한다
+		}
+
+		ReducedMotion: {
+			Label: (인벤토리 슬롯) 움직임 제거
+			Tooltip: 인벤토리에서 파티를 보고 숨길 때 애니메이션을 비활성화한다
+		}
+
+		ModIconType: {
+			Label: 모드 아이콘 타입
+			Tooltip: 모드 아이콘 변경
+		}
+
+		AnimatedModIcon: {
+			Label: 애니매이션 모드 아이콘
+			Tooltip: 활성화하면 모드 메뉴에서 모드 아이콘을 애니메이션화한다
+		}
+
+		RainbowBuffText: {
+			Label: 무지개 버프 텍스트
+			Tooltip: 파트너 포켓몬 버프 이름이 무지개색으로 순환한다
+		}
+	}
+
+	GameplayConfig: {
+		DisplayName: 게임플레이 설정
+
+		Headers: {
+			Spawning: 스폰
+			Visuals: 시각 효과
+			Miscellaneous: 기타 설정
+			Advanced: 고급
+		}
+
+		PokemonSpawnRateMultiplier: {
+			Label: 스폰율 배율 조정
+			Tooltip:
+				'''
+				야생에서 포켓몬이 생성되는 속도를 조절한다
+				[c/F2A754:0으로 설정하면, 포켓몬이 전혀 생성되지 않는다]
+				'''
+		}
+
+		SpawningStage: {
+			Label: 스폰 단계
+			Tooltip: 야생에서 나타날 수 있는 포켓몬의 단계 (높은 단계는 낮은 단계를 포함한다)
+		}
+
+		EncourageDespawning: {
+			Label: 디스폰 유도
+			Tooltip: 새로운 스폰을 위해 야생 포켓몬이 사라지도록 유도할지 여부
+		}
+
+		ShinySpawnRate: {
+			Label: 이로치 스폰률
+			Tooltip: 야생에서 희귀한 이로치 포켓몬이 나올 확률 (1/x)
+		}
+
+		FastAnimations: {
+			Label: 빠른 애니매이션션
+			Tooltip: 특정 이벤트에 대한 애니메이션을 건너뛸지 여부 (ex: 포켓몬을 잡았을 때)
+		}
+
+		ShinyLockedStarters: {
+			Label: 이로치 락
+			Tooltip: 스타팅 포켓몬이 이로치가 되는 것을 방지한다
+		}
+
+		DebugMode: {
+			Label: 치트 명령어 허용
+			Tooltip:
+				'''
+				채팅에서 치트 명령어를 허용한다 (ex: /pokeclear)
+				[c/F2A754:정상적인 게임 플레이에 방해가 될 수 있음]
+				'''
+		}
+	}
+
+	SpawningStage: {
+		Tooltip: ""
+		Basic.Label: 미진화 포켓몬/Basic Pokémon
+		Stage1.Label: 2진화 포켓몬/Stage 1 Pokémon
+		Stage2.Label: 3진화 포켓몬/Stage 2 Pokémon
+		Legendary.Label: 전설/환상의 포켓몬
+	}
+}
+
+GUI: {
+	Inventory: {
+		ShowParty: 파티 보기
+		HideParty: 파티 숨기기
+		OpenPokedex: 도감 열기
+		SlotName: "{0} (Lv. {1})"
+		SlotTooltip:
+			'''
+			HP: {0}/{1}
+			EXP: {2}/{3}
+			'''
+		SlotTooltipMaxLevel:
+			'''
+			HP: {0}/{1}
+			EXP: MAX
+			'''
+		SlotTooltipPCMode: "[c/FFFFFF:파티에 있음]"
+		SlotTooltipPCModeActive: "[c/FFFFFF:파티에 있음 (활성화)]"
+		CannotRemoveLastPokemon: 파티에는 최소한 한마리의 포켓몬이 있어야합니다!
+		}
+
+	PC.RenameLabel: 박스 이름 바꾸기
+
+	Starter: {
+		Title: 포켓몬의 세계에 오신 것을 환영합니다! 테라몬 모드를 설치해 주셔서 감사합니다!
+		Subtitle: 이제, 첫번째 포켓몬을 선택해 모험을 시작하세요!
+		Hint: (Back키로 닫기)
+		ComingSoon: 출시 예정...
+		ChosenMessage: 당신은 {0} [c/{1}:{2}] 을(를) 첫번째 포켓몬으로 선택했습니다!
+	}
+
+	NPCShop: {
+		PremierBonus: 프레미어볼 1개를 서비스로 드리겠습니다!
+		PremierBonusPlural: 프레미어볼 {0}개를 서비스로 드리겠습니다!
+	}
+
+	Party: {
+		LevelDisplay: Lv. {0}
+		SlotHover: 좌클릭으로 불러내기
+		SlotHoverActive: 좌클릭으로 돌려보내기
+		SlotHoverExtra:
+			'''
+
+			드래그해서 순서 바꾸기
+			'''
+	}
+
+	Pokedex: {
+		NumberPrefix: No.
+		ShowingRange: 도감번호 {$GUI.Pokedex.NumberPrefix} {0}-{1} ({2})
+		Obtained: 잡았다
+		Seen: 발견했다
+		ObtainedBy:
+			'''
+
+			[c/FFE745:{0}이(가) 잡았다]
+			'''
+		SeenBy:
+			'''
+
+			[c/FFE745:{0}이(가) 발견했다]
+			'''
+		Completion: "{0}% 완료!"
+		PlayerDexFilter: 유저 {0}의 도감 보기
+		PlayerShinyDexFilter: 유저 {0}의 이로치 도감 보기
+		WorldDexFilter: 월드 도감 보기
+		ShinyWorldDexFilter: 월드의 이로치 도감 보기
+		Height: 키
+		Weight: 몸무게
+		Entry: 특징
+	}
+
+	ControllerHints: {
+		Release: 놓아주기
+		SwitchPage: 페이지 전환
+	}
+}
+
+CommonTooltips: {
+	Apricorn:
+		'''
+		베리와 관련있어 보이는 특별한 과일
+		다양한 몬스터볼을 만드는 데 사용할 수 있다
+		'''
+	EvolutionaryItem: 진화 아이템
+	KeyItem: 중요한 도구
+	Vitamin: 비타민
+	RightClickPlace: 우클릭으로 설치 가능
+	PCItems: 포켓몬 박스 시스템에 접근한다
+	PokeBallMinis:
+		'''
+		'장식용'
+		아이템 액자에 설치 가능
+		'''
+	Unobtainable: 얻을 수 없음
+}
+
+Items: {
+	PokeBallItem: {
+		DisplayName: 몬스터볼
+		Tooltip:
+			'''
+			야생 포켓몬을 잡기 위한 도구
+			목표물을 향해 공처럼 던진다
+			'''
+		CatchRate: 포획률 1배
+	}
+
+	PokeBallMiniItem: {
+		DisplayName: "{$Items.PokeBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	GreatBallItem: {
+		DisplayName: 슈퍼볼
+		Tooltip: 몬스터볼보다도 더욱 포켓몬을 잡기 쉬워진 약간 성능이 좋은 볼
+		CatchRate: 포획률 1.5배
+	}
+
+	GreatBallMiniItem: {
+		DisplayName: "{$Items.GreatBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	UltraBallItem: {
+		DisplayName: 하이퍼볼
+		Tooltip: 슈퍼볼보다도 더욱 포켓몬을 잡기 쉬워진 매우 성능이 좋은 볼
+		CatchRate: 포획률 2배
+	}
+
+	UltraBallMiniItem: {
+		DisplayName: "{$Items.UltraBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	MasterBallItem: {
+		DisplayName: 마스터볼
+		Tooltip: 야생 포켓몬을 반드시 잡을 수 있는 최고 성능의 볼
+		CatchRate: 포획률 100%
+	}
+
+	MasterBallMiniItem: {
+		DisplayName: "{$Items.MasterBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	PremierBallItem: {
+		DisplayName: 프레미어볼
+		Tooltip: 무언가의 기념품으로 특별히 만들어진 조금 희귀한 볼
+		CatchRate: 포획률 1배
+	}
+
+	PremierBallMiniItem: {
+		DisplayName: "{$Items.PremierBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	CherishBallItem: {
+		DisplayName: 프레셔스볼
+		Tooltip: 무언가의 기념품으로 특별히 만들어진 상당히 진귀한 볼
+		CatchRate: 포획률 1배
+	}
+
+	CherishBallMiniItem: {
+		DisplayName: "{$Items.CherishBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	AetherBallItem: {
+		DisplayName: 에테르볼
+		Tooltip:
+			'''
+			반짝이는 에너지가 담긴 신비로운 몬스터볼
+			야생 포켓몬에게 진정 효과가 있다고 한다
+			'''
+		CatchRate: 포획률 1배
+	}
+
+	AetherBallMiniItem: {
+		DisplayName: "{$Items.AetherBallItem.DisplayName} (소형)"
+		Tooltip: ""
+	}
+
+	RareCandy: {
+		DisplayName: 이상한사탕
+		Tooltip:
+			'''
+			에너지가 가득한 사탕
+			먹이면 포켓몬 1마리의 레벨이 1만큼 올라간다
+			'''
+	}
+
+	TrainerCap: {
+		DisplayName: 포켓몬 트레이너 모자
+		Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	TrainerTorso: {
+		DisplayName: 포켓몬 트레이너 자켓
+		Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	TrainerLegs: {
+		DisplayName: 포켓몬 트레이너 바지
+		Tooltip: "'Gotta catch 'em all!'"
+	}
+
+	MusicItemCenter: {
+		DisplayName: 뮤직 박스 (Pokémon Center)
+		Tooltip: ""
+	}
+
+	MusicItemWildBattle: {
+		DisplayName: 뮤직 박스 (Battle! Wild Pokémon)
+		Tooltip: ""
+	}
+
+	ShinyCharm: {
+		DisplayName: 빛나는 부적
+		Tooltip:
+			'''
+			지니고 있으면 빛나는 포켓몬과 만나기 쉬워진다고 전해지는 이상하고 매우 반짝이는 부적
+			도감에 모든 포켓몬을 등록한 보상으로 받았다
+			'''
+	}
+
+	FireStone: {
+		DisplayName: 불꽃의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'주황색을 띠고 있다'
+			'''
+	}
+
+	WaterStone: {
+		DisplayName: 물의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'투명한 푸른색을 띄고 있다'
+			'''
+	}
+
+	ThunderStone: {
+		DisplayName: 천둥의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'천둥번개 무늬가 있다'
+			'''
+	}
+
+	LeafStone: {
+		DisplayName: 리프의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'잎사귀 무늬가 있다'
+			'''
+	}
+
+	MoonStone: {
+		DisplayName: 달의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'밤하늘처럼 까맣다'
+			'''
+	}
+
+	DuskStone: {
+		DisplayName: 어둠의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'칠흑처럼 어둡다'
+			'''
+	}
+
+	IceStone: {
+		DisplayName: 얼음의돌
+		Tooltip:
+			'''
+			어느 특정 포켓몬을 진화시키는 이상한 돌
+			'눈송이 무늬가 있다'
+			'''
+	}
+
+	LinkingCord: {
+		DisplayName: 연결의 끈
+		Tooltip:
+			'''
+			모종의 유대감이 느껴지는 신비한 에너지가 담긴 끈
+			'어떤 포켓몬들이 좋아하는 물건이다'
+			'''
+	}
+
+	BlackApricorn.DisplayName: 검은규토리
+	BlueApricorn.DisplayName: 파란규토리
+	GreenApricorn.DisplayName: 초록규토리
+	PinkApricorn.DisplayName: 담홍규토리
+	RedApricorn.DisplayName: 빨간규토리
+	WhiteApricorn.DisplayName: 하얀규토리
+	YellowApricorn.DisplayName: 노랑규토리
+
+	ExpCandyXS: {
+		DisplayName: 경험사탕XS
+		Tooltip:
+			'''
+			에너지가 가득한 사탕
+			먹이면 포켓몬 1마리의 경험치가 아주 조금 올라간다
+			'''
+	}
+
+	ExpCandyS: {
+		DisplayName: 경험사탕S
+		Tooltip:
+			'''
+			에너지가 가득한 사탕
+			먹이면 포켓몬 1마리의 경험치가 조금 올라간다
+			'''
+	}
+
+	ExpCandyM: {
+		DisplayName: 경험사탕M
+		Tooltip:
+			'''
+			에너지가 가득한 사탕
+			먹이면 포켓몬 1마리의 경험치가 올라간다
+			'''
+	}
+
+	ExpCandyL: {
+		DisplayName: 경험사탕L
+		Tooltip:
+			'''
+			에너지가 가득한 사탕
+			먹이면 포켓몬 1마리의 경험치가 많이 올라간다
+			'''
+	}
+
+	ExpCandyXL: {
+		DisplayName: 경험사탕XL
+		Tooltip:
+			'''
+			에너지가 가득한 사탕
+			먹이면 포켓몬 1마리의 경험치가 매우 많이 올라간다
+			'''
+	}
+
+	ShimmerStateDrive: {
+		DisplayName: 쉬머-상태 구동기
+		Tooltip:
+			'''
+			이 세계에서 공유 PC 상자를 영구적으로 잠금 해제한다
+			이를 통해 플레이어 간에 포켓몬을 쉽게 전송할 수 있다
+			'에테르 재단의 재산'
+			'''
+	}
+
+	PCItemRed: {
+		DisplayName: PC (빨강)
+		Tooltip: ""
+	}
+
+	PCItemWhite: {
+		DisplayName: PC (하양)
+		Tooltip: ""
+	}
+
+	ErikaPaintingItem: {
+		DisplayName: 민화의 초대
+		Tooltip: "'L. Walter'"
+	}
+}
+
+Keybinds: {
+	ToggleParty.DisplayName: 파티
+	OpenPokedex.DisplayName: 포켓몬 도감
+	OpenPokedexEntry.DisplayName: 도감에서 이 포켓몬 보기
+	TogglePokemon.DisplayName: 포켓몬 교체
+	NextPokemon.DisplayName: 다음 포켓몬으로 교체
+	PrevPokemon.DisplayName: 이전 포켓몬으로 교체
+}
+
+Tiles: {
+	MusicBoxCenter.MapEntry: 뮤직 박스
+	MusicBoxWildBattle.MapEntry: 뮤직 박스
+	PCWhite.MapEntry: PC
+	PCRed.MapEntry: PC
+}
+
+Types: {
+	Normal: 노말
+	Fire: 불꽃
+	Fighting: 격투
+	Water: 물
+	Flying: 비행
+	Grass: 풀
+	Poison: 독
+	Electric: 전기
+	Ground: 땅
+	Psychic: 에스퍼
+	Rock: 바위
+	Ice: 얼음
+	Bug: 벌레
+	Dragon: 드래곤
+	Ghost: 고스트
+	Dark: 악
+	Steel: 강철
+	Fairy: 페어리
+}
+
+NPCs: {
+	PokemartClerk: {
+		DisplayName: 프렌들리숍 직원
+		BestiaryText: 프렌들리숍 직원은 포켓몬 훈련에 필요한 모든 아이템을 취급하는 영업사원입니다.
+		EvolveButton: 진화 - {0}
+
+		TownNPCMood: {
+			Content: 저는 제가 사는 공간이 꽤 마음에 들어요.
+			NoHome: 제가 지낼 곳이 있었으면 좋겠어요.
+			FarFromHome: 집에 돌아가고 싶어요. 야생 포켓몬은 위험하거든요.
+			LoveSpace: 여기는 야생 포켓몬이 나타날 수 있는 공간이 많아서 정말 좋아요!
+			DislikeCrowded: 이야기할 사람이 많아서 좋지만, 조금 붐비는 것 같아요.
+			HateCrowded: 여기 사는 사람들이 너무 많아요!
+			LikeBiome: 이런 {BiomeName}에는 볼 수 있는 포켓몬이 정말 많아요!
+			DislikeBiome: 개인적으로 {BiomeName}같은 곳은 별로 좋아하지 않아요. 너무 으스스하고 모든게 위협적으로 느껴지거든요.
+			LikeNPC: 저는 {NPCName}을 좋아해요. 그분이 저를 많이 도와주셨거든요.
+			DislikeNPC: 제 생각에 {NPCName}는 조금 시끄러운 것 같아요.
+			HateNPC: 저는 {NPCName}이 정말 싫어요. 포켓몬을 존중하지 않아요.
+			LikeNPC_Princess: 당연히 {NPCName}을 좋아해요. 누가 싫어겠어요?
+			Princess_LovesNPC: 저는 {NPCName}가 좋아요. 그렇게 상냥한 사람은 본적이 없어요!
+		}
+
+		Dialogue: {
+			Catchem: 포켓몬은 정말 많지만, 잡으려면 몬스터볼이 필요할 거예요! 다행히도, 제가 몇 개 가지고 있어요.
+			Furret: 성도지방에는 다꼬리라는 포켓몬이 있어요. 걔들은 걷는걸 정말 좋아해요!
+			CheckBack: 당신의 여행이 진행될수록 새로운 걸 판매할게요. 가끔씩 여기를 다시 방문하세요.
+			Biomes: 다양한 포켓몬들은 서로 다른 장소를 좋아해요. 여행을 다니면 새로운 포켓몬을 발견할 수도 있어요!
+			Regions: 세상에는 다양한 지방이 많이 있어요. 언젠가는 모든 지방을 방문하고 싶어요!
+			Crafting: 몬스터볼을 편리하게 구매하실 수 있도록 판매하고 있지만, 돈이 부족하면 규토리와 {0}으로 언제든지 직접 만들 수 있습니다!
+			EvolutionStones: 어떤 포켓몬은 특정 돌에 노출되었을 때만 진화해요. 매우 드물죠.
+			SickBurn: Mobile Creatures의 리메이크가 나왔어요! 아트 스타일에 대해 어떻게 생각하실지는 모르겠지만...
+			Dedication: 포켓몬이 {0}에 나타나기 시작한 이후로, 저는 사람들이 포켓몬에 대해 더 많이 배울 수 있도록 돕는 데 평생을 바쳐왔어요.
+			NoBattleRip: 이 주변의 포켓몬은 매우 평화로워 보이네요. 생물들이 이렇게 잘 지내는 모습을 보는 것은 드물어요.
+			BadName: 이제, 당신이 무슨 생각을 하고 있는지 알아요. "정말 창의적인 이름이네요!"
+			Shimmer: 제 옷이 마음에 드시나요? 저는 진짜 포켓몬 트레이너처럼 생겼어요!
+			ShimmerQuery: 쉬머에 대해 들어보셨나요? 사람들에게도 색이 다른 모습을 줄 수 있다고 해요!
+			PokemonHello: 그 {0}, 당신이 주인인가요? 안녕, {1}!
+			PokemonGrass: 이 친구 풀 타입 포켓몬인가요? 제가 가장 좋아하는 타입이에요!
+			PokemonIce: 얼음 타입 포켓몬! 저는 항상 그걸 보는 걸 좋아했어요.
+			PokemonShiny: 색이 다른 포켓몬이에요? 대단하네요! 저도 하나 있었으면 좋겠네요.
+			PokemonShimmer: 흥미롭네요... 당신의 포켓몬은 색이 다른 포켓몬이지만, 어느 부분도 이상하지 않아요.
+			PokemonNicknameHowto: 포켓몬에게 이름을 지어줄 수 있다는 걸 알고 계셨나요? 채팅에서 "/nickname set" 옆에 원하는 이름을 입력하세요.
+			PokemonNickname: "{0}? 참 예쁜 이름이네요! 당신이 포켓몬을 정말 아끼는 걸 알 수 있어요."
+			MerchantComment: "{0} 은(는)좀 욕심이 많을 수도 있지만 그분은 제게 장사에 대한 모든 것을 가르쳐 줬어요."
+			MechanicComment: "{0} 은(는)몬스터볼에 대해 많이 알고 있어요. 언젠가는 더 많이 팔 수 있을지도 몰라요!"
+			PirateComment: 혹시 {0}와(과) 대화해 보셨나요? 그가 무슨 말을 하는지 전혀 알아들을 수가 없어요.
+			ArmsDealerComment: 제발 {0}에게 포켓몬을 쏘는 것을 멈춰달라고 말해주실 수 있나요??
+			EvolutionCongrats: 정말 {$Misc.PokemonEvolved}
+		}
+
+		Census.SpawnCondition: 알 수 없는 상태
+	}
+}
+
+WorldGen.ItemsPass: 사탕 흩뿌리기
+
+Misc: {
+	CatchSuccess: 신난다! [c/{0}:{1}]을(를) 잡았다!
+	CatchSuccessPC: 신난다! [c/{0}:{1}]을(를) 잡고 {3}의 PC로 전송했다!
+	CatchSuccessPCNoRoom: 신난다! [c/{0}:{1}]를 잡았지만, {2}의 PC에 자리가 없다!
+	PokedexRegistered: "{0}의 데이터가 새로 포켓몬 도감에 등록됩니다!"
+	PCBoxDefaultName: 박스 {0}
+	RequireStarter: 먼저 첫번째 포켓몬을 고르세요!
+	NoActivePokemon: 활성화된 포켓몬이 있어야 {0}이(가) 가능하다!!
+	ItemNoEffect: 이건 {0}에게는 써도 효과가 없다.
+	PokemonEvolved: 축하합니다! {0}은(는) {1}(으)로 진화했습니다!
+	PokemonEvolutionReady: "{0}은(는) 진화할 준비가 되있다!"
+	RareCandyUse: "{0}은(는) 레벨 {1}이(가) 되었다!"
+	ExpCandyUse: 당신의 포켓몬은 {0} 경험치를 얻었다!
+	MOTD:
+		'''
+		당신은 {0} v{1}를 설치했습니다-즐기세요! [i:{2}]
+
+		[c/C9C9E5:모드 설정 메뉴에서 모드를 원하는 대로 사용자 지정하고 설정 메뉴에서 지정 키를 설정하세요.]
+		'''
+}
