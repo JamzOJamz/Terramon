@@ -213,7 +213,9 @@ GUI: {
 		SlotTooltipPCMode: "[c/FFFFFF:파티에 있음]"
 		SlotTooltipPCModeActive: "[c/FFFFFF:파티에 있음 (활성화)]"
 		CannotRemoveLastPokemon: 파티에는 최소한 한마리의 포켓몬이 있어야합니다!
-	}
+		}
+
+	PC.RenameLabel: 박스 이름 바꾸기
 
 	Starter: {
 		Title: 포켓몬의 세계에 오신 것을 환영합니다! 테라몬 모드를 설치해 주셔서 감사합니다!
@@ -262,6 +264,11 @@ GUI: {
 		Height: 키
 		Weight: 몸무게
 		Entry: 특징
+	}
+
+	ControllerHints: {
+		Release: 놓아주기
+		SwitchPage: 페이지 전환
 	}
 }
 
@@ -568,6 +575,9 @@ Keybinds: {
 	ToggleParty.DisplayName: 파티
 	OpenPokedex.DisplayName: 포켓몬 도감
 	OpenPokedexEntry.DisplayName: 도감에서 이 포켓몬 보기
+	TogglePokemon.DisplayName: 포켓몬 교체
+	NextPokemon.DisplayName: 다음 포켓몬으로 교체
+	PrevPokemon.DisplayName: 이전 포켓몬으로 교체
 }
 
 Tiles: {
