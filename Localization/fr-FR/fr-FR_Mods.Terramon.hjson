@@ -695,4 +695,18 @@ Misc: {
 		''' */
 }
 
-// Loading.DownloadingBattleSimulator: Downloading Battle Simulator ({0}%)
+Loading: {
+	// DownloadingBattleSimulator: Downloading Battle Simulator ({0}%)
+	/* NoBattleSimulatorInfoMessage:
+		'''
+		Terramon Mod couldn't download the required Battle Simulator, which powers turn-based battles.
+		This usually happens if you're not connected to the internet.
+
+		Don't worry, the rest of the mod will still work just fine.
+
+		To fix this:
+		Please reconnect to the internet and reload the mod. Terramon will automatically install everything you need.
+
+		If you continue to get this message, let us know on Discord or open an issue on GitHub: https://terramon.tmod.page
+		''' */
+}
