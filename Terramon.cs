@@ -1,12 +1,9 @@
 using EasyPacketsLib;
-using SevenZipExtractor;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
 using Terramon.Core.Battling.TurnBased;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
-using Terraria.Localization;
-using Terraria.ModLoader.UI;
 using IOFile = System.IO.File;
 
 namespace Terramon;
