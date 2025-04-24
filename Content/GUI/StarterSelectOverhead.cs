@@ -6,7 +6,6 @@ using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
-using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
 
@@ -45,12 +44,9 @@ public class StarterSelectOverhead : SmartUIState
 
     private readonly LocalizedText _titleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
 
-    private UIBlendedImage _background;
-    private UIText _hintText;
     private UIHoverImageButton _showButton;
     private UIContainer _starterPanel;
     private bool _starterPanelShowing = true;
-    private UIText _titleText;
 
     public override bool Visible =>
         !Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
@@ -89,27 +85,34 @@ public class StarterSelectOverhead : SmartUIState
             VAlign = 0.19f
         };
 
-        _titleText = new UIText(_titleLocalizedText);
-        var subText = new UIText(_subtitleLocalizedText);
-        _titleText.HAlign = 0.5f;
+        var titleText = new BetterUIText(_titleLocalizedText)
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        var subText = new BetterUIText(_subtitleLocalizedText)
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        titleText.HAlign = 0.5f;
         subText.Top.Set(26, 0);
         subText.HAlign = 0.5f;
-        _titleText.Append(subText);
-        _starterPanel.Append(_titleText);
+        titleText.Append(subText);
+        _starterPanel.Append(titleText);
 
-        _background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background"));
-        _hintText = new UIText(_hintLocalizedText, 0.85f)
+        var background = new UIBlendedImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Background"));
+        var hintText = new BetterUIText(_hintLocalizedText, 0.85f)
         {
             HAlign = 0.5f,
             Top = { Pixels = 281 },
-            TextColor = new Color(173, 173, 198)
+            TextColor = new Color(173, 173, 198),
+            RemoveFloatingPointsFromDrawPosition = true
         };
-        _starterPanel.Append(_hintText);
+        _starterPanel.Append(hintText);
 
-        _background.Width.Set(626, 0);
-        _background.Height.Set(221, 0);
-        _background.HAlign = 0.5f;
-        _background.Top.Set(53, 0);
+        background.Width.Set(626, 0);
+        background.Height.Set(221, 0);
+        background.HAlign = 0.5f;
+        background.Top.Set(53, 0);
         for (var i = 0; i < _starters.Length; i++)
         {
             var starter = _starters[i];
@@ -131,10 +134,10 @@ public class StarterSelectOverhead : SmartUIState
                     break;
             }
 
-            _background.Append(item);
+            background.Append(item);
         }
 
-        _starterPanel.Append(_background);
+        _starterPanel.Append(background);
         Append(_starterPanel);
     }
 
@@ -159,6 +162,8 @@ public class StarterButton : UIHoverImage
             ? Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon)
             : Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon"))
     {
+        RemoveFloatingPointsFromDrawPosition = true;
+        
         if (!Terramon.DatabaseV2.IsAvailableStarter(pokemon))
         {
             OnLeftClick += (_, _) =>
@@ -202,7 +207,5 @@ public class StarterButton : UIHoverImage
             player.QuickSpawnItem(player.GetSource_GiftOrReward(),
                 itemType, 10);
         };
-        
-        RemoveFloatingPointsFromDrawPosition = true;
     }
 }
