@@ -202,5 +202,7 @@ public class StarterButton : UIHoverImage
             player.QuickSpawnItem(player.GetSource_GiftOrReward(),
                 itemType, 10);
         };
+        
+        RemoveFloatingPointsFromDrawPosition = true;
     }
 }
