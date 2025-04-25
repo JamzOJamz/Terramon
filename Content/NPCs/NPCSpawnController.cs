@@ -118,6 +118,13 @@ public class NPCSpawnController : NPCComponent
     public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
     {
         var gameplayConfig = ModContent.GetInstance<GameplayConfig>();
+
+        var regularSpawnRateMultiplier = gameplayConfig.NonPokemonSpawnRateMultiplier;
+        if (regularSpawnRateMultiplier != 1f)
+            // Iterate through all the NPCs in the pool and apply the spawn rate multiplier directly
+            foreach (var key in pool.Keys.ToList())
+                pool[key] *= regularSpawnRateMultiplier;
+
         var spawnRateMultiplier = gameplayConfig.PokemonSpawnRateMultiplier;
         if (spawnRateMultiplier == 0) return;
 
