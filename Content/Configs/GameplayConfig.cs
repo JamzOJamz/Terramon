@@ -8,8 +8,11 @@ namespace Terramon.Content.Configs;
 
 public class GameplayConfig : ModConfig
 {
-    [Header("Spawning")] [DefaultValue(1f)] [Range(0f, 2f)]
+    [Header("Spawning")] [DefaultValue(1f)] [Range(0f, 1f)]
     public float PokemonSpawnRateMultiplier;
+    
+    [DefaultValue(1f)] [Range(0f, 1f)]
+    public float NonPokemonSpawnRateMultiplier;
     
     [DefaultValue(SpawningStage.Stage1)]
     public SpawningStage SpawningStage;
