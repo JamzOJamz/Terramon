@@ -14,6 +14,9 @@ public class UILinkManager : ILoadable
     
     public void Load(Mod mod)
     {
+        if (Main.dedServ)
+            return;
+
         SetupPartyUIPage();
         SetupPCUIPage();
         SetupHubUIPage();
@@ -34,6 +37,9 @@ public class UILinkManager : ILoadable
 
     public void Unload()
     {
+        if (Main.dedServ)
+            return;
+
         RemovePage(TerramonPageID.Party);
         RemovePage(TerramonPageID.PC);
         RemovePage(TerramonPageID.HubUI);
