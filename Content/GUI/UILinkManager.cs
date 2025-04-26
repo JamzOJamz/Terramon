@@ -11,12 +11,9 @@ public class UILinkManager : ILoadable
 {
     //reference position for first slot in the row (default Pokédex position)
     private static readonly Vector2 FirstSlotPos = new(51, 291);
-    
+    public bool IsLoadingEnabled(Mod mod) => !Main.dedServ;
     public void Load(Mod mod)
     {
-        if (Main.dedServ)
-            return;
-
         SetupPartyUIPage();
         SetupPCUIPage();
         SetupHubUIPage();
@@ -37,9 +34,6 @@ public class UILinkManager : ILoadable
 
     public void Unload()
     {
-        if (Main.dedServ)
-            return;
-
         RemovePage(TerramonPageID.Party);
         RemovePage(TerramonPageID.PC);
         RemovePage(TerramonPageID.HubUI);
