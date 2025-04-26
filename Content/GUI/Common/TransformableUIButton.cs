@@ -12,7 +12,8 @@ public class TransformableUIButton : UIElement
     private Asset<Texture2D> _texture;
     private float _visibilityActive = 1f;
     private float _visibilityInactive = 0.4f;
-    protected float _scale = 1f;
+    protected float Scale = 1f;
+    public bool RemoveFloatingPointsFromDrawPosition = true;
 
     protected TransformableUIButton(Asset<Texture2D> texture)
     {
@@ -40,26 +41,32 @@ public class TransformableUIButton : UIElement
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         var dimensions = GetDimensions();
+        if (RemoveFloatingPointsFromDrawPosition)
+        {
+            dimensions.X = (int)dimensions.X;
+            dimensions.Y = (int)dimensions.Y;
+        }
+        var drawPos = dimensions.Center();
         
         // TODO: Less code duplication here, I can't think of a good proper way to do this right now
         if (_borderTextureIsOverlay)
         {
-            spriteBatch.Draw(_texture.Value, dimensions.Center(), null,
+            spriteBatch.Draw(_texture.Value, drawPos, null,
                 Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation,
-                _texture.Frame().Size() / 2f, _scale, SpriteEffects.None, 0f);
+                _texture.Frame().Size() / 2f, Scale, SpriteEffects.None, 0f);
             if (_borderTexture != null && ContainsPoint(Main.MouseScreen) && !IgnoresMouseInteraction)
-                spriteBatch.Draw(_borderTexture.Value, dimensions.Center(), null, Color.White, Rotation,
-                    _borderTexture.Frame().Size() / 2f, _scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(_borderTexture.Value, drawPos, null, Color.White, Rotation,
+                    _borderTexture.Frame().Size() / 2f, Scale, SpriteEffects.None, 0f);
         }
         else
         {
             if (_borderTexture == null || !ContainsPoint(Main.MouseScreen) || IgnoresMouseInteraction)
-                spriteBatch.Draw(_texture.Value, dimensions.Center(), null,
+                spriteBatch.Draw(_texture.Value, drawPos, null,
                     Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation,
-                    _texture.Frame().Size() / 2f, _scale, SpriteEffects.None, 0f);
+                    _texture.Frame().Size() / 2f, Scale, SpriteEffects.None, 0f);
             else
-                spriteBatch.Draw(_borderTexture.Value, dimensions.Center(), null, Color.White, Rotation,
-                    _borderTexture.Frame().Size() / 2f, _scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(_borderTexture.Value, drawPos, null, Color.White, Rotation,
+                    _borderTexture.Frame().Size() / 2f, Scale, SpriteEffects.None, 0f);
         }
     }
 

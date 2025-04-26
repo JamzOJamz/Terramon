@@ -41,7 +41,7 @@ public class UIHoverImageButton : TransformableUIButton
     
     public void SetImageScale(float scale)
     {
-        _scale = scale;
+        Scale = scale;
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)

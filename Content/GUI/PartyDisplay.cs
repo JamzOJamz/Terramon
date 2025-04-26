@@ -11,7 +11,7 @@ using Terraria.UI;
 
 namespace Terramon.Content.GUI;
 
-public class PartyDisplay : SmartUIState
+public sealed class PartyDisplay : SmartUIState
 {
     private static readonly PartySidebarSlot[] PartySlots = new PartySidebarSlot[6];
     public static bool IsDraggingSlot { get; set; }

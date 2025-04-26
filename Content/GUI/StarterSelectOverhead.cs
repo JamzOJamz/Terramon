@@ -11,7 +11,7 @@ using Terraria.UI;
 
 namespace Terramon.Content.GUI;
 
-public class StarterSelectOverhead : SmartUIState
+public sealed class StarterSelectOverhead : SmartUIState
 {
     private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
 
@@ -48,10 +48,10 @@ public class StarterSelectOverhead : SmartUIState
     private UIContainer _starterPanel;
     private bool _starterPanelShowing = true;
 
-    public override bool Visible =>
-        !Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
+    public override bool Visible => false;
+        /*!Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
         !TerramonPlayer.LocalPlayer.HasChosenStarter &&
-        Main.LocalPlayer.talkNPC < 0;
+        Main.LocalPlayer.talkNPC < 0;*/
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
