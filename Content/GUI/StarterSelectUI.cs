@@ -219,7 +219,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         {
             RemoveFloatingPointsFromDrawPosition = true,
             HAlign = 0.5f,
-            TextColor = new Color(232, 241, 255)
+            TextColor = new Color(239, 245, 255)
         };
         _speciesText.Top.Set(109, 0f);
         Append(_speciesText);
@@ -227,7 +227,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         {
             RemoveFloatingPointsFromDrawPosition = true,
             HAlign = 0.5f,
-            TextColor = new Color(232, 241, 255)
+            TextColor = new Color(239, 245, 255)
         };
         _suffixText.Top.Set(126, 0f);
         Append(_suffixText);
