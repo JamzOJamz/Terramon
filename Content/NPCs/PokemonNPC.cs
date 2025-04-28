@@ -210,10 +210,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         PlasmaState = reader.ReadBoolean();
 
         if (isFirstSync)
-        {
             // In multiplayer, load the proper texture after receiving the data from the server
             _mainTexture = PokemonEntityLoader.RequestTexture(this);
-        }
     }
 
     public override void AI()
@@ -259,7 +257,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             return;
         }
 
-        if (Data is { IsShiny: true }) ShinyEffect();
+        if (Data is not { IsShiny: true }) return;
+
+        if (_mainTexture == null)
+            SoundEngine.PlaySound(SoundID.Item30, NPC.position);
+
+        ShinyEffect();
     }
 
     private void ShinyEffect()
