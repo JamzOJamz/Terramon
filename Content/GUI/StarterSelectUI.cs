@@ -69,13 +69,13 @@ public sealed class StarterSelectUI : SmartUIState
         {
             HAlign = 0.5f
         };
-        _topContainer.Top.Set(-157, 0.25f);
+        _topContainer.Top.Set(-157 + 40, 0.25f);
 
         var backdropImage = new UIImage(
             ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Backdrop"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            Color = Color.White * 0.21f
+            Color = Color.White * 0.2f
         };
         backdropImage.Width.Set(1028, 0f);
         backdropImage.Height.Set(589, 0f);
@@ -126,7 +126,7 @@ public sealed class StarterSelectUI : SmartUIState
             TextColor = new Color(173, 173, 198),
             RemoveFloatingPointsFromDrawPosition = true
         };
-        _hintText.Top.Set(98, 0.5f);
+        _hintText.Top.Set(90, 0.5f);
         Append(_hintText);
     }
 
@@ -139,8 +139,8 @@ public sealed class StarterSelectUI : SmartUIState
             _starterPanelShowing = false;
         }
 
-        _topContainer.Top.Set(-157, _starterPanelShowing ? 0.25f : 4f);
-        _hintText.Top.Set(98, _starterPanelShowing ? 0.5f : 4f);
+        _topContainer.Top.Set(-157 + 40, _starterPanelShowing ? 0.25f : 4f);
+        _hintText.Top.Set(90, _starterPanelShowing ? 0.5f : 4f);
 
         if (_starterPanelShowing && _hintTextTween is not { IsRunning: true })
             _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a, _hintTextAlpha == 1f ? 0f : 1f,
