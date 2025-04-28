@@ -202,6 +202,8 @@ public class PartySidebarSlot : UIImage
         Append(_levelText);
     }
 
+    public static CancellationTokenSource CrySoundSource { get; private set; }
+
     public int Index
     {
         get => _index;
@@ -222,6 +224,7 @@ public class PartySidebarSlot : UIImage
             HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
             return;
         }
+
         var hoverText =
             Language.GetTextValue(_isActiveSlot
                 ? "Mods.Terramon.GUI.Party.SlotHoverActive"
@@ -266,11 +269,24 @@ public class PartySidebarSlot : UIImage
                 ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.35f }
                 : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f };
             SoundEngine.PlaySound(s);
+
+            CancellationTokenSource token = null;
             if (!_isActiveSlot)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                    { Volume = 0.2525f };
-                SoundEngine.PlaySound(cry);
+                token = new CancellationTokenSource();
+                Task.Run(() =>
+                {
+                    // Wait for ~500ms before playing the sound
+                    Thread.Sleep(490);
+                    if (token.Token.IsCancellationRequested) return;
+
+                    Main.QueueMainThreadAction(() =>
+                    {
+                        var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
+                            { Volume = 0.15f };
+                        SoundEngine.PlaySound(cry);
+                    });
+                }, token.Token);
             }
 
             if (_isActiveSlot)
@@ -285,6 +301,8 @@ public class PartySidebarSlot : UIImage
                 if (oldSlot != -1) PartyDisplay.RecalculateSlot(oldSlot);
                 PartyDisplay.RecalculateSlot(Index);
             }
+
+            CrySoundSource = token;
         }
     }
 

@@ -53,6 +53,8 @@ public class TerramonPlayer : ModPlayer
             // Toggle off dedicated pet slot
             if (_activeSlot == -1 && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
+            // Cancel Pokémon cry sound in party display UI
+            PartySidebarSlot.CrySoundSource?.Cancel();
             _activeSlot = value;
             var buffType = ModContent.BuffType<PokemonCompanion>();
             var hasBuff = Player.HasBuff(buffType);
