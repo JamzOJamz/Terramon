@@ -8,12 +8,12 @@ public class TransformableUIButton : UIElement
 {
     private Asset<Texture2D> _borderTexture;
     private bool _borderTextureIsOverlay = true;
-    private bool _justHovered;
+    protected bool JustHovered { get; private set; }
     private Asset<Texture2D> _texture;
     private float _visibilityActive = 1f;
     private float _visibilityInactive = 0.4f;
     protected float Scale = 1f;
-    public bool RemoveFloatingPointsFromDrawPosition = true;
+    protected bool RemoveFloatingPointsFromDrawPosition = true;
 
     protected TransformableUIButton(Asset<Texture2D> texture)
     {
@@ -74,14 +74,14 @@ public class TransformableUIButton : UIElement
     {
         base.Update(gameTime);
 
-        if (ContainsPoint(Main.MouseScreen) && !_justHovered)
+        if (ContainsPoint(Main.MouseScreen) && !JustHovered)
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            _justHovered = true;
+            JustHovered = true;
         }
         else if (!ContainsPoint(Main.MouseScreen))
         {
-            _justHovered = false;
+            JustHovered = false;
         }
     }
 
