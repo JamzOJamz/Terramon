@@ -1158,7 +1158,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
             if (playCry)
             {
                 var cry = new SoundStyle("Terramon/Sounds/Cries/" + schema.Identifier)
-                    { Volume = 0.21f };
+                    { Volume = 0.15f };
                 SoundEngine.PlaySound(cry);
             }
 

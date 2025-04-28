@@ -101,7 +101,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
             }
 
-            _cryTimer = 10;
+            _cryTimer = 34;
         }
 
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -222,7 +222,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
             {
                 var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                    { Volume = 0.21f };
+                    { Volume = 0.15f };
                 SoundEngine.PlaySound(cry, NPC.position);
             }
         }
