@@ -38,10 +38,11 @@ public class UIHoverImageButton : TransformableUIButton
     {
         _isActivated = active;
     }
-    
-    public void SetImageScale(float scale)
+
+    public override void Update(GameTime gameTime)
     {
-        _scale = scale;
+        if (!_isActivated) return;
+        base.Update(gameTime);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
