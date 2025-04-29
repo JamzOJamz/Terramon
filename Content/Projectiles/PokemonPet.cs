@@ -147,7 +147,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
                 : SpriteEffects.None;
 
         // Draw name on mouse hover
-        if (ModContent.GetInstance<ClientConfig>().ShowPetNameOnHover)
+        if (!Projectile.isAPreviewDummy && ModContent.GetInstance<ClientConfig>().ShowPetNameOnHover)
         {
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
