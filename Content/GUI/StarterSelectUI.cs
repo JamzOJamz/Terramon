@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
+using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
@@ -69,7 +71,7 @@ public sealed class StarterSelectUI : SmartUIState
         {
             HAlign = 0.5f
         };
-        _topContainer.Top.Set(-157 + 40, 0.25f);
+        _topContainer.Top.Set(-157 + 10, 0.25f);
 
         var backdropImage = new UIImage(
             ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Backdrop"))
@@ -126,7 +128,7 @@ public sealed class StarterSelectUI : SmartUIState
             TextColor = new Color(173, 173, 198),
             RemoveFloatingPointsFromDrawPosition = true
         };
-        _hintText.Top.Set(90, 0.5f);
+        _hintText.Top.Set(94, 0.5f);
         Append(_hintText);
     }
 
@@ -139,8 +141,8 @@ public sealed class StarterSelectUI : SmartUIState
             _starterPanelShowing = false;
         }
 
-        _topContainer.Top.Set(-157 + 40, _starterPanelShowing ? 0.25f : 4f);
-        _hintText.Top.Set(90, _starterPanelShowing ? 0.5f : 4f);
+        _topContainer.Top.Set(-157 + 10, _starterPanelShowing ? 0.25f : 4f);
+        _hintText.Top.Set(94, _starterPanelShowing ? 0.5f : 4f);
 
         if (_starterPanelShowing && _hintTextTween is not { IsRunning: true })
             _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a, _hintTextAlpha == 1f ? 0f : 1f,
@@ -161,7 +163,7 @@ public sealed class StarterSelectUI : SmartUIState
 internal sealed class UIStarterBanner : UIHoverImageButton
 {
     private static readonly Asset<Texture2D> ShadowTexture;
-    private readonly ushort _id;
+    private readonly ushort _pokemon;
     private readonly UIImage _miniTexture;
     private readonly UIImage _shadow;
     private readonly BetterUIText _speciesText;
@@ -181,11 +183,11 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         ShadowTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Shadow");
     }
 
-    public UIStarterBanner(ushort id) : base(ModContent.Request<Texture2D>("Terraria/Images/NPC_0"), "Pick this one!")
+    public UIStarterBanner(ushort pokemon) : base(ModContent.Request<Texture2D>("Terraria/Images/NPC_0"), "Pick this one!")
     {
-        _id = id;
+        _pokemon = pokemon;
 
-        var mainType = Terramon.DatabaseV2.GetPokemon(id).Types[0];
+        var mainType = Terramon.DatabaseV2.GetPokemon(pokemon).Types[0];
         var texturePath = $"Terramon/Assets/GUI/Starter/Banner{mainType}";
         if (!ModContent.HasAsset(texturePath))
             texturePath = "Terramon/Assets/GUI/Starter/BannerNormal";
@@ -193,13 +195,37 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         SetImage(ModContent.Request<Texture2D>(texturePath));
         SetHoverImage(ModContent.Request<Texture2D>(
             hoverTexturePath));
+        
+        OnLeftClick += (_, _) =>
+        {
+            var player = Main.LocalPlayer;
+            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var data = PokemonData.Create(player, pokemon, 5);
+            if (ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters && data.IsShiny)
+                data.IsShiny = false;
+            modPlayer.AddPartyPokemon(data, out _);
+            modPlayer.HasChosenStarter = true;
+            var schema = data.Schema;
+            var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
+                DatabaseV2.GetPokemonSpeciesDirect(schema),
+                schema.Types[0].GetHexColor(),
+                data.LocalizedName
+            );
+            Main.NewText(chosenMessage);
+            SoundEngine.PlaySound(SoundID.Coins);
+            var itemType = ModContent.ItemType<PokeBallItem>();
+            if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
+                itemType = ModContent.ItemType<MasterBallItem>();
+            player.QuickSpawnItem(player.GetSource_GiftOrReward(),
+                itemType, 10);
+        };
 
         RemoveFloatingPointsFromDrawPosition = true;
         Width.Set(114, 0f);
         Height.Set(184, 0f);
         SetVisibility(1f, 1f);
 
-        var nameText = new BetterUIText(Terramon.DatabaseV2.GetLocalizedPokemonName(id), 0.97f)
+        var nameText = new BetterUIText(Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon), 0.97f)
         {
             RemoveFloatingPointsFromDrawPosition = true,
             HAlign = 0.5f,
@@ -211,7 +237,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         nameText.Top.Set(10, 0f);
         Append(nameText);
 
-        var species = Terramon.DatabaseV2.GetPokemonSpeciesDirect(id);
+        var species = Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon);
         var speciesSplit = species.Split(' ');
         var speciesMod = string.Join(" ", speciesSplit.Take(speciesSplit.Length - 1));
         var suffix = speciesSplit.Last();
@@ -241,7 +267,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         Append(_shadow);
 
         _miniTexture = new UIImage(ModContent.Request<Texture2D>(
-            $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(id)}_Mini"))
+            $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini"))
         {
             RemoveFloatingPointsFromDrawPosition = true
         };
@@ -256,7 +282,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
 
         if (mouseOverThis)
             if (!JustHovered)
-                SoundEngine.PlaySound(new SoundStyle("Terraria/Sounds/Item_32") { Volume = 0.4f });
+                SoundEngine.PlaySound(new SoundStyle("Terraria/Sounds/Item_32") { Volume = 0.3f });
 
         base.Update(gameTime);
 
@@ -282,9 +308,9 @@ internal sealed class UIStarterBanner : UIHoverImageButton
                 {
                     _shakeCount = 0;
                     _hoverTextOverrideTimeLeft = 150;
-                    var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(_id))
+                    var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(_pokemon))
                         { Volume = 0.15f };
-                    SetHoverText(Terramon.DatabaseV2.GetLocalizedPokemonName(_id) + GetRandomHoverText());
+                    SetHoverText(Terramon.DatabaseV2.GetLocalizedPokemonName(_pokemon) + GetRandomHoverText());
                     SoundEngine.PlaySound(cry);
                 }
 
