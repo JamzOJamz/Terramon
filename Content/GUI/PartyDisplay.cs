@@ -277,7 +277,7 @@ public class PartySidebarSlot : UIImage
                 Task.Run(() =>
                 {
                     // Wait for ~600ms before playing the sound
-                    Thread.Sleep(578);
+                    Thread.Sleep(576);
                     if (token.Token.IsCancellationRequested) return;
 
                     Main.QueueMainThreadAction(() =>
