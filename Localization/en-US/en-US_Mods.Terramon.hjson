@@ -115,6 +115,11 @@ Configs: {
 			Tooltip: Disables the sliding animation when toggling inventory party slots
 		}
 
+		ShowPetNameOnHover: {
+			Label: Show Pokémon Companion Name on Hover
+			Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
+		}
+
 		ModIconType: {
 			Label: Mod Icon Type
 			Tooltip: Changes the mod icon

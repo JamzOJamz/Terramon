@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Buffs;
+using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Loaders;
@@ -145,14 +146,14 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
 
-        // Draw nickname on mouse hover
-        if (!string.IsNullOrEmpty(Data?.Nickname))
+        // Draw name on mouse hover
+        if (ModContent.GetInstance<ClientConfig>().ShowPetNameOnHover)
         {
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
                 (int)frameSize.Y);
             if (drawRect.Contains(Main.MouseScreen.ToPoint()))
-                Main.instance.MouseText(Data.Nickname);
+                Main.instance.MouseText(Data.DisplayName);
         }
 
         // Desaturate the lightColor for Gastly

@@ -115,6 +115,11 @@ Configs: {
 			Tooltip: 切换库存队伍槽位时禁用滑动动画
 		}
 
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
+		}
+
 		ModIconType: {
 			Label: 模组图标类型
 			Tooltip: 更改模组图标

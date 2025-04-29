@@ -115,6 +115,11 @@ Configs: {
 			Tooltip: Deaktiviert die Gleitanimation beim Umschalten von Inventar-Team-Slots
 		}
 
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
+		}
+
 		ModIconType: {
 			Label: Mod-Symboltyp
 			Tooltip: Ändert das Mod-Symbol

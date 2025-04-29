@@ -115,6 +115,11 @@ Configs: {
 			Tooltip: Desactiva la animación de deslize al activar o desactivar las ranuras de equipo en el inventario
 		}
 
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
+		}
+
 		ModIconType: {
 			Label: Tipo de icono del mod
 			Tooltip: Cambia el icono del mod
