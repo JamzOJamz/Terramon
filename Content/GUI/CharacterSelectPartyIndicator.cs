@@ -57,7 +57,8 @@ internal class CharacterSelectPartyIndicator : ILoadable
             spriteBatch.Draw(poke != null ? BallAssets.GetBallIcon(BallID.PokeBall).Value : _emptyPokeBallTexture.Value,
                 ballDrawPos, null,
                 Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-            if (poke == null || !Main.MouseScreen.Between(ballDrawPos, ballDrawPos + new Vector2(16, 16))) continue;
+            if (hoverConsumed || poke == null ||
+                !Main.MouseScreen.Between(ballDrawPos, ballDrawPos + new Vector2(16, 16))) continue;
             deleteButtonLabel.SetText(poke.DisplayName);
             deleteButtonLabel.TextColor =
                 poke.IsShiny ? ModContent.GetInstance<KeyItemRarity>().RarityColor : Color.White;
