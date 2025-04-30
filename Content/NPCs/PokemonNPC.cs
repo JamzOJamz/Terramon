@@ -101,7 +101,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
             }
 
-            _cryTimer = 34;
+            _cryTimer = 30;
         }
 
         if (Main.netMode == NetmodeID.MultiplayerClient) return;

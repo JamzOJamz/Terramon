@@ -40,5 +40,5 @@ public class KeyItemRarity : DiscoRarity
         new Color(255, 192, 35)
     ];
 
-    protected override float Time => 2f;
+    protected override float Time => 2.25f;
 }
