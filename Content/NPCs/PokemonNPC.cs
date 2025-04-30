@@ -286,7 +286,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool? CanBeHitByProjectile(Projectile projectile)
     {
-        return projectile.ModProjectile is BasePkballProjectile;
+        return projectile.ModProjectile is BasePkballProjectile && !PlasmaState;
     }
 
     /*public override bool CanBeHitByNPC(NPC attacker)
