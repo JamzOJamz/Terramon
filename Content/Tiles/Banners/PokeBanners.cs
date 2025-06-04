@@ -1,18 +1,14 @@
 using ReLogic.Content;
 using Terramon.Content.Items;
+using Terramon.Helpers;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Localization;
-using Terraria.ObjectData;
-using Terraria.Enums;
 using Terraria.ModLoader.IO;
-using MonoMod.RuntimeDetour;
-using System.Reflection;
-using Terraria.Audio;
-using System.Data;
-using System.Reflection.Metadata;
-using Terramon.Helpers;
-using Terraria;
+using Terraria.ObjectData;
 
 namespace Terramon.Content.Tiles.Banners;
 
@@ -24,110 +20,168 @@ public enum BannerTier : byte
     Tier3,
     Tier4
 }
-public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema) : TerramonItem
+
+public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shimmerItem = 0) : TerramonItem
 {
     private static Asset<Texture2D> _tierOverlay;
 
     private readonly LocalizedText _pokeName = Terramon.DatabaseV2.GetLocalizedPokemonName(id);
+
+    // The real tier data. Needs to be synced in network and saved in IO.
+    public BannerTier Tier = BannerTier.None;
+
+    // As this is purely visual and freely cyclable, this does not need the same treatment as the above.
+    public BannerTier VisualTier = BannerTier.None;
+
+    public bool IsShiny => shimmerItem > 0;
+
     protected override bool CloneNewInstances => true;
 
     public override LocalizedText DisplayName =>
-        Language.GetText("Mods.Terramon.Items.PokeBannerItem.DisplayName").WithFormatArgs(_pokeName);
+        Language.GetText(IsShiny
+            ? "Mods.Terramon.Items.PokeBannerItem.ShinyDisplayName"
+            : "Mods.Terramon.Items.PokeBannerItem.DisplayName").WithFormatArgs(_pokeName);
 
-    public override LocalizedText Tooltip => Language.GetText("Mods.Terramon.Items.PokeBannerItem.Tooltip").WithFormatArgs(_pokeName);
+    public override LocalizedText Tooltip =>
+        Language.GetText("Mods.Terramon.Items.PokeBannerItem.Tooltip").WithFormatArgs(_pokeName);
 
-    public override string Name { get; } = $"{schema.Identifier}Banner";
+    public override string Name => $"{(IsShiny ? "Shiny" : string.Empty)}{schema.Identifier}Banner";
 
-    public override string Texture => $"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner";
+    public override string Texture =>
+        $"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner";
 
-    protected override int UseRarity => ItemRarityID.Blue;
-
-    // The real tier data. Needs to be synced in network and saved in IO.
-    public BannerTier tier = BannerTier.None;
-    // As this is purely visual and freely cyclable, this does not need the same treatment as the above.
-    public BannerTier visualTier = BannerTier.None;
+    protected override int UseRarity => IsShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.Blue;
 
     public override void SetStaticDefaults()
     {
         _tierOverlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTierOverlay");
         ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = true;
+
+        // For correct item sprite drawing as cursor item icon
+        Main.RegisterItemAnimation(Item.type, new DrawAnimationStaticFrame
+        {
+            Frame = IsShiny ? 1 : 0,
+            FrameCount = 2,
+            Vertical = false,
+            SizeOffset = -2
+        });
+
+        // Banner is able to shimmer into its shiny version and vice versa
+        if (!IsShiny) return;
+        ItemID.Sets.ShimmerTransformToItem[Type] = shimmerItem;
+        ItemID.Sets.ShimmerTransformToItem[shimmerItem] = Type;
     }
+
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableTile(ModContent.TileType<PokeBannerTile>(), id - 1);
+        Item.DefaultToPlaceableTile(
+            IsShiny ? ModContent.TileType<ShinyPokeBannerTile>() : ModContent.TileType<PokeBannerTile>(), id - 1);
         base.SetDefaults();
         Item.width = 12;
         Item.height = 28;
     }
+
     public override void SaveData(TagCompound tag)
     {
-        if (tier != BannerTier.None)
-            tag["tier"] = (byte)tier;
+        if (Tier != BannerTier.None)
+            tag["tier"] = (byte)Tier;
     }
+
     public override void LoadData(TagCompound tag)
     {
         if (tag.ContainsKey("tier"))
-            tier = (BannerTier)tag.GetByte("tier");
+            Tier = (BannerTier)tag.GetByte("tier");
     }
+
     public override void NetSend(BinaryWriter writer)
     {
-        writer.Write((byte)tier);
+        writer.Write((byte)Tier);
     }
+
     public override void NetReceive(BinaryReader reader)
     {
-        tier = (BannerTier)reader.ReadByte();
+        Tier = (BannerTier)reader.ReadByte();
     }
+
     public override ModItem Clone(Item newEntity)
     {
         var bannerItem = base.Clone(newEntity) as PokeBannerItem;
-        bannerItem.tier = tier;
+        bannerItem!.Tier = Tier;
         return bannerItem;
     }
+
     public override void HoldItem(Player player)
     {
         if (player.whoAmI != Main.myPlayer)
             return;
-        if (Main.mouseRight && Main.mouseRightRelease)
-        {
-            CycleVisualTier();
-        }
+        if (Main.mouseRight && Main.mouseRightRelease) CycleVisualTier();
     }
-    public void CycleVisualTier()
+
+    private void CycleVisualTier()
     {
-        int upperTier = tier == BannerTier.None ? 4 : (byte)tier;
-        if (++visualTier > (BannerTier)upperTier)
-            visualTier = BannerTier.None;
+        var upperTier = Tier == BannerTier.None ? 4 : (byte)Tier;
+        if (++VisualTier > (BannerTier)upperTier)
+            VisualTier = BannerTier.None;
         SoundEngine.PlaySound(SoundID.MenuTick);
     }
-    public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+
+    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor,
+        Color itemColor,
+        Vector2 origin, float scale)
     {
-        if (tier == BannerTier.None)
+        var textureAsset = TextureAssets.Item[Type];
+        var newFrame = textureAsset.Frame(2, frameX: IsShiny ? 1 : 0, sizeOffsetX: -2);
+        spriteBatch.Draw(textureAsset.Value, position, newFrame, drawColor, 0, newFrame.Size() / 2f, scale,
+            SpriteEffects.None, 0);
+        return false;
+    }
+
+    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation,
+        ref float scale,
+        int whoAmI)
+    {
+        var textureAsset = TextureAssets.Item[Type];
+        var newFrame = textureAsset.Frame(2, frameX: IsShiny ? 1 : 0, sizeOffsetX: -2);
+        var drawPos = Item.Center - Main.screenPosition;
+        spriteBatch.Draw(textureAsset.Value, drawPos, newFrame, lightColor, rotation, newFrame.Size() / 2f, scale,
+            SpriteEffects.None, 0f);
+        return false;
+    }
+
+    public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame,
+        Color drawColor, Color itemColor, Vector2 origin, float scale)
+    {
+        if (Tier == BannerTier.None)
             return;
 
-        Texture2D overlay = _tierOverlay.Value;
+        var overlay = _tierOverlay.Value;
 
-        int tierFrame = ((int)tier) - 1;
-        int width = overlay.Width / 4;
+        var tierFrame = (int)Tier - 1;
+        var width = overlay.Width / 4;
 
         position += new Vector2(0f, -16f);
-        
-        spriteBatch.Draw(_tierOverlay.Value, position, new(tierFrame * width, 0, width, overlay.Height), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+        spriteBatch.Draw(_tierOverlay.Value, position, new Rectangle(tierFrame * width, 0, width, overlay.Height),
+            Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
     }
-    public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+
+    public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation,
+        float scale, int whoAmI)
     {
-        if (tier == BannerTier.None)
+        if (Tier == BannerTier.None)
             return;
 
-        Texture2D overlay = _tierOverlay.Value;
+        var overlay = _tierOverlay.Value;
 
-        int tierFrame = ((int)tier) - 1;
-        int width = overlay.Width / 4;
+        var tierFrame = (int)Tier - 1;
+        var width = overlay.Width / 4;
 
         Vector2 offsetFromCenter = new(0f, 16f);
 
-        Vector2 drawPos = Item.Center - Main.screenPosition;
+        var drawPos = Item.Center - Main.screenPosition;
 
-        spriteBatch.Draw(_tierOverlay.Value, drawPos, new(tierFrame * width, 0, width, overlay.Height), lightColor, rotation, offsetFromCenter, scale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(_tierOverlay.Value, drawPos, new Rectangle(tierFrame * width, 0, width, overlay.Height),
+            lightColor, rotation, offsetFromCenter, scale, SpriteEffects.None, 0f);
     }
 }
 
@@ -137,9 +191,11 @@ public class PokeBannerTile : CustomPreviewTile
     private const int SupportedPokeyMenHorizontal = 9;
     private static Asset<Texture2D> _tierUnderlay; // hmm yes real words
     public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile";
+
     public override void SetStaticDefaults()
     {
-        _tierUnderlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTileTiers");
+        if (!Main.dedServ)
+            _tierUnderlay = ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTileTiers");
 
         Main.tileFrameImportant[Type] = true;
         Main.tileNoAttach[Type] = true;
@@ -155,8 +211,11 @@ public class PokeBannerTile : CustomPreviewTile
         TileObjectData.newTile.StyleMultiplier = 1;
         TileObjectData.newTile.StyleLineSkip = 2;
 
-        TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom | AnchorType.PlanterBox, TileObjectData.newTile.Width, 0);
-        TileObjectData.newTile.DrawYOffset = -2; // Draw this tile 2 pixels up, allowing the banner pole to align visually with the bottom of the tile it is anchored to.
+        TileObjectData.newTile.AnchorTop =
+            new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom | AnchorType.PlanterBox,
+                TileObjectData.newTile.Width, 0);
+        TileObjectData.newTile.DrawYOffset =
+            -2; // Draw this tile 2 pixels up, allowing the banner pole to align visually with the bottom of the tile it is anchored to.
         TileObjectData.newTile.LavaDeath = false;
 
         // This alternate placement supports placing on un-hammered platform tiles. Note how the DrawYOffset accounts for the height adjustment needed for the tile to look correctly attached.
@@ -170,143 +229,172 @@ public class PokeBannerTile : CustomPreviewTile
         DustType = -1; // No dust when mined
         AddMapEntry(new Color(13, 88, 130), Language.GetText("MapObject.Banner"));
     }
+
     /// <summary>
-    /// This method will only output the correct values if the provided i, j coordinates are the top-left tile of a PokeBannerTile.
+    ///     This method will only output the correct values if the provided i, j coordinates are the top-left tile of a
+    ///     PokeBannerTile.
     /// </summary>
     /// <param name="i">The X coordinate of the top-left tile.</param>
     /// <param name="j">The Y coordinate of the top-left tile.</param>
     /// <param name="realTier">The functional tier of the banner tile.</param>
     /// <param name="visualTier">The visual tier of the banner tile.</param>
-    public static void GetTierData(int i, int j, out BannerTier realTier, out BannerTier visualTier)
+    private static void GetTierData(int i, int j, out BannerTier realTier, out BannerTier visualTier)
     {
-        Tile t = Framing.GetTileSafely(i, j);
-        realTier = (BannerTier)(t.TileFrameY % 54);
-        visualTier = (BannerTier)(t.TileFrameX % 18);
+        GetTierData(Framing.GetTileSafely(i, j), out realTier, out visualTier);
     }
+
     /// <summary>
-    /// This method will only output the correct values if the provided Tile is the top-left tile of a PokeBannerTile.
+    ///     This method will only output the correct values if the provided Tile is the top-left tile of a PokeBannerTile.
     /// </summary>
     /// <param name="t">The top-left tile.</param>
     /// <param name="realTier">The functional tier of the banner tile.</param>
     /// <param name="visualTier">The visual tier of the banner tile.</param>
-    public static void GetTierData(Tile t, out BannerTier realTier, out BannerTier visualTier)
+    private static void GetTierData(Tile t, out BannerTier realTier, out BannerTier visualTier)
     {
         realTier = (BannerTier)(t.TileFrameY % 54);
         visualTier = (BannerTier)(t.TileFrameX % 18);
     }
+
     public override void PlaceInWorld(int i, int j, Item item)
     {
-        if (item.ModItem is PokeBannerItem bannerItem)
+        if (item.ModItem is not PokeBannerItem bannerItem) return;
+        var t = Framing.GetTileSafely(i, j);
+
+        // store real tier info for item dropping
+        t.TileFrameY += (byte)bannerItem.Tier;
+
+        if (bannerItem.VisualTier == BannerTier.None) return;
+        // reframe it to the alt appearance if the visual tier is any of the ball tiers
+        for (var k = 0; k < 3; k++)
         {
-            Tile t = Framing.GetTileSafely(i, j);
-            // store real tier info for item dropping
-            t.TileFrameY += (byte)bannerItem.tier;
-
-            if (bannerItem.visualTier != BannerTier.None)
-            {
-
-                // reframe it to the alt appearance if the visual tier is any of the ball tiers
-                for (int k = 0; k < 3; k++)
-                {
-                    Tile reframe = Framing.GetTileSafely(i, j + k);
-                    reframe.TileFrameY += 54;
-                }
-
-                // store visual tier info for ball drawing
-                t.TileFrameX += (byte)bannerItem.visualTier;
-            }
+            var reframe = Framing.GetTileSafely(i, j + k);
+            reframe.TileFrameY += 54;
         }
+
+        // store visual tier info for ball drawing
+        t.TileFrameX += (byte)bannerItem.VisualTier;
     }
+
     public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
     {
         if (fail || noItem)
             return;
 
         Point16 thisPoint = new(i, j);
-        Tile tile = Framing.GetTileSafely(thisPoint);
-        int thing = tile.TileFrameY % 54;
-        Point16 origin = new(i, j - (thing / 18)); // thank you integer division
+        var tile = Framing.GetTileSafely(thisPoint);
+        var thing = tile.TileFrameY % 54;
+        Point16 origin = new(i, j - thing / 18); // thank you integer division
 
         if (thisPoint != origin)
             return;
 
-        Tile topTile = Framing.GetTileSafely(origin);
-        Tile below = Framing.GetTileSafely(origin + new Point16(0, 1));
+        var topTile = Framing.GetTileSafely(origin);
+        var below = Framing.GetTileSafely(origin + new Point16(0, 1));
 
-        int style = Math.Max(TileObjectData.GetTileStyle(below), 0);
+        var style = Math.Max(TileObjectData.GetTileStyle(below), 0);
 
         Item drop = new(TileLoader.GetItemDropFromTypeAndStyle(Type, style));
 
         if (drop.ModItem is PokeBannerItem bannerItem)
         {
-            GetTierData(topTile, out BannerTier realTier, out BannerTier visualTier);
+            GetTierData(topTile, out var realTier, out var visualTier);
 
-            bannerItem.tier = realTier;
-            bannerItem.visualTier = visualTier;
+            bannerItem.Tier = realTier;
+            bannerItem.VisualTier = visualTier;
         }
 
-        Item.NewItem(WorldGen.GetItemSource_FromTileBreak(origin.X, origin.Y + 1), origin.X * 16, (origin.Y + 1) * 16, 16, 16, drop);
+        Item.NewItem(WorldGen.GetItemSource_FromTileBreak(origin.X, origin.Y + 1), origin.X * 16, (origin.Y + 1) * 16,
+            16, 16, drop);
     }
-    public override bool CanDrop(int i, int j) => false;
-    public bool TopLeftPokeBanner(int i, int j)
+
+    public override bool CanDrop(int i, int j)
+    {
+        return false;
+    }
+
+    private bool TopLeftPokeBanner(int i, int j)
     {
         // if top left, the tile below will match this (cuz tileframey will be 18, 72, just any multiple of 54 on top of 18)
         // i'm sorry that this is so horrid
-        Tile below = Framing.GetTileSafely(i, j + 1);
+        var below = Framing.GetTileSafely(i, j + 1);
         return below.TileType == Type && below.TileFrameY % 54 == 18;
     }
-    public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture, Vector2 position, Rectangle sourceRect, Color color)
+
+    public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture,
+        Vector2 position, Rectangle sourceRect, Color color)
     {
-        if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem || bannerItem.visualTier == BannerTier.None)
+        if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem ||
+            bannerItem.VisualTier == BannerTier.None)
             return true;
 
         Rectangle newFrame = new(sourceRect.X, sourceRect.Y + 54, sourceRect.Width, sourceRect.Height);
 
         if (newFrame.Y % 54 == 0)
         {
-            Texture2D underlay = _tierUnderlay.Value;
-            int width = underlay.Width / 4;
-            Rectangle underlayFrame = new(((int)bannerItem.visualTier - 1) * width, 0, width, underlay.Height);
+            var underlay = _tierUnderlay.Value;
+            var width = underlay.Width / 4;
+            Rectangle underlayFrame = new(((int)bannerItem.VisualTier - 1) * width, 0, width, underlay.Height);
             sb.Draw(_tierUnderlay.Value, position, underlayFrame, color);
         }
 
         sb.Draw(texture, position, newFrame, color);
-        
+
         return false;
+
+        /*if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem)
+            return true;
+
+        Rectangle newFrame = new(sourceRect.X, sourceRect.Y, sourceRect.Width, sourceRect.Height);
+
+        if (bannerItem.VisualTier != BannerTier.None)
+        {
+            newFrame.Y += 54;
+
+            if (newFrame.Y % 54 == 0)
+            {
+                var underlay = _tierUnderlay.Value;
+                var width = underlay.Width / 4;
+                Rectangle underlayFrame = new(((int)bannerItem.VisualTier - 1) * width, 0, width, underlay.Height);
+                sb.Draw(_tierUnderlay.Value, position, underlayFrame, color);
+            }
+        }
+
+        sb.Draw(texture, position, newFrame, color);
+
+        return false;*/
     }
+
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
     {
-        Tile tile = Main.tile[i, j];
+        var tile = Main.tile[i, j];
 
-        bool topLeft = TopLeftPokeBanner(i, j);
-
-        if (topLeft)
-        {
+        if (TopLeftPokeBanner(i, j))
             Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
-        }
-        if (tile.TileFrameY % 54 != 36)
-        {
-            GetTierData(i, j, out BannerTier realTier, out BannerTier visualTier);
 
-            if (visualTier == BannerTier.None)
-                return false;
+        if (tile.TileFrameY % 54 == 36) return false;
+        GetTierData(i, j, out _, out var visualTier);
 
-            Texture2D underlay = _tierUnderlay.Value;
-            int width = underlay.Width / 4;
-            Rectangle underlayFrame = new(((int)visualTier - 1) * width, 0, width, underlay.Height);
+        if (visualTier == BannerTier.None)
+            return false;
 
-            TileUtils.DrawTileCommon(spriteBatch, i, j, underlay, new Vector2(0f, WorldGen.IsBelowANonHammeredPlatform(i, j) ? -10f : -2f), underlayFrame);
-        }
+        var underlay = _tierUnderlay.Value;
+        var width = underlay.Width / 4;
+        Rectangle underlayFrame = new(((int)visualTier - 1) * width, 0, width, underlay.Height);
+
+        TileUtils.DrawTileCommon(spriteBatch, i, j, underlay,
+            new Vector2(0f, WorldGen.IsBelowANonHammeredPlatform(i, j) ? -10f : -2f), underlayFrame);
+
         // We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
         return false;
     }
 
-    public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
+    public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height,
+        ref short tileFrameX, ref short tileFrameY)
     {
         // readjust the appearance of the top left tile
         if (TopLeftPokeBanner(i, j))
         {
-            GetTierData(i, j, out BannerTier realTier, out BannerTier visualTier);
+            GetTierData(i, j, out var realTier, out var visualTier);
 
             tileFrameX -= (byte)visualTier;
             tileFrameY -= (byte)realTier;
@@ -314,14 +402,23 @@ public class PokeBannerTile : CustomPreviewTile
 
         // Due to MultiTileVine rendering the tile 2 pixels higher than expected for modded tiles using TileObjectData.DrawYOffset, we need to add 2 to fix the math for correct drawing
         offsetY += 2;
-        return;
     }
+}
 
-    public override void NearbyEffects(int i, int j, bool closer)
+public class ShinyPokeBannerTile : PokeBannerTile
+{
+    public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile_Shiny";
+}
+
+internal class DrawAnimationStaticFrame : DrawAnimation
+{
+    public int SizeOffset;
+    public bool Vertical;
+
+    public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1)
     {
-        if (closer)
-        {
-            return;
-        }
+        return Vertical
+            ? texture.Frame(verticalFrames: FrameCount, frameY: Frame, sizeOffsetY: SizeOffset)
+            : texture.Frame(FrameCount, frameX: Frame, sizeOffsetX: SizeOffset);
     }
 }

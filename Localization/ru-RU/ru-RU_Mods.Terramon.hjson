@@ -593,6 +593,7 @@ Items: {
 
 	PokeBannerItem: {
 		// DisplayName: "{0} Banner"
+		// ShinyDisplayName: Shiny {0} Banner
 		/* Tooltip:
 			'''
 			Nearby {0} companions grow quicker and unleash stronger attacks

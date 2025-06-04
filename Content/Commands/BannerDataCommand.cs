@@ -33,7 +33,7 @@ namespace Terramon.Content.Commands
                 return;
             }
 
-            bannerItem.tier = result;
+            bannerItem.Tier = result;
             caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.BannerData.Success", result), ChatColorYellow);
         }
     }
