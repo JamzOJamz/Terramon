@@ -54,17 +54,21 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
 
     public override void SetStaticDefaults()
     {
-        _tierOverlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTierOverlay");
-        ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = true;
-
-        // For correct item sprite drawing as cursor item icon
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationStaticFrame
+        if (!Main.dedServ)
         {
-            Frame = IsShiny ? 1 : 0,
-            FrameCount = 2,
-            Vertical = false,
-            SizeOffset = -2
-        });
+            _tierOverlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTierOverlay");
+
+            // For correct item sprite drawing as cursor item icon
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationStaticFrame
+            {
+                Frame = IsShiny ? 1 : 0,
+                FrameCount = 2,
+                Vertical = false,
+                SizeOffset = -2
+            });
+        }
+
+        ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = true;
 
         // Banner is able to shimmer into its shiny version and vice versa
         if (!IsShiny) return;
