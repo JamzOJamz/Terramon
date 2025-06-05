@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.Graphics.Capture;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -33,7 +34,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
     // As this is purely visual and freely cyclable, this does not need the same treatment as the above.
     public BannerTier VisualTier = BannerTier.None;
 
-    public bool IsShiny => shimmerItem > 0;
+    private bool IsShiny => shimmerItem > 0;
 
     protected override bool CloneNewInstances => true;
 
@@ -194,6 +195,25 @@ public class PokeBannerTile : CustomPreviewTile
     // max is 227 for reference. after there's 227 banners don't do anything else cuz tiles be smart
     private const int SupportedPokeyMenHorizontal = 9;
     private static Asset<Texture2D> _tierUnderlay; // hmm yes real words
+    private static RenderTarget2D _placementPreviewRt;
+    private static bool _placementPreviewRtCreationIsQueued;
+    private static bool _isRenderingToPlacementPreviewRt;
+
+    static PokeBannerTile()
+    {
+        On_Main.CheckMonoliths += orig =>
+        {
+            orig();
+            if (_placementPreviewRt == null || _placementPreviewRt.IsDisposed) return;
+            var isDrawingPlacementPreviewThisFrame =
+                TileObject.objectPreview.Active && Main.LocalPlayer.cursorItemIconEnabled && Main.placementPreview &&
+                !CaptureManager.Instance.Active && Main.LocalPlayer.HeldItem.ModItem is PokeBannerItem bannerItem &&
+                bannerItem.VisualTier != BannerTier.None;
+            if (!isDrawingPlacementPreviewThisFrame) return;
+            RenderPlacementPreviewToTarget();
+        };
+    }
+
     public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile";
 
     public override void SetStaticDefaults()
@@ -324,48 +344,57 @@ public class PokeBannerTile : CustomPreviewTile
         return below.TileType == Type && below.TileFrameY % 54 == 18;
     }
 
+    private static void RenderPlacementPreviewToTarget()
+    {
+        _isRenderingToPlacementPreviewRt = true;
+
+        var gd = Main.graphics.GraphicsDevice;
+        gd.SetRenderTarget(_placementPreviewRt);
+        gd.Clear(Color.Transparent);
+
+        var sb = Main.spriteBatch;
+        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None,
+            Main.Rasterizer, null, Main.Transform);
+
+        Main.instance.LoadTiles(TileObject.objectPreview.Type);
+        TileObject.DrawPreview(Main.spriteBatch, TileObject.objectPreview, Vector2.Zero);
+
+        sb.End();
+        gd.SetRenderTarget(null);
+
+        _isRenderingToPlacementPreviewRt = false;
+    }
+
     public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture,
         Vector2 position, Rectangle sourceRect, Color color)
     {
         if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem ||
-            bannerItem.VisualTier == BannerTier.None)
-            return true;
+            bannerItem.VisualTier == BannerTier.None) return true;
 
+        var isTopTile = sourceRect.Y == 0;
         Rectangle newFrame = new(sourceRect.X, sourceRect.Y + 54, sourceRect.Width, sourceRect.Height);
 
-        if (newFrame.Y % 54 == 0)
+        if (_isRenderingToPlacementPreviewRt)
         {
-            var underlay = _tierUnderlay.Value;
-            var width = underlay.Width / 4;
-            Rectangle underlayFrame = new(((int)bannerItem.VisualTier - 1) * width, 0, width, underlay.Height);
-            sb.Draw(_tierUnderlay.Value, position, underlayFrame, color);
-        }
+            position = new Vector2(0, sourceRect.Y);
+            color = Color.White;
 
-        sb.Draw(texture, position, newFrame, color);
-
-        return false;
-
-        /*if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem)
-            return true;
-
-        Rectangle newFrame = new(sourceRect.X, sourceRect.Y, sourceRect.Width, sourceRect.Height);
-
-        if (bannerItem.VisualTier != BannerTier.None)
-        {
-            newFrame.Y += 54;
-
-            if (newFrame.Y % 54 == 0)
+            if (isTopTile)
             {
                 var underlay = _tierUnderlay.Value;
                 var width = underlay.Width / 4;
                 Rectangle underlayFrame = new(((int)bannerItem.VisualTier - 1) * width, 0, width, underlay.Height);
                 sb.Draw(_tierUnderlay.Value, position, underlayFrame, color);
             }
+
+            sb.Draw(texture, position, newFrame, color);
+        }
+        else
+        {
+            sb.Draw(_placementPreviewRt, position, new Rectangle(0, sourceRect.Y, 16, 16), color);
         }
 
-        sb.Draw(texture, position, newFrame, color);
-
-        return false;*/
+        return false;
     }
 
     public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
@@ -406,6 +435,29 @@ public class PokeBannerTile : CustomPreviewTile
 
         // Due to MultiTileVine rendering the tile 2 pixels higher than expected for modded tiles using TileObjectData.DrawYOffset, we need to add 2 to fix the math for correct drawing
         offsetY += 2;
+    }
+
+    public override void Load()
+    {
+        base.Load();
+        if (Main.dedServ) return;
+        if (_placementPreviewRt != null || _placementPreviewRtCreationIsQueued) return;
+        Main.QueueMainThreadAction(() =>
+        {
+            _placementPreviewRt = new RenderTarget2D(Main.graphics.GraphicsDevice, 16, 54);
+        });
+        _placementPreviewRtCreationIsQueued = true;
+    }
+
+    public override void Unload()
+    {
+        if (Main.dedServ) return;
+        Main.QueueMainThreadAction(() =>
+        {
+            _placementPreviewRt?.Dispose();
+            _placementPreviewRt = null;
+        });
+        _placementPreviewRtCreationIsQueued = false;
     }
 }
 
