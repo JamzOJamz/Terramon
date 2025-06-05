@@ -347,7 +347,7 @@ public class PokeBannerTile : CustomPreviewTile
     private static void RenderPlacementPreviewToTarget()
     {
         _isRenderingToPlacementPreviewRt = true;
-        
+
         var storedZoom = Main.GameViewMatrix.Zoom;
         Main.GameViewMatrix.Zoom = new Vector2(1, 1);
         var storedSpriteEffects = Main.GameViewMatrix.Effects;
@@ -366,7 +366,7 @@ public class PokeBannerTile : CustomPreviewTile
 
         sb.End();
         gd.SetRenderTarget(null);
-        
+
         Main.GameViewMatrix.Zoom = storedZoom;
         Main.GameViewMatrix.Effects = storedSpriteEffects;
 
@@ -472,6 +472,22 @@ public class PokeBannerTile : CustomPreviewTile
 public class ShinyPokeBannerTile : PokeBannerTile
 {
     public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile_Shiny";
+
+    public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY,
+        Color tileLight, bool visible)
+    {
+        var tile = Main.tile[i, j];
+
+        if (!visible || (int)Main.timeForVisualEffects % 7 != 0 || !Main.rand.NextBool(5)) return;
+
+        var spawnPosition = new Vector2(i * 16 + 4, j * 16 + 4);
+        var dust = Dust.NewDustDirect(
+            spawnPosition + new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)), 8, 8,
+            DustID.TreasureSparkle);
+        dust.velocity = new Vector2(Main.WindForVisuals * 2f, 0f);
+        dust.noGravity = true;
+        dust.scale *= 1f + Main.rand.NextFloat(-0.03f, 0.03f);
+    }
 }
 
 internal class DrawAnimationStaticFrame : DrawAnimation
