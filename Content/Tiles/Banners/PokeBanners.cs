@@ -347,6 +347,11 @@ public class PokeBannerTile : CustomPreviewTile
     private static void RenderPlacementPreviewToTarget()
     {
         _isRenderingToPlacementPreviewRt = true;
+        
+        var storedZoom = Main.GameViewMatrix.Zoom;
+        Main.GameViewMatrix.Zoom = new Vector2(1, 1);
+        var storedSpriteEffects = Main.GameViewMatrix.Effects;
+        Main.GameViewMatrix.Effects = SpriteEffects.None;
 
         var gd = Main.graphics.GraphicsDevice;
         gd.SetRenderTarget(_placementPreviewRt);
@@ -361,6 +366,9 @@ public class PokeBannerTile : CustomPreviewTile
 
         sb.End();
         gd.SetRenderTarget(null);
+        
+        Main.GameViewMatrix.Zoom = storedZoom;
+        Main.GameViewMatrix.Effects = storedSpriteEffects;
 
         _isRenderingToPlacementPreviewRt = false;
     }
