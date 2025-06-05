@@ -476,8 +476,6 @@ public class ShinyPokeBannerTile : PokeBannerTile
     public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY,
         Color tileLight, bool visible)
     {
-        var tile = Main.tile[i, j];
-
         if (!visible || (int)Main.timeForVisualEffects % 7 != 0 || !Main.rand.NextBool(5)) return;
 
         var spawnPosition = new Vector2(i * 16 + 4, j * 16 + 4);
