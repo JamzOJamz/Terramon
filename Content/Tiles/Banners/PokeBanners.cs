@@ -1,5 +1,6 @@
 using ReLogic.Content;
 using Terramon.Content.Items;
+using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -67,6 +68,10 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
                 Vertical = false,
                 SizeOffset = -2
             });
+            
+            // Fix for Wikithis
+            CrossModSystem.Wikithis?.Call(1, Type,
+                $"https://terrariamods.wiki.gg/wiki/Terramon_Mod/{DisplayName.Value.Replace(' ', '_')}");
         }
 
         ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = true;
