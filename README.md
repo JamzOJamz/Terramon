@@ -17,7 +17,13 @@ Immerse yourself in the captivating crossover of Terraria and Pokémon with the 
 
 ## Planned features
 
+Terramon is growing fast, and we have ambitious plans to bring even more of the Pokémon experience into Terraria. Here are some of the major features currently in development:
+
 - Turn-based Pokémon battling.
+- Summon-style real-time Pokémon combat.
+- Pokémon breeding & eggs.
+- Interactive apricorn farming system.
+- Collectible Pokémon banners.
 
 ## Contributing
 
