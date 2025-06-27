@@ -20,6 +20,7 @@ namespace Terramon.Content.NPCs;
 public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity
 {
     private int _cryTimer;
+    private PokemonData _data;
     private Asset<Texture2D> _mainTexture;
     private int _mouseHoverTimer;
     private int _plasmaStateTime;
@@ -40,7 +41,16 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public DatabaseV2.PokemonSchema Schema { get; } = schema;
 
-    public PokemonData Data { get; set; }
+    public PokemonData Data
+    {
+        get => _data;
+        set
+        {
+            _data = value;
+            NPC.lifeMax = _data.MaxHP;
+            NPC.life = _data.HP;
+        }
+    }
 
     public override void SetStaticDefaults()
     {
