@@ -697,6 +697,7 @@ Misc: {
 	PokemonEvolutionReady: ¡Parece que {0} está listo para evolucionar!
 	RareCandyUse: ¡{0} subió a nivel {1}!
 	ExpCandyUse: ¡Tu Pokémon ha ganado {0} puntos de experiencia!
+	// Trainer: Trainer
 	MOTD:
 		'''
 		Has instalado {0} v{1}—¡disfrútalo! [i:{2}]

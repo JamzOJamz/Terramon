@@ -701,6 +701,7 @@ Misc: {
 	// PokemonEvolutionReady: "{0} seems ready to evolve!"
 	// RareCandyUse: "{0} grew to Lv. {1}!"
 	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	// Trainer: Trainer
 	/* MOTD:
 		'''
 		You've installed {0} v{1}—enjoy! [i:{2}]

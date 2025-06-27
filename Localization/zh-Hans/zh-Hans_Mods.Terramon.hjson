@@ -701,6 +701,7 @@ Misc: {
 	PokemonEvolutionReady: “{0} 似乎准备好进化了！”
 	RareCandyUse: “{0} 提升到了 Lv. {1}！”
 	ExpCandyUse: 你的宝可梦获得了 {0} 点经验值！
+	// Trainer: Trainer
 	MOTD:
 		'''
 		你已安装 {0} v{1}——尽情享受吧！[i:{2}]

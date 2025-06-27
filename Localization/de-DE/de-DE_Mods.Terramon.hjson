@@ -701,6 +701,7 @@ Misc: {
 	PokemonEvolutionReady: "{0} scheint bereit für eine Entwicklung zu sein!"
 	RareCandyUse: "{0} ist auf Lv. {1} gestiegen!"
 	ExpCandyUse: Dein Pokémon hat {0} EP erhalten!
+	// Trainer: Trainer
 	MOTD:
 		'''
 		Du hast {0} v{1} installiert—viel Spaß! [i:{2}]
