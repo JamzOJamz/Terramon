@@ -1,6 +1,5 @@
 using System.Reflection;
 using ReLogic.Graphics;
-using Terramon.Content.Items;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -14,9 +13,7 @@ internal static class MenuSocialWidget
     private const string WikiURL = "https://terrariamods.wiki.gg/wiki/Terramon_Mod";
     private const string YouTubeURL = "https://www.youtube.com/@TerramonMod";
     private const string GitHubURL = "https://github.com/JamzOJamz/Terramon";
-    private const string KoFiURL = "https://ko-fi.com/jamzojamz";
     private const double DiscordClientCheckInterval = 2.5;
-    private const bool DonateLinkEnabled = false;
 
     private static readonly Item FakeItem = new();
     private static readonly bool[] LastHoveringInteractableText = new bool[6];
@@ -51,45 +48,6 @@ internal static class MenuSocialWidget
         DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
             $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
-
-        if (DonateLinkEnabled)
-        {
-            // Draw Donate link text
-            const string donateText = "https://ko-fi.com/jamzojamz :)";
-            const string donateHoverText = "https://ko-fi.com/jamzojamz :D";
-            var donateTextSize = FontAssets.MouseText.Value.MeasureString(donateText);
-            donateTextSize.Y *= 0.9f;
-            drawPos.Y += 30;
-            var hoveredDonate = Main.MouseScreen.Between(drawPos, drawPos + donateTextSize);
-            if (hoveredDonate)
-            {
-                Main.LocalPlayer.mouseInterface = true;
-                if (!LastHoveringInteractableText[5])
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-
-                if (Main.mouseLeft && Main.mouseLeftRelease)
-                {
-                    SoundEngine.PlaySound(SoundID.MenuOpen);
-                    Main.mouseLeftRelease = false;
-
-                    Utils.OpenToURL(KoFiURL);
-                }
-
-                LastHoveringInteractableText[5] = true;
-            }
-            else
-            {
-                LastHoveringInteractableText[5] = false;
-            }
-
-            var donateTextColor = ModContent.GetInstance<KeyItemRarity>().RarityColor;
-            if (hoveredDonate) donateTextColor = BrightenColor(donateTextColor, 0.7f);
-
-            DrawOutlinedStringOnMenu(Main.spriteBatch, FontAssets.MouseText.Value,
-                hoveredDonate ? donateHoverText : donateText, drawPos,
-                donateTextColor, 0f, Vector2.Zero, 1.02f,
-                SpriteEffects.None, 0f, alphaMult: 0.76f);
-        }
 
         // Draw Mod Config link text
         const string configText = "Mod Config";

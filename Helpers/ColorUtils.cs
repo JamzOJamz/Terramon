@@ -22,4 +22,18 @@ public static class ColorUtils
                                  (byte)((hexValue >> 16) & 0xFF))
         };
     }
+    
+    /// <summary>
+    /// Converts an XNA Color to a hex string without the # symbol
+    /// </summary>
+    /// <param name="color">The XNA Color to convert</param>
+    /// <returns>Hex string in format "RRGGBB" or "RRGGBBAA" if alpha is not 255</returns>
+    public static string ToHexString(this Color color)
+    {
+        return color.A == 255 ?
+            // RGB format (no alpha)
+            $"{color.R:X2}{color.G:X2}{color.B:X2}" :
+            // RGBA format (include alpha)
+            $"{color.R:X2}{color.G:X2}{color.B:X2}{color.A:X2}";
+    }
 }

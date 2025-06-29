@@ -8,6 +8,7 @@ using Terramon.Content.Dusts;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Loaders;
 using Terramon.Core.ProjectileComponents;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -153,8 +154,13 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
                 (int)frameSize.Y);
             if (drawRect.Contains(Main.MouseScreen.ToPoint()))
+            {
+                var mouseTextMult = Main.mouseTextColor / 255f;
+                var subColor = new Color((byte)(166f * mouseTextMult), (byte)(169f * mouseTextMult),
+                    (byte)(181f * mouseTextMult));
                 Main.instance.MouseText(
-                    $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/A4A7B2:{Language.GetTextValue("Mods.Terramon.Misc.Trainer")}: {Main.player[Projectile.owner].name}]");
+                    $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/{subColor.ToHexString()}:{Language.GetTextValue("Mods.Terramon.Misc.Trainer")}: {Main.player[Projectile.owner].name}]");
+            }
         }
 
         // Desaturate the lightColor for Gastly
