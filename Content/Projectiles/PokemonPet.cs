@@ -156,8 +156,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             if (drawRect.Contains(Main.MouseScreen.ToPoint()))
             {
                 var mouseTextMult = Main.mouseTextColor / 255f;
-                var subColor = new Color((byte)(166f * mouseTextMult), (byte)(169f * mouseTextMult),
-                    (byte)(181f * mouseTextMult));
+                var subColor = new Color((byte)(198f * mouseTextMult), (byte)(198f * mouseTextMult),
+                    (byte)(209f * mouseTextMult));
                 Main.instance.MouseText(
                     $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/{subColor.ToHexString()}:{Language.GetTextValue("Mods.Terramon.Misc.Trainer")}: {Main.player[Projectile.owner].name}]");
             }
