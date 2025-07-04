@@ -15,6 +15,7 @@ namespace Terramon.Content.GUI;
 public sealed class StarterSelectUI : SmartUIState
 {
     private readonly UIStarterBanner[] _banners = new UIStarterBanner[3];
+    private readonly LocalizedText _comingSoonLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon");
     private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
 
     private readonly ushort[] _starters =
@@ -67,7 +68,7 @@ public sealed class StarterSelectUI : SmartUIState
         _showButton.SetIsActive(false);
         Append(_showButton);
 
-        _topContainer = new UIContainer(new Vector2(372, 314))
+        _topContainer = new UIContainer(new Vector2(478, 314))
         {
             HAlign = 0.5f
         };
@@ -116,16 +117,54 @@ public sealed class StarterSelectUI : SmartUIState
             var banner = new UIStarterBanner(_starters[i]);
             _banners[i] = banner;
             banner.Top.Set(130, 0f);
-            banner.Left.Set(i * 128, 0f);
+            banner.Left.Set(i * 128 + 54, 0f);
             _topContainer.Append(banner);
         }
 
         Append(_topContainer);
 
+        var pageLeftButton =
+            new UIHoverImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonLeftDisabled"),
+                _comingSoonLocalizedText)
+            {
+                RemoveFloatingPointsFromDrawPosition = true
+            };
+        pageLeftButton.Width.Set(34, 0f);
+        pageLeftButton.Height.Set(34, 0f);
+        pageLeftButton.Left.Set(2, 0f);
+        pageLeftButton.Top.Set(194, 0f);
+        pageLeftButton.OnLeftClick += (_, _) =>
+        {
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            {
+                Volume = 0.25f
+            });
+        };
+        _topContainer.Append(pageLeftButton);
+
+        var pageRightButton = new UIHoverImage(
+            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonRightDisabled"),
+            _comingSoonLocalizedText)
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        pageRightButton.Width.Set(34, 0f);
+        pageRightButton.Height.Set(34, 0f);
+        pageRightButton.Left.Set(442, 0f);
+        pageRightButton.Top.Set(194, 0f);
+        pageRightButton.OnLeftClick += (_, _) =>
+        {
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            {
+                Volume = 0.25f
+            });
+        };
+        _topContainer.Append(pageRightButton);
+
         _hintText = new BetterUIText(_hintLocalizedText, 0.86f)
         {
             HAlign = 0.5f,
-            TextColor = new Color(173, 173, 198),
+            TextColor = new Color(182, 187, 203),
             RemoveFloatingPointsFromDrawPosition = true
         };
         _hintText.Top.Set(94, 0.5f);
@@ -154,7 +193,7 @@ public sealed class StarterSelectUI : SmartUIState
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        _hintText.TextColor = Color.Lerp(new Color(173, 173, 198), new Color(135, 135, 163), _hintTextAlpha);
+        _hintText.TextColor = Color.Lerp(new Color(182, 187, 203), new Color(131, 135, 146), _hintTextAlpha);
 
         base.Draw(spriteBatch);
     }
@@ -163,8 +202,8 @@ public sealed class StarterSelectUI : SmartUIState
 internal sealed class UIStarterBanner : UIHoverImageButton
 {
     private static readonly Asset<Texture2D> ShadowTexture;
-    private readonly ushort _pokemon;
     private readonly UIImage _miniTexture;
+    private readonly ushort _pokemon;
     private readonly UIImage _shadow;
     private readonly BetterUIText _speciesText;
     private readonly BetterUIText _suffixText;
@@ -183,7 +222,8 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         ShadowTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Shadow");
     }
 
-    public UIStarterBanner(ushort pokemon) : base(ModContent.Request<Texture2D>("Terraria/Images/NPC_0"), "Pick this one!")
+    public UIStarterBanner(ushort pokemon) : base(ModContent.Request<Texture2D>("Terraria/Images/NPC_0"),
+        "Pick this one!")
     {
         _pokemon = pokemon;
 
@@ -195,7 +235,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         SetImage(ModContent.Request<Texture2D>(texturePath));
         SetHoverImage(ModContent.Request<Texture2D>(
             hoverTexturePath));
-        
+
         OnLeftClick += (_, _) =>
         {
             var player = Main.LocalPlayer;
