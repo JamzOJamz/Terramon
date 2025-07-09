@@ -4,6 +4,7 @@ using Terramon.Content.GUI;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
@@ -50,11 +51,15 @@ public class TerramonPlayer : ModPlayer
         get => _activeSlot;
         set
         {
+            // Don't double execute logic here
+            if (_activeSlot == value) return;
+            ActivePetProjectile = null;
             // Toggle off dedicated pet slot
             if (_activeSlot == -1 && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
             // Cancel Pokémon cry sound in party display UI
-            PartySidebarSlot.CrySoundSource?.Cancel();
+            if (Player == Main.LocalPlayer)
+                PartySidebarSlot.CrySoundSource?.Cancel();
             _activeSlot = value;
             var buffType = ModContent.BuffType<PokemonCompanion>();
             var hasBuff = Player.HasBuff(buffType);
@@ -69,6 +74,8 @@ public class TerramonPlayer : ModPlayer
             }
         }
     }
+
+    public PokemonPet ActivePetProjectile;
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 

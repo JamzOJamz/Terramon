@@ -65,22 +65,20 @@ public class UpgradeCommand : TerramonCommand
             var nickname = _pkmnDataNicknameField.GetValue(data)?.ToString();
             var isShiny = (bool)_pkmnDataShinyField.GetValue(data)!;
             var level = (int)_pkmnDataLevelField.GetValue(data)!;
-            var newData = PokemonData.Create(player, id, (byte)level);
-            newData.Nickname = nickname;
-            newData.IsShiny = isShiny;
-            newData.Ball = GetBallIDFromItemName(modItemType.Name);
+            var newData = PokemonData.Create(id, (byte)level).CaughtBy(player).WithNickname(nickname)
+                .ForceShiny(isShiny).WithBall(GetBallIDFromItemName(modItemType.Name)).Build();
             if (modPlayer.TransferPokemonToPC(newData) == null) break;
 
             transferCount++;
             item.TurnToAir();
         }
-        
+
         if (transferCount == 0)
         {
             caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Upgrade.NopUpgrade"), ChatColorRed);
             return;
         }
-        
+
         caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.Upgrade.Success", transferCount, player.name),
             ChatColorYellow);
     }

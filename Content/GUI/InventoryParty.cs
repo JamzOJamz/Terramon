@@ -48,7 +48,8 @@ public class InventoryParty : SmartUIState
     }
 
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !Main.inFancyUI && !Main.LocalPlayer.tileEntityAnchor.InUse &&
+                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
+                                    !Main.LocalPlayer.tileEntityAnchor.InUse &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public static bool InPCMode { get; private set; }
@@ -272,7 +273,8 @@ public class InventoryParty : SmartUIState
             if ((slot.Data == null && partyData != null) ||
                 (slot.Data != null && partyData == null) ||
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
-                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitEXP | PokemonData.BitNickname |
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitHP | PokemonData.BitEXP |
+                    PokemonData.BitNickname |
                     PokemonData.BitIsShiny,
                     out _)))
                 UpdateSlot(partyData, slot.Index);
