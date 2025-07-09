@@ -32,7 +32,7 @@ public class RealtimeCombatGlobalNPC : GlobalNPC
         for (var j = 0; j < 16; j++)
         {
             var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
-            var d = Dust.NewDustPerfect(activePet.Projectile.Center + speed * 16, DustID.FrostHydra);
+            var d = Dust.NewDustPerfect(activePet.Projectile.Center + speed * 16, DustID.FrostHydra, new Vector2(0, -1.5f));
             d.noGravity = true;
         }
     }
