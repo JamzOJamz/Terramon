@@ -1,15 +1,18 @@
 using Terramon.Content.Configs;
+using Terramon.Content.Dusts;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.Localization;
+using Terraria.Graphics.Effects;
+using Terraria;
 
 namespace Terramon.Content.Items;
 
 public class RareCandy : Vitamin, IPokemonDirectUse
 {
     protected override int UseRarity { get; } = ModContent.RarityType<RareCandyRarity>();
-
+    private float RotTime;
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
@@ -27,6 +30,20 @@ public class RareCandy : Vitamin, IPokemonDirectUse
     {
         return data.Level < Terramon.MaxPokemonLevel;
     }
+
+    public override void OnConsumeItem(Player player)
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            int dust = Dust.NewDust(player.position, player.width, player.height, ModContent.DustType<BlueGlowBouncy>());
+            int dust2 = Dust.NewDust(player.position, player.width, player.height, ModContent.DustType<BlueGlowBouncy>());
+            Main.dust[dust].scale = 0.45f;
+            Main.dust[dust2].scale = 0.25f;
+            Main.dust[dust].noGravity = false;
+            Main.dust[dust2].noGravity = false;
+        }
+    }
+
 
     public int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
     {
@@ -69,13 +86,10 @@ public class RareCandy : Vitamin, IPokemonDirectUse
 
         // Visual feedback effects
         CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
-        SoundEngine.PlaySound(SoundID.Item20);
-        for (var j = 0; j < 40; j++)
-        {
-            var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
-            var d = Dust.NewDustPerfect(player.Center + speed * 26, DustID.FrostHydra);
-            d.noGravity = true;
-        }
+        
+
+
+
 
         SoundEngine.PlaySound(SoundID.Item4);
 
