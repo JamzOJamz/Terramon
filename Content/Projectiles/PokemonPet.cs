@@ -10,7 +10,9 @@ using Terramon.Core.Loaders;
 using Terramon.Core.ProjectileComponents;
 using Terramon.Helpers;
 using Terramon.ID;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 
@@ -21,9 +23,30 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 {
     public delegate void CustomFindFrame(PokemonPet proj);
 
+    private static readonly Asset<Texture2D> ResourceBarStartTexture;
+    private static readonly Asset<Texture2D> ResourceBarMiddleTexture;
+    private static readonly Asset<Texture2D> ResourceBarEndTexture;
+
+    private static readonly HashSet<int> PetsNeedingHPBars = [];
+    private int _activeAttackTimer;
+    private int _attackCooldown = 60;
+
+    private Vector2? _attackDirection;
+
     private ushort _cachedID;
+
+    private int _lastHPState = -1;
     private Asset<Texture2D> _mainTexture;
+    private bool _queueCry;
+    private bool _regeneratingHealth;
+    private int _regenStartTarget;
+    private int _regenStartTimer;
+    private float _regenTimer;
     private int _shinySparkleTimer;
+
+    private NPC _target;
+
+    private int _visualImmunityFrames;
     public int CustomFrameCounter;
     public int? CustomSpriteDirection;
     public CustomFindFrame FindFrame;
@@ -32,6 +55,29 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     {
         // Don't run this on the server
         if (Main.dedServ) return;
+
+        // Load resource bar textures
+        ResourceBarStartTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Realtime/ResourceBarStart");
+        ResourceBarMiddleTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Realtime/ResourceBarMiddle");
+        ResourceBarEndTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Realtime/ResourceBarEnd");
+
+        // Draw HP bars on proper layer
+        On_Main.DrawInterface_14_EntityHealthBars += (orig, self) =>
+        {
+            orig(self);
+
+            // Draw HP bars for all marked pets
+            foreach (var projIndex in PetsNeedingHPBars)
+            {
+                var proj = Main.projectile[projIndex];
+                if (!proj.active || proj.ModProjectile is not PokemonPet pet) continue;
+
+                DrawHealthBar(pet, proj);
+            }
+
+            // Clear the collection for next frame
+            PetsNeedingHPBars.Clear();
+        };
 
         // Draw the player's active Pokémon pet in the character select UI
         On_UICharacter.ctor += (orig, self, player, animated, panel, scale, clone) =>
@@ -122,7 +168,9 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
 
         var owningPlayer = Main.player[Projectile.owner];
-        Data = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
+        var modPlayer = owningPlayer.GetModPlayer<TerramonPlayer>();
+        Data = modPlayer.GetActivePokemon();
+        modPlayer.ActivePetProjectile = this;
         _cachedID = ID;
     }
 
@@ -134,10 +182,45 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
             FindFrame?.Invoke(this);
 
+        if (_visualImmunityFrames > 0 && _visualImmunityFrames % 6 < 3)
+            return false; // Skip draw to create flashing
+
         var projFrameCount = Main.projFrames[Type];
         var drawPos = Projectile.Center - Main.screenPosition +
                       new Vector2(0f,
                           Projectile.gfxOffY + DrawOriginOffsetY + (int)Math.Ceiling(Projectile.height / 2f) + 4);
+
+        // Apply attack animation offset
+        if (_activeAttackTimer > 0)
+        {
+            _attackDirection ??= _target == null ? Vector2.Zero : Vector2.Normalize(_target.Center - Projectile.Center);
+
+            var normalizedTime = (16 - _activeAttackTimer) / 16f;
+            float offsetIntensity;
+
+            if (normalizedTime < 0.3f)
+            {
+                // Fast attack movement
+                var attackTime = normalizedTime / 0.3f;
+                offsetIntensity = (float)Math.Sin(attackTime * Math.PI * 0.5f);
+            }
+            else
+            {
+                // Slow return with easing
+                var returnTime = (normalizedTime - 0.3f) / 0.7f;
+                offsetIntensity = (float)Math.Cos(returnTime * Math.PI * 0.5f);
+            }
+
+            const float maxOffset = 16f;
+
+            var attackOffset = _attackDirection.Value * (offsetIntensity * maxOffset);
+            drawPos += attackOffset;
+        }
+        else
+        {
+            _attackDirection = null;
+        }
+
         var sourceRect = _mainTexture.Frame(1, projFrameCount, frameY: Projectile.frame);
         var frameSize = sourceRect.Size();
         var origin = frameSize / new Vector2(2, 1);
@@ -159,7 +242,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
                 var subColor = new Color((byte)(182f * mouseTextMult), (byte)(187f * mouseTextMult),
                     (byte)(203f * mouseTextMult));
                 Main.instance.MouseText(
-                    $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/{subColor.ToHexString()}:{Language.GetTextValue("Mods.Terramon.Misc.Trainer")}: {Main.player[Projectile.owner].name}]");
+                    $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/{subColor.ToHexString()}:Following]");
             }
         }
 
@@ -191,6 +274,120 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         return false;
     }
 
+    public override void PostDraw(Color lightColor)
+    {
+        // Marks this pet for HP bar rendering if it needs one
+        if (!Projectile.isAPreviewDummy && Data != null && Data.HP != Data.MaxHP)
+            PetsNeedingHPBars.Add(Projectile.whoAmI);
+    }
+
+    private static void DrawHealthBar(PokemonPet pet, Projectile proj)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(default, default, Main.DefaultSamplerState, default, Main.Rasterizer, null,
+            Main.GameViewMatrix.TransformationMatrix);
+
+        // Get the main texture to determine Pokemon width (and subsequently bar width)
+        const int barMinWidth = 28;
+        const int barMaxWidth = 48;
+
+        var pokemonWidth = pet._mainTexture.Value.Width;
+        var barWidth = Math.Clamp(pokemonWidth, barMinWidth, barMaxWidth);
+        var barXOffset = (barWidth - pokemonWidth) / -2;
+
+        // Calculate health bar position
+        var drawPos = proj.Center - Main.screenPosition +
+                      new Vector2(barXOffset,
+                          proj.gfxOffY + pet.DrawOriginOffsetY + (int)Math.Ceiling(proj.height / 2f) + 4);
+        var sourceRect = pet._mainTexture.Frame(1, Main.projFrames[pet.Type], frameY: proj.frame);
+        var frameSize = sourceRect.Size();
+        var origin = frameSize / new Vector2(2, 1);
+
+        // Health bar dimensions
+        var healthPercent = (float)pet.Data.HP / pet.Data.MaxHP;
+        var regenHealthPercent = (float)pet.Data.RegenHP / pet.Data.MaxHP;
+
+        // Draw health bar background (full width)
+        var barStartPos = drawPos - origin + new Vector2(0, frameSize.Y + 6);
+        barStartPos.X = (int)barStartPos.X;
+        barStartPos.Y = (int)barStartPos.Y;
+
+        const float lightMultiplier = 3.75f;
+        var lightColor = Lighting.GetColor((int)(proj.Center.X / 16f), (int)(proj.Center.Y / 16f));
+        var barColor = new Color(
+            Math.Min((int)(lightColor.R * lightMultiplier), 255),
+            Math.Min((int)(lightColor.G * lightMultiplier), 255),
+            Math.Min((int)(lightColor.B * lightMultiplier), 255),
+            255
+        );
+
+        // Draw start cap
+        Main.spriteBatch.Draw(ResourceBarStartTexture.Value, barStartPos, null, barColor,
+            0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+
+        // Draw middle section (stretched to fill the width)
+        var middleWidth = barWidth - ResourceBarStartTexture.Value.Width - ResourceBarEndTexture.Value.Width;
+        var middlePos = barStartPos + new Vector2(ResourceBarStartTexture.Value.Width, 0);
+
+        // ReSharper disable once PossibleLossOfFraction
+        Main.spriteBatch.Draw(ResourceBarMiddleTexture.Value, middlePos, null, barColor, 0f, Vector2.Zero,
+            new Vector2(middleWidth / ResourceBarMiddleTexture.Value.Width, 1f), SpriteEffects.None, 0);
+
+        // Draw end cap
+        Main.spriteBatch.Draw(ResourceBarEndTexture.Value,
+            barStartPos + new Vector2(barWidth - ResourceBarEndTexture.Value.Width, 0),
+            null, barColor,
+            0f, Vector2.Zero, 1f, SpriteEffects.None, 0);
+
+        var healthFillRect = new Rectangle((int)barStartPos.X + 4, (int)barStartPos.Y + 4, barWidth - 8, 4);
+        var originalHealthFillRectWidth = healthFillRect.Width;
+
+        // Draw health fill background
+        Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, healthFillRect,
+            ColorUtils.MultiplyBlend(barColor, new Color(30, 40, 43)));
+
+        // Draw regen health fill
+        if (regenHealthPercent > 0f)
+        {
+            var pulseProgress = (float)Main.timeForVisualEffects / 60f % 1f;
+            var pulseOpacity = 1f - pulseProgress; // Fade from full opacity to 0
+
+            var regenColor = new Color(120, 150, 156) * pulseOpacity;
+
+            healthFillRect.Width = (int)(originalHealthFillRectWidth * regenHealthPercent);
+            Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, healthFillRect,
+                ColorUtils.MultiplyBlend(barColor, regenColor));
+        }
+
+        // Draw health fill
+        if (!(healthPercent > 0f)) return;
+
+        var currentHpState = healthPercent switch
+        {
+            > 0.5f => 2,
+            > 0.2f => 1,
+            _ => 0
+        };
+
+        if (currentHpState != pet._lastHPState)
+        {
+            if (pet._lastHPState >= 0 && currentHpState < pet._lastHPState)
+                pet._queueCry = true;
+            pet._lastHPState = currentHpState;
+        }
+
+        var healthColor = currentHpState switch
+        {
+            2 => new Color(0x36, 0xFF, 0x66),
+            1 => new Color(0xFF, 0xE6, 0x43),
+            _ => new Color(0xF0, 0x29, 0x29)
+        };
+
+        healthFillRect.Width = (int)(originalHealthFillRectWidth * healthPercent);
+        Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, healthFillRect,
+            ColorUtils.MultiplyBlend(barColor, healthColor));
+    }
+
     public static Color GrayscaleColor(Color color)
     {
         // Compute luminance using the weighted average formula
@@ -207,11 +404,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
-        Data ??= new PokemonData
-        {
-            ID = ID,
-            Level = 5
-        };
+        Data ??= PokemonData.Create(ID).Build();
         Data.NetRead(reader);
         CustomSpriteDirection = reader.ReadBoolean() ? reader.ReadInt32() : null;
     }
@@ -235,13 +428,222 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         if (!owningPlayer.dead && owningPlayer.HasBuff(ModContent.BuffType<PokemonCompanion>()) &&
             activePokemon == Data && activePokemon.ID == _cachedID) Projectile.timeLeft = 2;
 
-        if (CustomSpriteDirection.HasValue && Projectile.velocity.X != 0)
+        // Attacking NPCs
+        const float maxDetectRadius = 400f;
+        _target ??= FindClosestNPC(maxDetectRadius);
+        if (_target != null && !IsValidTarget(_target)) _target = null;
+
+        if (_target != null)
+        {
+            var dir = (Projectile.position.X < _target.position.X).ToDirectionInt();
+            CustomSpriteDirection = dir;
+
+            if (_attackCooldown == 0)
+            {
+                _activeAttackTimer = 16;
+                _attackCooldown = 120;
+                SoundEngine.PlaySound(new SoundStyle("Terraria/Sounds/Item_7") { Volume = 1f });
+            }
+            else if (_activeAttackTimer == 8)
+            {
+                _target.SimpleStrikeNPC(1, dir, false, 2f);
+                CreateHitEffect(_target.Center);
+            }
+        }
+
+        if (_attackCooldown > 0) _attackCooldown--;
+        _activeAttackTimer--;
+
+        // Health regen
+        if (Projectile.owner == Main.myPlayer)
+        {
+            if (Data.HP < Data.RegenHP)
+            {
+                if (_regenStartTarget == 0)
+                    _regenStartTarget = Main.rand.Next(6, 1021); // Between 1/10 of a second and 17 seconds
+
+                _regenStartTimer++;
+
+                if (_regenStartTimer == _regenStartTarget)
+                {
+                    _regenStartTimer = 0;
+                    _regenStartTarget = 0;
+                    _regeneratingHealth = true;
+                }
+
+                if (_regeneratingHealth)
+                {
+                    // Regen rate scales with MaxHP (20 is baseline), so more MaxHP = faster regen
+                    var regenScale = 20f / Math.Max(1f, Data.MaxHP); // Prevent divide by zero
+                    var regenIncrement = owningPlayer.velocity.LengthSquared() == 0 ? 1f : 0.5f;
+                    _regenTimer += regenIncrement / regenScale;
+
+                    if (_regenTimer >= 30f)
+                    {
+                        Data.Heal(1, true);
+                        _regenTimer = 0f;
+                    }
+                }
+            }
+            else
+            {
+                CancelRegen();
+            }
+        }
+
+        // Handle decreasing of visual immunity frames
+        if (_visualImmunityFrames > 0) _visualImmunityFrames--;
+
+        // Handle disabling custom sprite direction
+        if (CustomSpriteDirection.HasValue && Projectile.velocity.X != 0 && _activeAttackTimer <= 0)
         {
             CustomSpriteDirection = null;
             Projectile.netUpdate = true;
         }
 
+        // Play cry sound effect if queued
+        if (_queueCry && Main.netMode != NetmodeID.Server && Data != null)
+        {
+            var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
+                { Volume = 0.15f };
+            SoundEngine.PlaySound(cry, Projectile.position);
+            _queueCry = false;
+        }
+
         if (isShiny) ShinyEffect();
+    }
+
+    private NPC FindClosestNPC(float maxDetectDistance)
+    {
+        NPC closestNPC = null;
+
+        var sqrMaxDetectDistance = maxDetectDistance * maxDetectDistance;
+
+        foreach (var target in Main.ActiveNPCs)
+        {
+            if (!IsValidTarget(target)) continue;
+
+            var sqrDistanceToTarget = Vector2.DistanceSquared(target.Center, Projectile.Center);
+
+            if (!(sqrDistanceToTarget < sqrMaxDetectDistance)) continue;
+            sqrMaxDetectDistance = sqrDistanceToTarget;
+            closestNPC = target;
+        }
+
+        return closestNPC;
+    }
+
+    private bool IsValidTarget(NPC target)
+    {
+        return target.CanBeChasedBy() &&
+               Collision.CanHit(Projectile.Center, 1, 1, target.position, target.width, target.height);
+    }
+
+    public void RealtimeHit()
+    {
+        CancelRegen();
+        _visualImmunityFrames = 24;
+    }
+
+    private void CancelRegen()
+    {
+        _regeneratingHealth = false;
+        _regenTimer = 0f;
+    }
+
+    private static void CreateHitEffect(Vector2 hitPosition)
+    {
+        var particleCount = Main.rand.Next(12, 18);
+
+        for (var i = 0; i < particleCount; i++)
+        {
+            var angle = (float)(i * 2 * Math.PI / particleCount);
+
+            angle += Main.rand.NextFloat(-0.3f, 0.3f);
+
+            var speed = Main.rand.NextFloat(1.5f, 2.5f);
+            var velocity = new Vector2(
+                (float)Math.Cos(angle) * speed,
+                (float)Math.Sin(angle) * speed
+            );
+
+            var dustColor = Main.rand.Next(6) switch
+            {
+                0 => Color.Red,
+                1 => Color.Orange,
+                2 => Color.Yellow,
+                3 => Color.OrangeRed,
+                4 => Color.Crimson,
+                _ => Color.Gold
+            };
+
+            var spawnPos = hitPosition + new Vector2(
+                Main.rand.NextFloat(-3, 3),
+                Main.rand.NextFloat(-3, 3)
+            );
+
+            var dust = Dust.NewDustDirect(
+                spawnPos,
+                0, 0,
+                DustID.PortalBolt,
+                velocity.X,
+                velocity.Y,
+                100,
+                dustColor,
+                Main.rand.NextFloat(0.8f, 1.3f) // Varied scale for depth
+            );
+
+            dust.noGravity = true;
+            dust.fadeIn = Main.rand.NextFloat(0.2f, 0.5f);
+
+            if (i % 3 == 0)
+            {
+                dust.velocity *= 0.6f;
+                dust.scale *= 1.2f;
+            }
+        }
+
+        for (var i = 0; i < Main.rand.Next(3, 6); i++)
+        {
+            var flashDust = Dust.NewDustDirect(
+                hitPosition + new Vector2(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2)),
+                0, 0,
+                DustID.PortalBolt,
+                Main.rand.NextFloat(-0.5f, 0.5f),
+                Main.rand.NextFloat(-0.5f, 0.5f),
+                100,
+                Color.LightYellow,
+                Main.rand.NextFloat(1.0f, 1.5f)
+            );
+
+            flashDust.noGravity = true;
+            flashDust.fadeIn = 0.1f;
+        }
+
+        for (var i = 0; i < Main.rand.Next(4, 8); i++)
+        {
+            var sparkAngle = Main.rand.NextFloat(0, (float)(2 * Math.PI));
+            var sparkSpeed = Main.rand.NextFloat(1f, 2f);
+
+            var sparkVelocity = new Vector2(
+                (float)Math.Cos(sparkAngle) * sparkSpeed,
+                (float)Math.Sin(sparkAngle) * sparkSpeed
+            );
+
+            var spark = Dust.NewDustDirect(
+                hitPosition,
+                0, 0,
+                DustID.PortalBolt,
+                sparkVelocity.X,
+                sparkVelocity.Y,
+                100,
+                Color.Orange,
+                Main.rand.NextFloat(0.4f, 0.8f)
+            );
+
+            spark.noGravity = false;
+            spark.fadeIn = Main.rand.NextFloat(0.4f, 0.8f);
+        }
     }
 
     public override void PostAI()

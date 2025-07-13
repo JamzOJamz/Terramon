@@ -13,9 +13,10 @@ public class PokemonData
     private const ushort Version = 0;
 
     private Item _heldItem;
+    private ushort _hp;
     private ushort _id;
     private DateTime? _metDate;
-    private byte _metLevel = 0;
+    private byte _metLevel;
     private string _ot;
     private uint _personalityValue;
     private string _worldName;
@@ -58,10 +59,16 @@ public class PokemonData
     /// </summary>
     public DatabaseV2.PokemonSchema Schema { get; private set; }
 
-    public ushort HP => MaxHP; // TODO: Implement actual HP stat for Pokémon
+    public ushort HP
+    {
+        get => _hp;
+        private set => _hp = Math.Clamp(value, (ushort)0, MaxHP);
+    }
 
     public ushort MaxHP =>
         (ushort)(Math.Floor(2 * Schema.Stats.HP * Level / 100f) + Level + 10);
+    
+    public ushort RegenHP { get; private set; }
 
     /// <summary>
     ///     The total experience points the Pokémon has gained.
@@ -76,6 +83,22 @@ public class PokemonData
             Gender = DetermineGender(Schema, value);
             _personalityValue = value;
         }
+    }
+
+    public void Damage(ushort amount, bool isRealtime = false)
+    {
+        if (isRealtime && RegenHP == 0)
+            RegenHP = _hp;
+        
+        HP -= amount;
+    }
+
+    public void Heal(ushort amount, bool isRealtime = false)
+    {
+        HP += amount;
+
+        if (isRealtime && _hp >= RegenHP)
+            RegenHP = 0;
     }
 
     public void GainExperience(int amount, out int levelsGained, out int overflow)
@@ -167,20 +190,9 @@ public class PokemonData
         ID = id;
     }
 
-    public static PokemonData Create(Player player, ushort id, byte level = 1)
+    public static Builder Create(ushort id, byte level = 1)
     {
-        return new PokemonData
-        {
-            ID = id,
-            Level = level,
-            TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, Terramon.DatabaseV2.GetPokemon(id).GrowthRate),
-            _ot = player.name,
-            _metDate = DateTime.Now,
-            _metLevel = level,
-            _worldName = Main.worldName,
-            PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
-            IsShiny = RollShiny(player)
-        };
+        return new Builder(id, level);
     }
 
     private static bool RollShiny(Player player)
@@ -214,6 +226,75 @@ public class PokemonData
         return (PokemonData)MemberwiseClone();
     }
 
+    public class Builder(ushort id, byte level)
+    {
+        private readonly PokemonData _pokemon = new()
+        {
+            ID = id,
+            Level = level,
+            TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, Terramon.DatabaseV2.GetPokemon(id).GrowthRate),
+            _metDate = DateTime.Now,
+            _metLevel = level,
+            _worldName = Main.worldName,
+            PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue)
+        };
+
+        private Player _shinyPlayer;
+
+        public Builder CaughtBy(Player player)
+        {
+            return ForPlayer(player).OwnedBy(player);
+        }
+
+        // ReSharper disable once MemberCanBePrivate.Global
+        public Builder OwnedBy(Player player)
+        {
+            _pokemon._ot = player?.name;
+            return this;
+        }
+
+        public Builder ForPlayer(Player player)
+        {
+            _shinyPlayer = player;
+            return this;
+        }
+
+        public Builder WithBall(BallID ball)
+        {
+            _pokemon.Ball = ball;
+            return this;
+        }
+
+        public Builder WithNickname(string nickname)
+        {
+            _pokemon.Nickname = nickname;
+            return this;
+        }
+
+        public Builder WithVariant(string variant)
+        {
+            _pokemon.Variant = variant;
+            return this;
+        }
+
+        public Builder ForceShiny(bool isShiny = true)
+        {
+            _pokemon.IsShiny = isShiny;
+            _shinyPlayer = null; // Don't roll if forced
+            return this;
+        }
+
+        public PokemonData Build()
+        {
+            // Only roll for shiny if not already forced and we have a player
+            if (_shinyPlayer != null && !_pokemon.IsShiny)
+                _pokemon.IsShiny = RollShiny(_shinyPlayer);
+
+            _pokemon._hp = _pokemon.MaxHP;
+            return _pokemon;
+        }
+    }
+
     #region NBT Serialization
 
     public TagCompound SerializeData()
@@ -222,44 +303,54 @@ public class PokemonData
         {
             ["id"] = ID,
             ["lvl"] = Level,
+            ["hp"] = _hp,
             ["exp"] = TotalEXP,
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
             ["version"] = Version
         };
+
+        // Optional fields - only serialize if different from defaults
         if (Ball != BallID.PokeBall)
             tag["ball"] = (byte)Ball;
+
         if (IsShiny)
             tag["isShiny"] = true;
+
         if (!string.IsNullOrEmpty(Nickname))
             tag["n"] = Nickname;
+
         if (!string.IsNullOrEmpty(Variant))
             tag["variant"] = Variant;
+
         if (_heldItem != null)
             tag["item"] = new ItemDefinition(_heldItem.type);
+
         if (_metDate.HasValue)
             tag["met"] = _metDate.Value.ToBinary();
+
         if (_metLevel != 0)
             tag["metlvl"] = _metLevel;
+
         if (!string.IsNullOrEmpty(_worldName))
             tag["world"] = _worldName;
+
         return tag;
     }
 
     public static PokemonData Load(TagCompound tag)
     {
-        // Try to load the tag version. If it doesn't exist, it's version 0.
-        ushort loadedVersion = 0;
-        if (tag.ContainsKey("version"))
-            loadedVersion = tag.Get<ushort>("version");
+        // Handle versioning
+        var loadedVersion = tag.ContainsKey("version") ? tag.Get<ushort>("version") : (ushort)0;
 
         if (loadedVersion > Version)
-            Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +
-                                          ". This may lead to undefined behaviour!");
+            Terramon.Instance.Logger.Warn($"Unsupported PokemonData version {loadedVersion}. " +
+                                          "This may lead to undefined behaviour!");
         // ReSharper disable once ConditionIsAlwaysTrueOrFalse
         /*else if (loadedVersion < Version)
             Upgrade(tag, loadedVersion);*/
 
+        // Load required fields
         var data = new PokemonData
         {
             ID = (ushort)tag.GetShort("id"),
@@ -267,24 +358,40 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
+
+        // Load optional fields
+        data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
+        
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
+
         if (tag.TryGet<bool>("isShiny", out var isShiny))
             data.IsShiny = isShiny;
+
         if (tag.TryGet<string>("n", out var nickname))
             data.Nickname = nickname;
+
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
+
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
+
         if (tag.TryGet<long>("met", out var metDate))
             data._metDate = DateTime.FromBinary(metDate);
+
         data._metLevel = tag.TryGet<byte>("metlvl", out var metLevel) ? metLevel : data.Level;
+
         if (tag.TryGet<string>("world", out var worldName))
             data._worldName = worldName;
-        data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
+
+        // Set experience last to ensure proper level calculation
+        var expToSet = tag.TryGet<int>("exp", out var exp)
             ? exp
-            : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
+            : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate);
+
+        data.GainExperience(expToSet, out _, out _);
+
         return data;
     }
 
@@ -326,9 +433,10 @@ public class PokemonData
     private const int BitOT = 1 << 7;
     private const int BitHeldItem = 1 << 8;
     public const int BitEXP = 1 << 9;
+    public const int BitHP = 1 << 10;
 
     public const int AllFieldsBitmask = BitID | BitLevel | BitBall | BitIsShiny | BitPersonalityValue | BitNickname |
-                                        BitVariant | BitOT | BitHeldItem | BitEXP;
+                                        BitVariant | BitOT | BitHeldItem | BitEXP | BitHP;
 
     /// <summary>
     ///     Determines whether the Pokémon's network state has changed compared to the specified data,
@@ -355,6 +463,7 @@ public class PokemonData
         if ((compareFields & BitHeldItem) != 0 && _heldItem?.type != compareData._heldItem?.type)
             dirtyFields |= BitHeldItem;
         if ((compareFields & BitEXP) != 0 && TotalEXP != compareData.TotalEXP) dirtyFields |= BitEXP;
+        if ((compareFields & BitHP) != 0 && _hp != compareData._hp) dirtyFields |= BitHP;
 
         return dirtyFields != 0;
     }
@@ -375,6 +484,7 @@ public class PokemonData
         if ((fields & BitOT) != 0) target._ot = _ot;
         if ((fields & BitHeldItem) != 0) target._heldItem = _heldItem;
         if ((fields & BitEXP) != 0) target.TotalEXP = TotalEXP;
+        if ((fields & BitHP) != 0) target._hp = _hp;
     }
 
     /// <summary>
@@ -395,6 +505,7 @@ public class PokemonData
         if ((fields & BitOT) != 0) writer.Write(_ot ?? string.Empty);
         if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
         if ((fields & BitEXP) != 0) writer.Write(TotalEXP);
+        if ((fields & BitHP) != 0) writer.Write7BitEncodedInt(_hp);
     }
 
     /// <summary>
@@ -421,6 +532,7 @@ public class PokemonData
         }
 
         if ((fields & BitEXP) != 0) TotalEXP = reader.ReadInt32();
+        if ((fields & BitHP) != 0) _hp = (ushort)reader.Read7BitEncodedInt();
 
         return this;
     }
