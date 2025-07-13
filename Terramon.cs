@@ -9,7 +9,7 @@ namespace Terramon;
 public class Terramon : Mod
 {
 
-    private List<OrderedLoadable> loadCache;
+    private List<IOrderedLoadable> loadCache;
     /*
      * TODO:
      * This will be removed at a later date.
@@ -141,14 +141,14 @@ public class Terramon : Mod
         if (TimesLoaded == 1)
             ModContent.GetInstance<TerramonMenu>().ForceSwitchToThis();
 
-        loadCache = new List<OrderedLoadable>();
+        loadCache = new List<IOrderedLoadable>();
 
         foreach (Type type in Code.GetTypes())
         {
-            if (!type.IsAbstract && type.GetInterfaces().Contains(typeof(OrderedLoadable)))
+            if (!type.IsAbstract && type.GetInterfaces().Contains(typeof(IOrderedLoadable)))
             {
                 object instance = Activator.CreateInstance(type);
-                loadCache.Add(instance as OrderedLoadable);
+                loadCache.Add(instance as IOrderedLoadable);
             }
 
             loadCache.Sort((n, t) => n.Priority.CompareTo(t.Priority));
@@ -167,7 +167,7 @@ public class Terramon : Mod
 
         if (loadCache != null)
         {
-            foreach (OrderedLoadable loadable in loadCache)
+            foreach (IOrderedLoadable loadable in loadCache)
             {
                 loadable.Unload();
             }

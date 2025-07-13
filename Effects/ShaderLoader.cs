@@ -15,14 +15,14 @@ using Mono.Cecil;
 
 namespace Terramon.Effects
 {
-    interface OrderedLoadable
+    interface IOrderedLoadable
     {
         void Load();
         void Unload();
         float Priority { get; }
     }
 
-    class ShaderLoader : OrderedLoadable
+    class ShaderLoader : IOrderedLoadable
     {
         public float Priority => 0.9f;
 
