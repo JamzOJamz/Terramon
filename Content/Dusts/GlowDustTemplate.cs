@@ -61,5 +61,4 @@ namespace Terramon.Content.Dusts
             return false;
         }
     }
-
 }
