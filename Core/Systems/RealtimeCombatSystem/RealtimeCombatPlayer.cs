@@ -15,8 +15,8 @@ public class RealtimeCombatPlayer : ModPlayer
         // Play a hit sound
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/hit_normal_damage")
         {
-            Volume = 0.275f,
-            PitchRange = (-0.1f, 0.1f)
+            Volume = 0.2f,
+            PitchVariance = 0.12f
         }, activePet.Projectile.position);
 
         // Display text in chat
@@ -24,7 +24,7 @@ public class RealtimeCombatPlayer : ModPlayer
         Main.NewText($"Received {info.SourceDamage} damage, Pokémon will receive {transferredDamage}");
 
         // Show combat text above the Pokémon
-        CombatText.NewText(activePet.Projectile.getRect(), GetCombatTextColor(), transferredDamage);
+        CombatText.NewText(activePet.Projectile.getRect(), GetDamageCombatTextColor(), transferredDamage);
 
         // Apply damage to the Pokémon
         var activeData = terramonPlayer.GetActivePokemon();
@@ -34,7 +34,7 @@ public class RealtimeCombatPlayer : ModPlayer
         activePet.RealtimeHit();
     }
 
-    private static Color GetCombatTextColor()
+    private static Color GetDamageCombatTextColor()
     {
         // Subtle violet gradient
         var colors = new[]

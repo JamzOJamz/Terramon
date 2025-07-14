@@ -136,7 +136,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var frameSize = NPC.frame.Size();
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var drawPos = NPC.Center - screenPos +
-                      new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4);
+                      new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
 
         if (_plasmaStateTime <= 20)
         {
@@ -148,7 +148,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             spriteBatch.Draw(_mainTexture.Value,
                 drawPos,
                 NPC.frame, adjustedColor, NPC.rotation,
-                frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
+                frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
             var glowCache = Data?.IsShiny ?? false
                 ? PokemonEntityLoader.ShinyGlowTextureCache
@@ -160,7 +160,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 spriteBatch.Draw(glowTexture.Value,
                     drawPos,
                     NPC.frame, drawColor, NPC.rotation,
-                    frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
+                    frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
             }
 
             if (!NPC.IsABestiaryIconDummy && _mouseHoverTimer != -1)
@@ -197,11 +197,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity);
         GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"].Apply();
 
-        spriteBatch.Draw(_mainTexture.Value,
-            NPC.Center - screenPos +
-            new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
-            NPC.frame, drawColor, NPC.rotation,
-            frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
+        spriteBatch.Draw(_mainTexture.Value, drawPos, NPC.frame, drawColor, NPC.rotation, frameSize / new Vector2(2, 2),
+            NPC.scale, effects, 0f);
 
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,

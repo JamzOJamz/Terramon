@@ -1,6 +1,6 @@
 using Terramon.Content.Rarities;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Evolutionary;
 
 public class IceStone : EvolutionaryItem
 {

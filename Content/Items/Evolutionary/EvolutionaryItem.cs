@@ -4,7 +4,7 @@ using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.Audio;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Evolutionary;
 
 [LoadGroup("EvolutionaryItems")]
 public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse

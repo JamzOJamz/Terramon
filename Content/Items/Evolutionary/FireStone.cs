@@ -1,7 +1,7 @@
 using Terramon.Content.Rarities;
 using Terramon.ID;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Evolutionary;
 
 public class FireStone : EvolutionaryItem
 {

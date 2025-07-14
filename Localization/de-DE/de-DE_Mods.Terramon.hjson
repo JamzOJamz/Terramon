@@ -287,6 +287,9 @@ CommonTooltips: {
 		'''
 	EvolutionaryItem: Entwicklungsitem
 	KeyItem: Schlüsselitem
+	// RecoveryItem: Pokémon recovery item
+	// Potion: A spray-type medicine for wounds
+	// Revive: A medicine that revives a fainted Pokémon
 	Vitamin: Vitamin
 	RightClickPlace: Kann mit Rechtsklick platziert werden
 	PCItems: Greift auf das Pokémon-Lagerungssystem zu
@@ -402,6 +405,36 @@ Items: {
 	AetherBallMiniItem: {
 		DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
 		Tooltip: ""
+	}
+
+	Potion: {
+		// DisplayName: Potion
+		// Tooltip: Restores the HP of one Pokémon by just 20 points
+	}
+
+	SuperPotion: {
+		// DisplayName: Super Potion
+		// Tooltip: Restores the HP of one Pokémon by 50 points
+	}
+
+	HyperPotion: {
+		// DisplayName: Hyper Potion
+		// Tooltip: Restores the HP of one Pokémon by 200 points
+	}
+
+	MaxPotion: {
+		// DisplayName: Max Potion
+		// Tooltip: Completely restores the HP of a single Pokémon
+	}
+
+	Revive: {
+		// DisplayName: Revive
+		// Tooltip: Restores half the Pokémon's maximum HP
+	}
+
+	MaxRevive: {
+		// DisplayName: Max Revive
+		// Tooltip: Fully restores the Pokémon's HP
 	}
 
 	RareCandy: {
@@ -701,6 +734,9 @@ Misc: {
 	PokemonEvolutionReady: "{0} scheint bereit für eine Entwicklung zu sein!"
 	RareCandyUse: "{0} ist auf Lv. {1} gestiegen!"
 	ExpCandyUse: Dein Pokémon hat {0} EP erhalten!
+	// PotionUse: "{0}'s HP was restored by {1} {^1:point;points}!"
+	// ReviveUse: "{0} was revived with half its HP restored!"
+	// MaxReviveUse: "{0} was revived with full HP restored!"
 	// Trainer: Trainer
 	MOTD:
 		'''

@@ -1,4 +1,5 @@
 using Terramon.Content.Items;
+using Terramon.Content.Items.Vitamins;
 using Terraria.GameContent.ItemDropRules;
 
 namespace Terramon.Content.NPCs.Modifications;

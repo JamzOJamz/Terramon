@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Content.NPCs;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;

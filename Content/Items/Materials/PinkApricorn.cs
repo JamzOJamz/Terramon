@@ -1,6 +1,6 @@
 using Terramon.Helpers;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Materials;
 
 public class PinkApricorn : ApricornItem
 {

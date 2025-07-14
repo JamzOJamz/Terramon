@@ -1,6 +1,6 @@
 using Terramon.Content.Items.PokeBalls;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Materials;
 
 public class WhiteApricorn : ApricornItem
 {

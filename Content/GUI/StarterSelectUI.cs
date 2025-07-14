@@ -3,6 +3,7 @@ using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Items.Recovery;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
@@ -68,7 +69,7 @@ public sealed class StarterSelectUI : SmartUIState
         _showButton.SetIsActive(false);
         Append(_showButton);
 
-        _topContainer = new UIContainer(new Vector2(478, 314))
+        _topContainer = new UIContainer(new Vector2(494, 314))
         {
             HAlign = 0.5f
         };
@@ -78,12 +79,12 @@ public sealed class StarterSelectUI : SmartUIState
             ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Backdrop"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            Color = Color.White * 0.2f
+            Color = Color.White * 0.205f
         };
         backdropImage.Width.Set(1028, 0f);
         backdropImage.Height.Set(589, 0f);
         backdropImage.Top.Set(-146, 0f);
-        backdropImage.Left.Set(-329, 0f);
+        backdropImage.Left.Set(-329 + 54 + 50, 0f);
         _topContainer.Append(backdropImage);
 
         var titleText = new BetterUIText(_titleLocalizedText)
@@ -103,13 +104,13 @@ public sealed class StarterSelectUI : SmartUIState
         _topContainer.Append(titleText);
 
         var generationText = new BetterUIText(
-            "Generation I (Kanto)", 0.55f, true)
+            "Generation I (Kanto)", 0.66f, true)
         {
             RemoveFloatingPointsFromDrawPosition = true,
             ShadowSpread = 1.88f,
             HAlign = 0.5f
         };
-        generationText.Top.Set(91, 0f);
+        generationText.Top.Set(86, 0f);
         _topContainer.Append(generationText);
 
         for (var i = 0; i < _banners.Length; i++)
@@ -117,7 +118,7 @@ public sealed class StarterSelectUI : SmartUIState
             var banner = new UIStarterBanner(_starters[i]);
             _banners[i] = banner;
             banner.Top.Set(130, 0f);
-            banner.Left.Set(i * 128 + 54, 0f);
+            banner.Left.Set(i * 132 + 58, 0f);
             _topContainer.Append(banner);
         }
 
@@ -150,7 +151,7 @@ public sealed class StarterSelectUI : SmartUIState
         };
         pageRightButton.Width.Set(34, 0f);
         pageRightButton.Height.Set(34, 0f);
-        pageRightButton.Left.Set(442, 0f);
+        pageRightButton.Left.Set(458, 0f);
         pageRightButton.Top.Set(194, 0f);
         pageRightButton.OnLeftClick += (_, _) =>
         {
@@ -161,13 +162,13 @@ public sealed class StarterSelectUI : SmartUIState
         };
         _topContainer.Append(pageRightButton);
 
-        _hintText = new BetterUIText(_hintLocalizedText, 0.86f)
+        _hintText = new BetterUIText(_hintLocalizedText, 1f)
         {
             HAlign = 0.5f,
-            TextColor = new Color(182, 187, 203),
+            TextColor = new Color(193, 193, 226),
             RemoveFloatingPointsFromDrawPosition = true
         };
-        _hintText.Top.Set(94, 0.5f);
+        _hintText.Top.Set(95, 0.5f);
         Append(_hintText);
     }
 
@@ -193,7 +194,7 @@ public sealed class StarterSelectUI : SmartUIState
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        _hintText.TextColor = Color.Lerp(new Color(182, 187, 203), new Color(131, 135, 146), _hintTextAlpha);
+        _hintText.TextColor = Color.Lerp(new Color(193, 193, 226), new Color(157, 157, 184), _hintTextAlpha);
 
         base.Draw(spriteBatch);
     }
@@ -254,11 +255,12 @@ internal sealed class UIStarterBanner : UIHoverImageButton
             );
             Main.NewText(chosenMessage);
             SoundEngine.PlaySound(SoundID.Coins);
-            var itemType = ModContent.ItemType<PokeBallItem>();
+            var ballItemType = ModContent.ItemType<PokeBallItem>();
             if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
-                itemType = ModContent.ItemType<MasterBallItem>();
-            player.QuickSpawnItem(player.GetSource_GiftOrReward(),
-                itemType, 10);
+                ballItemType = ModContent.ItemType<MasterBallItem>();
+            var giftItemSource = player.GetSource_GiftOrReward();
+            player.QuickSpawnItem(giftItemSource, ballItemType, 10);
+            player.QuickSpawnItem(giftItemSource, ModContent.ItemType<Potion>(), 3);
         };
 
         RemoveFloatingPointsFromDrawPosition = true;

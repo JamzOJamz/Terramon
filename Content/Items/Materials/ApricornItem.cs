@@ -1,7 +1,7 @@
 using Terramon.Core.Loaders;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Materials;
 
 [LoadGroup("Apricorns")]
 public abstract class ApricornItem : Material

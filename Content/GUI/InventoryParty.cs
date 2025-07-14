@@ -3,6 +3,7 @@ using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Core.Systems.PokemonDirectUseSystem;

@@ -1,4 +1,4 @@
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Materials;
 
 public abstract class Material : TerramonItem
 {

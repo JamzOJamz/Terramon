@@ -1,6 +1,6 @@
 ﻿using Terramon.Core.Loaders;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Vanity;
 
 [AutoloadEquip(EquipType.Body)]
 [LoadGroup("TrainerVanity")]

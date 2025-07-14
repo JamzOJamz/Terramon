@@ -1,4 +1,4 @@
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.KeyItems;
 
 public class ShinyCharm : KeyItem
 {

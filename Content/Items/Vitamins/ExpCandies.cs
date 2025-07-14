@@ -1,10 +1,11 @@
 using Terramon.Content.Configs;
+using Terramon.Content.Items.Evolutionary;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Vitamins;
 
 public abstract class ExpCandy : Vitamin, IPokemonDirectUse
 {

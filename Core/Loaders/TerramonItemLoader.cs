@@ -21,6 +21,7 @@ public class TerramonItemLoader : ModSystem
     private static readonly List<string> LoadGroupList = [
         "Apricorns",
         "PokeBalls",
+        "Recovery",
         "EvolutionaryItems",
         "Vitamins",
         "KeyItems",

@@ -23,10 +23,11 @@ public class PokemonDirectUseGlobalItem : GlobalItem
         var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         if (activePokemonData == null)
         {
-            player.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"), TerramonCommand.ChatColorYellow);
+            player.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"),
+                TerramonCommand.ChatColorYellow);
             return false;
         }
-        
+
         var directUseItem = (IPokemonDirectUse)item.ModItem;
         if (directUseItem.AffectedByPokemonDirectUse(activePokemonData)) return true;
         player.NewText(Language.GetTextValue("Mods.Terramon.Misc.ItemNoEffect", activePokemonData.DisplayName),

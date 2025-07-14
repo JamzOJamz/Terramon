@@ -2,6 +2,7 @@ using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.GUI;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
 using Terramon.Content.Projectiles;

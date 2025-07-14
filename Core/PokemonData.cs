@@ -1,6 +1,8 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
+using Terramon.Content.Items.Evolutionary;
+using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
@@ -62,7 +64,7 @@ public class PokemonData
     public ushort HP
     {
         get => _hp;
-        private set => _hp = Math.Clamp(value, (ushort)0, MaxHP);
+        set => _hp = Math.Clamp(value, (ushort)0, MaxHP);
     }
 
     public ushort MaxHP =>
@@ -93,11 +95,11 @@ public class PokemonData
         HP -= amount;
     }
 
-    public void Heal(ushort amount, bool isRealtime = false)
+    public void Heal(ushort amount)
     {
         HP += amount;
 
-        if (isRealtime && _hp >= RegenHP)
+        if (RegenHP != 0 && _hp >= RegenHP)
             RegenHP = 0;
     }
 

@@ -36,10 +36,10 @@ public class AnimatedIconSystem : ModSystem
         _iconFrameTextures = new Asset<Texture2D>[IconFramePaths.Length];
         for (var i = 0; i < IconFramePaths.Length; i++)
             _iconFrameTextures[i] = ModContent.Request<Texture2D>(IconFramePaths[i]);
-        
+
         var modLoaderAssembly = typeof(ModContent).Assembly;
         Type uiModItemType;
-        
+
         // Concise Mods List compatibility
         if (ModLoader.TryGetMod("ConciseModList", out var conciseModList))
         {
@@ -50,13 +50,13 @@ public class AnimatedIconSystem : ModSystem
         {
             uiModItemType = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem");
         }
-        
+
         // If the UIModItem type is not found, the system cannot be initialized so return
         if (uiModItemType == null) return;
 
         var uiModItemInitialize = uiModItemType!.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);
-        
+
         var uiModsUpdate = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIMods")
             ?.GetMethod("Update", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModsUpdate, UIModsUpdate_Detour);

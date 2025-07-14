@@ -1,6 +1,6 @@
 using Terramon.Content.Rarities;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Miscellaneous;
 
 public class ShimmerStateDrive : TerramonItem
 {

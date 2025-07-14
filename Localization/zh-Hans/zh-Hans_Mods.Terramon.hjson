@@ -287,6 +287,9 @@ CommonTooltips: {
 		'''
 	EvolutionaryItem: 进化道具
 	KeyItem: 重要道具
+	// RecoveryItem: Pokémon recovery item
+	// Potion: A spray-type medicine for wounds
+	// Revive: A medicine that revives a fainted Pokémon
 	Vitamin: 营养剂
 	RightClickPlace: 可通过右键点击放置
 	PCItems: 访问宝可梦存储系统
@@ -402,6 +405,36 @@ Items: {
 	AetherBallMiniItem: {
 		DisplayName: "{$Items.AetherBallItem.DisplayName} (迷你)"
 		Tooltip: ""
+	}
+
+	Potion: {
+		// DisplayName: Potion
+		// Tooltip: Restores the HP of one Pokémon by just 20 points
+	}
+
+	SuperPotion: {
+		// DisplayName: Super Potion
+		// Tooltip: Restores the HP of one Pokémon by 50 points
+	}
+
+	HyperPotion: {
+		// DisplayName: Hyper Potion
+		// Tooltip: Restores the HP of one Pokémon by 200 points
+	}
+
+	MaxPotion: {
+		// DisplayName: Max Potion
+		// Tooltip: Completely restores the HP of a single Pokémon
+	}
+
+	Revive: {
+		// DisplayName: Revive
+		// Tooltip: Restores half the Pokémon's maximum HP
+	}
+
+	MaxRevive: {
+		// DisplayName: Max Revive
+		// Tooltip: Fully restores the Pokémon's HP
 	}
 
 	RareCandy: {
@@ -701,6 +734,9 @@ Misc: {
 	PokemonEvolutionReady: “{0} 似乎准备好进化了！”
 	RareCandyUse: “{0} 提升到了 Lv. {1}！”
 	ExpCandyUse: 你的宝可梦获得了 {0} 点经验值！
+	// PotionUse: "{0}'s HP was restored by {1} {^1:point;points}!"
+	// ReviveUse: "{0} was revived with half its HP restored!"
+	// MaxReviveUse: "{0} was revived with full HP restored!"
 	// Trainer: Trainer
 	MOTD:
 		'''

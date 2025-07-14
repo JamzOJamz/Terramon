@@ -1,5 +1,7 @@
 using Terramon.Content.Items;
+using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Items.Vitamins;
 using Terramon.Helpers;
 using Terraria.IO;
 using Terraria.Localization;

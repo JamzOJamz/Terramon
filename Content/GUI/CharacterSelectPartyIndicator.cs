@@ -1,6 +1,7 @@
 using System.Reflection;
 using ReLogic.Content;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.GameContent.UI.Elements;

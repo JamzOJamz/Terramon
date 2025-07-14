@@ -1,4 +1,5 @@
-﻿using Terramon.Core.Loaders;
+﻿using Terramon.Content.Items.Materials;
+using Terramon.Core.Loaders;
 using Terramon.Helpers;
 
 namespace Terramon.Content.Items.PokeBalls;

@@ -475,12 +475,12 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
                 {
                     // Regen rate scales with MaxHP (20 is baseline), so more MaxHP = faster regen
                     var regenScale = 20f / Math.Max(1f, Data.MaxHP); // Prevent divide by zero
-                    var regenIncrement = owningPlayer.velocity.LengthSquared() == 0 ? 1f : 0.5f;
+                    var regenIncrement = Math.Abs(owningPlayer.velocity.X) == 0 ? 1.25f : 0.5f;
                     _regenTimer += regenIncrement / regenScale;
 
                     if (_regenTimer >= 30f)
                     {
-                        Data.Heal(1, true);
+                        Data.Heal(1);
                         _regenTimer = 0f;
                     }
                 }
@@ -549,6 +549,11 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     {
         _regeneratingHealth = false;
         _regenTimer = 0f;
+        _regenStartTimer = 0;
+        
+        // Only set new target if we don't already have one from recent damage
+        if (_regenStartTarget == 0)
+            _regenStartTarget = Main.rand.Next(300, 600); // 5-10 seconds
     }
 
     private static void CreateHitEffect(Vector2 hitPosition)

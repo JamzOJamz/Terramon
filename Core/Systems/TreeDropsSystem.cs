@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Terramon.Content.Items;
+using Terramon.Content.Items.Materials;
 using Terraria.Enums;
 using Terraria.Utilities;
 

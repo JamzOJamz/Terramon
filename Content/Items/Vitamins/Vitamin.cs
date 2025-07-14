@@ -1,7 +1,7 @@
 using Terramon.Core.Loaders;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Vitamins;
 
 [LoadGroup("Vitamins")]
 public abstract class Vitamin : TerramonItem

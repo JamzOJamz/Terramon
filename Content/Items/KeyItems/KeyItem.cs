@@ -2,7 +2,7 @@ using Terramon.Content.Rarities;
 using Terramon.Core.Loaders;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.KeyItems;
 
 [LoadGroup("KeyItems")]
 public abstract class KeyItem : TerramonItem

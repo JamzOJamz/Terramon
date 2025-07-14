@@ -1,6 +1,8 @@
 ﻿using Terramon.Content.Configs;
 using Terramon.Content.Items;
+using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Items.Vanity;
 using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.ID;
 using Terraria.Audio;

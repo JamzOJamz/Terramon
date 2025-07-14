@@ -1,4 +1,4 @@
-namespace Terramon.Content.Items;
+namespace Terramon.Content.Items.Vanity;
 
 public abstract class VanityItem : TerramonItem
 {
