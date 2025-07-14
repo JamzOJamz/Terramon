@@ -903,3 +903,9 @@ Mew: {
 	Species: 新种宝可梦
 	DexEntry: 据说它有着所有宝可梦的遗传基因。因为可以随心所欲地隐形，所以就算接近人类也完全不会被察觉。
 }
+
+Darkrai: {
+	// DisplayName: Darkrai
+	// Species: Nightmare Pokémon
+	// DexEntry: Folklore has it that on moonless nights, this Pokémon will make people see horrific nightmares.
+}

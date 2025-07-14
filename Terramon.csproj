@@ -7,6 +7,7 @@
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\Dusts\GlowDustTemplate.png" />
+      <None Remove="Content\Pokemon\Darkrai.hjson" />
       <None Remove="Effects\GlowingDust.fx" />
     </ItemGroup>
 

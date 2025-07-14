@@ -1,0 +1,29 @@
+{
+  Common:
+  {
+    Transform:
+    {
+      DrawOffsetY: -2
+    }
+  }
+  NPC:
+  {
+    WalkingBehaviour: {}
+    SpawnController:
+    {
+      Stage: 4
+      Conditions:
+      [
+        {
+          Overworld: true
+          DayTime: true
+          Chance: 0.1
+        }
+      ]
+    }
+  }
+  Projectile:
+  {
+    GenericPet: {}
+  }
+}
