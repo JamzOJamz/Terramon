@@ -20,11 +20,9 @@ public class PokedexService
     public PokedexService()
     {
         if (Terramon.DatabaseV2 == null) return;
-        foreach (var id in Terramon.DatabaseV2.Pokemon.Keys)
-        {
-            if (id > Terramon.MaxPokemonIDToLoad) break;
+        
+        foreach (var id in Terramon.DatabaseV2.Pokemon.Keys.Take(Terramon.LoadedPokemonCount))
             Entries.Add(id, new PokedexEntry(PokedexEntryStatus.Undiscovered));
-        }
     }
 
     /// <summary>
