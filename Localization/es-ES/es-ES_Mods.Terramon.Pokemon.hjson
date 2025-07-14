@@ -903,3 +903,9 @@ Mew: {
 	Species: Pokémon Nueva Especie
 	DexEntry: Varios científicos lo consideran el antecesor de los Pokémon porque usa todo tipo de movimientos.
 }
+
+Darkrai: {
+	// DisplayName: Darkrai
+	// Species: Nightmare Pokémon
+	// DexEntry: Folklore has it that on moonless nights, this Pokémon will make people see horrific nightmares.
+}

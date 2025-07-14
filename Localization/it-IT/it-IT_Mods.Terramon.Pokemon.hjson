@@ -903,3 +903,9 @@ Mew: {
 	Species: Pokémon Novaspecie
 	DexEntry: Poiché sa usare qualsiasi mossa, molti scienziati ritengono che Mew sia l'antenato di tutti i Pokémon.
 }
+
+Darkrai: {
+	// DisplayName: Darkrai
+	// Species: Nightmare Pokémon
+	// DexEntry: Folklore has it that on moonless nights, this Pokémon will make people see horrific nightmares.
+}

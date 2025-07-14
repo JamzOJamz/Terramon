@@ -2,11 +2,14 @@ using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Effects;
 
 namespace Terramon;
 
 public class Terramon : Mod
 {
+
+    private List<IOrderedLoadable> loadCache;
     /*
      * TODO:
      * This will be removed at a later date.
@@ -30,7 +33,7 @@ public class Terramon : Mod
     /// </summary>
     public static int LoadedPokemonCount => Math.Min(MaxPokemonID, DatabaseV2.Pokemon.Count);
 
-    public static Terramon Instance => ModContent.GetInstance<Terramon>();
+    public static Terramon Instance  { get; set;}
 
     public static DatabaseV2 DatabaseV2 { get; private set; }
 
@@ -111,6 +114,11 @@ public class Terramon : Mod
         return result;
     }
 
+    public Terramon()
+    {
+        Instance = this;
+    }
+
     public override void Load()
     {
         // Load the database
@@ -132,11 +140,48 @@ public class Terramon : Mod
         // Check if first ever time loading the mod, and if so, force switch to Terramon's mod menu
         if (TimesLoaded == 1)
             ModContent.GetInstance<TerramonMenu>().ForceSwitchToThis();
+
+        loadCache = new List<IOrderedLoadable>();
+
+        foreach (Type type in Code.GetTypes())
+        {
+            if (!type.IsAbstract && type.GetInterfaces().Contains(typeof(IOrderedLoadable)))
+            {
+                object instance = Activator.CreateInstance(type);
+                loadCache.Add(instance as IOrderedLoadable);
+            }
+
+            loadCache.Sort((n, t) => n.Priority.CompareTo(t.Priority));
+        }
+
+        for (int k = 0; k < loadCache.Count; k++)
+        {
+            loadCache[k].Load();
+        }
     }
 
     public override void Unload()
     {
         DatabaseV2 = null;
         EasyPacketDLL.Unload();
+
+        if (loadCache != null)
+        {
+            foreach (IOrderedLoadable loadable in loadCache)
+            {
+                loadable.Unload();
+            }
+
+            loadCache = null;
+        }
+        else
+        {
+            Logger.Warn("load cache was null, OrderedLoadable's may not have been unloaded...");
+        }
+
+        if (!Main.dedServ)
+        {
+            Instance ??= null;
+        }
     }
 }
