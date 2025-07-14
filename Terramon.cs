@@ -15,7 +15,7 @@ public class Terramon : Mod
      * This will be removed at a later date.
      * It exists because there are Pokémon in the DB that shouldn't be loaded as mod content (yet).
      */
-    public const ushort MaxPokemonID = 9999;
+    public const ushort MaxPokemonID = 151;
 
     /// <summary>
     ///     The maximum level a Pokémon can reach.

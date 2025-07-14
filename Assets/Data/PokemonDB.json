@@ -3104,23 +3104,6 @@
       "height": 4,
       "weight": 52
     },
-    "491": {
-      "name": "Darkrai",
-      "types": [ 15 ],
-      "catchRate": 3,
-      "baseExp": 340,
-      "growthRate": 4,
-      "stats": {
-        "hp": 106,
-        "attack": 110,
-        "defense": 90,
-        "spAtk": 154,
-        "spDef": 90,
-        "speed": 130
-      },
-      "height": 12,
-      "weight": 550
-    },
     "495": {
       "name": "Snivy",
       "types": [ 5 ],
