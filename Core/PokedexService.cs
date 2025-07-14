@@ -22,7 +22,7 @@ public class PokedexService
         if (Terramon.DatabaseV2 == null) return;
         foreach (var id in Terramon.DatabaseV2.Pokemon.Keys)
         {
-            if (id > Terramon.LoadedPokemonCount) break;
+            if (id > Terramon.MaxPokemonIDToLoad) break;
             Entries.Add(id, new PokedexEntry(PokedexEntryStatus.Undiscovered));
         }
     }

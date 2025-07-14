@@ -422,7 +422,7 @@ public class HubUI : SmartUIState
         var registeredCount = pokedex.RegisteredCount;
         _seenAmountText.SetText((registeredCount + seenCount).ToString());
         _caughtAmountText.SetText(registeredCount.ToString());
-        var completion = pokedex.RegisteredCount * 100f / Terramon.LoadedPokemonCount;
+        var completion = pokedex.RegisteredCount * 100f / Terramon.HighestPokemonID;
         if (completion > 100) completion = 100; // Just in case
         var completionFmtString = Language.GetTextValue("Mods.Terramon.GUI.Pokedex.Completion", $"{completion:0.##}");
         _progressText.SetText(completionFmtString, 0.92f, false);
@@ -578,7 +578,10 @@ internal sealed class PokedexPageDisplay : UIElement
 
     private int _cols;
     private int _rows;
-    private int _startItemIndex;
+    private ushort _startPokemonId; // Now stores actual Pokemon ID, not array index
+
+    // Cache the sorted Pokemon IDs for efficient paging
+    private readonly List<ushort> _sortedPokemonIds;
 
     public PokedexPageDisplay(int width, int height, int rows, int cols)
     {
@@ -588,28 +591,61 @@ internal sealed class PokedexPageDisplay : UIElement
         Width.Set(width, 0);
         Height.Set(height, 0);
 
+        // Cache and sort all available Pokemon IDs
+        _sortedPokemonIds = Terramon.DatabaseV2.Pokemon.Keys
+            .Where(id => id <= Terramon.HighestPokemonID)
+            .OrderBy(id => id)
+            .ToList();
+
+        _startPokemonId = _sortedPokemonIds.FirstOrDefault();
         Reset();
     }
     
     public void ChangePage(int direction)
     {
-        _startItemIndex += direction * _rows * _cols;
-        if (_startItemIndex < 0) _startItemIndex = 0;
-        if (_startItemIndex > Terramon.LoadedPokemonCount - 1)
-            _startItemIndex = Terramon.LoadedPokemonCount - _rows * _cols;
+        var itemsPerPage = _rows * _cols;
+        var currentIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
+        
+        if (currentIndex == -1) // Current start ID not found, reset to first
+        {
+            _startPokemonId = _sortedPokemonIds.FirstOrDefault();
+            Reset();
+            return;
+        }
+        
+        var newIndex = currentIndex + (direction * itemsPerPage);
+        
+        // Clamp to valid bounds
+        if (newIndex < 0)
+        {
+            newIndex = 0;
+        }
+        else if (newIndex >= _sortedPokemonIds.Count)
+        {
+            // Go to the last possible page that shows items
+            var lastPageStartIndex = Math.Max(0, _sortedPokemonIds.Count - itemsPerPage);
+            newIndex = lastPageStartIndex;
+        }
+        
+        _startPokemonId = _sortedPokemonIds[newIndex];
         Reset();
     }
     
     public void ReturnToFirstPage()
     {
-        _startItemIndex = 0;
+        _startPokemonId = _sortedPokemonIds.FirstOrDefault();
         Reset();
     }
 
     public Tuple<int, int> GetPageRange()
     {
-        return Tuple.Create(_startItemIndex + 1,
-            Math.Min(_startItemIndex + _rows * _cols, Terramon.LoadedPokemonCount));
+        var startIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
+        if (startIndex == -1) return Tuple.Create(0, 0);
+        
+        var itemsPerPage = _rows * _cols;
+        var endIndex = Math.Min(startIndex + itemsPerPage - 1, _sortedPokemonIds.Count - 1);
+        
+        return Tuple.Create((int)_sortedPokemonIds[startIndex], (int)_sortedPokemonIds[endIndex]);
     }
 
     public void Reset()
@@ -627,14 +663,21 @@ internal sealed class PokedexPageDisplay : UIElement
         var buttonSpacingX = (Width.Pixels - _cols * ButtonSize) / (_cols - 1);
         var buttonSpacingY = (Height.Pixels - _rows * ButtonSize) / (_rows - 1);
 
+        // Find the starting index in our sorted Pokemon list
+        var startIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
+        if (startIndex == -1) startIndex = 0; // Fallback if ID not found
+        
         // Add the new entries
-        for (var i = 0; i < _rows * _cols; i++)
+        var itemsPerPage = _rows * _cols;
+        for (var i = 0; i < itemsPerPage; i++)
         {
+            var pokemonIndex = startIndex + i;
+            if (pokemonIndex >= _sortedPokemonIds.Count) break;
+            
+            var pokemon = _sortedPokemonIds[pokemonIndex];
+            
             var row = i / _cols;
             var col = i % _cols;
-
-            var pokemon = Terramon.DatabaseV2.Pokemon.Keys.ElementAtOrDefault(i + _startItemIndex);
-            if (pokemon is 0 || pokemon > Terramon.LoadedPokemonCount) break;
 
             var monButton = new PokedexEntryIcon(pokemon)
             {
@@ -643,7 +686,6 @@ internal sealed class PokedexPageDisplay : UIElement
             };
 
             _entries.Add(monButton);
-
             Append(monButton);
         }
     }
@@ -869,7 +911,7 @@ internal sealed class PokedexPageButton : UIHoverImageButton
     {
         var currentRange = _pageDisplay.GetPageRange();
         if ((!_right && currentRange.Item1 == 1) ||
-            (_right && currentRange.Item2 == Terramon.LoadedPokemonCount)) return;
+            (_right && currentRange.Item2 == Terramon.HighestPokemonID)) return;
 
         _pageDisplay.ChangePage(_right.ToDirectionInt()); // -1 for left, 1 for right
         UILoader.GetUIState<HubUI>().RefreshPokedex();

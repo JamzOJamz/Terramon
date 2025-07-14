@@ -26,10 +26,10 @@ public class PokemonEntityLoader : ModSystem
 
     public override void OnModLoad()
     {
-        // The initialization of these arrays is done here rather than in Load to avoid a null ref exception reading LoadedPokemonCount
-        var loadedPokemonCount = Terramon.LoadedPokemonCount;
-        HasGenderDifference = new BitArray(loadedPokemonCount);
-        HasPetExclusiveTexture = new BitArray(loadedPokemonCount);
+        // The initialization of these arrays is done here rather than in Load to avoid a null ref exception reading HighestPokemonID
+        var highestPokemonID = Terramon.HighestPokemonID;
+        HasGenderDifference = new BitArray(highestPokemonID);
+        HasPetExclusiveTexture = new BitArray(highestPokemonID);
 
         // Load the fade shader for Pokémon
         if (!Main.dedServ)
@@ -41,7 +41,7 @@ public class PokemonEntityLoader : ModSystem
         
         foreach (var (id, pokemon) in Terramon.DatabaseV2.Pokemon)
         {
-            if (id > Terramon.MaxPokemonID) continue;
+            if (id > Terramon.MaxPokemonIDToLoad) continue;
             if (!HjsonSchemaExists(pokemon.Identifier)) continue;
             LoadEntities(id, pokemon);
         }
