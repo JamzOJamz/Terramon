@@ -1,6 +1,5 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
-using Terramon.Content.Items;
 using Terramon.Content.Items.Evolutionary;
 using Terramon.Content.Items.KeyItems;
 using Terramon.ID;
@@ -69,7 +68,7 @@ public class PokemonData
 
     public ushort MaxHP =>
         (ushort)(Math.Floor(2 * Schema.Stats.HP * Level / 100f) + Level + 10);
-    
+
     public ushort RegenHP { get; private set; }
 
     /// <summary>
@@ -91,13 +90,21 @@ public class PokemonData
     {
         if (isRealtime && RegenHP == 0)
             RegenHP = _hp;
-        
-        HP -= amount;
+
+        // Prevent underflow - ensure HP doesn't go below 0
+        if (HP > amount)
+            HP -= amount;
+        else
+            HP = 0;
     }
 
     public void Heal(ushort amount)
     {
-        HP += amount;
+        // Prevent overflow - ensure HP doesn't exceed MaxHP
+        if (HP <= MaxHP - amount)
+            HP += amount;
+        else
+            HP = MaxHP;
 
         if (RegenHP != 0 && _hp >= RegenHP)
             RegenHP = 0;
@@ -148,9 +155,22 @@ public class PokemonData
     {
         if (Level >= Terramon.MaxPokemonLevel)
             return false;
+
+        var oldMaxHP = MaxHP;
         Level++;
+        var newMaxHP = MaxHP;
+
+        // Calculate the HP increase from leveling up
+        var hpIncrease = (ushort)(newMaxHP - oldMaxHP);
+
+        // Increase current HP by the difference in MaxHP
+        HP += hpIncrease;
+        if (RegenHP != 0)
+            RegenHP += hpIncrease;
+
         if (ensureMinimumExperience)
             TotalEXP = Math.Max(TotalEXP, ExperienceLookupTable.GetLevelTotalExp(Level, Schema.GrowthRate));
+
         return true;
     }
 
@@ -363,7 +383,7 @@ public class PokemonData
 
         // Load optional fields
         data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
-        
+
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
 

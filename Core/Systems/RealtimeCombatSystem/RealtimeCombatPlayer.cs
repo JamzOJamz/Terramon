@@ -15,13 +15,13 @@ public class RealtimeCombatPlayer : ModPlayer
         // Play a hit sound
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/hit_normal_damage")
         {
-            Volume = 0.2f,
+            Volume = 0.165f,
             PitchVariance = 0.12f
         }, activePet.Projectile.position);
 
         // Display text in chat
         var transferredDamage = info.SourceDamage / 3;
-        Main.NewText($"Received {info.SourceDamage} damage, Pokémon will receive {transferredDamage}");
+        //Main.NewText($"Received {info.SourceDamage} damage, Pokémon will receive {transferredDamage}");
 
         // Show combat text above the Pokémon
         CombatText.NewText(activePet.Projectile.getRect(), GetDamageCombatTextColor(), transferredDamage);

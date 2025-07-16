@@ -34,10 +34,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     private Vector2? _attackDirection;
 
     private ushort _cachedID;
+    private int _cryTimer;
 
     private int _lastHPState = -1;
     private Asset<Texture2D> _mainTexture;
-    private bool _queueCry;
     private bool _regeneratingHealth;
     private int _regenStartTarget;
     private int _regenStartTimer;
@@ -372,7 +372,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         if (currentHpState != pet._lastHPState)
         {
             if (pet._lastHPState >= 0 && currentHpState < pet._lastHPState)
-                pet._queueCry = true;
+                pet._cryTimer = 30;
             pet._lastHPState = currentHpState;
         }
 
@@ -430,10 +430,20 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
         // Attacking NPCs
         const float maxDetectRadius = 400f;
-        _target ??= FindClosestNPC(maxDetectRadius);
-        if (_target != null && !IsValidTarget(_target)) _target = null;
-
+        const float maxAttackRadius = 500f;
+        
         if (_target != null)
+        {
+            var distanceToTarget = Vector2.Distance(_target.Center, Projectile.Center);
+        
+            // Retargets if current target is too far away or no longer valid
+            if (distanceToTarget > maxAttackRadius || !IsValidTarget(_target))
+                _target = null;
+        }
+        
+        _target ??= FindClosestNPC(maxDetectRadius);
+
+        if (Data != null && _target != null)
         {
             var dir = (Projectile.position.X < _target.position.X).ToDirectionInt();
             CustomSpriteDirection = dir;
@@ -446,7 +456,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             }
             else if (_activeAttackTimer == 8)
             {
-                _target.SimpleStrikeNPC(1, dir, false, 2f);
+                _target.SimpleStrikeNPC(1, dir, false, CalculateKnockback());
                 CreateHitEffect(_target.Center);
             }
         }
@@ -455,7 +465,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         _activeAttackTimer--;
 
         // Health regen
-        if (Projectile.owner == Main.myPlayer)
+        if (Data != null && Projectile.owner == Main.myPlayer)
         {
             if (Data.HP < Data.RegenHP)
             {
@@ -474,7 +484,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
                 if (_regeneratingHealth)
                 {
                     // Regen rate scales with MaxHP (20 is baseline), so more MaxHP = faster regen
-                    var regenScale = 20f / Math.Max(1f, Data.MaxHP); // Prevent divide by zero
+                    var regenScale = 20f / Data.MaxHP;
                     var regenIncrement = Math.Abs(owningPlayer.velocity.X) == 0 ? 1.25f : 0.5f;
                     _regenTimer += regenIncrement / regenScale;
 
@@ -502,12 +512,15 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         }
 
         // Play cry sound effect if queued
-        if (_queueCry && Main.netMode != NetmodeID.Server && Data != null)
+        if (_cryTimer > 0)
         {
-            var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                { Volume = 0.15f };
-            SoundEngine.PlaySound(cry, Projectile.position);
-            _queueCry = false;
+            _cryTimer--;
+            if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
+            {
+                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
+                    { Volume = 0.15f };
+                SoundEngine.PlaySound(cry, Projectile.position);
+            }
         }
 
         if (isShiny) ShinyEffect();
@@ -550,7 +563,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         _regeneratingHealth = false;
         _regenTimer = 0f;
         _regenStartTimer = 0;
-        
+
         // Only set new target if we don't already have one from recent damage
         if (_regenStartTarget == 0)
             _regenStartTarget = Main.rand.Next(300, 600); // 5-10 seconds
@@ -649,6 +662,13 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             spark.noGravity = false;
             spark.fadeIn = Main.rand.NextFloat(0.4f, 0.8f);
         }
+    }
+
+    private float CalculateKnockback()
+    {
+        // Base attack of 255 = 2.5x multiplier
+        var multiplier = 1f + Schema.Stats.Attack / 255f * 1.5f;
+        return 2f * multiplier;
     }
 
     public override void PostAI()

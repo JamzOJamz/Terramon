@@ -15,6 +15,8 @@ namespace Terramon.Content.GUI;
 
 public sealed class StarterSelectUI : SmartUIState
 {
+    private static UIImage _backdropImage;
+    private static bool _fadeOutAnimationActive;
     private readonly UIStarterBanner[] _banners = new UIStarterBanner[3];
     private readonly LocalizedText _comingSoonLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon");
     private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
@@ -28,16 +30,42 @@ public sealed class StarterSelectUI : SmartUIState
 
     private readonly LocalizedText _subtitleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Subtitle");
     private readonly LocalizedText _titleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
-    private BetterUIText _hintText;
+    private static BetterUIText _hintText;
     private float _hintTextAlpha;
     private ITweener _hintTextTween;
     private UIHoverImageButton _showButton;
     private bool _starterPanelShowing = true;
-    private UIContainer _topContainer;
+    private static UIContainer _topContainer;
 
     public override bool Visible =>
-        !TerramonPlayer.LocalPlayer.HasChosenStarter && !Main.playerInventory && !Main.inFancyUI &&
+        (!TerramonPlayer.LocalPlayer.HasChosenStarter || (_fadeOutAnimationActive && _backdropImage.Color.A > 0)) &&
+        !Main.playerInventory && !Main.inFancyUI &&
         !Main.LocalPlayer.dead && Main.LocalPlayer.talkNPC < 0;
+
+    public static void DoFadeOutAnimation()
+    {
+        if (_fadeOutAnimationActive) return;
+        _fadeOutAnimationActive = true;
+        
+        // Hide stuff
+        _topContainer.Top.Set(0, float.MaxValue);
+        _hintText.Top.Set(0, float.MaxValue);
+        
+        var startingAlpha = _backdropImage.Color.A / 255f;
+        var fadeTween = Tween.To(() => startingAlpha, a =>
+            {
+                _backdropImage.Color = Color.White * a;
+            }, 0, 0.22f);
+        fadeTween.OnComplete = () =>
+        {
+            _fadeOutAnimationActive = false;
+            _backdropImage.Color = Color.White * 0.43f;
+            
+            // Unhide stuff
+            _topContainer.Top.Set(-157 + 10, 0.25f);
+            _hintText.Top.Set(94, 0.5f);
+        };
+    }
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -75,17 +103,19 @@ public sealed class StarterSelectUI : SmartUIState
         };
         _topContainer.Top.Set(-157 + 10, 0.25f);
 
-        var backdropImage = new UIImage(
-            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Backdrop"))
+        _backdropImage = new UIImage(
+            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/BackdropBig"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            Color = Color.White * 0.205f
+            Color = Color.White * 0.43f,
+            ImageScale = 2.25f
         };
-        backdropImage.Width.Set(1028, 0f);
-        backdropImage.Height.Set(589, 0f);
-        backdropImage.Top.Set(-146, 0f);
-        backdropImage.Left.Set(-329 + 54 + 50, 0f);
-        _topContainer.Append(backdropImage);
+        _backdropImage.Width.Set(1028, 0f);
+        _backdropImage.Height.Set(589, 0f);
+        _backdropImage.Top.Set(-157 + 10 + -146, 0.25f);
+        _backdropImage.Left.Set(-329 + 54 + 50 + 257, 0f);
+        _backdropImage.HAlign = 0.5f;
+        Append(_backdropImage);
 
         var titleText = new BetterUIText(_titleLocalizedText)
         {
@@ -104,7 +134,7 @@ public sealed class StarterSelectUI : SmartUIState
         _topContainer.Append(titleText);
 
         var generationText = new BetterUIText(
-            "Generation I (Kanto)", 0.66f, true)
+            "Generation I (Kanto)", 0.605f, true)
         {
             RemoveFloatingPointsFromDrawPosition = true,
             ShadowSpread = 1.88f,
@@ -162,7 +192,7 @@ public sealed class StarterSelectUI : SmartUIState
         };
         _topContainer.Append(pageRightButton);
 
-        _hintText = new BetterUIText(_hintLocalizedText, 1f)
+        _hintText = new BetterUIText(_hintLocalizedText)
         {
             HAlign = 0.5f,
             TextColor = new Color(193, 193, 226),
@@ -174,19 +204,25 @@ public sealed class StarterSelectUI : SmartUIState
 
     public override void SafeUpdate(GameTime gameTime)
     {
-        if (_starterPanelShowing && !Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
+        var isVisibleCondition = !_fadeOutAnimationActive && _starterPanelShowing;
+
+        if (isVisibleCondition)
         {
-            _showButton.SetIsActive(true);
-            SoundEngine.PlaySound(SoundID.MenuClose);
-            _starterPanelShowing = false;
+            if (!Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
+            {
+                _showButton.SetIsActive(true);
+                SoundEngine.PlaySound(SoundID.MenuClose);
+                _starterPanelShowing = false;
+            }
+            
+            if (_hintTextTween is not { IsRunning: true })
+                _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a, _hintTextAlpha == 1f ? 0f : 1f,
+                    1f);
         }
-
-        _topContainer.Top.Set(-157 + 10, _starterPanelShowing ? 0.25f : 4f);
-        _hintText.Top.Set(94, _starterPanelShowing ? 0.5f : 4f);
-
-        if (_starterPanelShowing && _hintTextTween is not { IsRunning: true })
-            _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a, _hintTextAlpha == 1f ? 0f : 1f,
-                1f);
+        
+        _topContainer.Top.Set(-157 + 10, isVisibleCondition ? 0.25f : 4f);
+        _backdropImage.Top.Set(-157 + 10 + -146, _starterPanelShowing ? 0.25f : 4f);
+        _hintText.Top.Set(94, isVisibleCondition ? 0.5f : 4f);
 
         Recalculate();
     }
@@ -247,6 +283,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
             var data = dataBuilder.Build();
             modPlayer.AddPartyPokemon(data, out _);
             modPlayer.HasChosenStarter = true;
+            StarterSelectUI.DoFadeOutAnimation();
             var schema = data.Schema;
             var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
                 DatabaseV2.GetPokemonSpeciesDirect(schema),

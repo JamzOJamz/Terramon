@@ -21,8 +21,12 @@ public class RealtimeCombatGlobalNPC : GlobalNPC
             PitchRange = (-0.1f, 0.1f)
         }, activePet.Projectile.position);
 
-        var expAmount = Main.rand.Next(3, 11); // TODO: Implement actual EXP gain formula based on enemy HP
+        var expAmount = CalculateEXPGain(npc);
         var expGainColor = GetEXPGainCombatTextColor();
+        
+        // Actually gain the EXP for the active Pokémon
+        var activeData = terramonPlayer.GetActivePokemon();
+        activeData.GainExperience(expAmount, out var levelsGained, out _);
 
         // Show combat text above the Pokémon
         CombatText.NewText(activePet.Projectile.getRect(), expGainColor, $"+{expAmount} EXP. Point{(expAmount > 1 ? "s" : "")}");
@@ -36,6 +40,24 @@ public class RealtimeCombatGlobalNPC : GlobalNPC
                 newColor: expGainColor);
             d.noGravity = true;
         }
+        
+        // Display level-up message if applicable
+        if (levelsGained > 0)
+        {
+            SoundEngine.PlaySound(SoundID.Item20);
+            CombatText.NewText(activePet.Projectile.getRect(), Color.White, "Level Up!", true);
+        }
+    }
+    
+    private static int CalculateEXPGain(NPC npc)
+    {
+        const float baseExpScale = 0.18f; // Adjust this value as needed
+   
+        var baseExp = npc.lifeMax * baseExpScale;
+        var randomFactor = Main.rand.NextFloat(0.8f, 1.2f);
+        var finalExp = baseExp * randomFactor;
+   
+        return Math.Max(1, (int)Math.Round(finalExp));
     }
 
     private static Color GetEXPGainCombatTextColor()

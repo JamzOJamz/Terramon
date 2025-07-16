@@ -21,7 +21,7 @@ public abstract class BaseReviveItem : RecoveryItem
     {
         if (player.whoAmI != Main.myPlayer)
         {
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            SoundEngine.PlaySound(SoundID.Item29, player.position);
             return 0;
         }
 
@@ -33,7 +33,7 @@ public abstract class BaseReviveItem : RecoveryItem
                 RestorationPercentage == 1f ? "Mods.Terramon.Misc.MaxReviveUse" : "Mods.Terramon.Misc.ReviveUse",
                 data.DisplayName));
 
-        SoundEngine.PlaySound(SoundID.Item4);
+        SoundEngine.PlaySound(SoundID.Item29);
 
         return 1;
     }
