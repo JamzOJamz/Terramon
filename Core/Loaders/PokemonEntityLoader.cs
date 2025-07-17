@@ -21,6 +21,7 @@ public class PokemonEntityLoader : ModSystem
     public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; }
     public static Dictionary<ushort, int> IDToNPCType { get; private set; }
     public static Dictionary<ushort, int> IDToPetType { get; private set; }
+    public static Dictionary<ushort, int> IDToBannerType { get; private set; }
     public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; }
     public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; }
     private static BitArray HasGenderDifference { get; set; }
@@ -126,6 +127,7 @@ public class PokemonEntityLoader : ModSystem
         // Load banner item
         var banner = new PokeBannerItem(id, schema);
         Mod.AddContent(banner);
+        IDToBannerType.Add(id, banner.Type);
         
         ShinyBanners.Add(new PokeBannerItem(id, schema, banner.Type));
     }
@@ -161,6 +163,7 @@ public class PokemonEntityLoader : ModSystem
     {
         IDToNPCType = new Dictionary<ushort, int>();
         IDToPetType = new Dictionary<ushort, int>();
+        IDToBannerType = new Dictionary<ushort, int>();
         NPCSchemaCache = new Dictionary<ushort, JToken>();
         PetSchemaCache = new Dictionary<ushort, JToken>();
         GlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
@@ -172,6 +175,7 @@ public class PokemonEntityLoader : ModSystem
     {
         IDToNPCType = null;
         IDToPetType = null;
+        IDToBannerType = null;
         NPCSchemaCache = null;
         PetSchemaCache = null;
         HasGenderDifference = null;

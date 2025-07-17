@@ -5,6 +5,7 @@ using Terramon.Content.Items;
 using Terramon.Content.NPCs;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -13,6 +14,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
 using Terraria.Localization;
 using Terraria.UI;
+using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
@@ -31,8 +33,6 @@ public class HubUI : SmartUIState
     public static readonly Asset<Texture2D> SmallButtonHoverTexture;
 
     private static bool _playerInventoryOpen;
-
-    private static bool _worldDexMode;
     private UIText _caughtAmountText;
     private UIPanel _caughtSeenPanel;
     private UIHoverImageButton _filterButton;
@@ -84,6 +84,8 @@ public class HubUI : SmartUIState
         };
     }
 
+    public static bool WorldDexMode { get; private set; }
+
     public static bool ShinyActive { get; private set; }
     public static bool ShiftKeyIgnore { get; set; }
 
@@ -114,37 +116,33 @@ public class HubUI : SmartUIState
         }
 
         if (customSound)
-        {
             SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Sounds/dex_open" : "Terramon/Sounds/dex_close")
             {
                 Volume = 0.48f
             });
-        }
         else
-        {
             SoundEngine.PlaySound(SoundID.MenuTick);
-        }
     }
 
     public static void ToggleActive()
     {
         SetActive(!Active);
     }
-    
+
     public static void OpenToPokemon(ushort pokemon, bool isShiny = false)
     {
         if (Active) return;
-        
+
         var hubState = UILoader.GetUIState<HubUI>();
         var filterButtonImage = isShiny ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture;
         var filterButtonRarity = isShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White;
-        _worldDexMode = false;
+        WorldDexMode = false;
         ShiftKeyIgnore = true;
         ShinyActive = isShiny;
         hubState._filterButton.SetImage(filterButtonImage);
         hubState._filterButton.SetHoverRarity(filterButtonRarity);
-        SetActive(true, customSound: false);
-        hubState.SetCurrentPokedexEntry(pokemon, PokedexEntryStatus.Registered);
+        SetActive(true, false);
+        hubState.SetCurrentPokedexEntry(TerramonPlayer.LocalPlayer.GetPokedex(isShiny).Entries[pokemon], pokemon);
     }
 
     public override void OnInitialize()
@@ -225,17 +223,17 @@ public class HubUI : SmartUIState
         _filterButton.OnLeftClick += (_, _) =>
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            _worldDexMode = !_worldDexMode;
+            WorldDexMode = !WorldDexMode;
             ShinyActive = false;
-            if (_worldDexMode)
+            if (WorldDexMode)
                 _filterButton.SetHoverText(Language.GetTextValue("Mods.Terramon.GUI.Pokedex.WorldDexFilter"));
-            _filterButton.SetImage(_worldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
+            _filterButton.SetImage(WorldDexMode ? WorldDexFilterTexture : PlayerDexFilterTexture);
             _filterButton.SetHoverRarity(ItemRarityID.White);
             RefreshPokedex(closeOverview: true);
         };
         _filterButton.OnRightClick += (_, _) =>
         {
-            if (_worldDexMode) return; // TODO: Later maybe make a Shiny World Dex
+            if (WorldDexMode) return; // TODO: Later maybe make a Shiny World Dex
             var shinyDex = TerramonPlayer.LocalPlayer.GetPokedex(true);
             if (shinyDex.SeenCount == 0 && shinyDex.RegisteredCount == 0) return;
             SoundEngine.PlaySound(SoundID.MaxMana);
@@ -373,7 +371,7 @@ public class HubUI : SmartUIState
             : Color.White;
 
         // Update the Pokédex filter button's hover text
-        if (!_worldDexMode)
+        if (!WorldDexMode)
             _filterButton.SetHoverText(Language.GetTextValue(
                 ShinyActive
                     ? "Mods.Terramon.GUI.Pokedex.PlayerShinyDexFilter"
@@ -387,11 +385,11 @@ public class HubUI : SmartUIState
     {
         // Close the Pokémon overview panel if requested
         if (closeOverview)
-            _overviewPanel.SetCurrentEntry(0, PokedexEntryStatus.Undiscovered);
+            _overviewPanel.SetCurrentEntry(null, 0);
 
         // Get the player's Pokédex
         var pokedex =
-            _worldDexMode
+            WorldDexMode
                 ? TerramonWorld.GetWorldDex()
                 : TerramonPlayer.LocalPlayer.GetPokedex(ShinyActive); // Neither should be null here
 
@@ -405,7 +403,7 @@ public class HubUI : SmartUIState
             var entry = pokedex.Entries.GetValueOrDefault(pokemon);
             _pokedexPage.UpdateEntry(pokemon, entry);
             if (_overviewPanel.Pokemon == pokemon)
-                _overviewPanel.SetCurrentEntry(pokemon, entry.Status);
+                _overviewPanel.SetCurrentEntry(entry, pokemon);
         }
 
         if (pokemon == 0)
@@ -453,16 +451,16 @@ public class HubUI : SmartUIState
     public void ResetPokedex()
     {
         _pokedexPage.ReturnToFirstPage(); // Resets the Pokédex page to the first page for the next time it is opened
-        _worldDexMode = false; // Reset to player's Pokédex mode
+        WorldDexMode = false; // Reset to player's Pokédex mode
         ShinyActive = false; // Reset to non-shiny mode
         _filterButton.SetImage(PlayerDexFilterTexture);
         _filterButton.SetHoverRarity(ItemRarityID.White);
         RefreshPokedex();
     }
 
-    public void SetCurrentPokedexEntry(ushort pokemon, PokedexEntryStatus status)
+    public void SetCurrentPokedexEntry(PokedexEntry entry, ushort pokemon)
     {
-        _overviewPanel.SetCurrentEntry(pokemon, status, true);
+        _overviewPanel.SetCurrentEntry(entry, pokemon, true);
     }
 
     public override void Recalculate()
@@ -590,7 +588,7 @@ internal sealed class PokedexPageDisplay : UIElement
 
         Reset();
     }
-    
+
     public void ChangePage(int direction)
     {
         _startItemIndex += direction * _rows * _cols;
@@ -599,7 +597,7 @@ internal sealed class PokedexPageDisplay : UIElement
             _startItemIndex = Terramon.LoadedPokemonCount - _rows * _cols;
         Reset();
     }
-    
+
     public void ReturnToFirstPage()
     {
         _startItemIndex = 0;
@@ -698,7 +696,7 @@ internal sealed class PokedexEntryIcon : UIPanel
         OnLeftClick += (_, _) =>
         {
             if (_entry?.Status == PokedexEntryStatus.Undiscovered) return;
-            UILoader.GetUIState<HubUI>().SetCurrentPokedexEntry(ID, _entry!.Status);
+            UILoader.GetUIState<HubUI>().SetCurrentPokedexEntry(_entry, ID);
         };
         _icon = new UIImage(QuestionMarkTexture)
         {
@@ -1126,9 +1124,15 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _list.Height.Set(Height.Pixels - 60, 0);
     }
 
-    public void SetCurrentEntry(ushort pokemon, PokedexEntryStatus status, bool playCry = false)
+    public void SetCurrentEntry(PokedexEntry entry, ushort pokemon, bool playCry = false)
     {
-        if (Pokemon == pokemon && _status == status) return;
+        var status = entry?.Status ?? PokedexEntryStatus.Undiscovered;
+
+        if (Pokemon == pokemon && _status == status)
+        {
+            _preview.CaughtCount = entry?.CaughtCount ?? 0; // Still update the caught count
+            return;
+        }
         Pokemon = pokemon;
         _status = status;
 
@@ -1217,6 +1221,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
         _header.Color = Color.White;
         _divider.Color = Color.White;
         _preview.IDToDraw = pokemon;
+        _preview.CaughtCount = entry?.CaughtCount ?? 0;
         _scrollBar.Height.Set(-80, 1f);
     }
 }
@@ -1228,6 +1233,8 @@ internal sealed class PokedexPreviewCanvas : UIImage
     private ushort _idToDraw;
     private UIImage _previewBackground;
     private UIImage _previewBackgroundOverlay;
+
+    public int CaughtCount;
 
     static PokedexPreviewCanvas()
     {
@@ -1321,16 +1328,54 @@ internal sealed class PokedexPreviewCanvas : UIImage
         if (_idToDraw == 0) return;
 
         var position = GetOuterDimensions().Position();
-        position.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
-        position.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height + 2);
+        var drawNPCPosition = position;
+        drawNPCPosition.X += (int)(Width.Pixels / 2 - _dummyNPCForDrawing.width / 2f);
+        drawNPCPosition.Y += (int)(Height.Pixels - _dummyNPCForDrawing.height + 2);
         if (_dummyNPCForDrawing.GetGlobalNPC<NPCWanderingHoverBehaviour>()
             .Enabled) // Draw the NPC a bit higher if it's a flying Pokémon
-            position.Y -= 6;
+            drawNPCPosition.Y -= 6;
         if (_dummyNPCForDrawing.GetGlobalNPC<NPCWalkingBehaviour>()?.AnimationType ==
-            NPCWalkingBehaviour.AnimType.IdleForward && _dummyNPCForDrawing.frame.Y == 0) // Draw fix for walking Pokémon using IdleForward animation
+            NPCWalkingBehaviour.AnimType.IdleForward &&
+            _dummyNPCForDrawing.frame.Y == 0) // Draw fix for walking Pokémon using IdleForward animation
             _dummyNPCForDrawing.frame.Y = TextureAssets.Npc[_dummyNPCForDrawing.type].Height() /
                                           Main.npcFrameCount[_dummyNPCForDrawing.type];
-        Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -position);
+        Main.instance.DrawNPCDirect(spriteBatch, _dummyNPCForDrawing, false, -drawNPCPosition);
+
+        if (HubUI.WorldDexMode) return; // Not supported in World Dex mode yet
+
+        var ballIcon = BallAssets.GetBallIcon(GetBallTypeForCaughtCount(CaughtCount));
+        var ballPosition = position + new Vector2(28, 28);
+        spriteBatch.Draw(ballIcon.Value, ballPosition, null,
+            Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+        var textPosition = ballPosition + new Vector2(21, 0);
+        var font = FontAssets.MouseText.Value;
+        var textColor = GetTextColorForCaughtCount(CaughtCount);
+        var baseScale = new Vector2(0.75f);
+        var origin = Vector2.Zero;
+        var shadowColor = Color.Black * (textColor.A / 255f);
+        var snippets = ChatManager.ParseMessage(CaughtCount.ToString(), textColor).ToArray();
+        ChatManager.ConvertNormalSnippets(snippets);
+        ChatManager.DrawColorCodedStringShadow(spriteBatch, font, snippets, textPosition, shadowColor, 0f, origin,
+            baseScale, -1f, 1.5f);
+        ChatManager.DrawColorCodedString(spriteBatch, font, snippets, textPosition, Color.White, 0f, origin, baseScale,
+            out _, -1f);
+    }
+
+    private static Color GetTextColorForCaughtCount(int caughtCount)
+    {
+        return caughtCount >= 3 ? Color.White : new Color(192, 198, 214);
+    }
+
+    private static BallID GetBallTypeForCaughtCount(int caughtCount)
+    {
+        return caughtCount switch
+        {
+            >= 12 => BallID.MasterBall,
+            >= 9 => BallID.UltraBall,
+            >= 6 => BallID.GreatBall,
+            _ => BallID.PokeBall
+        };
     }
 
     private static void GetBackgroundAssets(ushort pokemon, out Asset<Texture2D> background, out Color backgroundColor,

@@ -5,8 +5,10 @@ using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
 using Terramon.Content.Tiles.Interactive;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
@@ -229,22 +231,33 @@ public class TerramonPlayer : ModPlayer
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
         var entryUpdated = false;
+    
         if (hasEntry)
+        {
             if (entry.Status < status || force)
             {
                 entry.Status = status;
                 entryUpdated = true;
             }
+        
+            if (status == PokedexEntryStatus.Registered)
+                entry.CaughtCount++;
+        }
 
         if (shiny)
         {
             var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
             if (hasShinyEntry)
+            {
                 if (shinyEntry.Status < status || force)
                     shinyEntry.Status = status;
+                
+                if (shinyEntry.Status == PokedexEntryStatus.Registered)
+                    shinyEntry.CaughtCount++;
+            }
         }
 
-        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id, shiny);
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id);
         if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
             _pokedex.RegisteredCount == Terramon.LoadedPokemonCount && !_receivedShinyCharm)
             GiveShinyCharmReward();
