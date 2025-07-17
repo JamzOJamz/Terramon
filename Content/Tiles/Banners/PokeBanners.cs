@@ -195,7 +195,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
     }
 }
 
-public class PokeBannerTile : CustomPreviewTile
+public class PokeBannerTile : ModTile
 {
     // max is 227 for reference. after there's 227 banners don't do anything else cuz tiles be smart
     private const int SupportedPokeyMenHorizontal = 9;
@@ -378,18 +378,19 @@ public class PokeBannerTile : CustomPreviewTile
         _isRenderingToPlacementPreviewRt = false;
     }
 
-    public override bool PreDrawPlacementPreview(SpriteBatch sb, TileObjectPreviewData data, Texture2D texture,
-        Vector2 position, Rectangle sourceRect, Color color)
+    public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame, ref Vector2 position,
+        ref Color color, bool validPlacement, ref SpriteEffects spriteEffects)
     {
+        
         if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem ||
             bannerItem.VisualTier == BannerTier.None) return true;
 
-        var isTopTile = sourceRect.Y == 0;
-        Rectangle newFrame = new(sourceRect.X, sourceRect.Y + 54, sourceRect.Width, sourceRect.Height);
+        var isTopTile = frame.Y == 0;
+        Rectangle newFrame = new(frame.X, frame.Y + 54, frame.Width, frame.Height);
 
         if (_isRenderingToPlacementPreviewRt)
         {
-            position = new Vector2(0, sourceRect.Y);
+            position = new Vector2(0, frame.Y);
             color = Color.White;
 
             if (isTopTile)
@@ -397,14 +398,14 @@ public class PokeBannerTile : CustomPreviewTile
                 var underlay = _tierUnderlay.Value;
                 var width = underlay.Width / 4;
                 Rectangle underlayFrame = new(((int)bannerItem.VisualTier - 1) * width, 0, width, underlay.Height);
-                sb.Draw(_tierUnderlay.Value, position, underlayFrame, color);
+                spriteBatch.Draw(_tierUnderlay.Value, position, underlayFrame, color);
             }
 
-            sb.Draw(texture, position, newFrame, color);
+            spriteBatch.Draw(TextureAssets.Tile[Type].Value, position, newFrame, color);
         }
         else
         {
-            sb.Draw(_placementPreviewRt, position, new Rectangle(0, sourceRect.Y, 16, 16), color);
+            spriteBatch.Draw(_placementPreviewRt, position, new Rectangle(0, frame.Y, 16, 16), color);
         }
 
         return false;
