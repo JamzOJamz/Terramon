@@ -381,7 +381,6 @@ public class PokeBannerTile : ModTile
     public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame, ref Vector2 position,
         ref Color color, bool validPlacement, ref SpriteEffects spriteEffects)
     {
-        
         if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem ||
             bannerItem.VisualTier == BannerTier.None) return true;
 
