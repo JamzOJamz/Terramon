@@ -1,10 +1,13 @@
 using EasyPacketsLib;
 using Terramon.Content.Buffs;
+using Terramon.Content.Commands;
 using Terramon.Content.GUI;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terraria.DataStructures;
@@ -231,26 +234,75 @@ public class TerramonPlayer : ModPlayer
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
         var entryUpdated = false;
+
         if (hasEntry)
+        {
             if (entry.Status < status || force)
             {
                 entry.Status = status;
                 entryUpdated = true;
             }
 
+            if (status == PokedexEntryStatus.Registered)
+            {
+                entry.CaughtCount++;
+                HandleCatchMilestoneRewards(id, entry.CaughtCount);
+            }
+        }
+
         if (shiny)
         {
             var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
             if (hasShinyEntry)
+            {
                 if (shinyEntry.Status < status || force)
                     shinyEntry.Status = status;
+
+                if (shinyEntry.Status == PokedexEntryStatus.Registered)
+                    shinyEntry.CaughtCount++;
+            }
         }
 
-        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id, shiny);
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id);
         if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
             _pokedex.RegisteredCount == Terramon.LoadedPokemonCount && !_receivedShinyCharm)
             GiveShinyCharmReward();
         return force ? hasEntry : entryUpdated;
+    }
+
+    private void HandleCatchMilestoneRewards(ushort id, int caughtCount)
+    {
+        var milestone = GetMilestoneFromCaughtCount(caughtCount);
+        if (milestone == null) return;
+
+        Main.NewText(
+            Language.GetTextValue($"Mods.Terramon.Misc.CatchMilestone{caughtCount}",
+                Terramon.DatabaseV2.GetLocalizedPokemonName(id).Value), TerramonCommand.ChatColorYellow);
+
+        GiveBannerReward(id, milestone.Value);
+    }
+
+    private static BannerTier? GetMilestoneFromCaughtCount(int caughtCount)
+    {
+        return caughtCount switch
+        {
+            3 => BannerTier.Tier1,
+            6 => BannerTier.Tier2,
+            9 => BannerTier.Tier3,
+            12 => BannerTier.Tier4,
+            _ => null
+        };
+    }
+
+    private void GiveBannerReward(ushort id, BannerTier tier)
+    {
+        if (!PokemonEntityLoader.IDToBannerType.TryGetValue(id, out var bannerType)) return;
+
+        var bannerItem = new Item();
+        bannerItem.SetDefaults(bannerType);
+        var modItem = bannerItem.ModItem as PokeBannerItem;
+        modItem!.Tier = tier;
+        Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), bannerItem);
     }
 
     private void GiveShinyCharmReward()

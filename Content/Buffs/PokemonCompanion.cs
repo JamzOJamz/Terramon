@@ -12,7 +12,7 @@ public class PokemonCompanion : ModBuff
 {
     private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
     private static RenderTarget2D _rt;
-    private Asset<Texture2D> _starIconTexture;
+    private static Asset<Texture2D> _starIconTexture;
 
     public override string Texture => "Terraria/Images/Buff";
 

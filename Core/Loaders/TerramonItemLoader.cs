@@ -16,9 +16,11 @@ public class LoadWeightAttribute(float weight) : Attribute
     public float Weight { get; } = weight;
 }
 
+[Autoload(false)]
 public class TerramonItemLoader : ModSystem
 {
-    private static readonly List<string> LoadGroupList = [
+    private static readonly List<string> LoadGroupList =
+    [
         "Apricorns",
         "PokeBalls",
         "EvolutionaryItems",
@@ -29,13 +31,13 @@ public class TerramonItemLoader : ModSystem
         "PokeBallMinis",
         "TrainerVanity"
     ];
-    
+
     public override void OnModLoad()
     {
         // Load all item types across all mods loaded
         var items = (from t in AssemblyManager.GetLoadableTypes(Mod.Code)
-            where !t.IsAbstract && t.IsSubclassOf(typeof(TerramonItem)) &&
-                  t.GetCustomAttributes<AutoloadAttribute>(true).FirstOrDefault()?.Value == false
+            where !t.IsAbstract && t.IsSubclassOf(typeof(TerramonItem)) && t.GetConstructor(Type.EmptyTypes) != null &&
+                  !t.GetCustomAttributes<AutoloadAttribute>(false).Any()
             select (ModItem)Activator.CreateInstance(t, null)).ToList();
 
         // Group items by LoadGroup, sort each group by LoadWeight, and then flatten the result

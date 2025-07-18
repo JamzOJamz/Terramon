@@ -1,6 +1,7 @@
 using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon;
@@ -97,16 +98,6 @@ public class Terramon : Mod
         EasyPacketDLL.HandlePacket(reader, whoAmI);
     }
 
-    private void SetupCrossModCompatibility()
-    {
-        if (Main.dedServ) return;
-
-        // Wikithis compatibility
-        if (!ModLoader.TryGetMod("Wikithis", out var wikiThis)) return;
-        wikiThis.Call(0, this, "https://terrariamods.wiki.gg/wiki/Terramon_Mod/{}");
-        wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
-    }
-
     private uint CheckLoadCount()
     {
         var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
@@ -141,6 +132,10 @@ public class Terramon : Mod
 
     public override void Load()
     {
+        // Load items, then entities
+        AddContent<TerramonItemLoader>();
+        AddContent<PokemonEntityLoader>();
+
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
@@ -150,9 +145,6 @@ public class Terramon : Mod
 
         // Register the mod in EasyPacketsLib
         EasyPacketDLL.RegisterMod(this);
-
-        // Setup cross-mod compatibility
-        SetupCrossModCompatibility();
 
         // Don't run the rest of the method on servers
         if (Main.dedServ) return;
