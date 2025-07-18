@@ -4,8 +4,8 @@ using Terramon.Content.GUI;
 using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
-using Terraria.ModLoader.IO;
 using Terraria.Enums;
+using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
 
@@ -16,6 +16,8 @@ public partial class TerramonWorld : ModSystem
     private static bool _soundEndedLastFrame;
     private static float _lastMusicVolume;
     private static PokedexService _worldDex;
+
+    private static readonly List<(object content, Color? color)> NewTextQueue = [];
 
     /// <summary>
     ///     Plays a sound while temporarily lowering the background music volume.
@@ -60,7 +62,7 @@ public partial class TerramonWorld : ModSystem
     {
         if (TooltipOverlay.IsHoldingPokemon())
             TooltipOverlay.ClearHeldPokemon(true);
-        
+
         Terramon.ResetUI();
     }
 
@@ -115,12 +117,28 @@ public partial class TerramonWorld : ModSystem
         On_Main.DoDraw += MainDoDraw_Detour;
     }
 
+    public static void QueueNewText(object o, Color? color = null)
+    {
+        NewTextQueue.Add((o, color));
+    }
+
+    private static void ProcessQueuedNewText()
+    {
+        foreach (var (content, color) in NewTextQueue)
+            Main.NewText(content, color);
+
+        NewTextQueue.Clear();
+    }
+
     private static void MainDoUpdate_Detour(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
     {
         // Set GameTime and MousePosition for UILoader
         UILoader.GameTime = gameTime;
 
         orig(self, ref gameTime);
+
+        // Process queued NewText calls
+        ProcessQueuedNewText();
 
         if (Main.musicVolume != _lastMusicVolume)
         {
@@ -144,7 +162,7 @@ public partial class TerramonWorld : ModSystem
         if (!activeSound.IsPlaying) return;
         _soundEndedLastFrame = true;
     }
-    
+
     private static void MainDoDraw_Detour(On_Main.orig_DoDraw orig, Main self, GameTime gameTime)
     {
         orig(self, gameTime);

@@ -275,9 +275,8 @@ public class TerramonPlayer : ModPlayer
         var milestone = GetMilestoneFromCaughtCount(caughtCount);
         if (milestone == null) return;
 
-        Main.NewText(
-            Language.GetTextValue($"Mods.Terramon.Misc.CatchMilestone{caughtCount}",
-                Terramon.DatabaseV2.GetLocalizedPokemonName(id).Value), TerramonCommand.ChatColorYellow);
+        TerramonWorld.QueueNewText(Language.GetTextValue($"Mods.Terramon.Misc.CatchMilestone{caughtCount}",
+            Terramon.DatabaseV2.GetLocalizedPokemonName(id).Value), TerramonCommand.ChatColorYellow);
 
         GiveBannerReward(id, milestone.Value);
     }
