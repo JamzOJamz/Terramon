@@ -83,6 +83,14 @@ Commands: {
 		NopUpgrade: 未在库存中找到可升级的宝可梦
 		Success: 成功升级并将 {0} 只宝可梦转移到 {1} 的 PC
 	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
@@ -596,6 +604,16 @@ Items: {
 		DisplayName: Erika的邀请函
 		Tooltip: "'L. Walter'"
 	}
+
+	PokeBannerItem: {
+		// DisplayName: "{0} Banner"
+		// ShinyDisplayName: Shiny {0} Banner
+		/* Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			''' */
+	}
 }
 
 Keybinds: {
@@ -692,6 +710,10 @@ Misc: {
 	CatchSuccess: 抓住了！[c/{0}:{1}] 被捕获了！
 	CatchSuccessPC: 抓住了！[c/{0}:{1}] 被捕获并转移到 {2} 的 {3} 的PC中！
 	CatchSuccessPCNoRoom: 抓住了！[c/{0}:{1}] 被捕获了，但 {2} 的PC中没有空间了！
+	// CatchMilestone3: You've obtained your 3rd {0}!
+	// CatchMilestone6: You've obtained your 6th {0}!
+	// CatchMilestone9: You've obtained your 9th {0}!
+	// CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: “{0} 的数据已被添加到宝可梦图鉴中。”
 	PCBoxDefaultName: 盒子 {0}
 	RequireStarter: 请先选择初始宝可梦！
