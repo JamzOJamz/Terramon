@@ -696,6 +696,10 @@ Misc: {
 	CatchSuccess: Geschafft! [c/{0}:{1}] wurde gefangen!
 	CatchSuccessPC: Geschafft! [c/{0}:{1}] wurde gefangen und in {2} in {3}'s PC übertragen!
 	CatchSuccessPCNoRoom: Geschafft! [c/{0}:{1}] wurde gefangen, aber es war kein Platz in {2}'s PC!
+	// CatchMilestone3: You've obtained your 3rd {0}!
+	// CatchMilestone6: You've obtained your 6th {0}!
+	// CatchMilestone9: You've obtained your 9th {0}!
+	// CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: "{0}'s Daten wurden dem Pokédex hinzugefügt."
 	PCBoxDefaultName: Box {0}
 	RequireStarter: Wähle zuerst ein Starter-Pokémon!

@@ -169,7 +169,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
         var tierFrame = (int)Tier - 1;
         var width = overlay.Width / 4;
 
-        position += new Vector2(0f, -16f);
+        position += new Vector2(0f, -16f) * scale;
 
         spriteBatch.Draw(_tierOverlay.Value, position, new Rectangle(tierFrame * width, 0, width, overlay.Height),
             Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);

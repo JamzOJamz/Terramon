@@ -696,6 +696,10 @@ Misc: {
 	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
 	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
 	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
+	CatchMilestone3: You've obtained your 3rd {0}!
+	CatchMilestone6: You've obtained your 6th {0}!
+	CatchMilestone9: You've obtained your 9th {0}!
+	CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: "{0}'s data was added to the Pokédex."
 	PCBoxDefaultName: Box {0}
 	RequireStarter: Choose a starter Pokémon first!
