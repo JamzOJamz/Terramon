@@ -1009,11 +1009,13 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         var currentRange = _pageDisplay.GetPageRange();
         if ((!_right && currentRange.Item1 == 1) ||
             (_right && currentRange.Item2 == Terramon.HighestPokemonID))
+        {
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
             {
                 Volume = 0.25f
             });
             return;
+        }
 
         _pageDisplay.ChangePage(_right.ToDirectionInt()); // -1 for left, 1 for right
         UILoader.GetUIState<HubUI>().RefreshPokedex();
