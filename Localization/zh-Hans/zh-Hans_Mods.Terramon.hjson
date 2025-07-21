@@ -150,6 +150,15 @@ Configs: {
 				'''
 		}
 
+		NonPokemonSpawnRateMultiplier: {
+			// Label: Non-Pokémon Spawn Rate Multiplier
+			/* Tooltip:
+				'''
+				Multiplies the rate at which non-Pokémon NPCs spawn, including modded ones
+				[c/F2A754:If set to 0, regular Terraria enemies and other modded NPCs will not spawn at all]
+				''' */
+		}
+
 		SpawningStage: {
 			Label: 生成等级
 			Tooltip: 野外生成的宝可梦等级（更高等级包含所有更低等级）

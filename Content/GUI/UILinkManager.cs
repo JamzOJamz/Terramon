@@ -11,7 +11,7 @@ public class UILinkManager : ILoadable
 {
     //reference position for first slot in the row (default Pokédex position)
     private static readonly Vector2 FirstSlotPos = new(51, 291);
-    
+    public bool IsLoadingEnabled(Mod mod) => !Main.dedServ;
     public void Load(Mod mod)
     {
         SetupPartyUIPage();

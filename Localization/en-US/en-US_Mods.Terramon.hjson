@@ -150,6 +150,15 @@ Configs: {
 				'''
 		}
 
+		NonPokemonSpawnRateMultiplier: {
+			Label: Non-Pokémon Spawn Rate Multiplier
+			Tooltip:
+				'''
+				Multiplies the rate at which non-Pokémon NPCs spawn, including modded ones
+				[c/F2A754:If set to 0, regular Terraria enemies and other modded NPCs will not spawn at all]
+				'''
+		}
+
 		SpawningStage: {
 			Label: Spawning Stage
 			Tooltip: The stage of Pokémon that can spawn in the wild (higher stages include all lower stages)

@@ -1,6 +1,8 @@
+using System.Reflection;
 using Terramon.Content.Configs;
 using Terramon.Core.NPCComponents;
 using Terramon.ID;
+using Terraria.ModLoader.Core;
 using Terraria.ModLoader.Utilities;
 
 // ReSharper disable UnassignedField.Global
@@ -101,6 +103,12 @@ public class NPCSpawnController : NPCComponent
     // Simple spawning system fields
     public SpawningStage Stage;
 
+    static NPCSpawnController()
+    {
+        MonoModHooks.Add(typeof(NPCLoader).GetMethod("FinishSetup", BindingFlags.Static | BindingFlags.NonPublic),
+            HookFinishSetup);
+    }
+
     /// <summary>
     ///     All possible conditions for the NPC to spawn and their respective chances. If any of these conditions are met, the
     ///     NPC will be added to the spawn pool with the specified chance.
@@ -109,6 +117,35 @@ public class NPCSpawnController : NPCComponent
     //public CustomCondition[] Conditions;
 
     protected override bool CacheInstances => true;
+
+    private static void HookFinishSetup(Action orig)
+    {
+        orig();
+
+        var hookList = (GlobalHookList<GlobalNPC>)typeof(NPCLoader).GetField("HookEditSpawnPool",
+            BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
+        var hookGlobals = (GlobalNPC[])typeof(GlobalHookList<GlobalNPC>).GetField("hookGlobals",
+            BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(hookList)!;
+
+        // Finds this type (NPCSpawnController) in the array and move it to the end to ensure it runs last
+        for (var i = 0; i < hookGlobals.Length; i++)
+        {
+            if (hookGlobals[i].GetType() != typeof(NPCSpawnController)) continue;
+            MoveToEnd(hookGlobals, i);
+            break;
+        }
+
+        return;
+
+        void MoveToEnd<T>(IList<T> array, int index)
+        {
+            if (index < 0 || index >= array.Count) return;
+
+            var temp = array[index];
+            for (var i = index; i < array.Count - 1; i++) array[i] = array[i + 1];
+            array[^1] = temp;
+        }
+    }
 
     /*public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
     {
