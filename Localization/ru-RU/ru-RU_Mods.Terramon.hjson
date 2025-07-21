@@ -1,7 +1,12 @@
 Buffs: {
 	PokemonCompanion: {
-		// DisplayName: Pokémon companion
+		// DisplayName: Pokémon Companion
 		// Description: "{0} is following you around!"
+	}
+
+	PokeBannerBuff: {
+		// DisplayName: Pokémon Banner
+		// Description: Bonuses active for nearby companions:
 	}
 }
 

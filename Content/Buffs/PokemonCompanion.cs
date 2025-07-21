@@ -20,6 +20,7 @@ public class PokemonCompanion : ModBuff
     {
         Main.buffNoTimeDisplay[Type] = true;
         Main.vanityPet[Type] = true;
+        
         if (!Main.dedServ)
             _starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }

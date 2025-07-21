@@ -1,4 +1,5 @@
 using ReLogic.Content;
+using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
@@ -450,6 +451,19 @@ public class PokeBannerTile : ModTile
         offsetY += 2;
     }
 
+    public override void NearbyEffects(int i, int j, bool closer)
+    {
+        if (closer) return;
+        
+        var player = Main.LocalPlayer;
+        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        //var tileStyle = TileObjectData.GetTileStyle(Main.tile[i, j]) + 1;
+
+        modPlayer.HasPokeBanner = true;
+        if (!player.HasBuff<PokeBannerBuff>())
+            player.AddBuff(ModContent.BuffType<PokeBannerBuff>(), 2);
+    }
+
     public override void Load()
     {
         base.Load();
@@ -490,6 +504,34 @@ public class ShinyPokeBannerTile : PokeBannerTile
         dust.velocity = new Vector2(Main.WindForVisuals * 2f, 0f);
         dust.noGravity = true;
         dust.scale *= 1f + Main.rand.NextFloat(-0.03f, 0.03f);
+    }
+}
+
+public class PokeBannerBuff : ModBuff
+{
+    public override string Texture => "Terramon/Assets/Buffs/PokeBannerBuff";
+    
+    public override void SetStaticDefaults()
+    {
+        Main.buffNoTimeDisplay[Type] = true;
+        Main.debuff[Type] = true;
+        BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+    }
+
+    public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
+    {
+        if (ModContent.GetInstance<ClientConfig>().RainbowBuffText)
+            rare = ItemRarityID.Expert;
+    }
+
+    public override void Update(Player player, ref int buffIndex)
+    {
+        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        if (modPlayer.HasPokeBanner)
+        {
+            player.buffTime[buffIndex] = 2; // Keep the buff active
+            modPlayer.HasPokeBanner = false;
+        }
     }
 }
 

@@ -3,6 +3,11 @@ Buffs: {
 		DisplayName: Pokémon-Begleiter
 		Description: "{0} folgt dir!"
 	}
+
+	PokeBannerBuff: {
+		// DisplayName: Pokémon Banner
+		// Description: Bonuses active for nearby companions:
+	}
 }
 
 Commands: {

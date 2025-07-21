@@ -32,6 +32,8 @@ public class TerramonPlayer : ModPlayer
 
     public bool HasChosenStarter;
 
+    public bool HasPokeBanner;
+
     public int ActivePCTileEntityID
     {
         get => _activePCTileEntityID;
