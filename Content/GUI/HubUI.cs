@@ -105,6 +105,7 @@ public class HubUI : SmartUIState
         hubState.RefreshPokedex(closeOverview: !active);
         if (active)
         {
+            UILinkPointNavigator.ChangePoint(TerramonPointID.PokedexMin);
             _playerInventoryOpen = Main.playerInventory;
             hubState.Update(null);
             IngameFancyUI.OpenUIState(hubState);
@@ -113,6 +114,7 @@ public class HubUI : SmartUIState
         {
             IngameFancyUIClose();
             Main.playerInventory = _playerInventoryOpen;
+            UILinkPointNavigator.ChangePoint(InventoryParty.InPCMode ? TerramonPointID.PC0 : GamepadPointID.Inventory0);
         }
 
         if (customSound)
@@ -159,22 +161,22 @@ public class HubUI : SmartUIState
         // Pokédex tab
         var pokedexTabHeader = new HubTabHeader(Language.GetText("Mods.Terramon.Keybinds.OpenPokedex.DisplayName"), 93,
             new Vector2(51, 15), PokedexTabHeaderTexture,
-            PokedexTabIconTexture);
+            PokedexTabIconTexture, TerramonPointID.HubTab0);
         AddElement(pokedexTabHeader, -12, -12, 227, 66, _mainPanel);
 
         // First ??? tab
         var emptyTabHeader = new HubTabHeader("???", 96, Vector2.Zero, EmptyTabHeaderTexture,
-            null);
+            null, TerramonPointID.HubTab1);
         AddElement(emptyTabHeader, 213, -12, 226, 66, _mainPanel);
 
         // Second ??? tab
         var emptyTabHeader2 = new HubTabHeader("???", 96, Vector2.Zero, EmptyTabHeaderTexture,
-            null);
+            null, TerramonPointID.HubTab2);
         AddElement(emptyTabHeader2, 437, -12, 226, 66, _mainPanel);
 
         // Third ??? tab
         var emptyTabHeader3 = new HubTabHeader("???", 96, Vector2.Zero, EmptyTabHeaderAltTexture,
-            null);
+            null, TerramonPointID.HubTab3);
         AddElement(emptyTabHeader3, 661, -12, 227, 66, _mainPanel);
 
         #endregion
@@ -378,6 +380,39 @@ public class HubUI : SmartUIState
                     : "Mods.Terramon.GUI.Pokedex.PlayerDexFilter",
                 Main.LocalPlayer.name));
 
+        //update world dex uilinkpoint
+        UILinkPointNavigator.Pages[TerramonPageID.Pokedex].LinkMap[TerramonPointID.WorldDexToggle].Position =
+            _filterButton.GetDimensions().ToRectangle().Center.ToVector2() * Main.UIScale;
+
+        //change page using gamepad shoulder buttons
+        if (UILinkPointNavigator.CurrentPage == TerramonPageID.HackySwitchPageLeft ||
+            UILinkPointNavigator.CurrentPage == TerramonPageID.HackySwitchPageRight)
+        {
+            var dirIsRight = UILinkPointNavigator.CurrentPage == TerramonPageID.HackySwitchPageRight;
+
+            var currentRange = _pokedexPage.GetPageRange();
+            if ((!dirIsRight && currentRange.Item1 == 1) ||
+                (dirIsRight && currentRange.Item2 == Terramon.LoadedPokemonCount))
+            {
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                {
+                    Volume = 0.25f
+                });
+            }
+            else
+            {
+                _pokedexPage.ChangePage(dirIsRight.ToDirectionInt()); // -1 for left, 1 for right
+                UILoader.GetUIState<HubUI>().RefreshPokedex();
+
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/dex_pageup")
+                {
+                    Volume = 0.325f
+                });
+            }
+
+            UILinkPointNavigator.ChangePoint(TerramonPointID.PokedexMin);
+        }
+
         Recalculate();
     }
 
@@ -516,15 +551,17 @@ internal sealed class HubTabHeader : UIImage
     private readonly UIImage _icon;
     private readonly Asset<Texture2D> _iconAsset;
     private readonly bool _locked;
+    private readonly int _uiLinkPointID;
     private bool _headerAssetLoaded;
     private bool _iconAssetLoaded;
 
     public HubTabHeader(object title, float headerX, Vector2 iconPos, Asset<Texture2D> headerTexture,
-        Asset<Texture2D> iconTexture) : base(headerTexture)
+        Asset<Texture2D> iconTexture, int uiLinkPointID) : base(headerTexture)
     {
         _locked = title.ToString() == "???";
         _headerAsset = headerTexture;
         _iconAsset = iconTexture;
+        _uiLinkPointID = uiLinkPointID;
 
         var titleText = new BetterUIText(title, 0.485f, true)
         {
@@ -566,6 +603,12 @@ internal sealed class HubTabHeader : UIImage
         var cursorText = Language.GetTextValue("Mods.Terramon.GUI.Starter.ComingSoon");
         Main.instance.MouseText(cursorText);
     }
+
+    public override void Update(GameTime gameTime)
+    {
+        UILinkPointNavigator.SetPosition(_uiLinkPointID, GetDimensions().ToRectangle().Center.ToVector2());
+        base.Update(gameTime);
+    }
 }
 
 internal sealed class PokedexPageDisplay : UIElement
@@ -574,12 +617,12 @@ internal sealed class PokedexPageDisplay : UIElement
 
     private readonly List<PokedexEntryIcon> _entries = [];
 
+    // Cache the sorted Pokemon IDs for efficient paging
+    private readonly List<ushort> _sortedPokemonIds;
+
     private int _cols;
     private int _rows;
     private ushort _startPokemonId; // Now stores actual Pokemon ID, not array index
-
-    // Cache the sorted Pokemon IDs for efficient paging
-    private readonly List<ushort> _sortedPokemonIds;
 
     public PokedexPageDisplay(int width, int height, int rows, int cols)
     {
@@ -603,16 +646,16 @@ internal sealed class PokedexPageDisplay : UIElement
     {
         var itemsPerPage = _rows * _cols;
         var currentIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
-        
+
         if (currentIndex == -1) // Current start ID not found, reset to first
         {
             _startPokemonId = _sortedPokemonIds.FirstOrDefault();
             Reset();
             return;
         }
-        
-        var newIndex = currentIndex + (direction * itemsPerPage);
-        
+
+        var newIndex = currentIndex + direction * itemsPerPage;
+
         // Clamp to valid bounds
         if (newIndex < 0)
         {
@@ -624,7 +667,7 @@ internal sealed class PokedexPageDisplay : UIElement
             var lastPageStartIndex = Math.Max(0, _sortedPokemonIds.Count - itemsPerPage);
             newIndex = lastPageStartIndex;
         }
-        
+
         _startPokemonId = _sortedPokemonIds[newIndex];
         Reset();
     }
@@ -639,10 +682,10 @@ internal sealed class PokedexPageDisplay : UIElement
     {
         var startIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
         if (startIndex == -1) return Tuple.Create(0, 0);
-        
+
         var itemsPerPage = _rows * _cols;
         var endIndex = Math.Min(startIndex + itemsPerPage - 1, _sortedPokemonIds.Count - 1);
-        
+
         return Tuple.Create((int)_sortedPokemonIds[startIndex], (int)_sortedPokemonIds[endIndex]);
     }
 
@@ -652,6 +695,7 @@ internal sealed class PokedexPageDisplay : UIElement
         foreach (var entry in _entries)
             entry.Remove();
         _entries.Clear();
+        UILinkManager.ResetPokedexSlots();
 
         // Calculate row count based on the button size and the height of the page
         _rows = (int)Height.Pixels / (ButtonSize + 4);
@@ -664,18 +708,41 @@ internal sealed class PokedexPageDisplay : UIElement
         // Find the starting index in our sorted Pokemon list
         var startIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
         if (startIndex == -1) startIndex = 0; // Fallback if ID not found
-        
+
         // Add the new entries
         var itemsPerPage = _rows * _cols;
         for (var i = 0; i < itemsPerPage; i++)
         {
-            var pokemonIndex = startIndex + i;
-            if (pokemonIndex >= _sortedPokemonIds.Count) break;
-            
-            var pokemon = _sortedPokemonIds[pokemonIndex];
-            
             var row = i / _cols;
             var col = i % _cols;
+            var pokemonIndex = startIndex + i;
+
+            if (pokemonIndex >= _sortedPokemonIds.Count)
+            {
+                // Handle early page ending for controller navigation
+                var id = TerramonPointID.PokedexMin + i;
+
+                //if page ends early, set edge values
+                if (col != 0 && id <= TerramonPointID.PokedexMax + 1)
+                {
+                    var page = UILinkPointNavigator.Pages[TerramonPageID.Pokedex];
+                    id -= 1;
+
+                    page.LinkMap[id].Right = -1;
+
+                    //current row
+                    for (var j = 0; j <= col; j++)
+                        page.LinkMap[id - j].Down = -1;
+
+                    //row above
+                    for (var j = col; j < _cols; j++)
+                        page.LinkMap[id + j - 6].Down = -1;
+                }
+
+                break;
+            }
+
+            var pokemon = _sortedPokemonIds[pokemonIndex];
 
             var monButton = new PokedexEntryIcon(pokemon)
             {
@@ -685,6 +752,32 @@ internal sealed class PokedexPageDisplay : UIElement
 
             _entries.Add(monButton);
             Append(monButton);
+
+            //set up ui links
+            var pointID = TerramonPointID.PokedexMin + i;
+            if (pointID <= TerramonPointID.PokedexMax)
+            {
+                //set uilinkpoint position
+                UILinkPointNavigator.SetPosition(pointID, monButton.GetDimensions().ToRectangle().Center.ToVector2());
+                var page = UILinkPointNavigator.Pages[TerramonPageID.Pokedex];
+
+                //set uilinkpoint navigation for edge elements
+                if (col == 0)
+                    page.LinkMap[pointID].Left = -1;
+                if (col == _cols - 1)
+                {
+                    if (row <= 1)
+                        page.LinkMap[pointID].Right = TerramonPointID.WorldDexToggle;
+                    else
+                        page.LinkMap[pointID].Right = -1;
+                }
+
+                if (row == 0)
+                    page.LinkMap[pointID].Up = col == 0 ? TerramonPointID.PokedexLeft : TerramonPointID.PokedexRight;
+
+                if (row == _rows - 1)
+                    page.LinkMap[pointID].Down = -1;
+            }
         }
     }
 
@@ -820,6 +913,8 @@ internal sealed class PokedexEntryIcon : UIPanel
             _debugText.ShadowColor = Color.Black;
             HubUI.ShiftKeyIgnore = false;
         }
+
+        base.Update(gameTime);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -897,6 +992,10 @@ internal sealed class PokedexPageButton : UIHoverImageButton
             ChangePage();
         _lastZDown = zDown;
         _lastXDown = xDown;
+
+        UILinkPointNavigator.Pages[TerramonPageID.Pokedex].LinkMap[TerramonPointID.PokedexLeft + (_right ? 1 : 0)]
+                .Position =
+            GetDimensions().ToRectangle().Center.ToVector2() * Main.UIScale;
     }
 
     public override void LeftClick(UIMouseEvent evt)
@@ -909,7 +1008,12 @@ internal sealed class PokedexPageButton : UIHoverImageButton
     {
         var currentRange = _pageDisplay.GetPageRange();
         if ((!_right && currentRange.Item1 == 1) ||
-            (_right && currentRange.Item2 == Terramon.HighestPokemonID)) return;
+            (_right && currentRange.Item2 == Terramon.HighestPokemonID))
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            {
+                Volume = 0.25f
+            });
+            return;
 
         _pageDisplay.ChangePage(_right.ToDirectionInt()); // -1 for left, 1 for right
         UILoader.GetUIState<HubUI>().RefreshPokedex();
@@ -1175,6 +1279,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
             _preview.CaughtCount = entry?.CaughtCount ?? 0; // Still update the caught count
             return;
         }
+
         Pokemon = pokemon;
         _status = status;
 

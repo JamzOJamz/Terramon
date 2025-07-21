@@ -169,7 +169,7 @@ Configs: {
 		}
 
 		NonPokemonSpawnRateMultiplier: {
-			// Label: Non Pokémon Spawn Rate Multiplier
+			// Label: Non-Pokémon Spawn Rate Multiplier
 			/* Tooltip:
 				'''
 				Multiplies the rate at which non-Pokémon NPCs spawn, including modded ones
@@ -238,6 +238,8 @@ GUI: {
 		CannotRemoveLastPokemon: ¡Tu equipo debe tener al menos un Pokémon!
 	}
 
+	// PC.RenameLabel: Rename Box
+
 	Starter: {
 		Title: Bienvenid@ al mundo de Pokémon! Gracias por instalar Terramon!
 		Subtitle: ¡Ahora, por favor elige tu Pokémon inicial para comenzar tu aventura!
@@ -285,6 +287,11 @@ GUI: {
 		Height: Talla
 		Weight: Peso
 		Entry: Entrada
+	}
+
+	ControllerHints: {
+		// Release: Release
+		// SwitchPage: Switch page
 	}
 }
 
@@ -621,6 +628,9 @@ Keybinds: {
 	ToggleParty.DisplayName: Equipo
 	OpenPokedex.DisplayName: Pokédex
 	OpenPokedexEntry.DisplayName: Abrir entrada Pokédex para el Pokémon
+	// TogglePokemon.DisplayName: Toggle Active Pokémon
+	// NextPokemon.DisplayName: Summon Next Pokémon
+	// PrevPokemon.DisplayName: Summon Previous Pokémon
 }
 
 Tiles: {

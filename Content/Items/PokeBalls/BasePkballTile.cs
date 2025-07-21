@@ -121,8 +121,9 @@ public abstract class BasePkballTile : ModTile
         {
             if (!e.Item.IsAir) Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_None(), e.Item, e.Item.stack);
 
-            if (!e.Disposable)
+            if (!e.Disposable || e.Item.IsAir)
                 yield return new Item(DropItem);
+            
         }
         else
         {
@@ -164,7 +165,7 @@ public class BasePkballEntity : ModTileEntity
 
     public bool TryAddItem(Player player)
     {
-        if (player.HeldItem.IsAir) return false;
+        if (player.HeldItem.IsAir || player.HeldItem.ModItem is BasePkballItem) return false;
 
         if (Open || (!Disposable && player.HeldItem.type == Item.type))
         {
