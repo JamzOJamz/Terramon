@@ -239,6 +239,12 @@ public class TerramonPlayer : ModPlayer
         _premierBonusCount = 0;
     }
 
+    public override void PreUpdateBuffs()
+    {
+        if (HasPokeBanner)
+            Player.AddBuff(ModContent.BuffType<PokeBannerBuff>(), 2, quiet: false);
+    }
+
     public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item)
     {
         //use CanSellItem rather than PostSellItem because PostSellItem doesn't return item data correctly

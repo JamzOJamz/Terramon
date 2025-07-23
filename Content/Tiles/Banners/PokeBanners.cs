@@ -455,13 +455,8 @@ public class PokeBannerTile : ModTile
     {
         if (closer) return;
         
-        var player = Main.LocalPlayer;
-        var modPlayer = player.GetModPlayer<TerramonPlayer>();
         //var tileStyle = TileObjectData.GetTileStyle(Main.tile[i, j]) + 1;
-
-        modPlayer.HasPokeBanner = true;
-        if (!player.HasBuff<PokeBannerBuff>())
-            player.AddBuff(ModContent.BuffType<PokeBannerBuff>(), 2);
+        TerramonPlayer.LocalPlayer.HasPokeBanner = true;
     }
 
     public override void Load()
@@ -523,15 +518,13 @@ public class PokeBannerBuff : ModBuff
         if (ModContent.GetInstance<ClientConfig>().RainbowBuffText)
             rare = ItemRarityID.Expert;
     }
+}
 
-    public override void Update(Player player, ref int buffIndex)
+public class PokeBannerSystem : ModSystem
+{
+    public override void ResetNearbyTileEffects()
     {
-        var modPlayer = player.GetModPlayer<TerramonPlayer>();
-        if (modPlayer.HasPokeBanner)
-        {
-            player.buffTime[buffIndex] = 2; // Keep the buff active
-            modPlayer.HasPokeBanner = false;
-        }
+        TerramonPlayer.LocalPlayer.HasPokeBanner = false;
     }
 }
 
