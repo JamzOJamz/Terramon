@@ -10,6 +10,9 @@
         <Reference Include="EasyPacketsLib">
             <HintPath>lib\EasyPacketsLib.dll</HintPath>
         </Reference>
+        <Reference Include="Showdown.NET">
+            <HintPath>lib\Showdown.NET.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <ItemGroup>
