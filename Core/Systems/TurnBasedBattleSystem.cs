@@ -54,7 +54,7 @@ public class TurnBasedBattleSystem : ModSystem
 
         Task.Run(async () =>
         {
-            await foreach (var output in stream.ReadOutputsAsync()) Console.WriteLine(output);
+            await foreach (var output in stream.ReadOutputsAsync()) Mod.Logger.Info(output);
         });
 
         stream.Write(">start {\"formatid\":\"gen7randombattle\"}");
