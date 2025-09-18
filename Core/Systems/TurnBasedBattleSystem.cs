@@ -46,6 +46,9 @@ public class TurnBasedBattleSystem : ModSystem
             originalStream.CopyTo(_showdownArchiveStream);
             _showdownArchiveStream.Position = 0;
         }
+        
+        // ClearScript (what Showdown.NET uses to run PS) does a lot of trial and error
+        Logging.IgnoreExceptionContents("Microsoft.ClearScript");
 
         // Initialize Showdown.NET runtime
         ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesPath);
