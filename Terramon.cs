@@ -20,6 +20,8 @@ public class Terramon : Mod
     /// </summary>
     public const ushort MaxPokemonLevel = 100;
 
+    public static readonly string SavePath = Path.Combine(Main.SavePath, nameof(Terramon));
+
     static Terramon()
     {
         if (!Main.dedServ) MenuSocialWidget.Setup();
@@ -65,9 +67,10 @@ public class Terramon : Mod
         LoadedPokemonCount = Math.Min(MaxPokemonIDToLoad, DatabaseV2.Pokemon.Count);
 
         // Calculate highest ID (highest ID that is <= MaxPokemonIDToLoad)
-        HighestPokemonID = DatabaseV2.Pokemon.Keys
-            .Where(id => id <= MaxPokemonIDToLoad)
-            .Max();
+        if (DatabaseV2.Pokemon.Keys != null)
+            HighestPokemonID = DatabaseV2.Pokemon.Keys
+                .Where(id => id <= MaxPokemonIDToLoad)
+                .Max();
     }
 
     /// <summary>
@@ -100,29 +103,43 @@ public class Terramon : Mod
 
     private uint CheckLoadCount()
     {
-        var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
+        var loadCountDataPath = Path.Combine(SavePath, "LoadCount.dat");
 
-        if (!File.Exists(datFilePath))
+        if (!File.Exists(loadCountDataPath))
         {
-            using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
-            writer.Write(1u);
-            return 1;
+            var legacyLoadCountDataPath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
+
+            if (!File.Exists(legacyLoadCountDataPath))
+            {
+                using var writer = new BinaryWriter(File.Open(loadCountDataPath, FileMode.Create));
+                writer.Write(1u);
+                return 1;
+            }
+
+            try
+            {
+                File.Move(legacyLoadCountDataPath, loadCountDataPath);
+            }
+            catch (Exception ex)
+            {
+                Logger.Warn($"Failed to move legacy load count file! Error: {ex.Message}");
+            }
         }
 
         uint result = 1;
 
         try
         {
-            using var reader = new BinaryReader(File.Open(datFilePath, FileMode.Open));
+            using var reader = new BinaryReader(File.Open(loadCountDataPath, FileMode.Open));
             result = reader.ReadUInt32();
         }
         catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
         {
-            Logger.Warn($"Failed to read count from file! Error: {ex.Message}");
+            Logger.Warn($"Failed to read load count from file! Error: {ex.Message}");
         }
 
         result++;
-        using (var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create)))
+        using (var writer = new BinaryWriter(File.Open(loadCountDataPath, FileMode.Create)))
         {
             writer.Write(result);
         }
@@ -132,6 +149,9 @@ public class Terramon : Mod
 
     public override void Load()
     {
+        // Create the save directory if it doesn't exist
+        Directory.CreateDirectory(SavePath);
+        
         // Load items, then entities
         AddContent<TerramonItemLoader>();
         AddContent<PokemonEntityLoader>();
@@ -159,9 +179,9 @@ public class Terramon : Mod
 
     public override void Unload()
     {
-        DatabaseV2 = null;
+        EasyPacketDLL.Unload();
         LoadedPokemonCount = 0;
         HighestPokemonID = 0;
-        EasyPacketDLL.Unload();
+        DatabaseV2 = null;
     }
 }

@@ -62,7 +62,7 @@ public abstract class NPCAIComponent : NPCComponent
         binaryWriter.Write(Random.Seed);
     }
 
-    public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+    public override void ReceiveExtraAI(NPC npc, Terraria.ModLoader.IO.BitReader bitReader, BinaryReader binaryReader)
     {
         if (!Enabled) return;
 

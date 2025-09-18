@@ -73,7 +73,7 @@ public sealed class NPCWanderingHoverBehaviour : NPCAIComponent
         binaryWriter.Write(_moveSpeed);
     }
 
-    public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+    public override void ReceiveExtraAI(NPC npc, Terraria.ModLoader.IO.BitReader bitReader, BinaryReader binaryReader)
     {
         if (!Enabled) return;
         
