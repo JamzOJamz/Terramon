@@ -10,11 +10,11 @@ public class TurnBasedBattleSystem : ModSystem
 {
     private static readonly string RuntimesPath = Path.Combine(Terramon.SavePath, "Runtimes");
 
-    private static readonly Dictionary<PlatformType, string> Runtimes = new()
+    private static readonly Dictionary<PlatformType, (string Name, string Extension)> Runtimes = new()
     {
-        [PlatformType.Windows] = "ClearScriptV8.win-x64",
-        [PlatformType.Linux] = "ClearScriptV8.linux-x64",
-        [PlatformType.OSX] = "ClearScriptV8.osx-arm64"
+        [PlatformType.Windows] = ("ClearScriptV8.win-x64", ".dll"),
+        [PlatformType.Linux] = ("ClearScriptV8.linux-x64", ".so"),
+        [PlatformType.OSX] = ("ClearScriptV8.osx-arm64", ".dylib")
     };
 
     private MemoryStream _showdownArchiveStream;
@@ -26,15 +26,15 @@ public class TurnBasedBattleSystem : ModSystem
         // Ensure runtimes path exists
         Directory.CreateDirectory(RuntimesPath);
         
-        var runtime = Runtimes[Platform.Current.Type];
-        var runtimeDllPath = Path.Combine(RuntimesPath, $"{runtime}.dll");
+        var (runtimeName, extension) = Runtimes[Platform.Current.Type];
+        var runtimeLibraryPath = Path.Combine(RuntimesPath, $"{runtimeName}{extension}");
         
         // Extract runtime to disk
-        if (!File.Exists(runtimeDllPath))
+        if (!File.Exists(runtimeLibraryPath))
         {
-            Terramon.Instance.Logger.Info($"Extracting {runtime} runtime...");
+            Terramon.Instance.Logger.Info($"Extracting {runtimeName} runtime...");
 
-            using var runtimeArchiveStream = Mod.GetFileStream($"lib/{runtime}.zip");
+            using var runtimeArchiveStream = Mod.GetFileStream($"lib/{runtimeName}.zip");
             using var zipArchive = ZipArchive.Open(runtimeArchiveStream);
             zipArchive.ExtractToDirectory(RuntimesPath);
         }
