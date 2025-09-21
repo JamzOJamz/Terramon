@@ -578,6 +578,16 @@ Items: {
 		DisplayName: La Invitación de Erika
 		// Tooltip: "'L. Walter'"
 	}
+
+	PokePak: {
+		// DisplayName: Poké Pak ({0})
+		/* Tooltip:
+			'''
+			A portable device for storing Pokémon
+			Right click on a PC to insert or remove
+			[c/ADADC6:Capacity: 0/30 slots used]
+			''' */
+	}
 }
 
 Keybinds: {

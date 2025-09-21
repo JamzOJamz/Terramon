@@ -12,7 +12,7 @@ public class PokemonCompanion : ModBuff
 {
     private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
     private static RenderTarget2D _rt;
-    private Asset<Texture2D> _starIconTexture;
+    private static Asset<Texture2D> _starIconTexture;
 
     public override string Texture => "Terraria/Images/Buff";
 
@@ -60,7 +60,8 @@ public class PokemonCompanion : ModBuff
 
         // Draw the pokeball icon
         var ballId = player.GetActivePokemon()?.Ball ?? BallID.PokeBall;
-        spriteBatch.Draw(BallAssets.GetBallIcon(ballId).Value, new Vector2(4, 6),
+        spriteBatch.Draw(BallAssets.GetBallIcon(ballId)?.Value ?? BallAssets.GetBallIcon(BallID.PokeBall).Value,
+            new Vector2(4, 6),
             null, Color.White,
             0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
