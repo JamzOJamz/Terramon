@@ -2,7 +2,6 @@ using ReLogic.OS;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Zip;
 using Showdown.NET;
-using Showdown.NET.Simulator;
 
 namespace Terramon.Core.Systems;
 
@@ -52,17 +51,6 @@ public class TurnBasedBattleSystem : ModSystem
 
         // Initialize Showdown.NET runtime
         ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesPath);
-        
-        var stream = new BattleStream();
-
-        Task.Run(async () =>
-        {
-            await foreach (var output in stream.ReadOutputsAsync()) Mod.Logger.Info(output);
-        });
-
-        stream.Write(">start {\"formatid\":\"gen7randombattle\"}");
-        //stream.Write(">player p1 {\"name\":\"Alice\"}");
-        //stream.Write(">player p2 {\"name\":\"Bob\"}");*/
     }
 
     public override void Unload()
