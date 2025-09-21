@@ -2,6 +2,7 @@ using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
 using Terramon.Core.Battling.TurnBased;
+using Terramon.Core.IO;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using IOFile = System.IO.File;
@@ -23,8 +24,11 @@ public class Terramon : Mod
     public const ushort MaxPokemonLevel = 100;
 
     private const string DatabaseFile = "Assets/Data/PokemonDB-min.json";
+    private static readonly string SavePath = Path.Combine(Main.SavePath, nameof(Terramon));
+    public static readonly string CachePath = Path.Combine(Main.SavePath, "TerramonCache");
 
-    public static readonly string SavePath = Path.Combine(Main.SavePath, nameof(Terramon));
+    public static readonly EmbeddedArchive ShowdownArchive = new("lib/pokemon-showdown.zip",
+        "82ed253a8cd9a39fdd08467582954a7c5455591ab3e81fc4bd3e8665f7bdd836");
 
     static Terramon()
     {
@@ -134,14 +138,15 @@ public class Terramon : Mod
 
     public override void Load()
     {
-        // Create the save directory if it doesn't exist
+        // Create the save and cache directories if they don't exist
         Directory.CreateDirectory(SavePath);
+        Directory.CreateDirectory(CachePath);
 
         // Localization should be loaded as early as possible
         LocalizationHelper.ForceLoadModHJsonLocalization(this);
 
-        // Makes sure that the Pokémon Showdown executable is present to support turn-based battle functionality
-        ShowdownInstaller.VerifyInstallation();
+        // Setup the environment for NodeShowdownService to work
+        NodeShowdownService.SetupEnvironment();
 
         // Load the database
         var dbStream = GetFileStream(DatabaseFile);

@@ -150,12 +150,7 @@ public partial class TerramonWorld : ModSystem
         orig(self, gameTime);
 
         // FrameSkip subtle does very weird stuff with GameTime that causes tweens to randomly go super slow if we don't do this
-        double elapsedTime;
-
-        if (Main.FrameSkipMode == FrameSkipMode.Subtle)
-            elapsedTime = Tween.tweenStep;
-        else
-            elapsedTime = gameTime.ElapsedGameTime.TotalSeconds;
+        var elapsedTime = Main.FrameSkipMode == FrameSkipMode.Subtle ? Tween.tweenStep : gameTime.ElapsedGameTime.TotalSeconds;
 
         // Update all active tweens
         Tween.DoUpdate(elapsedTime);

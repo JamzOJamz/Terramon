@@ -93,6 +93,7 @@ Configs: {
 			Miscellaneous: Preferences
 			GUI: GUI
 			Accessibility: Accessibility
+			Advanced: Advanced
 		}
 
 		FastEvolution: {
@@ -128,6 +129,18 @@ Configs: {
 		RainbowBuffText: {
 			Label: Rainbow Buff Text
 			Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+		}
+
+		TurnEngineExecutionModel: {
+			Label: Preferred Battle Engine Execution Model
+			Tooltip:
+				'''
+				Specifies your preferred method for executing the turn-based battle engine.
+				Note: On platforms other than Windows, the engine will always run in-process regardless of this setting.
+
+				[c/8193EF:External Process:] Runs the battle engine in a separate process. Only available on Windows.
+				[c/8193EF:Embedded:] Runs the battle engine within the main game process using an internal interpreter.
+				'''
 		}
 	}
 
@@ -191,6 +204,12 @@ Configs: {
 		Stage1.Label: First-Evolved/Stage 1 Pokémon
 		Stage2.Label: Second-Evolved/Stage 2 Pokémon
 		Legendary.Label: Legendary/Mythical Pokémon
+	}
+
+	TurnEngineExecutionModel: {
+		Tooltip: ""
+		ExternalProcess.Label: External Process
+		EmbeddedInterpreter.Label: Embedded
 	}
 }
 
@@ -696,17 +715,17 @@ Misc: {
 }
 
 Loading: {
-	DownloadingBattleSimulator: Downloading Battle Simulator ({0}%)
+	DownloadingBattleSimulator: Downloading Turn-Based Battle Engine ({0}%)
 	NoBattleSimulatorInfoMessage:
 		'''
-		Terramon Mod couldn't download the required Battle Simulator, which powers turn-based battles.
+		Terramon Mod couldn't download the required components that power turn-based battles.
 		This usually happens if you're not connected to the internet.
 
-		Don't worry, the rest of the mod will still work just fine.
+		Don't worry, the rest of the mod will still work just fine!
 
 		To fix this:
 		Please reconnect to the internet and reload the mod. Terramon will automatically install everything you need.
 
-		If you continue to get this message, let us know on Discord or open an issue on GitHub: https://terramon.tmod.page
+		If you're still seeing this message after reconnecting and reloading the mod, feel free to ask for help on our Discord or open an issue on GitHub: https://terramon.tmod.page
 		'''
 }
