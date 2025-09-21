@@ -59,7 +59,7 @@ public sealed class StarterSelectUI : SmartUIState
         fadeTween.OnComplete = () =>
         {
             _fadeOutAnimationActive = false;
-            _backdropImage.Color = Color.White * 0.43f;
+            _backdropImage.Color = Color.White * 0.375f;
             
             // Unhide stuff
             _topContainer.Top.Set(-157 + 10, 0.25f);
@@ -107,7 +107,7 @@ public sealed class StarterSelectUI : SmartUIState
             ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/BackdropBig"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            Color = Color.White * 0.43f,
+            Color = Color.White * 0.375f,
             ImageScale = 2.25f
         };
         _backdropImage.Width.Set(1028, 0f);
@@ -305,7 +305,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         Height.Set(184, 0f);
         SetVisibility(1f, 1f);
 
-        var nameText = new BetterUIText(Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon), 0.97f)
+        var nameText = new BetterUIText(Terramon.DatabaseV2.GetLocalizedPokemonName(pokemon), 0.972f)
         {
             RemoveFloatingPointsFromDrawPosition = true,
             HAlign = 0.5f,
@@ -314,14 +314,14 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         };
         nameText.Width.Set(120, 0f);
         nameText.Height.Set(30, 0f);
-        nameText.Top.Set(10, 0f);
+        nameText.Top.Set(9, 0f);
         Append(nameText);
 
         var species = Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon);
         var speciesSplit = species.Split(' ');
         var speciesMod = string.Join(" ", speciesSplit.Take(speciesSplit.Length - 1));
         var suffix = speciesSplit.Last();
-        _speciesText = new BetterUIText(speciesMod, 0.85f)
+        _speciesText = new BetterUIText(speciesMod, 0.87f)
         {
             RemoveFloatingPointsFromDrawPosition = true,
             HAlign = 0.5f,
