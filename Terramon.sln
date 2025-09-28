@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terramon", "Terramon.csproj", "{DFB69F24-169D-4B9B-8DAA-E4F54366E286}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terramon", "Terramon/Terramon.csproj", "{DFB69F24-169D-4B9B-8DAA-E4F54366E286}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
