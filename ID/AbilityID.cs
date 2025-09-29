@@ -1,7 +1,8 @@
 ﻿namespace Terramon.ID;
 public enum AbilityID : ushort
 {
-    Stench = 1,
+    None,
+    Stench,
     Drizzle,
     SpeedBoost,
     BattleArmor,
