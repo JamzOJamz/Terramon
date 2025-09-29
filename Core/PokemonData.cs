@@ -459,6 +459,7 @@ public class PokemonData
 
     #endregion
 }
+
 #region Substructures
 public struct PokemonIVs
 {
