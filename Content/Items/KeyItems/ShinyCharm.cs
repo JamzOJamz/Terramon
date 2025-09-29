@@ -8,4 +8,8 @@ public class ShinyCharm : KeyItem
         Item.width = 24;
         Item.height = 30;
     }
+    public override void UpdateInventory(Player player)
+    {
+        player.GetModPlayer<TerramonPlayer>().HasShinyCharm = true;
+    }
 }

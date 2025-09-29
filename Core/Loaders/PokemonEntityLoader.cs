@@ -3,6 +3,7 @@ using System.Text;
 using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using Terramon.ID;
 using Terramon.Content.NPCs;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
@@ -146,7 +147,7 @@ public class PokemonEntityLoader : ModSystem
         var data = entity.Data;
         var i = entity.ID - 1;
         if (HasGenderDifference[i])
-            if ((data != null ? data.Gender == Gender.Female ? 1 : 0 : 0) != 0)
+            if ((data != null ? data.Gender == GenderID.F ? 1 : 0 : 0) != 0)
                 pathBuilder.Append('F');
         if (HasPetExclusiveTexture[i] && entity.GetType() == typeof(PokemonPet))
             pathBuilder.Append("_Pet");

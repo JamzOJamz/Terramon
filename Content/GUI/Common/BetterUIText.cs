@@ -13,10 +13,10 @@ public class BetterUIText : UIElement
         Vector2.UnitX, // Right
         -Vector2.UnitY, // Up
         Vector2.UnitY, // Down
-        new Vector2(-1, -1).SafeNormalize(Vector2.Zero), // Top-left (diagonal)
-        new Vector2(1, -1).SafeNormalize(Vector2.Zero), // Top-right (diagonal)
-        new Vector2(-1, 1).SafeNormalize(Vector2.Zero), // Bottom-left (diagonal)
-        new Vector2(1, 1).SafeNormalize(Vector2.Zero) // Bottom-right (diagonal)
+        Vector2.Normalize(new Vector2(-1, -1)), // Top-left (diagonal)
+        Vector2.Normalize(new Vector2(1, -1)),  // Top-right (diagonal)
+        Vector2.Normalize(new Vector2(-1, 1)),  // Bottom-left (diagonal)
+        Vector2.Normalize(new Vector2(1, 1)),   // Bottom-right (diagonal)
     ];
 
     private Color _color = Color.White;

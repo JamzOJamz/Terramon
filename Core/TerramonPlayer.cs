@@ -1,4 +1,5 @@
 using EasyPacketsLib;
+using System.Text;
 using Terramon.Content.Buffs;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
@@ -36,6 +37,8 @@ public class TerramonPlayer : ModPlayer
     public Vector3 ColorPickerHSL;
 
     public bool HasPokeBanner;
+
+    public bool HasShinyCharm;
 
     public int ActivePCTileEntityID
     {
@@ -199,6 +202,11 @@ public class TerramonPlayer : ModPlayer
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
                 { Volume = 0.35f });
         }
+    }
+
+    public override void ResetEffects()
+    {
+        HasShinyCharm = false;
     }
 
     public override void PostUpdateBuffs()
@@ -466,6 +474,17 @@ public class TerramonPlayer : ModPlayer
             box.Service = _pc;
             _pc.Boxes.Add(box);
         }
+    }
+
+    public string GetPackedTeam()
+    {
+        StringBuilder sb = new();
+        for (var i = 0; i < Party.Length; i++)
+        {
+            if (Party[i] == null) continue;
+            sb.Append($"{Party[i].GetPacked()}]");
+        }
+        return sb.ToString();
     }
 
     #region Network Sync
