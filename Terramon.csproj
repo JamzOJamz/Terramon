@@ -4,6 +4,7 @@
         <AssemblyName>Terramon</AssemblyName>
         <LangVersion>latest</LangVersion>
         <OutputType>Exe</OutputType>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>

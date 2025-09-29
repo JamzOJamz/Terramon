@@ -452,7 +452,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             _bounces = 2;
 
         // Calculate rotation to face the target (Pokemon)
-        _rotation = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero).ToRotation();
+        _rotation = (target.Center - Projectile.Center).ToRotation();
 
         // Ensure the Pokeball sprite doesn't appear upside down or reversed
         if (Math.Abs(_rotation) > MathHelper.PiOver2)

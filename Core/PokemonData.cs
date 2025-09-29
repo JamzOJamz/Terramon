@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
@@ -15,14 +16,22 @@ public class PokemonData
     private Item _heldItem;
     private ushort _id;
     private DateTime? _metDate;
-    private byte _metLevel = 0;
+    private byte _metLevel;
     private string _ot;
     private uint _personalityValue;
     private string _worldName;
+    public AbilityID Ability;
     public BallID Ball = BallID.PokeBall;
+    public PokemonEVs EVs;
     public Gender Gender;
+    public byte Happiness;
     public bool IsShiny;
+
+    // ReSharper disable once InconsistentNaming
+    public PokemonIVs IVs;
     public byte Level = 1;
+    public PokemonMoves Moves;
+    public NatureID Nature;
     public string Nickname;
     public string Variant;
 
@@ -178,7 +187,7 @@ public class PokemonData
             _metDate = DateTime.Now,
             _metLevel = level,
             _worldName = Main.worldName,
-            PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
+            PersonalityValue = unchecked((uint)Main.rand.Next(int.MinValue, int.MaxValue)),
             IsShiny = RollShiny(player)
         };
     }
@@ -186,7 +195,7 @@ public class PokemonData
     private static bool RollShiny(Player player)
     {
         var shinyChance = ModContent.GetInstance<GameplayConfig>().ShinySpawnRate;
-        var rolls = player.HasItemInInventoryOrOpenVoidBag(ModContent.ItemType<ShinyCharm>()) ? 3 : 1;
+        var rolls = player.GetModPlayer<TerramonPlayer>().HasShinyCharm ? 3 : 1;
         for (var i = 0; i < rolls; i++)
             if (Main.rand.NextBool(shinyChance))
                 return true;
@@ -207,6 +216,32 @@ public class PokemonData
         return ModContent.Request<Texture2D>(
             $"Terramon/Assets/Pokemon/{Schema.Identifier}{(!string.IsNullOrEmpty(Variant) ? "_" + Variant : string.Empty)}_Mini{(IsShiny ? "_S" : string.Empty)}",
             mode);
+    }
+
+    public string GetPacked()
+    {
+        var nickname = Nickname ?? Schema.Identifier;
+        var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
+        var heldItem = _heldItem is null ? null : ItemID.Search.GetName(_heldItem.type);
+        var shiny = IsShiny ? "S" : null;
+        var hiddenPowerType = string.Empty;
+        var gmax = string.Empty;
+        byte dmaxLevel = 0;
+        var teratype = string.Empty;
+
+        return
+            $"{nickname}|" +
+            $"{speciesName}|" +
+            $"{heldItem}|" +
+            $"{Ability}|" +
+            $"{Moves.PackedString()}|" +
+            $"{Nature}|" +
+            $"{EVs.PackedString()}|" +
+            $"{Gender.ToShowdownChar()}|" +
+            $"{IVs.PackedString()}|" +
+            $"{shiny}|" +
+            $"{Level}|" +
+            $"{Happiness},{Ball},{hiddenPowerType},{gmax},{dmaxLevel},{teratype}";
     }
 
     public PokemonData ShallowCopy()
@@ -427,3 +462,275 @@ public class PokemonData
 
     #endregion
 }
+
+#region Substructures
+
+public struct PokemonIVs
+{
+    public uint Packed;
+    private const uint HPMask = 0x1F;
+    private const uint AttackMask = HPMask << 5;
+    private const uint DefenseMask = AttackMask << 5;
+    private const uint SpeedMask = DefenseMask << 5;
+    private const uint SpAttackMask = SpeedMask << 5;
+    private const uint SpDefenseMask = SpAttackMask << 5;
+
+    public byte HP
+    {
+        readonly get => (byte)(Packed & HPMask);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~HPMask) | value;
+        }
+    }
+
+    public byte Attack
+    {
+        readonly get => (byte)((Packed & AttackMask) >> 5);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~AttackMask) | ((uint)value << 5);
+        }
+    }
+
+    public byte Defense
+    {
+        readonly get => (byte)((Packed & DefenseMask) >> 10);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~DefenseMask) | ((uint)value << 10);
+        }
+    }
+
+    public byte Speed
+    {
+        readonly get => (byte)((Packed & SpeedMask) >> 15);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~SpeedMask) | ((uint)value << 15);
+        }
+    }
+
+    public byte SpAttack
+    {
+        readonly get => (byte)((Packed & SpAttackMask) >> 20);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~SpAttackMask) | ((uint)value << 20);
+        }
+    }
+
+    public byte SpDefense
+    {
+        readonly get => (byte)((Packed & SpDefenseMask) >> 25);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~SpDefenseMask) | ((uint)value << 25);
+        }
+    }
+
+    public byte this[StatID iv]
+    {
+        readonly get
+        {
+            var move = 5 * (int)iv;
+            return (byte)(Packed & (HPMask << (move)) >> (move));
+        }
+        set
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            var move = 5 * (int)iv;
+            Packed = (Packed & ~(HPMask << move)) | ((uint)value << move);
+        }
+    }
+
+    public PokemonIVs(uint packed)
+    {
+        Packed = packed;
+    }
+
+    public PokemonIVs(byte hp, byte attack, byte defense, byte speed, byte spAttack, byte spDefense)
+    {
+        HP = hp;
+        Attack = attack;
+        Defense = defense;
+        Speed = speed;
+        SpAttack = spAttack;
+        SpDefense = spDefense;
+    }
+
+    public readonly string PackedString()
+    {
+        return $"{HP},{Attack},{Defense},{Speed},{SpAttack},{SpDefense}";
+    }
+
+    public readonly override string ToString()
+    {
+        return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, Spe: {Speed}, SpA: {SpAttack}, SpD: {SpDefense}";
+    }
+}
+
+[SuppressMessage("ReSharper", "UnassignedField.Global")]
+public struct PokemonEVs
+{
+    private const ushort MaxTotal = 510;
+    private const byte MaxSingle = 252;
+    public byte HP, Attack, Defense, Speed, SpAttack, SpDefense;
+    public readonly ushort Sum => (ushort)(HP + Attack + Defense + Speed + SpAttack + SpDefense);
+
+    /// <summary>
+    ///     Increases a given EV by some amount, bound to the rules of EVs:
+    ///     <para />
+    ///     <list type="bullet">
+    ///         <item>Each EV cannot exceed 252.</item>
+    ///         <item>The sum of all EVs cannot exceed 510.</item>
+    ///     </list>
+    /// </summary>
+    /// <param name="ev">The EV to increase.</param>
+    /// <param name="amount">The amount to increase the EV by.</param>
+    /// <returns>The amount that the EV was actually increased by.</returns>
+    public unsafe byte Increase(StatID ev, byte amount)
+    {
+        var max = (ushort)(MaxTotal - Sum);
+        if (max <= 0)
+            return 0;
+        amount = (byte)Math.Min(amount, max);
+        // you pepole and your fancy ref conditionals will never know the pleasure of shaving off 0.0000000001 nanoseconds
+        fixed (byte* p = &HP)
+        {
+            ref var stat = ref *(p + (int)ev);
+            var statRoom = (byte)(MaxSingle - stat);
+            var applied = Math.Min(amount, statRoom);
+            stat += applied;
+            return applied;
+        }
+    }
+
+    /// <summary>
+    ///     Decreases a given EV by some amount.
+    /// </summary>
+    /// <param name="ev">The EV to decrease.</param>
+    /// <param name="amount">The amount to decrease the EV by.</param>
+    /// <returns>The amount that the EV was actually decreased by.</returns>
+    public unsafe byte Decrease(StatID ev, byte amount)
+    {
+        if (amount == 0)
+            return 0;
+
+        fixed (byte* p = &HP)
+        {
+            ref var stat = ref *(p + (int)ev);
+            var applied = (byte)(amount - (byte)(byte.MaxValue - stat));
+            stat -= applied;
+            return applied;
+        }
+    }
+
+    /// <summary>
+    ///     Changes a given EV by some amount, bound to the rules of EVs:
+    ///     <para />
+    ///     <list type="bullet">
+    ///         <item>Each EV cannot exceed 252.</item>
+    ///         <item>The sum of all EVs cannot exceed 510.</item>
+    ///     </list>
+    /// </summary>
+    /// <param name="ev">The EV to change.</param>
+    /// <param name="amount">The amount to change the EV by.</param>
+    /// <returns>The amount that the EV was actually changed by.</returns>
+    public byte Change(StatID ev, short amount)
+    {
+        return amount < 0 ? Decrease(ev, (byte)-amount) : Increase(ev, (byte)amount);
+    }
+
+    public readonly string PackedString()
+    {
+        return $"{HP},{Attack},{Defense},{Speed},{SpAttack},{SpDefense}";
+    }
+
+    public readonly override string ToString()
+    {
+        return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, Spe: {Speed}, SpA: {SpAttack}, SpD: {SpDefense}";
+    }
+}
+
+public readonly struct PokemonMoves
+{
+    private const ushort IDMask = 0x3FF;
+    private readonly uint[] _moves = new uint[4];
+    public bool Initialized => _moves != null;
+
+    public MoveData this[int move]
+    {
+        get
+        {
+            Deconstruct(_moves[move], out var id, out var pp, out var ppUp);
+            return new MoveData(id, pp, ppUp);
+        }
+        set => _moves[move] = Construct(value.ID, value.PP, value.PPUp);
+    }
+
+    public PokemonMoves(params MoveData?[] moves)
+    {
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(moves.Length, 4);
+        for (var i = 0; i < moves.Length; i++)
+        {
+            var move = moves[i];
+            if (!move.HasValue)
+                continue;
+            this[i] = move.Value;
+        }
+    }
+
+    public PokemonMoves(params MoveID[] moves)
+    {
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(moves.Length, 4);
+        for (var i = 0; i < moves.Length; i++)
+        {
+            var move = moves[i];
+            if (move == MoveID.None)
+                continue;
+            // TODO: look for max pp for move and do stuff here to then pass into movedata ctor
+            this[i] = new MoveData(move, 0, 0);
+        }
+    }
+
+    private static void Deconstruct(uint move, out MoveID id, out byte pp, out byte ppUp)
+    {
+        id = (MoveID)(move & IDMask);
+        pp = (byte)((move >> 10) & 0x3F);
+        ppUp = (byte)(move >> 16); // mask out the rest if more data is added
+    }
+
+    private static uint Construct(MoveID id, byte pp, byte ppUp)
+    {
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(pp, 63);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(pp, 3);
+        return ((uint)id) | ((uint)pp << 10) | ((uint)ppUp << 16);
+    }
+
+    public string PackedString(bool withStruggle = true)
+    {
+        var final = string.Empty;
+        for (var i = 0; i < 4; i++)
+        {
+            var moveID = (MoveID)(_moves[i] & IDMask);
+            if (moveID == MoveID.None)
+                continue;
+            final += $"{moveID}{(i == 3 && !withStruggle ? null : ",")}";
+        }
+
+        if (withStruggle)
+            final += "struggle";
+        return final;
+    }
+}
+
+public readonly record struct MoveData(MoveID ID, byte PP, byte PPUp);
+
+#endregion
