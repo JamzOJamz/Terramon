@@ -224,10 +224,10 @@ public class PokemonData
         var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
         var heldItem = _heldItem is null ? null : ItemID.Search.GetName(_heldItem.type);
         var shiny = IsShiny ? "S" : null;
-        var hiddenPowerType = string.Empty;
-        var gmax = string.Empty;
+        string hiddenPowerType = null;
+        string gmax = null;
         byte dmaxLevel = 0;
-        var teratype = string.Empty;
+        string teratype = null;
 
         return
             $"{nickname}|" +
