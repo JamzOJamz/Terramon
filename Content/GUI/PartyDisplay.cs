@@ -1,6 +1,5 @@
 using System.Text;
 using ReLogic.Content;
-using Terramon.ID;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Core.Loaders.UILoading;

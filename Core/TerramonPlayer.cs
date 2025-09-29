@@ -1,5 +1,5 @@
-using EasyPacketsLib;
 using System.Text;
+using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
@@ -24,17 +24,17 @@ public class TerramonPlayer : ModPlayer
     private readonly PCService _pc = new();
     private readonly PokedexService _pokedex = new();
     private readonly PokedexService _shinyDex = new();
-    
+
     private int _activePCTileEntityID = -1;
-    private bool _hasPokemon;
     private int _activeSlot;
+    private bool _hasPokemon;
 
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
+    public Vector3 ColorPickerHSL;
 
     public bool HasChosenStarter;
-    public Vector3 ColorPickerHSL;
 
     public bool HasPokeBanner;
 
@@ -64,10 +64,10 @@ public class TerramonPlayer : ModPlayer
             // Toggle off dedicated pet slot
             if (!_hasPokemon && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
-            
+
             // Cancel Pokémon cry sound in party display UI
             PartySidebarSlot.CrySoundSource?.Cancel();
-            
+
             if (value != -1)
             {
                 _activeSlot = value;
@@ -75,6 +75,7 @@ public class TerramonPlayer : ModPlayer
             }
             else
                 _hasPokemon = false;
+
             var buffType = ModContent.BuffType<PokemonCompanion>();
             var hasBuff = Player.HasBuff(buffType);
             switch (value)
@@ -152,10 +153,10 @@ public class TerramonPlayer : ModPlayer
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
         ProcessActiveMonTriggers();
-        
+
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
-        
+
         if (!KeybindSystem.TogglePartyKeybind.JustPressed) return;
         var inventoryParty = UILoader.GetUIState<InventoryParty>();
         if (inventoryParty.Visible) inventoryParty.SimulateToggleSlots();
@@ -417,6 +418,7 @@ public class TerramonPlayer : ModPlayer
             _activeSlot = slot;
             _hasPokemon = true;
         }
+
         LoadParty(tag);
         LoadPokedex(tag);
         LoadPC(tag);
@@ -479,11 +481,12 @@ public class TerramonPlayer : ModPlayer
     public string GetPackedTeam()
     {
         StringBuilder sb = new();
-        for (var i = 0; i < Party.Length; i++)
+        foreach (var p in Party)
         {
-            if (Party[i] == null) continue;
-            sb.Append($"{Party[i].GetPacked()}]");
+            if (p == null) continue;
+            sb.Append($"{p.GetPacked()}]");
         }
+
         return sb.ToString();
     }
 
