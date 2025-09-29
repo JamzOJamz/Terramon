@@ -1,5 +1,4 @@
 using ReLogic.Content;
-using System.Text;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.ID;
@@ -21,7 +20,7 @@ public class PokemonData
     private uint _personalityValue;
     private string _worldName;
     public BallID Ball = BallID.PokeBall;
-    public GenderID Gender;
+    public Gender Gender;
     public NatureID Nature;
     public AbilityID Ability;
     public byte Happiness;
@@ -201,12 +200,12 @@ public class PokemonData
         return false;
     }
 
-    private static GenderID DetermineGender(DatabaseV2.PokemonSchema schema, uint pv)
+    private static Gender DetermineGender(DatabaseV2.PokemonSchema schema, uint pv)
     {
         var genderRatio = schema.GenderRatio;
         return genderRatio >= 0
-            ? new FastRandom(pv).Next(8) < genderRatio ? GenderID.F : GenderID.M
-            : GenderID.N;
+            ? new FastRandom(pv).Next(8) < genderRatio ? Gender.Female : Gender.Male
+            : Gender.Unspecified;
     }
 
     public Asset<Texture2D> GetMiniSprite(AssetRequestMode mode = AssetRequestMode.AsyncLoad)
@@ -235,7 +234,8 @@ public class PokemonData
 			$"{Moves.PackedString()}|" +
 			$"{Nature}|" +
 			$"{EVs.PackedString()}|" +
-			$"{Gender}|{IVs.PackedString()}|" +
+			$"{Gender.ToShowdown()}|" +
+            $"{IVs.PackedString()}|" +
 			$"{shiny}|" +
 			$"{Level}|" +
 			$"{Happiness},{Ball},{hiddenPowerType},{gmax},{dmaxLevel},{teratype}";

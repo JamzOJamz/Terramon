@@ -504,8 +504,8 @@ public class PartySidebarSlot : UIImage
             sprite.Top.Set(-12, 0f);
             sprite.Left.Set(-20, 0f);
             _spriteBox.Append(sprite);
-            var genderIconPath = data.Gender != GenderID.N
-                ? $"Terramon/Assets/GUI/Party/Icon{(data.Gender == GenderID.M ? "Male" : "Female")}"
+            var genderIconPath = data.Gender != Gender.Unspecified
+                ? $"Terramon/Assets/GUI/Party/Icon{(data.Gender == Gender.Male ? "Male" : "Female")}"
                 : "Terraria/Images/NPC_0";
             _genderIcon = new UIBlendedImage(ModContent.Request<Texture2D>(genderIconPath,
                 AssetRequestMode.ImmediateLoad));

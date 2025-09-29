@@ -30,4 +30,16 @@ public static class VanillaExtensions
     {
         return r.NextFloat() * (maxValue - minValue) + minValue;
     }
+
+    /// <summary>
+	/// Converts a Gender to its Showdown char representation ('M', 'F', 'N').
+	/// </summary>
+	public static char ToShowdown(this Gender gender) =>
+        gender switch
+        {
+            Gender.Male => 'M',
+            Gender.Female => 'F',
+            Gender.Unspecified => 'N',
+            _ => throw new ArgumentOutOfRangeException(nameof(gender), gender, null)
+        };
 }
