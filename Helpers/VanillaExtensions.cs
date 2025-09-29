@@ -32,9 +32,9 @@ public static class VanillaExtensions
     }
 
     /// <summary>
-	/// Converts a Gender to its Showdown char representation ('M', 'F', 'N').
+	/// Converts a <see cref="Gender" /> to its Showdown char representation ('M', 'F', 'N').
 	/// </summary>
-	public static char ToShowdown(this Gender gender) =>
+	public static char ToShowdownChar(this Gender gender) =>
         gender switch
         {
             Gender.Male => 'M',

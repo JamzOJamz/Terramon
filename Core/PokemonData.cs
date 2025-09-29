@@ -234,7 +234,7 @@ public class PokemonData
 			$"{Moves.PackedString()}|" +
 			$"{Nature}|" +
 			$"{EVs.PackedString()}|" +
-			$"{Gender.ToShowdown()}|" +
+			$"{Gender.ToShowdownChar()}|" +
             $"{IVs.PackedString()}|" +
 			$"{shiny}|" +
 			$"{Level}|" +
