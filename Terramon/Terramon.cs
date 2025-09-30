@@ -64,8 +64,8 @@ public class Terramon : Mod
         // Calculate loaded count
         LoadedPokemonCount = Math.Min(MaxPokemonIDToLoad, DatabaseV2.Pokemon.Count);
 
-        // Calculate highest ID (highest ID that is <= MaxPokemonIDToLoad)
-        HighestPokemonID = DatabaseV2.Pokemon.Keys
+        // Calculate the highest ID (highest ID that is <= MaxPokemonIDToLoad)
+        HighestPokemonID = DatabaseV2.Pokemon.Keys!
             .Where(id => id <= MaxPokemonIDToLoad)
             .Max();
     }
@@ -139,6 +139,8 @@ public class Terramon : Mod
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
+        
+        Logger.Debug($"PKMN LOADED COUNT DEBUGGGG {DatabaseV2.Pokemon.Count}");
 
         // Calculate and cache Pokémon metrics after loading the database
         CalculatePokemonMetrics();

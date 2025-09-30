@@ -12,6 +12,8 @@ using Terraria.UI;
 
 namespace Terramon.Content.GUI;
 
+// TODO: Should we use "first partner"/"partner" terminology in this UI (instead of "starter")?
+// https://bulbapedia.bulbagarden.net/wiki/Terminology_of_first_partner_Pok%C3%A9mon
 public sealed class StarterSelectUI : SmartUIState
 {
     private readonly UIStarterBanner[] _banners = new UIStarterBanner[3];

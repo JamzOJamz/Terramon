@@ -1,33 +1,31 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using Terramon.ID;
 using Terraria.Localization;
 
 // ReSharper disable InconsistentNaming
 
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable NotAccessedPositionalProperty.Global
 // ReSharper disable CollectionNeverUpdated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Terramon.Core;
 
+[JsonConverter(typeof(MultiPropertyNameConverter))]
 public class DatabaseV2
 {
-    [JsonProperty] public ushort StarterMax { get; private set; }
+/*
+    [JsonPropertyAlias("sm")]
+    public ushort StarterMax { get; init; }
+*/
 
-    [JsonProperty("sm")]
-    private ushort b_StarterMax
-    {
-        set => StarterMax = value;
-    }
-
-    [JsonProperty] public ReadOnlyDictionary<ushort, PokemonSchema> Pokemon { get; private set; }
-
-    [JsonProperty("p")]
-    private ReadOnlyDictionary<ushort, PokemonSchema> b_Pokemon
-    {
-        set => Pokemon = value;
-    }
+    [JsonPropertyAlias("p")] public ReadOnlyDictionary<ushort, PokemonSchema> Pokemon { get; init; }
 
     public static DatabaseV2 Parse(Stream stream)
     {
@@ -35,6 +33,28 @@ public class DatabaseV2
         var db = JsonConvert.DeserializeObject<DatabaseV2>(reader.ReadToEnd());
         reader.Close();
         return db;
+    }
+
+    public string Serialize(bool minify = false)
+    {
+        var prevValue = MultiPropertyNameConverter.GetUseAliases();
+        try
+        {
+            MultiPropertyNameConverter.SetUseAliases(minify);
+            return JsonConvert.SerializeObject(this, new JsonSerializerSettings
+            {
+                Formatting = minify ? Formatting.None : Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                }
+            });
+        }
+        finally
+        {
+            MultiPropertyNameConverter.SetUseAliases(prevValue);
+        }
     }
 
     public PokemonSchema GetPokemon(ushort id)
@@ -51,47 +71,51 @@ public class DatabaseV2
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");
     }
-    
+
     public static LocalizedText GetLocalizedPokemonName(PokemonSchema schema)
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{schema.Identifier}.DisplayName");
     }
-    
+
     public string GetLocalizedPokemonNameDirect(ushort id)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DisplayName");
     }
-    
+
     public static string GetLocalizedPokemonNameDirect(PokemonSchema schema)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{schema.Identifier}.DisplayName");
     }
 
-    /*public LocalizedText GetPokemonSpecies(ushort id)
+/*
+    public LocalizedText GetPokemonSpecies(ushort id)
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
-    }*/
-    
+    }
+*/
+
     public string GetPokemonSpeciesDirect(ushort id)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.Species");
     }
-    
+
     public static string GetPokemonSpeciesDirect(PokemonSchema schema)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{schema.Identifier}.Species");
     }
-    
-    /*public LocalizedText GetPokemonDexEntry(ushort id)
+
+/*
+    public LocalizedText GetPokemonDexEntry(ushort id)
     {
         return Language.GetText($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
-    }*/
-    
+    }
+*/
+
     public string GetPokemonDexEntryDirect(ushort id)
     {
         return Language.GetTextValue($"Mods.Terramon.Pokemon.{GetPokemon(id)?.Identifier}.DexEntry");
     }
-    
+
     public ushort GetEvolutionAtLevel(ushort id, byte level)
     {
         var pokemon = GetPokemon(id);
@@ -99,165 +123,227 @@ public class DatabaseV2
         return pokemon.Evolution.AtLevel <= level && id != pokemon.Evolution.ID ? pokemon.Evolution.ID : (ushort)0;
     }
 
+/*
     public bool IsAvailableStarter(ushort id)
     {
         return id <= StarterMax;
     }
+*/
 
-    [JsonObject(MemberSerialization.OptOut)]
-    public class PokemonSchema
+    [JsonConverter(typeof(MultiPropertyNameConverter))]
+    public record PokemonSchema(
+        [property: JsonProperty("name")]
+        [property: JsonPropertyAlias("n")]
+        string Identifier,
+        [property: JsonPropertyAlias("t")] List<PokemonType> Types,
+        [property: JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("f")]
+        [property: DefaultValue((byte)70)]
+        byte BaseHappiness,
+        [property: JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("c")]
+        [property: DefaultValue((byte)45)]
+        byte CatchRate,
+        [property: JsonPropertyAlias("b")] ushort BaseExp,
+        [property: JsonPropertyAlias("r")]
+        [property: DefaultValue(ExperienceGroup.MediumFast)]
+        ExperienceGroup GrowthRate,
+        [property: JsonPropertyAlias("s")] StatsTableSchema BaseStats,
+        [property: JsonPropertyAlias("e")] LevelEntrySchema Evolution,
+        [property: JsonProperty("genderRate", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("g")]
+        [property: DefaultValue((sbyte)4)]
+        sbyte GenderRatio,
+        [property: JsonPropertyAlias("h")] ushort Height,
+        [property: JsonPropertyAlias("w")] ushort Weight,
+        [property: JsonPropertyAlias("a")] AbilitiesSchema Abilities,
+        [property: JsonProperty("moves")]
+        [property: JsonPropertyAlias("m")]
+        List<LevelEntrySchema> LevelUpLearnset
+    )
     {
-        [JsonProperty("name")] public string Identifier { get; private set; }
-
-        [JsonProperty("n")]
-        private string b_Identifier
+        public PokemonSchema() : this(
+            string.Empty,
+            [],
+            70,
+            45,
+            0,
+            ExperienceGroup.MediumFast,
+            [],
+            null,
+            4,
+            0,
+            0,
+            new AbilitiesSchema(),
+            []
+        )
         {
-            set => Identifier = value;
-        }
-
-        public List<PokemonType> Types { get; private set; }
-
-        [JsonProperty("t")]
-        private List<PokemonType> b_Types
-        {
-            set => Types = value;
-        }
-        
-        public byte CatchRate { get; private set; } = 45;
-        
-        [JsonProperty("c")]
-        private byte b_CatchRate
-        {
-            set => CatchRate = value;
-        }
-
-        public ushort BaseExp { get; private set; } = 45;
-        
-        [JsonProperty("b")]
-        private ushort b_BaseExp
-        {
-            set => BaseExp = value;
-        }
-        
-        public ExperienceGroup GrowthRate { get; private set; } = ExperienceGroup.MediumFast;
-        
-        [JsonProperty("r")]
-        private ExperienceGroup b_GrowthRate
-        {
-            set => GrowthRate = value;
-        }
-
-        public StatsSchema Stats { get; private set; }
-
-        [JsonProperty("s")]
-        private StatsSchema b_Stats
-        {
-            set => Stats = value;
-        }
-
-        public EvolutionSchema Evolution { get; private set; }
-
-        [JsonProperty("e")]
-        private EvolutionSchema b_Evolution
-        {
-            set => Evolution = value;
-        }
-        
-        [JsonProperty("genderRate")]
-        public sbyte GenderRatio { get; private set; } = -1;
-
-        [JsonProperty("g")]
-        private sbyte b_GenderRatio
-        {
-            set => GenderRatio = value;
-        }
-
-        [JsonProperty("height")]
-        public ushort Height { get; private set; }
-        
-        [JsonProperty("h")]
-        private ushort b_Height
-        {
-            set => Height = value;
-        }
-        
-        [JsonProperty("weight")]
-        public ushort Weight { get; private set; }
-        
-        [JsonProperty("w")]
-        private ushort b_Weight
-        {
-            set => Weight = value;
         }
     }
 
-    public class StatsSchema
+    public class StatsTableSchema : List<byte>
     {
-        [JsonProperty("hp")] public byte HP { get; set; }
-
-        [JsonProperty("h")]
-        private byte b_HP
+        public StatsTableSchema()
         {
-            set => HP = value;
         }
 
-        public byte Attack { get; set; }
-
-        [JsonProperty("a")]
-        private byte b_Attack
+        public StatsTableSchema(IEnumerable<byte> values) : base(values)
         {
-            set => Attack = value;
         }
 
-        public byte Defense { get; set; }
+        public byte HP => this[0];
+        public byte Attack => this[1];
+        public byte Defense => this[2];
+        public byte SpAtk => this[3];
+        public byte SpDef => this[4];
+        public byte Speed => this[5];
+    }
 
-        [JsonProperty("d")]
-        private byte b_Defense
+    [JsonConverter(typeof(MultiPropertyNameConverter))]
+    public record LevelEntrySchema(
+        [property: JsonProperty("id")]
+        [property: JsonPropertyAlias("i")]
+        ushort ID,
+        [property: JsonPropertyAlias("l")] byte AtLevel
+    )
+    {
+        public LevelEntrySchema() : this(0, 0)
         {
-            set => Defense = value;
-        }
-
-        public byte SpAtk { get; set; }
-
-        [JsonProperty("sa")]
-        private byte b_SpAtk
-        {
-            set => SpAtk = value;
-        }
-
-        public byte SpDef { get; set; }
-
-        [JsonProperty("sd")]
-        private byte b_SpDef
-        {
-            set => SpDef = value;
-        }
-
-        public byte Speed { get; set; }
-
-        [JsonProperty("s")]
-        private byte b_Speed
-        {
-            set => Speed = value;
         }
     }
 
-    public class EvolutionSchema
+    [JsonConverter(typeof(MultiPropertyNameConverter))]
+    public record AbilitiesSchema(
+        [property: JsonProperty("1", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: DefaultValue(AbilityID.None)]
+        AbilityID Ability1,
+        [property: JsonProperty("2", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: DefaultValue(AbilityID.None)]
+        AbilityID Ability2,
+        [property: JsonProperty("hidden", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("h")]
+        [property: DefaultValue(AbilityID.None)]
+        AbilityID Hidden
+    )
     {
-        [JsonProperty("id")] public ushort ID { get; set; }
-
-        [JsonProperty("i")]
-        private ushort b_ID
+        public AbilitiesSchema() : this(AbilityID.None, AbilityID.None, AbilityID.None)
         {
-            set => ID = value;
+        }
+    }
+}
+
+[AttributeUsage(AttributeTargets.Property)]
+internal class JsonPropertyAliasAttribute(string alias) : Attribute
+{
+    public string Alias { get; } = alias;
+}
+
+internal class MultiPropertyNameConverter : JsonConverter
+{
+    // Thread-safe storage for the alias flag
+    private static readonly AsyncLocal<bool> _useAliases = new();
+
+    public static bool GetUseAliases() => _useAliases.Value;
+
+    public static void SetUseAliases(bool useAliases)
+    {
+        _useAliases.Value = useAliases;
+    }
+
+    public override bool CanConvert(Type objectType)
+    {
+        return true;
+    }
+
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+        var jObject = JObject.Load(reader);
+        var target = Activator.CreateInstance(objectType);
+
+        foreach (var property in objectType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
+                                                          BindingFlags.Instance))
+        {
+            var jsonProperty = property.GetCustomAttribute<JsonPropertyAttribute>();
+            var alias = property.GetCustomAttribute<JsonPropertyAliasAttribute>();
+
+            var propertyNames = new List<string> { property.Name };
+
+            if (jsonProperty != null && !string.IsNullOrEmpty(jsonProperty.PropertyName))
+                propertyNames.Add(jsonProperty.PropertyName);
+
+            if (alias != null)
+                propertyNames.Add(alias.Alias);
+
+            JToken token = null;
+            foreach (var name in propertyNames)
+            {
+                token = jObject[name];
+                if (token != null) break;
+            }
+
+            if (token == null || !property.CanWrite) continue;
+
+            var value = token.ToObject(property.PropertyType, serializer);
+            property.SetValue(target, value);
         }
 
-        public byte AtLevel { get; set; }
+        return target;
+    }
 
-        [JsonProperty("l")]
-        private byte b_AtLevel
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
+        if (value == null)
         {
-            set => AtLevel = value;
+            if (serializer.NullValueHandling != NullValueHandling.Ignore)
+                writer.WriteNull();
+            return;
         }
+
+        var useAliases = _useAliases.Value;
+
+        writer.WriteStartObject();
+
+        var type = value.GetType();
+        var contract = serializer.ContractResolver.ResolveContract(type) as JsonObjectContract;
+
+        foreach (var property in type.GetProperties(
+                     BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+        {
+            if (!property.CanRead)
+                continue;
+
+            var propValue = property.GetValue(value);
+
+            if (propValue == null && serializer.NullValueHandling == NullValueHandling.Ignore)
+                continue;
+
+            var jsonProperty = contract?.Properties.FirstOrDefault(p => p.UnderlyingName == property.Name);
+            if (jsonProperty == null)
+                continue;
+
+            var hasIgnoreDefault = property.GetCustomAttributes<JsonPropertyAttribute>()
+                .Any(attr => attr.DefaultValueHandling == DefaultValueHandling.Ignore);
+
+            if (hasIgnoreDefault)
+            {
+                var defaultValueAttr = property.GetCustomAttribute<DefaultValueAttribute>();
+                if (defaultValueAttr != null)
+                {
+                    var defaultValue = defaultValueAttr.Value;
+
+                    if (Equals(propValue, defaultValue))
+                        continue;
+                }
+            }
+
+            var propertyName = useAliases
+                ? property.GetCustomAttribute<JsonPropertyAliasAttribute>()?.Alias ?? jsonProperty.PropertyName!
+                : jsonProperty.PropertyName!;
+
+            writer.WritePropertyName(propertyName);
+            serializer.Serialize(writer, propValue);
+        }
+
+        writer.WriteEndObject();
     }
 }
