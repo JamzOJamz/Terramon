@@ -187,7 +187,7 @@ public class PokemonData
             _metDate = DateTime.Now,
             _metLevel = level,
             _worldName = Main.worldName,
-            PersonalityValue = unchecked((uint)Main.rand.Next(int.MinValue, int.MaxValue)),
+            PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
             IsShiny = RollShiny(player)
         };
     }
