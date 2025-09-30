@@ -24,7 +24,7 @@ public class PokemonData
     private string _worldName;
     public AbilityID Ability;
     public BallID Ball = BallID.PokeBall;
-    public PokemonEVs EVs;
+    public PokemonEVs EVs = default;
     public Gender Gender;
     public byte Happiness;
     public bool IsShiny;
@@ -32,7 +32,7 @@ public class PokemonData
     // ReSharper disable once InconsistentNaming
     public PokemonIVs IVs;
     public byte Level = 1;
-    public PokemonMoves Moves;
+    public PokemonMoves Moves = default;
     public NatureID Nature;
     public string Nickname;
     public string Variant;
@@ -191,7 +191,8 @@ public class PokemonData
             _metLevel = level,
             _worldName = Main.worldName,
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
-            IsShiny = RollShiny(player)
+            IsShiny = RollShiny(player),
+            IVs = PokemonIVs.Random()
         };
 
         // Use Schema after ID is set
@@ -224,7 +225,7 @@ public class PokemonData
     {
         return (NatureID)(pv % NatureCount);
     }
-    
+
     private static AbilityID DetermineAbility(DatabaseV2.PokemonSchema schema, uint pv)
     {
         var useSecond = pv % 2 == 1 && schema.Abilities.Ability2 != AbilityID.None;
@@ -281,6 +282,7 @@ public class PokemonData
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
             ["hap"] = Happiness,
+            ["ivs"] = IVs.Packed,
             ["version"] = Version
         };
         if (Ball != BallID.PokeBall)
@@ -323,7 +325,7 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
-        
+
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
         if (tag.TryGet<bool>("isShiny", out var isShiny))
@@ -339,9 +341,12 @@ public class PokemonData
         data._metLevel = tag.TryGet<byte>("metlvl", out var metLevel) ? metLevel : data.Level;
         if (tag.TryGet<string>("world", out var worldName))
             data._worldName = worldName;
-        data.Happiness = tag.TryGet("hap", out byte hap) 
-            ? hap 
+        data.Happiness = tag.TryGet("hap", out byte hap)
+            ? hap
             : data.Schema.BaseHappiness;
+        data.IVs = tag.TryGet<uint>("ivs", out var ivs) 
+            ? new PokemonIVs(ivs) 
+            : PokemonIVs.Random();
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
             ? exp
             : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
@@ -588,6 +593,18 @@ public struct PokemonIVs
         SpAtk = spAtk;
         SpDef = spDef;
         Speed = speed;
+    }
+    
+    public static PokemonIVs Random()
+    {
+        return new PokemonIVs(
+            (byte)Main.rand.Next(0, 32),
+            (byte)Main.rand.Next(0, 32),
+            (byte)Main.rand.Next(0, 32),
+            (byte)Main.rand.Next(0, 32),
+            (byte)Main.rand.Next(0, 32),
+            (byte)Main.rand.Next(0, 32)
+        );
     }
 
     public readonly string PackedString()
