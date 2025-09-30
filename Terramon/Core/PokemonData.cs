@@ -472,8 +472,8 @@ public struct PokemonIVs
     private const uint AttackMask = HPMask << 5;
     private const uint DefenseMask = AttackMask << 5;
     private const uint SpeedMask = DefenseMask << 5;
-    private const uint SpAttackMask = SpeedMask << 5;
-    private const uint SpDefenseMask = SpAttackMask << 5;
+    private const uint SpAtkMask = SpeedMask << 5;
+    private const uint SpDefMask = SpAtkMask << 5;
 
     public byte HP
     {
@@ -505,6 +505,26 @@ public struct PokemonIVs
         }
     }
 
+    public byte SpAtk
+    {
+        readonly get => (byte)((Packed & SpAtkMask) >> 20);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~SpAtkMask) | ((uint)value << 20);
+        }
+    }
+
+    public byte SpDef
+    {
+        readonly get => (byte)((Packed & SpDefMask) >> 25);
+        init
+        {
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
+            Packed = (Packed & ~SpDefMask) | ((uint)value << 25);
+        }
+    }
+
     public byte Speed
     {
         readonly get => (byte)((Packed & SpeedMask) >> 15);
@@ -512,26 +532,6 @@ public struct PokemonIVs
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
             Packed = (Packed & ~SpeedMask) | ((uint)value << 15);
-        }
-    }
-
-    public byte SpAttack
-    {
-        readonly get => (byte)((Packed & SpAttackMask) >> 20);
-        init
-        {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpAttackMask) | ((uint)value << 20);
-        }
-    }
-
-    public byte SpDefense
-    {
-        readonly get => (byte)((Packed & SpDefenseMask) >> 25);
-        init
-        {
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpDefenseMask) | ((uint)value << 25);
         }
     }
 
@@ -555,24 +555,24 @@ public struct PokemonIVs
         Packed = packed;
     }
 
-    public PokemonIVs(byte hp, byte attack, byte defense, byte speed, byte spAttack, byte spDefense)
+    public PokemonIVs(byte hp, byte attack, byte defense, byte spAtk, byte spDef, byte speed)
     {
         HP = hp;
         Attack = attack;
         Defense = defense;
+        SpAtk = spAtk;
+        SpDef = spDef;
         Speed = speed;
-        SpAttack = spAttack;
-        SpDefense = spDefense;
     }
 
     public readonly string PackedString()
     {
-        return $"{HP},{Attack},{Defense},{Speed},{SpAttack},{SpDefense}";
+        return $"{HP},{Attack},{Defense},{SpAtk},{SpDef},{Speed}";
     }
 
     public readonly override string ToString()
     {
-        return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, Spe: {Speed}, SpA: {SpAttack}, SpD: {SpDefense}";
+        return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, SpA: {SpAtk}, SpD: {SpDef}, Spe: {Speed}";
     }
 }
 
@@ -581,8 +581,8 @@ public struct PokemonEVs
 {
     private const ushort MaxTotal = 510;
     private const byte MaxSingle = 252;
-    public byte HP, Attack, Defense, Speed, SpAttack, SpDefense;
-    public readonly ushort Sum => (ushort)(HP + Attack + Defense + Speed + SpAttack + SpDefense);
+    public byte HP, Attack, Defense, SpAttack, SpDefense, Speed;
+    public readonly ushort Sum => (ushort)(HP + Attack + Defense + SpAttack + SpDefense + Speed);
 
     /// <summary>
     ///     Increases a given EV by some amount, bound to the rules of EVs:
@@ -650,12 +650,12 @@ public struct PokemonEVs
 
     public readonly string PackedString()
     {
-        return $"{HP},{Attack},{Defense},{Speed},{SpAttack},{SpDefense}";
+        return $"{HP},{Attack},{Defense},{SpAttack},{SpDefense},{Speed}";
     }
 
     public readonly override string ToString()
     {
-        return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, Spe: {Speed}, SpA: {SpAttack}, SpD: {SpDefense}";
+        return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, SpA: {SpAttack}, SpD: {SpDefense}, Spe: {Speed}";
     }
 }
 
