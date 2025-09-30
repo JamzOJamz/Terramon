@@ -182,11 +182,10 @@ public class PokemonData
 
     public static PokemonData Create(Player player, ushort id, byte level = 1)
     {
-        return new PokemonData
+        var pokemon = new PokemonData
         {
-            ID = id,
+            ID = id, // Schema is automatically set here
             Level = level,
-            TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, Terramon.DatabaseV2.GetPokemon(id).GrowthRate),
             _ot = player.name,
             _metDate = DateTime.Now,
             _metLevel = level,
@@ -194,6 +193,12 @@ public class PokemonData
             PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
             IsShiny = RollShiny(player)
         };
+
+        // Use Schema after ID is set
+        pokemon.TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, pokemon.Schema.GrowthRate);
+        pokemon.Happiness = pokemon.Schema.BaseHappiness;
+
+        return pokemon;
     }
 
     private static bool RollShiny(Player player)
@@ -275,6 +280,7 @@ public class PokemonData
             ["exp"] = TotalEXP,
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
+            ["hap"] = Happiness,
             ["version"] = Version
         };
         if (Ball != BallID.PokeBall)
@@ -317,6 +323,7 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
+        
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
         if (tag.TryGet<bool>("isShiny", out var isShiny))
@@ -332,6 +339,9 @@ public class PokemonData
         data._metLevel = tag.TryGet<byte>("metlvl", out var metLevel) ? metLevel : data.Level;
         if (tag.TryGet<string>("world", out var worldName))
             data._worldName = worldName;
+        data.Happiness = tag.TryGet("hap", out byte hap) 
+            ? hap 
+            : data.Schema.BaseHappiness;
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
             ? exp
             : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
