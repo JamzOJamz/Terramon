@@ -83,6 +83,7 @@ public class PokemonData
         set
         {
             Gender = DetermineGender(Schema, value);
+            Nature = DetermineNature(value);
             _personalityValue = value;
         }
     }
@@ -209,6 +210,11 @@ public class PokemonData
         return genderRatio >= 0
             ? new FastRandom(pv).Next(8) < genderRatio ? Gender.Female : Gender.Male
             : Gender.Unspecified;
+    }
+
+    private static NatureID DetermineNature(uint pv)
+    {
+        return (NatureID)(pv % 25);
     }
 
     public Asset<Texture2D> GetMiniSprite(AssetRequestMode mode = AssetRequestMode.AsyncLoad)
