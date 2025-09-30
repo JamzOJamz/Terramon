@@ -32,7 +32,7 @@ public class PokemonData
     // ReSharper disable once InconsistentNaming
     public PokemonIVs IVs;
     public byte Level = 1;
-    public PokemonMoves Moves = default;
+    public PokemonMoves Moves;
     public NatureID Nature;
     public string Nickname;
     public string Variant;
@@ -184,7 +184,7 @@ public class PokemonData
     {
         var pokemon = new PokemonData
         {
-            ID = id, // Schema is automatically set here
+            ID = id, // Setting the ID automatically assigns the corresponding Schema from the database
             Level = level,
             _ot = player.name,
             _metDate = DateTime.Now,
@@ -195,9 +195,9 @@ public class PokemonData
             IVs = PokemonIVs.Random()
         };
 
-        // Use Schema after ID is set
         pokemon.TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, pokemon.Schema.GrowthRate);
         pokemon.Happiness = pokemon.Schema.BaseHappiness;
+        pokemon.Moves = pokemon.GetInitialMoves();
 
         return pokemon;
     }
@@ -230,6 +230,49 @@ public class PokemonData
     {
         var useSecond = pv % 2 == 1 && schema.Abilities.Ability2 != AbilityID.None;
         return useSecond ? schema.Abilities.Ability2 : schema.Abilities.Ability1;
+    }
+
+    private PokemonMoves GetInitialMoves(int maxMoves = 4)
+    {
+        if (Schema == null)
+            throw new InvalidOperationException("Pokémon schema is not initialized.");
+
+        var movesAboveLevelOne = Schema.LevelUpLearnset
+            .Where(moveEntry => moveEntry.AtLevel > 1 && moveEntry.AtLevel <= Level)
+            .OrderByDescending(moveEntry => moveEntry.AtLevel)
+            .Take(maxMoves)
+            .ToList();
+
+        var learnset = new List<DatabaseV2.LevelEntrySchema>();
+
+        if (movesAboveLevelOne.Count < maxMoves)
+        {
+            var remainingSlots = maxMoves - movesAboveLevelOne.Count;
+
+            var levelOneMoves = Schema.LevelUpLearnset
+                .Where(moveEntry => moveEntry.AtLevel == 1)
+                .ToList();
+
+            if (levelOneMoves.Count > remainingSlots)
+            {
+                levelOneMoves = levelOneMoves
+                    .OrderBy(x => Main.rand.Next())
+                    .Take(remainingSlots)
+                    .ToList();
+            }
+            else
+            {
+                levelOneMoves = levelOneMoves.Take(remainingSlots).ToList();
+            }
+
+            learnset.AddRange(levelOneMoves);
+        }
+
+        // Add higher-level moves last
+        learnset.AddRange(movesAboveLevelOne);
+
+        // Finally we sort moves in ascending order of level
+        return new PokemonMoves(learnset.OrderBy(moveEntry => moveEntry.AtLevel).Select(e => (MoveID)e.ID).ToArray());
     }
 
     public Asset<Texture2D> GetMiniSprite(AssetRequestMode mode = AssetRequestMode.AsyncLoad)
@@ -301,6 +344,9 @@ public class PokemonData
             tag["metlvl"] = _metLevel;
         if (!string.IsNullOrEmpty(_worldName))
             tag["world"] = _worldName;
+        var moves = Moves.SerializeData();
+        if (moves != null)
+            tag["moves"] = moves;
         return tag;
     }
 
@@ -344,9 +390,12 @@ public class PokemonData
         data.Happiness = tag.TryGet("hap", out byte hap)
             ? hap
             : data.Schema.BaseHappiness;
-        data.IVs = tag.TryGet<uint>("ivs", out var ivs) 
-            ? new PokemonIVs(ivs) 
+        data.IVs = tag.TryGet<uint>("ivs", out var ivs)
+            ? new PokemonIVs(ivs)
             : PokemonIVs.Random();
+        data.Moves = tag.TryGet<TagCompound>("moves", out var moves)
+            ? PokemonMoves.Load(moves)
+            : data.GetInitialMoves();
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
             ? exp
             : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
@@ -594,7 +643,7 @@ public struct PokemonIVs
         SpDef = spDef;
         Speed = speed;
     }
-    
+
     public static PokemonIVs Random()
     {
         return new PokemonIVs(
@@ -705,7 +754,6 @@ public readonly struct PokemonMoves
 {
     private const ushort IDMask = 0x3FF;
     private readonly uint[] _moves = new uint[4];
-    public bool Initialized => _moves != null;
 
     public MoveData this[int move]
     {
@@ -742,6 +790,13 @@ public readonly struct PokemonMoves
         }
     }
 
+    private PokemonMoves(params uint[] moves)
+    {
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(moves.Length, 4);
+        for (var i = 0; i < moves.Length; i++)
+            _moves[i] = moves[i];
+    }
+
     private static void Deconstruct(uint move, out MoveID id, out byte pp, out byte ppUp)
     {
         id = (MoveID)(move & IDMask);
@@ -753,7 +808,7 @@ public readonly struct PokemonMoves
     {
         ArgumentOutOfRangeException.ThrowIfGreaterThan(pp, 63);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(pp, 3);
-        return ((uint)id) | ((uint)pp << 10) | ((uint)ppUp << 16);
+        return (uint)id | ((uint)pp << 10) | ((uint)ppUp << 16);
     }
 
     public string PackedString(bool withStruggle = true)
@@ -768,8 +823,36 @@ public readonly struct PokemonMoves
         }
 
         if (withStruggle)
-            final += "struggle";
+            final += "Struggle";
         return final;
+    }
+
+    public TagCompound SerializeData()
+    {
+        var tag = new TagCompound();
+        if (_moves[0] != 0)
+            tag["1"] = _moves[0];
+        if (_moves[1] != 0)
+            tag["2"] = _moves[1];
+        if (_moves[2] != 0)
+            tag["3"] = _moves[2];
+        if (_moves[3] != 0)
+            tag["4"] = _moves[3];
+        return tag.Count == 0 ? null : tag;
+    }
+
+    public static PokemonMoves Load(TagCompound tag)
+    {
+        var arr = new uint[4];
+        if (tag.ContainsKey("1"))
+            arr[0] = tag.Get<uint>("1");
+        if (tag.ContainsKey("2"))
+            arr[1] = tag.Get<uint>("2");
+        if (tag.ContainsKey("3"))
+            arr[2] = tag.Get<uint>("3");
+        if (tag.ContainsKey("4"))
+            arr[3] = tag.Get<uint>("4");
+        return new PokemonMoves(arr);
     }
 }
 
