@@ -1,4 +1,5 @@
 ﻿namespace Terramon.ID;
+
 public enum MoveID : ushort
 {
     None,
@@ -902,5 +903,5 @@ public enum MoveID : ushort
     SupercellSlam,
     PsychicNoise,
     UpperHand,
-    MalignantChain,
+    MalignantChain
 }

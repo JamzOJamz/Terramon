@@ -1,4 +1,5 @@
 ﻿namespace Terramon.ID;
+
 public enum NatureID : byte
 {
     Hardy,
@@ -25,5 +26,5 @@ public enum NatureID : byte
     Gentle,
     Sassy,
     Careful,
-    Quirky,
+    Quirky
 }

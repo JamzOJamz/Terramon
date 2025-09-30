@@ -66,11 +66,10 @@ public class Terramon : Mod
         // Calculate loaded count
         LoadedPokemonCount = Math.Min(MaxPokemonIDToLoad, DatabaseV2.Pokemon.Count);
 
-        // Calculate highest ID (highest ID that is <= MaxPokemonIDToLoad)
-        if (DatabaseV2.Pokemon.Keys != null)
-            HighestPokemonID = DatabaseV2.Pokemon.Keys
-                .Where(id => id <= MaxPokemonIDToLoad)
-                .Max();
+        // Calculate the highest ID (highest ID that is <= MaxPokemonIDToLoad)
+        HighestPokemonID = DatabaseV2.Pokemon.Keys!
+            .Where(id => id <= MaxPokemonIDToLoad)
+            .Max();
     }
 
     /// <summary>

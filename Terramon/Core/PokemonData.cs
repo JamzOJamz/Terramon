@@ -70,7 +70,7 @@ public class PokemonData
     public ushort HP => MaxHP; // TODO: Implement actual HP stat for Pokémon
 
     public ushort MaxHP =>
-        (ushort)(Math.Floor(2 * Schema.Stats.HP * Level / 100f) + Level + 10);
+        (ushort)(Math.Floor(2 * Schema.BaseStats.HP * Level / 100f) + Level + 10);
 
     /// <summary>
     ///     The total experience points the Pokémon has gained.

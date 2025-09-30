@@ -1,4 +1,5 @@
 ﻿namespace Terramon.ID;
+
 public enum AbilityID : ushort
 {
     None,
@@ -311,5 +312,5 @@ public enum AbilityID : ushort
     TeraShift,
     TeraShell,
     TeraformZero,
-    PoisonPuppeteer,
+    PoisonPuppeteer
 }
