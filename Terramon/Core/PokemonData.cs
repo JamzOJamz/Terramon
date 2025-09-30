@@ -13,6 +13,8 @@ public class PokemonData
 {
     private const ushort Version = 0;
 
+    private static readonly int NatureCount = Enum.GetValues<NatureID>().Length;
+
     private Item _heldItem;
     private ushort _id;
     private DateTime? _metDate;
@@ -84,6 +86,7 @@ public class PokemonData
         {
             Gender = DetermineGender(Schema, value);
             Nature = DetermineNature(value);
+            Ability = DetermineAbility(Schema, value);
             _personalityValue = value;
         }
     }
@@ -214,7 +217,13 @@ public class PokemonData
 
     private static NatureID DetermineNature(uint pv)
     {
-        return (NatureID)(pv % 25);
+        return (NatureID)(pv % NatureCount);
+    }
+    
+    private static AbilityID DetermineAbility(DatabaseV2.PokemonSchema schema, uint pv)
+    {
+        var useSecond = pv % 2 == 1 && schema.Abilities.Ability2 != AbilityID.None;
+        return useSecond ? schema.Abilities.Ability2 : schema.Abilities.Ability1;
     }
 
     public Asset<Texture2D> GetMiniSprite(AssetRequestMode mode = AssetRequestMode.AsyncLoad)
