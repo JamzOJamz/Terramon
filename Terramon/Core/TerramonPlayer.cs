@@ -487,7 +487,7 @@ public class TerramonPlayer : ModPlayer
             sb.Append($"{p.GetPacked()}]");
         }
 
-        return sb.ToString();
+        return sb.ToString().TrimEnd(']');
     }
 
     #region Network Sync

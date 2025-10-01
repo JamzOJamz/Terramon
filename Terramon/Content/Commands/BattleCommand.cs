@@ -1,3 +1,4 @@
+using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using Terraria.Localization;
 
@@ -75,19 +76,26 @@ public class BattleCommand : DebugCommand
         {
             var battleStream = new BattleStream();
             battleInstance.BattleStream = battleStream;
+            
+            var player = Main.LocalPlayer;
+            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var packedTeam = modPlayer.GetPackedTeam();
 
             // Initialize battle
-            battleStream.Write(""">start {"formatid":"gen7randombattle"}""");
-            battleStream.Write(""">player p1 {"name":"Alice"}""");
-            battleStream.Write(""">player p2 {"name":"Bob"}""");
+            battleStream.Write(ProtocolCodec.EncodeStartCommand(string.Empty)); // No format needed
+            battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p1", Main.LocalPlayer.name, packedTeam));
+            battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p2", "Green"));
 
             // Process battle outputs
             await foreach (var output in battleStream.ReadOutputsAsync())
             {
                 if (battleInstance.ShouldStop)
                     break;
-
-                Main.NewText(output);
+                
+                var parsed = ProtocolCodec.Parse(output);
+                Main.NewText(parsed);
+                
+                // Work with parsed message here
             }
         }
         catch (Exception ex)

@@ -4,5 +4,141 @@
         <name>Showdown.NET</name>
     </assembly>
     <members>
+        <member name="T:Showdown.NET.Protocol.ActivateElement">
+            <summary>
+                <para>
+                    A miscellaneous effect has activated. This is triggered whenever an effect could not be better described by
+                    one of the other minor messages: for example, healing abilities like Water Absorb simply use <c>-heal</c>.
+                </para>
+                <para>
+                    Items usually activate with <c>-end</c>, although items with two messages, like Berries ("POKEMON ate the
+                    Leppa Berry! POKEMON restored PP...!"), will send the "ate" message as <c>-eat</c>, and the "restored" message
+                    as <c>-activate.</c>
+                </para>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.ActivateElement.#ctor(System.String,System.String)">
+            <summary>
+                <para>
+                    A miscellaneous effect has activated. This is triggered whenever an effect could not be better described by
+                    one of the other minor messages: for example, healing abilities like Water Absorb simply use <c>-heal</c>.
+                </para>
+                <para>
+                    Items usually activate with <c>-end</c>, although items with two messages, like Berries ("POKEMON ate the
+                    Leppa Berry! POKEMON restored PP...!"), will send the "ate" message as <c>-eat</c>, and the "restored" message
+                    as <c>-activate.</c>
+                </para>
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Name">
+            <summary>
+            Nickname. Should be identical to its base species if not specified
+            by the player, e.g. "Minior".
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Species">
+            <summary>
+            Species name (including forme if applicable), e.g. "Minior-Red".
+            This should always be converted to an id before use.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Item">
+            <summary>
+            This can be an id, e.g. "whiteherb" or a full name, e.g. "White Herb".
+            This should always be converted to an id before use.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Ability">
+            <summary>
+            This can be an id, e.g. "shieldsdown" or a full name,
+            e.g. "Shields Down".
+            This should always be converted to an id before use.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Moves">
+            <summary>
+            Each move can be an id, e.g. "shellsmash" or a full name,
+            e.g. "Shell Smash"
+            These should always be converted to ids before use.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Nature">
+            <summary>
+            This can be an id, e.g. "adamant" or a full name, e.g. "Adamant".
+            This should always be converted to an id before use.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.EVs">
+             <summary>
+             Effort Values, used in stat calculation.
+             These must be between 0 and 255, inclusive.
+            
+             Also used to store AVs for Let's Go
+             </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.IVs">
+             <summary>
+             Individual Values, used in stat calculation.
+             These must be between 0 and 31, inclusive.
+            
+             These are also used as DVs, or determinant values, in Gens
+             1 and 2, which are represented as even numbers from 0 to 30.
+            
+             In Gen 2-6, these must match the Hidden Power type.
+            
+             In Gen 7+, Bottle Caps means these can either match the
+             Hidden Power type or 31.
+             </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Level">
+            <summary>
+            This is usually between 1 and 100, inclusive,
+            but the simulator supports levels up to 9999 for testing purposes.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Shiny">
+            <summary>
+            While having no direct competitive effect, certain Pokemon cannot
+            be legally obtained as shiny, either as a whole or with certain
+            event-only abilities or moves.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Happiness">
+             <summary>
+             This is technically "Friendship", but the community calls this
+             "Happiness".
+            
+             It's used to calculate the power of the moves Return and Frustration.
+             This value must be between 0 and 255, inclusive.
+             </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.Pokeball">
+             <summary>
+             The pokeball this Pokemon is in. Like shininess, this property
+             has no direct competitive effects, but has implications for
+             event legality. For example, any Rayquaza that knows V-Create
+             must be sent out from a Cherish Ball.
+            
+             TODO: actually support this in the validator, switching animations,
+             and the teambuilder.
+             </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.HpType">
+            <summary>
+            Hidden Power type. Optional in older gens, but used in Gen 7+
+            because `ivs` contain post-Battle-Cap values.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.DynamaxLevel">
+            <summary>
+            Dynamax Level. Affects the amount of HP gained when Dynamaxed.
+            This value must be between 0 and 10, inclusive.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Simulator.PokemonSet.TeraType">
+            <summary>
+            Tera Type
+            </summary>
+        </member>
     </members>
 </doc>
