@@ -1,5 +1,6 @@
 using Terramon.Core.NPCComponents;
 using Terramon.ID;
+using Terraria.DataStructures;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -35,12 +36,16 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         base.SetDefaults(npc);
         if (!Enabled) return;
 
-        var modNPC = (PokemonNPC)npc.ModNPC;
-        var speedStat = modNPC.Schema.BaseStats.Speed;
+        var speedStat = ((PokemonNPC)npc.ModNPC).Schema.BaseStats.Speed;
         WalkSpeed = MapSpeed(speedStat);
+    }
 
-        var nature = modNPC.Data.Nature;
-
+    public override void OnSpawn(NPC npc, IEntitySource source)
+    {
+        base.OnSpawn(npc, source);
+        if (!Enabled) return;
+        
+        var nature = ((PokemonNPC)npc.ModNPC).Data.Nature; // TODO: Make sure this syncs in MP
         WalkSpeed *= GetSpeedNatureMultiplier(nature);
     }
 

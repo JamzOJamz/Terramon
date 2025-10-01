@@ -33,7 +33,6 @@
   {
     GenericPet:
     {
-      WalkSpeedModifier: 0.9
       FrameCount: 4
       FrameTime: 6
       IsClassic: false

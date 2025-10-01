@@ -34,7 +34,6 @@
   {
     GenericPet:
     {
-      WalkSpeedModifier: 0.85
       FrameCount: 3
       FrameTime: 6
       AnimationType: Alternate

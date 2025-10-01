@@ -20,10 +20,9 @@ public class NPCVariants : NPCComponent
     public override void OnSpawn(NPC npc, IEntitySource source)
     {
         base.OnSpawn(npc, source);
-        
         if (!Enabled) return;
         
-        var modNpc = (PokemonNPC)npc.ModNPC;
+        var modNPC = (PokemonNPC)npc.ModNPC;
 
         //TODO: add array, iterate through each variant, etc.
         //also probably mp sync
@@ -39,7 +38,7 @@ public class NPCVariants : NPCComponent
         var random = Main.rand.NextFloat(0, 1);
         if (random > Chance * condition) return;
 
-        modNpc.Data.Variant = Kind;
+        modNPC.Data.Variant = Kind;
         npc.netUpdate = true;
     }
     
