@@ -92,10 +92,13 @@ public class BattleCommand : DebugCommand
                 if (battleInstance.ShouldStop)
                     break;
                 
-                var parsed = ProtocolCodec.Parse(output);
-                Main.NewText(parsed);
-                
-                // Work with parsed message here
+                var frame = ProtocolCodec.Parse(output);
+                if (frame == null || frame.Elements == null) continue;
+                Main.NewText($"Received message of type {frame.GetType()} from simulator");
+                foreach (var element in frame.Elements)
+                {
+                    Main.NewText(element);
+                }
             }
         }
         catch (Exception ex)
