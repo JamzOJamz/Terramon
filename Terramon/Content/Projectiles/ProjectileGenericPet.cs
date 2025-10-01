@@ -16,7 +16,9 @@ public class ProjectileGenericPet : ProjectileComponent
     public int FrameTime = 10;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
     public float StopThreshold = 0.15f;
+/*
     public float WalkSpeedModifier = 1f;
+*/
 
     public override void SetDefaults(Projectile proj)
     {
