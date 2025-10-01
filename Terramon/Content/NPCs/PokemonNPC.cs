@@ -1,6 +1,6 @@
+using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
-using System.Reflection;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
@@ -11,8 +11,10 @@ using Terramon.Core.NPCComponents;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
+using Terraria.UI.Chat;
 
 namespace Terramon.Content.NPCs;
 
@@ -152,26 +154,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     drawPos,
                     NPC.frame, drawColor, NPC.rotation,
                     frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
-            }
-
-            if (!NPC.IsABestiaryIconDummy && _mouseHoverTimer != -1)
-            {
-                // Check if mouse is hovering over the NPC
-                var hitboxScreenPosition = new Vector2(NPC.Hitbox.X, NPC.Hitbox.Y) - screenPos;
-                var hitboxScreen = new Rectangle((int)hitboxScreenPosition.X, (int)hitboxScreenPosition.Y,
-                    NPC.Hitbox.Width, NPC.Hitbox.Height);
-                if (hitboxScreen.Contains(Main.MouseScreen.ToPoint()))
-                    _mouseHoverTimer++;
-                else
-                    _mouseHoverTimer = 0;
-                if (_mouseHoverTimer ==
-                    60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
-                {
-                    // Register as seen in the player's Pokédex
-                    TerramonPlayer.LocalPlayer.UpdatePokedex(ID, PokedexEntryStatus.Seen,
-                        shiny: Data?.IsShiny ?? false);
-                    _mouseHoverTimer = -1;
-                }
             }
         }
 
@@ -313,6 +295,42 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
     {
         return false;
+    }
+
+    public override bool PreHoverInteract(bool mouseIntersects)
+    {
+        const string text = "Lv. 5";
+        var textScale = new Vector2(1f);
+        var textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, text, textScale);
+        var textDrawPos = NPC.position - Main.screenPosition - textSize;
+        textDrawPos.X = (int)textDrawPos.X;
+        textDrawPos.Y = (int)textDrawPos.Y;
+        ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, text, textDrawPos,
+            Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
+
+        return true;
+    }
+
+    public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
+    {
+        if (_mouseHoverTimer == -1) return;
+        
+        var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
+            (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
+        if (mouseRectangle.Intersects(boundingBox))
+        {
+            _mouseHoverTimer++;
+            if (_mouseHoverTimer !=
+                60) return; // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
+            // Register as seen in the player's Pokédex
+            TerramonPlayer.LocalPlayer.UpdatePokedex(ID, PokedexEntryStatus.Seen,
+                shiny: Data?.IsShiny ?? false);
+            _mouseHoverTimer = -1;
+        }
+        else
+        {
+            _mouseHoverTimer = 0;
+        }
     }
 
     public void Encapsulate(Vector2 pokeballPos)

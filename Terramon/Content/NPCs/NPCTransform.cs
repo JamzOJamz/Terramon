@@ -19,6 +19,7 @@ public class NPCTransform : NPCComponent
     {
         base.SetDefaults(npc);
         if (!Enabled) return;
+        
         npc.width = Width;
         npc.height = Height;
         npc.ModNPC.DrawOffsetY = DrawOffsetY;

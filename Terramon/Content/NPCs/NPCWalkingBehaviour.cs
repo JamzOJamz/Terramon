@@ -1,4 +1,5 @@
 using Terramon.Core.NPCComponents;
+using Terramon.ID;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -11,6 +12,14 @@ namespace Terramon.Content.NPCs;
 /// </summary>
 public sealed class NPCWalkingBehaviour : NPCAIComponent
 {
+    public enum AnimType : byte
+    {
+        None,
+        StraightForward,
+        IdleForward,
+        Alternate
+    }
+
     private int _collideTimer;
     public AnimType AnimationType = AnimType.StraightForward;
     public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
@@ -21,10 +30,24 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
     private ref float AITimer => ref NPC.ai[1];
     private ref float AIWalkDir => ref NPC.ai[2];
 
+    public override void SetDefaults(NPC npc)
+    {
+        base.SetDefaults(npc);
+        if (!Enabled) return;
+
+        var modNPC = (PokemonNPC)npc.ModNPC;
+        var speedStat = modNPC.Schema.BaseStats.Speed;
+        WalkSpeed = MapSpeed(speedStat);
+
+        var nature = modNPC.Data.Nature;
+
+        WalkSpeed *= GetSpeedNatureMultiplier(nature);
+    }
+
     public override void AI(NPC npc)
     {
         if (!Enabled || PlasmaState) return;
-        
+
         // Smooth walking over slopes
         Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed,
             ref NPC.gfxOffY);
@@ -79,6 +102,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
                 AIWalkDir *= -1;
                 _collideTimer = 0;
             }
+
             _collideTimer++;
         }
         else
@@ -181,17 +205,48 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         }
     }
 
+    private static float MapSpeed(int speed)
+    {
+        return speed switch
+        {
+            <= 5 => 0.4f,
+            >= 200 => 2.25f,
+            <= 67 => 0.4f + ((1.0f - 0.4f) / (67 - 5)) * (speed - 5),
+            _ => 1.0f + ((2.25f - 1.0f) / (200 - 67)) * (speed - 67)
+        };
+    }
+    
+    private static float GetSpeedNatureMultiplier(NatureID nature)
+    {
+        // Natures that increase Speed by 10%
+        NatureID[] speedUpNatures =
+        [
+            NatureID.Hasty,
+            NatureID.Jolly,
+            NatureID.Naive,
+            NatureID.Timid
+        ];
+
+        // Natures that decrease Speed by 10%
+        NatureID[] speedDownNatures =
+        [
+            NatureID.Brave,
+            NatureID.Quiet,
+            NatureID.Relaxed,
+            NatureID.Sassy
+        ];
+
+        if (speedUpNatures.Contains(nature))
+            return 1.1f;
+        if (speedDownNatures.Contains(nature))
+            return 0.9f;
+
+        return 1f;
+    }
+
     private enum ActionState
     {
         Idle,
         Walking
-    }
-    
-    public enum AnimType : byte
-    {
-        None,
-        StraightForward,
-        IdleForward,
-        Alternate
     }
 }
