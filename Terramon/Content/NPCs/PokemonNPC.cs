@@ -157,9 +157,28 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             }
         }
 
-        if (!PlasmaState) return false;
+        if (!PlasmaState)
+        {
+            var boundingBox = new Rectangle((int)NPC.Bottom.X - NPC.frame.Width / 2, (int)NPC.Bottom.Y - NPC.frame.Height, NPC.frame.Width, NPC.frame.Height);
+            var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
+                (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
+            var isMouseHovering = mouseRectangle.Intersects(boundingBox) || (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == NPC.whoAmI);
+            
+            if (!isMouseHovering) return false;
+            
+            const string text = "Lv. 5";
+            var textScale = new Vector2(0.8f);
+            var textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, text, Vector2.One) * textScale.X;
+            var textDrawPos = NPC.position - Main.screenPosition - textSize + new Vector2(8, NPC.gfxOffY);
+            textDrawPos.X = (int)textDrawPos.X;
+            textDrawPos.Y = (int)textDrawPos.Y;
+            ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, text, textDrawPos,
+                Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
 
-        // Draw the Pokemon with the fade shader
+            return false;
+        }
+
+        // Draw the Pokémon with the fade shader
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Immediate, null, Main.DefaultSamplerState, DepthStencilState.None,
             Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -281,10 +300,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         return projectile.ModProjectile is BasePkballProjectile && !PlasmaState;
     }
 
-    /*public override bool CanBeHitByNPC(NPC attacker)
+/*
+    public override bool CanBeHitByNPC(NPC attacker)
     {
         return false;
-    }*/
+    }
+*/
 
     public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
     {
@@ -295,20 +316,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
     {
         return false;
-    }
-
-    public override bool PreHoverInteract(bool mouseIntersects)
-    {
-        const string text = "Lv. 5";
-        var textScale = new Vector2(1f);
-        var textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, text, textScale);
-        var textDrawPos = NPC.position - Main.screenPosition - textSize;
-        textDrawPos.X = (int)textDrawPos.X;
-        textDrawPos.Y = (int)textDrawPos.Y;
-        ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, text, textDrawPos,
-            Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
-
-        return true;
     }
 
     public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)

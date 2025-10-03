@@ -243,10 +243,8 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
 
         if (speedUpNatures.Contains(nature))
             return 1.1f;
-        if (speedDownNatures.Contains(nature))
-            return 0.9f;
-
-        return 1f;
+        
+        return speedDownNatures.Contains(nature) ? 0.9f : 1f;
     }
 
     private enum ActionState

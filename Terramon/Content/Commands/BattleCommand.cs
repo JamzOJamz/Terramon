@@ -1,3 +1,4 @@
+using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using Terraria.Localization;
@@ -82,7 +83,7 @@ public class BattleCommand : DebugCommand
             var packedTeam = modPlayer.GetPackedTeam();
 
             // Initialize battle
-            battleStream.Write(ProtocolCodec.EncodeStartCommand(string.Empty)); // No format needed
+            battleStream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen9CustomGame));
             battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p1", Main.LocalPlayer.name, packedTeam));
             battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p2", "Green"));
 
