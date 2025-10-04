@@ -71,7 +71,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         NPC.value = 0f;
         NPC.knockBackResist = 0.75f;
         NPC.npcSlots = 0.2f;
-        NPC.despawnEncouraged = ModContent.GetInstance<GameplayConfig>().EncourageDespawning;
+        NPC.despawnEncouraged = GameplayConfig.Instance.EncourageDespawning;
         NPC.friendly = true;
 
         // Start a stopwatch to measure the time it takes to apply all components.

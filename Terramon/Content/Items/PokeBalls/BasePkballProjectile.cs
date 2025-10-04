@@ -201,7 +201,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         //if (AIState is > (float)ActionState.Throw and < (float)ActionState.CaptureComplete && Projectile.light < 0.35f)
         //    Projectile.light += 0.015f;
 
-        if (ModContent.GetInstance<GameplayConfig>().FastAnimations)
+        if (GameplayConfig.Instance.FastAnimations)
             _animSpeedMultiplier = 0.7f;
 
         Projectile.damage = AIState == (float)ActionState.Throw ? 1 : 0;
@@ -269,7 +269,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                 if (AITimer >= shakeAtTick)
                 {
                     //Main.NewText(catchTries, Color.CornflowerBlue);
-                    if (_catchTries == 0 || ModContent.GetInstance<GameplayConfig>().FastAnimations)
+                    if (_catchTries == 0 || GameplayConfig.Instance.FastAnimations)
                     {
                         if (_isCaught)
                         {
@@ -422,7 +422,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         }
 
         if (!justRegistered ||
-            !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
+            !ClientConfig.Instance.ShowPokedexRegistrationMessages) return;
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", _capture.DisplayName),
             new Color(159, 162, 173));
     }
@@ -446,7 +446,7 @@ internal abstract class BasePkballProjectile : ModProjectile
 
         AIState = (float)ActionState.Catch;
         AITimer = 0;
-        if (!ModContent.GetInstance<GameplayConfig>().FastAnimations)
+        if (!GameplayConfig.Instance.FastAnimations)
             _bounces = 5; //If fast animation disabled, reset bounces to 5 (so the animation isn't shorter if it's already hit the ground)
         else if (_bounces > 2)
             _bounces = 2;

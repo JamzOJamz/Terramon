@@ -90,7 +90,7 @@ public class PokemonCompanion : ModBuff
         var activePokemon = player.GetActivePokemon();
         if (activePokemon != null)
             tip = string.Format(tip, activePokemon.DisplayName);
-        if (ModContent.GetInstance<ClientConfig>().RainbowBuffText)
+        if (ClientConfig.Instance.RainbowBuffText)
             rare = ItemRarityID.Expert;
     }
 

@@ -30,7 +30,7 @@ public class AnimatedIconSystem : ModSystem
     public override void Load()
     {
         // Don't initialize the system if the animated mod icon is disabled in the config
-        if (!ModContent.GetInstance<ClientConfig>().AnimatedModIcon) return;
+        if (!ClientConfig.Instance.AnimatedModIcon) return;
 
         // Load icon frames from the specified paths
         _iconFrameTextures = new Asset<Texture2D>[IconFramePaths.Length];

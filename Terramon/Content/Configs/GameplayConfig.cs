@@ -8,6 +8,8 @@ namespace Terramon.Content.Configs;
 
 public class GameplayConfig : ModConfig
 {
+    public static GameplayConfig Instance;
+
     [Header("Spawning")] [DefaultValue(1f)] [Range(0f, 1f)]
     public float PokemonSpawnRateMultiplier;
     

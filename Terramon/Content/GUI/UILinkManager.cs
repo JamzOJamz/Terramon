@@ -53,7 +53,7 @@ public class UILinkManager : ILoadable
 
     private static void SetupPartyUIPage()
     {
-        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        var reducedMotion = ClientConfig.Instance.ReducedMotion;
         var hasAutoTrash = ModLoader.HasMod("AutoTrash");
         
         var slotOffset = hasAutoTrash ? 1 : 0;
@@ -183,7 +183,7 @@ public class UILinkManager : ILoadable
 
     private static void SetupPCUIPage()
     {
-        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        var reducedMotion = ClientConfig.Instance.ReducedMotion;
         
         //Add new page to control PC items
         var pcPage = new UILinkPage();
@@ -356,7 +356,7 @@ public class UILinkManager : ILoadable
     private static void UpdateInventory()
     {
         var invPage = UILinkPointNavigator.Pages[GamepadPageID.Inventory];
-        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        var reducedMotion = ClientConfig.Instance.ReducedMotion;
         var hasAutoTrash = ModLoader.HasMod("AutoTrash");
         
         var slotOffset = hasAutoTrash ? 1 : 0;

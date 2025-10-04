@@ -242,7 +242,7 @@ public class PokemartClerk : ModNPC
             activePokemonData.EvolveInto(queuedEvolution);
             var justRegistered = player.UpdatePokedex(queuedEvolution, PokedexEntryStatus.Registered,
                 shiny: activePokemonData.IsShiny);
-            if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return;
+            if (!justRegistered || !ClientConfig.Instance.ShowPokedexRegistrationMessages) return;
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", queuedEvolutionName),
                 new Color(159, 162, 173));
         }

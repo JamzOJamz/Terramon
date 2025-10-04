@@ -44,7 +44,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
         }
 
         // Get whether fast evolution is enabled
-        var clientConfig = ModContent.GetInstance<ClientConfig>();
+        var clientConfig = ClientConfig.Instance;
         var fastEvolution = clientConfig.FastEvolution;
 
         // Level up as many times as possible given the amount used

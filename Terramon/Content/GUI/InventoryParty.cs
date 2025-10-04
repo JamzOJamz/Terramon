@@ -67,7 +67,7 @@ public class InventoryParty : SmartUIState
             container.Left.Set(-47, 0f);
 
         // Initialize according to reduced motion setting
-        _reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        _reducedMotion = ClientConfig.Instance.ReducedMotion;
         if (_reducedMotion)
         {
             IsCompressed = true;
@@ -172,7 +172,7 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.SetImage(IsCompressed ? PartySlotBallGreyedTexture : PartySlotBallTexture);
         var startingAlpha = (float)IsCompressed.ToInt();
 
-        var reducedMotion = ModContent.GetInstance<ClientConfig>().ReducedMotion;
+        var reducedMotion = ClientConfig.Instance.ReducedMotion;
         if (reducedMotion)
         {
             _toggleSlotsButton.SetHoverText(IsCompressed ? _showPartyLocalizedText : _hidePartyLocalizedText);

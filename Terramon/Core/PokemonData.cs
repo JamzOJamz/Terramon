@@ -204,7 +204,7 @@ public class PokemonData
 
     private static bool RollShiny(Player player)
     {
-        var shinyChance = ModContent.GetInstance<GameplayConfig>().ShinySpawnRate;
+        var shinyChance = GameplayConfig.Instance.ShinySpawnRate;
         var rolls = player.GetModPlayer<TerramonPlayer>().HasShinyCharm ? 3 : 1;
         for (var i = 0; i < rolls; i++)
             if (Main.rand.NextBool(shinyChance))

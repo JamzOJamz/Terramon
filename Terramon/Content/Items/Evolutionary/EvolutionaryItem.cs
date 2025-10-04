@@ -59,7 +59,7 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
         TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
         var justRegistered = player.GetModPlayer<TerramonPlayer>()
             .UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered, shiny: data.IsShiny);
-        if (!justRegistered || !ModContent.GetInstance<ClientConfig>().ShowPokedexRegistrationMessages) return 1;
+        if (!justRegistered || !ClientConfig.Instance.ShowPokedexRegistrationMessages) return 1;
         Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
             new Color(159, 162, 173));
         return 1;
