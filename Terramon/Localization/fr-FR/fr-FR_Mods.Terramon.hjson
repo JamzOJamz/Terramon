@@ -293,6 +293,15 @@ GUI: {
 		Entry: Entrée
 	}
 
+	TurnBased: {
+		ButtonLabels: {
+			// Fight: Fight
+			// Bag: Bag
+			// Pokemon: Pokémon
+			// Run: Run
+		}
+	}
+
 	ControllerHints: {
 		// Release: Release
 		// SwitchPage: Switch page
