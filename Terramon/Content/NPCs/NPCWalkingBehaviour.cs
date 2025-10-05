@@ -44,7 +44,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
     {
         base.OnSpawn(npc, source);
         if (!Enabled) return;
-        
+
         var nature = ((PokemonNPC)npc.ModNPC).Data.Nature; // TODO: Make sure this syncs in MP
         WalkSpeed *= GetSpeedNatureMultiplier(nature);
     }
@@ -215,15 +215,20 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         return speed switch
         {
             <= 5 => 0.4f,
-            >= 200 => 2.25f,
+            >= 200 => 2f,
             <= 67 => 0.4f + ((1.0f - 0.4f) / (67 - 5)) * (speed - 5),
             _ => 1.0f + ((2.25f - 1.0f) / (200 - 67)) * (speed - 67)
         };
     }
-    
+
+    /// <summary>
+    ///     Returns the walking speed multiplier for the given <see cref="NatureID" />.
+    ///     Natures that boost Speed make walking 10% faster, while natures that reduce Speed
+    ///     make walking 10% slower. All other natures leave walking speed unchanged.
+    /// </summary>
     private static float GetSpeedNatureMultiplier(NatureID nature)
     {
-        // Natures that increase Speed by 10%
+        // Natures that increase Speed
         NatureID[] speedUpNatures =
         [
             NatureID.Hasty,
@@ -232,7 +237,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
             NatureID.Timid
         ];
 
-        // Natures that decrease Speed by 10%
+        // Natures that decrease Speed
         NatureID[] speedDownNatures =
         [
             NatureID.Brave,
@@ -243,7 +248,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
 
         if (speedUpNatures.Contains(nature))
             return 1.1f;
-        
+
         return speedDownNatures.Contains(nature) ? 0.9f : 1f;
     }
 

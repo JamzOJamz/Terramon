@@ -28,6 +28,30 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
+    
+    /// <summary>
+    ///     The index of the Pokémon NPC under the mouse cursor.
+    /// </summary>
+    private static int _highlightedNPCIndex = -1;
+
+    static PokemonNPC()
+    {
+        On_Main.DoUpdateInWorld += static (orig, self, sw) =>
+        {
+            _highlightedNPCIndex = -1;
+            orig(self, sw);
+        };
+        
+        On_Main.DrawNPCs += (orig, self, tiles) =>
+        {
+            orig(self, tiles);
+
+            if (_highlightedNPCIndex == -1) return;
+
+            var highlightedNPC = Main.npc[_highlightedNPCIndex];
+            DrawLevelText(Main.spriteBatch, highlightedNPC);
+        };
+    }
 
     protected override bool CloneNewInstances => true;
 
@@ -157,26 +181,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             }
         }
 
-        if (!PlasmaState)
-        {
-            var boundingBox = new Rectangle((int)NPC.Bottom.X - NPC.frame.Width / 2, (int)NPC.Bottom.Y - NPC.frame.Height, NPC.frame.Width, NPC.frame.Height);
-            var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
-                (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
-            var isMouseHovering = mouseRectangle.Intersects(boundingBox) || (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == NPC.whoAmI);
-            
-            if (!isMouseHovering) return false;
-            
-            const string text = "Lv. 5";
-            var textScale = new Vector2(0.8f);
-            var textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, text, Vector2.One) * textScale.X;
-            var textDrawPos = NPC.position - Main.screenPosition - textSize + new Vector2(8, NPC.gfxOffY);
-            textDrawPos.X = (int)textDrawPos.X;
-            textDrawPos.Y = (int)textDrawPos.Y;
-            ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, text, textDrawPos,
-                Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
-
-            return false;
-        }
+        if (!PlasmaState) return false;
 
         // Draw the Pokémon with the fade shader
         spriteBatch.End();
@@ -200,6 +205,21 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         return false;
+    }
+
+    /// <summary>
+    ///     Draws the NPC’s level text above its sprite.
+    /// </summary>
+    private static void DrawLevelText(SpriteBatch spriteBatch, NPC npc)
+    {
+        const string text = "Lv. 5";
+        var textScale = new Vector2(0.8f);
+        var textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, text, Vector2.One) * textScale.X;
+        var textDrawPos = npc.position - Main.screenPosition - textSize + new Vector2(8, npc.gfxOffY);
+        textDrawPos.X = (int)textDrawPos.X;
+        textDrawPos.Y = (int)textDrawPos.Y;
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, text, textDrawPos,
+            Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -268,6 +288,18 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             return;
         }
 
+        // Check for highlighting (mouse hovering)
+        // TODO: Checking this in AI() might result in flicker frames when using HFPSS
+        var boundingBox = new Rectangle((int)NPC.Bottom.X - NPC.frame.Width / 2,
+            (int)NPC.Bottom.Y - NPC.frame.Height, NPC.frame.Width, NPC.frame.Height);
+        var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
+            (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
+        var isMouseHovering = mouseRectangle.Intersects(boundingBox) ||
+                              (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == NPC.whoAmI);
+        
+        if (isMouseHovering && _highlightedNPCIndex == -1)
+            _highlightedNPCIndex = NPC.whoAmI;
+
         if (Data is not { IsShiny: true }) return;
 
         if (_mainTexture == null)
@@ -321,7 +353,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
     {
         if (_mouseHoverTimer == -1) return;
-        
+
         var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
             (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
         if (mouseRectangle.Intersects(boundingBox))
@@ -362,6 +394,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (_plasmaStateVelocity != Vector2.Zero) _plasmaStateVelocity = Vector2.Normalize(_plasmaStateVelocity) * 2f;
 
         NPC.noGravity = true; // Disable gravity
+        NPC.ShowNameOnHover = false; // Disable showing name on hover
         NPC.netUpdate = true;
     }
 }

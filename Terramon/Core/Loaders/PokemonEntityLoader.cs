@@ -20,6 +20,7 @@ public class PokemonEntityLoader : ModSystem
 {
     public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; }
     public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; }
+    public static Dictionary<ushort, Texture2D> HighlightTextures;
     public static Dictionary<ushort, int> IDToNPCType { get; private set; }
     public static Dictionary<ushort, int> IDToPetType { get; private set; }
     public static Dictionary<ushort, int> IDToBannerType { get; private set; }
@@ -169,6 +170,7 @@ public class PokemonEntityLoader : ModSystem
         PetSchemaCache = new Dictionary<ushort, JToken>();
         GlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
         ShinyGlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
+        HighlightTextures = new Dictionary<ushort, Texture2D>();
         ShinyBanners = [];
     }
 
@@ -183,6 +185,7 @@ public class PokemonEntityLoader : ModSystem
         HasPetExclusiveTexture = null;
         GlowTextureCache = null;
         ShinyGlowTextureCache = null;
+        HighlightTextures = null;
         ShinyBanners = null;
     }
 }
