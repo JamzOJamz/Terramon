@@ -237,7 +237,7 @@ public class PartySidebarSlot : UIImage
 
     public void PlayIndexSound()
     {
-        if (ModContent.GetInstance<ClientConfig>().ReducedAudio)
+        if (ClientConfig.Instance.ReducedAudio)
             return;
 
         var s = new SoundStyle
@@ -340,7 +340,7 @@ public class PartySidebarSlot : UIImage
     private void DragEnd()
     {
         if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
-        if (ModContent.GetInstance<ClientConfig>().ReducedAudio && _partyDisplay.Visible)
+        if (ClientConfig.Instance.ReducedAudio && _partyDisplay.Visible)
             SoundEngine.PlaySound(SoundID.Tink);
         _dragging = false;
         _justEndedDragging = true;

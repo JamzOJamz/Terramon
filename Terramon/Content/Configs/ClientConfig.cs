@@ -7,6 +7,7 @@ namespace Terramon.Content.Configs;
 
 public class ClientConfig : ModConfig
 {
+    public static ClientConfig Instance;
     // TODO: Add this back once alternate mod icons are redesigned to fit the new style
     //[Header("Graphics")] public ModIconType ModIconType;
     

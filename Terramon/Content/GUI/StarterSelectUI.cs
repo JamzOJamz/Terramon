@@ -243,7 +243,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
             var player = Main.LocalPlayer;
             var modPlayer = player.GetModPlayer<TerramonPlayer>();
             var data = PokemonData.Create(player, pokemon, 5);
-            if (ModContent.GetInstance<GameplayConfig>().ShinyLockedStarters && data.IsShiny)
+            if (GameplayConfig.Instance.ShinyLockedStarters && data.IsShiny)
                 data.IsShiny = false;
             modPlayer.AddPartyPokemon(data, out _);
             modPlayer.HasChosenStarter = true;

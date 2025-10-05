@@ -120,7 +120,7 @@ public class PCInterface : SmartUIState
     public override void OnInitialize()
     {
         _container = new UIContainer(new Vector2(442, 262));
-        _container.Left.Set(ModContent.GetInstance<ClientConfig>().ReducedMotion ? 73 : 120, 0);
+        _container.Left.Set(ClientConfig.Instance.ReducedMotion ? 73 : 120, 0);
         _container.Top.Set(306, 0);
 
         /*var listViewButton = new UIHoverImageButton(ListViewButtonTexture, "Switch to List View");

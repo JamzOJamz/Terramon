@@ -9,7 +9,7 @@ public abstract class DebugCommand : TerramonCommand
     {
         base.Action(caller, input, args);
         if (!Allowed) return;
-        if (ModContent.GetInstance<GameplayConfig>().DebugMode) return;
+        if (GameplayConfig.Instance.DebugMode) return;
         caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.RequiresDebugMode"), ChatColorRed);
         Allowed = false;
     }

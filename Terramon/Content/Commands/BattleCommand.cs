@@ -1,6 +1,7 @@
 using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
+using Terramon.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
@@ -32,6 +33,12 @@ public class BattleCommand : DebugCommand
             case "end":
                 EndBattle(caller);
                 break;
+            case "move":
+                Move(caller, args);
+                break;
+            case "switch":
+                Switch(caller, args);
+                break;
             default:
                 caller.Reply("""
                              Invalid subcommand. Use "start" or "end"
@@ -56,6 +63,97 @@ public class BattleCommand : DebugCommand
         Task.Run(async () => await RunBattleAsync(_currentBattle));
 
         caller.Reply("Battle started and running in background!", ChatColorYellow);
+    }
+
+    private static void Move(CommandCaller caller, string[] args)
+    {
+        if (_currentBattle is null)
+        {
+            caller.Reply("""There is no active battle. Use "/battle start" to start one first""", ChatColorRed);
+            return;
+        }
+
+        if (args.Length == 1)
+        {
+            caller.Reply("""Must provide a valid MOVESPEC (move index or move name)""", ChatColorRed);
+            return;
+        }
+
+        string moveSpec;
+
+        if (int.TryParse(args[1], out int n))
+        {
+            if (n < 1 || n > 4)
+            {
+                caller.Reply("""You provided a move index, but it was out of bounds""", ChatColorRed);
+                return;
+            }
+            moveSpec = n.ToString();
+        }
+        else
+        {
+            string possibleName = args[1].Replace(" ", "").Trim();
+            if (!Enum.TryParse<MoveID>(possibleName, true, out _))
+            {
+                caller.Reply("""You provided a move name, but it wasn't recognized""", ChatColorRed);
+                return;
+            }
+            moveSpec = possibleName;
+        }
+
+        BattleStream stream = _currentBattle.BattleStream;
+
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", $"move {moveSpec}"));
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "default"));
+    }
+
+    private static void Switch(CommandCaller caller, string[] args)
+    {
+        if (_currentBattle is null)
+        {
+            caller.Reply("""There is no active battle. Use "/battle start" to start one first""", ChatColorRed);
+            return;
+        }
+
+        if (args.Length == 1)
+        {
+            caller.Reply("""Must provide a valid SWITCHSPEC (Pokémon's party index, nickname or species)""", ChatColorRed);
+            return;
+        }
+
+        string switchSpec = null;
+
+        if (int.TryParse(args[1], out int n))
+        {
+            if (n < 1 || n > 6)
+            {
+                caller.Reply("""You provided a party index, but it was out of bounds""", ChatColorRed);
+                return;
+            }
+            switchSpec = n.ToString();
+        }
+        else
+        {
+            string possibleName = args[1];
+            foreach (var mon in Main.LocalPlayer.GetModPlayer<TerramonPlayer>().Party)
+            {
+                if (mon.Nickname == possibleName || mon.Schema.Identifier == possibleName)
+                {
+                    switchSpec = possibleName;
+                    break;
+                }
+            }
+            if (switchSpec is null)
+            {
+                caller.Reply("""You provided a Pokémon nickname or species name, but it wasn't found in your party""", ChatColorRed);
+                return;
+            }
+        }
+
+        BattleStream stream = _currentBattle.BattleStream;
+
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", $"switch {switchSpec}"));
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "default"));
     }
 
     private static void EndBattle(CommandCaller caller)
@@ -86,6 +184,8 @@ public class BattleCommand : DebugCommand
             battleStream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen9CustomGame));
             battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p1", Main.LocalPlayer.name, packedTeam));
             battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p2", "Green"));
+            battleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", "team 123456"));
+            battleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "team 123456"));
 
             // Process battle outputs
             await foreach (var output in battleStream.ReadOutputsAsync())

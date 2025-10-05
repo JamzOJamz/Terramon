@@ -228,28 +228,14 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
     /// </summary>
     private static float GetSpeedNatureMultiplier(NatureID nature)
     {
-        // Natures that increase Speed
-        NatureID[] speedUpNatures =
-        [
-            NatureID.Hasty,
-            NatureID.Jolly,
-            NatureID.Naive,
-            NatureID.Timid
-        ];
-
-        // Natures that decrease Speed
-        NatureID[] speedDownNatures =
-        [
-            NatureID.Brave,
-            NatureID.Quiet,
-            NatureID.Relaxed,
-            NatureID.Sassy
-        ];
-
-        if (speedUpNatures.Contains(nature))
-            return 1.1f;
-
-        return speedDownNatures.Contains(nature) ? 0.9f : 1f;
+        return nature switch
+        {
+            // Natures that increase Speed by 10%
+            NatureID.Hasty or NatureID.Jolly or NatureID.Naive or NatureID.Timid => 1.1f,
+            // Natures that decrease Speed by 10%
+            NatureID.Brave or NatureID.Quiet or NatureID.Relaxed or NatureID.Sassy => 0.9f,
+            _ => 1f
+        };
     }
 
     private enum ActionState

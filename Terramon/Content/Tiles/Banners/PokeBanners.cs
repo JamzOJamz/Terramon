@@ -515,7 +515,7 @@ public class PokeBannerBuff : ModBuff
 
     public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare)
     {
-        if (ModContent.GetInstance<ClientConfig>().RainbowBuffText)
+        if (ClientConfig.Instance.RainbowBuffText)
             rare = ItemRarityID.Expert;
     }
 }

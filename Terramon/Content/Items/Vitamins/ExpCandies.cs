@@ -36,7 +36,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
         }
 
         // Get whether fast evolution is enabled
-        var clientConfig = ModContent.GetInstance<ClientConfig>();
+        var clientConfig = ClientConfig.Instance;
         var fastEvolution = clientConfig.FastEvolution;
 
         // Gain the experience points
