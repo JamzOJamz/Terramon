@@ -189,15 +189,18 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         // Apply fade shader
-        GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"].UseColor(drawColor);
         GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"]
-            .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity);
-        GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"].Apply();
+            .UseColor(drawColor)
+            .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
+            .Apply();
+        
+        Vector2 pos = NPC.Center - screenPos +
+            new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
+        // Apply outline shader when selected
+        // GameShaders.Misc[$"{nameof(Terramon)}Outline"].Apply(new DrawData(_mainTexture.Value, pos, NPC.frame, drawColor));
 
         spriteBatch.Draw(_mainTexture.Value,
-            NPC.Center - screenPos +
-            new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
-            NPC.frame, drawColor, NPC.rotation,
+            pos, NPC.frame, drawColor, NPC.rotation,
             frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
         spriteBatch.End();

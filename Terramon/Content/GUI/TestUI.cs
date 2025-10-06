@@ -11,7 +11,7 @@ public sealed class TestBattleUI : SmartUIState
     {
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
     }
-    public override bool Visible => true;
+    public override bool Visible => false;
     public override void OnInitialize()
     {
         Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
