@@ -106,6 +106,7 @@ Configs: {
 			Miscellaneous: Preferencias
 			GUI: Interfaz
 			Accessibility: Accesibilidad
+			// Personalization: Personalization Header
 		}
 
 		FastEvolution: {
@@ -146,6 +147,16 @@ Configs: {
 		RainbowBuffText: {
 			Label: Texto arcoíris para el efecto
 			Tooltip: El nombre del efecto para el Compañero Pokémon irá a través de los colores del arcoíris
+		}
+
+		ThickHighlights: {
+			// Label: Thick Highlights
+			// Tooltip: ""
+		}
+
+		HighlightColor: {
+			// Label: Highlight Color
+			// Tooltip: ""
 		}
 	}
 

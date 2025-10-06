@@ -1,8 +1,8 @@
 sampler uImage0 : register(s0);
+float3 uColor;
+float3 uSecondaryColor;
 float2 uImageSize0;
-
-static const float4 outlineColorMain = float4(1.0f, 0.9f, 0.27f, 1.0f);
-static const float4 outlineColorSecond = float4(1.0f, 0.5f, 0.0f, 1.0f);
+bool uThickOutline;
 
 float4 Outline(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
@@ -18,26 +18,35 @@ float4 Outline(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
     // orth checks are functionally inlined.
     float ortho = 0;
     
-    // tl
-    neigh += tex2D(uImage0, coords - uvPx).a;
     // tm
     ortho += tex2D(uImage0, float2(coords.x, coords.y - uvPx.y)).a;
-        // tr
-    neigh += tex2D(uImage0, float2(coords.x + uvPx.x, coords.y - uvPx.y)).a;
-        // ml
+    // ml
     ortho += tex2D(uImage0, float2(coords.x - uvPx.x, coords.y)).a;
-        // mr
+    // mr
     ortho += tex2D(uImage0, float2(coords.x + uvPx.x, coords.y)).a;
-        // bl
-    neigh += tex2D(uImage0, float2(coords.x - uvPx.x, coords.y + uvPx.y)).a;
-        // bm
+    // bm
     ortho += tex2D(uImage0, float2(coords.x, coords.y + uvPx.y)).a;
+    if (uThickOutline)
+    {
+         // tl
+        neigh += tex2D(uImage0, coords - uvPx).a;
+        // tr
+        neigh += tex2D(uImage0, float2(coords.x + uvPx.x, coords.y - uvPx.y)).a;
+        // bl
+        neigh += tex2D(uImage0, float2(coords.x - uvPx.x, coords.y + uvPx.y)).a;
         // br
-    neigh += tex2D(uImage0, coords + uvPx).a;
+        neigh += tex2D(uImage0, coords + uvPx).a;
+    }
+    else
+    {
+        if (ortho > 0)
+            return (ortho > 1 ? float4(uSecondaryColor, 1) : float4(uColor, 1)) * sampleColor;
+        return center;
+    }
     
     if (ortho > 1)
-        return outlineColorSecond;
-    return neigh == 0 ? center : outlineColorMain;
+        return float4(uSecondaryColor, 1) * sampleColor;
+    return neigh == 0 ? center : float4(uColor, 1) * sampleColor;
     
     /*
     // sample everything

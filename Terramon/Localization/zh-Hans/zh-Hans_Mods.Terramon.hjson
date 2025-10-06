@@ -106,6 +106,7 @@ Configs: {
 			Miscellaneous: 偏好设置
 			GUI: 图形用户界面
 			Accessibility: 无障碍功能
+			// Personalization: Personalization Header
 		}
 
 		FastEvolution: {
@@ -146,6 +147,16 @@ Configs: {
 		RainbowBuffText: {
 			Label: 彩虹效果增益文本
 			Tooltip: 宝可梦伙伴的增益名称将循环显示彩虹颜色
+		}
+
+		ThickHighlights: {
+			// Label: Thick Highlights
+			// Tooltip: ""
+		}
+
+		HighlightColor: {
+			// Label: Highlight Color
+			// Tooltip: ""
 		}
 	}
 

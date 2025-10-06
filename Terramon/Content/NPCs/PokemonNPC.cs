@@ -1,6 +1,7 @@
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using Terramon.Helpers;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.Items.PokeBalls;
@@ -196,8 +197,18 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         
         Vector2 pos = NPC.Center - screenPos +
             new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
+
         // Apply outline shader when selected
-        // GameShaders.Misc[$"{nameof(Terramon)}Outline"].Apply(new DrawData(_mainTexture.Value, pos, NPC.frame, drawColor));
+        // put this stuff in the appropriate place lol
+        /*
+        Color highlightColor = Data.IsShiny ? ModContent.GetInstance<KeyItemRarity>().RarityColor : ClientConfig.Instance.HighlightColor;
+        var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
+        outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
+        outlineShader
+            .UseColor(highlightColor)
+            .UseSecondaryColor(highlightColor.Hueshift(0.05f, -0.15f))
+            .Apply(new DrawData(_mainTexture.Value, pos, NPC.frame, drawColor));
+        */
 
         spriteBatch.Draw(_mainTexture.Value,
             pos, NPC.frame, drawColor, NPC.rotation,
