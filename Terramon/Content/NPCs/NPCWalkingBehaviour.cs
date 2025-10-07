@@ -23,7 +23,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
 
     private int _collideTimer;
     public AnimType AnimationType = AnimType.StraightForward;
-    public bool IsClassic = true; //TODO: remove once all classic pokemon sprites are replaced with custom ones
+    public bool IsClassic = true; // TODO: Remove once all classic Pokémon sprites are replaced with custom ones
     public int StopFrequency = 225;
     public float WalkSpeed = 1f;
 
