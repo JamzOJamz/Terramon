@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
@@ -21,6 +22,11 @@ namespace Terramon.Content.NPCs;
 [Autoload(false)]
 public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity
 {
+    /// <summary>
+    ///     The index of the Pokémon NPC under the mouse cursor.
+    /// </summary>
+    private static int? _highlightedNPCIndex;
+
     private int _cryTimer;
     private PokemonData _data;
     private Asset<Texture2D> _mainTexture;
@@ -28,27 +34,22 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
-    
-    /// <summary>
-    ///     The index of the Pokémon NPC under the mouse cursor.
-    /// </summary>
-    private static int _highlightedNPCIndex = -1;
 
     static PokemonNPC()
     {
         On_Main.DoUpdateInWorld += static (orig, self, sw) =>
         {
-            _highlightedNPCIndex = -1;
+            _highlightedNPCIndex = null;
             orig(self, sw);
         };
-        
+
         On_Main.DrawNPCs += (orig, self, tiles) =>
         {
             orig(self, tiles);
 
-            if (_highlightedNPCIndex == -1) return;
+            if (!_highlightedNPCIndex.HasValue) return;
 
-            var highlightedNPC = Main.npc[_highlightedNPCIndex];
+            var highlightedNPC = Main.npc[_highlightedNPCIndex.Value];
             DrawLevelText(Main.spriteBatch, highlightedNPC);
         };
     }
@@ -149,11 +150,30 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         _mainTexture ??= PokemonEntityLoader.RequestTexture(this);
+        var mainTextureValue = _mainTexture.Value;
 
         var frameSize = NPC.frame.Size();
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var drawPos = NPC.Center - screenPos +
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4);
+
+        if (!PlasmaState)
+        {
+            if (NPC.whoAmI == _highlightedNPCIndex &&
+                Vector2.Distance(Main.LocalPlayer.Center, NPC.Center) < 300f) // Up to 20 blocks away
+            {
+                if (!PokemonEntityLoader.HighlightTextures.TryGetValue(ID, out var highlightTexture))
+                    highlightTexture = CreateHighlightTexture(); // Creates highlight texture and adds it to cache
+
+                foreach (var off in ChatManager.ShadowDirections) // For each shadow direction
+                {
+                    var offset = off;
+                    offset *= 2;
+                    spriteBatch.Draw(highlightTexture, drawPos + offset, NPC.frame,
+                        drawColor, NPC.rotation, frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
+                }
+            }
+        }
 
         if (_plasmaStateTime <= 20)
         {
@@ -162,7 +182,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
 
-            spriteBatch.Draw(_mainTexture.Value,
+            spriteBatch.Draw(mainTextureValue,
                 drawPos,
                 NPC.frame, adjustedColor, NPC.rotation,
                 frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
@@ -174,9 +194,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             {
                 drawColor = Color.White;
                 if (ID == NationalDexID.Gastly) drawColor.A = 128;
-                spriteBatch.Draw(glowTexture.Value,
-                    drawPos,
-                    NPC.frame, drawColor, NPC.rotation,
+                spriteBatch.Draw(glowTexture.Value, drawPos, NPC.frame, drawColor, NPC.rotation,
                     frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
             }
         }
@@ -194,7 +212,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity);
         GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"].Apply();
 
-        spriteBatch.Draw(_mainTexture.Value,
+        spriteBatch.Draw(mainTextureValue,
             NPC.Center - screenPos +
             new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
             NPC.frame, drawColor, NPC.rotation,
@@ -212,14 +230,35 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     /// </summary>
     private static void DrawLevelText(SpriteBatch spriteBatch, NPC npc)
     {
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, Main.Rasterizer, null);
+
         const string text = "Lv. 5";
-        var textScale = new Vector2(0.8f);
-        var textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, text, Vector2.One) * textScale.X;
+        var computedScale = 0.8f * Main.GameZoomTarget;
+        var useFont = computedScale > 1f ? FontAssets.DeathText.Value : FontAssets.MouseText.Value;
+
+        if (computedScale > 1f)
+            computedScale /= 2.5f;
+
+        var textScale = new Vector2(computedScale);
+        var textSize = ChatManager.GetStringSize(useFont, text, Vector2.One) * textScale.X / Main.GameZoomTarget;
         var textDrawPos = npc.position - Main.screenPosition - textSize + new Vector2(8, npc.gfxOffY);
-        textDrawPos.X = (int)textDrawPos.X;
-        textDrawPos.Y = (int)textDrawPos.Y;
-        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, text, textDrawPos,
+
+        if (Main.GameZoomTarget == 1f)
+        {
+            // Clamp to pixel values
+            textDrawPos.X = (int)textDrawPos.X;
+            textDrawPos.Y = (int)textDrawPos.Y;
+        }
+
+        var transformedPos = Vector2.Transform(textDrawPos, Main.GameViewMatrix.ZoomMatrix);
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, useFont, text, transformedPos,
             Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
+
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -296,9 +335,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
         var isMouseHovering = mouseRectangle.Intersects(boundingBox) ||
                               (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == NPC.whoAmI);
-        
-        if (isMouseHovering && _highlightedNPCIndex == -1)
+
+        if (isMouseHovering && _highlightedNPCIndex == null)
+        {
             _highlightedNPCIndex = NPC.whoAmI;
+            if (Main.mouseRight && Main.mouseRightRelease)
+            {
+                Main.NewText("Starting battle!");
+            }
+        }
 
         if (Data is not { IsShiny: true }) return;
 
@@ -396,5 +441,156 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         NPC.noGravity = true; // Disable gravity
         NPC.ShowNameOnHover = false; // Disable showing name on hover
         NPC.netUpdate = true;
+    }
+
+    private Texture2D CreateHighlightTexture()
+    {
+        var sw = Stopwatch.StartNew();
+
+        var mainTextureValue = _mainTexture.Value;
+
+        // Get base pixel data
+        var baseData = new Color[mainTextureValue.Width * mainTextureValue.Height];
+        mainTextureValue.GetData(baseData);
+
+        // Make buffer for AA
+        var aaDataBuffer = new Color[baseData.Length];
+
+        // Define colors
+        var outlineColor = new Color(252, 252, 84);
+        var aaColor = new Color(255, 208, 15);
+
+        // First pass: Fill AA data buffer
+        for (var i = 0; i < baseData.Length; i++)
+        {
+            if (baseData[i].A <= 0) continue;
+
+            baseData[i] = outlineColor;
+
+            // Get 2D position of current pixel
+            var x = i % mainTextureValue.Width;
+            var y = i / mainTextureValue.Width;
+
+            // Skip edge pixels
+            if (x == 0 || x == mainTextureValue.Width - 1 ||
+                y == 0 || y == mainTextureValue.Height - 1)
+                continue;
+
+            var leftIndex = y * mainTextureValue.Width + (x - 1);
+            var rightIndex = y * mainTextureValue.Width + (x + 1);
+            var upIndex = (y - 1) * mainTextureValue.Width + x;
+            var downIndex = (y + 1) * mainTextureValue.Width + x;
+
+            var hasLeft = baseData[leftIndex].A > 0;
+            var hasRight = baseData[rightIndex].A > 0;
+            var hasUp = baseData[upIndex].A > 0;
+            var hasDown = baseData[downIndex].A > 0;
+
+            // Check if all four directions from this pixel have solid pixels
+            if (hasLeft && hasRight && hasUp && hasDown)
+            {
+                // Check diagonal directions for transparent pixels
+                var topLeftIndex = (y - 1) * mainTextureValue.Width + (x - 1);
+                var topRightIndex = (y - 1) * mainTextureValue.Width + x + 1;
+                var bottomLeftIndex = (y + 1) * mainTextureValue.Width + (x - 1);
+                var bottomRightIndex = (y + 1) * mainTextureValue.Width + x + 1;
+
+                // Set any transparent diagonal pixels to red in a 2x2 pattern
+
+                // Top-left 2x2 region
+                if (baseData[topLeftIndex].A == 0)
+                {
+                    aaDataBuffer[topLeftIndex] = Color.Red;
+                    aaDataBuffer[(y - 1) * mainTextureValue.Width + (x - 2)] = Color.Red;
+                    aaDataBuffer[(y - 2) * mainTextureValue.Width + (x - 1)] = Color.Red;
+                    aaDataBuffer[(y - 2) * mainTextureValue.Width + (x - 2)] = Color.Red;
+                }
+
+                // Top-right 2x2 region
+                if (baseData[topRightIndex].A == 0)
+                {
+                    aaDataBuffer[topRightIndex] = Color.Red;
+                    aaDataBuffer[(y - 1) * mainTextureValue.Width + (x + 2)] = Color.Red;
+                    aaDataBuffer[(y - 2) * mainTextureValue.Width + (x + 1)] = Color.Red;
+                    aaDataBuffer[(y - 2) * mainTextureValue.Width + (x + 2)] = Color.Red;
+                }
+
+                // Bottom-left 2x2 region
+                if (baseData[bottomLeftIndex].A == 0)
+                {
+                    aaDataBuffer[bottomLeftIndex] = Color.Red;
+                    aaDataBuffer[(y + 1) * mainTextureValue.Width + (x - 2)] = Color.Red;
+                    aaDataBuffer[(y + 2) * mainTextureValue.Width + (x - 1)] = Color.Red;
+                    aaDataBuffer[(y + 2) * mainTextureValue.Width + (x - 2)] = Color.Red;
+                }
+
+                // Bottom-right 2x2 region
+                if (baseData[bottomRightIndex].A == 0)
+                {
+                    aaDataBuffer[bottomRightIndex] = Color.Red;
+                    aaDataBuffer[(y + 1) * mainTextureValue.Width + (x + 2)] = Color.Red;
+                    aaDataBuffer[(y + 2) * mainTextureValue.Width + (x + 1)] = Color.Red;
+                    aaDataBuffer[(y + 2) * mainTextureValue.Width + (x + 2)] = Color.Red;
+                }
+            }
+        }
+
+        // Second pass: Apply AA outline color
+        for (var i = 0; i < baseData.Length; i++)
+        {
+            if (baseData[i].A <= 0) continue;
+
+            // Get 2D position of current pixel
+            var x = i % mainTextureValue.Width;
+            var y = i / mainTextureValue.Width;
+
+            // We only want to process "real" pixels
+            if (x % 2 != 0 || y % 2 != 0) continue;
+
+            // Skip edge pixels
+            if (x == 0 || x == mainTextureValue.Width - 2 ||
+                y == 0 || y == mainTextureValue.Height - 2)
+                continue;
+
+            // Keep track of bordering AA pixel count
+            var borderingCount = 0;
+
+            // Check up direction
+            var upIndex = (y - 1) * mainTextureValue.Width + x;
+            if (aaDataBuffer[upIndex].A > 0)
+                borderingCount++;
+
+            // Check down direction
+            var downIndex = (y + 2) * mainTextureValue.Width + x;
+            if (aaDataBuffer[downIndex].A > 0)
+                borderingCount++;
+
+            // Check left direction
+            var leftIndex = y * mainTextureValue.Width + (x - 1);
+            if (aaDataBuffer[leftIndex].A > 0)
+                borderingCount++;
+
+            // Check right direction
+            var rightIndex = y * mainTextureValue.Width + (x + 2);
+            if (aaDataBuffer[rightIndex].A > 0)
+                borderingCount++;
+
+            // If 2 or more bordering AA pixels...
+            if (borderingCount < 2) continue;
+
+            // ...then fill this 2x2 block with AA color
+            baseData[i] = aaColor;
+            baseData[i + 1] = aaColor;
+            baseData[i + mainTextureValue.Width] = aaColor;
+            baseData[i + mainTextureValue.Width + 1] = aaColor;
+        }
+
+        var highlightTexture = new Texture2D(Main.graphics.GraphicsDevice, mainTextureValue.Width,
+            mainTextureValue.Height);
+        highlightTexture.SetData(baseData);
+        PokemonEntityLoader.HighlightTextures.Add(ID, highlightTexture);
+        Main.NewText($"Generated highlight texture for {ID} in {sw.Elapsed}");
+
+        return highlightTexture;
     }
 }
