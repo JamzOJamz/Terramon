@@ -207,16 +207,29 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         // Apply fade shader
-        GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"].UseColor(drawColor);
         GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"]
-            .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity);
-        GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"].Apply();
+            .UseColor(drawColor)
+            .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
+            .Apply();
+
+        /*var pos = NPC.Center - screenPos +
+                  new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);*/
+
+        // Apply outline shader when selected
+        // put this stuff in the appropriate place lol
+        /*
+        Color highlightColor = Data.IsShiny ? ModContent.GetInstance<KeyItemRarity>().RarityColor : ClientConfig.Instance.HighlightColor;
+        var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
+        outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
+        outlineShader
+            .UseColor(highlightColor)
+            .UseSecondaryColor(highlightColor.HueShift(0.05f, -0.15f))
+            .Apply(new DrawData(_mainTexture.Value, pos, NPC.frame, drawColor));
+        */
 
         spriteBatch.Draw(mainTextureValue,
-            NPC.Center - screenPos +
-            new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
-            NPC.frame, drawColor, NPC.rotation,
-            frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
+            NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
+            NPC.frame, drawColor, NPC.rotation, frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
@@ -245,7 +258,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var textSize = ChatManager.GetStringSize(useFont, text, Vector2.One) * textScale.X / Main.GameZoomTarget;
         var textDrawPos = npc.position - Main.screenPosition - textSize + new Vector2(8, npc.gfxOffY);
 
-        if (Main.GameZoomTarget == 1f)
+        if (Math.Abs(Main.GameZoomTarget - 1f) < 1e-5)
         {
             // Clamp to pixel values
             textDrawPos.X = (int)textDrawPos.X;

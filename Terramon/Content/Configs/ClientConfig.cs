@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
+using Terraria.ModLoader.Config.UI;
 
 // ReSharper disable UnassignedField.Global
 
@@ -33,6 +34,11 @@ public class ClientConfig : ModConfig
     [DefaultValue(true)]
     public bool RainbowBuffText;
 
+    [Header("Personalization")] [DefaultValue(true)]
+    public bool ThickHighlights;
+
+    [DefaultValue(typeof(Color), "252, 252, 84, 255")]
+    public Color HighlightColor;
     public override ConfigScope Mode => ConfigScope.ClientSide;
 }
 

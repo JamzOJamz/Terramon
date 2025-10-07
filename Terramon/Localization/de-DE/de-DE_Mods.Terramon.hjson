@@ -106,6 +106,7 @@ Configs: {
 			Miscellaneous: Einstellungen
 			GUI: Benutzeroberfläche
 			Accessibility: Barrierefreiheit
+			// Personalization: Personalization Header
 		}
 
 		FastEvolution: {
@@ -146,6 +147,16 @@ Configs: {
 		RainbowBuffText: {
 			Label: Regenbogen-Buff-Text
 			Tooltip: Der Name des Pokémon-Begleiter-Buffs wird durch die Regenbogenfarben rotieren
+		}
+
+		ThickHighlights: {
+			// Label: Thick Highlights
+			// Tooltip: ""
+		}
+
+		HighlightColor: {
+			// Label: Highlight Color
+			// Tooltip: ""
 		}
 	}
 
@@ -291,6 +302,15 @@ GUI: {
 		Height: Größe
 		Weight: Gewicht
 		Entry: Eintrag
+	}
+
+	TurnBased: {
+		ButtonLabels: {
+			// Fight: Fight
+			// Bag: Bag
+			// Pokemon: Pokémon
+			// Run: Run
+		}
 	}
 
 	ControllerHints: {

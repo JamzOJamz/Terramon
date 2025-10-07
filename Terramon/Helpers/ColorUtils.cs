@@ -36,4 +36,20 @@ public static class ColorUtils
             // RGBA format (include alpha)
             $"{color.R:X2}{color.G:X2}{color.B:X2}{color.A:X2}";
     }
+    
+    public static Color HueShift(this Color color, float amt, float shiftLumi = 0f, float direction = 0f)
+    {
+        // Thresholds for determining best hue shifting direction
+        const float yellow = 0.23529411764f;
+        const float blue = 0.94117647058f;
+        var col = Main.rgbToHsl(color);
+        // Everything before yellow should shift counterclockwise (yellow to orange, red to magenta)
+        // Everything before blue should shift clockwise (lime to green, cyan to blue)
+        if (direction == 0f)
+            direction = col.X is < yellow or > blue ? -1f : 1f;
+        var changedHue = col.X + amt * direction;
+        col.X = (changedHue % 1f + 1f) % 1f; // Bidirectional wrapping
+        col.Z = Math.Clamp(col.Z + shiftLumi, 0f, 1f);
+        return Main.hslToRgb(col);
+    }
 }

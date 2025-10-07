@@ -106,6 +106,7 @@ Configs: {
 			// Miscellaneous: Preferences
 			// GUI: GUI
 			// Accessibility: Accessibility
+			// Personalization: Personalization Header
 		}
 
 		FastEvolution: {
@@ -146,6 +147,16 @@ Configs: {
 		RainbowBuffText: {
 			// Label: Rainbow Buff Text
 			// Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
+		}
+
+		ThickHighlights: {
+			// Label: Thick Highlights
+			// Tooltip: ""
+		}
+
+		HighlightColor: {
+			// Label: Highlight Color
+			// Tooltip: ""
 		}
 	}
 
@@ -291,6 +302,15 @@ GUI: {
 		// Height: Height
 		// Weight: Weight
 		// Entry: Entry
+	}
+
+	TurnBased: {
+		ButtonLabels: {
+			// Fight: Fight
+			// Bag: Bag
+			// Pokemon: Pokémon
+			// Run: Run
+		}
 	}
 
 	ControllerHints: {

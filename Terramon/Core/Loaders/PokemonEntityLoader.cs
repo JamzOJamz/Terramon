@@ -39,8 +39,13 @@ public class PokemonEntityLoader : ModSystem
 
         // Load the fade shader for Pokémon
         if (!Main.dedServ)
+        {
+            const string Effects = "Assets/Effects/";
             GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
-                new MiscShaderData(Mod.Assets.Request<Effect>("Assets/Effects/FadeToColor"), "FadePass");
+                new MiscShaderData(Mod.Assets.Request<Effect>(Effects + "FadeToColor"), "FadePass");
+            GameShaders.Misc[$"{nameof(Terramon)}Outline"] =
+                new MiscShaderData(Mod.Assets.Request<Effect>(Effects + "Outline"), "ShaderPass");
+        }
 
         // Start a stopwatch to measure the time taken to load Pokémon entities
         //var stopwatch = System.Diagnostics.Stopwatch.StartNew();
