@@ -257,7 +257,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         if (ID != NationalDexID.Haunter && ID != NationalDexID.Gengar)
             Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
         _shinySparkleTimer++;
-        if (_shinySparkleTimer < 12) return;
+        if (_shinySparkleTimer < 15) return;
         for (var i = 0; i < 2; i++)
         {
             // Spoof projectile width and height to match the texture size

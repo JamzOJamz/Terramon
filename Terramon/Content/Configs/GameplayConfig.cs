@@ -8,7 +8,9 @@ namespace Terramon.Content.Configs;
 
 public class GameplayConfig : ModConfig
 {
+#pragma warning disable CA2211
     public static GameplayConfig Instance;
+#pragma warning restore CA2211
 
     [Header("Spawning")] [DefaultValue(1f)] [Range(0f, 1f)]
     public float PokemonSpawnRateMultiplier;

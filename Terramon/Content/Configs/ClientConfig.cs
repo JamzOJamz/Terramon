@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
-using Terraria.ModLoader.Config.UI;
 
 // ReSharper disable UnassignedField.Global
 
@@ -8,7 +7,10 @@ namespace Terramon.Content.Configs;
 
 public class ClientConfig : ModConfig
 {
+#pragma warning disable CA2211
     public static ClientConfig Instance;
+#pragma warning restore CA2211
+    
     // TODO: Add this back once alternate mod icons are redesigned to fit the new style
     //[Header("Graphics")] public ModIconType ModIconType;
     
@@ -34,11 +36,12 @@ public class ClientConfig : ModConfig
     [DefaultValue(true)]
     public bool RainbowBuffText;
 
-    [Header("Personalization")] [DefaultValue(true)]
+    [DefaultValue(false)]
     public bool ThickHighlights;
 
     [DefaultValue(typeof(Color), "252, 252, 84, 255")]
     public Color HighlightColor;
+    
     public override ConfigScope Mode => ConfigScope.ClientSide;
 }
 

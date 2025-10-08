@@ -106,7 +106,6 @@ Configs: {
 			Miscellaneous: Preferencias
 			GUI: Interfaz
 			Accessibility: Accesibilidad
-			// Personalization: Personalization Header
 		}
 
 		FastEvolution: {
@@ -150,13 +149,13 @@ Configs: {
 		}
 
 		ThickHighlights: {
-			// Label: Thick Highlights
-			// Tooltip: ""
+			// Label: Thick Pokémon Highlight Outlines
+			// Tooltip: Whether to use thicker outlines when highlighting Pokémon you can interact or battle with
 		}
 
 		HighlightColor: {
-			// Label: Highlight Color
-			// Tooltip: ""
+			// Label: Pokémon Highlight Color
+			// Tooltip: Customize the color of the outline shown when hovering over a Pokémon that you can interact or battle with
 		}
 	}
 
