@@ -1,5 +1,6 @@
 ﻿using ReLogic.Content;
 using Terramon.Core.Loaders.UILoading;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -11,10 +12,20 @@ public sealed class TestBattleUI : SmartUIState
     {
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
     }
-    public override bool Visible => false;
+    public override bool Visible => true;
     public override void OnInitialize()
     {
         Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
+
+        var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
+        ParallelogramElement player = new(parallelogram, -96f);
+        player.Width.Pixels = 378f;
+        player.Height.Pixels = 128f;
+        player.Top.Pixels = 256f;
+        Append(player);
+
+        return;
+
         DynamicPixelRatioElement p = new(Forest, null, true);
         p.Width.Percent = 0.5f;
         p.Height.Percent = 0.3f;
@@ -55,11 +66,45 @@ public sealed class TestBattleUI : SmartUIState
     }
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        /*
+        
         RemoveAllChildren();
         OnInitialize();
         Recalculate();
-        */
+        
+    }
+}
+public sealed class ParallelogramElement : UIElement
+{
+    private readonly Asset<Texture2D> _texture;
+    private readonly float _xOffset;
+    public ParallelogramElement(Asset<Texture2D> texture, float xOffset = 0f)
+    {
+        _texture = texture;
+        _xOffset = xOffset;
+        OverrideSamplerState = SamplerState.PointClamp;
+    }
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        if (_texture is null)
+            return;
+        float zoom = Main.GameZoomTarget;
+        var bounds = GetDimensions();
+        Texture2D tex = _texture.Value!;
+        float basicXOffset = _xOffset * zoom * 4f;
+        float textureXOffset = (tex.Width - (tex.Width / zoom)) * zoom;
+        Vector2 pos = new(bounds.X - (textureXOffset - _xOffset), bounds.Y);
+        float yOffset = (tex.Height / zoom) - bounds.Height;
+        DrawAdjustableParallelogram(spriteBatch, tex, pos, Color.White, yOffset, zoom);
+        // spriteBatch.Draw(TextureAssets.MagicPixel.Value, bounds.ToRectangle(), Color.White * 0.5f);
+    }
+    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, Vector2 position, Color col, float bottomOffset, float scale)
+    {
+        Rectangle frame = tex.Frame(1, 2);
+        bottomOffset *= scale;
+        spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        position += new Vector2(bottomOffset * -0.5f, (frame.Height * scale) + bottomOffset);
+        frame.Y += frame.Height;
+        spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
     }
 }
 public sealed class DynamicPixelRatioElement : UIElement
