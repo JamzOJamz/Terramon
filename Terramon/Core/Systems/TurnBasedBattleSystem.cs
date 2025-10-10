@@ -2,6 +2,7 @@ using ReLogic.OS;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Zip;
 using Showdown.NET;
+using Terraria.Graphics;
 
 namespace Terramon.Core.Systems;
 
@@ -57,5 +58,13 @@ public class TurnBasedBattleSystem : ModSystem
     {
         ShowdownHost.Unload();
         _showdownArchiveStream?.Dispose();
+    }
+    
+    public override void ModifyTransformMatrix(ref SpriteViewMatrix transform)
+    {
+        if (Main.gameMenu || TerramonPlayer.LocalPlayer.Battle == null) return;
+        
+        // Allows GameZoomTarget to go beyond the vanilla cap of 2f (200%)
+        transform.Zoom = new Vector2(Main.GameZoomTarget);
     }
 }

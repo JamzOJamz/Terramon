@@ -4,6 +4,11 @@ namespace Terramon.Helpers;
 
 public static class VanillaExtensions
 {
+    public static TerramonPlayer Terramon(this Player player)
+    {
+        return player.GetModPlayer<TerramonPlayer>();
+    }
+    
     /// <summary>
     ///     A wrapper for <see cref="Main.NewText(object, Color?)" /> that only sends the message if the player is the local
     ///     player.

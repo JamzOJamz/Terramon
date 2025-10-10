@@ -3,7 +3,7 @@ namespace Terramon.Core;
 public static class Tween
 {
     public static readonly List<ITweener> ActiveTweens = [];
-    public const double tweenStep = 1.0d / 60.0d;
+    public const double TweenStep = 1.0d / 60.0d;
 
     public static ITweener To<T>(Func<T> getter, Action<T> setter, T endValue,
         float time) where T : struct
@@ -30,9 +30,6 @@ public static class Tween
     
     public static double SimulationTime { get; private set; }
 
-    /// <summary>
-    ///     Updates all active tweens. Should be called once per frame.
-    /// </summary>
     public static void DoUpdate(double elapsedSeconds)
     {
         SimulationTime += elapsedSeconds;
@@ -49,12 +46,28 @@ public interface ITweener
     bool Update();
     void Kill();
     ITweener SetEase(Ease easeType);
+    ITweener SetEase(Ease easeType, EaseParams parameters);
+}
+
+public struct EaseParams
+{
+    public double BackConstant { get; private init; }
+
+    public static EaseParams Default => new()
+    {
+        BackConstant = 1.70158
+    };
+
+    public static EaseParams Back(double overshoot = 1.70158) => new()
+    {
+        BackConstant = overshoot
+    };
 }
 
 public class Tweener<TFrom, TValue> : ITweener where TValue : struct
 {
     private Ease _ease;
-
+    private EaseParams _easeParams = EaseParams.Default;
     private bool _killed;
     public float EndTime;
     public TValue EndValue;
@@ -69,27 +82,23 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
     {
         if (_killed) return false;
         
-        // Get the current time
-        var currentTime = Tween.SimulationTime; // Main.timeForVisualEffects;
+        var currentTime = Tween.SimulationTime;
         
         const double maxTime = 216000.0;
         double timeDiff;
 
         if (EndTime >= StartTime)
-            // Normal case: No wrap-around
             timeDiff = EndTime - StartTime;
         else
-            // Wrap-around case: EndTime < StartTime
             timeDiff = maxTime - StartTime + EndTime;
 
         var t = (currentTime - StartTime) / timeDiff;
 
-        // Handle the case where Main.timeForVisualEffects is also wrapped
         if (currentTime < StartTime) t = (currentTime + maxTime - StartTime) / timeDiff;
 
-        // Clamp t to the [0, 1] range
         t = Math.Clamp(t, 0, 1);
-        t = ApplyEasing(_ease, t);
+        t = ApplyEasing(_ease, t, _easeParams);
+        
         switch (StartValue, EndValue)
         {
             case (float s, float e):
@@ -115,25 +124,33 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
     public ITweener SetEase(Ease easeType)
     {
         _ease = easeType;
+        _easeParams = EaseParams.Default;
         return this;
     }
 
-    private static double ApplyEasing(Ease easing, double time)
+    public ITweener SetEase(Ease easeType, EaseParams parameters)
+    {
+        _ease = easeType;
+        _easeParams = parameters;
+        return this;
+    }
+
+    private static double ApplyEasing(Ease easing, double time, EaseParams p)
     {
         const double elasticConst = 2 * Math.PI / .3;
         const double elasticConst2 = .3 / 4;
 
-        const double backConst = 1.70158;
-        const double backConst2 = backConst * 1.525;
+        // Use custom back constant
+        var backConst = p.BackConstant;
+        var backConst2 = backConst * 1.525;
 
         const double bounceConst = 1 / 2.75;
 
         switch (easing)
         {
             case Ease.None:
-                break;
             default:
-                return time;
+                break;
 
             case Ease.InQuad:
                 return time * time;
@@ -202,8 +219,7 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
                 if ((time *= 2) < 1)
                     return -.5 * Math.Pow(2, -10 + 10 * time) *
                            Math.Sin((1 - elasticConst2 * 1.5 - time) * elasticConst / 1.5);
-                return .5 * Math.Pow(2, -10 * --time) * Math.Sin((time - elasticConst2 * 1.5) * elasticConst / 1.5) +
-                       1;
+                return .5 * Math.Pow(2, -10 * --time) * Math.Sin((time - elasticConst2 * 1.5) * elasticConst / 1.5) + 1;
 
             case Ease.InBack:
                 return time * time * ((backConst + 1) * time - backConst);
@@ -231,8 +247,14 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
                     _ => 7.5625 * (time -= 2.625 * bounceConst) * time + .984375
                 };
             case Ease.InOutBounce:
-                if (time < .5) return .5 - .5 * ApplyEasing(Ease.OutBounce, 1 - time * 2);
-                return ApplyEasing(Ease.OutBounce, (time - .5) * 2) * .5 + .5;
+                if (time < .5) return .5 - .5 * ApplyEasing(Ease.OutBounce, 1 - time * 2, p);
+                return ApplyEasing(Ease.OutBounce, (time - .5) * 2, p) * .5 + .5;
+            
+            case Ease.InBackExpo:
+                var backBase = time * time * ((backConst + 1) * time - backConst);
+                var expoMultiplier = 0.1 + 0.9 * Math.Pow(2, 8 * (time - 1));
+    
+                return backBase * expoMultiplier;
 
             case Ease.OutPow10:
                 return --time * Math.Pow(time, 10) + 1;
@@ -277,5 +299,6 @@ public enum Ease
     InBounce,
     OutBounce,
     InOutBounce,
-    OutPow10
+    OutPow10,
+    InBackExpo
 }

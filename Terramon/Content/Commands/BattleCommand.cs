@@ -1,6 +1,7 @@
 using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
+using Terramon.Core.Battling;
 using Terramon.ID;
 using Terraria.Localization;
 
@@ -211,16 +212,5 @@ public class BattleCommand : DebugCommand
         {
             battleInstance.BattleStream?.Dispose();
         }
-    }
-}
-
-public class BattleInstance
-{
-    public BattleStream BattleStream { get; set; }
-    public bool ShouldStop { get; private set; }
-
-    public void Stop()
-    {
-        ShouldStop = true;
     }
 }

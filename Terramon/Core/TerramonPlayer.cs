@@ -6,8 +6,10 @@ using Terramon.Content.GUI;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
+using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
@@ -27,18 +29,17 @@ public class TerramonPlayer : ModPlayer
 
     private int _activePCTileEntityID = -1;
     private int _activeSlot;
-    private bool _hasPokemon;
-
+    private int _lastActiveSlot = -1;
+    private PokemonPet _activePetProjectile;
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
+    
     public Vector3 ColorPickerHSL;
-
     public bool HasChosenStarter;
-
     public bool HasPokeBanner;
-
     public bool HasShinyCharm;
+    public BattleInstance Battle;
 
     public int ActivePCTileEntityID
     {
@@ -58,23 +59,23 @@ public class TerramonPlayer : ModPlayer
 
     public int ActiveSlot
     {
-        get => _hasPokemon ? _activeSlot : -1;
+        get => _activeSlot;
         set
         {
+            // Don't double execute logic here
+            if (_activeSlot == value) return;
+            
             // Toggle off dedicated pet slot
-            if (!_hasPokemon && !Player.miscEquips[0].IsAir)
+            if (_activeSlot == -1 && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
 
             // Cancel Pokémon cry sound in party display UI
-            PartySidebarSlot.CrySoundSource?.Cancel();
-
+            if (Player == Main.LocalPlayer)
+                PartySidebarSlot.CrySoundSource?.Cancel();
+            
+            _activeSlot = value;
             if (value != -1)
-            {
-                _activeSlot = value;
-                _hasPokemon = true;
-            }
-            else
-                _hasPokemon = false;
+                _lastActiveSlot = _activeSlot;
 
             var buffType = ModContent.BuffType<PokemonCompanion>();
             var hasBuff = Player.HasBuff(buffType);
@@ -88,6 +89,12 @@ public class TerramonPlayer : ModPlayer
                     break;
             }
         }
+    }
+
+    public PokemonPet ActivePetProjectile
+    {
+        get => _activeSlot >= 0 ? _activePetProjectile : null;
+        set => _activePetProjectile = value;
     }
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
@@ -146,7 +153,7 @@ public class TerramonPlayer : ModPlayer
         if (Player.whoAmI != Main.myPlayer) return;
 
         // Reapply companion buff on player respawn
-        if (ActiveSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
+        if (_activeSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
             Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
     }
 
@@ -164,35 +171,35 @@ public class TerramonPlayer : ModPlayer
 
     private void ProcessActiveMonTriggers()
     {
-        bool shouldPlaySound = false;
+        var shouldPlaySound = false;
 
         if (KeybindSystem.TogglePokemonKeybind.JustPressed)
         {
             shouldPlaySound = true;
-            if (_hasPokemon)
+            if (_activeSlot != -1)
                 ActiveSlot = -1;
             else
-                ActiveSlot = _activeSlot;
+                ActiveSlot = _lastActiveSlot;
         }
         else if (KeybindSystem.NextPokemonKeybind.JustPressed)
         {
             shouldPlaySound = true;
-            if (_hasPokemon)
+            if (_activeSlot != -1)
                 ActiveSlot = _activeSlot == 5 ? 0 : _activeSlot + 1;
             else
-                ActiveSlot = _activeSlot;
+                ActiveSlot = _lastActiveSlot;
         }
         else if (KeybindSystem.PrevPokemonKeybind.JustPressed)
         {
             shouldPlaySound = true;
-            if (_hasPokemon)
+            if (_activeSlot != -1)
                 ActiveSlot = _activeSlot == 0 ? 5 : _activeSlot - 1;
             else
-                ActiveSlot = _activeSlot;
+                ActiveSlot = _lastActiveSlot;
         }
 
         if (!shouldPlaySound) return;
-        if (_hasPokemon)
+        if (_activeSlot != -1)
         {
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
             SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
@@ -224,7 +231,7 @@ public class TerramonPlayer : ModPlayer
             TurnOffUsedPC();
 
         // Handle player removing companion buff manually (right-clicking the buff icon)
-        if (!Player.HasBuff<PokemonCompanion>() && ActiveSlot >= 0 && !Player.dead)
+        if (!Player.HasBuff<PokemonCompanion>() && _activeSlot >= 0 && !Player.dead)
             ActiveSlot = -1;
 
         // End the sidebar animation if the player opens their inventory to prevent visual bugs
@@ -246,6 +253,11 @@ public class TerramonPlayer : ModPlayer
         }
 
         _premierBonusCount = 0;
+    }
+
+    public override void PostUpdate()
+    {
+        Battle?.Update();
     }
 
     public override void PreUpdateBuffs()
@@ -286,9 +298,9 @@ public class TerramonPlayer : ModPlayer
 
     public void SwapParty(int first, int second)
     {
-        if (ActiveSlot == first)
+        if (_activeSlot == first)
             ActiveSlot = second;
-        else if (ActiveSlot == second)
+        else if (_activeSlot == second)
             ActiveSlot = first;
         (Party[first], Party[second]) = (Party[second], Party[first]);
     }
@@ -397,7 +409,7 @@ public class TerramonPlayer : ModPlayer
     public override void SaveData(TagCompound tag)
     {
         tag["flags"] = (byte)new BitsByte(HasChosenStarter, _receivedShinyCharm);
-        if (_hasPokemon)
+        if (_activeSlot >= 0)
             tag["activeSlot"] = _activeSlot;
         SaveParty(tag);
         SavePokedex(tag);
@@ -414,10 +426,7 @@ public class TerramonPlayer : ModPlayer
         }
 
         if (tag.TryGet("activeSlot", out int slot))
-        {
             _activeSlot = slot;
-            _hasPokemon = true;
-        }
 
         LoadParty(tag);
         LoadPokedex(tag);

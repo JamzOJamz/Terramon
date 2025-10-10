@@ -53,6 +53,14 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
     {
         if (!Enabled || PlasmaState) return;
 
+        if (Battle != null)
+        {
+            NPC.velocity = Vector2.Zero;
+            AIState = (float)ActionState.Idle;
+            AITimer = 0;
+            return;
+        }
+
         // Smooth walking over slopes
         Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed,
             ref NPC.gfxOffY);

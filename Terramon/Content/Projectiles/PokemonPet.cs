@@ -122,7 +122,9 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
 
         var owningPlayer = Main.player[Projectile.owner];
-        Data = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
+        var modPlayer = owningPlayer.GetModPlayer<TerramonPlayer>();
+        Data = modPlayer.GetActivePokemon();
+        modPlayer.ActivePetProjectile = this;
         _cachedID = ID;
     }
 

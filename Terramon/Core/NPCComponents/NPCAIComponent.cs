@@ -1,4 +1,5 @@
 using Terramon.Content.NPCs;
+using Terramon.Core.Battling;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -29,6 +30,11 @@ public abstract class NPCAIComponent : NPCComponent
     ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).PlasmaState</c>.
     /// </summary>
     protected bool PlasmaState => ((PokemonNPC)NPC.ModNPC).PlasmaState;
+
+    /// <summary>
+    ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).Battle</c>.
+    /// </summary>
+    protected BattleInstance Battle => ((PokemonNPC)NPC.ModNPC).Battle;
 
     public override void SetDefaults(NPC npc)
     {

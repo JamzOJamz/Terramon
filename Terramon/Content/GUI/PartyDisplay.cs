@@ -18,8 +18,17 @@ public sealed class PartyDisplay : SmartUIState
     public static bool IsDraggingSlot { get; set; }
     public static PartySidebar Sidebar { get; private set; }
 
-    public override bool Visible =>
-        !Main.playerInventory && !Main.LocalPlayer.dead && TerramonPlayer.LocalPlayer.HasChosenStarter && !HubUI.Active;
+    public override bool Visible
+    {
+        get
+        {
+            var terramonPlayer = TerramonPlayer.LocalPlayer;
+            return !Main.playerInventory
+                   && !Main.LocalPlayer.dead
+                   && terramonPlayer.HasChosenStarter
+                   && !HubUI.Active;
+        }
+    }
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -110,9 +119,49 @@ public sealed class PartyDisplay : SmartUIState
 
 public sealed class PartySidebar(Vector2 size) : UIContainer(size)
 {
-    private bool _isToggled = true;
     private bool _keyUp = true;
     private ITweener _toggleTween;
+    
+    public bool IsToggled { get; private set; } = true;
+    
+    public void Toggle()
+    {
+        _toggleTween?.Kill();
+        if (IsToggled)
+        {
+            Close();
+        }
+        else
+        {
+            Open();
+        }
+    }
+
+    public void Open()
+    {
+        if (IsToggled) return;
+
+        _toggleTween?.Kill();
+        _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
+        IsToggled = true;
+    }
+
+    public void Close()
+    {
+        if (!IsToggled) return;
+
+        _toggleTween?.Kill();
+        _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
+        IsToggled = false;
+    }
+
+    public void SetToggleState(bool open)
+    {
+        _toggleTween?.Kill();
+        IsToggled = open;
+        Left.Pixels = open ? 0 : -125;
+        Recalculate();
+    }
 
     public override void Update(GameTime gameTime)
     {
@@ -124,25 +173,14 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         Elements.CopyTo(elementsStatic);
         foreach (var element in elementsStatic) element.Update(gameTime);
 
-        var openKey = KeybindSystem.TogglePartyKeybind.Current;
+        var openKey = KeybindSystem.TogglePartyKeybind.Current && TerramonPlayer.LocalPlayer.Battle == null;
         switch (openKey)
         {
             case true when _keyUp:
             {
                 _keyUp = false;
                 if (Main.blockInput) break;
-                _toggleTween?.Kill();
-                if (_isToggled)
-                {
-                    _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
-                    _isToggled = false;
-                }
-                else
-                {
-                    _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
-                    _isToggled = true;
-                }
-
+                Toggle(); // Use the new Toggle method
                 break;
             }
             case false:
@@ -154,7 +192,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
     public void ForceKillAnimation()
     {
         _toggleTween?.Kill();
-        Left.Pixels = _isToggled ? 0 : -125;
+        Left.Pixels = IsToggled ? 0 : -125;
         Recalculate();
     }
 
