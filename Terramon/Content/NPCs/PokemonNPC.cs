@@ -41,12 +41,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     static PokemonNPC()
     {
-        On_Main.DoUpdateInWorld += static (orig, self, sw) =>
-        {
-            _highlightedNPCIndex = null;
-            orig(self, sw);
-        };
-
         On_Main.DrawNPCs += (orig, self, tiles) =>
         {
             orig(self, tiles);
@@ -163,14 +157,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var effects = GetSpriteEffects();
         var drawPos = NPC.Center - screenPos +
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4);
-        var isInRange = Vector2.Distance(Main.LocalPlayer.Center, NPC.Center) < 300f; // Up to 20 blocks away
-        var isHighlightedGenuine =
-            NPC.whoAmI == _highlightedNPCIndex && TerramonPlayer.LocalPlayer.Battle == null && isInRange;
+
+        var isHighlighted = NPC.whoAmI == _highlightedNPCIndex && TerramonPlayer.LocalPlayer.Battle == null;
 
         if (!PlasmaState)
         {
-            if (isHighlightedGenuine)
+            if (isHighlighted)
             {
+                _highlightedNPCIndex = null;
+
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, null, Main.DefaultSamplerState, DepthStencilState.None,
                     Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -211,7 +206,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 NPC.frame, adjustedColor, NPC.rotation,
                 frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
 
-            if (isHighlightedGenuine)
+            if (isHighlighted)
             {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
@@ -242,21 +237,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .UseColor(drawColor)
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
             .Apply();
-
-        /*var pos = NPC.Center - screenPos +
-                  new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);*/
-
-        // Apply outline shader when selected
-        // put this stuff in the appropriate place lol
-        /*
-        Color highlightColor = Data.IsShiny ? ModContent.GetInstance<KeyItemRarity>().RarityColor : ClientConfig.Instance.HighlightColor;
-        var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
-        outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
-        outlineShader
-            .UseColor(highlightColor)
-            .UseSecondaryColor(highlightColor.HueShift(0.05f, -0.15f))
-            .Apply(new DrawData(_mainTexture.Value, pos, NPC.frame, drawColor));
-        */
 
         spriteBatch.Draw(mainTextureValue,
             NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
@@ -384,43 +364,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             return;
         }
 
-        // Check for highlighting (mouse hovering)
-        // TODO: Checking this in AI() might result in flicker frames when using HFPSS
-        var boundingBox = new Rectangle((int)NPC.Bottom.X - NPC.frame.Width / 2,
-            (int)NPC.Bottom.Y - NPC.frame.Height, NPC.frame.Width, NPC.frame.Height);
-        var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
-            (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
-        var isMouseHovering = mouseRectangle.Intersects(boundingBox) ||
-                              (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == NPC.whoAmI);
-
-        if (isMouseHovering && _highlightedNPCIndex == null)
-        {
-            _highlightedNPCIndex = NPC.whoAmI;
-            var isInRange = Vector2.Distance(Main.LocalPlayer.Center, NPC.Center) < 300f; // Up to 20 blocks away
-            if (isInRange)
-            {
-                var modPlayer = TerramonPlayer.LocalPlayer;
-                if (modPlayer.Battle == null && Main.mouseRight && Main.mouseRightRelease)
-                {
-                    if (!modPlayer.HasChosenStarter)
-                    {
-                        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"),
-                            TerramonCommand.ChatColorYellow);
-                    }
-                    else if (modPlayer.GetActivePokemon() == null)
-                    {
-                        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"),
-                            TerramonCommand.ChatColorYellow);
-                    }
-                    else
-                    {
-                        SoundEngine.PlaySound(SoundID.MenuTick);
-                        StartBattle();
-                    }
-                }
-            }
-        }
-
         if (Data is not { IsShiny: true }) return;
 
         if (_mainTexture == null)
@@ -471,17 +414,39 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         return false;
     }
 
-    public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
+    public override bool PreHoverInteract(bool mouseIntersects)
     {
-        if (_mouseHoverTimer == -1) return;
-
-        var mouseRectangle = new Rectangle((int)(Main.mouseX + Main.screenPosition.X),
-            (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
-        if (mouseRectangle.Intersects(boundingBox))
+        if (_highlightedNPCIndex == null && NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
         {
-            _mouseHoverTimer++;
-            if (_mouseHoverTimer !=
-                60) return; // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
+            _highlightedNPCIndex = NPC.whoAmI;
+            var modPlayer = TerramonPlayer.LocalPlayer;
+            if (modPlayer.Battle == null && Main.mouseRight && Main.mouseRightRelease)
+            {
+                if (!modPlayer.HasChosenStarter)
+                {
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"),
+                        TerramonCommand.ChatColorYellow);
+                }
+                else if (modPlayer.GetActivePokemon() == null)
+                {
+                    Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"),
+                        TerramonCommand.ChatColorYellow);
+                }
+                else
+                {
+                    SoundEngine.PlaySound(SoundID.MenuTick);
+                    StartBattle();
+                }
+            }
+        }
+
+        if (_mouseHoverTimer == -1)
+            return true;
+
+        if (mouseIntersects)
+        {
+            if (++_mouseHoverTimer != 60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
+                return true;
             // Register as seen in the player's Pokédex
             TerramonPlayer.LocalPlayer.UpdatePokedex(ID, PokedexEntryStatus.Seen,
                 shiny: Data?.IsShiny ?? false);
@@ -491,6 +456,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         {
             _mouseHoverTimer = 0;
         }
+        return true;
     }
 
     public void Encapsulate(Vector2 pokeballPos)
