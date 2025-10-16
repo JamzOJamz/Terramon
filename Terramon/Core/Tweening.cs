@@ -1,3 +1,6 @@
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Terramon.Core;
 
 public static class Tween
@@ -9,6 +12,18 @@ public static class Tween
         float time) where T : struct
     {
         return To((getter, setter), tuple => tuple.getter(), (tuple, value) => tuple.setter(value), endValue, time);
+    }
+
+    public static ITweener To<T>(Expression<Func<T>> exp, T endValue, float time) where T : struct
+    {
+        var getter = exp.Compile();
+        Action<T> setter = ((MemberExpression)exp.Body).Member switch
+        {
+            PropertyInfo property => property.GetSetMethod().CreateDelegate<Action<T>>(getter.Target),
+            FieldInfo field => x => field.SetValue(getter.Target, x),
+            _ => throw new InvalidOperationException()
+        };
+        return To(getter, setter, endValue, time);
     }
 
     private static Tweener<TFrom, TValue> To<TValue, TFrom>(TFrom from, Func<TFrom, TValue> getter,
@@ -49,7 +64,7 @@ public interface ITweener
     ITweener SetEase(Ease easeType, EaseParams parameters);
 }
 
-public struct EaseParams
+public readonly struct EaseParams
 {
     public double BackConstant { get; private init; }
 

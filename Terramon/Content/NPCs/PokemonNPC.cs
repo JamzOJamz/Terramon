@@ -19,6 +19,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
+using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Terramon.Content.NPCs;
@@ -154,7 +155,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var mainTextureValue = _mainTexture.Value;
 
         var frameSize = NPC.frame.Size();
-        var effects = GetSpriteEffects();
+        var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var drawPos = NPC.Center - screenPos +
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4);
 
@@ -247,19 +248,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         return false;
-    }
-
-    private SpriteEffects GetSpriteEffects()
-    {
-        var petProj = Battle != null
-            ? Main.player[Battle.Player1Index]?.Terramon().ActivePetProjectile?.Projectile
-            : null;
-
-        var shouldFlip = petProj != null
-            ? petProj.position.X > NPC.position.X
-            : NPC.spriteDirection == 1;
-
-        return shouldFlip ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
     }
 
     /// <summary>
@@ -491,6 +479,10 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         var player = Main.LocalPlayer;
 
+        // Turn towards the player
+        NPC.spriteDirection = NPC.direction = player.position.X > NPC.position.X ? 1 : -1;
+        _highlightedNPCIndex = null;
+
         // Create a new BattleInstance for this battle
         var battle = new BattleInstance
         {
@@ -513,9 +505,19 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             await Task.Delay(570);
             Main.QueueMainThreadAction(() =>
             {
-                Tween.To(() => Main.GameZoomTarget, x => Main.GameZoomTarget = x, 5f, 1.42f)
-                    .SetEase(Ease.InBackExpo, EaseParams.Back(1.6f));
+                Tween.To(() => Main.GameZoomTarget, 5f, 1.42f)
+                    .SetEase(Ease.InBackExpo, EaseParams.Back(1.6f)).OnComplete = () =>
+                    {
+                        IngameFancyUI.OpenUIState(TestBattleUI.Instance);
+                        Tween.To(() => Main.GameZoomTarget, 1.5f, 0.4f);
+                    };
             });
         });
+    }
+    public void EndBattle()
+    {
+        Battle?.BattleStream?.Dispose();
+        Battle = null;
+        NPC.ShowNameOnHover = true;
     }
 }

@@ -1,59 +1,112 @@
-﻿using ReLogic.Content;
-using Terramon.Core.Loaders.UILoading;
-using Terraria.GameContent;
+﻿using rail;
+using ReLogic.Content;
+using Terramon.Content.NPCs;
+using Terramon.ID;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
 namespace Terramon.Content.GUI;
-public sealed class TestBattleUI : SmartUIState
+public sealed class TestBattleUI : UIState
 {
+    public static TestBattleUI Instance = new();
     public static Asset<Texture2D> Forest;
-    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    private static UIElement _optionsPanel;
+    private static UIElement _movesPanel;
+    static TestBattleUI()
     {
-        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
+        // Create options panel
+        _optionsPanel = new();
+        _optionsPanel.Left.Percent = _optionsPanel.Width.Percent = 0.5f;
+        _optionsPanel.Height.Percent = 1f;
+        for (ButtonType i = ButtonType.Fight; i <= ButtonType.Run; i++)
+        {
+            int xFactor = (int)i % 2;
+            int yFactor = (int)i / 2;
+            DynamicPixelRatioElement button = new($"Terramon/Assets/GUI/TurnBased/{i}Button", buttonLike: true);
+            button.Left.Percent = xFactor * 0.5f;
+            button.Top.Percent = yFactor * 0.5f;
+            button.Width.Percent = button.Height.Percent = 0.5f;
+            button.OnLeftClick += i switch
+            {
+                ButtonType.Fight => FightButton,
+                ButtonType.Bag => BagButton,
+                ButtonType.Pokemon => PokemonButton,
+                ButtonType.Run => RunButton,
+                _ => null,
+            };
+            UIText label = new(Terramon.Instance.GetLocalization($"GUI.TurnBased.ButtonLabels.{i}"), 0.75f, true);
+            label.HAlign = label.VAlign = 0.5f;
+            button.Append(label);
+            _optionsPanel.Append(button);
+        }
+
+        // Create moves panel (blank)
+        _movesPanel = new();
+        _movesPanel.Width.Percent = _movesPanel.Height.Percent = 1f;
+        for (int i = 0; i < 4; i++)
+        {
+            float xFactor = i % 2 * 0.5f;
+            float yFactor = i / 2 * 0.5f;
+            DynamicPixelRatioElement button = new(null, null, buttonLike: true);
+            button.Left.Percent = xFactor;
+            button.Top.Percent = yFactor;
+            button.Width.Percent = button.Height.Percent = 0.5f;
+            UIText label = new(string.Empty, 0.75f, true);
+            label.HAlign = label.VAlign = 0.5f;
+            button.Append(label);
+            _movesPanel.Append(button);
+        }
     }
-    public override bool Visible => true;
     public override void OnInitialize()
     {
-        Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
+        // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
 
+        /*
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
         ParallelogramElement player = new(parallelogram, -96f);
         player.Width.Pixels = 378f;
         player.Height.Pixels = 128f;
         player.Top.Pixels = 256f;
         Append(player);
+        */
 
-        return;
-
-        DynamicPixelRatioElement p = new(Forest, null, true);
+        DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple", true);
         p.Width.Percent = 0.5f;
         p.Height.Percent = 0.3f;
         p.HAlign = 0.5f;
         p.VAlign = 0.9f;
         p.SetPadding(32f);
 
-        for (ButtonType i = ButtonType.Fight; i <= ButtonType.Run; i++)
-        {
-            int xFactor = (int)i % 2;
-            int yFactor = (int)i / 2;
-            DynamicPixelRatioElement button = new($"Terramon/Assets/GUI/TurnBased/{i}Button");
-            button.Left.Percent = 0.5f + (xFactor * 0.25f);
-            button.Top.Percent = yFactor * 0.5f;
-            button.Width.Percent = 0.25f;
-            button.Height.Percent = 0.5f;
-            button.OnLeftClick += i switch
-            {
-                ButtonType.Fight => FightButton,
-                _ => null,
-            };
-            UIText label = new(Terramon.Instance.GetLocalization($"GUI.TurnBased.ButtonLabels.{i}"), 0.75f, true);
-            label.HAlign = label.VAlign = 0.5f;
-            button.Append(label);
-            p.Append(button);
-        }
+        p.Append(_optionsPanel);
+
         Append(p);
     }
+    public static void UpdateMoves(PokemonData data = null)
+    {
+        data ??= TerramonPlayer.LocalPlayer.GetActivePokemon();
+        if (data is null)
+            return;
+        int cur = 0;
+        foreach (var moveButton in _movesPanel.Children)
+        {
+            var actual = (DynamicPixelRatioElement)moveButton;
+            var label = (UIText)actual.Children.First();
+
+            var move = data.Moves[cur];
+            actual.Color = Main.rand.NextFromCollection(Enum.GetValues<PokemonType>().ToList()).GetColor();
+            actual.UpdateTextures($"Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
+            actual.OnLeftClick += (evt, listeningElement) => ClickMoveButton(evt, listeningElement, in move);
+            label.SetText(move.ID.ToString());
+
+            cur++;
+        }
+    }
+
+    private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement, in MoveData move)
+    {
+
+    }
+
     private static void FightButton(UIMouseEvent evt, UIElement listeningElement)
     {
         // for quick asset testing
@@ -63,14 +116,41 @@ public sealed class TestBattleUI : SmartUIState
         using Stream stream = File.OpenRead(path);
         Forest = Terramon.Instance.Assets.CreateUntracked<Texture2D>(stream, path);
         */
+        var parent = listeningElement.Parent.Parent;
+        parent.RemoveChild(_optionsPanel);
+        parent.Append(_movesPanel);
+        UpdateMoves();
+        parent.RecalculateChildren();
+    }
+    private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
+    {
+
+    }
+    private static void PokemonButton(UIMouseEvent evt, UIElement listeningElement)
+    {
+
+    }
+    private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
+    {
+        var plr = TerramonPlayer.LocalPlayer;
+        var battle = plr.Battle;
+        if (battle != null)
+        {
+            battle.BattleStream?.Dispose();
+            if (battle.WildNPCIndex.HasValue)
+                ((PokemonNPC)Main.npc[battle.WildNPCIndex.Value].ModNPC).EndBattle();
+            plr.Battle = null;
+        }
+        PartyDisplay.Sidebar.Open();
+        IngameFancyUI.Close();
     }
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        
+        /*
         RemoveAllChildren();
         OnInitialize();
         Recalculate();
-        
+        */
     }
 }
 public sealed class ParallelogramElement : UIElement
@@ -90,7 +170,6 @@ public sealed class ParallelogramElement : UIElement
         float zoom = Main.GameZoomTarget;
         var bounds = GetDimensions();
         Texture2D tex = _texture.Value!;
-        float basicXOffset = _xOffset * zoom * 4f;
         float textureXOffset = (tex.Width - (tex.Width / zoom)) * zoom;
         Vector2 pos = new(bounds.X - (textureXOffset - _xOffset), bounds.Y);
         float yOffset = (tex.Height / zoom) - bounds.Height;
@@ -109,36 +188,89 @@ public sealed class ParallelogramElement : UIElement
 }
 public sealed class DynamicPixelRatioElement : UIElement
 {
-    private readonly Asset<Texture2D> _nineSlice;
-    private readonly Asset<Texture2D> _corners;
-    private readonly bool _noStretching;
-    public DynamicPixelRatioElement(string basePath, bool noStretching = false)
+    private Asset<Texture2D> _nineSlice;
+    private Asset<Texture2D> _corners;
+    private bool _noStretching;
+    private bool _buttonLike;
+    private bool _hovered;
+    private float _hoverTime;
+    public Color Color { get; set; } = Color.White;
+    public DynamicPixelRatioElement(string basePath, bool noStretching = false, bool buttonLike = false)
     {
-        ModContent.RequestIfExists(basePath + "_NineSlice", out _nineSlice);
-        ModContent.RequestIfExists(basePath + "_Corners", out _corners);
-        _noStretching = noStretching;
-        OverrideSamplerState = SamplerState.PointClamp;
+        UpdateTextures(basePath, noStretching);
+        SetupCommon(buttonLike);
     }
-    public DynamicPixelRatioElement(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, bool noStretching = false)
+
+    private static void Unhovered(UIMouseEvent evt, UIElement listeningElement)
+    {
+        var dyn = (DynamicPixelRatioElement)listeningElement;
+        dyn._hovered = false;
+    }
+
+    private static void Hovered(UIMouseEvent evt, UIElement listeningElement)
+    {
+        var dyn = (DynamicPixelRatioElement)listeningElement;
+        dyn._hovered = true;
+    }
+
+    public DynamicPixelRatioElement(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, bool noStretching = false, bool buttonLike = false)
+    {
+        UpdateTextures(nineSlice, corners, noStretching);
+        SetupCommon(buttonLike);
+    }
+    private void SetupCommon(bool buttonLike)
+    {
+        OverrideSamplerState = SamplerState.PointClamp;
+        if (!buttonLike)
+            return;
+        _buttonLike = true;
+        OnMouseOver += Hovered;
+        OnMouseOut += Unhovered;
+    }
+    public DynamicPixelRatioElement UpdateTextures(string newBasePath, bool noStretching = false)
+    {
+        if (ModContent.RequestIfExists(newBasePath + "_NineSlice", out _nineSlice))
+            _noStretching = noStretching;
+        else if (ModContent.RequestIfExists(newBasePath + "_NineSlice_Stretch", out _nineSlice))
+            _noStretching = false;
+        ModContent.RequestIfExists(newBasePath + "_Corners", out _corners);
+        return this;
+    }
+    public DynamicPixelRatioElement UpdateTextures(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, bool noStretching = false)
     {
         _nineSlice = nineSlice;
         _corners = corners;
         _noStretching = noStretching;
-        OverrideSamplerState = SamplerState.PointClamp;
+        return this;
+    }
+    public override void Update(GameTime gameTime)
+    {
+        if (_hovered && _hoverTime < 1f)
+            _hoverTime = Math.Min(_hoverTime + 0.1f, 1f);
+        else if (!_hovered && _hoverTime > 0f)
+            _hoverTime = Math.Max(_hoverTime - 0.1f, 0f);
+        base.Update(gameTime);
     }
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         Rectangle bounds = GetDimensions().ToRectangle();
+        Color drawColor = Color;
+        if (_buttonLike)
+        {
+            int infl = (int)(_hoverTime * 2f);
+            bounds.Inflate(infl, infl);
+            drawColor.A = (byte)((1f - _hoverTime) * byte.MaxValue);
+        }
         if (_nineSlice != null)
-            DrawAdjustableBox(spriteBatch, _nineSlice.Value, bounds, Color.White, Main.GameZoomTarget, _noStretching);
+            DrawAdjustableBox(spriteBatch, _nineSlice.Value, bounds, drawColor, Main.GameZoomTarget, _noStretching);
         if (_corners != null)
-            DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, Color.White, Main.GameZoomTarget);
+            DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, drawColor, Main.GameZoomTarget);
     }
     public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float scale)
     {
         Rectangle frame = tex.Frame(2, 1);
         spriteBatch.Draw(tex, rect.TopLeft(), frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-        frame.X += tex.Width / 2;
+        frame.X += frame.Width;
         Vector2 og = new(tex.Width * 0.5f, tex.Height);
         spriteBatch.Draw(tex, rect.BottomRight(), frame, col, 0f, og, scale, SpriteEffects.None, 0f);
     }
