@@ -1,17 +1,25 @@
 ﻿using rail;
 using ReLogic.Content;
+using System.Runtime.InteropServices;
 using Terramon.Content.NPCs;
+using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
-public sealed class TestBattleUI : UIState
+public sealed class TestBattleUI : SmartUIState
 {
-    public static TestBattleUI Instance = new();
+    public static TestBattleUI Instance { get; private set; }
     public static Asset<Texture2D> Forest;
-    private static UIElement _optionsPanel;
-    private static UIElement _movesPanel;
+    private readonly static UIElement _optionsPanel;
+    private readonly static UIElement _movesPanel;
+    private readonly static UIElement _pokemonPanel;
+    private static DynamicPixelRatioElement _mainPanel;
     static TestBattleUI()
     {
         // Create options panel
@@ -54,8 +62,65 @@ public sealed class TestBattleUI : UIState
             UIText label = new(string.Empty, 0.75f, true);
             label.HAlign = label.VAlign = 0.5f;
             button.Append(label);
+            button.Append(new MoveReference());
+            button.OnLeftClick += ClickMoveButton;
             _movesPanel.Append(button);
         }
+
+        // Create Pokémon panel (blank)
+        _pokemonPanel = new();
+        _pokemonPanel.Width.Percent = _pokemonPanel.Height.Percent = 1f;
+        for (int i = 0; i < 6; i++)
+        {
+            float xFactor = i % 3 / 3f;
+            float yFactor = i / 9f;
+            DynamicPixelRatioElement button = new("Terramon/Assets/GUI/TurnBased/Simple", buttonLike: true);
+            button.Left.Percent = xFactor;
+            button.Top.Percent = yFactor;
+            button.Width.Percent = 1f / 3f;
+            button.Height.Percent = 0.5f;
+            UIText label = new(string.Empty, 0.75f, true)
+            {
+                HAlign = 0.6f,
+                VAlign = 0.5f
+            };
+            UIImage image = new(TextureAssets.Npc[0])
+            {
+                VAlign = 0.5f
+            };
+            button.Append(label);
+            button.Append(image);
+            button.Append(new PokemonReference());
+            button.OnLeftClick += ClickPokemonButton;
+            _pokemonPanel.Append(button);
+        }
+    }
+
+    public TestBattleUI()
+    {
+        Instance = this;
+    }
+    public override int InsertionIndex(List<GameInterfaceLayer> layers)
+    {
+        if (_opened)
+        {
+            foreach (var layer in CollectionsMarshal.AsSpan(layers))
+            {
+                var name = layer.Name;
+                if (name is "Vanilla: Resource Bars" or "Vanilla: Hotbar" or "Vanilla: Cursor" or "Vanilla: Player Chat")
+                    continue;
+                layer.Active = false;
+            }
+        }
+
+        return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
+    }
+    public override bool Visible => _opened;
+    public static void HandleExit()
+    {
+        if (_optionsPanel.Parent != null)
+            return;
+        ChangePanel(_optionsPanel);
     }
     public override void OnInitialize()
     {
@@ -70,16 +135,46 @@ public sealed class TestBattleUI : UIState
         Append(player);
         */
 
-        DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple", true);
+        DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple")
+        {
+            BlockInput = true,
+            HAlign = 0.5f,
+            VAlign = 0.9f,
+        };
         p.Width.Percent = 0.5f;
         p.Height.Percent = 0.3f;
-        p.HAlign = 0.5f;
-        p.VAlign = 0.9f;
         p.SetPadding(32f);
 
         p.Append(_optionsPanel);
 
         Append(p);
+
+        _mainPanel = p;
+    }
+
+    private static Point16 _dimensions;
+    private static bool _opened;
+    public static void Open()
+    {
+        Instance.Recalculate();
+        _dimensions = new(Main.screenWidth, Main.screenHeight);
+        if (Main.playerInventory)
+            Main.LocalPlayer.ToggleInv();
+        _opened = true;
+    }
+    public static void Close()
+    {
+        _opened = false;
+    }
+    public static void ChangePanel(UIElement to)
+    {
+        _mainPanel.RemoveAllChildren();
+        _mainPanel.Append(to);
+        if (to == _movesPanel)
+            UpdateMoves();
+        else if (to == _pokemonPanel)
+            UpdatePokemon();
+        _mainPanel.RecalculateChildren();
     }
     public static void UpdateMoves(PokemonData data = null)
     {
@@ -90,21 +185,64 @@ public sealed class TestBattleUI : UIState
         foreach (var moveButton in _movesPanel.Children)
         {
             var actual = (DynamicPixelRatioElement)moveButton;
-            var label = (UIText)actual.Children.First();
+            var label = (UIText)actual.Children.First(e => e is UIText);
+            var moveRef = (MoveReference)actual.Children.First(e => e is MoveReference);
 
             var move = data.Moves[cur];
             actual.Color = Main.rand.NextFromCollection(Enum.GetValues<PokemonType>().ToList()).GetColor();
             actual.UpdateTextures($"Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
-            actual.OnLeftClick += (evt, listeningElement) => ClickMoveButton(evt, listeningElement, in move);
             label.SetText(move.ID.ToString());
+            moveRef.DataRef = data;
+            moveRef.Move = cur;
 
             cur++;
         }
     }
-
-    private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement, in MoveData move)
+    private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement)
     {
-
+        Console.WriteLine("Testing1");
+        var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
+        var battle = TerramonPlayer.LocalPlayer.Battle;
+        if (battle.MakeMove(move.Move + 1))
+        {
+            ChangePanel(_optionsPanel);
+            battle.MakeMove(2, -1);
+        }
+    }
+    public static void UpdatePokemon()
+    {
+        var team = TerramonPlayer.LocalPlayer.Party;
+        for (int i = 0; i < team.Length; i++)
+        {
+            var pokemonButton = _pokemonPanel.Children.ElementAt(i);
+            var pokemon = team[i];
+            if (pokemon is null)
+                continue;
+            UIText label = (UIText)pokemonButton.Children.First(e => e is UIText);
+            UIImage image = (UIImage)pokemonButton.Children.First(e => e is UIImage);
+            PokemonReference poke = (PokemonReference)pokemonButton.Children.First(e => e is PokemonReference);
+            label.SetText(DatabaseV2.GetLocalizedPokemonName(pokemon.Schema));
+            image.SetImage(pokemon.GetMiniSprite());
+            poke.DataRef = pokemon;
+            poke.PartySlot = i;
+        }
+    }
+    private static void ClickPokemonButton(UIMouseEvent evt, UIElement listeningElement)
+    {
+        Console.WriteLine("Testing2");
+        var pokeRef = ((PokemonReference)listeningElement.Children.First(e => e is PokemonReference));
+        if (pokeRef is null)
+            return;
+        var data = pokeRef.DataRef;
+        string send = string.IsNullOrEmpty(data.Nickname) ? data.Schema.Identifier : data.Nickname;
+        var terramon = TerramonPlayer.LocalPlayer;
+        var battle = terramon.Battle;
+        if (battle.MakeSwitch(send))
+        {
+            ChangePanel(_optionsPanel);
+            battle.MakeMove(2, -1);
+            terramon.ActiveSlot = pokeRef.PartySlot;
+        }
     }
 
     private static void FightButton(UIMouseEvent evt, UIElement listeningElement)
@@ -116,11 +254,9 @@ public sealed class TestBattleUI : UIState
         using Stream stream = File.OpenRead(path);
         Forest = Terramon.Instance.Assets.CreateUntracked<Texture2D>(stream, path);
         */
-        var parent = listeningElement.Parent.Parent;
-        parent.RemoveChild(_optionsPanel);
-        parent.Append(_movesPanel);
-        UpdateMoves();
-        parent.RecalculateChildren();
+        if (TerramonPlayer.LocalPlayer.Battle?.HasToSwitch ?? false)
+            return;
+        ChangePanel(_movesPanel);
     }
     private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
     {
@@ -128,7 +264,7 @@ public sealed class TestBattleUI : UIState
     }
     private static void PokemonButton(UIMouseEvent evt, UIElement listeningElement)
     {
-
+        ChangePanel(_pokemonPanel);
     }
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
@@ -137,15 +273,20 @@ public sealed class TestBattleUI : UIState
         if (battle != null)
         {
             battle.BattleStream?.Dispose();
-            if (battle.WildNPCIndex.HasValue)
-                ((PokemonNPC)Main.npc[battle.WildNPCIndex.Value].ModNPC).EndBattle();
+            battle.WildNPC?.EndBattle();
             plr.Battle = null;
         }
         PartyDisplay.Sidebar.Open();
-        IngameFancyUI.Close();
+        Close();
     }
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        Point16 newDim = new(Main.screenWidth, Main.screenHeight);
+        if (newDim != _dimensions)
+        {
+            Recalculate();
+            _dimensions = newDim;
+        }
         /*
         RemoveAllChildren();
         OnInitialize();
@@ -186,6 +327,16 @@ public sealed class ParallelogramElement : UIElement
         spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
     }
 }
+public sealed class MoveReference : UIElement
+{
+    public PokemonData DataRef;
+    public int Move;
+}
+public sealed class PokemonReference : UIElement
+{
+    public PokemonData DataRef;
+    public int PartySlot;
+}
 public sealed class DynamicPixelRatioElement : UIElement
 {
     private Asset<Texture2D> _nineSlice;
@@ -194,6 +345,7 @@ public sealed class DynamicPixelRatioElement : UIElement
     private bool _buttonLike;
     private bool _hovered;
     private float _hoverTime;
+    public bool BlockInput;
     public Color Color { get; set; } = Color.White;
     public DynamicPixelRatioElement(string basePath, bool noStretching = false, bool buttonLike = false)
     {
@@ -253,6 +405,9 @@ public sealed class DynamicPixelRatioElement : UIElement
     }
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        if (BlockInput && ContainsPoint(Main.MouseScreen))
+            Main.LocalPlayer.mouseInterface = true;
+
         Rectangle bounds = GetDimensions().ToRectangle();
         Color drawColor = Color;
         if (_buttonLike)

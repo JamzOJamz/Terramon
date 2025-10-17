@@ -508,7 +508,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 Tween.To(() => Main.GameZoomTarget, 5f, 1.42f)
                     .SetEase(Ease.InBackExpo, EaseParams.Back(1.6f)).OnComplete = () =>
                     {
-                        IngameFancyUI.OpenUIState(TestBattleUI.Instance);
+                        TestBattleUI.Open();
+                        Battle.Start();
                         Tween.To(() => Main.GameZoomTarget, 1.5f, 0.4f);
                     };
             });

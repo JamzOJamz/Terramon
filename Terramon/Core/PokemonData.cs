@@ -69,10 +69,10 @@ public class PokemonData
     /// </summary>
     public DatabaseV2.PokemonSchema Schema { get; private set; }
 
-    public ushort HP => MaxHP; // TODO: Implement actual HP stat for Pokémon
+    public ushort HP;
 
-    public ushort MaxHP =>
-        (ushort)(Math.Floor(2 * Schema.BaseStats.HP * Level / 100f) + Level + 10);
+    public ushort MaxHP
+        => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (EVs.HP / 4) + 100) * Level / 100 + 10);
 
     /// <summary>
     ///     The total experience points the Pokémon has gained.
@@ -195,6 +195,7 @@ public class PokemonData
             IVs = PokemonIVs.Random()
         };
 
+        pokemon.HP = pokemon.MaxHP;
         pokemon.TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, pokemon.Schema.GrowthRate);
         pokemon.Happiness = pokemon.Schema.BaseHappiness;
         pokemon.Moves = pokemon.GetInitialMoves();
@@ -371,6 +372,8 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
+        // TODO: actually store and load HP value
+        data.HP = data.MaxHP;
 
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
