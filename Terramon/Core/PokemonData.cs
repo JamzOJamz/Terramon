@@ -107,7 +107,7 @@ public class PokemonData
 
         // Clamp the total experience points to an appropriate range
         var oldTotalEXP = TotalEXP;
-        TotalEXP = Math.Clamp(TotalEXP, 0,
+        TotalEXP = Math.Min(TotalEXP,
             ExperienceLookupTable.GetLevelTotalExp(Terramon.MaxPokemonLevel, growthRate));
         overflow = oldTotalEXP - TotalEXP;
 

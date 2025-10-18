@@ -45,6 +45,8 @@ public class BattleInstance
 
     public bool HasToSwitch { get; private set; }
 
+    public bool Player2HasToWait { get; private set; }
+
     public void Update()
     {
         TickCount++;
@@ -143,12 +145,17 @@ public class BattleInstance
                     break;
                 int plr = side["id"].ToString()[1] - '0';
                 bool forceSwitch = o.ContainsKey("forceSwitch");
-                ConsoleWriteColor($"Request was made for player {plr} to {(forceSwitch ? "switch Pokémon" : "make a move")}", ConsoleColor.Green);
+                bool wait = o.ContainsKey("wait");
+                ConsoleWriteColor($"Request was made for player {plr} to {(forceSwitch ? "switch Pokémon" : wait ? "wait" : "make a move")}", ConsoleColor.Green);
                 if (plr == 1)
                 {
                     CanChoose = true;
                     HasToSwitch = forceSwitch;
-                    ConsoleWriteColor("Player one can make a move now", ConsoleColor.Green);
+                }
+                else if (plr == 2)
+                {
+                    if (wait)
+                        Player2HasToWait = true;
                 }
                 break;
             case DamageElement damageMessage:
@@ -164,6 +171,9 @@ public class BattleInstance
                 targetMon.HP = newHP;
                 // this might not be needed for anything actually
                 // p2.GetPokemonFromShowdown(damageMessage.Pokemon.Split(' ', 2)[1], damageMessage.Pokemon[2]).HP = newHP;
+                break;
+            case FaintElement faintMessage:
+
                 break;
             case WinElement winMessage:
                 if (Player1.Player.name == winMessage.Username)
@@ -188,6 +198,12 @@ public class BattleInstance
     public bool MakeMove(int moveIndex) => MakeMove(1, moveIndex);
     public bool MakeMove(int playerIndex, int moveIndex)
     {
+        if (playerIndex == 2 && Player2HasToWait)
+        {
+            Console.WriteLine($"Player 2 waits");
+            Player2HasToWait = false;
+            return true;
+        }
         Console.WriteLine($"Player {playerIndex} plays move '{moveIndex}'");
         if (playerIndex == 1)
         {
@@ -217,7 +233,17 @@ public class BattleInstance
         _ = WildNPCIndex;
         return "default";
     }
-
+    public bool AutoRespond(int playerIndex)
+    {
+        if (playerIndex == 2)
+        {
+            if (WildNPCIndex.HasValue)
+                return MakeMove(2, -1);
+            else
+                return false;
+        }
+        return MakeMove(1, -1);
+    }
     #endregion
 
     public void Stop()

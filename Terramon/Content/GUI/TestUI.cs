@@ -1,4 +1,5 @@
-﻿using rail;
+﻿using Microsoft.Xna.Framework.Graphics;
+using rail;
 using ReLogic.Content;
 using System.Runtime.InteropServices;
 using Terramon.Content.NPCs;
@@ -9,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
@@ -126,14 +128,15 @@ public sealed class TestBattleUI : SmartUIState
     {
         // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
 
-        /*
+        
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
         ParallelogramElement player = new(parallelogram, -96f);
         player.Width.Pixels = 378f;
         player.Height.Pixels = 128f;
         player.Top.Pixels = 256f;
+        player.OnDraw += OnDrawPlayerPanel;
         Append(player);
-        */
+        
 
         DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple")
         {
@@ -150,6 +153,51 @@ public sealed class TestBattleUI : SmartUIState
         Append(p);
 
         _mainPanel = p;
+    }
+
+    private static void OnDrawPlayerPanel(SpriteBatch sb, ParallelogramElement element)
+    {
+        var activeMon = Main.LocalPlayer.Terramon().GetActivePokemon();
+        if (activeMon is null)
+            return;
+        var hpBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/HPBar").Value;
+        var expBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/EXPBar").Value;
+        var gender = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Gender").Value;
+        var ballSlots = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/BallSlots_Simple").Value;
+
+        var dims = element.GetDimensions();
+        Vector2 pos = dims.Position();
+        Vector2 textDrawPos = pos + new Vector2(32f, 16f);
+        float textDrawScale = 0.7f;
+        Vector2 genderDrawPos = textDrawPos + new Vector2(FontAssets.DeathText.Value.MeasureString(activeMon.DisplayName).X * textDrawScale + 8f, 0f);
+        int drawFrame = (int)activeMon.Gender;
+        if (drawFrame != 0)
+            sb.Draw(gender, genderDrawPos, gender.Frame(2, 1, drawFrame - 1), Color.White);
+        Vector2 hpDrawPos = textDrawPos + new Vector2(-(hpBar.Width / 3), 45f);
+        float hpWidth = dims.Width - 48f;
+        float hpFactor = activeMon.HP / (float)activeMon.MaxHP;
+        float zeroToOne = (MathF.Sin((float)Main.timeForVisualEffects * 0.025f) + 1f) * 0.5f;
+        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth, Color.Black, Main.GameZoomTarget);
+        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * hpFactor, Color.White, Main.GameZoomTarget);
+        string hpDisplay = $"HP: {activeMon.HP} / {activeMon.MaxHP}";
+        Vector2 hpDisplaySize = FontAssets.MouseText.Value.MeasureString(hpDisplay);
+        float xDifference = 128f;
+        Vector2 expDrawPos = hpDrawPos + new Vector2(xDifference, hpBar.Height);
+        float expWidth = hpWidth - xDifference - (hpBar.Width / 3);
+        float expFactor = activeMon.Level == Terramon.MaxPokemonLevel ? 1f : activeMon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(activeMon.Level + 1, activeMon.Schema.GrowthRate);
+        DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth, Color.Black, Main.GameZoomTarget);
+        DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth * expFactor, Color.White, Main.GameZoomTarget);
+
+        sb.End();
+        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap,
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+        ChatManager.DrawColorCodedStringWithShadow
+            (sb, FontAssets.DeathText.Value, activeMon.DisplayName, textDrawPos, Color.White, 0f, Vector2.Zero, Vector2.One * textDrawScale, -1, 2);
+        ChatManager.DrawColorCodedStringWithShadow
+            (sb, FontAssets.MouseText.Value, hpDisplay, hpDrawPos + new Vector2(hpWidth * 0.5f, (hpBar.Height + 8) * 0.5f * Main.GameZoomTarget) - hpDisplaySize * 0.5f, Color.White, 0f, Vector2.Zero, Vector2.One);
+        sb.End();
+        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
+            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
     }
 
     private static Point16 _dimensions;
@@ -298,6 +346,7 @@ public sealed class ParallelogramElement : UIElement
 {
     private readonly Asset<Texture2D> _texture;
     private readonly float _xOffset;
+    public event Action<SpriteBatch, ParallelogramElement> OnDraw;
     public ParallelogramElement(Asset<Texture2D> texture, float xOffset = 0f)
     {
         _texture = texture;
@@ -315,6 +364,7 @@ public sealed class ParallelogramElement : UIElement
         Vector2 pos = new(bounds.X - (textureXOffset - _xOffset), bounds.Y);
         float yOffset = (tex.Height / zoom) - bounds.Height;
         DrawAdjustableParallelogram(spriteBatch, tex, pos, Color.White, yOffset, zoom);
+        OnDraw?.Invoke(spriteBatch, this);
         // spriteBatch.Draw(TextureAssets.MagicPixel.Value, bounds.ToRectangle(), Color.White * 0.5f);
     }
     public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, Vector2 position, Color col, float bottomOffset, float scale)
@@ -429,11 +479,41 @@ public sealed class DynamicPixelRatioElement : UIElement
         Vector2 og = new(tex.Width * 0.5f, tex.Height);
         spriteBatch.Draw(tex, rect.BottomRight(), frame, col, 0f, og, scale, SpriteEffects.None, 0f);
     }
+    public static void DrawAdjustableBar(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos, float width, Color col, float pxScale)
+    {
+        if (width <= 0f)
+            return;
+        Vector2 drawPos = pos;
+        float quadWidth = tex.Width / 3f * pxScale;
+        var xScale = (width - quadWidth * 2f) / quadWidth;
+        Rectangle frame = tex.Frame(3, 1);
+        int oldWidth = frame.Width;
+        if (width < quadWidth)
+            frame.Width = (int)(frame.Width * (width / quadWidth));
+        spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+        frame.Width = oldWidth;
+        frame.X += frame.Width;
+        drawPos.X += quadWidth;
+        if (xScale > 0f)
+        {
+            spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, new Vector2(xScale * pxScale, pxScale), SpriteEffects.None, 0f);
+            var pxs = quadWidth * xScale;
+            drawPos.X += pxs;
+        }
+        else
+            drawPos.X = pos.X + quadWidth;
+        if (width <= quadWidth)
+            return;
+        frame.X += frame.Width;
+        if (width < quadWidth * 2f)
+            frame.Width = (int)(frame.Width * ((width - quadWidth) / quadWidth));
+        spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+    }
     public static void DrawAdjustableBox(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float pxScale, bool noStretching = false, SkipDrawBoxSegment flags = SkipDrawBoxSegment.None)
     {
         Vector2 quadSize = new Vector2(tex.Width / 3f, tex.Height / 3f) * pxScale;
-        var xScale = (rect.Width - quadSize.X * 2) / quadSize.X;
-        var yScale = (rect.Height - quadSize.Y * 2) / quadSize.Y;
+        var xScale = (rect.Width - quadSize.X * 2f) / quadSize.X;
+        var yScale = (rect.Height - quadSize.Y * 2f) / quadSize.Y;
 
         void DrawSegment(in Vector2 position, in Rectangle frame, float xSize = 1f, float ySize = 1f)
         {
