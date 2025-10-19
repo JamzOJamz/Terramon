@@ -1,21 +1,17 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using rail;
-using ReLogic.Content;
+﻿using ReLogic.Content;
 using System.Runtime.InteropServices;
-using Terramon.Content.NPCs;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader.UI;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.GUI;
 public sealed class TestBattleUI : SmartUIState
 {
+    private static float PixelRatioForUI() => 1f;
     public static TestBattleUI Instance { get; private set; }
     public static Asset<Texture2D> Forest;
     private readonly static UIElement _optionsPanel;
@@ -57,7 +53,7 @@ public sealed class TestBattleUI : SmartUIState
         {
             float xFactor = i % 2 * 0.5f;
             float yFactor = i / 2 * 0.5f;
-            DynamicPixelRatioElement button = new(null, null, buttonLike: true);
+            DynamicPixelRatioElement button = new(null, null, PixelRatioForUI, buttonLike: true);
             button.Left.Percent = xFactor;
             button.Top.Percent = yFactor;
             button.Width.Percent = button.Height.Percent = 0.5f;
@@ -130,17 +126,22 @@ public sealed class TestBattleUI : SmartUIState
 
         
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
-        ParallelogramElement player = new(parallelogram, -96f);
-        player.Width.Pixels = 378f;
+        ParallelogramElement player = new(parallelogram, PixelRatioForUI, -96f);
+        ParallelogramElement enemy = new(parallelogram, PixelRatioForUI, 96f);
+        player.Width.Pixels = enemy.Width.Pixels = 450f;
         player.Height.Pixels = 128f;
+        enemy.Height.Pixels = 110f;
         player.Top.Pixels = 256f;
         player.OnDraw += OnDrawPlayerPanel;
+        enemy.Top.Pixels = 128f;
+        enemy.HAlign = 1f;
+        enemy.OnDraw += OnDrawEnemyPanel;
         Append(player);
-        
+        Append(enemy);
 
         DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple")
         {
-            BlockInput = true,
+            BlockExternalInput = true,
             HAlign = 0.5f,
             VAlign = 0.9f,
         };
@@ -155,46 +156,67 @@ public sealed class TestBattleUI : SmartUIState
         _mainPanel = p;
     }
 
+    private void OnDrawEnemyPanel(SpriteBatch sb, ParallelogramElement element)
+    {
+        var battle = TerramonPlayer.LocalPlayer.Battle;
+        if (battle is null)
+            return;
+        var enemyMon = battle.WildNPC?.Data ?? battle.Player2.GetActivePokemon();
+        if (enemyMon is null)
+            return;
+        var dims = element.GetDimensions();
+        DrawPanelData(sb, dims.Position(), dims.Width, dims.Height, enemyMon, true);
+    }
+
     private static void OnDrawPlayerPanel(SpriteBatch sb, ParallelogramElement element)
     {
         var activeMon = Main.LocalPlayer.Terramon().GetActivePokemon();
         if (activeMon is null)
             return;
+        var dims = element.GetDimensions();
+        DrawPanelData(sb, dims.Position(), dims.Width, dims.Height, activeMon, false);
+    }
+    internal static void DrawPanelData(SpriteBatch sb, in Vector2 pos, float width, float height, PokemonData mon, bool enemySide)
+    {
         var hpBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/HPBar").Value;
         var expBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/EXPBar").Value;
         var gender = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Gender").Value;
         var ballSlots = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/BallSlots_Simple").Value;
 
-        var dims = element.GetDimensions();
-        Vector2 pos = dims.Position();
         Vector2 textDrawPos = pos + new Vector2(32f, 16f);
+        if (enemySide)
+            textDrawPos.X += 32f;
         float textDrawScale = 0.7f;
-        Vector2 genderDrawPos = textDrawPos + new Vector2(FontAssets.DeathText.Value.MeasureString(activeMon.DisplayName).X * textDrawScale + 8f, 0f);
-        int drawFrame = (int)activeMon.Gender;
+        Vector2 genderDrawPos = textDrawPos + new Vector2(FontAssets.DeathText.Value.MeasureString(mon.DisplayName).X * textDrawScale + 8f, 0f);
+        int drawFrame = (int)mon.Gender;
         if (drawFrame != 0)
             sb.Draw(gender, genderDrawPos, gender.Frame(2, 1, drawFrame - 1), Color.White);
-        Vector2 hpDrawPos = textDrawPos + new Vector2(-(hpBar.Width / 3), 45f);
-        float hpWidth = dims.Width - 48f;
-        float hpFactor = activeMon.HP / (float)activeMon.MaxHP;
-        float zeroToOne = (MathF.Sin((float)Main.timeForVisualEffects * 0.025f) + 1f) * 0.5f;
-        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth, Color.Black, Main.GameZoomTarget);
-        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * hpFactor, Color.White, Main.GameZoomTarget);
-        string hpDisplay = $"HP: {activeMon.HP} / {activeMon.MaxHP}";
+        Vector2 hpDrawPos = textDrawPos + new Vector2(-16f, 45f);
+        float hpWidth = width - 82f;
+        float hpFactor = mon.HP / (float)mon.MaxHP;
+        // float zeroToOne = (MathF.Sin((float)Main.timeForVisualEffects * 0.025f) + 1f) * 0.5f;
+        float zoom = PixelRatioForUI();
+        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth, Color.Black, zoom);
+        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * hpFactor, Color.White, zoom);
+        string hpDisplay = $"HP: {mon.HP} / {mon.MaxHP}";
         Vector2 hpDisplaySize = FontAssets.MouseText.Value.MeasureString(hpDisplay);
-        float xDifference = 128f;
-        Vector2 expDrawPos = hpDrawPos + new Vector2(xDifference, hpBar.Height);
-        float expWidth = hpWidth - xDifference - (hpBar.Width / 3);
-        float expFactor = activeMon.Level == Terramon.MaxPokemonLevel ? 1f : activeMon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(activeMon.Level + 1, activeMon.Schema.GrowthRate);
-        DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth, Color.Black, Main.GameZoomTarget);
-        DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth * expFactor, Color.White, Main.GameZoomTarget);
+        if (!enemySide)
+        {
+            float xDifference = 128f;
+            Vector2 expDrawPos = hpDrawPos + new Vector2(xDifference, hpBar.Height);
+            float expWidth = hpWidth - xDifference - (hpBar.Width / 3);
+            float expFactor = mon.Level == Terramon.MaxPokemonLevel ? 1f : mon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(mon.Level + 1, mon.Schema.GrowthRate);
+            DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth, Color.Black, zoom);
+            DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth * expFactor, Color.White, zoom);
+        }
 
         sb.End();
         sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap,
             DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
         ChatManager.DrawColorCodedStringWithShadow
-            (sb, FontAssets.DeathText.Value, activeMon.DisplayName, textDrawPos, Color.White, 0f, Vector2.Zero, Vector2.One * textDrawScale, -1, 2);
+            (sb, FontAssets.DeathText.Value, mon.DisplayName, textDrawPos, Color.White, 0f, Vector2.Zero, Vector2.One * textDrawScale, -1, 2);
         ChatManager.DrawColorCodedStringWithShadow
-            (sb, FontAssets.MouseText.Value, hpDisplay, hpDrawPos + new Vector2(hpWidth * 0.5f, (hpBar.Height + 8) * 0.5f * Main.GameZoomTarget) - hpDisplaySize * 0.5f, Color.White, 0f, Vector2.Zero, Vector2.One);
+            (sb, FontAssets.MouseText.Value, hpDisplay, hpDrawPos + new Vector2(hpWidth * 0.5f, (hpBar.Height + 8) * 0.5f * zoom) - hpDisplaySize * 0.5f, Color.White, 0f, Vector2.Zero, Vector2.One);
         sb.End();
         sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
             DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
@@ -237,6 +259,15 @@ public sealed class TestBattleUI : SmartUIState
             var moveRef = (MoveReference)actual.Children.First(e => e is MoveReference);
 
             var move = data.Moves[cur];
+            if (move.ID == MoveID.None)
+            {
+                actual.UpdateTextures(null);
+                label.SetText(string.Empty);
+                actual.BlockInteractions = true;
+                cur++;
+                continue;
+            }
+            actual.BlockInteractions = false;
             actual.Color = Main.rand.NextFromCollection(Enum.GetValues<PokemonType>().ToList()).GetColor();
             actual.UpdateTextures($"Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
             label.SetText(move.ID.ToString());
@@ -262,15 +293,32 @@ public sealed class TestBattleUI : SmartUIState
         var team = TerramonPlayer.LocalPlayer.Party;
         for (int i = 0; i < team.Length; i++)
         {
-            var pokemonButton = _pokemonPanel.Children.ElementAt(i);
-            var pokemon = team[i];
-            if (pokemon is null)
-                continue;
+            var pokemonButton = (DynamicPixelRatioElement)_pokemonPanel.Children.ElementAt(i);
             UIText label = (UIText)pokemonButton.Children.First(e => e is UIText);
             UIImage image = (UIImage)pokemonButton.Children.First(e => e is UIImage);
             PokemonReference poke = (PokemonReference)pokemonButton.Children.First(e => e is PokemonReference);
+            var pokemon = team[i];
+            if (pokemon is null)
+            {
+                pokemonButton.UpdateTextures(null);
+                pokemonButton.BlockInteractions = true;
+                label.SetText(string.Empty);
+                continue;
+            }
+            bool fainted = poke.DataRef != null && poke.DataRef.HP <= 0;
+            pokemonButton.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
             label.SetText(DatabaseV2.GetLocalizedPokemonName(pokemon.Schema));
             image.SetImage(pokemon.GetMiniSprite());
+            if (fainted)
+            {
+                pokemonButton.BlockInteractions = true;
+                image.Color = pokemonButton.Color = Color.Gray;
+            }
+            else
+            {
+                pokemonButton.BlockInteractions = false;
+                image.Color = pokemonButton.Color = Color.White;
+            }
             poke.DataRef = pokemon;
             poke.PartySlot = i;
         }
@@ -287,9 +335,9 @@ public sealed class TestBattleUI : SmartUIState
         var battle = terramon.Battle;
         if (battle.MakeSwitch(send))
         {
+            terramon.ActiveSlot = pokeRef.PartySlot;
             ChangePanel(_optionsPanel);
             battle.MakeMove(2, -1);
-            terramon.ActiveSlot = pokeRef.PartySlot;
         }
     }
 
@@ -344,12 +392,14 @@ public sealed class TestBattleUI : SmartUIState
 }
 public sealed class ParallelogramElement : UIElement
 {
+    private readonly Func<float> _getPixelRatio;
     private readonly Asset<Texture2D> _texture;
     private readonly float _xOffset;
     public event Action<SpriteBatch, ParallelogramElement> OnDraw;
-    public ParallelogramElement(Asset<Texture2D> texture, float xOffset = 0f)
+    public ParallelogramElement(Asset<Texture2D> texture, Func<float> getPixelRatio = null, float xOffset = 0f)
     {
         _texture = texture;
+        _getPixelRatio = getPixelRatio;
         _xOffset = xOffset;
         OverrideSamplerState = SamplerState.PointClamp;
     }
@@ -357,24 +407,67 @@ public sealed class ParallelogramElement : UIElement
     {
         if (_texture is null)
             return;
-        float zoom = Main.GameZoomTarget;
+        float zoom = _getPixelRatio?.Invoke() ?? 1f;
         var bounds = GetDimensions();
+        // var firstBounds = bounds;
         Texture2D tex = _texture.Value!;
-        float textureXOffset = (tex.Width - (tex.Width / zoom)) * zoom;
-        Vector2 pos = new(bounds.X - (textureXOffset - _xOffset), bounds.Y);
+        bounds.Width += Math.Abs(_xOffset);
+        if (_xOffset < 0f)
+            bounds.X += _xOffset;
         float yOffset = (tex.Height / zoom) - bounds.Height;
-        DrawAdjustableParallelogram(spriteBatch, tex, pos, Color.White, yOffset, zoom);
+        DrawAdjustableParallelogram(spriteBatch, tex, bounds.ToRectangle(), Color.White, zoom);
         OnDraw?.Invoke(spriteBatch, this);
-        // spriteBatch.Draw(TextureAssets.MagicPixel.Value, bounds.ToRectangle(), Color.White * 0.5f);
+        // spriteBatch.Draw(TextureAssets.MagicPixel.Value, firstBounds.ToRectangle(), Color.White * 0.5f);
     }
-    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, Vector2 position, Color col, float bottomOffset, float scale)
+    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float pxScale)
     {
-        Rectangle frame = tex.Frame(1, 2);
-        bottomOffset *= scale;
-        spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
-        position += new Vector2(bottomOffset * -0.5f, (frame.Height * scale) + bottomOffset);
+        Rectangle frame = tex.Frame(3, 3);
+        Rectangle firstFrame = frame;
+        float shiftClosest = frame.Height * 0.5f / pxScale;
+        float shiftFurthest = frame.Height / pxScale;
+        float quadWidth = frame.Width * pxScale;
+        float overlapShiftFurthest = frame.Height - (rect.Height / 3f); // i think this should be further multiplied by something but idk what
+        float overlapShiftClosest = overlapShiftFurthest * 0.5f;
+        float areaWeNeedToCover = rect.Width - (quadWidth * 2f) - shiftFurthest + overlapShiftFurthest;
+        Vector2 xScale = new(areaWeNeedToCover / frame.Width, pxScale);
+        // tl
+        Vector2 tlPos = new(rect.X + shiftFurthest - overlapShiftFurthest, rect.Y);
+        spriteBatch.Draw(tex, tlPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // tm
+        Vector2 tmPos = new(rect.X + quadWidth + shiftFurthest - overlapShiftFurthest, rect.Y);
+        spriteBatch.Draw(tex, tmPos, frame, col, 0f, Vector2.Zero, xScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // tr
+        spriteBatch.Draw(tex, rect.TopRight(), frame, col, 0f, firstFrame.TopRight(), pxScale, SpriteEffects.None, 0f);
+        frame.X = 0;
         frame.Y += frame.Height;
-        spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        if ((frame.Height * pxScale) * 2f < rect.Height)
+        {
+            // ml
+            Vector2 mlPos = new(rect.X + shiftClosest - overlapShiftClosest, rect.Y + (rect.Height * 0.5f));
+            spriteBatch.Draw(tex, mlPos, frame, col, 0f, new Vector2(0f, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
+            frame.X += frame.Width;
+            // mm
+            Vector2 mmPos = rect.Center();
+            spriteBatch.Draw(tex, mmPos, frame, col, 0f, firstFrame.Center(), xScale, SpriteEffects.None, 0f);
+            frame.X += frame.Width;
+            // mr
+            Vector2 mrPos = new(rect.X + rect.Width - shiftClosest + overlapShiftClosest, rect.Y + (rect.Height * 0.5f));
+            spriteBatch.Draw(tex, mrPos, frame, col, 0f, new Vector2(firstFrame.Width, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
+            frame.X = 0;
+        }
+        frame.Y += frame.Height;
+        // bl
+        spriteBatch.Draw(tex, rect.BottomLeft(), frame, col, 0f, firstFrame.BottomLeft(), pxScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // bm
+        Vector2 bmPos = new(rect.X + quadWidth, rect.Y + rect.Height);
+        spriteBatch.Draw(tex, bmPos, frame, col, 0f, firstFrame.BottomLeft(), xScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // br
+        Vector2 brPos = new(rect.X + rect.Width - shiftFurthest + overlapShiftFurthest, rect.Y + rect.Height);
+        spriteBatch.Draw(tex, brPos, frame, col, 0f, firstFrame.BottomRight(), pxScale, SpriteEffects.None, 0f);
     }
 }
 public sealed class MoveReference : UIElement
@@ -389,39 +482,45 @@ public sealed class PokemonReference : UIElement
 }
 public sealed class DynamicPixelRatioElement : UIElement
 {
+    private Func<float> _getPixelRatio;
     private Asset<Texture2D> _nineSlice;
     private Asset<Texture2D> _corners;
     private bool _noStretching;
     private bool _buttonLike;
     private bool _hovered;
     private float _hoverTime;
-    public bool BlockInput;
+    public bool BlockInteractions;
+    public bool BlockExternalInput;
     public Color Color { get; set; } = Color.White;
-    public DynamicPixelRatioElement(string basePath, bool noStretching = false, bool buttonLike = false)
+    public DynamicPixelRatioElement(string basePath, Func<float> getPixelRatio = null, bool noStretching = false, bool buttonLike = false)
     {
         UpdateTextures(basePath, noStretching);
-        SetupCommon(buttonLike);
+        SetupCommon(buttonLike, getPixelRatio);
     }
-
+    public DynamicPixelRatioElement(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, Func<float> getPixelRatio = null, bool noStretching = false, bool buttonLike = false)
+    {
+        UpdateTextures(nineSlice, corners, noStretching);
+        SetupCommon(buttonLike, getPixelRatio);
+    }
     private static void Unhovered(UIMouseEvent evt, UIElement listeningElement)
     {
         var dyn = (DynamicPixelRatioElement)listeningElement;
+        if (dyn.BlockInteractions)
+            return;
         dyn._hovered = false;
     }
 
     private static void Hovered(UIMouseEvent evt, UIElement listeningElement)
     {
         var dyn = (DynamicPixelRatioElement)listeningElement;
+        if (dyn.BlockInteractions)
+            return;
         dyn._hovered = true;
     }
 
-    public DynamicPixelRatioElement(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, bool noStretching = false, bool buttonLike = false)
+    private void SetupCommon(bool buttonLike, Func<float> getPixelRatio)
     {
-        UpdateTextures(nineSlice, corners, noStretching);
-        SetupCommon(buttonLike);
-    }
-    private void SetupCommon(bool buttonLike)
-    {
+        _getPixelRatio = getPixelRatio;
         OverrideSamplerState = SamplerState.PointClamp;
         if (!buttonLike)
             return;
@@ -445,6 +544,11 @@ public sealed class DynamicPixelRatioElement : UIElement
         _noStretching = noStretching;
         return this;
     }
+    public override void LeftClick(UIMouseEvent evt)
+    {
+        if (!BlockInteractions)
+            base.LeftClick(evt);
+    }
     public override void Update(GameTime gameTime)
     {
         if (_hovered && _hoverTime < 1f)
@@ -455,11 +559,12 @@ public sealed class DynamicPixelRatioElement : UIElement
     }
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        if (BlockInput && ContainsPoint(Main.MouseScreen))
+        if (BlockExternalInput && ContainsPoint(Main.MouseScreen))
             Main.LocalPlayer.mouseInterface = true;
 
         Rectangle bounds = GetDimensions().ToRectangle();
         Color drawColor = Color;
+        float zoom = _getPixelRatio?.Invoke() ?? 1f;
         if (_buttonLike)
         {
             int infl = (int)(_hoverTime * 2f);
@@ -467,9 +572,9 @@ public sealed class DynamicPixelRatioElement : UIElement
             drawColor.A = (byte)((1f - _hoverTime) * byte.MaxValue);
         }
         if (_nineSlice != null)
-            DrawAdjustableBox(spriteBatch, _nineSlice.Value, bounds, drawColor, Main.GameZoomTarget, _noStretching);
+            DrawAdjustableBox(spriteBatch, _nineSlice.Value, bounds, drawColor, zoom, _noStretching);
         if (_corners != null)
-            DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, drawColor, Main.GameZoomTarget);
+            DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, drawColor, zoom);
     }
     public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float scale)
     {

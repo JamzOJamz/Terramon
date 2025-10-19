@@ -1,11 +1,9 @@
-﻿using Microsoft.Build.Logging;
-using Showdown.NET.Definitions;
+﻿using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Terramon.Content.Commands;
 using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
 
@@ -97,8 +95,9 @@ public class BattleInstance
             
             s.Write($">start {start}");
 
-            // TODO: change team order for p1 to accurately reflect the active pokemon
-            s.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", "team 123456"));
+            string p1activeSlot = (modPlayer.ActiveSlot + 1).ToString();
+            string p1teamOrder = p1activeSlot + "123456".Replace(p1activeSlot, string.Empty);
+            s.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", "team", p1teamOrder));
             s.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "team 123456"));
 
             await foreach (var output in s.ReadOutputsAsync())
