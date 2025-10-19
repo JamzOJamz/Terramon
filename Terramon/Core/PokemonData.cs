@@ -372,8 +372,6 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
-        // TODO: actually store and load HP value
-        data.HP = data.MaxHP;
 
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
@@ -402,6 +400,10 @@ public class PokemonData
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
             ? exp
             : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
+
+        // TODO: actually store and load HP value
+        data.HP = data.MaxHP;
+
         return data;
     }
 

@@ -70,8 +70,8 @@ public sealed class TestBattleUI : SmartUIState
         _pokemonPanel.Width.Percent = _pokemonPanel.Height.Percent = 1f;
         for (int i = 0; i < 6; i++)
         {
-            float xFactor = i % 3 / 3f;
-            float yFactor = i / 9f;
+            float xFactor = (i % 3) / 3f;
+            float yFactor = (i / 3) * 0.5f;
             DynamicPixelRatioElement button = new("Terramon/Assets/GUI/TurnBased/Simple", buttonLike: true);
             button.Left.Percent = xFactor;
             button.Top.Percent = yFactor;
@@ -124,7 +124,9 @@ public sealed class TestBattleUI : SmartUIState
     {
         // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
 
-        
+        // i'm gonna say in the final version these should probably be their own UIElements instead of this weird system
+        // (probably the same thing with the move and pokemon buttons lol)
+
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
         ParallelogramElement player = new(parallelogram, PixelRatioForUI, -96f);
         ParallelogramElement enemy = new(parallelogram, PixelRatioForUI, 96f);
@@ -176,6 +178,17 @@ public sealed class TestBattleUI : SmartUIState
         var dims = element.GetDimensions();
         DrawPanelData(sb, dims.Position(), dims.Width, dims.Height, activeMon, false);
     }
+
+    private static float _playerHpVisual;
+    private static float _enemyHpVisual;
+
+    private static void Step(ref float f, float target, float step)
+    {
+        if (f > target)
+            f = Math.Max(f - step, target);
+        else if (f < target)
+            f = Math.Min(f + step, target);
+    }
     internal static void DrawPanelData(SpriteBatch sb, in Vector2 pos, float width, float height, PokemonData mon, bool enemySide)
     {
         var hpBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/HPBar").Value;
@@ -194,9 +207,16 @@ public sealed class TestBattleUI : SmartUIState
         Vector2 hpDrawPos = textDrawPos + new Vector2(-16f, 45f);
         float hpWidth = width - 82f;
         float hpFactor = mon.HP / (float)mon.MaxHP;
+        ref float visual = ref (enemySide ? ref _enemyHpVisual : ref _playerHpVisual);
+        if (hpFactor < visual)
+            Step(ref visual, hpFactor, 0.01f);
+        else
+            visual = hpFactor;
         // float zeroToOne = (MathF.Sin((float)Main.timeForVisualEffects * 0.025f) + 1f) * 0.5f;
         float zoom = PixelRatioForUI();
         DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth, Color.Black, zoom);
+        if (visual != hpFactor)
+            DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * visual, Color.Red, zoom);
         DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * hpFactor, Color.White, zoom);
         string hpDisplay = $"HP: {mon.HP} / {mon.MaxHP}";
         Vector2 hpDisplaySize = FontAssets.MouseText.Value.MeasureString(hpDisplay);
@@ -230,6 +250,17 @@ public sealed class TestBattleUI : SmartUIState
         _dimensions = new(Main.screenWidth, Main.screenHeight);
         if (Main.playerInventory)
             Main.LocalPlayer.ToggleInv();
+
+        var mon = TerramonPlayer.LocalPlayer.GetActivePokemon();
+        _playerHpVisual = mon.HP / (float)mon.MaxHP;
+        var battle = TerramonPlayer.LocalPlayer.Battle;
+        if (battle != null)
+        {
+            mon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
+            if (mon != null)
+                _enemyHpVisual = mon.HP / (float)mon.MaxHP;
+        }
+
         _opened = true;
     }
     public static void Close()
@@ -336,6 +367,7 @@ public sealed class TestBattleUI : SmartUIState
         if (battle.MakeSwitch(send))
         {
             terramon.ActiveSlot = pokeRef.PartySlot;
+            Open();
             ChangePanel(_optionsPanel);
             battle.MakeMove(2, -1);
         }
