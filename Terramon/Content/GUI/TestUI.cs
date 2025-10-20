@@ -107,6 +107,8 @@ public sealed class TestBattleUI : SmartUIState
                 var name = layer.Name;
                 if (name is "Vanilla: Resource Bars" or "Vanilla: Hotbar" or "Vanilla: Cursor" or "Vanilla: Player Chat")
                     continue;
+                if (name == UILoader.GetLayerName(UILoader.GetUIState<BattleUI>()))
+                    continue;
                 layer.Active = false;
             }
         }

@@ -505,6 +505,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             await Task.Delay(570);
             Main.QueueMainThreadAction(() =>
             {
+                BattleUI.FocusBetween.Reset();
+                Main.instance.CameraModifiers.Add(BattleUI.FocusBetween);
                 Tween.To(() => Main.GameZoomTarget, 5f, 1.42f)
                     .SetEase(Ease.InBackExpo, EaseParams.Back(1.6f)).OnComplete = () =>
                     {

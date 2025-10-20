@@ -111,11 +111,11 @@ public class BattleInstance
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
                     Type t = element.GetType();
-                    Console.WriteLine(element);
+                    var finalElement = element;
                     if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(SplitElement<>))
-                        HandleSingleElement((ProtocolElement)t.GetProperty("Secret").GetValue(element));
-                    else
-                        HandleSingleElement(element);
+                        finalElement = (ProtocolElement)t.GetProperty("Secret").GetValue(element);
+                    if (HandleSingleElement(finalElement, modPlayer, p2, wild))
+                        Console.WriteLine(finalElement);
                 }
             }
         }
@@ -130,18 +130,66 @@ public class BattleInstance
             BattleStream?.Dispose();
         }
     }
-    private void HandleSingleElement(ProtocolElement element)
+    /// <summary>
+    /// Gets the corresponding Pokémon data for a Pokémon given its ID as output by Showdown. 
+    /// </summary>
+    /// <param name="showdownMon"></param>
+    private void GetPokemonFromShowdown(string showdownMon, out TerramonPlayer player, out PokemonNPC wild, out PokemonData poke)
     {
-        var p2 = Player2;
+        int plr = showdownMon[1] - '0';
+        ReadOnlySpan<char> pokeName = showdownMon.AsSpan()[5..];
+        player = plr == 1 ? Player1 : Player2;
+        if (player is null)
+        {
+            wild = WildNPC;
+            poke = wild.Data;
+        }
+        else
+        {
+            wild = null;
+            poke = player.GetPokemonFromShowdown(pokeName);
+        }
+    }
+    private bool HandleSingleElement(ProtocolElement element, TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
+    {
         switch (element)
         {
+            // nothings
+            case TimestampElement:
+            case GameTypeElement:
+            case PlayerDetailsElement:
+            case GenElement:
+            case TierElement:
+            case PokeElement:
+            case TeamSizeElement:
+            case UpkeepElement:
+                return false;
+            // spacers
+            case ClearPokeElement:
+            case TeamPreviewElement:
+            case SpacerElement:
+            case StartElement:
+                Console.WriteLine();
+                return false;
+            case MoveElement moveMessage:
+                GetPokemonFromShowdown(moveMessage.Pokemon, out var mplr, out var mw, out var mpkd);
+                ConsoleWriteColor($"{(mw is null ? $"{mplr.Player.name}'s" : "Wild")} {mpkd.DisplayName} used {moveMessage.Move}!", ConsoleColor.Yellow);
+                return false;
+            case SwitchElement switchMessage:
+                GetPokemonFromShowdown(switchMessage.Pokemon, out var splr, out _, out var spkd);
+                if (splr != null)
+                    ConsoleWriteColor($"Player {splr.Player.name} switches to {spkd.DisplayName}", ConsoleColor.Magenta);
+                return false;
+            case TurnElement turnMessage:
+                Console.WriteLine($"It is turn {turnMessage.Number}");
+                return false;
             case RequestElement request:
                 JsonObject o = JsonSerializer.Deserialize<JsonObject>(request.Request);
                 if (o.ContainsKey("teamPreview"))
-                    break;
+                    return false;
                 var side = o["side"];
                 if (side is null)
-                    break;
+                    return false;
                 int plr = side["id"].ToString()[1] - '0';
                 bool forceSwitch = o.ContainsKey("forceSwitch");
                 bool wait = o.ContainsKey("wait");
@@ -156,36 +204,30 @@ public class BattleInstance
                     if (wait)
                         Player2HasToWait = true;
                 }
-                break;
+                return false;
             case DamageElement damageMessage:
-                int playerOwningPokemon = damageMessage.Pokemon[1] - '0';
+                GetPokemonFromShowdown(damageMessage.Pokemon, out var dplr, out var dw, out var targetMon);
                 ushort newHP = ushort.Parse(damageMessage.HP.Split('/', 2)[0]);
-                PokemonData targetMon = playerOwningPokemon switch
-                {
-                    1 => Player1.GetActivePokemon(),
-                    2 => WildNPC?.Data ?? Player2.GetActivePokemon(),
-                    _ => null,
-                };
-                ConsoleWriteColor($"{targetMon.DisplayName} got hit and lost {targetMon.HP - newHP} HP!", ConsoleColor.Magenta);
+                ConsoleWriteColor($"{(dw is null ? $"{dplr.Player.name}'s" : "Wild")} {targetMon.DisplayName} got hit and lost {targetMon.HP - newHP} HP!", ConsoleColor.Magenta);
                 targetMon.HP = newHP;
-                // this might not be needed for anything actually
-                // p2.GetPokemonFromShowdown(damageMessage.Pokemon.Split(' ', 2)[1], damageMessage.Pokemon[2]).HP = newHP;
-                break;
+                return false;
             case FaintElement faintMessage:
-
-                break;
+                GetPokemonFromShowdown(faintMessage.Pokemon, out var fplr, out var fw, out var fpkd);
+                ConsoleWriteColor($"{(fw is null ? $"{fplr.Player.name}'s" : "Wild")} {fpkd.DisplayName} has fainted!", ConsoleColor.DarkRed);
+                return false;
             case WinElement winMessage:
-                if (Player1.Player.name == winMessage.Username)
+                if (p1.Player.name == winMessage.Username)
                     ConsoleWriteColor("You winned :)", ConsoleColor.Green);
                 else if (p2 != null && p2.Player.name == winMessage.Username)
                     ConsoleWriteColor("The other guy winned :/", ConsoleColor.DarkGreen);
                 else
                     ConsoleWriteColor("That wild mon done did wonned...", ConsoleColor.DarkGreen);
-                Player1.Battle = null;
+                p1.Battle = null;
                 WildNPC?.EndBattle();
                 TestBattleUI.Close();
-                break;
+                return false;
         }
+        return true;
     }
     private static void ConsoleWriteColor(object obj, ConsoleColor color)
     {
@@ -203,7 +245,6 @@ public class BattleInstance
             Player2HasToWait = false;
             return true;
         }
-        Console.WriteLine($"Player {playerIndex} plays move '{moveIndex}'");
         if (playerIndex == 1)
         {
             if (!CanChoose || HasToSwitch)
@@ -217,7 +258,6 @@ public class BattleInstance
     public bool MakeSwitch(string pokemon) => MakeSwitch(1, pokemon);
     public bool MakeSwitch(int playerIndex, string pokemon)
     {
-        Console.WriteLine($"Player {playerIndex} switches to Pokémon '{pokemon}'");
         if (playerIndex == 1)
         {
             if (!CanChoose)

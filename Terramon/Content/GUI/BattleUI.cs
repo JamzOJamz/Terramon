@@ -1,18 +1,87 @@
-﻿using Terramon.Core.Loaders.UILoading;
+﻿using System.Runtime.CompilerServices;
+using Terramon.Content.Projectiles;
+using Terramon.Core.Loaders.UILoading;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.UI;
 
 namespace Terramon.Content.GUI;
 
-public class BattleUI : SmartUIState
+public sealed class SubjectModifier : ICameraModifier
+{
+    public Func<Vector2?> WantedSubject;
+    public float CameraSpeed;
+    private Vector2 _latestTargetPosition;
+    private bool _returning;
+    private float _progress;
+    private int _frames;
+    public string UniqueIdentity => nameof(Terramon) + nameof(SubjectModifier);
+    public bool Finished => _progress <= 0.00005f && _returning;
+    public SubjectModifier(Func<Vector2?> subject, float cameraSpeed = 0.1f)
+    {
+        WantedSubject = subject;
+        CameraSpeed = cameraSpeed;
+    }
+    public SubjectModifier(Func<Vector2> subject, int frames, float cameraSpeed = 0.1f)
+    {
+        _frames = frames;
+        WantedSubject = () => _frames <= 0 ? null : subject();
+        CameraSpeed = cameraSpeed;
+    }
+    public void Update(ref CameraInfo cameraPosition)
+    {
+        // Main.NewText($"{_returning}:{_progress}:{_latestTargetPosition}");
+
+        if (!_returning)
+        {
+            var check = WantedSubject();
+            if (check.HasValue)
+                _latestTargetPosition = check.Value - new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
+            else
+                _returning = true;
+        }
+
+        cameraPosition.CameraPosition = Vector2.Lerp(cameraPosition.CameraPosition, _latestTargetPosition, _progress);
+
+        if (Main.gameInactive || Main.gamePaused)
+            return;
+
+        _progress = float.Lerp(_progress, _returning ? 0f : 1f, CameraSpeed);
+        _frames--;
+    }
+    public void Reset()
+    {
+        _returning = false;
+        _progress = 0f;
+    }
+}
+public sealed class BattleUI : SmartUIState
 {
     public override bool Visible => TerramonPlayer.LocalPlayer.Battle != null;
-
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
         return layers.Count;
     }
 
+    public static SubjectModifier FocusBetween = new(GetBetweenPosition);
+    private static Vector2? GetBetweenPosition()
+    {
+        var terramon = TerramonPlayer.LocalPlayer;
+        var battle = terramon.Battle;
+        if (battle is null)
+            return null;
+        Projectile myPet = GetActiveMonProjectile(terramon);
+        if (myPet is null)
+            return null;
+        Vector2? other = battle.WildNPC?.NPC.Center ?? (battle.Player2Index.HasValue ? GetActiveMonProjectile(battle.Player2)?.Center : null);
+        if (!other.HasValue)
+            return null;
+        return Vector2.Lerp(myPet.Center, other.Value, 0.5f);
+        static Projectile GetActiveMonProjectile(TerramonPlayer t)
+        {
+            return Main.projectile.FirstOrDefault(p => p.owner == t.Player.whoAmI && p.ModProjectile is PokemonPet pet && pet.Data == t.GetActivePokemon());
+        }
+    }
     public override void Draw(SpriteBatch spriteBatch)
     {
         var battle = TerramonPlayer.LocalPlayer.Battle;

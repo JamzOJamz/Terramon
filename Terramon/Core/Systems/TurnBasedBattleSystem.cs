@@ -17,7 +17,7 @@ public class TurnBasedBattleSystem : ModSystem
         [PlatformType.OSX] = ("ClearScriptV8.osx-arm64", ".dylib")
     };
 
-    private MemoryStream _showdownArchiveStream;
+    private static MemoryStream _showdownArchiveStream;
 
     public override void OnModLoad()
     {
