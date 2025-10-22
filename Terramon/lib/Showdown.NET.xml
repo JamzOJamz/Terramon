@@ -4,6 +4,525 @@
         <name>Showdown.NET</name>
     </assembly>
     <members>
+        <member name="T:Showdown.NET.Definitions.FormatID">
+            <summary>
+                Contains a list of Pokémon Showdown battle format IDs supported
+                by the simulator.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Definitions.PokemonID">
+            <summary>
+                <para>
+                    A Pokémon ID is in the form <c>POSITION: NAME</c>.
+                </para>
+                This struct separates <c>POSITION</c> into <see cref="P:Showdown.NET.Definitions.PokemonID.Player" /> and <see cref="P:Showdown.NET.Definitions.PokemonID.Position" />:
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Definitions.PokemonID.Player" /> contains the player number.
+                    </item>
+                    <item>
+                        <para>
+                            <see cref="P:Showdown.NET.Definitions.PokemonID.Position" /> is <see langword="null" /> if this Pokémon is in the team, but not in battle.
+                            Otherwise, refers to the physical location of the Pokémon in <see cref="F:Showdown.NET.Protocol.GameType.Doubles" />
+                            and <see cref="F:Showdown.NET.Protocol.GameType.Triples" /> battles.
+                        </para>
+                        In singles, this will always be <c>'a'</c>.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Definitions.PokemonID.#ctor(System.Int32,System.Nullable{System.Char},System.String)">
+            <summary>
+                <para>
+                    A Pokémon ID is in the form <c>POSITION: NAME</c>.
+                </para>
+                This struct separates <c>POSITION</c> into <see cref="P:Showdown.NET.Definitions.PokemonID.Player" /> and <see cref="P:Showdown.NET.Definitions.PokemonID.Position" />:
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Definitions.PokemonID.Player" /> contains the player number.
+                    </item>
+                    <item>
+                        <para>
+                            <see cref="P:Showdown.NET.Definitions.PokemonID.Position" /> is <see langword="null" /> if this Pokémon is in the team, but not in battle.
+                            Otherwise, refers to the physical location of the Pokémon in <see cref="F:Showdown.NET.Protocol.GameType.Doubles" />
+                            and <see cref="F:Showdown.NET.Protocol.GameType.Triples" /> battles.
+                        </para>
+                        In singles, this will always be <c>'a'</c>.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Definitions.Details">
+            <summary>
+                A comma-separated list of all information about a Pokémon visible on the battle screen: species, shininess, gender, and level.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Definitions.Details.#ctor(System.String,System.Int32,System.Nullable{System.Char},System.Boolean,System.String)">
+            <summary>
+                A comma-separated list of all information about a Pokémon visible on the battle screen: species, shininess, gender, and level.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ProtocolElement">
+            <summary>
+                Provides abstraction over the messages which are output by the Pokémon Showdown simulator protocol.
+            </summary>
+        </member>
+        <member name="P:Showdown.NET.Protocol.ProtocolElement.Tags">
+            <summary>
+                Battle actions (especially minor actions) often come with tags such as <c>[from] EFFECT</c>, <c>[of] SOURCE</c>.
+                <c>EFFECT</c> will be an effect (move, ability, item, status, etc), and <c>SOURCE</c> will be a Pokémon.
+                These can affect the message or animation displayed, but do not affect anything else.
+                Other tags include <c>[still]</c> (suppress animation) and <c>[silent]</c> (suppress message).
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.MinorActionAttribute">
+            <summary>
+                Decorates any <see cref="T:Showdown.NET.Protocol.ProtocolElement" /> type which is considered a minor action.
+                Minor actions are less important than major actions. Pretty much anything that happens in a
+                battle other than a switch or the fact that a move was used is a minor action. So yes, the
+                effects of a move such as damage or stat boosts are minor actions.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.TimestampElement">
+            <summary>
+                The current <see cref="T:System.DateTimeOffset" /> - useful for determining when events occurred in real time.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.TimestampElement.#ctor(System.DateTimeOffset)">
+            <summary>
+                The current <see cref="T:System.DateTimeOffset" /> - useful for determining when events occurred in real time.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.TimestampElement.Parse(System.String)">
+            <summary>
+                Creates a new <see cref="T:Showdown.NET.Protocol.TimestampElement" /> given a string <paramref name="value" />
+                representing a UNIX timestamp (the number of seconds since 1970).
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.GameTypeElement">
+            <summary>
+                <see cref="P:Showdown.NET.Protocol.GameTypeElement.GameType" /> is <see cref="F:Showdown.NET.Protocol.GameType.Singles" />, <see cref="F:Showdown.NET.Protocol.GameType.Doubles" />,
+                <see cref="F:Showdown.NET.Protocol.GameType.Triples" />, <see cref="F:Showdown.NET.Protocol.GameType.Multi" />, or <see cref="F:Showdown.NET.Protocol.GameType.FreeForAll" />.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.GameTypeElement.#ctor(Showdown.NET.Protocol.GameType)">
+            <summary>
+                <see cref="P:Showdown.NET.Protocol.GameTypeElement.GameType" /> is <see cref="F:Showdown.NET.Protocol.GameType.Singles" />, <see cref="F:Showdown.NET.Protocol.GameType.Doubles" />,
+                <see cref="F:Showdown.NET.Protocol.GameType.Triples" />, <see cref="F:Showdown.NET.Protocol.GameType.Multi" />, or <see cref="F:Showdown.NET.Protocol.GameType.FreeForAll" />.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.PlayerDetailsElement">
+            <summary>
+                <para>
+                    Player details.
+                </para>
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Player" /> is <c>1</c> or <c>2</c>.
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Player" /> may also be <c>3</c> or <c>4</c> in 4-player battles.
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Username" /> is the username.
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Avatar" /> is the player's avatar identifier (usually a number, but other values
+                        can be used for custom avatars.)
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Rating" /> is the player's Elo rating in the format they're playing.
+                        This will only be displayed in rated battles and when the player is first introduced otherwise it's blank
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.PlayerDetailsElement.#ctor(System.Int32,System.String,System.String,System.String)">
+            <summary>
+                <para>
+                    Player details.
+                </para>
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Player" /> is <c>1</c> or <c>2</c>.
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Player" /> may also be <c>3</c> or <c>4</c> in 4-player battles.
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Username" /> is the username.
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Avatar" /> is the player's avatar identifier (usually a number, but other values
+                        can be used for custom avatars.)
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PlayerDetailsElement.Rating" /> is the player's Elo rating in the format they're playing.
+                        This will only be displayed in rated battles and when the player is first introduced otherwise it's blank
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.GenElement">
+            <summary>
+                Generation number, from 1 to 9. Stadium counts as its respective gens; Let's Go counts as 7,
+                and modded formats count as whatever gen they were based on.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.GenElement.#ctor(System.Int32)">
+            <summary>
+                Generation number, from 1 to 9. Stadium counts as its respective gens; Let's Go counts as 7,
+                and modded formats count as whatever gen they were based on.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.TierElement">
+            <summary>
+                The name of the format being played. (see also <see cref="T:Showdown.NET.Definitions.FormatID" />).
+            </summary>
+            <param name="FormatName"></param>
+        </member>
+        <member name="M:Showdown.NET.Protocol.TierElement.#ctor(System.String)">
+            <summary>
+                The name of the format being played. (see also <see cref="T:Showdown.NET.Definitions.FormatID" />).
+            </summary>
+            <param name="FormatName"></param>
+        </member>
+        <member name="P:Showdown.NET.Protocol.TierElement.FormatName">
+            <summary></summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ClearPokeElement">
+            <summary>
+                Marks the start of Team Preview.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.PokeElement">
+            <summary>
+                Declares a Pokémon for Team Preview.
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PokeElement.Player" /> is the player ID (see <see cref="T:Showdown.NET.Protocol.PlayerDetailsElement" />).
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PokeElement.Details" /> describes the Pokémon (see <see cref="T:Showdown.NET.Definitions.Details" />).
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PokeElement.Item" /> will be <c>item</c> if the Pokémon is holding an item, or blank if it isn't.
+                    </item>
+                </list>
+                Note that forme and shininess are hidden on this, unlike on the <see cref="T:Showdown.NET.Protocol.SwitchElement" /> details message.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.PokeElement.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+                Declares a Pokémon for Team Preview.
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PokeElement.Player" /> is the player ID (see <see cref="T:Showdown.NET.Protocol.PlayerDetailsElement" />).
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PokeElement.Details" /> describes the Pokémon (see <see cref="T:Showdown.NET.Definitions.Details" />).
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.PokeElement.Item" /> will be <c>item</c> if the Pokémon is holding an item, or blank if it isn't.
+                    </item>
+                </list>
+                Note that forme and shininess are hidden on this, unlike on the <see cref="T:Showdown.NET.Protocol.SwitchElement" /> details message.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.TeamPreviewElement">
+            <summary>
+                These messages appear if you're playing a format that uses team previews.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.TeamSizeElement">
+            <summary>
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.TeamSizeElement.Player" /> is <c>1</c>, <c>2</c>, <c>3</c>, or <c>4</c>
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.TeamSizeElement.Size" /> is the number of Pokémon your opponent starts with. In games without Team Preview,
+                        you don't know which Pokémon your opponent has, but you at least know how many there are.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.TeamSizeElement.#ctor(System.Int32,System.Int32)">
+            <summary>
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.TeamSizeElement.Player" /> is <c>1</c>, <c>2</c>, <c>3</c>, or <c>4</c>
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.TeamSizeElement.Size" /> is the number of Pokémon your opponent starts with. In games without Team Preview,
+                        you don't know which Pokémon your opponent has, but you at least know how many there are.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.StartElement">
+            <summary>
+                Indicates that the game has started.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.WinElement">
+            <summary>
+                <see cref="P:Showdown.NET.Protocol.WinElement.Username" /> has won the battle.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.WinElement.#ctor(System.String)">
+            <summary>
+                <see cref="P:Showdown.NET.Protocol.WinElement.Username" /> has won the battle.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.SwitchElement">
+            <summary>
+                <para>
+                    A Pokémon identified by <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> has switched in (if there was an old Pokémon in that
+                    position, it is switched out).
+                </para>
+                <para>
+                    For the <see cref="P:Showdown.NET.Protocol.SwitchElement.Details" /> format, see <see cref="T:Showdown.NET.Definitions.Details" />.
+                </para>
+                <para>
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> and <see cref="P:Showdown.NET.Protocol.SwitchElement.Details" /> represent all the information that can be used to tell Pokémon apart.
+                    If two Pokémon have the same <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> and <see cref="P:Showdown.NET.Protocol.SwitchElement.Details" /> (which will never happen in any format with Species Clause),
+                    you usually won't be able to tell if the same Pokémon switched in or a different Pokémon switched in.
+                </para>
+                <para>
+                    The switched Pokémon has HP <see cref="P:Showdown.NET.Protocol.SwitchElement.HP" />, and status <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" />. <see cref="P:Showdown.NET.Protocol.SwitchElement.HP" /> is specified as a fraction; if it is your own Pokémon
+                    then it will be <c>CURRENT/MAX</c>, if not, it will be <c>/100</c> if HP Percentage Mod is in effect and <c>/48</c> otherwise.
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see langword="null" />, or it can be <c>slp</c>, <c>par</c>, etc.
+                </para>
+            </summary>
+            <remarks>
+                A <see cref="T:Showdown.NET.Protocol.SwitchElement" /> indicates an intentional switch, in contrast with <see cref="T:Showdown.NET.Protocol.DragElement" />,
+                which indicates it was unintentional (forced by Whirlwind, Roar, etc).
+            </remarks>
+        </member>
+        <member name="M:Showdown.NET.Protocol.SwitchElement.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+                <para>
+                    A Pokémon identified by <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> has switched in (if there was an old Pokémon in that
+                    position, it is switched out).
+                </para>
+                <para>
+                    For the <see cref="P:Showdown.NET.Protocol.SwitchElement.Details" /> format, see <see cref="T:Showdown.NET.Definitions.Details" />.
+                </para>
+                <para>
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> and <see cref="P:Showdown.NET.Protocol.SwitchElement.Details" /> represent all the information that can be used to tell Pokémon apart.
+                    If two Pokémon have the same <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> and <see cref="P:Showdown.NET.Protocol.SwitchElement.Details" /> (which will never happen in any format with Species Clause),
+                    you usually won't be able to tell if the same Pokémon switched in or a different Pokémon switched in.
+                </para>
+                <para>
+                    The switched Pokémon has HP <see cref="P:Showdown.NET.Protocol.SwitchElement.HP" />, and status <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" />. <see cref="P:Showdown.NET.Protocol.SwitchElement.HP" /> is specified as a fraction; if it is your own Pokémon
+                    then it will be <c>CURRENT/MAX</c>, if not, it will be <c>/100</c> if HP Percentage Mod is in effect and <c>/48</c> otherwise.
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see langword="null" />, or it can be <c>slp</c>, <c>par</c>, etc.
+                </para>
+            </summary>
+            <remarks>
+                A <see cref="T:Showdown.NET.Protocol.SwitchElement" /> indicates an intentional switch, in contrast with <see cref="T:Showdown.NET.Protocol.DragElement" />,
+                which indicates it was unintentional (forced by Whirlwind, Roar, etc).
+            </remarks>
+        </member>
+        <member name="T:Showdown.NET.Protocol.DragElement">
+            <inheritdoc cref="T:Showdown.NET.Protocol.SwitchElement" />
+        </member>
+        <member name="M:Showdown.NET.Protocol.DragElement.#ctor(System.String,System.String,System.String,System.String)">
+            <inheritdoc cref="T:Showdown.NET.Protocol.SwitchElement" />
+        </member>
+        <member name="T:Showdown.NET.Protocol.MoveElement">
+            <summary>
+                <para>
+                    The specified <see cref="P:Showdown.NET.Protocol.MoveElement.Pokemon" /> has used move <see cref="P:Showdown.NET.Protocol.MoveElement.Move" /> at <see cref="P:Showdown.NET.Protocol.MoveElement.Target" />. If a move has multiple targets or no target,
+                    <see cref="P:Showdown.NET.Protocol.MoveElement.Target" /> should be ignored. If a move targets a side, <see cref="P:Showdown.NET.Protocol.MoveElement.Target" /> will be a (possibly fainted) Pokémon on that side.
+                </para>
+                <see cref="P:Showdown.NET.Protocol.MoveElement.Details" /> contains secondary information.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.MoveElement.#ctor(System.String,System.String,System.String,Showdown.NET.Protocol.MoveDetails)">
+            <summary>
+                <para>
+                    The specified <see cref="P:Showdown.NET.Protocol.MoveElement.Pokemon" /> has used move <see cref="P:Showdown.NET.Protocol.MoveElement.Move" /> at <see cref="P:Showdown.NET.Protocol.MoveElement.Target" />. If a move has multiple targets or no target,
+                    <see cref="P:Showdown.NET.Protocol.MoveElement.Target" /> should be ignored. If a move targets a side, <see cref="P:Showdown.NET.Protocol.MoveElement.Target" /> will be a (possibly fainted) Pokémon on that side.
+                </para>
+                <see cref="P:Showdown.NET.Protocol.MoveElement.Details" /> contains secondary information.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.MoveDetails">
+            <summary>
+                Contains secondary information about a move that was used in a battle.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.MoveDetails.#ctor(System.Boolean,System.Boolean,System.String)">
+            <summary>
+                Contains secondary information about a move that was used in a battle.
+            </summary>
+        </member>
+        <member name="F:Showdown.NET.Protocol.MoveDetails.Miss">
+            <summary>
+                If <see langword="true" />, the move missed.
+            </summary>
+        </member>
+        <member name="F:Showdown.NET.Protocol.MoveDetails.Still">
+            <summary>
+                If <see langword="true" />, no animation should play.
+            </summary>
+        </member>
+        <member name="F:Showdown.NET.Protocol.MoveDetails.Animation">
+            <summary>
+                If not <see langword="null" />, contains the name of the move whose
+                animation should be used instead of the move that was actually used.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.FaintElement">
+            <summary>
+                The Pokémon <see cref="P:Showdown.NET.Protocol.FaintElement.Pokemon" /> has fainted.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.FaintElement.#ctor(System.String)">
+            <summary>
+                The Pokémon <see cref="P:Showdown.NET.Protocol.FaintElement.Pokemon" /> has fainted.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.FailElement">
+            <summary>
+                The specified <see cref="P:Showdown.NET.Protocol.FailElement.Action" /> has failed against the <see cref="P:Showdown.NET.Protocol.FailElement.Pokemon" /> targeted. The
+                <see cref="P:Showdown.NET.Protocol.FailElement.Action" /> in question should be a move that fails due to its own mechanics. Moves (or effect
+                activations) that fail because they're blocked by another effect should use <c>-block</c> instead.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.FailElement.#ctor(System.String,System.String)">
+            <summary>
+                The specified <see cref="P:Showdown.NET.Protocol.FailElement.Action" /> has failed against the <see cref="P:Showdown.NET.Protocol.FailElement.Pokemon" /> targeted. The
+                <see cref="P:Showdown.NET.Protocol.FailElement.Action" /> in question should be a move that fails due to its own mechanics. Moves (or effect
+                activations) that fail because they're blocked by another effect should use <c>-block</c> instead.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.BlockElement">
+            <summary>
+                An effect targeted at <see cref="P:Showdown.NET.Protocol.BlockElement.Pokemon" /> was blocked by <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" />. This may optionally specify that
+                the effect was a <see cref="P:Showdown.NET.Protocol.BlockElement.Move" /> from <see cref="P:Showdown.NET.Protocol.BlockElement.Attacker" />. <c>[of]SOURCE</c> will note the owner of the
+                <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" />, in the case that it's not <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" /> (for instance, an ally with Aroma Veil.)
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.BlockElement.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+                An effect targeted at <see cref="P:Showdown.NET.Protocol.BlockElement.Pokemon" /> was blocked by <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" />. This may optionally specify that
+                the effect was a <see cref="P:Showdown.NET.Protocol.BlockElement.Move" /> from <see cref="P:Showdown.NET.Protocol.BlockElement.Attacker" />. <c>[of]SOURCE</c> will note the owner of the
+                <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" />, in the case that it's not <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" /> (for instance, an ally with Aroma Veil.)
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.MissElement">
+            <summary>
+                The move used by the <see cref="P:Showdown.NET.Protocol.MissElement.Source" /> Pokémon missed (maybe absent) the <see cref="P:Showdown.NET.Protocol.MissElement.Target" /> Pokémon.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.MissElement.#ctor(System.String,System.String)">
+            <summary>
+                The move used by the <see cref="P:Showdown.NET.Protocol.MissElement.Source" /> Pokémon missed (maybe absent) the <see cref="P:Showdown.NET.Protocol.MissElement.Target" /> Pokémon.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.DamageElement">
+            <summary>
+                <para>
+                    The specified Pokémon <see cref="P:Showdown.NET.Protocol.DamageElement.Pokemon" /> has taken damage, and is now at <see cref="P:Showdown.NET.Protocol.DamageElement.HP" />
+                    <see cref="P:Showdown.NET.Protocol.DamageElement.Status" /> (see <see cref="T:Showdown.NET.Protocol.SwitchElement" /> for details).
+                </para>
+                <para>
+                    If <see cref="P:Showdown.NET.Protocol.DamageElement.HP" /> is 0, <see cref="P:Showdown.NET.Protocol.DamageElement.Status" /> should be ignored. The current behavior is for
+                    <see cref="P:Showdown.NET.Protocol.DamageElement.Status" /> to be <c>fnt</c>, but this may change and
+                    should not be relied upon.
+                </para>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.DamageElement.#ctor(System.String,System.String,System.String)">
+            <summary>
+                <para>
+                    The specified Pokémon <see cref="P:Showdown.NET.Protocol.DamageElement.Pokemon" /> has taken damage, and is now at <see cref="P:Showdown.NET.Protocol.DamageElement.HP" />
+                    <see cref="P:Showdown.NET.Protocol.DamageElement.Status" /> (see <see cref="T:Showdown.NET.Protocol.SwitchElement" /> for details).
+                </para>
+                <para>
+                    If <see cref="P:Showdown.NET.Protocol.DamageElement.HP" /> is 0, <see cref="P:Showdown.NET.Protocol.DamageElement.Status" /> should be ignored. The current behavior is for
+                    <see cref="P:Showdown.NET.Protocol.DamageElement.Status" /> to be <c>fnt</c>, but this may change and
+                    should not be relied upon.
+                </para>
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.HealElement">
+            <summary>
+                Same as <see cref="T:Showdown.NET.Protocol.DamageElement" />, but the Pokémon has healed damage instead.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.HealElement.#ctor(System.String,System.String,System.String)">
+            <summary>
+                Same as <see cref="T:Showdown.NET.Protocol.DamageElement" />, but the Pokémon has healed damage instead.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.StartVolatileElement">
+            <summary>
+                A <see href="https://bulbapedia.bulbagarden.net/wiki/Status_condition#Volatile_status"><i>volatile</i> status</see>
+                has been inflicted on the <see cref="P:Showdown.NET.Protocol.StartVolatileElement.Pokemon" /> Pokémon by <see cref="P:Showdown.NET.Protocol.StartVolatileElement.Effect" />. (For example: confusion, Taunt,
+                Substitute).
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.StartVolatileElement.#ctor(System.String,System.String)">
+            <summary>
+                A <see href="https://bulbapedia.bulbagarden.net/wiki/Status_condition#Volatile_status"><i>volatile</i> status</see>
+                has been inflicted on the <see cref="P:Showdown.NET.Protocol.StartVolatileElement.Pokemon" /> Pokémon by <see cref="P:Showdown.NET.Protocol.StartVolatileElement.Effect" />. (For example: confusion, Taunt,
+                Substitute).
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.EndVolatileElement">
+            <summary>
+                The volatile status from <see cref="P:Showdown.NET.Protocol.EndVolatileElement.Effect" /> inflicted on the <see cref="P:Showdown.NET.Protocol.EndVolatileElement.Pokemon" /> Pokémon has ended.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.EndVolatileElement.#ctor(System.String,System.String)">
+            <summary>
+                The volatile status from <see cref="P:Showdown.NET.Protocol.EndVolatileElement.Effect" /> inflicted on the <see cref="P:Showdown.NET.Protocol.EndVolatileElement.Pokemon" /> Pokémon has ended.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.CritElement">
+            <summary>
+                A move has dealt a critical hit against the <see cref="P:Showdown.NET.Protocol.CritElement.Pokemon" />.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.CritElement.#ctor(System.String)">
+            <summary>
+                A move has dealt a critical hit against the <see cref="P:Showdown.NET.Protocol.CritElement.Pokemon" />.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.SuperEffectiveElement">
+            <summary>
+                A move was super effective against the <see cref="P:Showdown.NET.Protocol.SuperEffectiveElement.Pokemon" />.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.SuperEffectiveElement.#ctor(System.String)">
+            <summary>
+                A move was super effective against the <see cref="P:Showdown.NET.Protocol.SuperEffectiveElement.Pokemon" />.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ResistedElement">
+            <summary>
+                A move was not very effective against the <see cref="P:Showdown.NET.Protocol.ResistedElement.Pokemon" />.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.ResistedElement.#ctor(System.String)">
+            <summary>
+                A move was not very effective against the <see cref="P:Showdown.NET.Protocol.ResistedElement.Pokemon" />.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ImmuneElement">
+            <summary>
+                The <see cref="P:Showdown.NET.Protocol.ImmuneElement.Pokemon" /> was immune to a move.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.ImmuneElement.#ctor(System.String)">
+            <summary>
+                The <see cref="P:Showdown.NET.Protocol.ImmuneElement.Pokemon" /> was immune to a move.
+            </summary>
+        </member>
         <member name="T:Showdown.NET.Protocol.ActivateElement">
             <summary>
                 <para>
@@ -11,8 +530,8 @@
                     one of the other minor messages: for example, healing abilities like Water Absorb simply use <c>-heal</c>.
                 </para>
                 <para>
-                    Items usually activate with <c>-end</c>, although items with two messages, like Berries ("POKEMON ate the
-                    Leppa Berry! POKEMON restored PP...!"), will send the "ate" message as <c>-eat</c>, and the "restored" message
+                    Items usually activate with <c>-end</c>, although items with two messages, like Berries ("POKÉMON ate the
+                    Leppa Berry! POKÉMON restored PP...!"), will send the "ate" message as <c>-eat</c>, and the "restored" message
                     as <c>-activate.</c>
                 </para>
             </summary>
@@ -24,10 +543,150 @@
                     one of the other minor messages: for example, healing abilities like Water Absorb simply use <c>-heal</c>.
                 </para>
                 <para>
-                    Items usually activate with <c>-end</c>, although items with two messages, like Berries ("POKEMON ate the
-                    Leppa Berry! POKEMON restored PP...!"), will send the "ate" message as <c>-eat</c>, and the "restored" message
+                    Items usually activate with <c>-end</c>, although items with two messages, like Berries ("POKÉMON ate the
+                    Leppa Berry! POKÉMON restored PP...!"), will send the "ate" message as <c>-eat</c>, and the "restored" message
                     as <c>-activate.</c>
                 </para>
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.HitCountElement">
+            <summary>
+                A multi-hit move hit the <see cref="P:Showdown.NET.Protocol.HitCountElement.Pokemon" /> <see cref="P:Showdown.NET.Protocol.HitCountElement.Num" /> times.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.HitCountElement.#ctor(System.String,System.Int32)">
+            <summary>
+                A multi-hit move hit the <see cref="P:Showdown.NET.Protocol.HitCountElement.Pokemon" /> <see cref="P:Showdown.NET.Protocol.HitCountElement.Num" /> times.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.UpkeepElement">
+            <summary>
+                Signals the upkeep phase of the turn where the number of turns left for field conditions are updated.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.TurnElement">
+            <summary>
+                It is now turn <see cref="P:Showdown.NET.Protocol.TurnElement.Number" />.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.TurnElement.#ctor(System.Int32)">
+            <summary>
+                It is now turn <see cref="P:Showdown.NET.Protocol.TurnElement.Number" />.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.RequestElement">
+            <summary>
+                Gives a JSON object containing a request for a choice (to move or switch).
+                See <a href="https://github.com/smogon/pokemon-showdown/blob/9562cec3897758c54b907cb29baf7573f3db4aec/sim/SIM-PROTOCOL.md#choice-requests">this</a>
+                for a more in-depth explanation.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.RequestElement.#ctor(System.String)">
+            <summary>
+                Gives a JSON object containing a request for a choice (to move or switch).
+                See <a href="https://github.com/smogon/pokemon-showdown/blob/9562cec3897758c54b907cb29baf7573f3db4aec/sim/SIM-PROTOCOL.md#choice-requests">this</a>
+                for a more in-depth explanation.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ISplitElement">
+            <summary>
+                <para>
+                    Exposes the members of <see cref="T:Showdown.NET.Protocol.SplitElement`1"/> non-generically. Handy for easier mass parsing of unknown elements.
+                </para>
+                <see cref="P:Showdown.NET.Protocol.ISplitElement.Secret"/> should always be used for internal parsing.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.SplitElement`1">
+            <summary>
+                Contains two <see cref="T:Showdown.NET.Protocol.ProtocolElement"/>s of the same type:
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.SplitElement`1.Secret"/> is a message for the specific player or an omniscient observer (details which may
+                        contain information about exact details of the player's set, like exact HP).
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.SplitElement`1.Public"/> is a message with public details suitable for display to opponents / teammates / spectators.
+                        Note that this may be empty.
+                    </item>
+                </list>
+                These can be exposed non-generically by casting the <see cref="T:Showdown.NET.Protocol.ProtocolElement"/> to <see cref="T:Showdown.NET.Protocol.ISplitElement"/>.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.SplitElement`1.#ctor(System.Int32,`0,`0)">
+            <summary>
+                Contains two <see cref="T:Showdown.NET.Protocol.ProtocolElement"/>s of the same type:
+                <list type="bullet">
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.SplitElement`1.Secret"/> is a message for the specific player or an omniscient observer (details which may
+                        contain information about exact details of the player's set, like exact HP).
+                    </item>
+                    <item>
+                        <see cref="P:Showdown.NET.Protocol.SplitElement`1.Public"/> is a message with public details suitable for display to opponents / teammates / spectators.
+                        Note that this may be empty.
+                    </item>
+                </list>
+                These can be exposed non-generically by casting the <see cref="T:Showdown.NET.Protocol.ProtocolElement"/> to <see cref="T:Showdown.NET.Protocol.ISplitElement"/>.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.SpacerElement">
+            <summary>
+                Clears the message-bar, and add a spacer to the battle history. This is usually done automatically
+                by detecting the message-type, but can also be forced to happen with this.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.DebugElement">
+            <summary>
+                A debug message.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.DebugElement.#ctor(System.String)">
+            <summary>
+                A debug message.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ErrorElement">
+            <summary>
+                Signals that a decision was sent which is somehow invalid:
+                <list type="bullet">
+                    <item>
+                        If <see cref="P:Showdown.NET.Protocol.ErrorElement.Type"/> is <see cref="F:Showdown.NET.Protocol.ErrorType.InvalidChoice"/>, an invalid decision was sent        
+                        (trying to switch when you're trapped by Mean Look or something).
+                    </item>
+                    <item>
+                        If <see cref="P:Showdown.NET.Protocol.ErrorElement.Type"/> is <see cref="F:Showdown.NET.Protocol.ErrorType.UnavailableChoice"/>, your previous choice revealed additional information
+                        (For example: a move disabled by Imprison or a trapping effect), and a <see cref="T:Showdown.NET.Protocol.RequestElement"/> will be sent to follow up on.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.ErrorElement.#ctor(Showdown.NET.Protocol.ErrorType,System.String)">
+            <summary>
+                Signals that a decision was sent which is somehow invalid:
+                <list type="bullet">
+                    <item>
+                        If <see cref="P:Showdown.NET.Protocol.ErrorElement.Type"/> is <see cref="F:Showdown.NET.Protocol.ErrorType.InvalidChoice"/>, an invalid decision was sent        
+                        (trying to switch when you're trapped by Mean Look or something).
+                    </item>
+                    <item>
+                        If <see cref="P:Showdown.NET.Protocol.ErrorElement.Type"/> is <see cref="F:Showdown.NET.Protocol.ErrorType.UnavailableChoice"/>, your previous choice revealed additional information
+                        (For example: a move disabled by Imprison or a trapping effect), and a <see cref="T:Showdown.NET.Protocol.RequestElement"/> will be sent to follow up on.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.ErrorType">
+            <summary>
+                The type of error output by the Pokémon Showdown simulator, obtained in <see cref="T:Showdown.NET.Protocol.ErrorElement"/>.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.UnknownElement">
+            <summary>
+                <see cref="T:Showdown.NET.Protocol.ProtocolCodec"/> does not support this message type yet, so it is received as an unknown element.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.UnknownElement.#ctor(System.String)">
+            <summary>
+                <see cref="T:Showdown.NET.Protocol.ProtocolCodec"/> does not support this message type yet, so it is received as an unknown element.
             </summary>
         </member>
         <member name="P:Showdown.NET.Simulator.PokemonSet.Name">

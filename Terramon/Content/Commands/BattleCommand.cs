@@ -104,8 +104,8 @@ public class BattleCommand : DebugCommand
 
         BattleStream stream = _currentBattle.BattleStream;
 
-        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", $"move {moveSpec}"));
-        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "default"));
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(1, $"move {moveSpec}"));
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(2, "default"));
     }
 
     private static void Switch(CommandCaller caller, string[] args)
@@ -153,8 +153,8 @@ public class BattleCommand : DebugCommand
 
         BattleStream stream = _currentBattle.BattleStream;
 
-        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", $"switch {switchSpec}"));
-        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "default"));
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(1, $"switch {switchSpec}"));
+        stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(2, "default"));
     }
 
     private static void EndBattle(CommandCaller caller)
@@ -183,10 +183,10 @@ public class BattleCommand : DebugCommand
 
             // Initialize battle
             battleStream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen9CustomGame));
-            battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p1", Main.LocalPlayer.name, packedTeam));
-            battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand("p2", "Green"));
-            battleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p1", "team 123456"));
-            battleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand("p2", "team 123456"));
+            battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand(1, Main.LocalPlayer.name, packedTeam));
+            battleStream.Write(ProtocolCodec.EncodeSetPlayerCommand(2, "Green"));
+            battleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand(1, "team 123456"));
+            battleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand(2, "team 123456"));
 
             // Process battle outputs
             await foreach (var output in battleStream.ReadOutputsAsync())

@@ -8,12 +8,14 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
-namespace Terramon.Content.GUI;
+namespace Terramon.Content.GUI.TurnBased;
 public sealed class TestBattleUI : SmartUIState
 {
     private static float PixelRatioForUI() => 1f;
     public static TestBattleUI Instance { get; private set; }
     public static Asset<Texture2D> Forest;
+    private static ParticipantPanel _playerPanel;
+    private static ParticipantPanel _foePanel;
     private readonly static UIElement _optionsPanel;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
@@ -70,8 +72,8 @@ public sealed class TestBattleUI : SmartUIState
         _pokemonPanel.Width.Percent = _pokemonPanel.Height.Percent = 1f;
         for (int i = 0; i < 6; i++)
         {
-            float xFactor = (i % 3) / 3f;
-            float yFactor = (i / 3) * 0.5f;
+            float xFactor = i % 3 / 3f;
+            float yFactor = i / 3 * 0.5f;
             DynamicPixelRatioElement button = new("Terramon/Assets/GUI/TurnBased/Simple", buttonLike: true);
             button.Left.Percent = xFactor;
             button.Top.Percent = yFactor;
@@ -130,18 +132,16 @@ public sealed class TestBattleUI : SmartUIState
         // (probably the same thing with the move and pokemon buttons lol)
 
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
-        ParallelogramElement player = new(parallelogram, PixelRatioForUI, -96f);
-        ParallelogramElement enemy = new(parallelogram, PixelRatioForUI, 96f);
-        player.Width.Pixels = enemy.Width.Pixels = 450f;
-        player.Height.Pixels = 128f;
-        enemy.Height.Pixels = 110f;
-        player.Top.Pixels = 256f;
-        player.OnDraw += OnDrawPlayerPanel;
-        enemy.Top.Pixels = 128f;
-        enemy.HAlign = 1f;
-        enemy.OnDraw += OnDrawEnemyPanel;
-        Append(player);
-        Append(enemy);
+        _playerPanel = new(PixelRatioForUI);
+        _foePanel = new(PixelRatioForUI);
+        _playerPanel.Width.Pixels = _foePanel.Width.Pixels = 450f;
+        _playerPanel.Height.Pixels = 128f;
+        _foePanel.Height.Pixels = 110f;
+        _playerPanel.Top.Pixels = 256f;
+        _foePanel.Top.Pixels = 128f;
+        _foePanel.HAlign = 1f;
+        Append(_playerPanel);
+        Append(_foePanel);
 
         DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple")
         {
@@ -160,31 +160,10 @@ public sealed class TestBattleUI : SmartUIState
         _mainPanel = p;
     }
 
-    private void OnDrawEnemyPanel(SpriteBatch sb, ParallelogramElement element)
-    {
-        var battle = TerramonPlayer.LocalPlayer.Battle;
-        if (battle is null)
-            return;
-        var enemyMon = battle.WildNPC?.Data ?? battle.Player2.GetActivePokemon();
-        if (enemyMon is null)
-            return;
-        var dims = element.GetDimensions();
-        DrawPanelData(sb, dims.Position(), dims.Width, dims.Height, enemyMon, true);
-    }
-
-    private static void OnDrawPlayerPanel(SpriteBatch sb, ParallelogramElement element)
-    {
-        var activeMon = Main.LocalPlayer.Terramon().GetActivePokemon();
-        if (activeMon is null)
-            return;
-        var dims = element.GetDimensions();
-        DrawPanelData(sb, dims.Position(), dims.Width, dims.Height, activeMon, false);
-    }
-
     private static float _playerHpVisual;
     private static float _enemyHpVisual;
 
-    private static void Step(ref float f, float target, float step)
+    public static void Step(ref float f, float target, float step)
     {
         if (f > target)
             f = Math.Max(f - step, target);
@@ -226,7 +205,7 @@ public sealed class TestBattleUI : SmartUIState
         {
             float xDifference = 128f;
             Vector2 expDrawPos = hpDrawPos + new Vector2(xDifference, hpBar.Height);
-            float expWidth = hpWidth - xDifference - (hpBar.Width / 3);
+            float expWidth = hpWidth - xDifference - hpBar.Width / 3;
             float expFactor = mon.Level == Terramon.MaxPokemonLevel ? 1f : mon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(mon.Level + 1, mon.Schema.GrowthRate);
             DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth, Color.Black, zoom);
             DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth * expFactor, Color.White, zoom);
@@ -312,7 +291,6 @@ public sealed class TestBattleUI : SmartUIState
     }
     private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        Console.WriteLine("Testing1");
         var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
         var battle = TerramonPlayer.LocalPlayer.Battle;
         if (battle.MakeMove(move.Move + 1))
@@ -359,7 +337,7 @@ public sealed class TestBattleUI : SmartUIState
     private static void ClickPokemonButton(UIMouseEvent evt, UIElement listeningElement)
     {
         Console.WriteLine("Testing2");
-        var pokeRef = ((PokemonReference)listeningElement.Children.First(e => e is PokemonReference));
+        var pokeRef = (PokemonReference)listeningElement.Children.First(e => e is PokemonReference);
         if (pokeRef is null)
             return;
         var data = pokeRef.DataRef;
@@ -417,91 +395,14 @@ public sealed class TestBattleUI : SmartUIState
             Recalculate();
             _dimensions = newDim;
         }
+
+        _playerPanel.SideFactor = MathF.Sin((float)(Main.timeForVisualEffects * 0.01f));
+        _playerPanel.Recalculate();
         /*
         RemoveAllChildren();
         OnInitialize();
         Recalculate();
         */
-    }
-}
-public sealed class ParallelogramElement : UIElement
-{
-    private readonly Func<float> _getPixelRatio;
-    private readonly Asset<Texture2D> _texture;
-    private readonly float _xOffset;
-    public event Action<SpriteBatch, ParallelogramElement> OnDraw;
-    public ParallelogramElement(Asset<Texture2D> texture, Func<float> getPixelRatio = null, float xOffset = 0f)
-    {
-        _texture = texture;
-        _getPixelRatio = getPixelRatio;
-        _xOffset = xOffset;
-        OverrideSamplerState = SamplerState.PointClamp;
-    }
-    protected override void DrawSelf(SpriteBatch spriteBatch)
-    {
-        if (_texture is null)
-            return;
-        float zoom = _getPixelRatio?.Invoke() ?? 1f;
-        var bounds = GetDimensions();
-        // var firstBounds = bounds;
-        Texture2D tex = _texture.Value!;
-        bounds.Width += Math.Abs(_xOffset);
-        if (_xOffset < 0f)
-            bounds.X += _xOffset;
-        float yOffset = (tex.Height / zoom) - bounds.Height;
-        DrawAdjustableParallelogram(spriteBatch, tex, bounds.ToRectangle(), Color.White, zoom);
-        OnDraw?.Invoke(spriteBatch, this);
-        // spriteBatch.Draw(TextureAssets.MagicPixel.Value, firstBounds.ToRectangle(), Color.White * 0.5f);
-    }
-    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float pxScale)
-    {
-        Rectangle frame = tex.Frame(3, 3);
-        Rectangle firstFrame = frame;
-        float shiftClosest = frame.Height * 0.5f / pxScale;
-        float shiftFurthest = frame.Height / pxScale;
-        float quadWidth = frame.Width * pxScale;
-        float overlapShiftFurthest = frame.Height - (rect.Height / 3f); // i think this should be further multiplied by something but idk what
-        float overlapShiftClosest = overlapShiftFurthest * 0.5f;
-        float areaWeNeedToCover = rect.Width - (quadWidth * 2f) - shiftFurthest + overlapShiftFurthest;
-        Vector2 xScale = new(areaWeNeedToCover / frame.Width, pxScale);
-        // tl
-        Vector2 tlPos = new(rect.X + shiftFurthest - overlapShiftFurthest, rect.Y);
-        spriteBatch.Draw(tex, tlPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
-        frame.X += frame.Width;
-        // tm
-        Vector2 tmPos = new(rect.X + quadWidth + shiftFurthest - overlapShiftFurthest, rect.Y);
-        spriteBatch.Draw(tex, tmPos, frame, col, 0f, Vector2.Zero, xScale, SpriteEffects.None, 0f);
-        frame.X += frame.Width;
-        // tr
-        spriteBatch.Draw(tex, rect.TopRight(), frame, col, 0f, firstFrame.TopRight(), pxScale, SpriteEffects.None, 0f);
-        frame.X = 0;
-        frame.Y += frame.Height;
-        if ((frame.Height * pxScale) * 2f < rect.Height)
-        {
-            // ml
-            Vector2 mlPos = new(rect.X + shiftClosest - overlapShiftClosest, rect.Y + (rect.Height * 0.5f));
-            spriteBatch.Draw(tex, mlPos, frame, col, 0f, new Vector2(0f, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
-            frame.X += frame.Width;
-            // mm
-            Vector2 mmPos = rect.Center();
-            spriteBatch.Draw(tex, mmPos, frame, col, 0f, firstFrame.Center(), xScale, SpriteEffects.None, 0f);
-            frame.X += frame.Width;
-            // mr
-            Vector2 mrPos = new(rect.X + rect.Width - shiftClosest + overlapShiftClosest, rect.Y + (rect.Height * 0.5f));
-            spriteBatch.Draw(tex, mrPos, frame, col, 0f, new Vector2(firstFrame.Width, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
-            frame.X = 0;
-        }
-        frame.Y += frame.Height;
-        // bl
-        spriteBatch.Draw(tex, rect.BottomLeft(), frame, col, 0f, firstFrame.BottomLeft(), pxScale, SpriteEffects.None, 0f);
-        frame.X += frame.Width;
-        // bm
-        Vector2 bmPos = new(rect.X + quadWidth, rect.Y + rect.Height);
-        spriteBatch.Draw(tex, bmPos, frame, col, 0f, firstFrame.BottomLeft(), xScale, SpriteEffects.None, 0f);
-        frame.X += frame.Width;
-        // br
-        Vector2 brPos = new(rect.X + rect.Width - shiftFurthest + overlapShiftFurthest, rect.Y + rect.Height);
-        spriteBatch.Draw(tex, brPos, frame, col, 0f, firstFrame.BottomRight(), pxScale, SpriteEffects.None, 0f);
     }
 }
 public sealed class MoveReference : UIElement
@@ -753,6 +654,56 @@ public sealed class DynamicPixelRatioElement : UIElement
             Rectangle bottomRightCorner = tex.Frame(3, 3, 2, 2);
             DrawSegment(new Vector2(rect.X + rect.Width - quadSize.X, rect.Y + rect.Height - quadSize.Y), bottomRightCorner);
         }
+    }
+    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float pxScale)
+    {
+        Rectangle frame = tex.Frame(3, 3);
+        Rectangle firstFrame = frame;
+        float shiftClosest = frame.Height * 0.5f / pxScale;
+        float shiftFurthest = frame.Height / pxScale;
+        float quadWidth = frame.Width * pxScale;
+        float overlapShiftFurthest = frame.Height - rect.Height / 3f; // i think this should be further multiplied by something but idk what
+        float overlapShiftClosest = overlapShiftFurthest * 0.5f;
+        float areaWeNeedToCover = rect.Width - quadWidth * 2f - shiftFurthest + overlapShiftFurthest;
+        Vector2 xScale = new(areaWeNeedToCover / frame.Width, pxScale);
+        // tl
+        Vector2 tlPos = new(rect.X + shiftFurthest - overlapShiftFurthest, rect.Y);
+        spriteBatch.Draw(tex, tlPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // tm
+        Vector2 tmPos = new(rect.X + quadWidth + shiftFurthest - overlapShiftFurthest, rect.Y);
+        spriteBatch.Draw(tex, tmPos, frame, col, 0f, Vector2.Zero, xScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // tr
+        spriteBatch.Draw(tex, rect.TopRight(), frame, col, 0f, firstFrame.TopRight(), pxScale, SpriteEffects.None, 0f);
+        frame.X = 0;
+        frame.Y += frame.Height;
+        if (frame.Height * pxScale * 2f < rect.Height)
+        {
+            // ml
+            Vector2 mlPos = new(rect.X + shiftClosest - overlapShiftClosest, rect.Y + rect.Height * 0.5f);
+            spriteBatch.Draw(tex, mlPos, frame, col, 0f, new Vector2(0f, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
+            frame.X += frame.Width;
+            // mm
+            Vector2 mmPos = rect.Center();
+            spriteBatch.Draw(tex, mmPos, frame, col, 0f, firstFrame.Center(), xScale, SpriteEffects.None, 0f);
+            frame.X += frame.Width;
+            // mr
+            Vector2 mrPos = new(rect.X + rect.Width - shiftClosest + overlapShiftClosest, rect.Y + rect.Height * 0.5f);
+            spriteBatch.Draw(tex, mrPos, frame, col, 0f, new Vector2(firstFrame.Width, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
+            frame.X = 0;
+        }
+        frame.Y += frame.Height;
+        // bl
+        spriteBatch.Draw(tex, rect.BottomLeft(), frame, col, 0f, firstFrame.BottomLeft(), pxScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // bm
+        Vector2 bmPos = new(rect.X + quadWidth, rect.Y + rect.Height);
+        spriteBatch.Draw(tex, bmPos, frame, col, 0f, firstFrame.BottomLeft(), xScale, SpriteEffects.None, 0f);
+        frame.X += frame.Width;
+        // br
+        Vector2 brPos = new(rect.X + rect.Width - shiftFurthest + overlapShiftFurthest, rect.Y + rect.Height);
+        spriteBatch.Draw(tex, brPos, frame, col, 0f, firstFrame.BottomRight(), pxScale, SpriteEffects.None, 0f);
     }
 }
 internal enum ButtonType

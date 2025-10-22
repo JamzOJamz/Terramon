@@ -5,6 +5,7 @@ using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Content.GUI;
+using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Projectiles;
