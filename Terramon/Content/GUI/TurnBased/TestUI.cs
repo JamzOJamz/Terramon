@@ -128,9 +128,6 @@ public sealed class TestBattleUI : SmartUIState
     {
         // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
 
-        // i'm gonna say in the final version these should probably be their own UIElements instead of this weird system
-        // (probably the same thing with the move and pokemon buttons lol)
-
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
         _playerPanel = new(PixelRatioForUI);
         _foePanel = new(PixelRatioForUI);
@@ -140,6 +137,7 @@ public sealed class TestBattleUI : SmartUIState
         _playerPanel.Top.Pixels = 256f;
         _foePanel.Top.Pixels = 128f;
         _foePanel.HAlign = 1f;
+        _playerPanel.DrawEXPBar = true;
         Append(_playerPanel);
         Append(_foePanel);
 
@@ -160,69 +158,6 @@ public sealed class TestBattleUI : SmartUIState
         _mainPanel = p;
     }
 
-    private static float _playerHpVisual;
-    private static float _enemyHpVisual;
-
-    public static void Step(ref float f, float target, float step)
-    {
-        if (f > target)
-            f = Math.Max(f - step, target);
-        else if (f < target)
-            f = Math.Min(f + step, target);
-    }
-    internal static void DrawPanelData(SpriteBatch sb, in Vector2 pos, float width, float height, PokemonData mon, bool enemySide)
-    {
-        var hpBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/HPBar").Value;
-        var expBar = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/EXPBar").Value;
-        var gender = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Gender").Value;
-        var ballSlots = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/BallSlots_Simple").Value;
-
-        Vector2 textDrawPos = pos + new Vector2(32f, 16f);
-        if (enemySide)
-            textDrawPos.X += 32f;
-        float textDrawScale = 0.7f;
-        Vector2 genderDrawPos = textDrawPos + new Vector2(FontAssets.DeathText.Value.MeasureString(mon.DisplayName).X * textDrawScale + 8f, 0f);
-        int drawFrame = (int)mon.Gender;
-        if (drawFrame != 0)
-            sb.Draw(gender, genderDrawPos, gender.Frame(2, 1, drawFrame - 1), Color.White);
-        Vector2 hpDrawPos = textDrawPos + new Vector2(-16f, 45f);
-        float hpWidth = width - 82f;
-        float hpFactor = mon.HP / (float)mon.MaxHP;
-        ref float visual = ref (enemySide ? ref _enemyHpVisual : ref _playerHpVisual);
-        if (hpFactor < visual)
-            Step(ref visual, hpFactor, 0.01f);
-        else
-            visual = hpFactor;
-        // float zeroToOne = (MathF.Sin((float)Main.timeForVisualEffects * 0.025f) + 1f) * 0.5f;
-        float zoom = PixelRatioForUI();
-        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth, Color.Black, zoom);
-        if (visual != hpFactor)
-            DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * visual, Color.Red, zoom);
-        DynamicPixelRatioElement.DrawAdjustableBar(sb, hpBar, hpDrawPos, hpWidth * hpFactor, Color.White, zoom);
-        string hpDisplay = $"HP: {mon.HP} / {mon.MaxHP}";
-        Vector2 hpDisplaySize = FontAssets.MouseText.Value.MeasureString(hpDisplay);
-        if (!enemySide)
-        {
-            float xDifference = 128f;
-            Vector2 expDrawPos = hpDrawPos + new Vector2(xDifference, hpBar.Height);
-            float expWidth = hpWidth - xDifference - hpBar.Width / 3;
-            float expFactor = mon.Level == Terramon.MaxPokemonLevel ? 1f : mon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(mon.Level + 1, mon.Schema.GrowthRate);
-            DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth, Color.Black, zoom);
-            DynamicPixelRatioElement.DrawAdjustableBar(sb, expBar, expDrawPos, expWidth * expFactor, Color.White, zoom);
-        }
-
-        sb.End();
-        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap,
-            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
-        ChatManager.DrawColorCodedStringWithShadow
-            (sb, FontAssets.DeathText.Value, mon.DisplayName, textDrawPos, Color.White, 0f, Vector2.Zero, Vector2.One * textDrawScale, -1, 2);
-        ChatManager.DrawColorCodedStringWithShadow
-            (sb, FontAssets.MouseText.Value, hpDisplay, hpDrawPos + new Vector2(hpWidth * 0.5f, (hpBar.Height + 8) * 0.5f * zoom) - hpDisplaySize * 0.5f, Color.White, 0f, Vector2.Zero, Vector2.One);
-        sb.End();
-        sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp,
-            DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
-    }
-
     private static Point16 _dimensions;
     private static bool _opened;
     public static void Open()
@@ -232,16 +167,13 @@ public sealed class TestBattleUI : SmartUIState
         if (Main.playerInventory)
             Main.LocalPlayer.ToggleInv();
 
-        var mon = TerramonPlayer.LocalPlayer.GetActivePokemon();
-        _playerHpVisual = mon.HP / (float)mon.MaxHP;
-        var battle = TerramonPlayer.LocalPlayer.Battle;
+        var terramon = TerramonPlayer.LocalPlayer;
+        var battle = terramon.Battle;
         if (battle != null)
         {
-            mon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
-            if (mon != null)
-                _enemyHpVisual = mon.HP / (float)mon.MaxHP;
+            _playerPanel.CurrentMon = terramon.GetActivePokemon();
+            _foePanel.CurrentMon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
         }
-
         _opened = true;
     }
     public static void Close()
@@ -336,7 +268,6 @@ public sealed class TestBattleUI : SmartUIState
     }
     private static void ClickPokemonButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        Console.WriteLine("Testing2");
         var pokeRef = (PokemonReference)listeningElement.Children.First(e => e is PokemonReference);
         if (pokeRef is null)
             return;
@@ -395,9 +326,6 @@ public sealed class TestBattleUI : SmartUIState
             Recalculate();
             _dimensions = newDim;
         }
-
-        _playerPanel.SideFactor = MathF.Sin((float)(Main.timeForVisualEffects * 0.01f));
-        _playerPanel.Recalculate();
         /*
         RemoveAllChildren();
         OnInitialize();
@@ -713,6 +641,7 @@ internal enum ButtonType
     Pokemon,
     Run,
 }
+
 [Flags]
 public enum SkipDrawBoxSegment
 {

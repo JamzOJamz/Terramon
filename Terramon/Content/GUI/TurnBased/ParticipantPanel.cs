@@ -5,7 +5,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Terramon.Content.GUI.TurnBased;
-public sealed class ParticipantPanel : UIElement
+public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIElement
 {
     public static Asset<Texture2D> HPBar { get; private set; } 
     public static Asset<Texture2D> EXPBar { get; private set; }
@@ -14,8 +14,9 @@ public sealed class ParticipantPanel : UIElement
     public static Asset<Texture2D> PanelTexture { get; private set; }
 
     public PokemonData CurrentMon;
+    public bool DrawEXPBar;
     private float _hpVisual;
-    private Func<float> _getPixelRatio;
+    private readonly Func<float> _getPixelRatio = getPixelRatio;
     /// <summary>
     /// Use instead of <see cref="UIElement.HAlign"/>
     /// </summary>
@@ -32,10 +33,7 @@ public sealed class ParticipantPanel : UIElement
         BallSlots = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/BallSlots_Simple");
         PanelTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/PlayerPanel_Simple");
     }
-    public ParticipantPanel(Func<float> getPixelRatio = null)
-    {
-        _getPixelRatio = getPixelRatio;
-    }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         DynamicSpriteFont bigFont = FontAssets.DeathText.Value;
@@ -68,10 +66,12 @@ public sealed class ParticipantPanel : UIElement
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
         }
 
-        float hpWidth = dims.Width - 96f;
-        Vector2 drawHpPosition = new(dims.X + (dims.Width * 0.5f) - (hpWidth * 0.5f), dims.Y + dims.Height - 48f);
+        float hpWidth = dims.Width - 84f;
+        float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
+        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + HPBar.Height() * 0.5f, in parallelogramRect);
+        Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
         if (_hpVisual < monHpFactor)
-            TestBattleUI.Step(ref _hpVisual, monHpFactor, 0.01f);
+            Step(ref _hpVisual, monHpFactor, 0.01f);
         else
             _hpVisual = monHpFactor;
 
@@ -80,6 +80,41 @@ public sealed class ParticipantPanel : UIElement
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual, Color.Red, zoom);
         DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * monHpFactor, Color.White, zoom);
 
+        string hpDisplay = CurrentMon is null ? "??? / ???" : $"HP: {CurrentMon.HP} / {CurrentMon.MaxHP}";
+        Vector2 hpDisplaySize = smallFont.MeasureString(hpDisplay);
+        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (HPBar.Height() + 8) * 0.5f * zoom) - hpDisplaySize * 0.5f;
+
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, hpDisplay, hpDisplayPosition, Color.White, 0f, Vector2.Zero, Vector2.One);
+
+        if (DrawEXPBar)
+        {
+            float xDifference = 128f;
+            Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, HPBar.Height());
+            float expWidth = hpWidth - xDifference - HPBar.Width() / 3;
+            float expFactor = CurrentMon is null ? 0f : CurrentMon.Level == Terramon.MaxPokemonLevel ? 1f : CurrentMon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(CurrentMon.Level + 1, CurrentMon.Schema.GrowthRate);
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, Color.Black, zoom);
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor, Color.White, zoom);
+        }
+
         // spriteBatch.Draw(TextureAssets.MagicPixel.Value, dims.ToRectangle(), Color.White * 0.5f);
+    }
+
+    public static float GetParallelogramCenter(float y, in Rectangle bounds)
+    {
+        if (y < bounds.Y || y > bounds.Y + bounds.Height)
+            return y;
+        y -= bounds.Y; // makes it relative, so we don't need to use bounds.Y or bounds.X anymore
+        y /= bounds.Height; // makes it range from 0f - 1f
+        float spaceAtTop = bounds.Height * 0.5f;
+        float space = spaceAtTop * (1f - y);
+        return bounds.X + space + ((bounds.Width - spaceAtTop) * 0.5f);
+    }
+
+    public static void Step(ref float f, float target, float step)
+    {
+        if (f > target)
+            f = Math.Max(f - step, target);
+        else if (f < target)
+            f = Math.Min(f + step, target);
     }
 }
