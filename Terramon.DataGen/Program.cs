@@ -46,7 +46,6 @@ internal static class Program
     private static readonly Dictionary<string, string> IdentifierMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         { "Medium", "MediumFast" },
-        { "ViceGrip", "ViseGrip" }
     };
 
     private static async Task Main()
@@ -112,10 +111,25 @@ internal static class Program
 
     private static async Task<DatabaseV2.PokemonSchema> FetchPokemonData(int id)
     {
-        var url = $"https://pokeapi.co/api/v2/pokemon/{id}";
-        var response = await HttpClient.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        var jsonContent = await response.Content.ReadAsStringAsync();
+        // --- Handle caching in accordance to PokéAPI's fair use policy ---
+
+        var cacheDir = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "Terramon.DataGen", "Cache");
+        var pokeFile = Path.Combine(cacheDir, "Pokemon", $"{id}");
+
+        string? jsonContent = null;
+
+        if (File.Exists(pokeFile))
+        {
+            jsonContent = await File.ReadAllTextAsync(pokeFile);
+        }
+        else
+        {
+            var url = $"https://pokeapi.co/api/v2/pokemon/{id}";
+            var response = await HttpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            jsonContent = await response.Content.ReadAsStringAsync();
+            File.WriteAllText(pokeFile, jsonContent);
+        }
 
         // --- Basic info ---
         using var doc = JsonDocument.Parse(jsonContent);

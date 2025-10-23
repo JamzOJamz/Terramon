@@ -13038,5 +13038,6520 @@
         }
       ]
     }
+  },
+  "move": {
+    "1": {
+      "power": 40,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "2": {
+      "type": 2,
+      "power": 50,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "3": {
+      "power": 15,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 30
+    },
+    "4": {
+      "power": 18,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 30
+    },
+    "5": {
+      "power": 80,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 1
+    },
+    "6": {
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 35
+    },
+    "7": {
+      "type": 10,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 5,
+      "effectChance": 10
+    },
+    "8": {
+      "type": 15,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 6,
+      "effectChance": 10
+    },
+    "9": {
+      "type": 13,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 7,
+      "effectChance": 10
+    },
+    "10": {
+      "power": 40,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "11": {
+      "power": 55,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "12": {
+      "pp": 5,
+      "accuracy": 30,
+      "category": 2,
+      "effect": 39
+    },
+    "13": {
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 40
+    },
+    "14": {
+      "pp": 20,
+      "category": 1,
+      "effect": 51
+    },
+    "15": {
+      "power": 50,
+      "pp": 30,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 1
+    },
+    "16": {
+      "type": 3,
+      "power": 40,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 150
+    },
+    "17": {
+      "type": 3,
+      "power": 60,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "18": {
+      "pp": 20,
+      "category": 1,
+      "effect": 29
+    },
+    "19": {
+      "type": 3,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 156
+    },
+    "20": {
+      "power": 15,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "21": {
+      "power": 80,
+      "pp": 20,
+      "accuracy": 75,
+      "category": 2,
+      "effect": 1
+    },
+    "22": {
+      "type": 12,
+      "power": 45,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "23": {
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 151,
+      "effectChance": 30
+    },
+    "24": {
+      "type": 2,
+      "power": 30,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 45
+    },
+    "25": {
+      "power": 120,
+      "pp": 5,
+      "accuracy": 75,
+      "category": 2,
+      "effect": 1
+    },
+    "26": {
+      "type": 2,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 46
+    },
+    "27": {
+      "type": 2,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "28": {
+      "type": 5,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 24
+    },
+    "29": {
+      "power": 70,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "30": {
+      "power": 65,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "31": {
+      "power": 15,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 30
+    },
+    "32": {
+      "pp": 5,
+      "accuracy": 30,
+      "category": 2,
+      "effect": 39
+    },
+    "33": {
+      "power": 40,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "34": {
+      "power": 85,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 7,
+      "effectChance": 30
+    },
+    "35": {
+      "power": 15,
+      "pp": 20,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "36": {
+      "power": 90,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 49
+    },
+    "37": {
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 28
+    },
+    "38": {
+      "power": 120,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 199
+    },
+    "39": {
+      "pp": 30,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 20
+    },
+    "40": {
+      "type": 4,
+      "power": 15,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 3,
+      "effectChance": 30
+    },
+    "41": {
+      "type": 7,
+      "power": 25,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 78,
+      "effectChance": 20
+    },
+    "42": {
+      "type": 7,
+      "power": 25,
+      "pp": 20,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 30
+    },
+    "43": {
+      "pp": 30,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 20,
+      "effectChance": 100
+    },
+    "44": {
+      "type": 17,
+      "power": 60,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "45": {
+      "pp": 40,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 19
+    },
+    "46": {
+      "pp": 20,
+      "category": 1,
+      "effect": 29
+    },
+    "47": {
+      "pp": 15,
+      "accuracy": 55,
+      "category": 1,
+      "effect": 2
+    },
+    "48": {
+      "pp": 20,
+      "accuracy": 55,
+      "category": 1,
+      "effect": 50
+    },
+    "49": {
+      "pp": 20,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 131
+    },
+    "50": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 87
+    },
+    "51": {
+      "type": 4,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "52": {
+      "type": 10,
+      "power": 40,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 10
+    },
+    "53": {
+      "type": 10,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 10
+    },
+    "54": {
+      "type": 15,
+      "pp": 30,
+      "category": 1,
+      "effect": 47
+    },
+    "55": {
+      "type": 11,
+      "power": 40,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "56": {
+      "type": 11,
+      "power": 110,
+      "pp": 5,
+      "accuracy": 80,
+      "category": 3,
+      "effect": 1
+    },
+    "57": {
+      "type": 11,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 258
+    },
+    "58": {
+      "type": 15,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 6,
+      "effectChance": 10
+    },
+    "59": {
+      "type": 15,
+      "power": 110,
+      "pp": 5,
+      "accuracy": 70,
+      "category": 3,
+      "effect": 261,
+      "effectChance": 10
+    },
+    "60": {
+      "type": 14,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 77,
+      "effectChance": 10
+    },
+    "61": {
+      "type": 11,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 71,
+      "effectChance": 10
+    },
+    "62": {
+      "type": 15,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 69,
+      "effectChance": 10
+    },
+    "63": {
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 81
+    },
+    "64": {
+      "type": 3,
+      "power": 35,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "65": {
+      "type": 3,
+      "power": 80,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "66": {
+      "type": 2,
+      "power": 80,
+      "pp": 20,
+      "accuracy": 80,
+      "category": 2,
+      "effect": 49
+    },
+    "67": {
+      "type": 2,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 197
+    },
+    "68": {
+      "type": 2,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 90
+    },
+    "69": {
+      "type": 2,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 88
+    },
+    "70": {
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "71": {
+      "type": 12,
+      "power": 20,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 4
+    },
+    "72": {
+      "type": 12,
+      "power": 40,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 4
+    },
+    "73": {
+      "type": 12,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 1,
+      "effect": 85
+    },
+    "74": {
+      "pp": 20,
+      "category": 1,
+      "effect": 317
+    },
+    "75": {
+      "type": 12,
+      "power": 55,
+      "pp": 25,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 44
+    },
+    "76": {
+      "type": 12,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 152
+    },
+    "77": {
+      "type": 4,
+      "pp": 35,
+      "accuracy": 75,
+      "category": 1,
+      "effect": 67
+    },
+    "78": {
+      "type": 12,
+      "pp": 30,
+      "accuracy": 75,
+      "category": 1,
+      "effect": 68
+    },
+    "79": {
+      "type": 12,
+      "pp": 15,
+      "accuracy": 75,
+      "category": 1,
+      "effect": 2
+    },
+    "80": {
+      "type": 12,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 28
+    },
+    "81": {
+      "type": 7,
+      "pp": 40,
+      "accuracy": 95,
+      "category": 1,
+      "effect": 61
+    },
+    "82": {
+      "type": 16,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 42
+    },
+    "83": {
+      "type": 10,
+      "power": 35,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "84": {
+      "type": 13,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 7,
+      "effectChance": 10
+    },
+    "85": {
+      "type": 13,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 7,
+      "effectChance": 10
+    },
+    "86": {
+      "type": 13,
+      "pp": 20,
+      "accuracy": 90,
+      "category": 1,
+      "effect": 68
+    },
+    "87": {
+      "type": 13,
+      "power": 110,
+      "pp": 10,
+      "accuracy": 70,
+      "category": 3,
+      "effect": 153,
+      "effectChance": 30
+    },
+    "88": {
+      "type": 6,
+      "power": 50,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1
+    },
+    "89": {
+      "type": 5,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 148
+    },
+    "90": {
+      "type": 5,
+      "pp": 5,
+      "accuracy": 30,
+      "category": 2,
+      "effect": 39
+    },
+    "91": {
+      "type": 5,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 257
+    },
+    "92": {
+      "type": 4,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 1,
+      "effect": 34
+    },
+    "93": {
+      "type": 14,
+      "power": 50,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 77,
+      "effectChance": 10
+    },
+    "94": {
+      "type": 14,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "95": {
+      "type": 14,
+      "pp": 20,
+      "accuracy": 60,
+      "category": 1,
+      "effect": 2
+    },
+    "96": {
+      "type": 14,
+      "pp": 40,
+      "category": 1,
+      "effect": 11
+    },
+    "97": {
+      "type": 14,
+      "pp": 30,
+      "category": 1,
+      "effect": 53
+    },
+    "98": {
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "99": {
+      "power": 20,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 82
+    },
+    "100": {
+      "type": 14,
+      "pp": 20,
+      "category": 1,
+      "effect": 154
+    },
+    "101": {
+      "type": 8,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 88
+    },
+    "102": {
+      "pp": 10,
+      "category": 1,
+      "effect": 83
+    },
+    "103": {
+      "pp": 40,
+      "accuracy": 85,
+      "category": 1,
+      "effect": 60
+    },
+    "104": {
+      "pp": 15,
+      "category": 1,
+      "effect": 17
+    },
+    "105": {
+      "pp": 5,
+      "category": 1,
+      "effect": 33
+    },
+    "106": {
+      "pp": 30,
+      "category": 1,
+      "effect": 12
+    },
+    "107": {
+      "pp": 10,
+      "category": 1,
+      "effect": 109
+    },
+    "108": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 24
+    },
+    "109": {
+      "type": 8,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 50
+    },
+    "110": {
+      "type": 11,
+      "pp": 40,
+      "category": 1,
+      "effect": 12
+    },
+    "111": {
+      "pp": 40,
+      "category": 1,
+      "effect": 157
+    },
+    "112": {
+      "type": 14,
+      "pp": 20,
+      "category": 1,
+      "effect": 52
+    },
+    "113": {
+      "type": 14,
+      "pp": 30,
+      "category": 1,
+      "effect": 36
+    },
+    "114": {
+      "type": 15,
+      "pp": 30,
+      "category": 1,
+      "effect": 26
+    },
+    "115": {
+      "type": 14,
+      "pp": 20,
+      "category": 1,
+      "effect": 66
+    },
+    "116": {
+      "pp": 30,
+      "category": 1,
+      "effect": 48
+    },
+    "117": {
+      "pp": 10,
+      "category": 2,
+      "effect": 27
+    },
+    "118": {
+      "pp": 10,
+      "category": 1,
+      "effect": 84
+    },
+    "119": {
+      "type": 3,
+      "pp": 20,
+      "category": 1,
+      "effect": 10
+    },
+    "120": {
+      "power": 200,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 8
+    },
+    "121": {
+      "power": 100,
+      "pp": 10,
+      "accuracy": 75,
+      "category": 2,
+      "effect": 1
+    },
+    "122": {
+      "type": 8,
+      "power": 30,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 7,
+      "effectChance": 30
+    },
+    "123": {
+      "type": 4,
+      "power": 30,
+      "pp": 20,
+      "accuracy": 70,
+      "category": 3,
+      "effect": 3,
+      "effectChance": 40
+    },
+    "124": {
+      "type": 4,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 3,
+      "effectChance": 30
+    },
+    "125": {
+      "type": 5,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 10
+    },
+    "126": {
+      "type": 10,
+      "power": 110,
+      "pp": 5,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 10
+    },
+    "127": {
+      "type": 11,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 20
+    },
+    "128": {
+      "type": 11,
+      "power": 35,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "129": {
+      "power": 60,
+      "pp": 20,
+      "category": 3,
+      "effect": 18
+    },
+    "130": {
+      "power": 130,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 146,
+      "effectChance": 100
+    },
+    "131": {
+      "power": 20,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 30
+    },
+    "132": {
+      "power": 10,
+      "pp": 35,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 71,
+      "effectChance": 10
+    },
+    "133": {
+      "type": 14,
+      "pp": 20,
+      "category": 1,
+      "effect": 55
+    },
+    "134": {
+      "type": 14,
+      "pp": 15,
+      "accuracy": 80,
+      "category": 1,
+      "effect": 24
+    },
+    "135": {
+      "pp": 5,
+      "category": 1,
+      "effect": 33
+    },
+    "136": {
+      "type": 2,
+      "power": 130,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 46
+    },
+    "137": {
+      "pp": 30,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 68
+    },
+    "138": {
+      "type": 14,
+      "power": 100,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 9
+    },
+    "139": {
+      "type": 4,
+      "pp": 40,
+      "accuracy": 90,
+      "category": 1,
+      "effect": 67
+    },
+    "140": {
+      "power": 15,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 30
+    },
+    "141": {
+      "type": 7,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 4
+    },
+    "142": {
+      "pp": 10,
+      "accuracy": 75,
+      "category": 1,
+      "effect": 2
+    },
+    "143": {
+      "type": 3,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 76,
+      "effectChance": 30
+    },
+    "144": {
+      "pp": 10,
+      "category": 1,
+      "effect": 58
+    },
+    "145": {
+      "type": 11,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 71,
+      "effectChance": 10
+    },
+    "146": {
+      "power": 70,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 77,
+      "effectChance": 20
+    },
+    "147": {
+      "type": 12,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 2
+    },
+    "148": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 24
+    },
+    "149": {
+      "type": 14,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 89
+    },
+    "150": {
+      "pp": 40,
+      "category": 1,
+      "effect": 86
+    },
+    "151": {
+      "type": 4,
+      "pp": 20,
+      "category": 1,
+      "effect": 52
+    },
+    "152": {
+      "type": 11,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 44
+    },
+    "153": {
+      "power": 250,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 8
+    },
+    "154": {
+      "power": 18,
+      "pp": 15,
+      "accuracy": 80,
+      "category": 2,
+      "effect": 30
+    },
+    "155": {
+      "type": 5,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 45
+    },
+    "156": {
+      "type": 14,
+      "pp": 5,
+      "category": 1,
+      "effect": 38
+    },
+    "157": {
+      "type": 6,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "158": {
+      "power": 80,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 10
+    },
+    "159": {
+      "pp": 30,
+      "category": 1,
+      "effect": 11
+    },
+    "160": {
+      "pp": 30,
+      "category": 1,
+      "effect": 31
+    },
+    "161": {
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 37,
+      "effectChance": 20
+    },
+    "162": {
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 41
+    },
+    "163": {
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "164": {
+      "pp": 10,
+      "category": 1,
+      "effect": 80
+    },
+    "165": {
+      "power": 50,
+      "pp": 1,
+      "category": 2,
+      "effect": 255
+    },
+    "166": {
+      "pp": 1,
+      "category": 1,
+      "effect": 96
+    },
+    "167": {
+      "type": 2,
+      "power": 10,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 105
+    },
+    "168": {
+      "type": 17,
+      "power": 60,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 106
+    },
+    "169": {
+      "type": 7,
+      "pp": 10,
+      "category": 1,
+      "effect": 107
+    },
+    "170": {
+      "pp": 5,
+      "category": 1,
+      "effect": 95
+    },
+    "171": {
+      "type": 8,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 108
+    },
+    "172": {
+      "type": 10,
+      "power": 60,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 126,
+      "effectChance": 10
+    },
+    "173": {
+      "power": 50,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 93,
+      "effectChance": 30
+    },
+    "174": {
+      "type": 8,
+      "pp": 10,
+      "category": 1,
+      "effect": 110
+    },
+    "175": {
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 100
+    },
+    "176": {
+      "pp": 30,
+      "category": 1,
+      "effect": 94
+    },
+    "177": {
+      "type": 3,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 44
+    },
+    "178": {
+      "type": 12,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 61
+    },
+    "179": {
+      "type": 2,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 100
+    },
+    "180": {
+      "type": 8,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 101
+    },
+    "181": {
+      "type": 15,
+      "power": 40,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 6,
+      "effectChance": 10
+    },
+    "182": {
+      "pp": 10,
+      "category": 1,
+      "effect": 112
+    },
+    "183": {
+      "type": 2,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "184": {
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 61
+    },
+    "185": {
+      "type": 17,
+      "power": 60,
+      "pp": 20,
+      "category": 2,
+      "effect": 18
+    },
+    "186": {
+      "type": 18,
+      "pp": 10,
+      "accuracy": 75,
+      "category": 1,
+      "effect": 50
+    },
+    "187": {
+      "pp": 10,
+      "category": 1,
+      "effect": 143
+    },
+    "188": {
+      "type": 4,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 3,
+      "effectChance": 30
+    },
+    "189": {
+      "type": 5,
+      "power": 20,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 100
+    },
+    "190": {
+      "type": 11,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 50
+    },
+    "191": {
+      "type": 5,
+      "pp": 20,
+      "category": 1,
+      "effect": 113
+    },
+    "192": {
+      "type": 13,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 50,
+      "category": 3,
+      "effect": 7,
+      "effectChance": 100
+    },
+    "193": {
+      "pp": 40,
+      "category": 1,
+      "effect": 114
+    },
+    "194": {
+      "type": 8,
+      "pp": 5,
+      "category": 1,
+      "effect": 99
+    },
+    "195": {
+      "pp": 5,
+      "category": 1,
+      "effect": 115
+    },
+    "196": {
+      "type": 15,
+      "power": 55,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 71,
+      "effectChance": 100
+    },
+    "197": {
+      "type": 2,
+      "pp": 5,
+      "category": 1,
+      "effect": 112
+    },
+    "198": {
+      "type": 5,
+      "power": 25,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 30
+    },
+    "199": {
+      "pp": 5,
+      "category": 1,
+      "effect": 95
+    },
+    "200": {
+      "type": 16,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 28
+    },
+    "201": {
+      "type": 6,
+      "pp": 10,
+      "category": 1,
+      "effect": 116
+    },
+    "202": {
+      "type": 12,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 4
+    },
+    "203": {
+      "pp": 10,
+      "category": 1,
+      "effect": 117
+    },
+    "204": {
+      "type": 18,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 59
+    },
+    "205": {
+      "type": 6,
+      "power": 30,
+      "pp": 20,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 118
+    },
+    "206": {
+      "power": 40,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 102
+    },
+    "207": {
+      "pp": 15,
+      "accuracy": 85,
+      "category": 1,
+      "effect": 119
+    },
+    "208": {
+      "pp": 5,
+      "category": 1,
+      "effect": 33
+    },
+    "209": {
+      "type": 13,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 7,
+      "effectChance": 30
+    },
+    "210": {
+      "type": 7,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 120
+    },
+    "211": {
+      "type": 9,
+      "power": 70,
+      "pp": 25,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 139,
+      "effectChance": 10
+    },
+    "212": {
+      "pp": 5,
+      "category": 1,
+      "effect": 107
+    },
+    "213": {
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 121
+    },
+    "214": {
+      "pp": 10,
+      "category": 1,
+      "effect": 98
+    },
+    "215": {
+      "pp": 5,
+      "category": 1,
+      "effect": 103
+    },
+    "216": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 122
+    },
+    "217": {
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 123
+    },
+    "218": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 124
+    },
+    "219": {
+      "pp": 25,
+      "category": 1,
+      "effect": 125
+    },
+    "220": {
+      "pp": 20,
+      "category": 1,
+      "effect": 92
+    },
+    "221": {
+      "type": 10,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 126,
+      "effectChance": 50
+    },
+    "222": {
+      "type": 5,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 127
+    },
+    "223": {
+      "type": 2,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 50,
+      "category": 2,
+      "effect": 77,
+      "effectChance": 100
+    },
+    "224": {
+      "type": 7,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 1
+    },
+    "225": {
+      "type": 16,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 7,
+      "effectChance": 30
+    },
+    "226": {
+      "pp": 40,
+      "category": 1,
+      "effect": 128
+    },
+    "227": {
+      "pp": 5,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 91
+    },
+    "228": {
+      "type": 17,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 129
+    },
+    "229": {
+      "power": 50,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 130,
+      "effectChance": 100
+    },
+    "230": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 25
+    },
+    "231": {
+      "type": 9,
+      "power": 100,
+      "pp": 15,
+      "accuracy": 75,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 30
+    },
+    "232": {
+      "type": 9,
+      "power": 50,
+      "pp": 35,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 140,
+      "effectChance": 10
+    },
+    "233": {
+      "type": 2,
+      "power": 70,
+      "pp": 10,
+      "category": 2,
+      "effect": 79
+    },
+    "234": {
+      "pp": 5,
+      "category": 1,
+      "effect": 133
+    },
+    "235": {
+      "type": 12,
+      "pp": 5,
+      "category": 1,
+      "effect": 133
+    },
+    "236": {
+      "type": 18,
+      "pp": 5,
+      "category": 1,
+      "effect": 133
+    },
+    "237": {
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 136
+    },
+    "238": {
+      "type": 2,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 80,
+      "category": 2,
+      "effect": 44
+    },
+    "239": {
+      "type": 16,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 147,
+      "effectChance": 20
+    },
+    "240": {
+      "type": 11,
+      "pp": 5,
+      "category": 1,
+      "effect": 137
+    },
+    "241": {
+      "type": 10,
+      "pp": 5,
+      "category": 1,
+      "effect": 138
+    },
+    "242": {
+      "type": 17,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 20
+    },
+    "243": {
+      "type": 14,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 145
+    },
+    "244": {
+      "pp": 10,
+      "category": 1,
+      "effect": 144
+    },
+    "245": {
+      "power": 80,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "246": {
+      "type": 6,
+      "power": 60,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 141,
+      "effectChance": 10
+    },
+    "247": {
+      "type": 8,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 20
+    },
+    "248": {
+      "type": 14,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 149
+    },
+    "249": {
+      "type": 2,
+      "power": 40,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 50
+    },
+    "250": {
+      "type": 11,
+      "power": 35,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 262,
+      "effectChance": 100
+    },
+    "251": {
+      "type": 17,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 155
+    },
+    "252": {
+      "power": 40,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 159,
+      "effectChance": 100
+    },
+    "253": {
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 160
+    },
+    "254": {
+      "pp": 20,
+      "category": 1,
+      "effect": 161
+    },
+    "255": {
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 162
+    },
+    "256": {
+      "pp": 10,
+      "category": 1,
+      "effect": 163
+    },
+    "257": {
+      "type": 10,
+      "power": 95,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 10
+    },
+    "258": {
+      "type": 15,
+      "pp": 10,
+      "category": 1,
+      "effect": 165
+    },
+    "259": {
+      "type": 17,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 166
+    },
+    "260": {
+      "type": 17,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 167
+    },
+    "261": {
+      "type": 10,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 1,
+      "effect": 168
+    },
+    "262": {
+      "type": 17,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 169
+    },
+    "263": {
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 170
+    },
+    "264": {
+      "type": 2,
+      "power": 150,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 171
+    },
+    "265": {
+      "power": 70,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 172
+    },
+    "266": {
+      "pp": 20,
+      "category": 1,
+      "effect": 173
+    },
+    "267": {
+      "pp": 20,
+      "category": 1,
+      "effect": 174
+    },
+    "268": {
+      "type": 13,
+      "pp": 20,
+      "category": 1,
+      "effect": 175
+    },
+    "269": {
+      "type": 17,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 176
+    },
+    "270": {
+      "pp": 20,
+      "category": 1,
+      "effect": 177
+    },
+    "271": {
+      "type": 14,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 178
+    },
+    "272": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 179
+    },
+    "273": {
+      "pp": 10,
+      "category": 1,
+      "effect": 180
+    },
+    "274": {
+      "pp": 20,
+      "category": 1,
+      "effect": 181
+    },
+    "275": {
+      "type": 12,
+      "pp": 20,
+      "category": 1,
+      "effect": 182
+    },
+    "276": {
+      "type": 2,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 183,
+      "effectChance": 100
+    },
+    "277": {
+      "type": 14,
+      "pp": 15,
+      "category": 1,
+      "effect": 184
+    },
+    "278": {
+      "pp": 10,
+      "category": 1,
+      "effect": 185
+    },
+    "279": {
+      "type": 2,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 186
+    },
+    "280": {
+      "type": 2,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 187
+    },
+    "281": {
+      "pp": 10,
+      "category": 1,
+      "effect": 188
+    },
+    "282": {
+      "type": 17,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 189
+    },
+    "283": {
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 190
+    },
+    "284": {
+      "type": 10,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 191
+    },
+    "285": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 192
+    },
+    "286": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 193
+    },
+    "287": {
+      "pp": 20,
+      "category": 1,
+      "effect": 194
+    },
+    "288": {
+      "type": 8,
+      "pp": 5,
+      "category": 1,
+      "effect": 195
+    },
+    "289": {
+      "type": 17,
+      "pp": 10,
+      "category": 1,
+      "effect": 196
+    },
+    "290": {
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 198,
+      "effectChance": 30
+    },
+    "291": {
+      "type": 11,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 256
+    },
+    "292": {
+      "type": 2,
+      "power": 15,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 30
+    },
+    "293": {
+      "pp": 20,
+      "category": 1,
+      "effect": 214
+    },
+    "294": {
+      "type": 7,
+      "pp": 20,
+      "category": 1,
+      "effect": 322
+    },
+    "295": {
+      "type": 14,
+      "power": 95,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 50
+    },
+    "296": {
+      "type": 14,
+      "power": 95,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 72,
+      "effectChance": 50
+    },
+    "297": {
+      "type": 3,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 59
+    },
+    "298": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 200
+    },
+    "299": {
+      "type": 10,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 201,
+      "effectChance": 10
+    },
+    "300": {
+      "type": 5,
+      "pp": 15,
+      "category": 1,
+      "effect": 202
+    },
+    "301": {
+      "type": 15,
+      "power": 30,
+      "pp": 20,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 118
+    },
+    "302": {
+      "type": 12,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "303": {
+      "pp": 5,
+      "category": 1,
+      "effect": 33
+    },
+    "304": {
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "305": {
+      "type": 4,
+      "power": 50,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 203,
+      "effectChance": 50
+    },
+    "306": {
+      "power": 75,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 50
+    },
+    "307": {
+      "type": 10,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 81
+    },
+    "308": {
+      "type": 11,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 81
+    },
+    "309": {
+      "type": 9,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 140,
+      "effectChance": 20
+    },
+    "310": {
+      "type": 8,
+      "power": 30,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "311": {
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 204
+    },
+    "312": {
+      "type": 12,
+      "pp": 5,
+      "category": 1,
+      "effect": 103
+    },
+    "313": {
+      "type": 17,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 63
+    },
+    "314": {
+      "type": 3,
+      "power": 60,
+      "pp": 25,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 44
+    },
+    "315": {
+      "type": 10,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 205,
+      "effectChance": 100
+    },
+    "316": {
+      "pp": 40,
+      "category": 1,
+      "effect": 114
+    },
+    "317": {
+      "type": 6,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 71,
+      "effectChance": 100
+    },
+    "318": {
+      "type": 7,
+      "power": 60,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 141,
+      "effectChance": 10
+    },
+    "319": {
+      "type": 9,
+      "pp": 40,
+      "accuracy": 85,
+      "category": 1,
+      "effect": 63
+    },
+    "320": {
+      "type": 12,
+      "pp": 15,
+      "accuracy": 55,
+      "category": 1,
+      "effect": 2
+    },
+    "321": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 206
+    },
+    "322": {
+      "type": 14,
+      "pp": 20,
+      "category": 1,
+      "effect": 207
+    },
+    "323": {
+      "type": 11,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 191
+    },
+    "324": {
+      "type": 7,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 77,
+      "effectChance": 10
+    },
+    "325": {
+      "type": 8,
+      "power": 60,
+      "pp": 20,
+      "category": 2,
+      "effect": 18
+    },
+    "326": {
+      "type": 14,
+      "power": 80,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 32,
+      "effectChance": 10
+    },
+    "327": {
+      "type": 2,
+      "power": 85,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 208
+    },
+    "328": {
+      "type": 5,
+      "power": 35,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "329": {
+      "type": 15,
+      "pp": 5,
+      "accuracy": 30,
+      "category": 3,
+      "effect": 39
+    },
+    "330": {
+      "type": 11,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 30
+    },
+    "331": {
+      "type": 12,
+      "power": 25,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 30
+    },
+    "332": {
+      "type": 3,
+      "power": 60,
+      "pp": 20,
+      "category": 2,
+      "effect": 18
+    },
+    "333": {
+      "type": 15,
+      "power": 25,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 30
+    },
+    "334": {
+      "type": 9,
+      "pp": 15,
+      "category": 1,
+      "effect": 52
+    },
+    "335": {
+      "pp": 5,
+      "category": 1,
+      "effect": 107
+    },
+    "336": {
+      "pp": 40,
+      "category": 1,
+      "effect": 11
+    },
+    "337": {
+      "type": 16,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "338": {
+      "type": 12,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 81
+    },
+    "339": {
+      "type": 2,
+      "pp": 20,
+      "category": 1,
+      "effect": 209
+    },
+    "340": {
+      "type": 3,
+      "power": 85,
+      "pp": 5,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 264,
+      "effectChance": 30
+    },
+    "341": {
+      "type": 5,
+      "power": 55,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 71,
+      "effectChance": 100
+    },
+    "342": {
+      "type": 4,
+      "power": 50,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 210,
+      "effectChance": 10
+    },
+    "343": {
+      "power": 60,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 106
+    },
+    "344": {
+      "type": 13,
+      "power": 120,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 263,
+      "effectChance": 10
+    },
+    "345": {
+      "type": 12,
+      "power": 60,
+      "pp": 20,
+      "category": 3,
+      "effect": 18
+    },
+    "346": {
+      "type": 11,
+      "pp": 15,
+      "category": 1,
+      "effect": 211
+    },
+    "347": {
+      "type": 14,
+      "pp": 20,
+      "category": 1,
+      "effect": 212
+    },
+    "348": {
+      "type": 12,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "349": {
+      "type": 16,
+      "pp": 20,
+      "category": 1,
+      "effect": 213
+    },
+    "350": {
+      "type": 6,
+      "power": 25,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 30
+    },
+    "351": {
+      "type": 13,
+      "power": 60,
+      "pp": 20,
+      "category": 3,
+      "effect": 18
+    },
+    "352": {
+      "type": 11,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 77,
+      "effectChance": 20
+    },
+    "353": {
+      "type": 9,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 149
+    },
+    "354": {
+      "type": 14,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 205,
+      "effectChance": 100
+    },
+    "355": {
+      "type": 3,
+      "pp": 5,
+      "category": 1,
+      "effect": 215
+    },
+    "356": {
+      "type": 14,
+      "pp": 5,
+      "category": 1,
+      "effect": 216
+    },
+    "357": {
+      "type": 14,
+      "pp": 40,
+      "category": 1,
+      "effect": 217
+    },
+    "358": {
+      "type": 2,
+      "power": 70,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 218
+    },
+    "359": {
+      "type": 2,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 219,
+      "effectChance": 100
+    },
+    "360": {
+      "type": 9,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 220
+    },
+    "361": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 221
+    },
+    "362": {
+      "type": 11,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 222
+    },
+    "363": {
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 223
+    },
+    "364": {
+      "power": 30,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 224
+    },
+    "365": {
+      "type": 3,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 225
+    },
+    "366": {
+      "type": 3,
+      "pp": 15,
+      "category": 1,
+      "effect": 226
+    },
+    "367": {
+      "pp": 30,
+      "category": 1,
+      "effect": 227
+    },
+    "368": {
+      "type": 9,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 228
+    },
+    "369": {
+      "type": 7,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 229
+    },
+    "370": {
+      "type": 2,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 230,
+      "effectChance": 100
+    },
+    "371": {
+      "type": 17,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 231
+    },
+    "372": {
+      "type": 17,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 232
+    },
+    "373": {
+      "type": 17,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 233
+    },
+    "374": {
+      "type": 17,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 234
+    },
+    "375": {
+      "type": 14,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 235
+    },
+    "376": {
+      "pp": 5,
+      "category": 3,
+      "effect": 236
+    },
+    "377": {
+      "type": 14,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 237
+    },
+    "378": {
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 238
+    },
+    "379": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 239
+    },
+    "380": {
+      "type": 4,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 240
+    },
+    "381": {
+      "pp": 30,
+      "category": 1,
+      "effect": 241
+    },
+    "382": {
+      "pp": 20,
+      "category": 1,
+      "effect": 242
+    },
+    "383": {
+      "pp": 20,
+      "category": 1,
+      "effect": 243
+    },
+    "384": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 244
+    },
+    "385": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 245
+    },
+    "386": {
+      "type": 17,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 246
+    },
+    "387": {
+      "power": 140,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 247
+    },
+    "388": {
+      "type": 12,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 248
+    },
+    "389": {
+      "type": 17,
+      "power": 70,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 249
+    },
+    "390": {
+      "type": 4,
+      "pp": 20,
+      "category": 1,
+      "effect": 250
+    },
+    "391": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 251
+    },
+    "392": {
+      "type": 11,
+      "pp": 20,
+      "category": 1,
+      "effect": 252
+    },
+    "393": {
+      "type": 13,
+      "pp": 10,
+      "category": 1,
+      "effect": 253
+    },
+    "394": {
+      "type": 10,
+      "power": 120,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 254,
+      "effectChance": 10
+    },
+    "395": {
+      "type": 2,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 7,
+      "effectChance": 30
+    },
+    "396": {
+      "type": 2,
+      "power": 80,
+      "pp": 20,
+      "category": 3,
+      "effect": 18
+    },
+    "397": {
+      "type": 6,
+      "pp": 20,
+      "category": 1,
+      "effect": 53
+    },
+    "398": {
+      "type": 4,
+      "power": 80,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 3,
+      "effectChance": 30
+    },
+    "399": {
+      "type": 17,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 32,
+      "effectChance": 20
+    },
+    "400": {
+      "type": 17,
+      "power": 70,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "401": {
+      "type": 11,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1
+    },
+    "402": {
+      "type": 12,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "403": {
+      "type": 3,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "404": {
+      "type": 7,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "405": {
+      "type": 7,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "406": {
+      "type": 16,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "407": {
+      "type": 16,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 75,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 20
+    },
+    "408": {
+      "type": 6,
+      "power": 80,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "409": {
+      "type": 2,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 4
+    },
+    "410": {
+      "type": 2,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 104
+    },
+    "411": {
+      "type": 2,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 70,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "412": {
+      "type": 12,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "413": {
+      "type": 3,
+      "power": 120,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 199
+    },
+    "414": {
+      "type": 5,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "415": {
+      "type": 17,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 178
+    },
+    "416": {
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 81
+    },
+    "417": {
+      "type": 17,
+      "pp": 20,
+      "category": 1,
+      "effect": 54
+    },
+    "418": {
+      "type": 9,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "419": {
+      "type": 15,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 186
+    },
+    "420": {
+      "type": 15,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "421": {
+      "type": 8,
+      "power": 70,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "422": {
+      "type": 13,
+      "power": 65,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 276,
+      "effectChance": 10
+    },
+    "423": {
+      "type": 15,
+      "power": 65,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 275,
+      "effectChance": 10
+    },
+    "424": {
+      "type": 10,
+      "power": 65,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 274,
+      "effectChance": 10
+    },
+    "425": {
+      "type": 8,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "426": {
+      "type": 5,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 30
+    },
+    "427": {
+      "type": 14,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "428": {
+      "type": 14,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 20
+    },
+    "429": {
+      "type": 9,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 30
+    },
+    "430": {
+      "type": 9,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 73,
+      "effectChance": 10
+    },
+    "431": {
+      "power": 90,
+      "pp": 20,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 77,
+      "effectChance": 20
+    },
+    "432": {
+      "type": 3,
+      "pp": 15,
+      "category": 1,
+      "effect": 259
+    },
+    "433": {
+      "type": 14,
+      "pp": 5,
+      "category": 1,
+      "effect": 260
+    },
+    "434": {
+      "type": 16,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 205,
+      "effectChance": 100
+    },
+    "435": {
+      "type": 13,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 7,
+      "effectChance": 30
+    },
+    "436": {
+      "type": 10,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 30
+    },
+    "437": {
+      "type": 12,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 205,
+      "effectChance": 100
+    },
+    "438": {
+      "type": 12,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 1
+    },
+    "439": {
+      "type": 6,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 81
+    },
+    "440": {
+      "type": 4,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 210,
+      "effectChance": 10
+    },
+    "441": {
+      "type": 4,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 80,
+      "category": 2,
+      "effect": 3,
+      "effectChance": 30
+    },
+    "442": {
+      "type": 9,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "443": {
+      "type": 9,
+      "power": 60,
+      "pp": 20,
+      "category": 2,
+      "effect": 18
+    },
+    "444": {
+      "type": 6,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 80,
+      "category": 2,
+      "effect": 44
+    },
+    "445": {
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 266
+    },
+    "446": {
+      "type": 6,
+      "pp": 20,
+      "category": 1,
+      "effect": 267
+    },
+    "447": {
+      "type": 12,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 197
+    },
+    "448": {
+      "type": 3,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 268,
+      "effectChance": 100
+    },
+    "449": {
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 269
+    },
+    "450": {
+      "type": 7,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 225
+    },
+    "451": {
+      "type": 13,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 277,
+      "effectChance": 70
+    },
+    "452": {
+      "type": 12,
+      "power": 120,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 199
+    },
+    "453": {
+      "type": 11,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "454": {
+      "type": 7,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 44
+    },
+    "455": {
+      "type": 7,
+      "pp": 10,
+      "category": 1,
+      "effect": 207
+    },
+    "456": {
+      "type": 7,
+      "pp": 10,
+      "category": 1,
+      "effect": 33
+    },
+    "457": {
+      "type": 6,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 80,
+      "category": 2,
+      "effect": 270
+    },
+    "458": {
+      "power": 35,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 45
+    },
+    "459": {
+      "type": 16,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 81
+    },
+    "460": {
+      "type": 16,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 44
+    },
+    "461": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 271
+    },
+    "462": {
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 238
+    },
+    "463": {
+      "type": 10,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 75,
+      "category": 3,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "464": {
+      "type": 17,
+      "pp": 10,
+      "accuracy": 50,
+      "category": 1,
+      "effect": 2
+    },
+    "465": {
+      "type": 12,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 272,
+      "effectChance": 40
+    },
+    "466": {
+      "type": 8,
+      "power": 60,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 141,
+      "effectChance": 10
+    },
+    "467": {
+      "type": 8,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 273
+    },
+    "468": {
+      "type": 17,
+      "pp": 15,
+      "category": 1,
+      "effect": 278
+    },
+    "469": {
+      "type": 6,
+      "pp": 10,
+      "category": 1,
+      "effect": 279
+    },
+    "470": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 280
+    },
+    "471": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 281
+    },
+    "472": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 282
+    },
+    "473": {
+      "type": 14,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 283
+    },
+    "474": {
+      "type": 4,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 284
+    },
+    "475": {
+      "type": 9,
+      "pp": 15,
+      "category": 1,
+      "effect": 285
+    },
+    "476": {
+      "type": 7,
+      "pp": 20,
+      "category": 1,
+      "effect": 173
+    },
+    "477": {
+      "type": 14,
+      "pp": 15,
+      "category": 1,
+      "effect": 286
+    },
+    "478": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 287
+    },
+    "479": {
+      "type": 6,
+      "power": 50,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 288,
+      "effectChance": 100
+    },
+    "480": {
+      "type": 2,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 289
+    },
+    "481": {
+      "type": 10,
+      "power": 70,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 290
+    },
+    "482": {
+      "type": 4,
+      "power": 95,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 3,
+      "effectChance": 10
+    },
+    "483": {
+      "type": 7,
+      "pp": 20,
+      "category": 1,
+      "effect": 291
+    },
+    "484": {
+      "type": 9,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 292
+    },
+    "485": {
+      "type": 14,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 293
+    },
+    "486": {
+      "type": 13,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 294
+    },
+    "487": {
+      "type": 11,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 295
+    },
+    "488": {
+      "type": 10,
+      "power": 50,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 296,
+      "effectChance": 100
+    },
+    "489": {
+      "type": 4,
+      "pp": 20,
+      "category": 1,
+      "effect": 323
+    },
+    "490": {
+      "type": 2,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 21,
+      "effectChance": 100
+    },
+    "491": {
+      "type": 4,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 297,
+      "effectChance": 100
+    },
+    "492": {
+      "type": 17,
+      "power": 95,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 298
+    },
+    "493": {
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 299
+    },
+    "494": {
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 300
+    },
+    "495": {
+      "pp": 15,
+      "category": 1,
+      "effect": 301
+    },
+    "496": {
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 302
+    },
+    "497": {
+      "power": 40,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 303
+    },
+    "498": {
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 304
+    },
+    "499": {
+      "type": 4,
+      "power": 50,
+      "pp": 15,
+      "category": 3,
+      "effect": 305
+    },
+    "500": {
+      "type": 14,
+      "power": 20,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 306
+    },
+    "501": {
+      "type": 2,
+      "pp": 15,
+      "category": 1,
+      "effect": 307
+    },
+    "502": {
+      "type": 14,
+      "pp": 15,
+      "category": 1,
+      "effect": 308
+    },
+    "503": {
+      "type": 11,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 30
+    },
+    "504": {
+      "pp": 15,
+      "category": 1,
+      "effect": 309
+    },
+    "505": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 310
+    },
+    "506": {
+      "type": 8,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 311
+    },
+    "507": {
+      "type": 3,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 312
+    },
+    "508": {
+      "type": 9,
+      "pp": 10,
+      "category": 1,
+      "effect": 313
+    },
+    "509": {
+      "type": 2,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 314
+    },
+    "510": {
+      "type": 10,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 315
+    },
+    "511": {
+      "type": 17,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 316
+    },
+    "512": {
+      "type": 3,
+      "power": 55,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 318
+    },
+    "513": {
+      "pp": 15,
+      "category": 1,
+      "effect": 319
+    },
+    "514": {
+      "power": 70,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 320
+    },
+    "515": {
+      "type": 2,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 321
+    },
+    "516": {
+      "pp": 15,
+      "category": 1,
+      "effect": 324
+    },
+    "517": {
+      "type": 10,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 50,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 100
+    },
+    "518": {
+      "type": 11,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 325
+    },
+    "519": {
+      "type": 10,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 326
+    },
+    "520": {
+      "type": 12,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 327
+    },
+    "521": {
+      "type": 13,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 229
+    },
+    "522": {
+      "type": 7,
+      "power": 50,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 72,
+      "effectChance": 100
+    },
+    "523": {
+      "type": 5,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 71,
+      "effectChance": 100
+    },
+    "524": {
+      "type": 15,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 289,
+      "effectChance": 100
+    },
+    "525": {
+      "type": 16,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 314
+    },
+    "526": {
+      "pp": 30,
+      "category": 1,
+      "effect": 328
+    },
+    "527": {
+      "type": 13,
+      "power": 55,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 21,
+      "effectChance": 100
+    },
+    "528": {
+      "type": 13,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 49
+    },
+    "529": {
+      "type": 5,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 44
+    },
+    "530": {
+      "type": 16,
+      "power": 40,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 45
+    },
+    "531": {
+      "type": 14,
+      "power": 60,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "532": {
+      "type": 12,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 4
+    },
+    "533": {
+      "type": 2,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 304
+    },
+    "534": {
+      "type": 11,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 50
+    },
+    "535": {
+      "type": 10,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 292
+    },
+    "536": {
+      "type": 12,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 50
+    },
+    "537": {
+      "type": 7,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 151,
+      "effectChance": 30
+    },
+    "538": {
+      "type": 12,
+      "pp": 10,
+      "category": 1,
+      "effect": 329
+    },
+    "539": {
+      "type": 17,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 74,
+      "effectChance": 40
+    },
+    "540": {
+      "type": 14,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 283
+    },
+    "541": {
+      "power": 25,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 30
+    },
+    "542": {
+      "type": 3,
+      "power": 110,
+      "pp": 10,
+      "accuracy": 70,
+      "category": 3,
+      "effect": 334,
+      "effectChance": 30
+    },
+    "543": {
+      "power": 120,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 49
+    },
+    "544": {
+      "type": 9,
+      "power": 50,
+      "pp": 15,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 45
+    },
+    "545": {
+      "type": 10,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 30
+    },
+    "546": {
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 269
+    },
+    "547": {
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 330,
+      "effectChance": 10
+    },
+    "548": {
+      "type": 2,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 283
+    },
+    "549": {
+      "type": 15,
+      "power": 65,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 331,
+      "effectChance": 100
+    },
+    "550": {
+      "type": 13,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 7,
+      "effectChance": 20
+    },
+    "551": {
+      "type": 10,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 20
+    },
+    "552": {
+      "type": 10,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 277,
+      "effectChance": 50
+    },
+    "553": {
+      "type": 15,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 332,
+      "effectChance": 30
+    },
+    "554": {
+      "type": 15,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 333,
+      "effectChance": 30
+    },
+    "555": {
+      "type": 17,
+      "power": 55,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 72,
+      "effectChance": 100
+    },
+    "556": {
+      "type": 15,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "557": {
+      "type": 10,
+      "power": 180,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 335,
+      "effectChance": 100
+    },
+    "558": {
+      "type": 10,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 336
+    },
+    "559": {
+      "type": 13,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 337
+    },
+    "560": {
+      "type": 2,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 338
+    },
+    "561": {
+      "type": 2,
+      "pp": 10,
+      "category": 1,
+      "effect": 377
+    },
+    "562": {
+      "type": 4,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 339
+    },
+    "563": {
+      "type": 5,
+      "pp": 10,
+      "category": 1,
+      "effect": 340,
+      "effectChance": 100
+    },
+    "564": {
+      "type": 7,
+      "pp": 20,
+      "category": 1,
+      "effect": 341
+    },
+    "565": {
+      "type": 7,
+      "power": 50,
+      "pp": 25,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 342
+    },
+    "566": {
+      "type": 8,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 273
+    },
+    "567": {
+      "type": 8,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 343
+    },
+    "568": {
+      "pp": 30,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 344,
+      "effectChance": 100
+    },
+    "569": {
+      "type": 13,
+      "pp": 25,
+      "category": 1,
+      "effect": 345
+    },
+    "570": {
+      "type": 13,
+      "power": 65,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 346
+    },
+    "571": {
+      "type": 12,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 376
+    },
+    "572": {
+      "type": 12,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 379
+    },
+    "573": {
+      "type": 15,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 380,
+      "effectChance": 10
+    },
+    "574": {
+      "type": 18,
+      "power": 40,
+      "pp": 15,
+      "category": 3,
+      "effect": 381
+    },
+    "575": {
+      "type": 17,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 347,
+      "effectChance": 100
+    },
+    "576": {
+      "type": 17,
+      "pp": 20,
+      "category": 1,
+      "effect": 348
+    },
+    "577": {
+      "type": 18,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 349
+    },
+    "578": {
+      "type": 18,
+      "pp": 10,
+      "category": 1,
+      "effect": 350
+    },
+    "579": {
+      "type": 18,
+      "pp": 10,
+      "category": 1,
+      "effect": 351,
+      "effectChance": 100
+    },
+    "580": {
+      "type": 12,
+      "pp": 10,
+      "category": 1,
+      "effect": 352
+    },
+    "581": {
+      "type": 18,
+      "pp": 10,
+      "category": 1,
+      "effect": 353
+    },
+    "582": {
+      "type": 13,
+      "pp": 20,
+      "category": 1,
+      "effect": 354
+    },
+    "583": {
+      "type": 18,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 69,
+      "effectChance": 10
+    },
+    "584": {
+      "type": 18,
+      "power": 40,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "585": {
+      "type": 18,
+      "power": 95,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 72,
+      "effectChance": 30
+    },
+    "586": {
+      "power": 140,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 379
+    },
+    "587": {
+      "type": 18,
+      "pp": 10,
+      "category": 1,
+      "effect": 355
+    },
+    "588": {
+      "type": 9,
+      "pp": 10,
+      "category": 1,
+      "effect": 356
+    },
+    "589": {
+      "pp": 20,
+      "category": 1,
+      "effect": 357,
+      "effectChance": 100
+    },
+    "590": {
+      "pp": 20,
+      "category": 1,
+      "effect": 358,
+      "effectChance": 100
+    },
+    "591": {
+      "type": 6,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 359,
+      "effectChance": 50
+    },
+    "592": {
+      "type": 11,
+      "power": 110,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 30
+    },
+    "593": {
+      "type": 14,
+      "power": 80,
+      "pp": 5,
+      "category": 3,
+      "effect": 360
+    },
+    "594": {
+      "type": 11,
+      "power": 15,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 361
+    },
+    "595": {
+      "type": 10,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 72,
+      "effectChance": 100
+    },
+    "596": {
+      "type": 12,
+      "pp": 10,
+      "category": 1,
+      "effect": 362
+    },
+    "597": {
+      "type": 18,
+      "pp": 20,
+      "category": 1,
+      "effect": 363
+    },
+    "598": {
+      "type": 13,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 62
+    },
+    "599": {
+      "type": 4,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 364,
+      "effectChance": 100
+    },
+    "600": {
+      "type": 7,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 378
+    },
+    "601": {
+      "type": 18,
+      "pp": 10,
+      "category": 1,
+      "effect": 366
+    },
+    "602": {
+      "type": 13,
+      "pp": 20,
+      "category": 1,
+      "effect": 367
+    },
+    "603": {
+      "pp": 30,
+      "category": 1,
+      "effect": 368
+    },
+    "604": {
+      "type": 13,
+      "pp": 10,
+      "category": 1,
+      "effect": 369
+    },
+    "605": {
+      "type": 18,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "606": {
+      "pp": 40,
+      "category": 1,
+      "effect": 370
+    },
+    "607": {
+      "pp": 40,
+      "category": 1,
+      "effect": 371
+    },
+    "608": {
+      "type": 18,
+      "pp": 30,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 365
+    },
+    "609": {
+      "type": 13,
+      "power": 20,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 372,
+      "effectChance": 100
+    },
+    "610": {
+      "power": 40,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 102
+    },
+    "611": {
+      "type": 7,
+      "power": 20,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "612": {
+      "type": 2,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 375,
+      "effectChance": 100
+    },
+    "613": {
+      "type": 3,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 349
+    },
+    "614": {
+      "type": 5,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 373,
+      "effectChance": 100
+    },
+    "615": {
+      "type": 5,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 374
+    },
+    "616": {
+      "type": 5,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "617": {
+      "type": 18,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 270
+    },
+    "618": {
+      "type": 11,
+      "power": 110,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 1
+    },
+    "619": {
+      "type": 5,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 2,
+      "effect": 1
+    },
+    "620": {
+      "type": 3,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 230,
+      "effectChance": 100
+    },
+    "621": {
+      "type": 17,
+      "power": 100,
+      "pp": 5,
+      "category": 2,
+      "effect": 360,
+      "effectChance": 100
+    },
+    "622": {
+      "pp": 1,
+      "effect": 1
+    },
+    "623": {
+      "type": 2,
+      "pp": 1,
+      "effect": 1
+    },
+    "624": {
+      "type": 3,
+      "pp": 1,
+      "effect": 1
+    },
+    "625": {
+      "type": 4,
+      "pp": 1,
+      "effect": 1
+    },
+    "626": {
+      "type": 5,
+      "pp": 1,
+      "effect": 1
+    },
+    "627": {
+      "type": 6,
+      "pp": 1,
+      "effect": 1
+    },
+    "628": {
+      "type": 7,
+      "pp": 1,
+      "effect": 1
+    },
+    "629": {
+      "type": 8,
+      "pp": 1,
+      "effect": 1
+    },
+    "630": {
+      "type": 9,
+      "pp": 1,
+      "effect": 1
+    },
+    "631": {
+      "type": 10,
+      "pp": 1,
+      "effect": 1
+    },
+    "632": {
+      "type": 11,
+      "pp": 1,
+      "effect": 1
+    },
+    "633": {
+      "type": 12,
+      "pp": 1,
+      "effect": 1
+    },
+    "634": {
+      "type": 13,
+      "pp": 1,
+      "effect": 1
+    },
+    "635": {
+      "type": 14,
+      "pp": 1,
+      "effect": 1
+    },
+    "636": {
+      "type": 15,
+      "pp": 1,
+      "effect": 1
+    },
+    "637": {
+      "type": 16,
+      "pp": 1,
+      "effect": 1
+    },
+    "638": {
+      "type": 17,
+      "pp": 1,
+      "effect": 1
+    },
+    "639": {
+      "type": 18,
+      "pp": 1,
+      "effect": 1
+    },
+    "640": {
+      "type": 13,
+      "power": 210,
+      "pp": 1,
+      "category": 2,
+      "effect": 1
+    },
+    "641": {
+      "type": 5,
+      "pp": 5,
+      "category": 1,
+      "effect": 382
+    },
+    "642": {
+      "type": 7,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 383
+    },
+    "643": {
+      "type": 4,
+      "pp": 10,
+      "category": 1,
+      "effect": 384
+    },
+    "644": {
+      "type": 8,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 385
+    },
+    "645": {
+      "type": 17,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 304
+    },
+    "646": {
+      "type": 11,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 386
+    },
+    "647": {
+      "type": 15,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 219,
+      "effectChance": 100
+    },
+    "648": {
+      "type": 18,
+      "pp": 10,
+      "category": 1,
+      "effect": 387
+    },
+    "649": {
+      "type": 5,
+      "power": 95,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 1
+    },
+    "650": {
+      "type": 12,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 388,
+      "effectChance": 100
+    },
+    "651": {
+      "type": 12,
+      "power": 125,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 152
+    },
+    "652": {
+      "type": 12,
+      "power": 40,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "653": {
+      "pp": 15,
+      "category": 1,
+      "effect": 389
+    },
+    "654": {
+      "type": 4,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 390,
+      "effectChance": 100
+    },
+    "655": {
+      "pp": 30,
+      "category": 1,
+      "effect": 391
+    },
+    "656": {
+      "type": 9,
+      "pp": 20,
+      "category": 1,
+      "effect": 392
+    },
+    "657": {
+      "type": 17,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 393,
+      "effectChance": 100
+    },
+    "658": {
+      "type": 7,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 394
+    },
+    "659": {
+      "type": 9,
+      "power": 80,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 385
+    },
+    "660": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 395
+    },
+    "661": {
+      "type": 7,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 396,
+      "effectChance": 100
+    },
+    "662": {
+      "type": 10,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 397,
+      "effectChance": 100
+    },
+    "663": {
+      "type": 17,
+      "power": 20,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 306
+    },
+    "664": {
+      "type": 10,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 398
+    },
+    "665": {
+      "type": 14,
+      "pp": 10,
+      "category": 1,
+      "effect": 399
+    },
+    "666": {
+      "type": 9,
+      "power": 70,
+      "pp": 10,
+      "category": 2,
+      "effect": 18
+    },
+    "667": {
+      "type": 4,
+      "pp": 20,
+      "category": 1,
+      "effect": 400
+    },
+    "668": {
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 401
+    },
+    "669": {
+      "type": 16,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 402
+    },
+    "670": {
+      "type": 12,
+      "power": 70,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 396,
+      "effectChance": 100
+    },
+    "671": {
+      "type": 14,
+      "pp": 15,
+      "category": 1,
+      "effect": 403
+    },
+    "672": {
+      "type": 3,
+      "power": 100,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 404
+    },
+    "673": {
+      "type": 16,
+      "power": 110,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 405,
+      "effectChance": 100
+    },
+    "674": {
+      "type": 16,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "675": {
+      "type": 17,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 406
+    },
+    "676": {
+      "type": 15,
+      "pp": 20,
+      "category": 1,
+      "effect": 407
+    },
+    "677": {
+      "type": 8,
+      "power": 180,
+      "pp": 1,
+      "category": 2,
+      "effect": 1
+    },
+    "678": {
+      "type": 17,
+      "power": 180,
+      "pp": 1,
+      "category": 2,
+      "effect": 1
+    },
+    "679": {
+      "type": 11,
+      "power": 195,
+      "pp": 1,
+      "category": 3,
+      "effect": 1
+    },
+    "680": {
+      "type": 18,
+      "pp": 1,
+      "category": 3,
+      "effect": 413
+    },
+    "681": {
+      "type": 8,
+      "power": 195,
+      "pp": 1,
+      "category": 2,
+      "effect": 1
+    },
+    "682": {
+      "type": 13,
+      "power": 175,
+      "pp": 1,
+      "category": 3,
+      "effect": 7,
+      "effectChance": 100
+    },
+    "683": {
+      "power": 210,
+      "pp": 1,
+      "category": 2,
+      "effect": 1
+    },
+    "684": {
+      "pp": 1,
+      "category": 1,
+      "effect": 414,
+      "effectChance": 100
+    },
+    "685": {
+      "type": 14,
+      "power": 185,
+      "pp": 1,
+      "category": 3,
+      "effect": 415
+    },
+    "686": {
+      "type": 10,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 408
+    },
+    "687": {
+      "type": 18,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 205,
+      "effectChance": 100
+    },
+    "688": {
+      "type": 14,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 187
+    },
+    "689": {
+      "type": 5,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 409
+    },
+    "690": {
+      "type": 8,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 20
+    },
+    "691": {
+      "type": 6,
+      "power": 40,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 104
+    },
+    "692": {
+      "type": 11,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 70,
+      "effectChance": 20
+    },
+    "693": {
+      "type": 14,
+      "power": 160,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 81
+    },
+    "694": {
+      "type": 8,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 410
+    },
+    "695": {
+      "type": 9,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 411
+    },
+    "696": {
+      "type": 8,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 411
+    },
+    "697": {
+      "pp": 20,
+      "category": 1,
+      "effect": 412,
+      "effectChance": 100
+    },
+    "698": {
+      "type": 13,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 32,
+      "effectChance": 30
+    },
+    "699": {
+      "type": 18,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 41
+    },
+    "700": {
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 269
+    },
+    "701": {
+      "type": 13,
+      "power": 195,
+      "pp": 1,
+      "category": 3,
+      "effect": 1
+    },
+    "702": {
+      "type": 10,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 420
+    },
+    "703": {
+      "type": 13,
+      "power": 100,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 417
+    },
+    "704": {
+      "type": 14,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "705": {
+      "type": 14,
+      "power": 200,
+      "pp": 1,
+      "category": 3,
+      "effect": 416
+    },
+    "706": {
+      "type": 9,
+      "power": 200,
+      "pp": 1,
+      "category": 2,
+      "effect": 411
+    },
+    "707": {
+      "type": 8,
+      "power": 200,
+      "pp": 1,
+      "category": 3,
+      "effect": 411
+    },
+    "708": {
+      "type": 18,
+      "power": 190,
+      "pp": 1,
+      "category": 2,
+      "effect": 1
+    },
+    "709": {
+      "type": 6,
+      "power": 190,
+      "pp": 1,
+      "category": 2,
+      "effect": 418
+    },
+    "710": {
+      "type": 16,
+      "power": 185,
+      "pp": 1,
+      "category": 3,
+      "effect": 419,
+      "effectChance": 100
+    },
+    "711": {
+      "type": 13,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "712": {
+      "type": 11,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 30
+    },
+    "713": {
+      "type": 3,
+      "power": 90,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2,
+      "effect": 1,
+      "effectChance": 30
+    },
+    "714": {
+      "type": 13,
+      "pp": 20,
+      "category": 3,
+      "effect": 1
+    },
+    "715": {
+      "type": 11,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "716": {
+      "type": 13,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "717": {
+      "type": 10,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "718": {
+      "type": 14,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 1
+    },
+    "719": {
+      "type": 17,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 1
+    },
+    "720": {
+      "type": 12,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "721": {
+      "type": 15,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 1
+    },
+    "722": {
+      "type": 18,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 85,
+      "category": 3,
+      "effect": 1
+    },
+    "723": {
+      "pp": 20,
+      "category": 2,
+      "effect": 1
+    },
+    "724": {
+      "type": 9,
+      "power": 60,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 45,
+      "effectChance": 30
+    },
+    "725": {
+      "pp": 10,
+      "category": 1,
+      "effect": 112
+    },
+    "726": {
+      "type": 16,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 421
+    },
+    "727": {
+      "type": 11,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 422
+    },
+    "728": {
+      "type": 17,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 423
+    },
+    "729": {
+      "pp": 10,
+      "category": 1,
+      "effect": 424,
+      "effectChance": 100
+    },
+    "730": {
+      "type": 2,
+      "pp": 5,
+      "category": 1,
+      "effect": 425,
+      "effectChance": 100
+    },
+    "731": {
+      "type": 6,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 426,
+      "effectChance": 100
+    },
+    "732": {
+      "type": 14,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 427
+    },
+    "733": {
+      "type": 16,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 428
+    },
+    "734": {
+      "pp": 10,
+      "category": 1,
+      "effect": 429
+    },
+    "735": {
+      "type": 2,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 430
+    },
+    "736": {
+      "type": 13,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 431
+    },
+    "737": {
+      "type": 11,
+      "power": 85,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 431
+    },
+    "738": {
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 432
+    },
+    "739": {
+      "type": 10,
+      "power": 100,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "740": {
+      "type": 7,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "741": {
+      "type": 13,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "742": {
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "743": {
+      "type": 2,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "744": {
+      "type": 8,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "745": {
+      "type": 15,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "746": {
+      "type": 4,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "747": {
+      "type": 11,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "748": {
+      "type": 3,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "749": {
+      "type": 18,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "750": {
+      "type": 16,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "751": {
+      "type": 14,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "752": {
+      "type": 6,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "753": {
+      "type": 5,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "754": {
+      "type": 17,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "755": {
+      "type": 12,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "756": {
+      "type": 9,
+      "power": 10,
+      "pp": 10,
+      "category": 2,
+      "effect": 1
+    },
+    "757": {
+      "type": 16,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 433,
+      "effectChance": 100
+    },
+    "758": {
+      "type": 2,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 434
+    },
+    "759": {
+      "type": 18,
+      "pp": 15,
+      "category": 1,
+      "effect": 435,
+      "effectChance": 100
+    },
+    "760": {
+      "type": 12,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 71,
+      "effectChance": 100
+    },
+    "761": {
+      "type": 12,
+      "power": 35,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 43,
+      "effectChance": 100
+    },
+    "762": {
+      "type": 10,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 5,
+      "effectChance": 10
+    },
+    "763": {
+      "type": 9,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 436
+    },
+    "764": {
+      "type": 9,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 436
+    },
+    "765": {
+      "type": 13,
+      "power": 110,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 437,
+      "effectChance": 100
+    },
+    "766": {
+      "type": 16,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 396,
+      "effectChance": 100
+    },
+    "767": {
+      "type": 12,
+      "power": 40,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "768": {
+      "type": 13,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 439
+    },
+    "769": {
+      "type": 12,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 440,
+      "effectChance": 100
+    },
+    "770": {
+      "type": 12,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 397,
+      "effectChance": 100
+    },
+    "771": {
+      "type": 18,
+      "power": 75,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 72,
+      "effectChance": 100
+    },
+    "772": {
+      "type": 18,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 77,
+      "effectChance": 20
+    },
+    "773": {
+      "type": 11,
+      "pp": 10,
+      "category": 1,
+      "effect": 441
+    },
+    "774": {
+      "type": 17,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 442
+    },
+    "775": {
+      "type": 17,
+      "power": 80,
+      "pp": 10,
+      "category": 2,
+      "effect": 18
+    },
+    "776": {
+      "type": 2,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 81
+    },
+    "777": {
+      "type": 16,
+      "power": 160,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 81
+    },
+    "778": {
+      "type": 9,
+      "power": 140,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 3,
+      "effect": 420
+    },
+    "779": {
+      "type": 14,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "780": {
+      "type": 9,
+      "power": 130,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "781": {
+      "type": 16,
+      "power": 25,
+      "pp": 20,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 443
+    },
+    "782": {
+      "type": 6,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "783": {
+      "type": 4,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 20
+    },
+    "784": {
+      "type": 18,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "785": {
+      "type": 12,
+      "power": 55,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "786": {
+      "type": 13,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "787": {
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "788": {
+      "type": 7,
+      "power": 70,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "789": {
+      "type": 10,
+      "power": 70,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "790": {
+      "type": 17,
+      "power": 75,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "791": {
+      "type": 8,
+      "power": 110,
+      "pp": 5,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1
+    },
+    "792": {
+      "type": 4,
+      "pp": 40,
+      "accuracy": 100,
+      "category": 1,
+      "effect": 1
+    },
+    "793": {
+      "type": 2,
+      "pp": 10,
+      "category": 1,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "794": {
+      "type": 11,
+      "power": 60,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "795": {
+      "type": 15,
+      "power": 20,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1
+    },
+    "796": {
+      "type": 3,
+      "power": 40,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2,
+      "effect": 1
+    },
+    "797": {
+      "type": 5,
+      "power": 70,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 5,
+      "effectChance": 30
+    },
+    "798": {
+      "type": 12,
+      "pp": 10,
+      "category": 1,
+      "effect": 1
+    },
+    "799": {
+      "type": 17,
+      "power": 75,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "800": {
+      "type": 11,
+      "power": 25,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "801": {
+      "type": 13,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "802": {
+      "type": 16,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "803": {
+      "type": 14,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 10
+    },
+    "804": {
+      "type": 17,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1,
+      "effectChance": 20
+    },
+    "805": {
+      "type": 2,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1,
+      "effectChance": 100
+    },
+    "806": {
+      "type": 15,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2,
+      "effect": 1
+    },
+    "807": {
+      "type": 8,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "808": {
+      "type": 14,
+      "power": 80,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3,
+      "effect": 1
+    },
+    "809": {
+      "type": 4,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "810": {
+      "type": 14,
+      "power": 70,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2
+    },
+    "811": {
+      "pp": 10,
+      "category": 1
+    },
+    "812": {
+      "type": 6,
+      "power": 65,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2
+    },
+    "813": {
+      "type": 18,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 80,
+      "category": 3
+    },
+    "814": {
+      "type": 14,
+      "power": 70,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3
+    },
+    "815": {
+      "type": 10,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "816": {
+      "type": 11,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "817": {
+      "type": 12,
+      "power": 150,
+      "pp": 5,
+      "accuracy": 95,
+      "category": 3
+    },
+    "818": {
+      "type": 15,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 2
+    },
+    "819": {
+      "type": 2,
+      "pp": 10,
+      "category": 1
+    },
+    "820": {
+      "type": 5,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "821": {
+      "type": 4,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "822": {
+      "type": 14,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "823": {
+      "type": 8,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "824": {
+      "type": 9,
+      "pp": 10,
+      "category": 1
+    },
+    "825": {
+      "type": 2,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "826": {
+      "type": 8,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3
+    },
+    "827": {
+      "type": 17,
+      "power": 65,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 2
+    },
+    "828": {
+      "type": 3,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 80,
+      "category": 3
+    },
+    "829": {
+      "type": 13,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 80,
+      "category": 3
+    },
+    "830": {
+      "type": 5,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 80,
+      "category": 3
+    },
+    "831": {
+      "type": 14,
+      "pp": 5,
+      "category": 1
+    },
+    "832": {
+      "type": 14,
+      "pp": 10,
+      "category": 1
+    },
+    "833": {
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "834": {
+      "type": 7,
+      "pp": 10,
+      "category": 1
+    },
+    "835": {
+      "type": 2,
+      "power": 120,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2
+    },
+    "836": {
+      "type": 8,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "837": {
+      "type": 14,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "838": {
+      "type": 16,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "839": {
+      "type": 11,
+      "power": 60,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "840": {
+      "type": 12,
+      "pp": 15,
+      "category": 1
+    },
+    "841": {
+      "type": 9,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "842": {
+      "power": 20,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 2
+    },
+    "843": {
+      "type": 15,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "844": {
+      "type": 16,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "845": {
+      "pp": 1,
+      "category": 1
+    },
+    "846": {
+      "type": 6,
+      "power": 40,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "847": {
+      "type": 11,
+      "power": 30,
+      "pp": 10,
+      "accuracy": 95,
+      "category": 2
+    },
+    "848": {
+      "type": 4,
+      "power": 30,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "849": {
+      "pp": 10,
+      "accuracy": 100,
+      "category": 1
+    },
+    "850": {
+      "pp": 10,
+      "category": 1
+    },
+    "851": {
+      "type": 17,
+      "power": 85,
+      "pp": 10,
+      "category": 2
+    },
+    "852": {
+      "type": 12,
+      "power": 70,
+      "pp": 10,
+      "category": 2
+    },
+    "853": {
+      "type": 10,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "854": {
+      "type": 11,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "855": {
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "856": {
+      "type": 9,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "857": {
+      "type": 14,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "858": {
+      "type": 11,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 3
+    },
+    "859": {
+      "type": 17,
+      "power": 1,
+      "pp": 10,
+      "accuracy": 90,
+      "category": 3
+    },
+    "860": {
+      "type": 2,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "861": {
+      "type": 13,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "862": {
+      "pp": 10,
+      "category": 1
+    },
+    "863": {
+      "type": 15,
+      "pp": 10,
+      "category": 1
+    },
+    "864": {
+      "pp": 10,
+      "category": 1
+    },
+    "865": {
+      "type": 15,
+      "pp": 10,
+      "category": 1
+    },
+    "866": {
+      "type": 7,
+      "power": 50,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2
+    },
+    "867": {
+      "type": 12,
+      "power": 50,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2
+    },
+    "868": {
+      "type": 11,
+      "power": 50,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 3
+    },
+    "869": {
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "870": {
+      "type": 14,
+      "power": 40,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "871": {
+      "type": 8,
+      "power": 50,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "872": {
+      "type": 10,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "873": {
+      "type": 10,
+      "power": 90,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "874": {
+      "type": 13,
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "875": {
+      "type": 9,
+      "power": 160,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "876": {
+      "type": 17,
+      "power": 1,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "877": {
+      "type": 11,
+      "power": 70,
+      "pp": 20,
+      "accuracy": 100,
+      "category": 2
+    },
+    "878": {
+      "type": 10,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "879": {
+      "type": 17,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "880": {
+      "type": 4,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "881": {
+      "type": 2,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "882": {
+      "type": 18,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "883": {
+      "power": 140,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "884": {
+      "type": 12,
+      "power": 80,
+      "pp": 15,
+      "accuracy": 90,
+      "category": 3
+    },
+    "885": {
+      "type": 12,
+      "power": 60,
+      "pp": 10,
+      "accuracy": 85,
+      "category": 3
+    },
+    "886": {
+      "type": 12,
+      "power": 100,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "887": {
+      "type": 13,
+      "power": 130,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "888": {
+      "power": 120,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "889": {
+      "type": 16,
+      "power": 80,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "890": {
+      "type": 10,
+      "pp": 10,
+      "category": 1
+    },
+    "891": {
+      "type": 13,
+      "power": 70,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    },
+    "892": {
+      "type": 6,
+      "power": 95,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 2
+    },
+    "893": {
+      "type": 9,
+      "power": 50,
+      "pp": 10,
+      "category": 3
+    },
+    "894": {
+      "type": 9,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "895": {
+      "type": 16,
+      "pp": 15,
+      "category": 1
+    },
+    "896": {
+      "type": 18,
+      "power": 80,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "897": {
+      "type": 10,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 2
+    },
+    "898": {
+      "type": 13,
+      "power": 100,
+      "pp": 15,
+      "accuracy": 95,
+      "category": 2
+    },
+    "899": {
+      "type": 14,
+      "power": 75,
+      "pp": 10,
+      "accuracy": 100,
+      "category": 3
+    },
+    "900": {
+      "type": 2,
+      "power": 65,
+      "pp": 15,
+      "accuracy": 100,
+      "category": 2
+    },
+    "901": {
+      "type": 4,
+      "power": 100,
+      "pp": 5,
+      "accuracy": 100,
+      "category": 3
+    }
   }
 }

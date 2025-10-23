@@ -212,7 +212,7 @@ public sealed class TestBattleUI : SmartUIState
                 continue;
             }
             actual.BlockInteractions = false;
-            actual.Color = Main.rand.NextFromCollection(Enum.GetValues<PokemonType>().ToList()).GetColor();
+            actual.Color = move.Schema.Type.GetColor();
             actual.UpdateTextures($"Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
             label.SetText(move.ID.ToString());
             moveRef.DataRef = data;

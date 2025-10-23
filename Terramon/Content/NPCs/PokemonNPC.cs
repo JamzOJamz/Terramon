@@ -20,7 +20,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
-using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Terramon.Content.NPCs;

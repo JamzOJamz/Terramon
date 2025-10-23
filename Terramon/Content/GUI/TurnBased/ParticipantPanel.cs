@@ -1,4 +1,5 @@
-﻿using ReLogic.Content;
+﻿using Humanizer;
+using ReLogic.Content;
 using ReLogic.Graphics;
 using Terraria.GameContent;
 using Terraria.UI;
@@ -41,11 +42,12 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
         float zoom = _getPixelRatio?.Invoke() ?? 1f;
         var dims = GetDimensions();
-        float third = PanelTexture.Height() * 0.5f;
+        float third = dims.Height * 0.5f;
         float halfThird = third * 0.5f;
         float sideFactor = SideFactor;
         float sideShift = halfThird * sideFactor;
-        var parallelogramRect = new Rectangle((int)(dims.X + - halfThird + sideShift), (int)dims.Y, (int)(dims.Width + third), (int)dims.Height);
+        float extra = 1.2f;
+        var parallelogramRect = new Rectangle((int)(dims.X - halfThird + sideShift * extra), (int)dims.Y, (int)(dims.Width + third * extra), (int)dims.Height);
         DynamicPixelRatioElement.DrawAdjustableParallelogram(spriteBatch, PanelTexture.Value, parallelogramRect, Color.White, zoom);
 
         var monName = CurrentMon?.DisplayName ?? "???";
@@ -65,6 +67,20 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
         }
+
+        string lv = "Lv. ";
+        float levelNumberScale = 0.85f;
+        Vector2 levelNumberSize = bigFont.MeasureString(monLevel.ToString()) * levelNumberScale;
+        Vector2 levelLabelSize = smallFont.MeasureString(lv);
+        Vector2 drawLevelPosition = new(dims.X + dims.Width - 64f, dims.Y + levelNumberSize.Y + 6f);
+        Vector2 drawLevelLabelPosition = drawLevelPosition;
+
+        drawLevelPosition.Y -= levelNumberSize.Y;
+        drawLevelLabelPosition.X -= levelNumberSize.X + 8f;
+        drawLevelLabelPosition.Y -= levelLabelSize.Y * 1.4f;
+
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, bigFont, monLevel.ToString(), drawLevelPosition, Color.White, 0f, Vector2.Zero, new Vector2(levelNumberScale));
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f, Vector2.Zero, Vector2.One);
 
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
@@ -91,7 +107,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             float xDifference = 128f;
             Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, HPBar.Height());
             float expWidth = hpWidth - xDifference - HPBar.Width() / 3;
-            float expFactor = CurrentMon is null ? 0f : CurrentMon.Level == Terramon.MaxPokemonLevel ? 1f : CurrentMon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(CurrentMon.Level + 1, CurrentMon.Schema.GrowthRate);
+            float expFactor = CurrentMon is null ? 0f : monLevel == Terramon.MaxPokemonLevel ? 1f : CurrentMon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, CurrentMon.Schema.GrowthRate);
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, Color.Black, zoom);
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor, Color.White, zoom);
         }

@@ -980,6 +980,9 @@ public readonly struct PokemonMoves
     }
 }
 
-public readonly record struct MoveData(MoveID ID, byte PP, byte PPUp);
+public readonly record struct MoveData(MoveID ID, byte PP, byte PPUp)
+{
+    public DatabaseV2.MoveSchema Schema => Terramon.DatabaseV2.GetMove(ID);
+}
 
 #endregion

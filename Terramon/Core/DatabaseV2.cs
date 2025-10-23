@@ -27,6 +27,7 @@ public class DatabaseV2
 */
 
     [JsonPropertyAlias("p")] public ReadOnlyDictionary<ushort, PokemonSchema> Pokemon { get; init; }
+    [JsonPropertyAlias("m")] public ReadOnlyDictionary<ushort, MoveSchema> Moves { get; init; }
 
     public static DatabaseV2 Parse(Stream stream)
     {
@@ -124,6 +125,13 @@ public class DatabaseV2
         return pokemon.Evolution.AtLevel <= level && id != pokemon.Evolution.ID ? pokemon.Evolution.ID : (ushort)0;
     }
 
+    public MoveSchema GetMove(ushort id)
+    {
+        return Moves.GetValueOrDefault(id);
+    }
+
+    public MoveSchema GetMove(MoveID id)
+        => GetMove((ushort)id);
 /*
     public bool IsAvailableStarter(ushort id)
     {
@@ -231,6 +239,36 @@ public class DatabaseV2
     {
         public AbilitiesSchema() : this(AbilityID.None, AbilityID.None, AbilityID.None)
         {
+        }
+    }
+
+    [JsonConverter(typeof(MultiPropertyNameConverter))]
+    public record MoveSchema(
+        [property: JsonProperty("type", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("t")]
+        [property: DefaultValue(PokemonType.Normal)]
+        PokemonType Type,
+        [property: JsonProperty("power", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("p")]
+        int Power,
+        [property: JsonProperty("pp")] int PP,
+        [property: JsonProperty("accuracy", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("a")]
+        int Accuracy,
+        [property: JsonProperty("category", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("c")]
+        MoveCategory Category,
+        [property: JsonProperty("effect", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("e")]
+        int Effect,
+        [property: JsonProperty("effectChance", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [property: JsonPropertyAlias("ec")]
+        int EffectChance
+    )
+    {
+        public MoveSchema() : this(PokemonType.Normal, 0, 0, 0, MoveCategory.Dynamic, 0, 0)
+        { 
+
         }
     }
 }
