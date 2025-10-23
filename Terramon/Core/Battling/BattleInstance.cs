@@ -176,7 +176,7 @@ public class BattleInstance
                 Console.WriteLine();
                 return false;
             case MoveElement moveMessage:
-                GetPokemonFromShowdown(moveMessage.Pokemon, out var plr, out var w, out var pkd, out var monMessage);
+                GetPokemonFromShowdown(moveMessage.Pokemon, out _, out _, out _, out var monMessage);
                 ConsoleWriteColor($"{monMessage} used {moveMessage.Move}!", ConsoleColor.Yellow);
                 return false;
             case FailElement:
@@ -190,7 +190,7 @@ public class BattleInstance
                 ConsoleWriteColor("But it missed!", ConsoleColor.Yellow);
                 return false;
             case SwitchElement switchMessage:
-                GetPokemonFromShowdown(switchMessage.Pokemon, out plr, out _, out pkd);
+                GetPokemonFromShowdown(switchMessage.Pokemon, out var plr, out _, out var pkd);
                 if (plr != null)
                     ConsoleWriteColor($"Player {plr.Player.name} switches to {pkd.DisplayName}", ConsoleColor.Magenta);
                 return false;

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using ReLogic.Content;
+using Showdown.NET.Definitions;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.ID;
@@ -555,9 +556,9 @@ public struct PokemonIVs
     private const uint HPMask = 0x1F;
     private const uint AttackMask = HPMask << 5;
     private const uint DefenseMask = AttackMask << 5;
-    private const uint SpeedMask = DefenseMask << 5;
-    private const uint SpAtkMask = SpeedMask << 5;
+    private const uint SpAtkMask = DefenseMask << 5;
     private const uint SpDefMask = SpAtkMask << 5;
+    private const uint SpeedMask = SpDefMask << 5;
 
     public byte HP
     {
@@ -591,31 +592,31 @@ public struct PokemonIVs
 
     public byte SpAtk
     {
-        readonly get => (byte)((Packed & SpAtkMask) >> 20);
+        readonly get => (byte)((Packed & SpAtkMask) >> 15);
         init
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpAtkMask) | ((uint)value << 20);
+            Packed = (Packed & ~SpAtkMask) | ((uint)value << 15);
         }
     }
 
     public byte SpDef
     {
-        readonly get => (byte)((Packed & SpDefMask) >> 25);
+        readonly get => (byte)((Packed & SpDefMask) >> 20);
         init
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpDefMask) | ((uint)value << 25);
+            Packed = (Packed & ~SpDefMask) | ((uint)value << 20);
         }
     }
 
     public byte Speed
     {
-        readonly get => (byte)((Packed & SpeedMask) >> 15);
+        readonly get => (byte)((Packed & SpeedMask) >> 25);
         init
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpeedMask) | ((uint)value << 15);
+            Packed = (Packed & ~SpeedMask) | ((uint)value << 25);
         }
     }
 
@@ -752,6 +753,105 @@ public struct PokemonEVs
     public readonly override string ToString()
     {
         return $"HP: {HP}, Atk: {Attack}, Def: {Defense}, SpA: {SpAttack}, SpD: {SpDefense}, Spe: {Speed}";
+    }
+}
+
+public struct StatStages
+{
+    public uint Packed;
+    private const uint HPMask = 0xF;
+    private const uint AttackMask = HPMask << 4;
+    private const uint DefenseMask = AttackMask << 4;
+    private const uint SpAtkMask = DefenseMask << 4;
+    private const uint SpDefMask = SpAtkMask << 4;
+    private const uint SpeedMask = SpDefMask << 4;
+
+    public sbyte HP
+    {
+        readonly get => Signed4Bit(Packed & HPMask);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~HPMask) | (byte)value;
+        }
+    }
+
+    public sbyte Attack
+    {
+        readonly get => Signed4Bit((Packed & AttackMask) >> 4);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~AttackMask) | ((uint)value << 4);
+        }
+    }
+
+    public sbyte Defense
+    {
+        readonly get => Signed4Bit((Packed & DefenseMask) >> 8);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~DefenseMask) | ((uint)value << 8);
+        }
+    }
+
+    public sbyte SpAtk
+    {
+        readonly get => Signed4Bit((Packed & SpAtkMask) >> 12);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~SpAtkMask) | ((uint)value << 12);
+        }
+    }
+
+    public sbyte SpDef
+    {
+        readonly get => Signed4Bit((Packed & SpDefMask) >> 16);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~SpDefMask) | ((uint)value << 16);
+        }
+    }
+
+    public sbyte Speed
+    {
+        readonly get => Signed4Bit((Packed & SpeedMask) >> 20);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~SpeedMask) | ((uint)value << 20);
+        }
+    }
+
+    public sbyte this[StatID iv]
+    {
+        readonly get
+        {
+            var move = 4 * (int)iv;
+            return Signed4Bit(Packed & (HPMask << (move)) >> (move));
+        }
+        set
+        {
+            CheckError(value);
+            var move = 4 * (int)iv;
+            Packed = (Packed & ~(HPMask << move)) | ((uint)value << move);
+        }
+    }
+
+    private static sbyte Signed4Bit(uint value)
+    {
+        if ((value & 0x8) != 0)
+            return (sbyte)((int)value - 16);
+        return (sbyte)value;
+    }
+
+    private static void CheckError(sbyte value)
+    {
+        if (value < -8 || value > 7)
+            throw new ArgumentOutOfRangeException(nameof(value));
     }
 }
 
