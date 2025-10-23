@@ -175,6 +175,32 @@
                 and modded formats count as whatever gen they were based on.
             </summary>
         </member>
+        <member name="T:Showdown.NET.Protocol.RatedElement">
+            <summary>
+                Will be sent if the game is official in some way.
+                <list type="bullet">
+                    <item>
+                        If <see cref="P:Showdown.NET.Protocol.RatedElement.Message"/> is <see langword="null"/>, the game will affect the player's ladder rating (Elo score).
+                    </item>
+                    <item>
+                        Otherwise, indicates an official game that is not actually rated, such as being a tournament game.
+                    </item>
+                </list>
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.RatedElement.#ctor(System.String)">
+            <summary>
+                Will be sent if the game is official in some way.
+                <list type="bullet">
+                    <item>
+                        If <see cref="P:Showdown.NET.Protocol.RatedElement.Message"/> is <see langword="null"/>, the game will affect the player's ladder rating (Elo score).
+                    </item>
+                    <item>
+                        Otherwise, indicates an official game that is not actually rated, such as being a tournament game.
+                    </item>
+                </list>
+            </summary>
+        </member>
         <member name="T:Showdown.NET.Protocol.TierElement">
             <summary>
                 The name of the format being played. (see also <see cref="T:Showdown.NET.Definitions.FormatID" />).
@@ -189,6 +215,16 @@
         </member>
         <member name="P:Showdown.NET.Protocol.TierElement.FormatName">
             <summary></summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.RuleElement">
+            <summary>
+                Will appear multiple times, one for each rule.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.RuleElement.#ctor(System.String,System.String)">
+            <summary>
+                Will appear multiple times, one for each rule.
+            </summary>
         </member>
         <member name="T:Showdown.NET.Protocol.ClearPokeElement">
             <summary>
@@ -275,6 +311,31 @@
                 <see cref="P:Showdown.NET.Protocol.WinElement.Username" /> has won the battle.
             </summary>
         </member>
+        <member name="T:Showdown.NET.Protocol.TieElement">
+            <summary>
+                The battle has ended in a tie.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.InactiveElement">
+            <summary>
+                A message related to the battle timer has been sent. The official client displays these messages in red.
+                <see cref="T:Showdown.NET.Protocol.InactiveElement" /> means that the timer is on at the time the message was sent,
+                while <see cref="T:Showdown.NET.Protocol.InactiveOffElement" /> means that the timer is off.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.InactiveElement.#ctor(System.String)">
+            <summary>
+                A message related to the battle timer has been sent. The official client displays these messages in red.
+                <see cref="T:Showdown.NET.Protocol.InactiveElement" /> means that the timer is on at the time the message was sent,
+                while <see cref="T:Showdown.NET.Protocol.InactiveOffElement" /> means that the timer is off.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.InactiveOffElement">
+            <inheritdoc cref="T:Showdown.NET.Protocol.InactiveElement" />
+        </member>
+        <member name="M:Showdown.NET.Protocol.InactiveOffElement.#ctor(System.String)">
+            <inheritdoc cref="T:Showdown.NET.Protocol.InactiveElement" />
+        </member>
         <member name="T:Showdown.NET.Protocol.MoveElement">
             <summary>
                 <para>
@@ -340,7 +401,7 @@
                     as a fraction; if it is your own Pokémon
                     then it will be <c>CURRENT/MAX</c>, if not, it will be <c>/100</c> if HP Percentage Mod is in effect and
                     <c>/48</c> otherwise.
-                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see langword="null" />, or it can be <c>slp</c>, <c>par</c>, etc.
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see cref="F:Showdown.NET.Definitions.StatusID.None" />, or it can be <see cref="F:Showdown.NET.Definitions.StatusID.Slp"/>, <see cref="F:Showdown.NET.Definitions.StatusID.Par"/>, etc.
                 </para>
             </summary>
             <remarks>
@@ -348,7 +409,7 @@
                 which indicates it was unintentional (forced by Whirlwind, Roar, etc).
             </remarks>
         </member>
-        <member name="M:Showdown.NET.Protocol.SwitchElement.#ctor(System.String,System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.SwitchElement.#ctor(System.String,System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 <para>
                     A Pokémon identified by <see cref="P:Showdown.NET.Protocol.SwitchElement.Pokemon" /> has switched in (if there was an old Pokémon in that
@@ -369,7 +430,7 @@
                     as a fraction; if it is your own Pokémon
                     then it will be <c>CURRENT/MAX</c>, if not, it will be <c>/100</c> if HP Percentage Mod is in effect and
                     <c>/48</c> otherwise.
-                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see langword="null" />, or it can be <c>slp</c>, <c>par</c>, etc.
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see cref="F:Showdown.NET.Definitions.StatusID.None" />, or it can be <see cref="F:Showdown.NET.Definitions.StatusID.Slp"/>, <see cref="F:Showdown.NET.Definitions.StatusID.Par"/>, etc.
                 </para>
             </summary>
             <remarks>
@@ -380,7 +441,7 @@
         <member name="T:Showdown.NET.Protocol.DragElement">
             <inheritdoc cref="T:Showdown.NET.Protocol.SwitchElement" />
         </member>
-        <member name="M:Showdown.NET.Protocol.DragElement.#ctor(System.String,System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.DragElement.#ctor(System.String,System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <inheritdoc cref="T:Showdown.NET.Protocol.SwitchElement" />
         </member>
         <member name="T:Showdown.NET.Protocol.DetailsChangeElement">
@@ -394,7 +455,7 @@
                 Syntax is the same as <see cref="T:Showdown.NET.Protocol.SwitchElement" />.
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.DetailsChangeElement.#ctor(System.String,System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.DetailsChangeElement.#ctor(System.String,System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 <para>
                     The specified Pokémon has changed formes (via Mega Evolution, ability, etc.) to <c>SPECIES</c>
@@ -408,7 +469,7 @@
         <member name="T:Showdown.NET.Protocol.FormeChangeElement">
             <inheritdoc cref="T:Showdown.NET.Protocol.DetailsChangeElement" />
         </member>
-        <member name="M:Showdown.NET.Protocol.FormeChangeElement.#ctor(System.String,System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.FormeChangeElement.#ctor(System.String,System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <inheritdoc cref="T:Showdown.NET.Protocol.DetailsChangeElement" />
         </member>
         <member name="T:Showdown.NET.Protocol.ReplaceElement">
@@ -420,7 +481,7 @@
                 <see cref="P:Showdown.NET.Protocol.ReplaceElement.Pokemon" /> will be the NEW Pokémon ID - i.e. it will have the nickname of the Zoroark (or other Illusion user).
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.ReplaceElement.#ctor(System.String,System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.ReplaceElement.#ctor(System.String,System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 <para>
                     Illusion has ended for the specified Pokémon.
@@ -489,6 +550,18 @@
                 <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" />, in the case that it's not <see cref="P:Showdown.NET.Protocol.BlockElement.Effect" /> (for instance, an ally with Aroma Veil.)
             </summary>
         </member>
+        <member name="T:Showdown.NET.Protocol.NoTargetElement">
+            <summary>
+                A move has failed due to their being no target Pokémon <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/>. <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/> is <see langword="null"/> in Generation 1.
+                This action is specific to Generations 1-4 as in later Generations a failed move will display using <see cref="T:Showdown.NET.Protocol.FailElement"/>.
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.NoTargetElement.#ctor(System.String)">
+            <summary>
+                A move has failed due to their being no target Pokémon <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/>. <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/> is <see langword="null"/> in Generation 1.
+                This action is specific to Generations 1-4 as in later Generations a failed move will display using <see cref="T:Showdown.NET.Protocol.FailElement"/>.
+            </summary>
+        </member>
         <member name="T:Showdown.NET.Protocol.MissElement">
             <summary>
                 The move used by the <see cref="P:Showdown.NET.Protocol.MissElement.Source" /> Pokémon missed (maybe absent) the <see cref="P:Showdown.NET.Protocol.MissElement.Target" /> Pokémon.
@@ -512,7 +585,7 @@
                 </para>
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.DamageElement.#ctor(System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.DamageElement.#ctor(System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 <para>
                     The specified Pokémon <see cref="P:Showdown.NET.Protocol.DamageElement.Pokemon" /> has taken damage, and is now at <see cref="P:Showdown.NET.Protocol.DamageElement.HP" />
@@ -530,7 +603,7 @@
                 Same as <see cref="T:Showdown.NET.Protocol.DamageElement" />, but the Pokémon has healed damage instead.
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.HealElement.#ctor(System.String,System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.HealElement.#ctor(System.String,System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 Same as <see cref="T:Showdown.NET.Protocol.DamageElement" />, but the Pokémon has healed damage instead.
             </summary>
@@ -550,7 +623,7 @@
                 The Pokémon <see cref="P:Showdown.NET.Protocol.StatusElement.Pokemon" /> has been inflicted with <see cref="P:Showdown.NET.Protocol.StatusElement.Status" />.
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.StatusElement.#ctor(System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.StatusElement.#ctor(System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 The Pokémon <see cref="P:Showdown.NET.Protocol.StatusElement.Pokemon" /> has been inflicted with <see cref="P:Showdown.NET.Protocol.StatusElement.Status" />.
             </summary>
@@ -560,7 +633,7 @@
                 The Pokémon <see cref="P:Showdown.NET.Protocol.CureStatusElement.Pokemon" /> has recovered from <see cref="P:Showdown.NET.Protocol.CureStatusElement.Status" />.
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.CureStatusElement.#ctor(System.String,System.String)">
+        <member name="M:Showdown.NET.Protocol.CureStatusElement.#ctor(System.String,Showdown.NET.Definitions.StatusID)">
             <summary>
                 The Pokémon <see cref="P:Showdown.NET.Protocol.CureStatusElement.Pokemon" /> has recovered from <see cref="P:Showdown.NET.Protocol.CureStatusElement.Status" />.
             </summary>

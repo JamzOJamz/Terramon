@@ -38,6 +38,9 @@ public class PokemonData
     public string Nickname;
     public string Variant;
 
+    public StatStages StatStages;
+    public Showdown.NET.Definitions.StatusID Status;
+
     public ushort ID
     {
         get => _id;
@@ -308,6 +311,22 @@ public class PokemonData
             $"{shiny}|" +
             $"{Level}|" +
             $"{Happiness},{Ball},{hiddenPowerType},{gmax},{dmaxLevel},{teratype}";
+    }
+
+    public bool CureStatus()
+    {
+        if (Status == Showdown.NET.Definitions.StatusID.Fnt)
+            return false;
+        Status = Showdown.NET.Definitions.StatusID.None;
+        return true;
+    }
+
+    public bool Faint()
+    {
+        if (Status == Showdown.NET.Definitions.StatusID.Fnt)
+            return false;
+        Status = Showdown.NET.Definitions.StatusID.Fnt;
+        return true;
     }
 
     public PokemonData ShallowCopy()
@@ -766,7 +785,7 @@ public struct StatStages
     private const uint SpDefMask = SpAtkMask << 4;
     private const uint SpeedMask = SpDefMask << 4;
 
-    public sbyte HP
+    public int HP
     {
         readonly get => Signed4Bit(Packed & HPMask);
         set
@@ -776,7 +795,7 @@ public struct StatStages
         }
     }
 
-    public sbyte Attack
+    public int Attack
     {
         readonly get => Signed4Bit((Packed & AttackMask) >> 4);
         set
@@ -786,7 +805,7 @@ public struct StatStages
         }
     }
 
-    public sbyte Defense
+    public int Defense
     {
         readonly get => Signed4Bit((Packed & DefenseMask) >> 8);
         set
@@ -796,7 +815,7 @@ public struct StatStages
         }
     }
 
-    public sbyte SpAtk
+    public int SpAtk
     {
         readonly get => Signed4Bit((Packed & SpAtkMask) >> 12);
         set
@@ -806,7 +825,7 @@ public struct StatStages
         }
     }
 
-    public sbyte SpDef
+    public int SpDef
     {
         readonly get => Signed4Bit((Packed & SpDefMask) >> 16);
         set
@@ -816,7 +835,7 @@ public struct StatStages
         }
     }
 
-    public sbyte Speed
+    public int Speed
     {
         readonly get => Signed4Bit((Packed & SpeedMask) >> 20);
         set
@@ -826,7 +845,7 @@ public struct StatStages
         }
     }
 
-    public sbyte this[StatID iv]
+    public int this[StatID iv]
     {
         readonly get
         {
@@ -848,7 +867,7 @@ public struct StatStages
         return (sbyte)value;
     }
 
-    private static void CheckError(sbyte value)
+    private static void CheckError(int value)
     {
         if (value < -8 || value > 7)
             throw new ArgumentOutOfRangeException(nameof(value));
