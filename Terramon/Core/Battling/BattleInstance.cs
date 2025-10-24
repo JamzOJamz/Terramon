@@ -179,6 +179,9 @@ public class BattleInstance
             case InactiveElement:
             case InactiveOffElement:
             case UpkeepElement:
+            case HintElement:
+            case CenterElement:
+            case MessageElement:
             case DebugElement:
                 return false;
             // spacers
@@ -421,15 +424,31 @@ public class BattleInstance
                 if (weatherMessage.Weather is null)
                     ConsoleWriteColor("The weather has expired!", ConsoleColor.Blue);
                 else if (!weatherMessage.Upkeep)
-                    ConsoleWriteColor($"The weather is now {weatherMessage.Weather}", ConsoleColor.Blue);
+                    ConsoleWriteColor($"The weather is now {weatherMessage.Weather}.", ConsoleColor.Blue);
+                return false;
+            case FieldStartElement fieldStartMessage:
+                ConsoleWriteColor($"Field condition {fieldStartMessage.Condition} has started.", ConsoleColor.Blue);
+                return false;
+            case FieldEndElement fieldEndMessage:
+                ConsoleWriteColor($"Field condition {fieldEndMessage.Condition} has ended.", ConsoleColor.Blue);
+                return false;
+            case SideStartElement sideStartMessage:
+                ConsoleWriteColor($"Side condition {sideStartMessage.Condition} has started for side {sideStartMessage.Side}!", ConsoleColor.DarkBlue);
+                return false;
+            case SideEndElement sideEndMessage:
+                ConsoleWriteColor($"Side condition {sideEndMessage.Condition} has ended for side {sideEndMessage.Side}!", ConsoleColor.DarkBlue);
+                return false;
+            case SwapSideConditionsElement swapSideConditionsMessage:
+                // we probably wanna keep track of side conditions in two variables eventually, for the visual effects
+                // THINGS
                 return false;
             case StartVolatileElement startVolatileMessage:
                 GetPokemonFromShowdown(startVolatileMessage.Pokemon, out monMessage);
-                ConsoleWriteColor($"Status effect {startVolatileMessage.Effect} was applied to {monMessage}.", ConsoleColor.DarkCyan);
+                ConsoleWriteColor($"Volatile effect {startVolatileMessage.Effect} was applied to {monMessage}.", ConsoleColor.DarkCyan);
                 return false;
             case EndVolatileElement endVolatileMessage:
                 GetPokemonFromShowdown(endVolatileMessage.Pokemon, out monMessage);
-                ConsoleWriteColor($"Status effect {endVolatileMessage.Effect} ended for {monMessage}.", ConsoleColor.DarkCyan);
+                ConsoleWriteColor($"Volatile effect {endVolatileMessage.Effect} ended for {monMessage}.", ConsoleColor.DarkCyan);
                 return false;
             case FaintElement faintMessage:
                 pkd = GetPokemonFromShowdown(faintMessage.Pokemon, out monMessage);
