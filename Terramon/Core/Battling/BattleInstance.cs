@@ -541,8 +541,13 @@ public class BattleInstance
     {
         var p1 = Player1;
         var p2 = Player2;
+        var w = WildNPC;
 
-        WildNPC?.EndBattle();
+        if (w != null)
+            w.EndBattle();
+        else
+            BattleStream?.Dispose();
+
         p1.Battle = null;
         if (p2 != null)
             p2.Battle = null;
