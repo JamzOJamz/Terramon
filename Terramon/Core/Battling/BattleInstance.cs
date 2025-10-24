@@ -156,8 +156,14 @@ public class BattleInstance
     {
         GetPokemonFromShowdown(showdownMon, out player, out wild, out poke, out _);
     }
+    private PokemonData GetPokemonFromShowdown(string showdownMon, out string monMessage)
+    {
+        GetPokemonFromShowdown(showdownMon, out _, out _, out var mon, out monMessage);
+        return mon;
+    }
     private bool HandleSingleElement(ProtocolElement element, TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
     {
+        PokemonData[] foeTeam = wild is null ? p2.Party : [wild.Data];
         switch (element)
         {
             // nothings (or skip)
@@ -187,6 +193,7 @@ public class BattleInstance
                 ConsoleWriteColor($"{monMessage} used {moveMessage.Move}!", ConsoleColor.Yellow);
                 return false;
             case FailElement:
+            case NoTargetElement:
                 ConsoleWriteColor("But it failed!", ConsoleColor.Yellow);
                 return false;
             case BlockElement blockMessage:
@@ -228,7 +235,7 @@ public class BattleInstance
                 ConsoleWriteColor(nameof(SwapElement), ConsoleColor.DarkRed);
                 return false;
             case CantElement cantMessage:
-                GetPokemonFromShowdown(cantMessage.Pokemon, out _, out _, out _, out monMessage);
+                GetPokemonFromShowdown(cantMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"{monMessage} couldn't use the move{(cantMessage.Move is null ? string.Empty : $" {cantMessage.Move}")}: {cantMessage.Reason}", ConsoleColor.DarkYellow);
                 return false;
             case TurnElement turnMessage:
@@ -263,9 +270,21 @@ public class BattleInstance
                 ConsoleWriteColor(error, ConsoleColor.Red);
                 return false;
             case DamageElement damageMessage:
-                GetPokemonFromShowdown(damageMessage.Pokemon, out _, out _, out var targetMon, out monMessage);
+                var targetMon = GetPokemonFromShowdown(damageMessage.Pokemon, out monMessage);
                 ushort newHP = ushort.Parse(damageMessage.HP.Split('/', 2)[0]);
                 ConsoleWriteColor($"{monMessage} got hit and lost {targetMon.HP - newHP} HP!", ConsoleColor.Magenta);
+                targetMon.HP = newHP;
+                return false;
+            case HealElement healMessage:
+                targetMon = GetPokemonFromShowdown(healMessage.Pokemon, out monMessage);
+                newHP = ushort.Parse(healMessage.HP.Split('/', 2)[0]);
+                ConsoleWriteColor($"{monMessage} was healed for {newHP - targetMon.HP}!", ConsoleColor.Green);
+                targetMon.HP = newHP;
+                return false;
+            case SetHPElement setHPMessage:
+                targetMon = GetPokemonFromShowdown(setHPMessage.Pokemon, out monMessage);
+                newHP = ushort.Parse(setHPMessage.HP.Split('/', 2)[0]);
+                ConsoleWriteColor($"{monMessage} now has {newHP} HP!", ConsoleColor.Yellow);
                 targetMon.HP = newHP;
                 return false;
             case CritElement:
@@ -278,32 +297,20 @@ public class BattleInstance
                 ConsoleWriteColor("It wasn't very effective...", ConsoleColor.DarkYellow);
                 return false;
             case ImmuneElement immuneMessage:
-                GetPokemonFromShowdown(immuneMessage.Pokemon, out _, out _, out _, out monMessage);
+                GetPokemonFromShowdown(immuneMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"But {monMessage} was immune!", ConsoleColor.DarkYellow);
                 return false;
             case HitCountElement hitCountMessage:
-                GetPokemonFromShowdown(hitCountMessage.Pokemon, out _, out _, out _, out monMessage);
+                GetPokemonFromShowdown(hitCountMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"{monMessage} was hit {hitCountMessage.Num} times!", ConsoleColor.DarkYellow);
                 return false;
-            case HealElement healMessage:
-                GetPokemonFromShowdown(healMessage.Pokemon, out _, out _, out targetMon, out monMessage);
-                newHP = ushort.Parse(healMessage.HP.Split('/', 2)[0]);
-                ConsoleWriteColor($"{monMessage} was healed for {newHP - targetMon.HP}!", ConsoleColor.Green);
-                targetMon.HP = newHP;
-                return false;
-            case SetHPElement setHPMessage:
-                GetPokemonFromShowdown(setHPMessage.Pokemon, out _, out _, out targetMon, out monMessage);
-                newHP = ushort.Parse(setHPMessage.HP.Split('/', 2)[0]);
-                ConsoleWriteColor($"{monMessage} now has {newHP} HP!", ConsoleColor.Yellow);
-                targetMon.HP = newHP;
-                return false;
             case StatusElement statusMessage:
-                GetPokemonFromShowdown(statusMessage.Pokemon, out _, out _, out targetMon, out monMessage);
+                targetMon = GetPokemonFromShowdown(statusMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"{monMessage} has been inflicted with the {statusMessage.Status} status!", ConsoleColor.DarkYellow);
                 targetMon.Status = statusMessage.Status;
                 return false;
             case CureStatusElement cureStatusMessage:
-                GetPokemonFromShowdown(cureStatusMessage.Pokemon, out _, out _, out targetMon, out monMessage);
+                targetMon = GetPokemonFromShowdown(cureStatusMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"{monMessage} has recovered from {cureStatusMessage.Status}!", ConsoleColor.DarkGreen);
                 targetMon.CureStatus();
                 return false;
@@ -312,22 +319,12 @@ public class BattleInstance
 
                 ConsoleWriteColor($"Everyone in team {playerTeam} has been healed!", ConsoleColor.Green);
 
-                PokemonData[] party = null;
-                if (playerTeam == 2)
-                {
-                    if (p2 != null)
-                        party = p2.Party;
-                    else
-                        wild.Data.CureStatus();
-                }
-                else
-                    party = p1.Party;
-                if (party != null)
-                    foreach (var member in party)
-                        member.CureStatus();
+                PokemonData[] party = playerTeam == 1 ? p1.Party : foeTeam;
+                foreach (var member in party)
+                    member?.CureStatus();
                 return false;
             case BoostElement boostMessage:
-                GetPokemonFromShowdown(boostMessage.Pokemon, out _, out _, out targetMon, out monMessage);
+                targetMon = GetPokemonFromShowdown(boostMessage.Pokemon, out monMessage);
                 var stat = boostMessage.Stat;
                 ConsoleWriteColor($"{monMessage} has had their {stat} raised by {boostMessage.Amount}!", ConsoleColor.DarkYellow);
                 int currentStage = targetMon.StatStages[stat];
@@ -338,7 +335,7 @@ public class BattleInstance
                     ConsoleWriteColor($"But the cap for {stat} was reached!", ConsoleColor.DarkGray);
                 return false;
             case UnboostElement unboostMessage:
-                GetPokemonFromShowdown(unboostMessage.Pokemon, out _, out _, out targetMon, out monMessage);
+                targetMon = GetPokemonFromShowdown(unboostMessage.Pokemon, out monMessage);
                 stat = unboostMessage.Stat;
                 ConsoleWriteColor($"{monMessage} has had their {stat} lowered by {unboostMessage.Amount}!", ConsoleColor.DarkYellow);
                 currentStage = targetMon.StatStages[stat];
@@ -349,7 +346,7 @@ public class BattleInstance
                     ConsoleWriteColor($"But {stat} is already as low as possible!", ConsoleColor.DarkGray);
                 return false;
             case SetBoostElement setBoostMessage:
-                GetPokemonFromShowdown(setBoostMessage.Pokemon, out _, out _, out targetMon, out monMessage);
+                targetMon = GetPokemonFromShowdown(setBoostMessage.Pokemon, out monMessage);
                 stat = setBoostMessage.Stat;
                 ConsoleWriteColor($"{monMessage} has had their {stat} set to {setBoostMessage.Amount}!", ConsoleColor.DarkYellow);
                 newStage = Math.Clamp(setBoostMessage.Amount, -7, 7);
@@ -358,16 +355,84 @@ public class BattleInstance
                 else
                     ConsoleWriteColor($"But the value was clamped!", ConsoleColor.DarkGray);
                 return false;
+            case SwapBoostElement swapBoostMessage:
+                pkd = GetPokemonFromShowdown(swapBoostMessage.Source, out monMessage);
+                targetMon = GetPokemonFromShowdown(swapBoostMessage.Target, out var monMessage2);
+                var stats = swapBoostMessage.Stats;
+                ConsoleWriteColor($"{monMessage} swapped their own {string.Join(", ", stats)} with {monMessage2}'s!", ConsoleColor.Cyan);
+                for (int i = 0; i < stats.Length; i++)
+                {
+                    stat = stats[i];
+                    (targetMon.StatStages[stat], pkd.StatStages[stat]) = (pkd.StatStages[stat], targetMon.StatStages[stat]);
+                }
+                return false;
+            case InvertBoostElement invertBoostMessage:
+                targetMon = GetPokemonFromShowdown(invertBoostMessage.Pokemon, out monMessage);
+                ConsoleWriteColor($"{monMessage} has had their stat boosts inverted!", ConsoleColor.DarkYellow);
+                for (int i = 0; i <= (int)StatID.Spe; i++)
+                {
+                    targetMon.StatStages.Packed ^= (uint)(0b1000 << (i * 4));
+                }
+                return false;
+            case ClearBoostElement clearBoostMessage:
+                targetMon = GetPokemonFromShowdown(clearBoostMessage.Pokemon, out monMessage);
+                ConsoleWriteColor($"{monMessage} has had their stat boosts reset to 0!", ConsoleColor.DarkYellow);
+                targetMon.StatStages.Packed = 0;
+                return false;
+            case ClearAllBoostElement clearAllBoostMessage:
+                foreach (var member in p1.Party)
+                {
+                    if (member != null)
+                        member.StatStages.Packed = 0;
+                }
+                foreach (var member in foeTeam)
+                {
+                    if (member != null)
+                        member.StatStages.Packed = 0;
+                }
+                return false;
+            case ClearPositiveBoostElement clearPositiveBoostMessage:
+                targetMon = GetPokemonFromShowdown(clearPositiveBoostMessage.Target, out monMessage);
+                ConsoleWriteColor($"{monMessage} had their positive stat boosts reset to 0!", ConsoleColor.DarkYellow);
+                for (int i = 0; i <= (int)StatID.Spe; i++)
+                {
+                    uint mask = (uint)(0b1000 << (i * 4));
+                    if ((targetMon.StatStages.Packed & mask) != 0)
+                        targetMon.StatStages.Packed ^= mask;
+                }
+                return false;
+            case ClearNegativeBoostElement clearNegativeBoostMessage:
+                targetMon = GetPokemonFromShowdown(clearNegativeBoostMessage.Pokemon, out monMessage);
+                ConsoleWriteColor($"{monMessage} had their negative stat boosts reset to 0!", ConsoleColor.DarkYellow);
+                for (int i = 0; i <= (int)StatID.Spe; i++)
+                {
+                    uint mask = (uint)(0b1000 << (i * 4));
+                    if ((targetMon.StatStages.Packed & mask) == 0)
+                        targetMon.StatStages.Packed ^= mask;
+                }
+                return false;
+            case CopyBoostElement copyBoostMessage:
+                pkd = GetPokemonFromShowdown(copyBoostMessage.Source, out monMessage);
+                targetMon = GetPokemonFromShowdown(copyBoostMessage.Target, out monMessage2);
+                ConsoleWriteColor($"{monMessage2} copied {monMessage}'s stat boosts!", ConsoleColor.DarkYellow);
+                targetMon.StatStages.Packed = pkd.StatStages.Packed;
+                return false;
+            case WeatherElement weatherMessage:
+                if (weatherMessage.Weather is null)
+                    ConsoleWriteColor("The weather has expired!", ConsoleColor.Blue);
+                else if (!weatherMessage.Upkeep)
+                    ConsoleWriteColor($"The weather is now {weatherMessage.Weather}", ConsoleColor.Blue);
+                return false;
             case StartVolatileElement startVolatileMessage:
-                GetPokemonFromShowdown(startVolatileMessage.Pokemon, out _, out _, out _, out monMessage);
+                GetPokemonFromShowdown(startVolatileMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"Status effect {startVolatileMessage.Effect} was applied to {monMessage}.", ConsoleColor.DarkCyan);
                 return false;
             case EndVolatileElement endVolatileMessage:
-                GetPokemonFromShowdown(endVolatileMessage.Pokemon, out _, out _, out _, out monMessage);
+                GetPokemonFromShowdown(endVolatileMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"Status effect {endVolatileMessage.Effect} ended for {monMessage}.", ConsoleColor.DarkCyan);
                 return false;
             case FaintElement faintMessage:
-                GetPokemonFromShowdown(faintMessage.Pokemon, out _, out _, out pkd, out monMessage);
+                pkd = GetPokemonFromShowdown(faintMessage.Pokemon, out monMessage);
                 ConsoleWriteColor($"{monMessage} has fainted!", ConsoleColor.DarkRed);
                 pkd.Faint();
                 return false;
