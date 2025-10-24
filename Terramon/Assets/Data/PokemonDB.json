@@ -3,8 +3,8 @@
     "1": {
       "name": "Bulbasaur",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "baseExp": 64,
       "growthRate": 3,
@@ -93,8 +93,8 @@
     "2": {
       "name": "Ivysaur",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "baseExp": 142,
       "growthRate": 3,
@@ -183,8 +183,8 @@
     "3": {
       "name": "Venusaur",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "baseExp": 236,
       "growthRate": 3,
@@ -277,7 +277,7 @@
     "4": {
       "name": "Charmander",
       "types": [
-        1
+        10
       ],
       "baseExp": 62,
       "growthRate": 3,
@@ -354,7 +354,7 @@
     "5": {
       "name": "Charmeleon",
       "types": [
-        1
+        10
       ],
       "baseExp": 142,
       "growthRate": 3,
@@ -427,8 +427,8 @@
     "6": {
       "name": "Charizard",
       "types": [
-        1,
-        4
+        10,
+        3
       ],
       "baseExp": 240,
       "growthRate": 3,
@@ -513,7 +513,7 @@
     "7": {
       "name": "Squirtle",
       "types": [
-        3
+        11
       ],
       "baseExp": 63,
       "growthRate": 3,
@@ -598,7 +598,7 @@
     "8": {
       "name": "Wartortle",
       "types": [
-        3
+        11
       ],
       "baseExp": 142,
       "growthRate": 3,
@@ -683,7 +683,7 @@
     "9": {
       "name": "Blastoise",
       "types": [
-        3
+        11
       ],
       "baseExp": 239,
       "growthRate": 3,
@@ -768,7 +768,7 @@
     "10": {
       "name": "Caterpie",
       "types": [
-        12
+        7
       ],
       "catchRate": 255,
       "baseExp": 39,
@@ -809,7 +809,7 @@
     "11": {
       "name": "Metapod",
       "types": [
-        12
+        7
       ],
       "catchRate": 120,
       "baseExp": 72,
@@ -845,8 +845,8 @@
     "12": {
       "name": "Butterfree",
       "types": [
-        12,
-        4
+        7,
+        3
       ],
       "baseExp": 178,
       "growthRate": 2,
@@ -946,8 +946,8 @@
     "13": {
       "name": "Weedle",
       "types": [
-        12,
-        6
+        7,
+        4
       ],
       "catchRate": 255,
       "baseExp": 39,
@@ -988,8 +988,8 @@
     "14": {
       "name": "Kakuna",
       "types": [
-        12,
-        6
+        7,
+        4
       ],
       "catchRate": 120,
       "baseExp": 72,
@@ -1025,8 +1025,8 @@
     "15": {
       "name": "Beedrill",
       "types": [
-        12,
-        6
+        7,
+        4
       ],
       "baseExp": 178,
       "growthRate": 2,
@@ -1110,8 +1110,8 @@
     "16": {
       "name": "Pidgey",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "catchRate": 255,
       "baseExp": 50,
@@ -1197,8 +1197,8 @@
     "17": {
       "name": "Pidgeotto",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "catchRate": 120,
       "baseExp": 122,
@@ -1292,8 +1292,8 @@
     "18": {
       "name": "Pidgeot",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "baseExp": 216,
       "growthRate": 3,
@@ -1390,7 +1390,7 @@
     "19": {
       "name": "Rattata",
       "types": [
-        0
+        1
       ],
       "catchRate": 255,
       "baseExp": 51,
@@ -1472,7 +1472,7 @@
     "20": {
       "name": "Raticate",
       "types": [
-        0
+        1
       ],
       "catchRate": 127,
       "baseExp": 145,
@@ -1570,8 +1570,8 @@
     "21": {
       "name": "Spearow",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "catchRate": 255,
       "baseExp": 52,
@@ -1648,8 +1648,8 @@
     "22": {
       "name": "Fearow",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "catchRate": 90,
       "baseExp": 155,
@@ -1742,7 +1742,7 @@
     "23": {
       "name": "Ekans",
       "types": [
-        6
+        4
       ],
       "catchRate": 255,
       "baseExp": 58,
@@ -1840,7 +1840,7 @@
     "24": {
       "name": "Arbok",
       "types": [
-        6
+        4
       ],
       "catchRate": 90,
       "baseExp": 157,
@@ -1950,7 +1950,7 @@
     "25": {
       "name": "Pikachu",
       "types": [
-        7
+        13
       ],
       "catchRate": 190,
       "baseExp": 112,
@@ -2055,7 +2055,7 @@
     "26": {
       "name": "Raichu",
       "types": [
-        7
+        13
       ],
       "catchRate": 75,
       "baseExp": 218,
@@ -2164,7 +2164,7 @@
     "27": {
       "name": "Sandshrew",
       "types": [
-        8
+        5
       ],
       "catchRate": 255,
       "baseExp": 60,
@@ -2261,7 +2261,7 @@
     "28": {
       "name": "Sandslash",
       "types": [
-        8
+        5
       ],
       "catchRate": 90,
       "baseExp": 158,
@@ -2358,7 +2358,7 @@
     "29": {
       "name": "NidoranF",
       "types": [
-        6
+        4
       ],
       "catchRate": 235,
       "baseExp": 55,
@@ -2441,7 +2441,7 @@
     "30": {
       "name": "Nidorina",
       "types": [
-        6
+        4
       ],
       "catchRate": 120,
       "baseExp": 128,
@@ -2520,8 +2520,8 @@
     "31": {
       "name": "Nidoqueen",
       "types": [
-        6,
-        8
+        4,
+        5
       ],
       "baseExp": 227,
       "growthRate": 3,
@@ -2607,7 +2607,7 @@
     "32": {
       "name": "NidoranM",
       "types": [
-        6
+        4
       ],
       "catchRate": 235,
       "baseExp": 55,
@@ -2690,7 +2690,7 @@
     "33": {
       "name": "Nidorino",
       "types": [
-        6
+        4
       ],
       "catchRate": 120,
       "baseExp": 128,
@@ -2769,8 +2769,8 @@
     "34": {
       "name": "Nidoking",
       "types": [
-        6,
-        8
+        4,
+        5
       ],
       "baseExp": 227,
       "growthRate": 3,
@@ -2856,7 +2856,7 @@
     "35": {
       "name": "Clefairy",
       "types": [
-        17
+        18
       ],
       "baseHappiness": 140,
       "catchRate": 150,
@@ -2968,7 +2968,7 @@
     "36": {
       "name": "Clefable",
       "types": [
-        17
+        18
       ],
       "baseHappiness": 140,
       "catchRate": 25,
@@ -3012,7 +3012,7 @@
     "37": {
       "name": "Vulpix",
       "types": [
-        1
+        10
       ],
       "catchRate": 190,
       "baseExp": 60,
@@ -3098,7 +3098,7 @@
     "38": {
       "name": "Ninetales",
       "types": [
-        1
+        10
       ],
       "catchRate": 75,
       "baseExp": 177,
@@ -3136,8 +3136,8 @@
     "39": {
       "name": "Jigglypuff",
       "types": [
-        0,
-        17
+        1,
+        18
       ],
       "catchRate": 170,
       "baseExp": 95,
@@ -3244,8 +3244,8 @@
     "40": {
       "name": "Wigglytuff",
       "types": [
-        0,
-        17
+        1,
+        18
       ],
       "catchRate": 50,
       "baseExp": 196,
@@ -3356,8 +3356,8 @@
     "41": {
       "name": "Zubat",
       "types": [
-        6,
-        4
+        4,
+        3
       ],
       "catchRate": 255,
       "baseExp": 49,
@@ -3438,8 +3438,8 @@
     "42": {
       "name": "Golbat",
       "types": [
-        6,
-        4
+        4,
+        3
       ],
       "catchRate": 90,
       "baseExp": 159,
@@ -3520,8 +3520,8 @@
     "43": {
       "name": "Oddish",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "catchRate": 255,
       "baseExp": 64,
@@ -3606,8 +3606,8 @@
     "44": {
       "name": "Gloom",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "catchRate": 120,
       "baseExp": 138,
@@ -3688,8 +3688,8 @@
     "45": {
       "name": "Vileplume",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "baseExp": 221,
       "growthRate": 3,
@@ -3773,8 +3773,8 @@
     "46": {
       "name": "Paras",
       "types": [
-        12,
-        5
+        7,
+        12
       ],
       "catchRate": 190,
       "baseExp": 57,
@@ -3852,8 +3852,8 @@
     "47": {
       "name": "Parasect",
       "types": [
-        12,
-        5
+        7,
+        12
       ],
       "catchRate": 75,
       "baseExp": 142,
@@ -3943,8 +3943,8 @@
     "48": {
       "name": "Venonat",
       "types": [
-        12,
-        6
+        7,
+        4
       ],
       "catchRate": 190,
       "baseExp": 61,
@@ -4026,8 +4026,8 @@
     "49": {
       "name": "Venomoth",
       "types": [
-        12,
-        6
+        7,
+        4
       ],
       "catchRate": 75,
       "baseExp": 158,
@@ -4113,7 +4113,7 @@
     "50": {
       "name": "Diglett",
       "types": [
-        8
+        5
       ],
       "catchRate": 255,
       "baseExp": 53,
@@ -4195,7 +4195,7 @@
     "51": {
       "name": "Dugtrio",
       "types": [
-        8
+        5
       ],
       "catchRate": 50,
       "baseExp": 149,
@@ -4285,7 +4285,7 @@
     "52": {
       "name": "Meowth",
       "types": [
-        0
+        1
       ],
       "catchRate": 255,
       "baseExp": 58,
@@ -4367,7 +4367,7 @@
     "53": {
       "name": "Persian",
       "types": [
-        0
+        1
       ],
       "catchRate": 90,
       "baseExp": 154,
@@ -4453,7 +4453,7 @@
     "54": {
       "name": "Psyduck",
       "types": [
-        3
+        11
       ],
       "catchRate": 190,
       "baseExp": 64,
@@ -4539,7 +4539,7 @@
     "55": {
       "name": "Golduck",
       "types": [
-        3
+        11
       ],
       "catchRate": 75,
       "baseExp": 175,
@@ -4817,7 +4817,7 @@
     "58": {
       "name": "Growlithe",
       "types": [
-        1
+        10
       ],
       "catchRate": 190,
       "baseExp": 70,
@@ -4908,7 +4908,7 @@
     "59": {
       "name": "Arcanine",
       "types": [
-        1
+        10
       ],
       "catchRate": 75,
       "baseExp": 194,
@@ -5003,7 +5003,7 @@
     "60": {
       "name": "Poliwag",
       "types": [
-        3
+        11
       ],
       "catchRate": 255,
       "baseExp": 60,
@@ -5077,7 +5077,7 @@
     "61": {
       "name": "Poliwhirl",
       "types": [
-        3
+        11
       ],
       "catchRate": 120,
       "baseExp": 135,
@@ -5147,7 +5147,7 @@
     "62": {
       "name": "Poliwrath",
       "types": [
-        3,
+        11,
         2
       ],
       "baseExp": 230,
@@ -5189,7 +5189,7 @@
     "63": {
       "name": "Abra",
       "types": [
-        9
+        14
       ],
       "catchRate": 200,
       "baseExp": 62,
@@ -5224,7 +5224,7 @@
     "64": {
       "name": "Kadabra",
       "types": [
-        9
+        14
       ],
       "catchRate": 100,
       "baseExp": 140,
@@ -5311,7 +5311,7 @@
     "65": {
       "name": "Alakazam",
       "types": [
-        9
+        14
       ],
       "catchRate": 50,
       "baseExp": 225,
@@ -5662,8 +5662,8 @@
     "69": {
       "name": "Bellsprout",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "catchRate": 255,
       "baseExp": 60,
@@ -5748,8 +5748,8 @@
     "70": {
       "name": "Weepinbell",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "catchRate": 120,
       "baseExp": 137,
@@ -5830,8 +5830,8 @@
     "71": {
       "name": "Victreebel",
       "types": [
-        5,
-        6
+        12,
+        4
       ],
       "baseExp": 221,
       "growthRate": 3,
@@ -5879,8 +5879,8 @@
     "72": {
       "name": "Tentacool",
       "types": [
-        3,
-        6
+        11,
+        4
       ],
       "catchRate": 190,
       "baseExp": 67,
@@ -5966,8 +5966,8 @@
     "73": {
       "name": "Tentacruel",
       "types": [
-        3,
-        6
+        11,
+        4
       ],
       "catchRate": 60,
       "baseExp": 180,
@@ -6053,8 +6053,8 @@
     "74": {
       "name": "Geodude",
       "types": [
-        10,
-        8
+        6,
+        5
       ],
       "catchRate": 255,
       "baseExp": 60,
@@ -6140,8 +6140,8 @@
     "75": {
       "name": "Graveler",
       "types": [
-        10,
-        8
+        6,
+        5
       ],
       "catchRate": 120,
       "baseExp": 137,
@@ -6223,8 +6223,8 @@
     "76": {
       "name": "Golem",
       "types": [
-        10,
-        8
+        6,
+        5
       ],
       "baseExp": 223,
       "growthRate": 3,
@@ -6305,7 +6305,7 @@
     "77": {
       "name": "Ponyta",
       "types": [
-        1
+        10
       ],
       "catchRate": 190,
       "baseExp": 82,
@@ -6387,7 +6387,7 @@
     "78": {
       "name": "Rapidash",
       "types": [
-        1
+        10
       ],
       "catchRate": 60,
       "baseExp": 175,
@@ -6485,8 +6485,8 @@
     "79": {
       "name": "Slowpoke",
       "types": [
-        3,
-        9
+        11,
+        14
       ],
       "catchRate": 190,
       "baseExp": 63,
@@ -6584,8 +6584,8 @@
     "80": {
       "name": "Slowbro",
       "types": [
-        3,
-        9
+        11,
+        14
       ],
       "catchRate": 75,
       "baseExp": 172,
@@ -6683,8 +6683,8 @@
     "81": {
       "name": "Magnemite",
       "types": [
-        7,
-        16
+        13,
+        9
       ],
       "catchRate": 190,
       "baseExp": 65,
@@ -6775,8 +6775,8 @@
     "82": {
       "name": "Magneton",
       "types": [
-        7,
-        16
+        13,
+        9
       ],
       "catchRate": 60,
       "baseExp": 163,
@@ -6871,8 +6871,8 @@
     "83": {
       "name": "Farfetchd",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "baseExp": 132,
       "growthRate": 2,
@@ -6957,8 +6957,8 @@
     "84": {
       "name": "Doduo",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "catchRate": 190,
       "baseExp": 62,
@@ -7040,8 +7040,8 @@
     "85": {
       "name": "Dodrio",
       "types": [
-        0,
-        4
+        1,
+        3
       ],
       "baseExp": 165,
       "growthRate": 2,
@@ -7122,7 +7122,7 @@
     "86": {
       "name": "Seel",
       "types": [
-        3
+        11
       ],
       "catchRate": 190,
       "baseExp": 65,
@@ -7220,8 +7220,8 @@
     "87": {
       "name": "Dewgong",
       "types": [
-        3,
-        11
+        11,
+        15
       ],
       "catchRate": 75,
       "baseExp": 166,
@@ -7315,7 +7315,7 @@
     "88": {
       "name": "Grimer",
       "types": [
-        6
+        4
       ],
       "catchRate": 190,
       "baseExp": 65,
@@ -7409,7 +7409,7 @@
     "89": {
       "name": "Muk",
       "types": [
-        6
+        4
       ],
       "catchRate": 75,
       "baseExp": 175,
@@ -7499,7 +7499,7 @@
     "90": {
       "name": "Shellder",
       "types": [
-        3
+        11
       ],
       "catchRate": 190,
       "baseExp": 61,
@@ -7581,8 +7581,8 @@
     "91": {
       "name": "Cloyster",
       "types": [
-        3,
-        11
+        11,
+        15
       ],
       "catchRate": 60,
       "baseExp": 184,
@@ -7680,8 +7680,8 @@
     "92": {
       "name": "Gastly",
       "types": [
-        14,
-        6
+        8,
+        4
       ],
       "catchRate": 190,
       "baseExp": 62,
@@ -7765,8 +7765,8 @@
     "93": {
       "name": "Haunter",
       "types": [
-        14,
-        6
+        8,
+        4
       ],
       "catchRate": 90,
       "baseExp": 142,
@@ -7850,8 +7850,8 @@
     "94": {
       "name": "Gengar",
       "types": [
-        14,
-        6
+        8,
+        4
       ],
       "baseExp": 225,
       "growthRate": 3,
@@ -7942,8 +7942,8 @@
     "95": {
       "name": "Onix",
       "types": [
-        10,
-        8
+        6,
+        5
       ],
       "baseExp": 77,
       "growthRate": 2,
@@ -8040,7 +8040,7 @@
     "96": {
       "name": "Drowzee",
       "types": [
-        9
+        14
       ],
       "catchRate": 190,
       "baseExp": 66,
@@ -8126,7 +8126,7 @@
     "97": {
       "name": "Hypno",
       "types": [
-        9
+        14
       ],
       "catchRate": 75,
       "baseExp": 169,
@@ -8212,7 +8212,7 @@
     "98": {
       "name": "Krabby",
       "types": [
-        3
+        11
       ],
       "catchRate": 225,
       "baseExp": 65,
@@ -8298,7 +8298,7 @@
     "99": {
       "name": "Kingler",
       "types": [
-        3
+        11
       ],
       "catchRate": 60,
       "baseExp": 166,
@@ -8388,7 +8388,7 @@
     "100": {
       "name": "Voltorb",
       "types": [
-        7
+        13
       ],
       "catchRate": 190,
       "baseExp": 66,
@@ -8487,7 +8487,7 @@
     "101": {
       "name": "Electrode",
       "types": [
-        7
+        13
       ],
       "catchRate": 60,
       "baseExp": 172,
@@ -8586,8 +8586,8 @@
     "102": {
       "name": "Exeggcute",
       "types": [
-        5,
-        9
+        12,
+        14
       ],
       "catchRate": 90,
       "baseExp": 65,
@@ -8664,8 +8664,8 @@
     "103": {
       "name": "Exeggutor",
       "types": [
-        5,
-        9
+        12,
+        14
       ],
       "baseExp": 186,
       "growthRate": 4,
@@ -8761,7 +8761,7 @@
     "104": {
       "name": "Cubone",
       "types": [
-        8
+        5
       ],
       "catchRate": 190,
       "baseExp": 64,
@@ -8847,7 +8847,7 @@
     "105": {
       "name": "Marowak",
       "types": [
-        8
+        5
       ],
       "catchRate": 75,
       "baseExp": 149,
@@ -9129,7 +9129,7 @@
     "108": {
       "name": "Lickitung",
       "types": [
-        0
+        1
       ],
       "baseExp": 77,
       "growthRate": 2,
@@ -9202,7 +9202,7 @@
     "109": {
       "name": "Koffing",
       "types": [
-        6
+        4
       ],
       "catchRate": 190,
       "baseExp": 68,
@@ -9292,7 +9292,7 @@
     "110": {
       "name": "Weezing",
       "types": [
-        6
+        4
       ],
       "catchRate": 60,
       "baseExp": 172,
@@ -9386,8 +9386,8 @@
     "111": {
       "name": "Rhyhorn",
       "types": [
-        8,
-        10
+        5,
+        6
       ],
       "catchRate": 120,
       "baseExp": 69,
@@ -9473,8 +9473,8 @@
     "112": {
       "name": "Rhydon",
       "types": [
-        8,
-        10
+        5,
+        6
       ],
       "catchRate": 60,
       "baseExp": 170,
@@ -9560,7 +9560,7 @@
     "113": {
       "name": "Chansey",
       "types": [
-        0
+        1
       ],
       "baseHappiness": 140,
       "catchRate": 30,
@@ -9668,7 +9668,7 @@
     "114": {
       "name": "Tangela",
       "types": [
-        5
+        12
       ],
       "baseExp": 87,
       "growthRate": 2,
@@ -9757,7 +9757,7 @@
     "115": {
       "name": "Kangaskhan",
       "types": [
-        0
+        1
       ],
       "baseExp": 172,
       "growthRate": 2,
@@ -9843,7 +9843,7 @@
     "116": {
       "name": "Horsea",
       "types": [
-        3
+        11
       ],
       "catchRate": 225,
       "baseExp": 59,
@@ -9925,7 +9925,7 @@
     "117": {
       "name": "Seadra",
       "types": [
-        3
+        11
       ],
       "catchRate": 75,
       "baseExp": 154,
@@ -10003,7 +10003,7 @@
     "118": {
       "name": "Goldeen",
       "types": [
-        3
+        11
       ],
       "catchRate": 225,
       "baseExp": 64,
@@ -10081,7 +10081,7 @@
     "119": {
       "name": "Seaking",
       "types": [
-        3
+        11
       ],
       "catchRate": 60,
       "baseExp": 158,
@@ -10155,7 +10155,7 @@
     "120": {
       "name": "Staryu",
       "types": [
-        3
+        11
       ],
       "catchRate": 225,
       "baseExp": 68,
@@ -10246,8 +10246,8 @@
     "121": {
       "name": "Starmie",
       "types": [
-        3,
-        9
+        11,
+        14
       ],
       "catchRate": 60,
       "baseExp": 182,
@@ -10338,8 +10338,8 @@
     "122": {
       "name": "MrMime",
       "types": [
-        9,
-        17
+        14,
+        18
       ],
       "baseExp": 161,
       "growthRate": 2,
@@ -10452,8 +10452,8 @@
     "123": {
       "name": "Scyther",
       "types": [
-        12,
-        4
+        7,
+        3
       ],
       "baseExp": 100,
       "growthRate": 2,
@@ -10530,8 +10530,8 @@
     "124": {
       "name": "Jynx",
       "types": [
-        11,
-        9
+        15,
+        14
       ],
       "baseExp": 159,
       "growthRate": 2,
@@ -10617,7 +10617,7 @@
     "125": {
       "name": "Electabuzz",
       "types": [
-        7
+        13
       ],
       "baseExp": 172,
       "growthRate": 2,
@@ -10702,7 +10702,7 @@
     "126": {
       "name": "Magmar",
       "types": [
-        1
+        10
       ],
       "baseExp": 173,
       "growthRate": 2,
@@ -10787,7 +10787,7 @@
     "127": {
       "name": "Pinsir",
       "types": [
-        12
+        7
       ],
       "baseExp": 175,
       "growthRate": 4,
@@ -10872,7 +10872,7 @@
     "128": {
       "name": "Tauros",
       "types": [
-        0
+        1
       ],
       "baseExp": 172,
       "growthRate": 4,
@@ -10954,7 +10954,7 @@
     "129": {
       "name": "Magikarp",
       "types": [
-        3
+        11
       ],
       "catchRate": 255,
       "baseExp": 40,
@@ -10995,8 +10995,8 @@
     "130": {
       "name": "Gyarados",
       "types": [
-        3,
-        4
+        11,
+        3
       ],
       "baseExp": 189,
       "growthRate": 4,
@@ -11096,8 +11096,8 @@
     "131": {
       "name": "Lapras",
       "types": [
-        3,
-        11
+        11,
+        15
       ],
       "baseExp": 187,
       "growthRate": 4,
@@ -11182,7 +11182,7 @@
     "132": {
       "name": "Ditto",
       "types": [
-        0
+        1
       ],
       "catchRate": 35,
       "baseExp": 101,
@@ -11212,7 +11212,7 @@
     "133": {
       "name": "Eevee",
       "types": [
-        0
+        1
       ],
       "baseExp": 65,
       "growthRate": 2,
@@ -11302,7 +11302,7 @@
     "134": {
       "name": "Vaporeon",
       "types": [
-        3
+        11
       ],
       "baseExp": 184,
       "growthRate": 2,
@@ -11423,7 +11423,7 @@
     "135": {
       "name": "Jolteon",
       "types": [
-        7
+        13
       ],
       "baseExp": 184,
       "growthRate": 2,
@@ -11544,7 +11544,7 @@
     "136": {
       "name": "Flareon",
       "types": [
-        1
+        10
       ],
       "baseExp": 184,
       "growthRate": 2,
@@ -11661,7 +11661,7 @@
     "137": {
       "name": "Porygon",
       "types": [
-        0
+        1
       ],
       "baseExp": 79,
       "growthRate": 2,
@@ -11743,8 +11743,8 @@
     "138": {
       "name": "Omanyte",
       "types": [
-        10,
-        3
+        6,
+        11
       ],
       "baseExp": 71,
       "growthRate": 2,
@@ -11830,8 +11830,8 @@
     "139": {
       "name": "Omastar",
       "types": [
-        10,
-        3
+        6,
+        11
       ],
       "baseExp": 173,
       "growthRate": 2,
@@ -11921,8 +11921,8 @@
     "140": {
       "name": "Kabuto",
       "types": [
-        10,
-        3
+        6,
+        11
       ],
       "baseExp": 71,
       "growthRate": 2,
@@ -12008,8 +12008,8 @@
     "141": {
       "name": "Kabutops",
       "types": [
-        10,
-        3
+        6,
+        11
       ],
       "baseExp": 173,
       "growthRate": 2,
@@ -12107,8 +12107,8 @@
     "142": {
       "name": "Aerodactyl",
       "types": [
-        10,
-        4
+        6,
+        3
       ],
       "baseExp": 180,
       "growthRate": 4,
@@ -12190,7 +12190,7 @@
     "143": {
       "name": "Snorlax",
       "types": [
-        0
+        1
       ],
       "catchRate": 25,
       "baseExp": 189,
@@ -12325,8 +12325,8 @@
     "144": {
       "name": "Articuno",
       "types": [
-        11,
-        4
+        15,
+        3
       ],
       "baseHappiness": 35,
       "catchRate": 3,
@@ -12417,8 +12417,8 @@
     "145": {
       "name": "Zapdos",
       "types": [
-        7,
-        4
+        13,
+        3
       ],
       "baseHappiness": 35,
       "catchRate": 3,
@@ -12509,8 +12509,8 @@
     "146": {
       "name": "Moltres",
       "types": [
-        1,
-        4
+        10,
+        3
       ],
       "baseHappiness": 35,
       "catchRate": 3,
@@ -12601,7 +12601,7 @@
     "147": {
       "name": "Dratini",
       "types": [
-        13
+        16
       ],
       "baseHappiness": 35,
       "baseExp": 60,
@@ -12686,7 +12686,7 @@
     "148": {
       "name": "Dragonair",
       "types": [
-        13
+        16
       ],
       "baseHappiness": 35,
       "baseExp": 147,
@@ -12771,8 +12771,8 @@
     "149": {
       "name": "Dragonite",
       "types": [
-        13,
-        4
+        16,
+        3
       ],
       "baseHappiness": 35,
       "baseExp": 270,
@@ -12877,7 +12877,7 @@
     "150": {
       "name": "Mewtwo",
       "types": [
-        9
+        14
       ],
       "baseHappiness": 0,
       "catchRate": 3,
@@ -12968,7 +12968,7 @@
     "151": {
       "name": "Mew",
       "types": [
-        9
+        14
       ],
       "baseHappiness": 100,
       "baseExp": 270,

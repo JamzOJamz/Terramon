@@ -13,3 +13,5 @@ Desktop.ini
 .DS_Store
 
 Scripts/
+
+*.pkmn
