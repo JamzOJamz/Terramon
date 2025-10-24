@@ -177,10 +177,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     : ClientConfig.Instance.HighlightColor;
                 var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
                 outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
+                outlineShader.Shader.Parameters["uImageSize0"].SetValue(_mainTexture.Size());
                 outlineShader
                     .UseColor(highlightColor)
                     .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f))
-                    .Apply(new DrawData(_mainTexture.Value, drawPos, NPC.frame, drawColor));
+                    .Apply();
 
                 /*if (!PokemonEntityLoader.HighlightTextures.TryGetValue(ID, out var highlightTexture))
                     highlightTexture = CreateHighlightTexture(); // Creates highlight texture and adds it to cache

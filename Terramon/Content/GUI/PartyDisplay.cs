@@ -1,11 +1,14 @@
-using System.Text;
 using ReLogic.Content;
+using System.Runtime.CompilerServices;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terramon.Helpers;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
+using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 using Terraria.UI;
 using Terraria.UI.Gamepad;
@@ -210,7 +213,7 @@ public class PartySidebarSlot : UIImage
     private readonly UIText _nameText;
     private readonly PartyDisplay _partyDisplay;
     private bool _dragging;
-    private UIBlendedImage _genderIcon;
+    private UIImage _genderIcon;
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
     private UIBlendedImage _heldItemBox;
 #pragma warning restore CS0649
@@ -253,9 +256,32 @@ public class PartySidebarSlot : UIImage
         }
     }
 
+    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_texture")]
+    public static extern ref Asset<Texture2D> GetImage(UIImage self);
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        var outlined = IsMouseHovering && Data != null;
+        if (outlined)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+            var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
+            Color highlight = ClientConfig.DefaultHighlightColor;
+            outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
+            outlineShader.Shader.Parameters["uImageSize0"].SetValue(GetImage(this).Size());
+            outlineShader
+                .UseColor(highlight)
+                .UseSecondaryColor(highlight.HueShift(0.035f, -0.08f))
+                .Apply();
+        }
         base.DrawSelf(spriteBatch);
+        if (outlined)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+        }
+
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
         if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
@@ -402,7 +428,7 @@ public class PartySidebarSlot : UIImage
                 DragStart(_monitorEvent);
             }
 
-        var transparentColor = Color.White * 0.45f;
+        var transparentColor = (_isActiveSlot ? Color.Pink : Color.White) * 0.45f;
         if (PartyDisplay.IsDraggingSlot)
         {
             if (!_dragging)
@@ -460,11 +486,12 @@ public class PartySidebarSlot : UIImage
         }
         else if (Data != null)
         {
-            Color = Color.White;
+            var targetColor = _isActiveSlot ? Color.Pink : Color.White;
+            Color = targetColor;
             _nameText.TextColor = Color.White;
             _levelText.TextColor = Color.White;
             //_heldItemBox.Color = Color.White;
-            _spriteBox.Color = Color.White;
+            _spriteBox.Color = targetColor;
             ((UIImage)_spriteBox.Children.ElementAt(0)).Color = Color.White;
             _genderIcon.Color = Color.White;
         }
@@ -487,22 +514,14 @@ public class PartySidebarSlot : UIImage
 
     private void UpdateSprite(bool selected = false)
     {
-        var spritePath = new StringBuilder("Terramon/Assets/GUI/Party/");
+        var spritePath = "Assets/GUI/Party/Sidebar";
 
         if (Data != null)
-        {
-            spritePath.Append("SidebarOpen");
-
-            if (selected) spritePath.Append("_Selected");
-
-            if (_isActiveSlot) spritePath.Append("Active");
-        }
+            spritePath += "Open";
         else
-        {
-            spritePath.Append("SidebarClosed");
-        }
+            spritePath += "Closed";
 
-        SetImage(ModContent.Request<Texture2D>(spritePath.ToString(),
+        SetImage(Terramon.Instance.Assets.Request<Texture2D>(spritePath,
             AssetRequestMode.ImmediateLoad));
     }
 
@@ -529,8 +548,7 @@ public class PartySidebarSlot : UIImage
                 AssetRequestMode.ImmediateLoad));
             _heldItemBox.Top.Set(25, 0f);
             _heldItemBox.Left.Set(8, 0f);*/
-            _spriteBox = new UIBlendedImage(ModContent.Request<Texture2D>(
-                "Terramon/Assets/GUI/Party/SpriteBox" + (_isActiveSlot ? "Active" : string.Empty),
+            _spriteBox = new UIBlendedImage(Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/Party/SpriteBox",
                 AssetRequestMode.ImmediateLoad));
             _spriteBox.Top.Set(10, 0f);
             _spriteBox.Left.Set(59, 0f);
@@ -541,13 +559,13 @@ public class PartySidebarSlot : UIImage
             sprite.Top.Set(-12, 0f);
             sprite.Left.Set(-20, 0f);
             _spriteBox.Append(sprite);
-            var genderIconPath = data.Gender != Gender.Unspecified
-                ? $"Terramon/Assets/GUI/Party/Icon{(data.Gender == Gender.Male ? "Male" : "Female")}"
-                : "Terraria/Images/NPC_0";
-            _genderIcon = new UIBlendedImage(ModContent.Request<Texture2D>(genderIconPath,
-                AssetRequestMode.ImmediateLoad));
-            _genderIcon.Top.Set(57, 0f);
-            _genderIcon.Left.Set(87, 0f);
+            if (data.Gender != Gender.Unspecified)
+            {
+                _genderIcon = new UIImage(Terramon.Instance.Assets.Request<Texture2D>($"Assets/GUI/Party/Icon{data.Gender}",
+                    AssetRequestMode.ImmediateLoad));
+                _genderIcon.Top.Set(54, 0f);
+                _genderIcon.Left.Set(87, 0f);
+            }
             //Append(_heldItemBox);
             Append(_spriteBox);
             Append(_genderIcon);

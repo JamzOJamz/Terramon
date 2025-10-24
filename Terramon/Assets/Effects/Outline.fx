@@ -40,13 +40,13 @@ float4 Outline(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
     else
     {
         if (ortho > 0)
-            return (ortho > 1 ? float4(uSecondaryColor, 1) : float4(uColor, 1)) * sampleColor;
+            return (ortho > 1 ? float4(uSecondaryColor, 1) : float4(uColor, 1));
         return center;
     }
     
     if (ortho > 1)
-        return float4(uSecondaryColor, 1) * sampleColor;
-    return neigh == 0 ? center : float4(uColor, 1) * sampleColor;
+        return float4(uSecondaryColor, 1);
+    return neigh == 0 ? center : float4(uColor, 1);
     
     /*
     // sample everything

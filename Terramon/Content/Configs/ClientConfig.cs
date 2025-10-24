@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Terraria.ModLoader.Config;
 
 // ReSharper disable UnassignedField.Global
@@ -38,6 +39,9 @@ public class ClientConfig : ModConfig
 
     [DefaultValue(false)]
     public bool ThickHighlights;
+
+    [JsonIgnore]
+    public static readonly Color DefaultHighlightColor = new(252, 252, 84, 255);
 
     [DefaultValue(typeof(Color), "252, 252, 84, 255")]
     public Color HighlightColor;
