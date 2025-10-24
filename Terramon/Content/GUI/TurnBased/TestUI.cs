@@ -590,7 +590,7 @@ public sealed class DynamicPixelRatioElement : UIElement
         float shiftClosest = frame.Height * 0.5f / pxScale;
         float shiftFurthest = frame.Height / pxScale;
         float quadWidth = frame.Width * pxScale;
-        float overlapShiftFurthest = frame.Height - rect.Height / 3f; // i think this should be further multiplied by something but idk what
+        float overlapShiftFurthest = (frame.Height - rect.Height / 3f) * 1.5f;
         float overlapShiftClosest = overlapShiftFurthest * 0.5f;
         float areaWeNeedToCover = rect.Width - quadWidth * 2f - shiftFurthest + overlapShiftFurthest;
         Vector2 xScale = new(areaWeNeedToCover / frame.Width, pxScale);

@@ -47,6 +47,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         float sideFactor = SideFactor;
         float sideShift = halfThird * sideFactor;
         float extra = 1.2f;
+        // float the = (MathF.Sin((float)Main.timeForVisualEffects * 0.1f) + 1f) * 16f;
         var parallelogramRect = new Rectangle((int)(dims.X - halfThird + sideShift * extra), (int)dims.Y, (int)(dims.Width + third * extra), (int)dims.Height);
         DynamicPixelRatioElement.DrawAdjustableParallelogram(spriteBatch, PanelTexture.Value, parallelogramRect, Color.White, zoom);
 
