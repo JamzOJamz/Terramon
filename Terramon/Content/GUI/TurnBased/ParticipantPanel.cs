@@ -14,7 +14,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public static Asset<Texture2D> GenderIcon { get; private set; }
     public static Asset<Texture2D> BallSlots { get; private set; }
     public static Asset<Texture2D> PanelTexture { get; private set; }
-    public static SoundStyle Ping { get; } = new("Terramon/Sounds/pkball_shake") { Pitch = 0.7f };
+    public static SoundStyle Ping { get; } = new("Terramon/Sounds/pkball_shake") { Pitch = 1f, Volume = 0.75f, MaxInstances = 0 };
 
     public PokemonData CurrentMon;
     public bool DrawEXPBar;
@@ -42,19 +42,19 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public void Animate(int ticks)
     {
         const int animationStart = 190;
-        const int ticksPerSlot = 12;
+        const int ticksPerSlot = 5;
         const int ticksForWholeAnimation = ticksPerSlot * 6;
         const int animationEnd = animationStart + ticksForWholeAnimation;
         const float initialPosition = -42f;
 
-        if (ticks > animationEnd || ticks < animationStart)
+        if (!DrawBallSlots || ticks > animationEnd || ticks < animationStart)
             return;
 
         for (int i = 0; i < _ballSlotXPositions.Length; i++)
         {
             int startTick = animationStart + (i * ticksPerSlot);
 
-            if (ticks == startTick + 8)
+            if (ticks == startTick + 4)
                 SoundEngine.PlaySound(Ping);
 
             int endTick = startTick + ticksPerSlot;
