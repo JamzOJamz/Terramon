@@ -179,8 +179,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
                 outlineShader.Shader.Parameters["uImageSize0"].SetValue(_mainTexture.Size());
                 outlineShader
-                    .UseColor(highlightColor)
-                    .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f))
+                    .UseColor(highlightColor.MultiplyRGB(drawColor))
+                    .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f).MultiplyRGB(drawColor))
                     .Apply();
 
                 /*if (!PokemonEntityLoader.HighlightTextures.TryGetValue(ID, out var highlightTexture))
