@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using ReLogic.Content;
+using Showdown.NET.Definitions;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.ID;
@@ -37,6 +38,9 @@ public class PokemonData
     public string Nickname;
     public string Variant;
 
+    public StatStages StatStages;
+    public Showdown.NET.Definitions.StatusID Status;
+
     public ushort ID
     {
         get => _id;
@@ -69,10 +73,10 @@ public class PokemonData
     /// </summary>
     public DatabaseV2.PokemonSchema Schema { get; private set; }
 
-    public ushort HP => MaxHP; // TODO: Implement actual HP stat for Pokémon
+    public ushort HP;
 
-    public ushort MaxHP =>
-        (ushort)(Math.Floor(2 * Schema.BaseStats.HP * Level / 100f) + Level + 10);
+    public ushort MaxHP
+        => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (EVs.HP / 4) + 100) * Level / 100 + 10);
 
     /// <summary>
     ///     The total experience points the Pokémon has gained.
@@ -107,7 +111,7 @@ public class PokemonData
 
         // Clamp the total experience points to an appropriate range
         var oldTotalEXP = TotalEXP;
-        TotalEXP = Math.Clamp(TotalEXP, 0,
+        TotalEXP = Math.Min(TotalEXP,
             ExperienceLookupTable.GetLevelTotalExp(Terramon.MaxPokemonLevel, growthRate));
         overflow = oldTotalEXP - TotalEXP;
 
@@ -195,6 +199,7 @@ public class PokemonData
             IVs = PokemonIVs.Random()
         };
 
+        pokemon.HP = pokemon.MaxHP;
         pokemon.TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, pokemon.Schema.GrowthRate);
         pokemon.Happiness = pokemon.Schema.BaseHappiness;
         pokemon.Moves = pokemon.GetInitialMoves();
@@ -308,6 +313,22 @@ public class PokemonData
             $"{Happiness},{Ball},{hiddenPowerType},{gmax},{dmaxLevel},{teratype}";
     }
 
+    public bool CureStatus()
+    {
+        if (Status == Showdown.NET.Definitions.StatusID.Fnt)
+            return false;
+        Status = Showdown.NET.Definitions.StatusID.None;
+        return true;
+    }
+
+    public bool Faint()
+    {
+        if (Status == Showdown.NET.Definitions.StatusID.Fnt)
+            return false;
+        Status = Showdown.NET.Definitions.StatusID.Fnt;
+        return true;
+    }
+
     public PokemonData ShallowCopy()
     {
         return (PokemonData)MemberwiseClone();
@@ -399,6 +420,10 @@ public class PokemonData
         data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
             ? exp
             : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
+
+        // TODO: actually store and load HP value
+        data.HP = data.MaxHP;
+
         return data;
     }
 
@@ -550,9 +575,9 @@ public struct PokemonIVs
     private const uint HPMask = 0x1F;
     private const uint AttackMask = HPMask << 5;
     private const uint DefenseMask = AttackMask << 5;
-    private const uint SpeedMask = DefenseMask << 5;
-    private const uint SpAtkMask = SpeedMask << 5;
+    private const uint SpAtkMask = DefenseMask << 5;
     private const uint SpDefMask = SpAtkMask << 5;
+    private const uint SpeedMask = SpDefMask << 5;
 
     public byte HP
     {
@@ -586,31 +611,31 @@ public struct PokemonIVs
 
     public byte SpAtk
     {
-        readonly get => (byte)((Packed & SpAtkMask) >> 20);
+        readonly get => (byte)((Packed & SpAtkMask) >> 15);
         init
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpAtkMask) | ((uint)value << 20);
+            Packed = (Packed & ~SpAtkMask) | ((uint)value << 15);
         }
     }
 
     public byte SpDef
     {
-        readonly get => (byte)((Packed & SpDefMask) >> 25);
+        readonly get => (byte)((Packed & SpDefMask) >> 20);
         init
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpDefMask) | ((uint)value << 25);
+            Packed = (Packed & ~SpDefMask) | ((uint)value << 20);
         }
     }
 
     public byte Speed
     {
-        readonly get => (byte)((Packed & SpeedMask) >> 15);
+        readonly get => (byte)((Packed & SpeedMask) >> 25);
         init
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 31);
-            Packed = (Packed & ~SpeedMask) | ((uint)value << 15);
+            Packed = (Packed & ~SpeedMask) | ((uint)value << 25);
         }
     }
 
@@ -750,6 +775,105 @@ public struct PokemonEVs
     }
 }
 
+public struct StatStages
+{
+    public uint Packed;
+    private const uint HPMask = 0xF;
+    private const uint AttackMask = HPMask << 4;
+    private const uint DefenseMask = AttackMask << 4;
+    private const uint SpAtkMask = DefenseMask << 4;
+    private const uint SpDefMask = SpAtkMask << 4;
+    private const uint SpeedMask = SpDefMask << 4;
+
+    public int HP
+    {
+        readonly get => Signed4Bit(Packed & HPMask);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~HPMask) | (byte)value;
+        }
+    }
+
+    public int Attack
+    {
+        readonly get => Signed4Bit((Packed & AttackMask) >> 4);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~AttackMask) | ((uint)value << 4);
+        }
+    }
+
+    public int Defense
+    {
+        readonly get => Signed4Bit((Packed & DefenseMask) >> 8);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~DefenseMask) | ((uint)value << 8);
+        }
+    }
+
+    public int SpAtk
+    {
+        readonly get => Signed4Bit((Packed & SpAtkMask) >> 12);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~SpAtkMask) | ((uint)value << 12);
+        }
+    }
+
+    public int SpDef
+    {
+        readonly get => Signed4Bit((Packed & SpDefMask) >> 16);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~SpDefMask) | ((uint)value << 16);
+        }
+    }
+
+    public int Speed
+    {
+        readonly get => Signed4Bit((Packed & SpeedMask) >> 20);
+        set
+        {
+            CheckError(value);
+            Packed = (Packed & ~SpeedMask) | ((uint)value << 20);
+        }
+    }
+
+    public int this[StatID iv]
+    {
+        readonly get
+        {
+            var move = 4 * (int)iv;
+            return Signed4Bit(Packed & (HPMask << (move)) >> (move));
+        }
+        set
+        {
+            CheckError(value);
+            var move = 4 * (int)iv;
+            Packed = (Packed & ~(HPMask << move)) | ((uint)value << move);
+        }
+    }
+
+    private static sbyte Signed4Bit(uint value)
+    {
+        if ((value & 0x8) != 0)
+            return (sbyte)((int)value - 16);
+        return (sbyte)value;
+    }
+
+    private static void CheckError(int value)
+    {
+        if (value < -8 || value > 7)
+            throw new ArgumentOutOfRangeException(nameof(value));
+    }
+}
+
 public readonly struct PokemonMoves
 {
     private const ushort IDMask = 0x3FF;
@@ -856,6 +980,9 @@ public readonly struct PokemonMoves
     }
 }
 
-public readonly record struct MoveData(MoveID ID, byte PP, byte PPUp);
+public readonly record struct MoveData(MoveID ID, byte PP, byte PPUp)
+{
+    public DatabaseV2.MoveSchema Schema => Terramon.DatabaseV2.GetMove(ID);
+}
 
 #endregion

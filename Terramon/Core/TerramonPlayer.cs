@@ -3,6 +3,7 @@ using EasyPacketsLib;
 using Terramon.Content.Buffs;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
+using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
@@ -107,6 +108,23 @@ public class TerramonPlayer : ModPlayer
         return ActiveSlot >= 0 ? Party[ActiveSlot] : null;
     }
 
+    /// <summary>
+    ///     Returns the Pokémon in this player's party which has the given name. If there are multiple with that name, <paramref name="multipleChoice"/> is used to determine which to use.
+    /// </summary>
+    public PokemonData GetPokemonFromShowdown(ReadOnlySpan<char> name)
+    {
+        for (int i = 0; i < Party.Length; i++)
+        {
+            var poke = Party[i];
+            if (poke is null)
+                continue;
+            if (name.Equals(poke.Nickname, StringComparison.Ordinal) ||
+                name.Equals(poke.Schema.Identifier, StringComparison.Ordinal))
+                    return poke;
+        }
+        return null;
+    }
+
     public PokedexService GetPokedex(bool shiny = false)
     {
         return shiny ? _shinyDex : _pokedex;
@@ -155,6 +173,14 @@ public class TerramonPlayer : ModPlayer
         // Reapply companion buff on player respawn
         if (_activeSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
             Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
+    }
+    public override void SetControls()
+    {
+        if (Player.controlInv && TestBattleUI.Instance.Visible)
+        {
+            TestBattleUI.HandleExit();
+            Player.controlInv = false;
+        }
     }
 
     public override void ProcessTriggers(TriggersSet triggersSet)
@@ -244,9 +270,7 @@ public class TerramonPlayer : ModPlayer
         var premierBonus = _premierBonusCount / 10;
         if (premierBonus > 0)
         {
-            Main.NewText(premierBonus == 1
-                ? Language.GetTextValue("Mods.Terramon.GUI.NPCShop.PremierBonus")
-                : Language.GetTextValue("Mods.Terramon.GUI.NPCShop.PremierBonusPlural", premierBonus));
+            Main.NewText(Language.GetTextValue($"Mods.Terramon.GUI.NPCShop.PremierBonus{(premierBonus != 1 ? "Plural" : string.Empty)}", premierBonus));
 
             Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), ModContent.ItemType<PremierBallItem>(),
                 premierBonus);

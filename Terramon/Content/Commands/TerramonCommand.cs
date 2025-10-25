@@ -7,7 +7,7 @@ public abstract class TerramonCommand : ModCommand
     /// <summary>
     ///     Shorthand for #FF1919 (255, 25, 25)
     /// </summary>
-    protected static Color ChatColorRed => new(255, 25, 25);
+    public static Color ChatColorRed => new(255, 25, 25);
 
     /// <summary>
     ///     Shorthand for #FFF014 (255, 240, 20)

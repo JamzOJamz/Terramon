@@ -1,3 +1,6 @@
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Terramon.Core;
 
 public static class Tween
@@ -9,6 +12,18 @@ public static class Tween
         float time) where T : struct
     {
         return To((getter, setter), tuple => tuple.getter(), (tuple, value) => tuple.setter(value), endValue, time);
+    }
+
+    public static ITweener To<T>(Expression<Func<T>> exp, T endValue, float time) where T : struct
+    {
+        var getter = exp.Compile();
+        Action<T> setter = ((MemberExpression)exp.Body).Member switch
+        {
+            PropertyInfo property => property.GetSetMethod().CreateDelegate<Action<T>>(getter.Target),
+            FieldInfo field => x => field.SetValue(getter.Target, x),
+            _ => throw new InvalidOperationException()
+        };
+        return To(getter, setter, endValue, time);
     }
 
     private static Tweener<TFrom, TValue> To<TValue, TFrom>(TFrom from, Func<TFrom, TValue> getter,
@@ -37,105 +52,15 @@ public static class Tween
             if (!ActiveTweens[i].Update())
                 ActiveTweens.RemoveAt(i--);
     }
-}
 
-public interface ITweener
-{
-    bool IsRunning { get; }
-    Action OnComplete { set; }
-    bool Update();
-    void Kill();
-    ITweener SetEase(Ease easeType);
-    ITweener SetEase(Ease easeType, EaseParams parameters);
-}
-
-public struct EaseParams
-{
-    public double BackConstant { get; private init; }
-
-    public static EaseParams Default => new()
+    public static float ApplyEasing(Ease easing, float time, EaseParams p = default)
     {
-        BackConstant = 1.70158
-    };
-
-    public static EaseParams Back(double overshoot = 1.70158) => new()
-    {
-        BackConstant = overshoot
-    };
-}
-
-public class Tweener<TFrom, TValue> : ITweener where TValue : struct
-{
-    private Ease _ease;
-    private EaseParams _easeParams = EaseParams.Default;
-    private bool _killed;
-    public float EndTime;
-    public TValue EndValue;
-    public TFrom From;
-    public Action<TFrom, TValue> Setter;
-    public float StartTime;
-    public TValue StartValue;
-    public bool IsRunning => !_killed;
-    public Action OnComplete { get; set; }
-
-    public bool Update()
-    {
-        if (_killed) return false;
-        
-        var currentTime = Tween.SimulationTime;
-        
-        const double maxTime = 216000.0;
-        double timeDiff;
-
-        if (EndTime >= StartTime)
-            timeDiff = EndTime - StartTime;
-        else
-            timeDiff = maxTime - StartTime + EndTime;
-
-        var t = (currentTime - StartTime) / timeDiff;
-
-        if (currentTime < StartTime) t = (currentTime + maxTime - StartTime) / timeDiff;
-
-        t = Math.Clamp(t, 0, 1);
-        t = ApplyEasing(_ease, t, _easeParams);
-        
-        switch (StartValue, EndValue)
-        {
-            case (float s, float e):
-                Setter.Invoke(From, (TValue)Convert.ChangeType(s + (e - s) * t, typeof(TValue)));
-                break;
-        }
-
-        var isComplete = currentTime >= EndTime;
-        if (!isComplete) return true;
-        Setter.Invoke(From, EndValue);
-        _killed = true;
-        OnComplete?.Invoke();
-
-        return false;
+        if (p == default)
+            p = EaseParams.Default;
+        return (float)ApplyEasing(easing, (double)time, p);
     }
 
-    public void Kill()
-    {
-        _killed = true;
-        Tween.ActiveTweens.Remove(this);
-    }
-
-    public ITweener SetEase(Ease easeType)
-    {
-        _ease = easeType;
-        _easeParams = EaseParams.Default;
-        return this;
-    }
-
-    public ITweener SetEase(Ease easeType, EaseParams parameters)
-    {
-        _ease = easeType;
-        _easeParams = parameters;
-        return this;
-    }
-
-    private static double ApplyEasing(Ease easing, double time, EaseParams p)
+    public static double ApplyEasing(Ease easing, double time, EaseParams p)
     {
         const double elasticConst = 2 * Math.PI / .3;
         const double elasticConst2 = .3 / 4;
@@ -249,11 +174,11 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
             case Ease.InOutBounce:
                 if (time < .5) return .5 - .5 * ApplyEasing(Ease.OutBounce, 1 - time * 2, p);
                 return ApplyEasing(Ease.OutBounce, (time - .5) * 2, p) * .5 + .5;
-            
+
             case Ease.InBackExpo:
                 var backBase = time * time * ((backConst + 1) * time - backConst);
                 var expoMultiplier = 0.1 + 0.9 * Math.Pow(2, 8 * (time - 1));
-    
+
                 return backBase * expoMultiplier;
 
             case Ease.OutPow10:
@@ -261,6 +186,103 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
         }
 
         return time;
+    }
+}
+
+public interface ITweener
+{
+    bool IsRunning { get; }
+    Action OnComplete { set; }
+    bool Update();
+    void Kill();
+    ITweener SetEase(Ease easeType);
+    ITweener SetEase(Ease easeType, EaseParams parameters);
+}
+
+public readonly record struct EaseParams
+{
+    public double BackConstant { get; private init; }
+
+    public static EaseParams Default => new()
+    {
+        BackConstant = 1.70158
+    };
+
+    public static EaseParams Back(double overshoot = 1.70158) => new()
+    {
+        BackConstant = overshoot
+    };
+}
+
+public class Tweener<TFrom, TValue> : ITweener where TValue : struct
+{
+    private Ease _ease;
+    private EaseParams _easeParams = EaseParams.Default;
+    private bool _killed;
+    public float EndTime;
+    public TValue EndValue;
+    public TFrom From;
+    public Action<TFrom, TValue> Setter;
+    public float StartTime;
+    public TValue StartValue;
+    public bool IsRunning => !_killed;
+    public Action OnComplete { get; set; }
+
+    public bool Update()
+    {
+        if (_killed) return false;
+        
+        var currentTime = Tween.SimulationTime;
+        
+        const double maxTime = 216000.0;
+        double timeDiff;
+
+        if (EndTime >= StartTime)
+            timeDiff = EndTime - StartTime;
+        else
+            timeDiff = maxTime - StartTime + EndTime;
+
+        var t = (currentTime - StartTime) / timeDiff;
+
+        if (currentTime < StartTime) t = (currentTime + maxTime - StartTime) / timeDiff;
+
+        t = Math.Clamp(t, 0, 1);
+        t = Tween.ApplyEasing(_ease, t, _easeParams);
+        
+        switch (StartValue, EndValue)
+        {
+            case (float s, float e):
+                Setter.Invoke(From, (TValue)Convert.ChangeType(s + (e - s) * t, typeof(TValue)));
+                break;
+        }
+
+        var isComplete = currentTime >= EndTime;
+        if (!isComplete) return true;
+        Setter.Invoke(From, EndValue);
+        _killed = true;
+        OnComplete?.Invoke();
+
+        return false;
+    }
+
+    public void Kill()
+    {
+        _killed = true;
+        Tween.ActiveTweens.Remove(this);
+    }
+
+    public ITweener SetEase(Ease easeType)
+    {
+        _ease = easeType;
+        _easeParams = EaseParams.Default;
+        return this;
+    }
+
+    public ITweener SetEase(Ease easeType, EaseParams parameters)
+    {
+        _ease = easeType;
+        _easeParams = parameters;
+        return this;
     }
 }
 

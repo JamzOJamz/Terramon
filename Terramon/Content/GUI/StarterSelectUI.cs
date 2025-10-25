@@ -6,6 +6,7 @@ using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -224,7 +225,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         ShadowTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Shadow");
     }
 
-    public UIStarterBanner(ushort pokemon) : base(ModContent.Request<Texture2D>("Terraria/Images/NPC_0"),
+    public UIStarterBanner(ushort pokemon) : base(TextureAssets.Npc[0],
         "Pick this one!")
     {
         _pokemon = pokemon;

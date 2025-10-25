@@ -5,24 +5,26 @@ namespace Terramon.ID;
 
 public enum PokemonType
 {
+    None,
     Normal,
-    Fire,
     Fighting,
-    Water,
     Flying,
-    Grass,
     Poison,
-    Electric,
     Ground,
-    Psychic,
     Rock,
-    Ice,
     Bug,
-    Dragon,
     Ghost,
-    Dark,
     Steel,
-    Fairy
+    Fire,
+    Water,
+    Grass,
+    Electric,
+    Psychic,
+    Ice,
+    Dragon,
+    Dark,
+    Fairy,
+    Stellar,
 }
 
 public static class PokemonTypeExtensions

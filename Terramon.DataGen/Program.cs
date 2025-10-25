@@ -9,6 +9,9 @@ namespace Terramon.DataGen;
 
 internal static class Program
 {
+    // Whether this program is running from /bin or launched directly
+    private static bool Exec;
+
     // Maximum Pokémon ID to fetch data for (not including extra)
     private const ushort MaxPokemonIDToFetch = 151;
 
@@ -46,7 +49,6 @@ internal static class Program
     private static readonly Dictionary<string, string> IdentifierMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         { "Medium", "MediumFast" },
-        { "ViceGrip", "ViseGrip" }
     };
 
     private static async Task Main()
@@ -55,8 +57,14 @@ internal static class Program
         var assemblyName = assembly.GetName();
         var totalPokemonCount = MaxPokemonIDToFetch + ExtraPokemonIDs.Length;
 
+        string dir = Path.GetFileName(Environment.CurrentDirectory)!;
+        // Console.WriteLine($"dir: {dir}, asm: {assemblyName.Name}");
+
+        Exec = !dir.Equals(assemblyName.Name, StringComparison.Ordinal);
+
         Console.WriteLine("========================================");
         Console.WriteLine($"Running {assemblyName.Name} v{assemblyName.Version}");
+        Console.WriteLine($"Launched {(Exec ? $"from {assemblyName.Name}.exe" : "using dotnet run")}");
         Console.WriteLine("========================================\n");
 
         Console.WriteLine("WARNING: This program will overwrite existing PokemonDB*.json files in:");
@@ -96,7 +104,11 @@ internal static class Program
         var json = databaseV2.Serialize();
         var jsonMinified = databaseV2.Serialize(true);
 
-        var outDir = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "Terramon", "Assets", "Data");
+        var outDir = Path.Combine(Environment.CurrentDirectory, "..");
+        if (Exec)
+            outDir = Path.Combine(outDir, "..", "..", "..");
+        outDir = Path.Combine(outDir, "Terramon", "Assets", "Data");
+
         var outFile = Path.Combine(outDir, "PokemonDB.json");
         var outFileMinified = Path.Combine(outDir, "PokemonDB-min.json");
 
@@ -110,12 +122,39 @@ internal static class Program
         Console.WriteLine($"\nProcess completed at {endTime:T} (Duration: {endTime - startTime})");
     }
 
+    private static string GetCacheDirectory(string? subdir = null)
+    {
+        var cacheDir = Environment.CurrentDirectory;
+        if (Exec)
+            cacheDir = Path.Combine(cacheDir, "..", "..", "..");
+        cacheDir = Path.Combine(cacheDir, "Cache");
+        if (subdir != null)
+            cacheDir = Path.Combine(cacheDir, subdir);
+        return cacheDir;
+    }
+
     private static async Task<DatabaseV2.PokemonSchema> FetchPokemonData(int id)
     {
-        var url = $"https://pokeapi.co/api/v2/pokemon/{id}";
-        var response = await HttpClient.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        var jsonContent = await response.Content.ReadAsStringAsync();
+        // --- Handle caching in accordance to PokéAPI's fair use policy ---
+
+        var pokeCacheDir = GetCacheDirectory("Pokemon");
+
+        var pokeFile = Path.Combine(pokeCacheDir, $"{id}.pkmn");
+
+        string? jsonContent = null;
+
+        if (File.Exists(pokeFile))
+        {
+            jsonContent = await File.ReadAllTextAsync(pokeFile);
+        }
+        else
+        {
+            var url = $"https://pokeapi.co/api/v2/pokemon/{id}";
+            var response = await HttpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            jsonContent = await response.Content.ReadAsStringAsync();
+            File.WriteAllText(pokeFile, jsonContent);
+        }
 
         // --- Basic info ---
         using var doc = JsonDocument.Parse(jsonContent);
