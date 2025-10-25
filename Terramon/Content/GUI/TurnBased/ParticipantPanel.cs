@@ -1,6 +1,7 @@
 ﻿using Humanizer;
 using ReLogic.Content;
 using ReLogic.Graphics;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.UI;
 using Terraria.UI.Chat;
@@ -13,11 +14,14 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public static Asset<Texture2D> GenderIcon { get; private set; }
     public static Asset<Texture2D> BallSlots { get; private set; }
     public static Asset<Texture2D> PanelTexture { get; private set; }
+    public static SoundStyle Ping { get; } = new("Terramon/Sounds/pkball_shake") { Pitch = 0.7f };
 
     public PokemonData CurrentMon;
     public bool DrawEXPBar;
+    public bool DrawBallSlots;
     private float _hpVisual;
     private readonly Func<float> _getPixelRatio = getPixelRatio;
+    private readonly float[] _ballSlotXPositions = new float[6];
     /// <summary>
     /// Use instead of <see cref="UIElement.HAlign"/>
     /// </summary>
@@ -35,6 +39,34 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         PanelTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/PlayerPanel_Simple");
     }
 
+    public void Animate(int ticks)
+    {
+        const int animationStart = 190;
+        const int ticksPerSlot = 12;
+        const int ticksForWholeAnimation = ticksPerSlot * 6;
+        const int animationEnd = animationStart + ticksForWholeAnimation;
+        const float initialPosition = -42f;
+
+        if (ticks > animationEnd || ticks < animationStart)
+            return;
+
+        for (int i = 0; i < _ballSlotXPositions.Length; i++)
+        {
+            int startTick = animationStart + (i * ticksPerSlot);
+
+            if (ticks == startTick + 8)
+                SoundEngine.PlaySound(Ping);
+
+            int endTick = startTick + ticksPerSlot;
+            float targetXPosition = -8f + (i * 26f);
+            float lerp = Utils.GetLerpValue(startTick, endTick, ticks, true);
+
+            _ballSlotXPositions[i] = float.Lerp(initialPosition, targetXPosition, Tween.ApplyEasing(Ease.OutBack, lerp));
+        }
+    }
+
+    public void ResetAnimation() => Array.Fill(_ballSlotXPositions, -42f);
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         DynamicSpriteFont bigFont = FontAssets.DeathText.Value;
@@ -46,6 +78,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         float halfThird = third * 0.5f;
         float sideFactor = SideFactor;
         float sideShift = halfThird * sideFactor;
+        bool right = sideFactor > 0f;
         float extra = 1.2f;
         // float the = (MathF.Sin((float)Main.timeForVisualEffects * 0.1f) + 1f) * 16f;
         var parallelogramRect = new Rectangle((int)(dims.X - halfThird + sideShift * extra), (int)dims.Y, (int)(dims.Width + third * extra), (int)dims.Height);
@@ -113,6 +146,39 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor, Color.White, zoom);
         }
 
+        if (DrawBallSlots)
+        {
+            Texture2D ballSlots = BallSlots.Value;
+            PokemonData[] party = TerramonPlayer.LocalPlayer.Party;
+            Rectangle frame = ballSlots.Frame(3, 1, 2);
+            int next = 4;
+            if (!right)
+            {
+                frame.X -= frame.Width;
+                next = 0;
+            }
+
+            for (int i = _ballSlotXPositions.Length - 1; i >= 0; i--)
+            {
+                if (i == next)
+                    frame.X -= frame.Width;
+                float slotPosition = _ballSlotXPositions[i];
+                if (i != 0 && slotPosition == -8)
+                    continue;
+                Vector2 drawPosition = new(dims.X + slotPosition, dims.Y + dims.Height);
+
+                spriteBatch.Draw(ballSlots, drawPosition, frame, Color.White, 0f, Vector2.Zero, zoom, SpriteEffects.None, 0f);
+
+                if (party[i] is null)
+                    continue;
+
+                Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Items/PokeBalls/PokeBallMiniItem").Value;
+
+                drawPosition.X += 12f;
+                drawPosition.Y += 6f;
+                spriteBatch.Draw(bola, drawPosition, null, Color.White, 0f, Vector2.Zero, zoom, SpriteEffects.None, 0f);
+            }
+        }
         // spriteBatch.Draw(TextureAssets.MagicPixel.Value, dims.ToRectangle(), Color.White * 0.5f);
     }
 

@@ -14,8 +14,8 @@ public sealed class TestBattleUI : SmartUIState
     private static float PixelRatioForUI() => 1f;
     public static TestBattleUI Instance { get; private set; }
     public static Asset<Texture2D> Forest;
-    private static ParticipantPanel _playerPanel;
-    private static ParticipantPanel _foePanel;
+    public static ParticipantPanel PlayerPanel { get; private set; }
+    public static ParticipantPanel FoePanel { get; private set; }
     private readonly static UIElement _optionsPanel;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
@@ -129,17 +129,18 @@ public sealed class TestBattleUI : SmartUIState
         // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
 
         var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
-        _playerPanel = new(PixelRatioForUI);
-        _foePanel = new(PixelRatioForUI);
-        _playerPanel.Width.Pixels = _foePanel.Width.Pixels = 450f;
-        _playerPanel.Height.Pixels = 128f;
-        _foePanel.Height.Pixels = 110f;
-        _playerPanel.Top.Pixels = 256f;
-        _foePanel.Top.Pixels = 128f;
-        _foePanel.HAlign = 1f;
-        _playerPanel.DrawEXPBar = true;
-        Append(_playerPanel);
-        Append(_foePanel);
+        PlayerPanel = new(PixelRatioForUI);
+        FoePanel = new(PixelRatioForUI);
+        PlayerPanel.Width.Pixels = FoePanel.Width.Pixels = 450f;
+        PlayerPanel.Height.Pixels = 128f;
+        FoePanel.Height.Pixels = 110f;
+        PlayerPanel.Top.Pixels = 256f;
+        FoePanel.Top.Pixels = 128f;
+        FoePanel.HAlign = 1f;
+        PlayerPanel.DrawEXPBar = true;
+        PlayerPanel.DrawBallSlots = true;
+        Append(PlayerPanel);
+        Append(FoePanel);
 
         DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple")
         {
@@ -162,6 +163,9 @@ public sealed class TestBattleUI : SmartUIState
     private static bool _opened;
     public static void Open()
     {
+        PlayerPanel.ResetAnimation();
+        FoePanel.ResetAnimation();
+
         Instance.Recalculate();
         _dimensions = new(Main.screenWidth, Main.screenHeight);
         if (Main.playerInventory)
@@ -171,8 +175,8 @@ public sealed class TestBattleUI : SmartUIState
         var battle = terramon.Battle;
         if (battle != null)
         {
-            _playerPanel.CurrentMon = terramon.GetActivePokemon();
-            _foePanel.CurrentMon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
+            PlayerPanel.CurrentMon = terramon.GetActivePokemon();
+            FoePanel.CurrentMon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
         }
         _opened = true;
     }

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Projectiles;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.GameContent;
@@ -90,6 +91,8 @@ public sealed class BattleUI : SmartUIState
 
         var ticks = battle.TickCount;
         var opacity = GetCutsceneOpacity(ticks);
+        TestBattleUI.PlayerPanel?.Animate(ticks);
+        TestBattleUI.FoePanel?.Animate(ticks);
 
         if (ticks == 160)
             Main.GameZoomTarget = 1.5f;
