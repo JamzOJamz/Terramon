@@ -114,6 +114,7 @@ internal static class Program
         if (Exec)
             outDir = Path.Combine(outDir, "..", "..", "..");
         outDir = Path.Combine(outDir, "Terramon", "Assets", "Data");
+        Directory.CreateDirectory(outDir);
 
         var outFile = Path.Combine(outDir, "PokemonDB.json");
         var outFileMinified = Path.Combine(outDir, "PokemonDB-min.json");
