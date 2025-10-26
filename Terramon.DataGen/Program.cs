@@ -9,13 +9,19 @@ namespace Terramon.DataGen;
 
 internal static class Program
 {
-    // Whether this program is running from /bin or launched directly
-    private static bool Exec;
-
-    // Maximum Pokémon ID to fetch data for (not including extra)
+    /// <summary>
+    ///     Maximum Pokémon ID to fetch data for (not including <see cref="ExtraPokemonIDs" />).
+    /// </summary>
     private const ushort MaxPokemonIDToFetch = 151;
 
-    // Extra Pokémon IDs to fetch (like starters from later generations)
+    /// <summary>
+    ///     Whether the program is running from /bin or launched directly.
+    /// </summary>
+    private static bool Exec;
+
+    /// <summary>
+    ///     Extra Pokémon IDs to fetch (like starters from later generations).
+    /// </summary>
     private static readonly int[] ExtraPokemonIDs =
     [
         // Gen 2 starters
@@ -57,7 +63,7 @@ internal static class Program
         var assemblyName = assembly.GetName();
         var totalPokemonCount = MaxPokemonIDToFetch + ExtraPokemonIDs.Length;
 
-        string dir = Path.GetFileName(Environment.CurrentDirectory)!;
+        var dir = Path.GetFileName(Environment.CurrentDirectory);
         // Console.WriteLine($"dir: {dir}, asm: {assemblyName.Name}");
 
         Exec = !dir.Equals(assemblyName.Name, StringComparison.Ordinal);
@@ -136,12 +142,10 @@ internal static class Program
     private static async Task<DatabaseV2.PokemonSchema> FetchPokemonData(int id)
     {
         // --- Handle caching in accordance to PokéAPI's fair use policy ---
-
         var pokeCacheDir = GetCacheDirectory("Pokemon");
-
         var pokeFile = Path.Combine(pokeCacheDir, $"{id}.pkmn");
-
-        string? jsonContent = null;
+        
+        string? jsonContent;
 
         if (File.Exists(pokeFile))
         {
@@ -153,7 +157,7 @@ internal static class Program
             var response = await HttpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             jsonContent = await response.Content.ReadAsStringAsync();
-            File.WriteAllText(pokeFile, jsonContent);
+            await File.WriteAllTextAsync(pokeFile, jsonContent);
         }
 
         // --- Basic info ---
