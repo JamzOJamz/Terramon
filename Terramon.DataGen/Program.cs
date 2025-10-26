@@ -136,6 +136,7 @@ internal static class Program
         cacheDir = Path.Combine(cacheDir, "Cache");
         if (subdir != null)
             cacheDir = Path.Combine(cacheDir, subdir);
+        Directory.CreateDirectory(cacheDir);
         return cacheDir;
     }
 
