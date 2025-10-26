@@ -9,7 +9,7 @@ using Terramon.Content.NPCs;
 
 namespace Terramon.Core.Battling;
 
-public class BattleInstance
+public sealed partial class BattleInstance
 {
     /// <summary>
     ///     In wild battles, holds the index of the <see cref="PokemonNPC" /> currently being battled.
@@ -36,8 +36,6 @@ public class BattleInstance
     public int TickCount { get; set; }
 
     public BattleStream BattleStream { get; set; }
-
-    public bool ShouldStop { get; private set; }
 
     public bool CanChoose { get; private set; }
 
@@ -103,17 +101,13 @@ public class BattleInstance
 
             await foreach (var output in s.ReadOutputsAsync())
             {
-                if (ShouldStop)
-                    break;
-
                 var frame = ProtocolCodec.Parse(output);
-                if (frame == null || frame.Elements == null) continue;
+                if (frame is null || frame.Elements == null) continue;
                 // Console.WriteLine($"Received message of type {frame.GetType().Name} from simulator");
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
                     var finalElement = element is ISplitElement split ? split.Secret : element;
-                    if (HandleSingleElement(finalElement, modPlayer, p2, wild))
-                        Console.WriteLine(finalElement);
+                    HandleSingleElement(finalElement, modPlayer, p2, wild);
                 }
             }
         }
@@ -209,20 +203,7 @@ public class BattleInstance
 
         public readonly override string ToString() => Name;
     }
-    private const ConsoleColor BattleAction = ConsoleColor.Yellow;
-    private const ConsoleColor BattleFollowup = ConsoleColor.DarkYellow;
-    private const ConsoleColor BattleReceive = ConsoleColor.Magenta;
-    private const ConsoleColor BattleReceiveFollowup = ConsoleColor.DarkMagenta;
-    private const ConsoleColor Meta = ConsoleColor.Cyan;
-    private const ConsoleColor MetaProgress = ConsoleColor.DarkCyan;
-    private const ConsoleColor MetaFollowup = ConsoleColor.DarkGray;
-    private const ConsoleColor ChronoAction = ConsoleColor.Blue;
-    private const ConsoleColor FieldAction = ConsoleColor.DarkBlue;
-    private const ConsoleColor Faint = ConsoleColor.Red;
-    private const ConsoleColor Error = ConsoleColor.DarkRed;
-    private const ConsoleColor Win = ConsoleColor.Green;
-    private const ConsoleColor NotWin = ConsoleColor.DarkGreen;
-    private bool HandleSingleElement(ProtocolElement element, TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
+    private void HandleSingleElement(ProtocolElement element, TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
     {
         PokemonData[] foeTeam = wild is null ? p2.Party : [wild.Data];
 
@@ -231,303 +212,31 @@ public class BattleInstance
 
         if (element is IPokemonArgs args)
         {
-            GetPokemonFromShowdown(args.Source ?? args.Attacker, out source);
-            GetPokemonFromShowdown(args.Target ?? args.Defender ?? args.Pokemon, out target);
+            string src = args.Source ?? args.Attacker;
+            string tgt = args.Target ?? args.Defender;
+
+            if (src is null)
+            {
+                if (tgt is null)
+                    tgt = args.Pokemon;
+                else
+                    src = args.Pokemon;
+            }
+
+            GetPokemonFromShowdown(src, out source);
+            GetPokemonFromShowdown(tgt, out target);
         }
 
-        switch (element)
-        {
-            // nothings (or skip)
-            case TimestampElement:
-            case GameTypeElement:
-            case PlayerDetailsElement:
-            case GenElement:
-            case TierElement:
-            case RatedElement:
-            case RuleElement:
-            case TeamSizeElement:
-            case InactiveElement:
-            case InactiveOffElement:
-            case UpkeepElement:
-            case HintElement:
-            case CenterElement:
-            case MessageElement:
-            case DebugElement:
-                return false;
-            // spacers
-            case ClearPokeElement:
-            case TeamPreviewElement:
-            case SpacerElement:
-            case StartElement:
-                Console.WriteLine();
-                return false;
-            // basic info
-            case PokeElement pokeMessage:
-                Details d = Details.Parse(pokeMessage.Details);
-                ConsoleWrite($"Player: {pokeMessage.Player}, Species: {d.Species}, Level: {d.Level}, Gender: {d.Gender ?? 'N'}, Shiny: {d.Shiny}", ConsoleColor.Cyan);
-                return false;
-            case MoveElement moveMessage:
-                ConsoleWrite($"{target} used {moveMessage.Move}!", BattleAction);
-                return false;
-            case FailElement:
-            case NoTargetElement:
-                ConsoleWrite("But it failed!", BattleFollowup);
-                return false;
-            case BlockElement blockMessage:
-                var name = PokemonID.Parse(blockMessage.Pokemon).Name;
-                ConsoleWrite($"But {name} blocked it!", BattleFollowup);
-                return false;
-            case MissElement:
-                ConsoleWrite("But it missed!", BattleFollowup);
-                return false;
-            case SwitchElement switchMessage:
-                if (target.Player != null)
-                    ConsoleWrite($"Player {target.PlayerName} switches to {target.PokeName}", BattleAction);
-                return false;
-            case DragElement dragMessage:
-                if (target.Player != null)
-                    ConsoleWrite($"Player {target.PlayerName} had their Pokémon forcefully switched to {target.PokeName}!", BattleAction);
-                return false;
-            case DetailsChangeElement detailsChangeMessage:
-                // THINGS
-                ConsoleWrite(nameof(DetailsChangeElement), Error);
-                return false;
-            case FormeChangeElement formeChangeMessage:
-                // THINGS
-                ConsoleWrite(nameof(FormeChangeElement), Error);
-                return false;
-            case ReplaceElement replaceMessage:
-                // Illusion does bring about an interesting question.
-                // i think when starting a battle with someone,you should wait until both have sent their teams,
-                // which is obvious, but then after that, a client should override what it thinks a remote client's
-                // team looks like given what's given in a public PokeElement (or wherever the fake Pokémon imitated by Illusion is shown to a client)
-                // otherwise, GetPokemonFromShowdown is gonna spazz out, 100%
-                // THINGS
-                ConsoleWrite(nameof(ReplaceElement), Error);
-                return false;
-            case SwapElement swapMessage:
-                // idk what this is tbh
-                ConsoleWrite(nameof(SwapElement), Error);
-                return false;
-            case CantElement cantMessage:
-                ConsoleWrite($"{target} couldn't use the move {cantMessage.Move}: {cantMessage.Reason}", BattleFollowup);
-                return false;
-            case TurnElement turnMessage:
-                ConsoleWrite($"It is turn {turnMessage.Number}", MetaProgress);
-                return false;
-            case RequestElement request:
-                JsonObject o = JsonSerializer.Deserialize<JsonObject>(request.Request);
-                if (o.ContainsKey("teamPreview"))
-                    return false;
-                var side = o["side"];
-                if (side is null)
-                    return false;
-                int plrID = side["id"].ToString()[1] - '0';
-                bool forceSwitch = o.ContainsKey("forceSwitch");
-                bool wait = o.ContainsKey("wait");
-                ConsoleWrite($"Request was made for player {plrID} to {(forceSwitch ? "switch Pokémon" : wait ? "wait" : "make a move")}", Meta);
-                if (plrID == 1)
-                {
-                    CanChoose = true;
-                    HasToSwitch = forceSwitch;
-                }
-                else if (plrID == 2)
-                {
-                    if (wait)
-                        Player2HasToWait = true;
-                }
-                return false;
-            case ErrorElement error:
-                if (error.Type == ErrorType.Other)
-                    return true;
-                CanChoose = true;
-                ConsoleWrite(error.ToString(), Error);
-                return false;
-            case DamageElement damageMessage:
-                ushort newHP = ushort.Parse(damageMessage.HP.Split('/', 2)[0]);
-                ConsoleWrite($"{target} got hit and lost {target.HP - newHP} HP!", BattleReceive);
-                target.HP = newHP;
-                return false;
-            case HealElement healMessage:
-                newHP = ushort.Parse(healMessage.HP.Split('/', 2)[0]);
-                ConsoleWrite($"{target} was healed for {newHP - target.HP}!", BattleReceive);
-                target.HP = newHP;
-                return false;
-            case SetHPElement setHPMessage:
-                newHP = ushort.Parse(setHPMessage.HP.Split('/', 2)[0]);
-                ConsoleWrite($"{target} now has {newHP} HP!", BattleReceive);
-                target.HP = newHP;
-                return false;
-            case CritElement:
-                ConsoleWrite("It was a critical hit!", BattleReceiveFollowup);
-                return false;
-            case SuperEffectiveElement:
-                ConsoleWrite("It was super effective!", BattleReceiveFollowup);
-                return false;
-            case ResistedElement:
-                ConsoleWrite("It wasn't very effective...", BattleReceiveFollowup);
-                return false;
-            case ImmuneElement immuneMessage:
-                ConsoleWrite($"But {target} was immune!", BattleFollowup);
-                return false;
-            case HitCountElement hitCountMessage:
-                ConsoleWrite($"{target} was hit {hitCountMessage.Num} times!", BattleReceiveFollowup);
-                return false;
-            case StatusElement statusMessage:
-                ConsoleWrite($"{target} has been inflicted with the {statusMessage.Status} status!", BattleReceiveFollowup);
-                target.Status = statusMessage.Status;
-                return false;
-            case CureStatusElement cureStatusMessage:
-                ConsoleWrite($"{target} has recovered from {cureStatusMessage.Status}!", ChronoAction);
-                target.Data.CureStatus();
-                return false;
-            case CureTeamElement cureTeamMessage:
-                int playerTeam = cureTeamMessage.Pokemon[1] - '0';
-
-                ConsoleWrite($"Everyone in team {playerTeam} has been healed!", BattleReceive);
-
-                PokemonData[] party = playerTeam == 1 ? p1.Party : foeTeam;
-                foreach (var member in party)
-                    member?.CureStatus();
-                return false;
-            case BoostElement boostMessage:
-                var stat = boostMessage.Stat;
-                ConsoleWrite($"{target} has had their {stat} raised by {boostMessage.Amount}!", BattleReceiveFollowup);
-                int currentStage = target.StatStages[stat];
-                int newStage = Math.Clamp(currentStage + boostMessage.Amount, -7, 7);
-                if (currentStage != newStage)
-                    target.StatStages[stat] = newStage;
-                else
-                    ConsoleWrite($"But the cap for {stat} was reached!", MetaFollowup);
-                return false;
-            case UnboostElement unboostMessage:
-                stat = unboostMessage.Stat;
-                ConsoleWrite($"{target} has had their {stat} lowered by {unboostMessage.Amount}!", BattleReceiveFollowup);
-                currentStage = target.StatStages[stat];
-                newStage = Math.Clamp(currentStage - unboostMessage.Amount, -7, 7);
-                if (currentStage != newStage)
-                    target.StatStages[stat] = newStage;
-                else
-                    ConsoleWrite($"But {stat} is already as low as possible!", MetaFollowup);
-                return false;
-            case SetBoostElement setBoostMessage:
-                stat = setBoostMessage.Stat;
-                ConsoleWrite($"{target} has had their {stat} set to {setBoostMessage.Amount}!", BattleReceiveFollowup);
-                newStage = Math.Clamp(setBoostMessage.Amount, -7, 7);
-                if (setBoostMessage.Amount != newStage)
-                    target.StatStages[stat] = newStage;
-                else
-                    ConsoleWrite($"But the value was clamped!", MetaFollowup);
-                return false;
-            case SwapBoostElement swapBoostMessage:
-                var stats = swapBoostMessage.Stats;
-                ConsoleWrite($"{source} swapped their own {string.Join(", ", stats)} with {target}'s!", BattleAction);
-                for (int i = 0; i < stats.Length; i++)
-                {
-                    stat = stats[i];
-                    (target.StatStages[stat], source.StatStages[stat]) = (source.StatStages[stat], target.StatStages[stat]);
-                }
-                return false;
-            case InvertBoostElement invertBoostMessage:
-                ConsoleWrite($"{target} has had their stat boosts inverted!", BattleReceive);
-                for (int i = 0; i <= (int)StatID.Spe; i++)
-                {
-                    target.StatStages.Packed ^= (uint)(0b1000 << (i * 4));
-                }
-                return false;
-            case ClearBoostElement clearBoostMessage:
-                ConsoleWrite($"{target} has had their stat boosts reset to 0!", BattleReceive);
-                target.StatStages.Packed = 0;
-                return false;
-            case ClearAllBoostElement clearAllBoostMessage:
-                foreach (var member in p1.Party)
-                {
-                    if (member != null)
-                        member.StatStages.Packed = 0;
-                }
-                foreach (var member in foeTeam)
-                {
-                    if (member != null)
-                        member.StatStages.Packed = 0;
-                }
-                return false;
-            case ClearPositiveBoostElement clearPositiveBoostMessage:
-                ConsoleWrite($"{target} had their positive stat boosts reset to 0!", BattleReceive);
-                for (int i = 0; i <= (int)StatID.Spe; i++)
-                {
-                    uint mask = (uint)(0b1000 << (i * 4));
-                    if ((target.StatStages.Packed & mask) != 0)
-                        target.StatStages.Packed ^= mask;
-                }
-                return false;
-            case ClearNegativeBoostElement clearNegativeBoostMessage:
-                ConsoleWrite($"{target} had their negative stat boosts reset to 0!", BattleReceive);
-                for (int i = 0; i <= (int)StatID.Spe; i++)
-                {
-                    uint mask = (uint)(0b1000 << (i * 4));
-                    if ((target.StatStages.Packed & mask) == 0)
-                        target.StatStages.Packed ^= mask;
-                }
-                return false;
-            case CopyBoostElement copyBoostMessage:
-                ConsoleWrite($"{target} copied {source}'s stat boosts!", BattleAction);
-                target.StatStages.Packed = source.StatStages.Packed;
-                return false;
-            case WeatherElement weatherMessage:
-                if (weatherMessage.Weather is null)
-                    ConsoleWrite("The weather has expired!", FieldAction);
-                else if (!weatherMessage.Upkeep)
-                    ConsoleWrite($"The weather is now {weatherMessage.Weather}.", FieldAction);
-                return false;
-            case FieldStartElement fieldStartMessage:
-                ConsoleWrite($"Field condition {fieldStartMessage.Condition} has started.", FieldAction);
-                return false;
-            case FieldEndElement fieldEndMessage:
-                ConsoleWrite($"Field condition {fieldEndMessage.Condition} has ended.", FieldAction);
-                return false;
-            case SideStartElement sideStartMessage:
-                ConsoleWrite($"Side condition {sideStartMessage.Condition} has started for side {sideStartMessage.Side}!", FieldAction);
-                return false;
-            case SideEndElement sideEndMessage:
-                ConsoleWrite($"Side condition {sideEndMessage.Condition} has ended for side {sideEndMessage.Side}!", FieldAction);
-                return false;
-            case SwapSideConditionsElement swapSideConditionsMessage:
-                // we probably wanna keep track of side conditions in two variables eventually, for the visual effects
-                // THINGS
-                return false;
-            case StartVolatileElement startVolatileMessage:
-                ConsoleWrite($"Volatile effect {startVolatileMessage.Effect} was applied to {target}.", BattleReceive);
-                return false;
-            case EndVolatileElement endVolatileMessage:
-                ConsoleWrite($"Volatile effect {endVolatileMessage.Effect} ended for {target}.", ChronoAction);
-                return false;
-            case FaintElement faintMessage:
-                ConsoleWrite($"{target} has fainted!", Faint);
-                target.Data.Faint();
-                return false;
-            case WinElement winMessage:
-                if (p1.Player.name == winMessage.Username)
-                    ConsoleWrite("You winned :)", Win);
-                else if (p2 != null && p2.Player.name == winMessage.Username)
-                    ConsoleWrite("The other guy winned :/", NotWin);
-                else
-                    ConsoleWrite("That wild mon done did wonned...", NotWin);
-                EndEverywhere();
-                return false;
-            case TieElement:
-                ConsoleWrite("The battle has ended in a tie.", NotWin);
-                EndEverywhere();
-                return true;
-
-        }
-        return true;
+        HandleSingleElement_Inner(element, in source, in target, p1, p2, foeTeam);
     }
     private static void ConsoleWrite(string str, ConsoleColor color)
     {
-        var prev = Console.ForegroundColor;
-        Console.ForegroundColor = color;
-        Console.WriteLine(str);
-        Console.ForegroundColor = prev;
+        lock (str)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(str);
+            Console.ResetColor();
+        }
     }
     public bool MakeMove(int moveIndex) => MakeMove(1, moveIndex);
     public bool MakeMove(int playerIndex, int moveIndex)
@@ -583,11 +292,6 @@ public class BattleInstance
     #endregion
 
     public void Stop()
-    {
-        ShouldStop = true;
-    }
-
-    public void EndEverywhere()
     {
         var p1 = Player1;
         var p2 = Player2;

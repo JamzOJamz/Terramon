@@ -191,9 +191,6 @@ public class BattleCommand : DebugCommand
             // Process battle outputs
             await foreach (var output in battleStream.ReadOutputsAsync())
             {
-                if (battleInstance.ShouldStop)
-                    break;
-                
                 var frame = ProtocolCodec.Parse(output);
                 if (frame == null || frame.Elements == null) continue;
                 Main.NewText($"Received message of type {frame.GetType()} from simulator");
