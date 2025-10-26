@@ -3,12 +3,18 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 24
+      Width: 20
     }
   }
   NPC:
   {
-    WalkingBehaviour: {}
+    WalkingBehaviour: {
+      FrameCount: 5
+      FrameTime: 5
+      AnimationType: IdleForward
+      IsClassic: false
+    }
     SpawnController:
     {
       Stage: 1
@@ -24,6 +30,12 @@
   }
   Projectile:
   {
-    GenericPet: {}
+    GenericPet:
+    {
+      FrameCount: 5
+      FrameTime: 5
+      AnimationType: IdleForward
+      IsClassic: false
+    }
   }
 }
