@@ -180,7 +180,7 @@
                 Will be sent if the game is official in some way.
                 <list type="bullet">
                     <item>
-                        If <see cref="P:Showdown.NET.Protocol.RatedElement.Message"/> is <see langword="null"/>, the game will affect the player's ladder rating (Elo score).
+                        If <see cref="P:Showdown.NET.Protocol.RatedElement.Message" /> is <see langword="null" />, the game will affect the player's ladder rating (Elo score).
                     </item>
                     <item>
                         Otherwise, indicates an official game that is not actually rated, such as being a tournament game.
@@ -193,7 +193,7 @@
                 Will be sent if the game is official in some way.
                 <list type="bullet">
                     <item>
-                        If <see cref="P:Showdown.NET.Protocol.RatedElement.Message"/> is <see langword="null"/>, the game will affect the player's ladder rating (Elo score).
+                        If <see cref="P:Showdown.NET.Protocol.RatedElement.Message" /> is <see langword="null" />, the game will affect the player's ladder rating (Elo score).
                     </item>
                     <item>
                         Otherwise, indicates an official game that is not actually rated, such as being a tournament game.
@@ -401,7 +401,7 @@
                     as a fraction; if it is your own Pokémon
                     then it will be <c>CURRENT/MAX</c>, if not, it will be <c>/100</c> if HP Percentage Mod is in effect and
                     <c>/48</c> otherwise.
-                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see cref="F:Showdown.NET.Definitions.StatusID.None" />, or it can be <see cref="F:Showdown.NET.Definitions.StatusID.Slp"/>, <see cref="F:Showdown.NET.Definitions.StatusID.Par"/>, etc.
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see cref="F:Showdown.NET.Definitions.StatusID.None" />, or it can be <see cref="F:Showdown.NET.Definitions.StatusID.Slp" />, <see cref="F:Showdown.NET.Definitions.StatusID.Par" />, etc.
                 </para>
             </summary>
             <remarks>
@@ -430,7 +430,7 @@
                     as a fraction; if it is your own Pokémon
                     then it will be <c>CURRENT/MAX</c>, if not, it will be <c>/100</c> if HP Percentage Mod is in effect and
                     <c>/48</c> otherwise.
-                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see cref="F:Showdown.NET.Definitions.StatusID.None" />, or it can be <see cref="F:Showdown.NET.Definitions.StatusID.Slp"/>, <see cref="F:Showdown.NET.Definitions.StatusID.Par"/>, etc.
+                    <see cref="P:Showdown.NET.Protocol.SwitchElement.Status" /> can be left <see cref="F:Showdown.NET.Definitions.StatusID.None" />, or it can be <see cref="F:Showdown.NET.Definitions.StatusID.Slp" />, <see cref="F:Showdown.NET.Definitions.StatusID.Par" />, etc.
                 </para>
             </summary>
             <remarks>
@@ -552,14 +552,14 @@
         </member>
         <member name="T:Showdown.NET.Protocol.NoTargetElement">
             <summary>
-                A move has failed due to their being no target Pokémon <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/>. <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/> is <see langword="null"/> in Generation 1.
-                This action is specific to Generations 1-4 as in later Generations a failed move will display using <see cref="T:Showdown.NET.Protocol.FailElement"/>.
+                A move has failed due to their being no target Pokémon <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon" />. <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon" /> is <see langword="null" /> in Generation 1.
+                This action is specific to Generations 1-4 as in later Generations a failed move will display using <see cref="T:Showdown.NET.Protocol.FailElement" />.
             </summary>
         </member>
         <member name="M:Showdown.NET.Protocol.NoTargetElement.#ctor(System.String)">
             <summary>
-                A move has failed due to their being no target Pokémon <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/>. <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon"/> is <see langword="null"/> in Generation 1.
-                This action is specific to Generations 1-4 as in later Generations a failed move will display using <see cref="T:Showdown.NET.Protocol.FailElement"/>.
+                A move has failed due to their being no target Pokémon <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon" />. <see cref="P:Showdown.NET.Protocol.NoTargetElement.Pokemon" /> is <see langword="null" /> in Generation 1.
+                This action is specific to Generations 1-4 as in later Generations a failed move will display using <see cref="T:Showdown.NET.Protocol.FailElement" />.
             </summary>
         </member>
         <member name="T:Showdown.NET.Protocol.MissElement">
