@@ -12,6 +12,4 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
-Scripts/
-
-*.pkmn
+Terramon.DataGen/Cache/

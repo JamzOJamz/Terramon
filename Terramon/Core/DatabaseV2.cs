@@ -27,6 +27,7 @@ public class DatabaseV2
 */
 
     [JsonPropertyAlias("p")] public ReadOnlyDictionary<ushort, PokemonSchema> Pokemon { get; init; }
+
     [JsonPropertyAlias("m")] public ReadOnlyDictionary<ushort, MoveSchema> Moves { get; init; }
 
     public static DatabaseV2 Parse(Stream stream)
@@ -250,25 +251,25 @@ public class DatabaseV2
         PokemonType Type,
         [property: JsonProperty("power", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("p")]
-        int Power,
-        [property: JsonProperty("pp")] int PP,
+        byte? Power,
+        [property: JsonProperty("pp")] byte PP,
         [property: JsonProperty("accuracy", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("a")]
-        int Accuracy,
+        byte? Accuracy,
         [property: JsonProperty("category", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("c")]
+        [property: DefaultValue(MoveCategory.Physical)]
         MoveCategory Category,
         [property: JsonProperty("effect", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("e")]
-        int Effect,
+        ushort? Effect,
         [property: JsonProperty("effectChance", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("ec")]
-        int EffectChance
+        byte? EffectChance
     )
     {
         public MoveSchema() : this(PokemonType.Normal, 0, 0, 0, MoveCategory.Dynamic, 0, 0)
-        { 
-
+        {
         }
     }
 }

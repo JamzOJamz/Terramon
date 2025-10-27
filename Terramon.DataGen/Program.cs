@@ -101,10 +101,15 @@ internal static class Program
                 Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
             }
         }
+        
+        var cacheDir = GetCacheDirectory();
+        var csvPath = await MoveService.DownloadMovesCsv(cacheDir);
+        var moves = MoveService.ProcessMovesCsv(csvPath);
 
         var databaseV2 = new DatabaseV2
         {
-            Pokemon = new ReadOnlyDictionary<ushort, DatabaseV2.PokemonSchema>(pokemon)
+            Pokemon = new ReadOnlyDictionary<ushort, DatabaseV2.PokemonSchema>(pokemon),
+            Moves = new ReadOnlyDictionary<ushort, DatabaseV2.MoveSchema>(moves)
         };
 
         var json = databaseV2.Serialize();

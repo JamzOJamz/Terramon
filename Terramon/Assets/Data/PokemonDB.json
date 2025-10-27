@@ -13039,12 +13039,11 @@
       ]
     }
   },
-  "move": {
+  "moves": {
     "1": {
       "power": 40,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "2": {
@@ -13052,35 +13051,30 @@
       "power": 50,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "3": {
       "power": 15,
       "pp": 10,
       "accuracy": 85,
-      "category": 2,
       "effect": 30
     },
     "4": {
       "power": 18,
       "pp": 15,
       "accuracy": 85,
-      "category": 2,
       "effect": 30
     },
     "5": {
       "power": 80,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 1
     },
     "6": {
       "power": 40,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 35
     },
     "7": {
@@ -13088,7 +13082,6 @@
       "power": 75,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 5,
       "effectChance": 10
     },
@@ -13097,7 +13090,6 @@
       "power": 75,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 6,
       "effectChance": 10
     },
@@ -13106,7 +13098,6 @@
       "power": 75,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 7,
       "effectChance": 10
     },
@@ -13114,20 +13105,17 @@
       "power": 40,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "11": {
       "power": 55,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "12": {
       "pp": 5,
       "accuracy": 30,
-      "category": 2,
       "effect": 39
     },
     "13": {
@@ -13146,7 +13134,6 @@
       "power": 50,
       "pp": 30,
       "accuracy": 95,
-      "category": 2,
       "effect": 1
     },
     "16": {
@@ -13162,7 +13149,6 @@
       "power": 60,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "18": {
@@ -13175,14 +13161,12 @@
       "power": 90,
       "pp": 15,
       "accuracy": 95,
-      "category": 2,
       "effect": 156
     },
     "20": {
       "power": 15,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 43,
       "effectChance": 100
     },
@@ -13190,7 +13174,6 @@
       "power": 80,
       "pp": 20,
       "accuracy": 75,
-      "category": 2,
       "effect": 1
     },
     "22": {
@@ -13198,14 +13181,12 @@
       "power": 45,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "23": {
       "power": 65,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 151,
       "effectChance": 30
     },
@@ -13214,14 +13195,12 @@
       "power": 30,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 45
     },
     "25": {
       "power": 120,
       "pp": 5,
       "accuracy": 75,
-      "category": 2,
       "effect": 1
     },
     "26": {
@@ -13229,7 +13208,6 @@
       "power": 100,
       "pp": 10,
       "accuracy": 95,
-      "category": 2,
       "effect": 46
     },
     "27": {
@@ -13237,7 +13215,6 @@
       "power": 60,
       "pp": 15,
       "accuracy": 85,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -13252,7 +13229,6 @@
       "power": 70,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -13260,34 +13236,29 @@
       "power": 65,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "31": {
       "power": 15,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 30
     },
     "32": {
       "pp": 5,
       "accuracy": 30,
-      "category": 2,
       "effect": 39
     },
     "33": {
       "power": 40,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "34": {
       "power": 85,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 7,
       "effectChance": 30
     },
@@ -13295,7 +13266,6 @@
       "power": 15,
       "pp": 20,
       "accuracy": 90,
-      "category": 2,
       "effect": 43,
       "effectChance": 100
     },
@@ -13303,21 +13273,18 @@
       "power": 90,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 49
     },
     "37": {
       "power": 120,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 28
     },
     "38": {
       "power": 120,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 199
     },
     "39": {
@@ -13331,7 +13298,6 @@
       "power": 15,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 3,
       "effectChance": 30
     },
@@ -13340,7 +13306,6 @@
       "power": 25,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 78,
       "effectChance": 20
     },
@@ -13349,7 +13314,6 @@
       "power": 25,
       "pp": 20,
       "accuracy": 95,
-      "category": 2,
       "effect": 30
     },
     "43": {
@@ -13364,7 +13328,6 @@
       "power": 60,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -13517,7 +13480,6 @@
       "power": 35,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "65": {
@@ -13525,7 +13487,6 @@
       "power": 80,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "66": {
@@ -13533,35 +13494,30 @@
       "power": 80,
       "pp": 20,
       "accuracy": 80,
-      "category": 2,
       "effect": 49
     },
     "67": {
       "type": 2,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 197
     },
     "68": {
       "type": 2,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 90
     },
     "69": {
       "type": 2,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 88
     },
     "70": {
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "71": {
@@ -13597,7 +13553,6 @@
       "power": 55,
       "pp": 25,
       "accuracy": 95,
-      "category": 2,
       "effect": 44
     },
     "76": {
@@ -13699,7 +13654,6 @@
       "power": 50,
       "pp": 15,
       "accuracy": 90,
-      "category": 2,
       "effect": 1
     },
     "89": {
@@ -13707,14 +13661,12 @@
       "power": 100,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 148
     },
     "90": {
       "type": 5,
       "pp": 5,
       "accuracy": 30,
-      "category": 2,
       "effect": 39
     },
     "91": {
@@ -13722,7 +13674,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 257
     },
     "92": {
@@ -13773,14 +13724,12 @@
       "power": 40,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "99": {
       "power": 20,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 82
     },
     "100": {
@@ -13882,7 +13831,6 @@
     },
     "117": {
       "pp": 10,
-      "category": 2,
       "effect": 27
     },
     "118": {
@@ -13900,14 +13848,12 @@
       "power": 200,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 8
     },
     "121": {
       "power": 100,
       "pp": 10,
       "accuracy": 75,
-      "category": 2,
       "effect": 1
     },
     "122": {
@@ -13915,7 +13861,6 @@
       "power": 30,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 7,
       "effectChance": 30
     },
@@ -13942,7 +13887,6 @@
       "power": 65,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 32,
       "effectChance": 10
     },
@@ -13960,7 +13904,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 20
     },
@@ -13969,7 +13912,6 @@
       "power": 35,
       "pp": 15,
       "accuracy": 85,
-      "category": 2,
       "effect": 43,
       "effectChance": 100
     },
@@ -13983,7 +13925,6 @@
       "power": 130,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 146,
       "effectChance": 100
     },
@@ -13991,14 +13932,12 @@
       "power": 20,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 30
     },
     "132": {
       "power": 10,
       "pp": 35,
       "accuracy": 100,
-      "category": 2,
       "effect": 71,
       "effectChance": 10
     },
@@ -14025,7 +13964,6 @@
       "power": 130,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 46
     },
     "137": {
@@ -14053,7 +13991,6 @@
       "power": 15,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 30
     },
     "141": {
@@ -14061,7 +13998,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 4
     },
     "142": {
@@ -14075,7 +14011,6 @@
       "power": 140,
       "pp": 5,
       "accuracy": 90,
-      "category": 2,
       "effect": 76,
       "effectChance": 30
     },
@@ -14097,7 +14032,6 @@
       "power": 70,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 77,
       "effectChance": 20
     },
@@ -14137,21 +14071,18 @@
       "power": 100,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 44
     },
     "153": {
       "power": 250,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 8
     },
     "154": {
       "power": 18,
       "pp": 15,
       "accuracy": 80,
-      "category": 2,
       "effect": 30
     },
     "155": {
@@ -14159,7 +14090,6 @@
       "power": 50,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 45
     },
     "156": {
@@ -14173,7 +14103,6 @@
       "power": 75,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -14181,7 +14110,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 90,
-      "category": 2,
       "effect": 32,
       "effectChance": 10
     },
@@ -14206,14 +14134,12 @@
     "162": {
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 41
     },
     "163": {
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "164": {
@@ -14224,7 +14150,6 @@
     "165": {
       "power": 50,
       "pp": 1,
-      "category": 2,
       "effect": 255
     },
     "166": {
@@ -14237,7 +14162,6 @@
       "power": 10,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 105
     },
     "168": {
@@ -14245,7 +14169,6 @@
       "power": 60,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 106
     },
     "169": {
@@ -14271,7 +14194,6 @@
       "power": 60,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 126,
       "effectChance": 10
     },
@@ -14292,7 +14214,6 @@
     "175": {
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 100
     },
     "176": {
@@ -14319,7 +14240,6 @@
       "type": 2,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 100
     },
     "180": {
@@ -14348,7 +14268,6 @@
       "power": 40,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "184": {
@@ -14361,7 +14280,6 @@
       "type": 17,
       "power": 60,
       "pp": 20,
-      "category": 2,
       "effect": 18
     },
     "186": {
@@ -14454,7 +14372,6 @@
       "power": 25,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 30
     },
     "199": {
@@ -14467,7 +14384,6 @@
       "power": 120,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 28
     },
     "201": {
@@ -14501,14 +14417,12 @@
       "power": 30,
       "pp": 20,
       "accuracy": 90,
-      "category": 2,
       "effect": 118
     },
     "206": {
       "power": 40,
       "pp": 40,
       "accuracy": 100,
-      "category": 2,
       "effect": 102
     },
     "207": {
@@ -14527,7 +14441,6 @@
       "power": 65,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 7,
       "effectChance": 30
     },
@@ -14536,7 +14449,6 @@
       "power": 40,
       "pp": 20,
       "accuracy": 95,
-      "category": 2,
       "effect": 120
     },
     "211": {
@@ -14544,7 +14456,6 @@
       "power": 70,
       "pp": 25,
       "accuracy": 90,
-      "category": 2,
       "effect": 139,
       "effectChance": 10
     },
@@ -14572,19 +14483,16 @@
     "216": {
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 122
     },
     "217": {
       "pp": 15,
       "accuracy": 90,
-      "category": 2,
       "effect": 123
     },
     "218": {
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 124
     },
     "219": {
@@ -14602,7 +14510,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 95,
-      "category": 2,
       "effect": 126,
       "effectChance": 50
     },
@@ -14610,7 +14517,6 @@
       "type": 5,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 127
     },
     "223": {
@@ -14618,7 +14524,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 50,
-      "category": 2,
       "effect": 77,
       "effectChance": 100
     },
@@ -14627,7 +14532,6 @@
       "power": 120,
       "pp": 10,
       "accuracy": 85,
-      "category": 2,
       "effect": 1
     },
     "225": {
@@ -14655,14 +14559,12 @@
       "power": 40,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 129
     },
     "229": {
       "power": 50,
       "pp": 40,
       "accuracy": 100,
-      "category": 2,
       "effect": 130,
       "effectChance": 100
     },
@@ -14677,7 +14579,6 @@
       "power": 100,
       "pp": 15,
       "accuracy": 75,
-      "category": 2,
       "effect": 70,
       "effectChance": 30
     },
@@ -14686,7 +14587,6 @@
       "power": 50,
       "pp": 35,
       "accuracy": 95,
-      "category": 2,
       "effect": 140,
       "effectChance": 10
     },
@@ -14694,7 +14594,6 @@
       "type": 2,
       "power": 70,
       "pp": 10,
-      "category": 2,
       "effect": 79
     },
     "234": {
@@ -14726,7 +14625,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 80,
-      "category": 2,
       "effect": 44
     },
     "239": {
@@ -14755,7 +14653,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 70,
       "effectChance": 20
     },
@@ -14775,7 +14672,6 @@
       "power": 80,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "246": {
@@ -14809,7 +14705,6 @@
       "power": 40,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 70,
       "effectChance": 50
     },
@@ -14826,14 +14721,12 @@
       "type": 17,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 155
     },
     "252": {
       "power": 40,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 159,
       "effectChance": 100
     },
@@ -14907,7 +14800,6 @@
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 170
     },
     "264": {
@@ -14915,14 +14807,12 @@
       "power": 150,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 171
     },
     "265": {
       "power": 70,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 172
     },
     "266": {
@@ -14987,7 +14877,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 183,
       "effectChance": 100
     },
@@ -15007,7 +14896,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 186
     },
     "280": {
@@ -15015,7 +14903,6 @@
       "power": 75,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 187
     },
     "281": {
@@ -15028,13 +14915,11 @@
       "power": 65,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 189
     },
     "283": {
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 190
     },
     "284": {
@@ -15078,7 +14963,6 @@
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 198,
       "effectChance": 30
     },
@@ -15087,7 +14971,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 256
     },
     "292": {
@@ -15095,7 +14978,6 @@
       "power": 15,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 30
     },
     "293": {
@@ -15145,7 +15027,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 201,
       "effectChance": 10
     },
@@ -15160,7 +15041,6 @@
       "power": 30,
       "pp": 20,
       "accuracy": 90,
-      "category": 2,
       "effect": 118
     },
     "302": {
@@ -15168,7 +15048,6 @@
       "power": 60,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -15189,7 +15068,6 @@
       "power": 50,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 203,
       "effectChance": 50
     },
@@ -15197,7 +15075,6 @@
       "power": 75,
       "pp": 10,
       "accuracy": 95,
-      "category": 2,
       "effect": 70,
       "effectChance": 50
     },
@@ -15222,7 +15099,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 140,
       "effectChance": 20
     },
@@ -15231,7 +15107,6 @@
       "power": 30,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -15282,7 +15157,6 @@
       "power": 60,
       "pp": 15,
       "accuracy": 95,
-      "category": 2,
       "effect": 71,
       "effectChance": 100
     },
@@ -15342,7 +15216,6 @@
       "type": 8,
       "power": 60,
       "pp": 20,
-      "category": 2,
       "effect": 18
     },
     "326": {
@@ -15359,7 +15232,6 @@
       "power": 85,
       "pp": 15,
       "accuracy": 90,
-      "category": 2,
       "effect": 208
     },
     "328": {
@@ -15367,7 +15239,6 @@
       "power": 35,
       "pp": 15,
       "accuracy": 85,
-      "category": 2,
       "effect": 43,
       "effectChance": 100
     },
@@ -15392,14 +15263,12 @@
       "power": 25,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 30
     },
     "332": {
       "type": 3,
       "power": 60,
       "pp": 20,
-      "category": 2,
       "effect": 18
     },
     "333": {
@@ -15407,7 +15276,6 @@
       "power": 25,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 30
     },
     "334": {
@@ -15431,7 +15299,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "338": {
@@ -15453,7 +15320,6 @@
       "power": 85,
       "pp": 5,
       "accuracy": 85,
-      "category": 2,
       "effect": 264,
       "effectChance": 30
     },
@@ -15471,7 +15337,6 @@
       "power": 50,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 210,
       "effectChance": 10
     },
@@ -15479,7 +15344,6 @@
       "power": 60,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 106
     },
     "344": {
@@ -15487,7 +15351,6 @@
       "power": 120,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 263,
       "effectChance": 10
     },
@@ -15515,7 +15378,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "349": {
@@ -15529,7 +15391,6 @@
       "power": 25,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 30
     },
     "351": {
@@ -15588,7 +15449,6 @@
       "power": 70,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 218
     },
     "359": {
@@ -15596,7 +15456,6 @@
       "power": 100,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 219,
       "effectChance": 100
     },
@@ -15604,7 +15463,6 @@
       "type": 9,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 220
     },
     "361": {
@@ -15624,14 +15482,12 @@
     "363": {
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 223
     },
     "364": {
       "power": 30,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 224
     },
     "365": {
@@ -15639,7 +15495,6 @@
       "power": 60,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 225
     },
     "366": {
@@ -15657,7 +15512,6 @@
       "type": 9,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 228
     },
     "369": {
@@ -15665,7 +15519,6 @@
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 229
     },
     "370": {
@@ -15673,7 +15526,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 230,
       "effectChance": 100
     },
@@ -15682,7 +15534,6 @@
       "power": 50,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 231
     },
     "372": {
@@ -15690,7 +15541,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 232
     },
     "373": {
@@ -15704,7 +15554,6 @@
       "type": 17,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 234
     },
     "375": {
@@ -15776,14 +15625,12 @@
       "type": 17,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 246
     },
     "387": {
       "power": 140,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 247
     },
     "388": {
@@ -15798,7 +15645,6 @@
       "power": 70,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 249
     },
     "390": {
@@ -15830,7 +15676,6 @@
       "power": 120,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 254,
       "effectChance": 10
     },
@@ -15839,7 +15684,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 7,
       "effectChance": 30
     },
@@ -15861,7 +15705,6 @@
       "power": 80,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 3,
       "effectChance": 30
     },
@@ -15879,7 +15722,6 @@
       "power": 70,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "401": {
@@ -15887,7 +15729,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 1
     },
     "402": {
@@ -15895,7 +15736,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "403": {
@@ -15912,7 +15752,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "405": {
@@ -15937,7 +15776,6 @@
       "power": 100,
       "pp": 10,
       "accuracy": 75,
-      "category": 2,
       "effect": 32,
       "effectChance": 20
     },
@@ -15954,7 +15792,6 @@
       "power": 75,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 4
     },
     "410": {
@@ -15988,7 +15825,6 @@
       "power": 120,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 199
     },
     "414": {
@@ -16011,7 +15847,6 @@
       "power": 150,
       "pp": 5,
       "accuracy": 90,
-      "category": 2,
       "effect": 81
     },
     "417": {
@@ -16025,7 +15860,6 @@
       "power": 40,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "419": {
@@ -16033,7 +15867,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 186
     },
     "420": {
@@ -16041,7 +15874,6 @@
       "power": 40,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "421": {
@@ -16049,7 +15881,6 @@
       "power": 70,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "422": {
@@ -16057,7 +15888,6 @@
       "power": 65,
       "pp": 15,
       "accuracy": 95,
-      "category": 2,
       "effect": 276,
       "effectChance": 10
     },
@@ -16066,7 +15896,6 @@
       "power": 65,
       "pp": 15,
       "accuracy": 95,
-      "category": 2,
       "effect": 275,
       "effectChance": 10
     },
@@ -16075,7 +15904,6 @@
       "power": 65,
       "pp": 15,
       "accuracy": 95,
-      "category": 2,
       "effect": 274,
       "effectChance": 10
     },
@@ -16084,7 +15912,6 @@
       "power": 40,
       "pp": 30,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "426": {
@@ -16101,7 +15928,6 @@
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "428": {
@@ -16109,7 +15935,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 90,
-      "category": 2,
       "effect": 32,
       "effectChance": 20
     },
@@ -16135,7 +15960,6 @@
       "power": 90,
       "pp": 20,
       "accuracy": 85,
-      "category": 2,
       "effect": 77,
       "effectChance": 20
     },
@@ -16192,7 +16016,6 @@
       "power": 120,
       "pp": 10,
       "accuracy": 85,
-      "category": 2,
       "effect": 1
     },
     "439": {
@@ -16200,7 +16023,6 @@
       "power": 150,
       "pp": 5,
       "accuracy": 90,
-      "category": 2,
       "effect": 81
     },
     "440": {
@@ -16208,7 +16030,6 @@
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 210,
       "effectChance": 10
     },
@@ -16217,7 +16038,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 80,
-      "category": 2,
       "effect": 3,
       "effectChance": 30
     },
@@ -16226,7 +16046,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -16234,7 +16053,6 @@
       "type": 9,
       "power": 60,
       "pp": 20,
-      "category": 2,
       "effect": 18
     },
     "444": {
@@ -16242,7 +16060,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 80,
-      "category": 2,
       "effect": 44
     },
     "445": {
@@ -16285,7 +16102,6 @@
       "power": 60,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 225
     },
     "451": {
@@ -16302,7 +16118,6 @@
       "power": 120,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 199
     },
     "453": {
@@ -16310,7 +16125,6 @@
       "power": 40,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "454": {
@@ -16318,7 +16132,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 44
     },
     "455": {
@@ -16338,14 +16151,12 @@
       "power": 150,
       "pp": 5,
       "accuracy": 80,
-      "category": 2,
       "effect": 270
     },
     "458": {
       "power": 35,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 45
     },
     "459": {
@@ -16373,7 +16184,6 @@
     "462": {
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 238
     },
     "463": {
@@ -16415,7 +16225,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 273
     },
     "468": {
@@ -16493,7 +16302,6 @@
       "power": 50,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 288,
       "effectChance": 100
     },
@@ -16502,7 +16310,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 289
     },
     "481": {
@@ -16532,7 +16339,6 @@
       "type": 9,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 292
     },
     "485": {
@@ -16562,7 +16368,6 @@
       "power": 50,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 296,
       "effectChance": 100
     },
@@ -16577,7 +16382,6 @@
       "power": 65,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 21,
       "effectChance": 100
     },
@@ -16595,7 +16399,6 @@
       "power": 95,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 298
     },
     "493": {
@@ -16633,7 +16436,6 @@
       "power": 70,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 304
     },
     "499": {
@@ -16696,7 +16498,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 312
     },
     "508": {
@@ -16710,7 +16511,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 314
     },
     "510": {
@@ -16733,7 +16533,6 @@
       "power": 55,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 318
     },
     "513": {
@@ -16745,7 +16544,6 @@
       "power": 70,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 320
     },
     "515": {
@@ -16815,7 +16613,6 @@
       "power": 60,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 71,
       "effectChance": 100
     },
@@ -16833,7 +16630,6 @@
       "power": 60,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 314
     },
     "526": {
@@ -16855,7 +16651,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 49
     },
     "529": {
@@ -16863,7 +16658,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 95,
-      "category": 2,
       "effect": 44
     },
     "530": {
@@ -16871,7 +16665,6 @@
       "power": 40,
       "pp": 15,
       "accuracy": 90,
-      "category": 2,
       "effect": 45
     },
     "531": {
@@ -16879,7 +16672,6 @@
       "power": 60,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -16888,7 +16680,6 @@
       "power": 75,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 4
     },
     "533": {
@@ -16896,7 +16687,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 304
     },
     "534": {
@@ -16904,7 +16694,6 @@
       "power": 75,
       "pp": 10,
       "accuracy": 95,
-      "category": 2,
       "effect": 70,
       "effectChance": 50
     },
@@ -16912,7 +16701,6 @@
       "type": 10,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 292
     },
     "536": {
@@ -16929,7 +16717,6 @@
       "power": 65,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 151,
       "effectChance": 30
     },
@@ -16960,7 +16747,6 @@
       "power": 25,
       "pp": 10,
       "accuracy": 85,
-      "category": 2,
       "effect": 30
     },
     "542": {
@@ -16976,7 +16762,6 @@
       "power": 120,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 49
     },
     "544": {
@@ -16984,7 +16769,6 @@
       "power": 50,
       "pp": 15,
       "accuracy": 85,
-      "category": 2,
       "effect": 45
     },
     "545": {
@@ -17033,7 +16817,6 @@
       "power": 130,
       "pp": 5,
       "accuracy": 85,
-      "category": 2,
       "effect": 7,
       "effectChance": 20
     },
@@ -17060,7 +16843,6 @@
       "power": 140,
       "pp": 5,
       "accuracy": 90,
-      "category": 2,
       "effect": 332,
       "effectChance": 30
     },
@@ -17087,7 +16869,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -17096,7 +16877,6 @@
       "power": 180,
       "pp": 5,
       "accuracy": 95,
-      "category": 2,
       "effect": 335,
       "effectChance": 100
     },
@@ -17113,7 +16893,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 337
     },
     "560": {
@@ -17121,7 +16900,6 @@
       "power": 100,
       "pp": 10,
       "accuracy": 95,
-      "category": 2,
       "effect": 338
     },
     "561": {
@@ -17156,7 +16934,6 @@
       "power": 50,
       "pp": 25,
       "accuracy": 100,
-      "category": 2,
       "effect": 342
     },
     "566": {
@@ -17164,7 +16941,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 273
     },
     "567": {
@@ -17207,7 +16983,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 379
     },
     "573": {
@@ -17284,7 +17059,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 69,
       "effectChance": 10
     },
@@ -17341,7 +17115,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 95,
-      "category": 2,
       "effect": 359,
       "effectChance": 50
     },
@@ -17465,7 +17238,6 @@
       "power": 20,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 372,
       "effectChance": 100
     },
@@ -17473,7 +17245,6 @@
       "power": 40,
       "pp": 40,
       "accuracy": 100,
-      "category": 2,
       "effect": 102
     },
     "611": {
@@ -17490,7 +17261,6 @@
       "power": 40,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 375,
       "effectChance": 100
     },
@@ -17507,7 +17277,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 373,
       "effectChance": 100
     },
@@ -17516,7 +17285,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 374
     },
     "616": {
@@ -17524,7 +17292,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "617": {
@@ -17548,7 +17315,6 @@
       "power": 120,
       "pp": 10,
       "accuracy": 85,
-      "category": 2,
       "effect": 1
     },
     "620": {
@@ -17556,7 +17322,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 230,
       "effectChance": 100
     },
@@ -17564,104 +17329,120 @@
       "type": 17,
       "power": 100,
       "pp": 5,
-      "category": 2,
       "effect": 360,
       "effectChance": 100
     },
     "622": {
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "623": {
       "type": 2,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "624": {
       "type": 3,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "625": {
       "type": 4,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "626": {
       "type": 5,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "627": {
       "type": 6,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "628": {
       "type": 7,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "629": {
       "type": 8,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "630": {
       "type": 9,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "631": {
       "type": 10,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "632": {
       "type": 11,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "633": {
       "type": 12,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "634": {
       "type": 13,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "635": {
       "type": 14,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "636": {
       "type": 15,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "637": {
       "type": 16,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "638": {
       "type": 17,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "639": {
       "type": 18,
       "pp": 1,
+      "category": 0,
       "effect": 1
     },
     "640": {
       "type": 13,
       "power": 210,
       "pp": 1,
-      "category": 2,
       "effect": 1
     },
     "641": {
@@ -17675,7 +17456,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 383
     },
     "643": {
@@ -17689,7 +17469,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 385
     },
     "645": {
@@ -17697,7 +17476,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 304
     },
     "646": {
@@ -17713,7 +17491,6 @@
       "power": 100,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 219,
       "effectChance": 100
     },
@@ -17728,7 +17505,6 @@
       "power": 95,
       "pp": 10,
       "accuracy": 95,
-      "category": 2,
       "effect": 1
     },
     "650": {
@@ -17744,7 +17520,6 @@
       "power": 125,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 152
     },
     "652": {
@@ -17752,7 +17527,6 @@
       "power": 40,
       "pp": 40,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "653": {
@@ -17784,7 +17558,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 393,
       "effectChance": 100
     },
@@ -17801,7 +17574,6 @@
       "power": 80,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 385
     },
     "660": {
@@ -17815,7 +17587,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 396,
       "effectChance": 100
     },
@@ -17824,7 +17595,6 @@
       "power": 80,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 397,
       "effectChance": 100
     },
@@ -17833,7 +17603,6 @@
       "power": 20,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 306
     },
     "664": {
@@ -17854,7 +17623,6 @@
       "type": 9,
       "power": 70,
       "pp": 10,
-      "category": 2,
       "effect": 18
     },
     "667": {
@@ -17883,7 +17651,6 @@
       "power": 70,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 396,
       "effectChance": 100
     },
@@ -17898,7 +17665,6 @@
       "power": 100,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 404
     },
     "673": {
@@ -17915,7 +17681,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "675": {
@@ -17923,7 +17688,6 @@
       "power": 60,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 406
     },
     "676": {
@@ -17936,14 +17700,12 @@
       "type": 8,
       "power": 180,
       "pp": 1,
-      "category": 2,
       "effect": 1
     },
     "678": {
       "type": 17,
       "power": 180,
       "pp": 1,
-      "category": 2,
       "effect": 1
     },
     "679": {
@@ -17963,7 +17725,6 @@
       "type": 8,
       "power": 195,
       "pp": 1,
-      "category": 2,
       "effect": 1
     },
     "682": {
@@ -17977,7 +17738,6 @@
     "683": {
       "power": 210,
       "pp": 1,
-      "category": 2,
       "effect": 1
     },
     "684": {
@@ -18015,7 +17775,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 187
     },
     "689": {
@@ -18023,7 +17782,6 @@
       "power": 75,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 409
     },
     "690": {
@@ -18031,7 +17789,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 70,
       "effectChance": 20
     },
@@ -18040,7 +17797,6 @@
       "power": 40,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 104
     },
     "692": {
@@ -18048,7 +17804,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 70,
       "effectChance": 20
     },
@@ -18065,7 +17820,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 410
     },
     "695": {
@@ -18073,7 +17827,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 411
     },
     "696": {
@@ -18095,7 +17848,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 32,
       "effectChance": 30
     },
@@ -18110,7 +17862,6 @@
       "power": 120,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 269
     },
     "701": {
@@ -18133,7 +17884,6 @@
       "power": 100,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 417
     },
     "704": {
@@ -18155,7 +17905,6 @@
       "type": 9,
       "power": 200,
       "pp": 1,
-      "category": 2,
       "effect": 411
     },
     "707": {
@@ -18169,14 +17918,12 @@
       "type": 18,
       "power": 190,
       "pp": 1,
-      "category": 2,
       "effect": 1
     },
     "709": {
       "type": 6,
       "power": 190,
       "pp": 1,
-      "category": 2,
       "effect": 418
     },
     "710": {
@@ -18192,7 +17939,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 1,
       "effectChance": 100
     },
@@ -18210,7 +17956,6 @@
       "power": 90,
       "pp": 15,
       "accuracy": 95,
-      "category": 2,
       "effect": 1,
       "effectChance": 30
     },
@@ -18242,7 +17987,6 @@
       "power": 60,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 1,
       "effectChance": 100
     },
@@ -18267,7 +18011,6 @@
       "power": 100,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 1,
       "effectChance": 100
     },
@@ -18289,7 +18032,6 @@
     },
     "723": {
       "pp": 20,
-      "category": 2,
       "effect": 1
     },
     "724": {
@@ -18297,7 +18039,6 @@
       "power": 60,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 45,
       "effectChance": 30
     },
@@ -18327,7 +18068,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 423
     },
     "729": {
@@ -18363,7 +18103,6 @@
       "power": 50,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 428
     },
     "734": {
@@ -18383,7 +18122,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 431
     },
     "737": {
@@ -18391,7 +18129,6 @@
       "power": 85,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 431
     },
     "738": {
@@ -18404,125 +18141,107 @@
       "type": 10,
       "power": 100,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "740": {
       "type": 7,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "741": {
       "type": 13,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "742": {
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "743": {
       "type": 2,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "744": {
       "type": 8,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "745": {
       "type": 15,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "746": {
       "type": 4,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "747": {
       "type": 11,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "748": {
       "type": 3,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "749": {
       "type": 18,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "750": {
       "type": 16,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "751": {
       "type": 14,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "752": {
       "type": 6,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "753": {
       "type": 5,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "754": {
       "type": 17,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "755": {
       "type": 12,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "756": {
       "type": 9,
       "power": 10,
       "pp": 10,
-      "category": 2,
       "effect": 1
     },
     "757": {
@@ -18538,7 +18257,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 434
     },
     "759": {
@@ -18553,7 +18271,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 71,
       "effectChance": 100
     },
@@ -18562,7 +18279,6 @@
       "power": 35,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 43,
       "effectChance": 100
     },
@@ -18571,7 +18287,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 90,
-      "category": 2,
       "effect": 5,
       "effectChance": 10
     },
@@ -18580,7 +18295,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 436
     },
     "764": {
@@ -18588,7 +18302,6 @@
       "power": 100,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 436
     },
     "765": {
@@ -18596,7 +18309,6 @@
       "power": 110,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 437,
       "effectChance": 100
     },
@@ -18605,7 +18317,6 @@
       "power": 60,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 396,
       "effectChance": 100
     },
@@ -18614,7 +18325,6 @@
       "power": 40,
       "pp": 40,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "768": {
@@ -18639,7 +18349,6 @@
       "power": 80,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 397,
       "effectChance": 100
     },
@@ -18648,7 +18357,6 @@
       "power": 75,
       "pp": 15,
       "accuracy": 100,
-      "category": 2,
       "effect": 72,
       "effectChance": 100
     },
@@ -18678,7 +18386,6 @@
       "type": 17,
       "power": 80,
       "pp": 10,
-      "category": 2,
       "effect": 18
     },
     "776": {
@@ -18686,7 +18393,6 @@
       "power": 150,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 81
     },
     "777": {
@@ -18718,7 +18424,6 @@
       "power": 130,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "781": {
@@ -18726,7 +18431,6 @@
       "power": 25,
       "pp": 20,
       "accuracy": 90,
-      "category": 2,
       "effect": 443
     },
     "782": {
@@ -18760,7 +18464,6 @@
       "power": 55,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "786": {
@@ -18783,7 +18486,6 @@
       "power": 70,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 1,
       "effectChance": 100
     },
@@ -18801,7 +18503,6 @@
       "power": 75,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "791": {
@@ -18809,7 +18510,6 @@
       "power": 110,
       "pp": 5,
       "accuracy": 90,
-      "category": 2,
       "effect": 1
     },
     "792": {
@@ -18831,7 +18531,6 @@
       "power": 60,
       "pp": 20,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "795": {
@@ -18839,7 +18538,6 @@
       "power": 20,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 1
     },
     "796": {
@@ -18847,7 +18545,6 @@
       "power": 40,
       "pp": 10,
       "accuracy": 90,
-      "category": 2,
       "effect": 1
     },
     "797": {
@@ -18870,7 +18567,6 @@
       "power": 75,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "800": {
@@ -18878,7 +18574,6 @@
       "power": 25,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "801": {
@@ -18921,7 +18616,6 @@
       "power": 90,
       "pp": 10,
       "accuracy": 100,
-      "category": 2,
       "effect": 1,
       "effectChance": 100
     },
@@ -18930,7 +18624,6 @@
       "power": 120,
       "pp": 5,
       "accuracy": 100,
-      "category": 2,
       "effect": 1
     },
     "807": {
@@ -18953,17 +18646,16 @@
       "type": 4,
       "power": 80,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "810": {
       "type": 14,
       "power": 70,
       "pp": 10,
-      "accuracy": 90,
-      "category": 2
+      "accuracy": 90
     },
     "811": {
+      "power": 0,
       "pp": 10,
       "category": 1
     },
@@ -18971,8 +18663,7 @@
       "type": 6,
       "power": 65,
       "pp": 15,
-      "accuracy": 90,
-      "category": 2
+      "accuracy": 90
     },
     "813": {
       "type": 18,
@@ -18992,15 +18683,13 @@
       "type": 10,
       "power": 120,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "816": {
       "type": 11,
       "power": 120,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "817": {
       "type": 12,
@@ -19013,11 +18702,11 @@
       "type": 15,
       "power": 100,
       "pp": 10,
-      "accuracy": 85,
-      "category": 2
+      "accuracy": 85
     },
     "819": {
       "type": 2,
+      "power": 0,
       "pp": 10,
       "category": 1
     },
@@ -19025,15 +18714,13 @@
       "type": 5,
       "power": 120,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "821": {
       "type": 4,
       "power": 60,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "822": {
       "type": 14,
@@ -19051,6 +18738,7 @@
     },
     "824": {
       "type": 9,
+      "power": 0,
       "pp": 10,
       "category": 1
     },
@@ -19058,8 +18746,7 @@
       "type": 2,
       "power": 90,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "826": {
       "type": 8,
@@ -19072,8 +18759,7 @@
       "type": 17,
       "power": 65,
       "pp": 15,
-      "accuracy": 90,
-      "category": 2
+      "accuracy": 90
     },
     "828": {
       "type": 3,
@@ -19098,11 +18784,13 @@
     },
     "831": {
       "type": 14,
+      "power": 0,
       "pp": 5,
       "category": 1
     },
     "832": {
       "type": 14,
+      "power": 0,
       "pp": 10,
       "category": 1
     },
@@ -19114,6 +18802,7 @@
     },
     "834": {
       "type": 7,
+      "power": 0,
       "pp": 10,
       "category": 1
     },
@@ -19121,15 +18810,13 @@
       "type": 2,
       "power": 120,
       "pp": 10,
-      "accuracy": 90,
-      "category": 2
+      "accuracy": 90
     },
     "836": {
       "type": 8,
       "power": 50,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "837": {
       "type": 14,
@@ -19142,18 +18829,17 @@
       "type": 16,
       "power": 80,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "839": {
       "type": 11,
       "power": 60,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "840": {
       "type": 12,
+      "power": 0,
       "pp": 15,
       "category": 1
     },
@@ -19161,30 +18847,27 @@
       "type": 9,
       "power": 100,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "842": {
       "power": 20,
       "pp": 10,
-      "accuracy": 90,
-      "category": 2
+      "accuracy": 90
     },
     "843": {
       "type": 15,
       "power": 80,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "844": {
       "type": 16,
       "power": 120,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "845": {
+      "power": 0,
       "pp": 1,
       "category": 1
     },
@@ -19192,43 +18875,40 @@
       "type": 6,
       "power": 40,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "847": {
       "type": 11,
       "power": 30,
       "pp": 10,
-      "accuracy": 95,
-      "category": 2
+      "accuracy": 95
     },
     "848": {
       "type": 4,
       "power": 30,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "849": {
+      "power": 0,
       "pp": 10,
       "accuracy": 100,
       "category": 1
     },
     "850": {
+      "power": 0,
       "pp": 10,
       "category": 1
     },
     "851": {
       "type": 17,
       "power": 85,
-      "pp": 10,
-      "category": 2
+      "pp": 10
     },
     "852": {
       "type": 12,
       "power": 70,
-      "pp": 10,
-      "category": 2
+      "pp": 10
     },
     "853": {
       "type": 10,
@@ -19241,14 +18921,12 @@
       "type": 11,
       "power": 80,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "855": {
       "power": 90,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "856": {
       "type": 9,
@@ -19261,8 +18939,7 @@
       "type": 14,
       "power": 80,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "858": {
       "type": 11,
@@ -19282,8 +18959,7 @@
       "type": 2,
       "power": 100,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "861": {
       "type": 13,
@@ -19293,20 +18969,24 @@
       "category": 3
     },
     "862": {
+      "power": 0,
       "pp": 10,
       "category": 1
     },
     "863": {
       "type": 15,
+      "power": 0,
       "pp": 10,
       "category": 1
     },
     "864": {
+      "power": 0,
       "pp": 10,
       "category": 1
     },
     "865": {
       "type": 15,
+      "power": 0,
       "pp": 10,
       "category": 1
     },
@@ -19314,15 +18994,13 @@
       "type": 7,
       "power": 50,
       "pp": 20,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "867": {
       "type": 12,
       "power": 50,
       "pp": 20,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "868": {
       "type": 11,
@@ -19334,8 +19012,7 @@
     "869": {
       "power": 100,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "870": {
       "type": 14,
@@ -19348,8 +19025,7 @@
       "type": 8,
       "power": 50,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "872": {
       "type": 10,
@@ -19362,71 +19038,61 @@
       "type": 10,
       "power": 90,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "874": {
       "type": 13,
       "power": 120,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "875": {
       "type": 9,
       "power": 160,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "876": {
       "type": 17,
       "power": 1,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "877": {
       "type": 11,
       "power": 70,
       "pp": 20,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "878": {
       "type": 10,
       "power": 80,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "879": {
       "type": 17,
       "power": 80,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "880": {
       "type": 4,
       "power": 100,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "881": {
       "type": 2,
       "power": 100,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "882": {
       "type": 18,
       "power": 100,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "883": {
       "power": 140,
@@ -19452,8 +19118,7 @@
       "type": 12,
       "power": 100,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "887": {
       "type": 13,
@@ -19477,7 +19142,9 @@
     },
     "890": {
       "type": 10,
+      "power": 0,
       "pp": 10,
+      "accuracy": 0,
       "category": 1
     },
     "891": {
@@ -19491,24 +19158,26 @@
       "type": 6,
       "power": 95,
       "pp": 5,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "893": {
       "type": 9,
       "power": 50,
       "pp": 10,
+      "accuracy": 0,
       "category": 3
     },
     "894": {
       "type": 9,
+      "power": 0,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "895": {
       "type": 16,
+      "power": 0,
       "pp": 15,
+      "accuracy": 0,
       "category": 1
     },
     "896": {
@@ -19522,15 +19191,13 @@
       "type": 10,
       "power": 75,
       "pp": 10,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "898": {
       "type": 13,
       "power": 100,
       "pp": 15,
-      "accuracy": 95,
-      "category": 2
+      "accuracy": 95
     },
     "899": {
       "type": 14,
@@ -19543,8 +19210,7 @@
       "type": 2,
       "power": 65,
       "pp": 15,
-      "accuracy": 100,
-      "category": 2
+      "accuracy": 100
     },
     "901": {
       "type": 4,
