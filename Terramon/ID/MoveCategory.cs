@@ -1,4 +1,5 @@
 ﻿namespace Terramon.ID;
+
 public enum MoveCategory : byte
 {
     /// <summary>
