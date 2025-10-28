@@ -40,7 +40,7 @@ internal static class MoveService
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         csv.Context.RegisterClassMap<MoveCsvMap>();
 
-        var records = csv.GetRecords<MoveCsvModel>().ToList();
+        var records = csv.GetRecords<MoveCsvModel>();
 
         var moves = new Dictionary<ushort, DatabaseV2.MoveSchema>();
         var overage = 0;

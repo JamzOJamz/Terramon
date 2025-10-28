@@ -51,29 +51,6 @@ public sealed partial class BattleInstance
         TickCount++;
     }
 
-    public void Stop()
-    {
-        ShouldStop = true;
-    }
-
-    public void EndEverywhere()
-    {
-        var p1 = Player1;
-        var p2 = Player2;
-        var w = WildNPC;
-
-        if (w != null)
-            w.EndBattle();
-        else
-            BattleStream?.Dispose();
-
-        p1.Battle = null;
-        if (p2 != null)
-            p2.Battle = null;
-
-        TestBattleUI.Close();
-    }
-
     #region Battle Stream
 
     public void Start()
