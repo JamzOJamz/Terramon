@@ -1,9 +1,9 @@
-﻿using Showdown.NET.Definitions;
-using Showdown.NET.Protocol;
-using Showdown.NET.Simulator;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Showdown.NET.Definitions;
+using Showdown.NET.Protocol;
+using Showdown.NET.Simulator;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.NPCs;
 
@@ -16,6 +16,7 @@ public sealed partial class BattleInstance
     ///     For trainer or other battle types, this value is null.
     /// </summary>
     public int? WildNPCIndex { get; init; }
+
     public PokemonNPC WildNPC => WildNPCIndex.HasValue ? (PokemonNPC)Main.npc[WildNPCIndex.Value].ModNPC : null;
 
     /// <summary>
@@ -24,6 +25,7 @@ public sealed partial class BattleInstance
     ///     In trainer battles, this is the host player, and the other player is Player2.
     /// </summary>
     public int Player1Index { get; init; }
+
     public TerramonPlayer Player1 => Main.player[Player1Index].Terramon();
 
     /// <summary>
@@ -31,8 +33,9 @@ public sealed partial class BattleInstance
     ///     Null in wild battles.
     /// </summary>
     public int? Player2Index { get; init; }
+
     public TerramonPlayer Player2 => Player2Index.HasValue ? Main.player[Player2Index.Value].Terramon() : null;
-    
+
     public int TickCount { get; set; }
 
     public BattleStream BattleStream { get; set; }
@@ -46,6 +49,29 @@ public sealed partial class BattleInstance
     public void Update()
     {
         TickCount++;
+    }
+
+    public void Stop()
+    {
+        ShouldStop = true;
+    }
+
+    public void EndEverywhere()
+    {
+        var p1 = Player1;
+        var p2 = Player2;
+        var w = WildNPC;
+
+        if (w != null)
+            w.EndBattle();
+        else
+            BattleStream?.Dispose();
+
+        p1.Battle = null;
+        if (p2 != null)
+            p2.Battle = null;
+
+        TestBattleUI.Close();
     }
 
     #region Battle Stream
@@ -84,13 +110,13 @@ public sealed partial class BattleInstance
                     player.name,
                     team = packedTeam,
                 },
-                p2 = new 
-                { 
+                p2 = new
+                {
                     name = otherName,
                     team = otherTeam,
                 },
             });
-            
+
             s.Write($">start {start}");
 
             const string defaultSpec = "123456";
@@ -126,8 +152,9 @@ public sealed partial class BattleInstance
             }
         }
     }
+
     /// <summary>
-    /// Gets the corresponding Pokémon data for a Pokémon given its ID as output by Showdown. 
+    ///     Gets the corresponding Pokémon data for a Pokémon given its ID as output by Showdown.
     /// </summary>
     /// <param name="showdownMon"></param>
     private void GetPokemonFromShowdown(string showdownMon, out ShowdownPokemonData data)
@@ -238,28 +265,34 @@ public sealed partial class BattleInstance
             Console.ResetColor();
         }
     }
+
     public bool MakeMove(int moveIndex) => MakeMove(1, moveIndex);
+
     public bool MakeMove(int playerIndex, int moveIndex)
     {
         if (BattleStream.IsDisposed)
             return false;
         if (playerIndex == 2 && Player2HasToWait)
         {
-            Console.WriteLine($"Player 2 waits");
+            Console.WriteLine("Player 2 waits");
             Player2HasToWait = false;
             return true;
         }
+
         if (playerIndex == 1)
         {
             if (!CanChoose || HasToSwitch)
                 return false;
             CanChoose = false;
         }
+
         string choice = moveIndex == -1 ? GetBestAction(playerIndex) : $"move {moveIndex}";
         BattleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand(playerIndex, choice));
         return true;
     }
+
     public bool MakeSwitch(string pokemon) => MakeSwitch(1, pokemon);
+
     public bool MakeSwitch(int playerIndex, string pokemon)
     {
         if (BattleStream.IsDisposed)
@@ -270,25 +303,29 @@ public sealed partial class BattleInstance
                 return false;
             CanChoose = false;
         }
+
         BattleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand(playerIndex, $"switch {pokemon}"));
         return true;
     }
+
     public string GetBestAction(int playerIndex)
     {
         _ = WildNPCIndex;
         return "default";
     }
+
     public bool AutoRespond(int playerIndex)
     {
         if (playerIndex == 2)
         {
             if (WildNPCIndex.HasValue)
                 return MakeMove(2, -1);
-            else
-                return false;
+            return false;
         }
+
         return MakeMove(1, -1);
     }
+
     #endregion
 
     public void Stop()
