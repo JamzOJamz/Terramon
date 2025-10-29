@@ -155,7 +155,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
                 (int)frameSize.Y);
-            if (drawRect.Contains(Main.MouseScreen.ToPoint()))
+            if (drawRect.Contains(Main.mouseX, Main.mouseY))
             {
                 var mouseTextMult = Main.mouseTextColor / 255f;
                 var subColor = new Color((byte)(182f * mouseTextMult), (byte)(187f * mouseTextMult),
@@ -218,35 +218,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         CustomSpriteDirection = reader.ReadBoolean() ? reader.ReadInt32() : null;
     }
 
-    private (Vector2, Vector2, int)? _ownerOldPosition = null;
-
-    public override bool PreAI()
-    {
-        // Get in front of actively fought wild NPC
-        var owner = Main.player[Projectile.owner];
-        var terramon = owner.Terramon();
-        if (terramon.Battle != null && terramon.Battle.WildNPCIndex.HasValue)
-        {
-            _ownerOldPosition = (owner.position, owner.velocity, owner.direction);
-            NPC fighting = Main.npc[terramon.Battle.WildNPCIndex.Value];
-            Vector2 newPos = Vector2.Lerp(Projectile.position, fighting.position, 0.5f);
-            owner.position = newPos;
-            owner.velocity = Vector2.Zero;
-            owner.direction = 1;
-           //  Dust.QuickDust(owner.position, Color.Red);
-        }
-        return true;
-    }
     public override void AI()
     {
         var owningPlayer = Main.player[Projectile.owner];
         var activePokemon = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
-
-        if (_ownerOldPosition.HasValue)
-        {
-            (owningPlayer.position, owningPlayer.velocity, owningPlayer.direction) = _ownerOldPosition.Value;
-            _ownerOldPosition = null;
-        }
 
         var isShiny = Data is { IsShiny: true };
 
