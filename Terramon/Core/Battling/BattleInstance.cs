@@ -48,6 +48,24 @@ public class BattleInstance
 
     public bool Player2HasToWait { get; private set; }
 
+    public void Start()
+    {
+        // Only the local player can start a battle
+        if (Player1Index != Main.myPlayer)
+            throw new Exception("Battle started by non-local player.");
+
+        if (WildNPC != null)
+        {
+            // Turn towards the player and disable hover behaviour
+            var npc = WildNPC.NPC;
+            npc.spriteDirection = npc.direction = Main.player[Player1Index].position.X > npc.position.X ? 1 : -1;
+            npc.ShowNameOnHover = false;
+        }
+
+        BattleUI.ApplyStartEffects();
+        StartStream();
+    }
+
     public void Update()
     {
         TickCount++;
@@ -73,15 +91,13 @@ public class BattleInstance
         if (p2 != null)
             p2.Battle = null;
 
-        TestBattleUI.Close();
+        BattleUI.ApplyEndEffects();
     }
 
     #region Battle Stream
 
-    public void Start()
+    private void StartStream()
     {
-        if (Player1Index != Main.myPlayer)
-            return;
         Task.Run(RunAsync);
         Main.NewText("Battle started and running in background!");
     }

@@ -17,6 +17,7 @@ public class PokemonData
     private static readonly int NatureCount = Enum.GetValues<NatureID>().Length;
 
     private Item _heldItem;
+    private ushort _hp;
     private ushort _id;
     private DateTime? _metDate;
     private byte _metLevel;
@@ -29,8 +30,6 @@ public class PokemonData
     public Gender Gender;
     public byte Happiness;
     public bool IsShiny;
-
-    // ReSharper disable once InconsistentNaming
     public PokemonIVs IVs;
     public byte Level = 1;
     public PokemonMoves Moves;
@@ -73,7 +72,11 @@ public class PokemonData
     /// </summary>
     public DatabaseV2.PokemonSchema Schema { get; private set; }
 
-    public ushort HP;
+    public ushort HP
+    {
+        get => _hp;
+        set => _hp = Math.Clamp(value, (ushort)0, MaxHP);
+    }
 
     public ushort MaxHP
         => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (EVs.HP / 4) + 100) * Level / 100 + 10);
@@ -465,9 +468,10 @@ public class PokemonData
     private const int BitOT = 1 << 7;
     private const int BitHeldItem = 1 << 8;
     public const int BitEXP = 1 << 9;
+    public const int BitHP = 1 << 10;
 
     public const int AllFieldsBitmask = BitID | BitLevel | BitBall | BitIsShiny | BitPersonalityValue | BitNickname |
-                                        BitVariant | BitOT | BitHeldItem | BitEXP;
+                                        BitVariant | BitOT | BitHeldItem | BitEXP | BitHP;
 
     /// <summary>
     ///     Determines whether the Pokémon's network state has changed compared to the specified data,
@@ -494,6 +498,7 @@ public class PokemonData
         if ((compareFields & BitHeldItem) != 0 && _heldItem?.type != compareData._heldItem?.type)
             dirtyFields |= BitHeldItem;
         if ((compareFields & BitEXP) != 0 && TotalEXP != compareData.TotalEXP) dirtyFields |= BitEXP;
+        if ((compareFields & BitHP) != 0 && _hp != compareData._hp) dirtyFields |= BitHP;
 
         return dirtyFields != 0;
     }
@@ -514,6 +519,7 @@ public class PokemonData
         if ((fields & BitOT) != 0) target._ot = _ot;
         if ((fields & BitHeldItem) != 0) target._heldItem = _heldItem;
         if ((fields & BitEXP) != 0) target.TotalEXP = TotalEXP;
+        if ((fields & BitHP) != 0) target._hp = _hp;
     }
 
     /// <summary>
@@ -534,6 +540,7 @@ public class PokemonData
         if ((fields & BitOT) != 0) writer.Write(_ot ?? string.Empty);
         if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
         if ((fields & BitEXP) != 0) writer.Write(TotalEXP);
+        if ((fields & BitHP) != 0) writer.Write7BitEncodedInt(_hp);
     }
 
     /// <summary>
@@ -560,6 +567,7 @@ public class PokemonData
         }
 
         if ((fields & BitEXP) != 0) TotalEXP = reader.ReadInt32();
+        if ((fields & BitHP) != 0) _hp = (ushort)reader.Read7BitEncodedInt();
 
         return this;
     }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.Xna.Framework.Audio;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Commands;
@@ -159,14 +160,16 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var drawPos = NPC.Center - screenPos +
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4);
 
-        var isHighlighted = NPC.whoAmI == _highlightedNPCIndex && TerramonPlayer.LocalPlayer.Battle == null;
-
-        if (!PlasmaState)
+        var isHighlighted = NPC.whoAmI == _highlightedNPCIndex;
+        if (isHighlighted)
         {
-            if (isHighlighted)
-            {
-                _highlightedNPCIndex = null;
+            _highlightedNPCIndex = null;
+        }
 
+        if (!PlasmaState && TerramonPlayer.LocalPlayer.Battle == null)
+        {
+            if (isHighlighted && NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
+            {
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Immediate, null, Main.DefaultSamplerState, DepthStencilState.None,
                     Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
@@ -323,7 +326,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             }
         }
 
-        if (NPC.life < NPC.lifeMax) NPC.life = NPC.lifeMax;
+        if (Data != null && Data.HP != 0) NPC.life = Data.HP;
         if (PlasmaState)
         {
             var lightIntensity = 0.57f - _plasmaStateTime / 70f;
@@ -405,26 +408,29 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool PreHoverInteract(bool mouseIntersects)
     {
-        if (_highlightedNPCIndex == null && NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
+        if (_highlightedNPCIndex == null)
         {
             _highlightedNPCIndex = NPC.whoAmI;
-            var modPlayer = TerramonPlayer.LocalPlayer;
-            if (modPlayer.Battle == null && Main.mouseRight && Main.mouseRightRelease)
+            if (NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
             {
-                if (!modPlayer.HasChosenStarter)
+                var modPlayer = TerramonPlayer.LocalPlayer;
+                if (modPlayer.Battle == null && Main.mouseRight && Main.mouseRightRelease)
                 {
-                    Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"),
-                        TerramonCommand.ChatColorYellow);
-                }
-                else if (modPlayer.GetActivePokemon() == null)
-                {
-                    Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"),
-                        TerramonCommand.ChatColorYellow);
-                }
-                else
-                {
-                    SoundEngine.PlaySound(SoundID.MenuTick);
-                    StartBattle();
+                    if (!modPlayer.HasChosenStarter)
+                    {
+                        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"),
+                            TerramonCommand.ChatColorYellow);
+                    }
+                    else if (modPlayer.GetActivePokemon() == null)
+                    {
+                        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"),
+                            TerramonCommand.ChatColorYellow);
+                    }
+                    else
+                    {
+                        SoundEngine.PlaySound(SoundID.MenuTick);
+                        StartBattle();
+                    }
                 }
             }
         }
@@ -445,6 +451,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         {
             _mouseHoverTimer = 0;
         }
+        
         return true;
     }
 
@@ -476,13 +483,9 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     private void StartBattle()
     {
-        Main.NewText($"Starting battle with wild {DisplayName}");
+        // Main.NewText($"Starting battle with wild {DisplayName}");
 
         var player = Main.LocalPlayer;
-
-        // Turn towards the player
-        NPC.spriteDirection = NPC.direction = player.position.X > NPC.position.X ? 1 : -1;
-        _highlightedNPCIndex = null;
 
         // Create a new BattleInstance for this battle
         var battle = new BattleInstance
@@ -494,30 +497,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         // Keep references to the battle alive on both the player and the NPC
         player.Terramon().Battle = battle;
         Battle = battle;
-
-        // Apply battle start effects
-        PartyDisplay.Sidebar.Close();
-        NPC.ShowNameOnHover = false;
-        var curMusic = Main.curMusic;
-        var curMusicFade = Main.musicFade[curMusic];
-        Tween.To(() => curMusicFade, x => Main.musicFade[curMusic] = x, 0f, 0.5f);
-        Task.Run(async () =>
-        {
-            await Task.Delay(570);
-            Main.QueueMainThreadAction(() =>
-            {
-                BattleUI.FocusBetween.Reset();
-                Main.instance.CameraModifiers.Add(BattleUI.FocusBetween);
-                Tween.To(() => Main.GameZoomTarget, 5f, 1.42f)
-                    .SetEase(Ease.InBackExpo, EaseParams.Back(1.6f)).OnComplete = () =>
-                    {
-                        TestBattleUI.Open();
-                        Battle.Start();
-                        Tween.To(() => Main.GameZoomTarget, 1.5f, 0.4f);
-                    };
-            });
-        });
+        
+        // Start the battle
+        battle.Start();
     }
+    
     public void EndBattle()
     {
         Battle?.BattleStream?.Dispose();

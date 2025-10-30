@@ -32,14 +32,14 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public static Asset<Texture2D> BallSlots { get; }
     public static Asset<Texture2D> PanelTexture { get; }
 
-    public static SoundStyle Ping { get; } = new("Terramon/Sounds/pkball_tb_ping")
-        { Volume = 0.275f, MaxInstances = 0 };
-    
-    public static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/pkball_tb_empty")
-        { Volume = 0.275f, MaxInstances = 0 };
-    
-    public static SoundStyle Start { get; } = new("Terramon/Sounds/pkball_tb_start")
-        { Volume = 0.35f };
+    private static SoundStyle Ping { get; } = new("Terramon/Sounds/battle_tb_ping")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    private static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/battle_tb_empty")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    private static SoundStyle Start { get; } = new("Terramon/Sounds/battle_tb_start")
+        { Volume = 0.3f };
 
     /// <summary>
     ///     Use instead of <see cref="UIElement.HAlign" />
@@ -116,7 +116,11 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         {
             Vector2 drawGenderPosition = drawTextPosition;
             drawGenderPosition.X += bigFont.MeasureString(monName + " ").X * textDrawScale;
-
+            
+            // Remove floating points from draw position
+            drawGenderPosition.X = (int)drawGenderPosition.X;
+            drawGenderPosition.Y = (int)drawGenderPosition.Y;
+            
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
         }
 
@@ -140,6 +144,11 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
         float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + HPBar.Height() * 0.5f, in parallelogramRect);
         Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
+        
+        // Remove floating points from draw position
+        drawHpPosition.X = (int)drawHpPosition.X;
+        drawHpPosition.Y = (int)drawHpPosition.Y;
+        
         if (_hpVisual < monHpFactor)
             Step(ref _hpVisual, monHpFactor, 0.01f);
         else
