@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using ReLogic.Content;
+﻿using ReLogic.Content;
 using ReLogic.Graphics;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -7,29 +6,17 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Terramon.Content.GUI.TurnBased;
+
 public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIElement
 {
-    public static Asset<Texture2D> HPBar { get; private set; } 
-    public static Asset<Texture2D> EXPBar { get; private set; }
-    public static Asset<Texture2D> GenderIcon { get; private set; }
-    public static Asset<Texture2D> BallSlots { get; private set; }
-    public static Asset<Texture2D> PanelTexture { get; private set; }
-    public static SoundStyle Ping { get; } = new("Terramon/Sounds/pkball_shake") { Pitch = 1f, Volume = 0.75f, MaxInstances = 0 };
+    private readonly float[] _ballSlotXPositions = new float[6];
+    private readonly Func<float> _getPixelRatio = getPixelRatio;
+    private float _hpVisual;
 
     public PokemonData CurrentMon;
-    public bool DrawEXPBar;
     public bool DrawBallSlots;
-    private float _hpVisual;
-    private readonly Func<float> _getPixelRatio = getPixelRatio;
-    private readonly float[] _ballSlotXPositions = new float[6];
-    /// <summary>
-    /// Use instead of <see cref="UIElement.HAlign"/>
-    /// </summary>
-    public float SideFactor
-    {
-        get => (HAlign - 0.5f) * 2f;
-        set => HAlign = (value + 1f) * 0.5f;
-    }
+    public bool DrawEXPBar;
+
     static ParticipantPanel()
     {
         HPBar = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/HPBar");
@@ -39,13 +26,40 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         PanelTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/PlayerPanel_Simple");
     }
 
+    public static Asset<Texture2D> HPBar { get; }
+    public static Asset<Texture2D> EXPBar { get; }
+    public static Asset<Texture2D> GenderIcon { get; }
+    public static Asset<Texture2D> BallSlots { get; }
+    public static Asset<Texture2D> PanelTexture { get; }
+
+    private static SoundStyle Ping { get; } = new("Terramon/Sounds/battle_tb_ping")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    private static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/battle_tb_empty")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    private static SoundStyle Start { get; } = new("Terramon/Sounds/battle_tb_start")
+        { Volume = 0.3f };
+
+    /// <summary>
+    ///     Use instead of <see cref="UIElement.HAlign" />
+    /// </summary>
+    public float SideFactor
+    {
+        get => (HAlign - 0.5f) * 2f;
+        set => HAlign = (value + 1f) * 0.5f;
+    }
+
     public void Animate(int ticks)
     {
         const int animationStart = 190;
-        const int ticksPerSlot = 5;
+        const int ticksPerSlot = 6;
         const int ticksForWholeAnimation = ticksPerSlot * 6;
         const int animationEnd = animationStart + ticksForWholeAnimation;
         const float initialPosition = -42f;
+        
+        if (ticks == animationStart - 25)
+            SoundEngine.PlaySound(Start);
 
         if (!DrawBallSlots || ticks > animationEnd || ticks < animationStart)
             return;
@@ -54,14 +68,15 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         {
             int startTick = animationStart + (i * ticksPerSlot);
 
-            if (ticks == startTick + 4)
-                SoundEngine.PlaySound(Ping);
+            if (ticks == startTick + ticksPerSlot - 1)
+                SoundEngine.PlaySound(TerramonPlayer.LocalPlayer.Party[i] != null ? Ping : PingEmpty);
 
             int endTick = startTick + ticksPerSlot;
             float targetXPosition = -8f + (i * 26f);
             float lerp = Utils.GetLerpValue(startTick, endTick, ticks, true);
 
-            _ballSlotXPositions[i] = float.Lerp(initialPosition, targetXPosition, Tween.ApplyEasing(Ease.OutBack, lerp));
+            _ballSlotXPositions[i] =
+                float.Lerp(initialPosition, targetXPosition, Tween.ApplyEasing(Ease.OutBack, lerp));
         }
     }
 
@@ -81,8 +96,10 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         bool right = sideFactor > 0f;
         float extra = 1.2f;
         // float the = (MathF.Sin((float)Main.timeForVisualEffects * 0.1f) + 1f) * 16f;
-        var parallelogramRect = new Rectangle((int)(dims.X - halfThird + sideShift * extra), (int)dims.Y, (int)(dims.Width + third * extra), (int)dims.Height);
-        DynamicPixelRatioElement.DrawAdjustableParallelogram(spriteBatch, PanelTexture.Value, parallelogramRect, Color.White, zoom);
+        var parallelogramRect = new Rectangle((int)(dims.X - halfThird + sideShift * extra), (int)dims.Y,
+            (int)(dims.Width + third * extra), (int)dims.Height);
+        DynamicPixelRatioElement.DrawAdjustableParallelogram(spriteBatch, PanelTexture.Value, parallelogramRect,
+            Color.White, zoom);
 
         var monName = CurrentMon?.DisplayName ?? "???";
         var monGender = (int)(CurrentMon?.Gender ?? Gender.Unspecified) - 1;
@@ -92,13 +109,18 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         Vector2 drawTextPosition = new(dims.X + 64f + sideShift, dims.Y + 16f);
         float textDrawScale = 0.7f;
 
-        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, bigFont, monName, drawTextPosition, Color.White, 0f, Vector2.Zero, new Vector2(0.7f));
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, bigFont, monName, drawTextPosition, Color.White, 0f,
+            Vector2.Zero, new Vector2(0.7f));
 
         if (monGender != -1)
         {
             Vector2 drawGenderPosition = drawTextPosition;
             drawGenderPosition.X += bigFont.MeasureString(monName + " ").X * textDrawScale;
-
+            
+            // Remove floating points from draw position
+            drawGenderPosition.X = (int)drawGenderPosition.X;
+            drawGenderPosition.Y = (int)drawGenderPosition.Y;
+            
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
         }
 
@@ -113,37 +135,54 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         drawLevelLabelPosition.X -= levelNumberSize.X + 8f;
         drawLevelLabelPosition.Y -= levelLabelSize.Y * 1.4f;
 
-        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, bigFont, monLevel.ToString(), drawLevelPosition, Color.White, 0f, Vector2.Zero, new Vector2(levelNumberScale));
-        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f, Vector2.Zero, Vector2.One);
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, bigFont, monLevel.ToString(), drawLevelPosition,
+            Color.White, 0f, Vector2.Zero, new Vector2(levelNumberScale));
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f,
+            Vector2.Zero, Vector2.One);
 
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
         float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + HPBar.Height() * 0.5f, in parallelogramRect);
         Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
+        
+        // Remove floating points from draw position
+        drawHpPosition.X = (int)drawHpPosition.X;
+        drawHpPosition.Y = (int)drawHpPosition.Y;
+        
         if (_hpVisual < monHpFactor)
             Step(ref _hpVisual, monHpFactor, 0.01f);
         else
             _hpVisual = monHpFactor;
 
-        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, Color.Black, zoom);
+        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, Color.Black,
+            zoom);
         if (_hpVisual != monHpFactor)
-            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual, Color.Red, zoom);
-        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * monHpFactor, Color.White, zoom);
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual,
+                Color.Red, zoom);
+        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * monHpFactor,
+            Color.White, zoom);
 
         string hpDisplay = CurrentMon is null ? "??? / ???" : $"HP: {CurrentMon.HP} / {CurrentMon.MaxHP}";
         Vector2 hpDisplaySize = smallFont.MeasureString(hpDisplay);
-        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (HPBar.Height() + 8) * 0.5f * zoom) - hpDisplaySize * 0.5f;
+        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (HPBar.Height() + 8) * 0.5f * zoom) -
+                                    hpDisplaySize * 0.5f;
 
-        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, hpDisplay, hpDisplayPosition, Color.White, 0f, Vector2.Zero, Vector2.One);
+        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, hpDisplay, hpDisplayPosition, Color.White,
+            0f, Vector2.Zero, Vector2.One);
 
         if (DrawEXPBar)
         {
             float xDifference = 128f;
             Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, HPBar.Height());
             float expWidth = hpWidth - xDifference - HPBar.Width() / 3;
-            float expFactor = CurrentMon is null ? 0f : monLevel == Terramon.MaxPokemonLevel ? 1f : CurrentMon.TotalEXP / (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, CurrentMon.Schema.GrowthRate);
-            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, Color.Black, zoom);
-            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor, Color.White, zoom);
+            float expFactor = CurrentMon is null ? 0f :
+                monLevel == Terramon.MaxPokemonLevel ? 1f :
+                CurrentMon.TotalEXP /
+                (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, CurrentMon.Schema.GrowthRate);
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, Color.Black,
+                zoom);
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor,
+                Color.White, zoom);
         }
 
         if (DrawBallSlots)
@@ -167,12 +206,14 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
                     continue;
                 Vector2 drawPosition = new(dims.X + slotPosition, dims.Y + dims.Height);
 
-                spriteBatch.Draw(ballSlots, drawPosition, frame, Color.White, 0f, Vector2.Zero, zoom, SpriteEffects.None, 0f);
+                spriteBatch.Draw(ballSlots, drawPosition, frame, Color.White, 0f, Vector2.Zero, zoom,
+                    SpriteEffects.None, 0f);
 
                 if (party[i] is null)
                     continue;
 
-                Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Items/PokeBalls/PokeBallMiniItem").Value;
+                Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Items/PokeBalls/PokeBallMiniItem")
+                    .Value;
 
                 drawPosition.X += 12f;
                 drawPosition.Y += 6f;

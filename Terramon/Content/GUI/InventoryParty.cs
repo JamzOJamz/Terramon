@@ -33,8 +33,6 @@ public class InventoryParty : SmartUIState
 
     private readonly LocalizedText _showPartyLocalizedText = Language.GetText("Mods.Terramon.GUI.Inventory.ShowParty");
     private readonly ITweener[] _toggleTweens = new ITweener[3];
-
-    public static bool IsCompressed { get; private set; }
     private UIHoverImageButton _openPokedexButton;
     private UIHoverImageButton _toggleSlotsButton;
 
@@ -48,8 +46,11 @@ public class InventoryParty : SmartUIState
             ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PokedexButtonHoverAlt");
     }
 
+    public static bool IsCompressed { get; private set; }
+
     public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !Main.inFancyUI && !Main.LocalPlayer.tileEntityAnchor.InUse &&
+                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
+                                    !Main.LocalPlayer.tileEntityAnchor.InUse &&
                                     TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public static bool InPCMode { get; private set; }
@@ -211,7 +212,7 @@ public class InventoryParty : SmartUIState
                 slot.Update(null);
             }
         }, (!IsCompressed).ToInt(), 0.35f);
-        
+
         //UILinkPointNavigator.ChangePoint(9607);
     }
 
@@ -275,8 +276,8 @@ public class InventoryParty : SmartUIState
             if ((slot.Data == null && partyData != null) ||
                 (slot.Data != null && partyData == null) ||
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
-                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitEXP | PokemonData.BitNickname |
-                    PokemonData.BitIsShiny,
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitHP | PokemonData.BitEXP |
+                    PokemonData.BitNickname | PokemonData.BitIsShiny,
                     out _)))
                 UpdateSlot(partyData, slot.Index);
         }
@@ -322,7 +323,8 @@ internal sealed class CustomPartyItemSlot : UIImage
         PartySlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmpty");
         PartySlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBg");
         PartySlotBgClickedTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgClicked");
-        PartySlotBgEmptyHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmptyHover");
+        PartySlotBgEmptyHoverTexture =
+            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmptyHover");
         PartySlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgHover");
     }
 
@@ -578,16 +580,16 @@ internal sealed class CustomPartyItemSlot : UIImage
     {
         base.Update(gameTime);
         IgnoresMouseInteraction = Color.A < 255;
-        
+
         if (Data != null)
             _minispriteImage.Color = Color;
-        
+
         if (IsMouseHovering && UILinkPointNavigator.InUse)
             SetImage(_pretendToBeEmptyState || Data == null ? PartySlotBgEmptyHoverTexture : PartySlotBgHoverTexture);
         else if (!_pretendToBeEmptyState && Data != null)
         {
             if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
-                     directUseItem.AffectedByPokemonDirectUse(Data))
+                directUseItem.AffectedByPokemonDirectUse(Data))
                 SetImage(PartySlotBgClickedTexture);
             else if (!_pretendToBeEmptyState)
                 SetImage(PartySlotBgTexture);

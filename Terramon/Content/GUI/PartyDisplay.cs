@@ -242,6 +242,7 @@ public class PartySidebarSlot : UIImage
         _levelText.Left.Set(8, 0);
         _levelText.Top.Set(10, 0);
         Append(_levelText);
+        RemoveFloatingPointsFromDrawPosition = true;
     }
 
     public static CancellationTokenSource CrySoundSource { get; private set; }
@@ -261,6 +262,8 @@ public class PartySidebarSlot : UIImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        RemoveFloatingPointsFromDrawPosition = !PartyDisplay.IsDraggingSlot;
+        
         var outlined = IsMouseHovering && Data != null;
         if (outlined)
         {
@@ -440,7 +443,8 @@ public class PartySidebarSlot : UIImage
                 //_heldItemBox.Color = transparentColor;
                 _spriteBox.Color = transparentColor;
                 ((UIImage)_spriteBox.Children.ElementAt(0)).Color = transparentColor;
-                _genderIcon.Color = transparentColor;
+                if (_genderIcon != null)
+                    _genderIcon.Color = transparentColor;
                 return;
             }
 
@@ -493,7 +497,8 @@ public class PartySidebarSlot : UIImage
             //_heldItemBox.Color = Color.White;
             _spriteBox.Color = targetColor;
             ((UIImage)_spriteBox.Children.ElementAt(0)).Color = Color.White;
-            _genderIcon.Color = Color.White;
+            if (_genderIcon != null) 
+                _genderIcon.Color = Color.White;
         }
 
         if (IsMouseHovering && !PartyDisplay.IsDraggingSlot)
@@ -549,8 +554,11 @@ public class PartySidebarSlot : UIImage
             _heldItemBox.Top.Set(25, 0f);
             _heldItemBox.Left.Set(8, 0f);*/
             _spriteBox = new UIBlendedImage(Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/Party/SpriteBox",
-                AssetRequestMode.ImmediateLoad));
-            _spriteBox.Top.Set(10, 0f);
+                AssetRequestMode.ImmediateLoad))
+            {
+                RemoveFloatingPointsFromDrawPosition = true
+            };
+            _spriteBox.Top.Set(8, 0f);
             _spriteBox.Left.Set(59, 0f);
             var sprite = new UIImage(data.GetMiniSprite())
             {
@@ -559,16 +567,19 @@ public class PartySidebarSlot : UIImage
             sprite.Top.Set(-12, 0f);
             sprite.Left.Set(-20, 0f);
             _spriteBox.Append(sprite);
+            //Append(_heldItemBox);
+            Append(_spriteBox);
             if (data.Gender != Gender.Unspecified)
             {
                 _genderIcon = new UIImage(Terramon.Instance.Assets.Request<Texture2D>($"Assets/GUI/Party/Icon{data.Gender}",
-                    AssetRequestMode.ImmediateLoad));
+                    AssetRequestMode.ImmediateLoad))
+                {
+                    RemoveFloatingPointsFromDrawPosition = true
+                };
                 _genderIcon.Top.Set(54, 0f);
                 _genderIcon.Left.Set(87, 0f);
+                Append(_genderIcon);
             }
-            //Append(_heldItemBox);
-            Append(_spriteBox);
-            Append(_genderIcon);
         }
 
         Recalculate();

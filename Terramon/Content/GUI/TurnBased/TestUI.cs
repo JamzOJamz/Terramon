@@ -1,25 +1,26 @@
-﻿using ReLogic.Content;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using ReLogic.Content;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.ID;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using Terraria.UI.Chat;
 
 namespace Terramon.Content.GUI.TurnBased;
+
 public sealed class TestBattleUI : SmartUIState
 {
-    private static float PixelRatioForUI() => 1f;
-    public static TestBattleUI Instance { get; private set; }
     public static Asset<Texture2D> Forest;
-    public static ParticipantPanel PlayerPanel { get; private set; }
-    public static ParticipantPanel FoePanel { get; private set; }
     private readonly static UIElement _optionsPanel;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
     private static DynamicPixelRatioElement _mainPanel;
+
+    private static Point16 _dimensions;
+    private static bool _opened;
+
     static TestBattleUI()
     {
         // Create options panel
@@ -34,6 +35,7 @@ public sealed class TestBattleUI : SmartUIState
             button.Left.Percent = xFactor * 0.5f;
             button.Top.Percent = yFactor * 0.5f;
             button.Width.Percent = button.Height.Percent = 0.5f;
+            button.OnLeftClick += (_, _) => SoundEngine.PlaySound(Decide);
             button.OnLeftClick += i switch
             {
                 ButtonType.Fight => FightButton,
@@ -100,6 +102,22 @@ public sealed class TestBattleUI : SmartUIState
     {
         Instance = this;
     }
+
+    private static SoundStyle Decide { get; } = new("Terramon/Sounds/battle_decide")
+        { Volume = 0.3f };
+
+    private static SoundStyle Cancel { get; } = new("Terramon/Sounds/battle_cancel")
+        { Volume = 0.3f };
+
+    private static SoundStyle Run { get; } = new("Terramon/Sounds/battle_run")
+        { Volume = 0.3f };
+
+    public static TestBattleUI Instance { get; private set; }
+    public static ParticipantPanel PlayerPanel { get; private set; }
+    public static ParticipantPanel FoePanel { get; private set; }
+    public override bool Visible => _opened;
+    private static float PixelRatioForUI() => 1f;
+
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
         if (_opened)
@@ -107,7 +125,8 @@ public sealed class TestBattleUI : SmartUIState
             foreach (var layer in CollectionsMarshal.AsSpan(layers))
             {
                 var name = layer.Name;
-                if (name is "Vanilla: Resource Bars" or "Vanilla: Hotbar" or "Vanilla: Cursor" or "Vanilla: Player Chat")
+                if (name is "Vanilla: Resource Bars" or "Vanilla: Hotbar" or "Vanilla: Cursor"
+                    or "Vanilla: Player Chat")
                     continue;
                 if (name == UILoader.GetLayerName(UILoader.GetUIState<BattleUI>()))
                     continue;
@@ -117,13 +136,15 @@ public sealed class TestBattleUI : SmartUIState
 
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
     }
-    public override bool Visible => _opened;
+
     public static void HandleExit()
     {
         if (_optionsPanel.Parent != null)
             return;
+        SoundEngine.PlaySound(Cancel);
         ChangePanel(_optionsPanel);
     }
+
     public override void OnInitialize()
     {
         // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
@@ -159,8 +180,6 @@ public sealed class TestBattleUI : SmartUIState
         _mainPanel = p;
     }
 
-    private static Point16 _dimensions;
-    private static bool _opened;
     public static void Open()
     {
         PlayerPanel.ResetAnimation();
@@ -178,12 +197,15 @@ public sealed class TestBattleUI : SmartUIState
             PlayerPanel.CurrentMon = terramon.GetActivePokemon();
             FoePanel.CurrentMon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
         }
+
         _opened = true;
     }
+
     public static void Close()
     {
         _opened = false;
     }
+
     public static void ChangePanel(UIElement to)
     {
         _mainPanel.RemoveAllChildren();
@@ -194,6 +216,7 @@ public sealed class TestBattleUI : SmartUIState
             UpdatePokemon();
         _mainPanel.RecalculateChildren();
     }
+
     public static void UpdateMoves(PokemonData data = null)
     {
         data ??= TerramonPlayer.LocalPlayer.GetActivePokemon();
@@ -215,9 +238,10 @@ public sealed class TestBattleUI : SmartUIState
                 cur++;
                 continue;
             }
+
             actual.BlockInteractions = false;
             actual.Color = move.Schema.Type.GetColor();
-            actual.UpdateTextures($"Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
+            actual.UpdateTextures("Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
             label.SetText(move.ID.ToString());
             moveRef.DataRef = data;
             moveRef.Move = cur;
@@ -225,8 +249,10 @@ public sealed class TestBattleUI : SmartUIState
             cur++;
         }
     }
+
     private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement)
     {
+        SoundEngine.PlaySound(Decide);
         var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
         var battle = TerramonPlayer.LocalPlayer.Battle;
         if (battle.MakeMove(move.Move + 1))
@@ -235,6 +261,7 @@ public sealed class TestBattleUI : SmartUIState
             battle.MakeMove(2, -1);
         }
     }
+
     public static void UpdatePokemon()
     {
         var team = TerramonPlayer.LocalPlayer.Party;
@@ -252,6 +279,7 @@ public sealed class TestBattleUI : SmartUIState
                 label.SetText(string.Empty);
                 continue;
             }
+
             bool fainted = poke.DataRef != null && poke.DataRef.HP <= 0;
             pokemonButton.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
             label.SetText(DatabaseV2.GetLocalizedPokemonName(pokemon.Schema));
@@ -266,10 +294,12 @@ public sealed class TestBattleUI : SmartUIState
                 pokemonButton.BlockInteractions = false;
                 image.Color = pokemonButton.Color = Color.White;
             }
+
             poke.DataRef = pokemon;
             poke.PartySlot = i;
         }
     }
+
     private static void ClickPokemonButton(UIMouseEvent evt, UIElement listeningElement)
     {
         var pokeRef = (PokemonReference)listeningElement.Children.First(e => e is PokemonReference);
@@ -301,27 +331,22 @@ public sealed class TestBattleUI : SmartUIState
             return;
         ChangePanel(_movesPanel);
     }
+
     private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
     {
-
     }
+
     private static void PokemonButton(UIMouseEvent evt, UIElement listeningElement)
     {
         ChangePanel(_pokemonPanel);
     }
+
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        var plr = TerramonPlayer.LocalPlayer;
-        var battle = plr.Battle;
-        if (battle != null)
-        {
-            battle.BattleStream?.Dispose();
-            battle.WildNPC?.EndBattle();
-            plr.Battle = null;
-        }
-        PartyDisplay.Sidebar.Open();
-        Close();
+        TerramonPlayer.LocalPlayer.Battle.EndEverywhere();
+        SoundEngine.PlaySound(Run);
     }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         Point16 newDim = new(Main.screenWidth, Main.screenHeight);
@@ -337,38 +362,47 @@ public sealed class TestBattleUI : SmartUIState
         */
     }
 }
+
 public sealed class MoveReference : UIElement
 {
     public PokemonData DataRef;
     public int Move;
 }
+
 public sealed class PokemonReference : UIElement
 {
     public PokemonData DataRef;
     public int PartySlot;
 }
+
 public sealed class DynamicPixelRatioElement : UIElement
 {
-    private Func<float> _getPixelRatio;
-    private Asset<Texture2D> _nineSlice;
-    private Asset<Texture2D> _corners;
-    private bool _noStretching;
     private bool _buttonLike;
+    private Asset<Texture2D> _corners;
+    private Func<float> _getPixelRatio;
     private bool _hovered;
     private float _hoverTime;
-    public bool BlockInteractions;
+    private Asset<Texture2D> _nineSlice;
+    private bool _noStretching;
     public bool BlockExternalInput;
-    public Color Color { get; set; } = Color.White;
-    public DynamicPixelRatioElement(string basePath, Func<float> getPixelRatio = null, bool noStretching = false, bool buttonLike = false)
+    public bool BlockInteractions;
+
+    public DynamicPixelRatioElement(string basePath, Func<float> getPixelRatio = null, bool noStretching = false,
+        bool buttonLike = false)
     {
         UpdateTextures(basePath, noStretching);
         SetupCommon(buttonLike, getPixelRatio);
     }
-    public DynamicPixelRatioElement(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, Func<float> getPixelRatio = null, bool noStretching = false, bool buttonLike = false)
+
+    public DynamicPixelRatioElement(Asset<Texture2D> nineSlice, Asset<Texture2D> corners,
+        Func<float> getPixelRatio = null, bool noStretching = false, bool buttonLike = false)
     {
         UpdateTextures(nineSlice, corners, noStretching);
         SetupCommon(buttonLike, getPixelRatio);
     }
+
+    public Color Color { get; set; } = Color.White;
+
     private static void Unhovered(UIMouseEvent evt, UIElement listeningElement)
     {
         var dyn = (DynamicPixelRatioElement)listeningElement;
@@ -395,6 +429,7 @@ public sealed class DynamicPixelRatioElement : UIElement
         OnMouseOver += Hovered;
         OnMouseOut += Unhovered;
     }
+
     public DynamicPixelRatioElement UpdateTextures(string newBasePath, bool noStretching = false)
     {
         if (ModContent.RequestIfExists(newBasePath + "_NineSlice", out _nineSlice))
@@ -404,18 +439,22 @@ public sealed class DynamicPixelRatioElement : UIElement
         ModContent.RequestIfExists(newBasePath + "_Corners", out _corners);
         return this;
     }
-    public DynamicPixelRatioElement UpdateTextures(Asset<Texture2D> nineSlice, Asset<Texture2D> corners, bool noStretching = false)
+
+    public DynamicPixelRatioElement UpdateTextures(Asset<Texture2D> nineSlice, Asset<Texture2D> corners,
+        bool noStretching = false)
     {
         _nineSlice = nineSlice;
         _corners = corners;
         _noStretching = noStretching;
         return this;
     }
+
     public override void LeftClick(UIMouseEvent evt)
     {
         if (!BlockInteractions)
             base.LeftClick(evt);
     }
+
     public override void Update(GameTime gameTime)
     {
         if (_hovered && _hoverTime < 1f)
@@ -424,6 +463,7 @@ public sealed class DynamicPixelRatioElement : UIElement
             _hoverTime = Math.Max(_hoverTime - 0.1f, 0f);
         base.Update(gameTime);
     }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         if (BlockExternalInput && ContainsPoint(Main.MouseScreen))
@@ -438,27 +478,32 @@ public sealed class DynamicPixelRatioElement : UIElement
             bounds.Inflate(infl, infl);
             drawColor.A = (byte)((1f - _hoverTime) * byte.MaxValue);
         }
+
         if (_nineSlice != null)
             DrawAdjustableBox(spriteBatch, _nineSlice.Value, bounds, drawColor, zoom, _noStretching);
         if (_corners != null)
             DrawAdjustableCorners(spriteBatch, _corners.Value, bounds, drawColor, zoom);
     }
-    public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float scale)
+
+    public static void DrawAdjustableCorners(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,
+        float scale)
     {
-        Rectangle frame = tex.Frame(2, 1);
+        Rectangle frame = tex.Frame(2);
         spriteBatch.Draw(tex, rect.TopLeft(), frame, col, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         frame.X += frame.Width;
         Vector2 og = new(tex.Width * 0.5f, tex.Height);
         spriteBatch.Draw(tex, rect.BottomRight(), frame, col, 0f, og, scale, SpriteEffects.None, 0f);
     }
-    public static void DrawAdjustableBar(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos, float width, Color col, float pxScale)
+
+    public static void DrawAdjustableBar(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos, float width, Color col,
+        float pxScale)
     {
         if (width <= 0f)
             return;
         Vector2 drawPos = pos;
         float quadWidth = tex.Width / 3f * pxScale;
         var xScale = (width - quadWidth * 2f) / quadWidth;
-        Rectangle frame = tex.Frame(3, 1);
+        Rectangle frame = tex.Frame(3);
         int oldWidth = frame.Width;
         if (width < quadWidth)
             frame.Width = (int)(frame.Width * (width / quadWidth));
@@ -468,12 +513,20 @@ public sealed class DynamicPixelRatioElement : UIElement
         drawPos.X += quadWidth;
         if (xScale > 0f)
         {
-            spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, new Vector2(xScale * pxScale, pxScale), SpriteEffects.None, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,
+                Main.UIScaleMatrix);
+            spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, new Vector2(xScale * pxScale, pxScale),
+                SpriteEffects.None, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null,
+                Main.UIScaleMatrix);
             var pxs = quadWidth * xScale;
             drawPos.X += pxs;
         }
         else
             drawPos.X = pos.X + quadWidth;
+
         if (width <= quadWidth)
             return;
         frame.X += frame.Width;
@@ -481,7 +534,9 @@ public sealed class DynamicPixelRatioElement : UIElement
             frame.Width = (int)(frame.Width * ((width - quadWidth) / quadWidth));
         spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
     }
-    public static void DrawAdjustableBox(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float pxScale, bool noStretching = false, SkipDrawBoxSegment flags = SkipDrawBoxSegment.None)
+
+    public static void DrawAdjustableBox(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,
+        float pxScale, bool noStretching = false, SkipDrawBoxSegment flags = SkipDrawBoxSegment.None)
     {
         Vector2 quadSize = new Vector2(tex.Width / 3f, tex.Height / 3f) * pxScale;
         var xScale = (rect.Width - quadSize.X * 2f) / quadSize.X;
@@ -489,8 +544,10 @@ public sealed class DynamicPixelRatioElement : UIElement
 
         void DrawSegment(in Vector2 position, in Rectangle frame, float xSize = 1f, float ySize = 1f)
         {
-            spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, new Vector2(xSize * pxScale, ySize * pxScale), SpriteEffects.None, 0f);
+            spriteBatch.Draw(tex, position, frame, col, 0f, Vector2.Zero, new Vector2(xSize * pxScale, ySize * pxScale),
+                SpriteEffects.None, 0f);
         }
+
         void DrawWrapped(Vector2 position, Rectangle frame, float scale, bool down)
         {
             for (float currentScale = 0f; currentScale < scale; currentScale++)
@@ -502,6 +559,7 @@ public sealed class DynamicPixelRatioElement : UIElement
                     else
                         position.X += quadSize.X;
                 }
+
                 float overshoot = currentScale + 1f;
                 if (overshoot > scale)
                 {
@@ -510,9 +568,11 @@ public sealed class DynamicPixelRatioElement : UIElement
                     else
                         frame.Width = (int)MathF.Ceiling(frame.Width * (scale - currentScale));
                 }
+
                 DrawSegment(in position, in frame);
             }
         }
+
         // Draw center
         if ((flags & SkipDrawBoxSegment.CenterCenter) == 0)
         {
@@ -523,12 +583,12 @@ public sealed class DynamicPixelRatioElement : UIElement
         // Draw sides
         if ((flags & SkipDrawBoxSegment.TopCenter) == 0)
         {
-            Rectangle topSideFrame = tex.Frame(3, 3, 1, 0);
+            Rectangle topSideFrame = tex.Frame(3, 3, 1);
             Vector2 pos = new(rect.X + quadSize.X, rect.Y);
             if (noStretching)
                 DrawWrapped(pos, topSideFrame, xScale, false);
             else
-                DrawSegment(pos, topSideFrame, xScale, 1f);
+                DrawSegment(pos, topSideFrame, xScale);
         }
 
         if ((flags & SkipDrawBoxSegment.CenterLeft) == 0)
@@ -558,20 +618,20 @@ public sealed class DynamicPixelRatioElement : UIElement
             if (noStretching)
                 DrawWrapped(pos, bottomSideFrame, xScale, false);
             else
-                DrawSegment(pos, bottomSideFrame, xScale, 1f);
+                DrawSegment(pos, bottomSideFrame, xScale);
         }
 
         // Draw corners
 
         if ((flags & SkipDrawBoxSegment.TopLeft) == 0)
         {
-            Rectangle topLeftCorner = tex.Frame(3, 3, 0, 0);
+            Rectangle topLeftCorner = tex.Frame(3, 3);
             DrawSegment(new Vector2(rect.X, rect.Y), topLeftCorner);
         }
 
         if ((flags & SkipDrawBoxSegment.TopRight) == 0)
         {
-            Rectangle topRightCorner = tex.Frame(3, 3, 2, 0);
+            Rectangle topRightCorner = tex.Frame(3, 3, 2);
             DrawSegment(new Vector2(rect.X + rect.Width - quadSize.X, rect.Y), topRightCorner);
         }
 
@@ -584,10 +644,13 @@ public sealed class DynamicPixelRatioElement : UIElement
         if ((flags & SkipDrawBoxSegment.BottomRight) == 0)
         {
             Rectangle bottomRightCorner = tex.Frame(3, 3, 2, 2);
-            DrawSegment(new Vector2(rect.X + rect.Width - quadSize.X, rect.Y + rect.Height - quadSize.Y), bottomRightCorner);
+            DrawSegment(new Vector2(rect.X + rect.Width - quadSize.X, rect.Y + rect.Height - quadSize.Y),
+                bottomRightCorner);
         }
     }
-    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col, float pxScale)
+
+    public static void DrawAdjustableParallelogram(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,
+        float pxScale)
     {
         Rectangle frame = tex.Frame(3, 3);
         Rectangle firstFrame = frame;
@@ -614,7 +677,8 @@ public sealed class DynamicPixelRatioElement : UIElement
         {
             // ml
             Vector2 mlPos = new(rect.X + shiftClosest - overlapShiftClosest, rect.Y + rect.Height * 0.5f);
-            spriteBatch.Draw(tex, mlPos, frame, col, 0f, new Vector2(0f, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(tex, mlPos, frame, col, 0f, new Vector2(0f, firstFrame.Height * 0.5f), pxScale,
+                SpriteEffects.None, 0f);
             frame.X += frame.Width;
             // mm
             Vector2 mmPos = rect.Center();
@@ -622,12 +686,15 @@ public sealed class DynamicPixelRatioElement : UIElement
             frame.X += frame.Width;
             // mr
             Vector2 mrPos = new(rect.X + rect.Width - shiftClosest + overlapShiftClosest, rect.Y + rect.Height * 0.5f);
-            spriteBatch.Draw(tex, mrPos, frame, col, 0f, new Vector2(firstFrame.Width, firstFrame.Height * 0.5f), pxScale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(tex, mrPos, frame, col, 0f, new Vector2(firstFrame.Width, firstFrame.Height * 0.5f),
+                pxScale, SpriteEffects.None, 0f);
             frame.X = 0;
         }
+
         frame.Y += frame.Height;
         // bl
-        spriteBatch.Draw(tex, rect.BottomLeft(), frame, col, 0f, firstFrame.BottomLeft(), pxScale, SpriteEffects.None, 0f);
+        spriteBatch.Draw(tex, rect.BottomLeft(), frame, col, 0f, firstFrame.BottomLeft(), pxScale, SpriteEffects.None,
+            0f);
         frame.X += frame.Width;
         // bm
         Vector2 bmPos = new(rect.X + quadWidth, rect.Y + rect.Height);
@@ -638,6 +705,7 @@ public sealed class DynamicPixelRatioElement : UIElement
         spriteBatch.Draw(tex, brPos, frame, col, 0f, firstFrame.BottomRight(), pxScale, SpriteEffects.None, 0f);
     }
 }
+
 internal enum ButtonType
 {
     Fight,

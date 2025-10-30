@@ -174,6 +174,7 @@ public class TerramonPlayer : ModPlayer
         if (_activeSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
             Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
     }
+    
     public override void SetControls()
     {
         if (Player.controlInv && TestBattleUI.Instance.Visible)
