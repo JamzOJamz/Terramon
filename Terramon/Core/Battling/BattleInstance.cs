@@ -61,8 +61,9 @@ public class BattleInstance
             var npc = WildNPC.NPC;
             npc.spriteDirection = npc.direction = Main.player[Player1Index].position.X > npc.position.X ? 1 : -1;
             npc.ShowNameOnHover = false;
-            Player1.ActivePetProjectile.ConfrontFoe(this);
         }
+
+        Player1.ActivePetProjectile.ConfrontFoe(this);
 
         BattleUI.ApplyStartEffects();
         StartStream();
@@ -92,6 +93,9 @@ public class BattleInstance
         p1.Battle = null;
         if (p2 != null)
             p2.Battle = null;
+
+        p1.ActivePetProjectile.ConfrontFoe();
+        p2?.ActivePetProjectile?.ConfrontFoe();
 
         BattleUI.ApplyEndEffects();
     }

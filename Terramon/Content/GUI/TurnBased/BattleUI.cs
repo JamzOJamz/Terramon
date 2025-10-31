@@ -127,27 +127,28 @@ public sealed class BattleUI : SmartUIState
         lastExtremePosition = null;
     }
 
-    private static Vector2? lastExtremePosition;
+    private static float? lastExtremePosition;
     private static Vector2? GetBetweenPosition()
     {
         var terramon = TerramonPlayer.LocalPlayer;
         var battle = terramon.Battle;
         if (battle is null)
             return null;
+
         Projectile myPet = terramon.ActivePetProjectile?.Projectile;
         if (myPet is null)
             return null;
-        Vector2? other = battle.WildNPC?.NPC.Center ?? battle.Player2.ActivePetProjectile?.Projectile.Center;
-        if (!other.HasValue)
-            return null;
-        Vector2 target = Vector2.Lerp(myPet.Center, other.Value, 0.5f);
 
+        Entity other = (Entity)battle.WildNPC?.NPC ?? battle.Player2.ActivePetProjectile.Projectile;
+        Vector2 otherCenter = other.Center;
+        float target = float.Lerp(myPet.Center.X, otherCenter.X, 0.5f);
+
+        bool correctDirection = Math.Sign(target - otherCenter.X) == other.direction;
         if (!lastExtremePosition.HasValue ||
-            (Math.Abs(target.X) < Math.Abs(lastExtremePosition.Value.X) &&
-            Math.Sign(target.X) == Math.Sign(lastExtremePosition.Value.X)))
-            lastExtremePosition = target; // nsadfnpoasdfniodfsaioasdfonif will finish this tomorrow
+            (Math.Abs(target) < Math.Abs(lastExtremePosition.Value) && correctDirection))
+            lastExtremePosition = target;
 
-        return target;
+        return new(lastExtremePosition.Value, otherCenter.Y);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
