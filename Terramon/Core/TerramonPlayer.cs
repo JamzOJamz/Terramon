@@ -182,10 +182,10 @@ public class TerramonPlayer : ModPlayer
     
     public override void SetControls()
     {
-        if (Player.controlInv && TestBattleUI.Instance.Visible)
+        if (TestBattleUI.Instance.Visible && Player.controlInv && Player.releaseInventory)
         {
             TestBattleUI.HandleExit();
-            Player.controlInv = false;
+            Player.releaseInventory = false;
         }
     }
 
