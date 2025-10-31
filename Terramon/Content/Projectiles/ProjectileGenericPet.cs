@@ -1,6 +1,5 @@
 using Terramon.Core.ProjectileComponents;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ConvertToConstant.Global

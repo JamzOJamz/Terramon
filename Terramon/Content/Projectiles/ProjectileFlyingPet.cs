@@ -17,7 +17,7 @@ public class ProjectileFlyingPet : ProjectileComponent
         if (!Enabled) return;
 
         proj.CloneDefaults(ProjectileID.LilHarpy);
-		proj.aiStyle = 0;
+        proj.aiStyle = 0;
         proj.tileCollide = false;
         
         Main.projFrames[proj.type] = FrameCount;
