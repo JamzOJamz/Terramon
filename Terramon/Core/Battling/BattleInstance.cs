@@ -72,32 +72,6 @@ public sealed partial class BattleInstance
         TickCount++;
     }
 
-    public void Stop()
-    {
-        ShouldStop = true;
-    }
-
-    public void EndEverywhere()
-    {
-        var p1 = Player1;
-        var p2 = Player2;
-        var w = WildNPC;
-
-        if (w != null)
-            w.EndBattle();
-        else
-            BattleStream?.Dispose();
-
-        p1.Battle = null;
-        if (p2 != null)
-            p2.Battle = null;
-
-        p1.ActivePetProjectile.ConfrontFoe();
-        p2?.ActivePetProjectile?.ConfrontFoe();
-
-        BattleUI.ApplyEndEffects();
-    }
-
     #region Battle Stream
 
     private void StartStream()
@@ -240,7 +214,11 @@ public sealed partial class BattleInstance
             }
         }
 
-        public readonly ref ushort HP => ref _data.HP;
+        public readonly ushort HP
+        {
+            get => _data.HP;
+            set => _data.HP = value;
+        }
 
         public readonly ref Showdown.NET.Definitions.StatusID Status => ref _data.Status;
 
@@ -365,6 +343,9 @@ public sealed partial class BattleInstance
         if (p2 != null)
             p2.Battle = null;
 
-        TestBattleUI.Close();
+        p1.ActivePetProjectile.ConfrontFoe();
+        p2?.ActivePetProjectile?.ConfrontFoe();
+
+        BattleUI.ApplyEndEffects();
     }
 }
