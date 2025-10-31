@@ -157,7 +157,7 @@ public sealed partial class BattleInstance
     {
         data = default;
 
-        if (showdownMon is null)
+        if (string.IsNullOrEmpty(showdownMon))
             return;
 
         var finalID = PokemonID.Parse(showdownMon);
