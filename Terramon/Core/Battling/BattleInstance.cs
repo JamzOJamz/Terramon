@@ -6,6 +6,7 @@ using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.NPCs;
+using Terramon.Content.Projectiles;
 
 namespace Terramon.Core.Battling;
 
@@ -46,17 +47,61 @@ public sealed partial class BattleInstance
 
     public bool Player2HasToWait { get; private set; }
 
+    public void Start()
+    {
+        // Only the local player can start a battle
+        if (Player1Index != Main.myPlayer)
+            throw new Exception("Battle started by non-local player.");
+
+        if (WildNPC != null)
+        {
+            // Turn towards the player and disable hover behaviour
+            var npc = WildNPC.NPC;
+            npc.spriteDirection = npc.direction = Main.player[Player1Index].position.X > npc.position.X ? 1 : -1;
+            npc.ShowNameOnHover = false;
+        }
+
+        Player1.ActivePetProjectile.ConfrontFoe(this);
+
+        BattleUI.ApplyStartEffects();
+        StartStream();
+    }
+
     public void Update()
     {
         TickCount++;
     }
 
+    public void Stop()
+    {
+        ShouldStop = true;
+    }
+
+    public void EndEverywhere()
+    {
+        var p1 = Player1;
+        var p2 = Player2;
+        var w = WildNPC;
+
+        if (w != null)
+            w.EndBattle();
+        else
+            BattleStream?.Dispose();
+
+        p1.Battle = null;
+        if (p2 != null)
+            p2.Battle = null;
+
+        p1.ActivePetProjectile.ConfrontFoe();
+        p2?.ActivePetProjectile?.ConfrontFoe();
+
+        BattleUI.ApplyEndEffects();
+    }
+
     #region Battle Stream
 
-    public void Start()
+    private void StartStream()
     {
-        if (Player1Index != Main.myPlayer)
-            return;
         Task.Run(RunAsync);
         Main.NewText("Battle started and running in background!");
     }

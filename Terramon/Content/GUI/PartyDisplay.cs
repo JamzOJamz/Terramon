@@ -1,12 +1,11 @@
-using ReLogic.Content;
 using System.Runtime.CompilerServices;
+using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
@@ -122,11 +121,13 @@ public sealed class PartyDisplay : SmartUIState
 
 public sealed class PartySidebar(Vector2 size) : UIContainer(size)
 {
+    private const float ClosedOffset = -128f;
+
     private bool _keyUp = true;
     private ITweener _toggleTween;
-    
+
     public bool IsToggled { get; private set; } = true;
-    
+
     public void Toggle()
     {
         _toggleTween?.Kill();
@@ -154,7 +155,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         if (!IsToggled) return;
 
         _toggleTween?.Kill();
-        _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, -125, 0.5f).SetEase(Ease.OutExpo);
+        _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, ClosedOffset, 0.5f).SetEase(Ease.OutExpo);
         IsToggled = false;
     }
 
@@ -162,7 +163,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
     {
         _toggleTween?.Kill();
         IsToggled = open;
-        Left.Pixels = open ? 0 : -125;
+        Left.Pixels = open ? 0 : ClosedOffset;
         Recalculate();
     }
 
@@ -192,10 +193,15 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         }
     }
 
+    public bool IsAnimationActive()
+    {
+        return _toggleTween is { IsRunning: true };
+    }
+
     public void ForceKillAnimation()
     {
         _toggleTween?.Kill();
-        Left.Pixels = IsToggled ? 0 : -125;
+        Left.Pixels = IsToggled ? 0 : ClosedOffset;
         Recalculate();
     }
 
@@ -217,6 +223,7 @@ public class PartySidebarSlot : UIImage
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
     private UIBlendedImage _heldItemBox;
 #pragma warning restore CS0649
+    private UIImage _hpMeter;
     private int _index;
     private bool _isActiveSlot;
     private bool _isHovered;
@@ -242,6 +249,7 @@ public class PartySidebarSlot : UIImage
         _levelText.Left.Set(8, 0);
         _levelText.Top.Set(10, 0);
         Append(_levelText);
+        RemoveFloatingPointsFromDrawPosition = true;
     }
 
     public static CancellationTokenSource CrySoundSource { get; private set; }
@@ -261,11 +269,15 @@ public class PartySidebarSlot : UIImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        RemoveFloatingPointsFromDrawPosition =
+            !PartyDisplay.IsDraggingSlot && !PartyDisplay.Sidebar.IsAnimationActive();
+
         var outlined = IsMouseHovering && Data != null;
         if (outlined)
         {
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
+                Main.UIScaleMatrix);
             var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
             Color highlight = ClientConfig.DefaultHighlightColor;
             outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
@@ -275,11 +287,13 @@ public class PartySidebarSlot : UIImage
                 .UseSecondaryColor(highlight.HueShift(0.035f, -0.08f))
                 .Apply();
         }
+
         base.DrawSelf(spriteBatch);
         if (outlined)
         {
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null,
+                Main.UIScaleMatrix);
         }
 
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
@@ -494,7 +508,7 @@ public class PartySidebarSlot : UIImage
             //_heldItemBox.Color = Color.White;
             _spriteBox.Color = targetColor;
             ((UIImage)_spriteBox.Children.ElementAt(0)).Color = Color.White;
-            if (_genderIcon != null) 
+            if (_genderIcon != null)
                 _genderIcon.Color = Color.White;
         }
 
@@ -533,9 +547,9 @@ public class PartySidebarSlot : UIImage
         CloneData = data?.ShallowCopy();
         _isActiveSlot = TerramonPlayer.LocalPlayer.ActiveSlot == Index;
         UpdateSprite(IsMouseHovering && !PartyDisplay.IsDraggingSlot);
-        _heldItemBox?.Remove();
-        _spriteBox?.Remove();
-        _genderIcon?.Remove();
+
+        RemoveUIElements();
+
         if (data == null)
         {
             _nameText.SetText(string.Empty);
@@ -545,34 +559,70 @@ public class PartySidebarSlot : UIImage
         {
             _nameText.SetText(data.DisplayName);
             _levelText.SetText(Language.GetText("Mods.Terramon.GUI.Party.LevelDisplay").WithFormatArgs(data.Level));
-            /*_heldItemBox = new UIBlendedImage(ModContent.Request<Texture2D>(
-                "Terramon/Assets/GUI/Party/HeldItemBox" + (_isActiveSlot ? "Active" : string.Empty),
-                AssetRequestMode.ImmediateLoad));
-            _heldItemBox.Top.Set(25, 0f);
-            _heldItemBox.Left.Set(8, 0f);*/
-            _spriteBox = new UIBlendedImage(Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/Party/SpriteBox",
-                AssetRequestMode.ImmediateLoad));
-            _spriteBox.Top.Set(10, 0f);
-            _spriteBox.Left.Set(59, 0f);
-            var sprite = new UIImage(data.GetMiniSprite())
-            {
-                ImageScale = 0.7f
-            };
-            sprite.Top.Set(-12, 0f);
-            sprite.Left.Set(-20, 0f);
-            _spriteBox.Append(sprite);
-            //Append(_heldItemBox);
-            Append(_spriteBox);
-            if (data.Gender != Gender.Unspecified)
-            {
-                _genderIcon = new UIImage(Terramon.Instance.Assets.Request<Texture2D>($"Assets/GUI/Party/Icon{data.Gender}",
-                    AssetRequestMode.ImmediateLoad));
-                _genderIcon.Top.Set(54, 0f);
-                _genderIcon.Left.Set(87, 0f);
-                Append(_genderIcon);
-            }
+            CreateUIElements(data);
         }
 
         Recalculate();
+    }
+
+    private void RemoveUIElements()
+    {
+        _heldItemBox?.Remove();
+        _spriteBox?.Remove();
+        _genderIcon?.Remove();
+        _hpMeter?.Remove();
+    }
+
+    private void CreateUIElements(PokemonData data)
+    {
+        var assetRepository = Terramon.Instance.Assets;
+
+        // Sprite box
+        _spriteBox = new UIBlendedImage(assetRepository.Request<Texture2D>("Assets/GUI/Party/SpriteBox",
+            AssetRequestMode.ImmediateLoad))
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        _spriteBox.Top.Set(8, 0f);
+        _spriteBox.Left.Set(59, 0f);
+
+        var sprite = new UIImage(data.GetMiniSprite())
+        {
+            ImageScale = 0.7f
+        };
+        sprite.Top.Set(-12, 0f);
+        sprite.Left.Set(-20, 0f);
+        _spriteBox.Append(sprite);
+        Append(_spriteBox);
+
+        // Gender icon
+        if (data.Gender != Gender.Unspecified)
+        {
+            _genderIcon = new UIImage(assetRepository.Request<Texture2D>($"Assets/GUI/Party/Icon{data.Gender}",
+                AssetRequestMode.ImmediateLoad))
+            {
+                RemoveFloatingPointsFromDrawPosition = true
+            };
+            _genderIcon.Top.Set(54, 0f);
+            _genderIcon.Left.Set(87, 0f);
+            Append(_genderIcon);
+        }
+
+        // HP meter
+        _hpMeter = new UIImage(assetRepository.Request<Texture2D>("Assets/GUI/Party/HPMeter",
+            AssetRequestMode.ImmediateLoad))
+        {
+            Left = { Pixels = 112 },
+            Top = { Pixels = 12 },
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        var ball = new UIImage(BallAssets.GetBallIcon(data.Ball))
+        {
+            Left = { Pixels = -2 },
+            Top = { Pixels = 38 },
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        _hpMeter.Append(ball);
+        Append(_hpMeter);
     }
 }

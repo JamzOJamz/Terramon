@@ -32,14 +32,14 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public static Asset<Texture2D> BallSlots { get; }
     public static Asset<Texture2D> PanelTexture { get; }
 
-    public static SoundStyle Ping { get; } = new("Terramon/Sounds/pkball_tb_ping")
-        { Volume = 0.275f, MaxInstances = 0 };
-    
-    public static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/pkball_tb_empty")
-        { Volume = 0.275f, MaxInstances = 0 };
-    
-    public static SoundStyle Start { get; } = new("Terramon/Sounds/pkball_tb_start")
-        { Volume = 0.35f };
+    private static SoundStyle Ping { get; } = new("Terramon/Sounds/battle_tb_ping")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    private static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/battle_tb_empty")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    private static SoundStyle Start { get; } = new("Terramon/Sounds/battle_tb_start")
+        { Volume = 0.3f };
 
     /// <summary>
     ///     Use instead of <see cref="UIElement.HAlign" />
@@ -81,6 +81,8 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     }
 
     public void ResetAnimation() => Array.Fill(_ballSlotXPositions, -42f);
+    
+    private static readonly Color BackColor = new(10, 9, 22);
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
@@ -116,7 +118,11 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         {
             Vector2 drawGenderPosition = drawTextPosition;
             drawGenderPosition.X += bigFont.MeasureString(monName + " ").X * textDrawScale;
-
+            
+            // Remove floating points from draw position
+            drawGenderPosition.X = (int)drawGenderPosition.X;
+            drawGenderPosition.Y = (int)drawGenderPosition.Y;
+            
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
         }
 
@@ -136,16 +142,23 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f,
             Vector2.Zero, Vector2.One);
 
+        var hpBarHeight = HPBar.Height() / 2 - 2;
+
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
-        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + HPBar.Height() * 0.5f, in parallelogramRect);
+        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + hpBarHeight * 0.5f, in parallelogramRect);
         Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
+        
+        // Remove floating points from draw position
+        drawHpPosition.X = (int)drawHpPosition.X;
+        drawHpPosition.Y = (int)drawHpPosition.Y;
+        
         if (_hpVisual < monHpFactor)
             Step(ref _hpVisual, monHpFactor, 0.01f);
         else
             _hpVisual = monHpFactor;
 
-        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, Color.Black,
+        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, BackColor,
             zoom);
         if (_hpVisual != monHpFactor)
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual,
@@ -155,7 +168,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
         string hpDisplay = CurrentMon is null ? "??? / ???" : $"HP: {CurrentMon.HP} / {CurrentMon.MaxHP}";
         Vector2 hpDisplaySize = smallFont.MeasureString(hpDisplay);
-        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (HPBar.Height() + 8) * 0.5f * zoom) -
+        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (hpBarHeight + 8) * 0.5f * zoom) -
                                     hpDisplaySize * 0.5f;
 
         ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, hpDisplay, hpDisplayPosition, Color.White,
@@ -164,13 +177,13 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         if (DrawEXPBar)
         {
             float xDifference = 128f;
-            Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, HPBar.Height());
+            Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, hpBarHeight);
             float expWidth = hpWidth - xDifference - HPBar.Width() / 3;
             float expFactor = CurrentMon is null ? 0f :
                 monLevel == Terramon.MaxPokemonLevel ? 1f :
                 CurrentMon.TotalEXP /
                 (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, CurrentMon.Schema.GrowthRate);
-            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, Color.Black,
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, BackColor,
                 zoom);
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor,
                 Color.White, zoom);

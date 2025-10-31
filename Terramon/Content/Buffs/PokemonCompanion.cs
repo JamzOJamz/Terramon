@@ -20,7 +20,7 @@ public class PokemonCompanion : ModBuff
     {
         Main.buffNoTimeDisplay[Type] = true;
         Main.vanityPet[Type] = true;
-        
+
         if (!Main.dedServ)
             _starIconTexture = ModContent.Request<Texture2D>(StarIconPath);
     }
@@ -94,6 +94,12 @@ public class PokemonCompanion : ModBuff
             rare = ItemRarityID.Expert;
     }
 
+    public override bool RightClick(int buffIndex)
+    {
+        // Only allow removing outside of battles
+        return TerramonPlayer.LocalPlayer.Battle == null;
+    }
+
     public override void Load()
     {
         if (Main.dedServ) return;
@@ -103,6 +109,6 @@ public class PokemonCompanion : ModBuff
     public override void Unload()
     {
         if (Main.dedServ) return;
-        Main.QueueMainThreadAction(() => _rt.Dispose());
+        Main.QueueMainThreadAction(_rt.Dispose);
     }
 }
