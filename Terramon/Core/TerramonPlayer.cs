@@ -111,16 +111,21 @@ public class TerramonPlayer : ModPlayer
     /// <summary>
     ///     Returns the Pokémon in this player's party which has the given name. If there are multiple with that name, <paramref name="multipleChoice"/> is used to determine which to use.
     /// </summary>
-    public PokemonData GetPokemonFromShowdown(ReadOnlySpan<char> name)
+    public PokemonData GetPokemonFromShowdown(string name)
     {
         for (int i = 0; i < Party.Length; i++)
         {
             var poke = Party[i];
             if (poke is null)
                 continue;
-            if (name.Equals(poke.Nickname, StringComparison.Ordinal) ||
-                name.Equals(poke.Schema.Identifier, StringComparison.Ordinal))
+            if (!name.Equals(poke.Nickname, StringComparison.Ordinal))
+            {
+                string sanitizedName = name.Replace("-", string.Empty);
+                if (sanitizedName.Equals(poke.Schema.Identifier, StringComparison.Ordinal))
                     return poke;
+            }
+            else
+                return poke;
         }
         return null;
     }

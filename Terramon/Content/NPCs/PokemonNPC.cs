@@ -135,10 +135,9 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             for (var i = 0; i < 4; i++)
             {
                 var angle = MathHelper.PiOver2 * i;
-                var x = (float)Math.Cos(angle);
-                var y = (float)Math.Sin(angle);
-                Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x / 2, y / 2);
-                Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
+                var (y, x) = MathF.SinCos(angle);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, x / 2, y / 2);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, x, y);
             }
 
             _cryTimer = 30;
@@ -463,8 +462,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         for (var i = 0; i < 4; i++)
         {
             var angle = MathHelper.PiOver2 * i;
-            var x = MathF.Cos(angle);
-            var y = MathF.Sin(angle);
+            var (y, x) = MathF.SinCos(angle);
             Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, x / 2, y / 2);
             Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, x, y);
         }
