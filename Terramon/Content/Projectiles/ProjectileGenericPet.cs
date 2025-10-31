@@ -82,12 +82,13 @@ public class ProjectileGenericPet : ProjectileComponent
 
         var battle = o.Terramon().Battle;
         bool inBattle = battle != null;
+        bool hasCustomTarget = petProj.CustomTargetPosition.HasValue;
 
-        Vector2 targetPosition = petProj.CustomTargetPosition ?? o.Center;
-        Vector2 targetSize = inBattle ? Vector2.Zero : o.Size;
+        Vector2 targetPosition = hasCustomTarget ? petProj.CustomTargetPosition.Value : o.position;
+        Vector2 targetSize = hasCustomTarget ? Vector2.Zero : o.Size;
         Vector2 targetCenter = targetPosition + targetSize * 0.5f;
-        Vector2 targetVelo = inBattle ? Vector2.Zero : o.velocity;
-        int extraDistance = inBattle ? 0 : 85;
+        Vector2 targetVelo = hasCustomTarget ? Vector2.Zero : o.velocity;
+        int extraDistance = hasCustomTarget ? 0 : 85;
 
         Vector2 projCenter = p.Center;
         Vector2 toPlayer = targetCenter - projCenter;

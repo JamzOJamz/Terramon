@@ -66,16 +66,17 @@ public class ProjectileFlyingPet : ProjectileComponent
 
         var battle = o.Terramon().Battle;
         bool inBattle = battle != null;
+        bool hasCustomTarget = petProj.CustomTargetPosition.HasValue;
 
-        Vector2 targetPosition = petProj.CustomTargetPosition ?? o.position;
-        Vector2 targetSize = inBattle ? Vector2.Zero : o.Size;
+        Vector2 targetPosition = hasCustomTarget ? petProj.CustomTargetPosition.Value : o.position;
+        Vector2 targetSize = hasCustomTarget ? Vector2.Zero : o.Size;
         Vector2 targetCenter = targetPosition + targetSize * 0.5f;
-        Vector2 targetVelo = inBattle ? Vector2.Zero : o.velocity;
-        int targetDir = inBattle ? 0 : o.direction;
+        Vector2 targetVelo = hasCustomTarget ? Vector2.Zero : o.velocity;
+        int targetDir = hasCustomTarget ? 0 : o.direction;
 
         Vector2 projCenter = p.Center;
-        float extraDistance = inBattle ? 0f : 60f;
-        float randomFactor = inBattle ? 0f : 1f;
+        float extraDistance = hasCustomTarget ? 0f : 60f;
+        float randomFactor = hasCustomTarget ? 0f : 1f;
 
         float toPlayerX = targetCenter.X - projCenter.X;
         float toPlayerY = targetCenter.Y - projCenter.Y;
