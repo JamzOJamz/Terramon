@@ -140,7 +140,13 @@ public sealed class TestBattleUI : SmartUIState
     public static void HandleExit()
     {
         if (_optionsPanel.Parent != null)
+        {
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            {
+                Volume = 0.25f
+            });
             return;
+        }
         SoundEngine.PlaySound(Cancel);
         ChangePanel(_optionsPanel);
     }

@@ -122,7 +122,7 @@ public sealed class BattleUI : SmartUIState
             partySidebar.SetToggleState(true);
         
         if (Math.Abs(Main.GameZoomTarget - OldGameZoomTarget) > 0.001f)
-            Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.35f).SetEase(Ease.OutExpo);
+            Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.45f).SetEase(Ease.OutExpo);
     }
 
     private static Vector2? GetBetweenPosition()
