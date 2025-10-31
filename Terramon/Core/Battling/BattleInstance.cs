@@ -6,6 +6,7 @@ using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.NPCs;
+using Terramon.Content.Projectiles;
 
 namespace Terramon.Core.Battling;
 
@@ -62,6 +63,8 @@ public class BattleInstance
             npc.ShowNameOnHover = false;
         }
 
+        Player1.ActivePetProjectile.ConfrontFoe(this);
+
         BattleUI.ApplyStartEffects();
         StartStream();
     }
@@ -90,6 +93,9 @@ public class BattleInstance
         p1.Battle = null;
         if (p2 != null)
             p2.Battle = null;
+
+        p1.ActivePetProjectile.ConfrontFoe();
+        p2?.ActivePetProjectile?.ConfrontFoe();
 
         BattleUI.ApplyEndEffects();
     }
