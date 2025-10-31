@@ -166,7 +166,7 @@ public sealed partial class BattleInstance
         if (data.Player is null)
             data.Wild = WildNPC;
         else
-            data.Data = data.Player.GetPokemonFromShowdown(finalID.Name);
+            data.Data = data.Player.Party[int.Parse(finalID.Name)];
     }
     private struct ShowdownPokemonData()
     {

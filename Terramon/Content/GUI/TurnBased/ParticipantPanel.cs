@@ -1,5 +1,6 @@
 ﻿using ReLogic.Content;
 using ReLogic.Graphics;
+using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.UI;
@@ -12,8 +13,18 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     private readonly float[] _ballSlotXPositions = new float[6];
     private readonly Func<float> _getPixelRatio = getPixelRatio;
     private float _hpVisual;
-
-    public PokemonData CurrentMon;
+    private PokemonData _currentMon;
+    public PokemonData CurrentMon
+    {
+        get => _currentMon;
+        set
+        {
+            if (_currentMon == value)
+                return;
+            _currentMon = value;
+            _hpVisual = 0f;
+        }
+    }
     public bool DrawBallSlots;
     public bool DrawEXPBar;
 
@@ -142,7 +153,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f,
             Vector2.Zero, Vector2.One);
 
-        var hpBarHeight = HPBar.Height() / 2 - 2;
+        var hpBarHeight = HPBar.Height() - 2;
 
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
@@ -153,16 +164,25 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         drawHpPosition.X = (int)drawHpPosition.X;
         drawHpPosition.Y = (int)drawHpPosition.Y;
         
-        if (_hpVisual < monHpFactor)
+        if (monHpFactor < _hpVisual)
             Step(ref _hpVisual, monHpFactor, 0.01f);
         else
             _hpVisual = monHpFactor;
 
+        var colorShader = ShaderAssets.FadeToColor.Shader;
+        var colorParam = colorShader.Parameters["uColor"];
+        colorShader.Parameters["uOpacity"].SetValue(1f);
+
+        colorParam.SetValue(BackColor.ToVector3());
+
         DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, BackColor,
-            zoom);
+            zoom, colorShader);
         if (_hpVisual != monHpFactor)
+        {
+            colorParam.SetValue(Color.Red.ToVector3());
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual,
-                Color.Red, zoom);
+                Color.Red, zoom, colorShader);
+        }
         DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * monHpFactor,
             Color.White, zoom);
 

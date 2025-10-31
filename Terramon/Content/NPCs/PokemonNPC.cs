@@ -177,7 +177,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 var highlightColor = Data.IsShiny
                     ? ModContent.GetInstance<KeyItemRarity>().RarityColor
                     : ClientConfig.Instance.HighlightColor;
-                var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
+                var outlineShader = ShaderAssets.Outline;
                 outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
                 outlineShader.Shader.Parameters["uImageSize0"].SetValue(_mainTexture.Size());
                 outlineShader
@@ -237,7 +237,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         // Apply fade shader
-        GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"]
+        ShaderAssets.FadeToColor
             .UseColor(drawColor)
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
             .Apply();

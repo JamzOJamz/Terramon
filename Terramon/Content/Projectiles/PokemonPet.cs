@@ -257,6 +257,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         FindFrame?.Invoke(this);
     }
 
+    public const float DistanceFromFoe = 128f;
+
     public void ConfrontFoe(BattleInstance battle = null)
     {
         if (battle is null)
@@ -281,7 +283,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             foeDir = foePet.Projectile.direction;
         }
 
-        float xTarget = foePos.X + (foeDir * 128f);
+        float xTarget = foePos.X + (foeDir * DistanceFromFoe);
         CustomTargetPosition = new(xTarget, foePos.Y);
     }
 

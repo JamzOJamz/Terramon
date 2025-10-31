@@ -9,6 +9,7 @@ using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
 using Terraria.Graphics.Shaders;
+using Terramon.Helpers;
 
 namespace Terramon.Core.Loaders;
 
@@ -37,15 +38,9 @@ public class PokemonEntityLoader : ModSystem
         HasGenderDifference = new BitArray(highestPokemonID);
         HasPetExclusiveTexture = new BitArray(highestPokemonID);
 
-        // Load the fade shader for Pokémon
+        // Load the shaders
         if (!Main.dedServ)
-        {
-            const string Effects = "Assets/Effects/";
-            GameShaders.Misc[$"{nameof(Terramon)}FadeToColor"] =
-                new MiscShaderData(Mod.Assets.Request<Effect>(Effects + "FadeToColor"), "FadePass");
-            GameShaders.Misc[$"{nameof(Terramon)}Outline"] =
-                new MiscShaderData(Mod.Assets.Request<Effect>(Effects + "Outline"), "ShaderPass");
-        }
+            ShaderAssets.Load(Mod.Assets);
 
         // Start a stopwatch to measure the time taken to load Pokémon entities
         //var stopwatch = System.Diagnostics.Stopwatch.StartNew();
