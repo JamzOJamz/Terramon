@@ -43,7 +43,7 @@ public sealed class PartyDisplay : SmartUIState
         {
             VAlign = 0.5f
         };
-        Sidebar.Left.Set(-1, 0f);
+        // Sidebar.Left.Set(-1, 0f);
         for (var i = 0; i < PartySlots.Length; i++)
         {
             var slot = new PartySidebarSlot(this, i);
@@ -193,10 +193,12 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         }
     }
 
+/*
     public bool IsAnimationActive()
     {
         return _toggleTween is { IsRunning: true };
     }
+*/
 
     public void ForceKillAnimation()
     {
@@ -213,7 +215,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
     }
 }
 
-public class PartySidebarSlot : UIImage
+public class PartySidebarSlot : UICompositeImage
 {
     private readonly UIText _levelText;
     private readonly UIText _nameText;
@@ -237,16 +239,16 @@ public class PartySidebarSlot : UIImage
     public PokemonData Data;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
-        "Terramon/Assets/GUI/Party/SidebarClosed"))
+        "Terramon/Assets/GUI/Party/SidebarClosed"), new Point(126, 76))
     {
         _partyDisplay = partyDisplay;
         Index = index;
         _nameText = new UIText(string.Empty, 0.67f);
-        _nameText.Left.Set(8, 0);
+        _nameText.Left.Set(7, 0);
         _nameText.Top.Set(57, 0);
         Append(_nameText);
         _levelText = new UIText(string.Empty, 0.67f);
-        _levelText.Left.Set(8, 0);
+        _levelText.Left.Set(7, 0);
         _levelText.Top.Set(10, 0);
         Append(_levelText);
         RemoveFloatingPointsFromDrawPosition = true;
@@ -265,12 +267,11 @@ public class PartySidebarSlot : UIImage
     }
 
     [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_texture")]
-    public static extern ref Asset<Texture2D> GetImage(UIImage self);
+    private static extern ref Asset<Texture2D> GetImage(UIImage self);
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        RemoveFloatingPointsFromDrawPosition =
-            !PartyDisplay.IsDraggingSlot && !PartyDisplay.Sidebar.IsAnimationActive();
+        // RemoveFloatingPointsFromDrawPosition = !PartyDisplay.IsDraggingSlot;
 
         var outlined = IsMouseHovering && Data != null;
         if (outlined)
@@ -279,12 +280,12 @@ public class PartySidebarSlot : UIImage
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
                 Main.UIScaleMatrix);
             var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
-            Color highlight = ClientConfig.DefaultHighlightColor;
+            var highlightColor = ClientConfig.DefaultHighlightColor;
             outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
             outlineShader.Shader.Parameters["uImageSize0"].SetValue(GetImage(this).Size());
             outlineShader
-                .UseColor(highlight)
-                .UseSecondaryColor(highlight.HueShift(0.035f, -0.08f))
+                .UseColor(highlightColor)
+                .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f))
                 .Apply();
         }
 
@@ -371,15 +372,15 @@ public class PartySidebarSlot : UIImage
             if (_isActiveSlot)
             {
                 TerramonPlayer.LocalPlayer.ActiveSlot = -1;
-                PartyDisplay.RecalculateSlot(Index);
             }
             else
             {
                 var oldSlot = TerramonPlayer.LocalPlayer.ActiveSlot;
                 TerramonPlayer.LocalPlayer.ActiveSlot = Index;
                 if (oldSlot != -1) PartyDisplay.RecalculateSlot(oldSlot);
-                PartyDisplay.RecalculateSlot(Index);
             }
+
+            PartyDisplay.RecalculateSlot(Index);
 
             CrySoundSource = token;
         }
@@ -442,20 +443,12 @@ public class PartySidebarSlot : UIImage
                 DragStart(_monitorEvent);
             }
 
-        var transparentColor = (_isActiveSlot ? Color.Pink : Color.White) * 0.45f;
         if (PartyDisplay.IsDraggingSlot)
         {
             if (!_dragging)
             {
                 if (Data == null) return;
-                Color = transparentColor;
-                _nameText.TextColor = transparentColor;
-                _levelText.TextColor = transparentColor;
-                //_heldItemBox.Color = transparentColor;
-                _spriteBox.Color = transparentColor;
-                ((UIImage)_spriteBox.Children.ElementAt(0)).Color = transparentColor;
-                if (_genderIcon != null)
-                    _genderIcon.Color = transparentColor;
+                CompositeColor = Color.White * 0.45f;
                 return;
             }
 
@@ -503,13 +496,7 @@ public class PartySidebarSlot : UIImage
         {
             var targetColor = _isActiveSlot ? Color.Pink : Color.White;
             Color = targetColor;
-            _nameText.TextColor = Color.White;
-            _levelText.TextColor = Color.White;
-            //_heldItemBox.Color = Color.White;
-            _spriteBox.Color = targetColor;
-            ((UIImage)_spriteBox.Children.ElementAt(0)).Color = Color.White;
-            if (_genderIcon != null)
-                _genderIcon.Color = Color.White;
+            CompositeColor = Color.White;
         }
 
         if (IsMouseHovering && !PartyDisplay.IsDraggingSlot)

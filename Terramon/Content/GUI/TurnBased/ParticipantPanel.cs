@@ -120,8 +120,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             drawGenderPosition.X += bigFont.MeasureString(monName + " ").X * textDrawScale;
             
             // Remove floating points from draw position
-            drawGenderPosition.X = (int)drawGenderPosition.X;
-            drawGenderPosition.Y = (int)drawGenderPosition.Y;
+            drawGenderPosition = drawGenderPosition.Floor();
             
             spriteBatch.Draw(GenderIcon.Value, drawGenderPosition, GenderIcon.Frame(2, 1, monGender), Color.White);
         }
@@ -150,8 +149,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
         
         // Remove floating points from draw position
-        drawHpPosition.X = (int)drawHpPosition.X;
-        drawHpPosition.Y = (int)drawHpPosition.Y;
+        drawHpPosition = drawHpPosition.Floor();
         
         if (_hpVisual < monHpFactor)
             Step(ref _hpVisual, monHpFactor, 0.01f);
