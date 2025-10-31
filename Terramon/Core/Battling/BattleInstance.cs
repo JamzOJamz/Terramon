@@ -155,7 +155,7 @@ public sealed partial class BattleInstance
     /// <param name="showdownMon"></param>
     private void GetPokemonFromShowdown(string showdownMon, out ShowdownPokemonData data)
     {
-        data = new ShowdownPokemonData();
+        data = default;
 
         if (showdownMon is null)
             return;
@@ -173,6 +173,7 @@ public sealed partial class BattleInstance
         private TerramonPlayer _owner;
         private PokemonNPC _wild;
         private PokemonData _data;
+        private PokemonData[] _team;
 
         public string Name { get; set; } = string.Empty;
         public bool Active { get; set; }
@@ -197,7 +198,10 @@ public sealed partial class BattleInstance
             {
                 _owner = value;
                 if (_owner != null)
+                {
                     Name += PlayerName + "'s ";
+                    _team = _owner.Party;
+                }
             }
         }
         public PokemonNPC Wild
@@ -210,9 +214,11 @@ public sealed partial class BattleInstance
                 {
                     Name += "Wild ";
                     Data = _wild.Data;
+                    _team = [Data];
                 }
             }
         }
+        public readonly PokemonData[] Team => _team;
 
         public readonly ushort HP
         {
@@ -232,10 +238,8 @@ public sealed partial class BattleInstance
     }
     private void HandleSingleElement(ProtocolElement element, TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
     {
-        PokemonData[] foeTeam = wild is null ? p2.Party : [wild.Data];
-
-        ShowdownPokemonData source = new();
-        ShowdownPokemonData target = new();
+        ShowdownPokemonData source = default;
+        ShowdownPokemonData target = default;
 
         if (element is IPokemonArgs args)
         {
@@ -254,7 +258,11 @@ public sealed partial class BattleInstance
             GetPokemonFromShowdown(tgt, out target);
         }
 
-        HandleSingleElement_Inner(element, in source, in target, p1, p2, foeTeam);
+        Details details = default;
+        if (element is IDetailsArg deet)
+            details = Details.Parse(deet.Details);
+
+        HandleSingleElement_Inner(element, in details, in source, in target, p1, p2, wild);
     }
     private static void ConsoleWrite(string str, ConsoleColor color)
     {

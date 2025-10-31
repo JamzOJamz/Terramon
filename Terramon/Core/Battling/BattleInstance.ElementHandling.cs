@@ -2,6 +2,7 @@
 using Showdown.NET.Protocol;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Terramon.Content.NPCs;
 
 namespace Terramon.Core.Battling;
 public sealed partial class BattleInstance
@@ -19,8 +20,8 @@ public sealed partial class BattleInstance
     private const ConsoleColor Error = ConsoleColor.DarkRed;
     private const ConsoleColor Win = ConsoleColor.Green;
     private const ConsoleColor NotWin = ConsoleColor.DarkGreen;
-    private void HandleSingleElement_Inner(ProtocolElement element, in ShowdownPokemonData source, in ShowdownPokemonData target,
-        TerramonPlayer p1, TerramonPlayer p2, PokemonData[] foeTeam)
+    private void HandleSingleElement_Inner(ProtocolElement element, in Details details, in ShowdownPokemonData source, in ShowdownPokemonData target,
+        TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
     {
         switch (element)
         {
@@ -50,8 +51,12 @@ public sealed partial class BattleInstance
                 break;
             // basic info
             case PokeElement pokeMessage:
-                Details d = Details.Parse(pokeMessage.Details);
-                ConsoleWrite($"Player: {pokeMessage.Player}, Species: {d.Species}, Level: {d.Level}, Gender: {d.Gender ?? 'N'}, Shiny: {d.Shiny}", ConsoleColor.Cyan);
+                ConsoleWrite(
+                    $"Player: {pokeMessage.Player}, " +
+                    $"Species: {details.Species}, " +
+                    $"Level: {details.Level}, " +
+                    $"Gender: {details.Gender ?? 'N'}, " +
+                    $"Shiny: {details.Shiny}", ConsoleColor.Cyan);
                 break;
             case MoveElement moveMessage:
                 ConsoleWrite($"{source} used {moveMessage.Move}!", BattleAction);
@@ -61,8 +66,7 @@ public sealed partial class BattleInstance
                 ConsoleWrite("But it failed!", BattleFollowup);
                 break;
             case BlockElement blockMessage:
-                var name = PokemonID.Parse(blockMessage.Pokemon).Name;
-                ConsoleWrite($"But {name} blocked it!", BattleFollowup);
+                ConsoleWrite($"But {target.PokeName} blocked it!", BattleFollowup);
                 break;
             case MissElement:
                 ConsoleWrite("But it missed!", BattleFollowup);
@@ -169,12 +173,9 @@ public sealed partial class BattleInstance
                 target.Data.CureStatus();
                 break;
             case CureTeamElement cureTeamMessage:
-                int playerTeam = cureTeamMessage.Pokemon[1] - '0';
+                ConsoleWrite($"Everyone in {target}'s team has been healed!", BattleReceive);
 
-                ConsoleWrite($"Everyone in team {playerTeam} has been healed!", BattleReceive);
-
-                PokemonData[] party = playerTeam == 1 ? p1.Party : foeTeam;
-                foreach (var member in party)
+                foreach (var member in target.Team)
                     member?.CureStatus();
                 break;
             case BoostElement boostMessage:
@@ -226,16 +227,21 @@ public sealed partial class BattleInstance
                 ConsoleWrite($"{target} has had their stat boosts reset to 0!", BattleReceive);
                 target.StatStages.Packed = 0;
                 break;
-            case ClearAllBoostElement clearAllBoostMessage:
+            case ClearAllBoostElement:
                 foreach (var member in p1.Party)
                 {
                     if (member != null)
                         member.StatStages.Packed = 0;
                 }
-                foreach (var member in foeTeam)
+                if (wild != null)
+                    wild.Data.StatStages.Packed = 0;
+                else
                 {
-                    if (member != null)
-                        member.StatStages.Packed = 0;
+                    foreach (var member in p2.Party)
+                    {
+                        if (member != null)
+                            member.StatStages.Packed = 0;
+                    }
                 }
                 break;
             case ClearPositiveBoostElement clearPositiveBoostMessage:
