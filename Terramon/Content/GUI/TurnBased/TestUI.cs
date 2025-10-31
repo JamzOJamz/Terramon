@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using ReLogic.Content;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -350,7 +351,7 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        TerramonPlayer.LocalPlayer.Battle.EndEverywhere();
+        TerramonPlayer.LocalPlayer.Battle.Stop();
         SoundEngine.PlaySound(Run);
     }
 
@@ -503,14 +504,19 @@ public sealed class DynamicPixelRatioElement : UIElement
     }
 
     public static void DrawAdjustableBar(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos, float width, Color col,
-        float pxScale)
+        float pxScale, Effect effect = null)
     {
         if (width <= 0f)
             return;
+
+        SpriteBatchData data = default;
+        if (effect != null)
+            data = spriteBatch.Restart(effect);
+
         Vector2 drawPos = pos;
         float quadWidth = tex.Width / 3f * pxScale;
         var xScale = (width - quadWidth * 2f) / quadWidth;
-        Rectangle frame = tex.Frame(3, 2, frameY: col == Color.White ? 0 : 1);
+        Rectangle frame = tex.Frame(3);
         int oldWidth = frame.Width;
         if (width < quadWidth)
             frame.Width = (int)(frame.Width * (width / quadWidth));
@@ -520,14 +526,22 @@ public sealed class DynamicPixelRatioElement : UIElement
         drawPos.X += quadWidth;
         if (xScale > 0f)
         {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,
-                Main.UIScaleMatrix);
+            if (effect == null)
+                data = spriteBatch.Restart(SamplerState.PointClamp);
+            else
+            {
+                spriteBatch.End();
+                data.SamplerState = SamplerState.PointClamp;
+                spriteBatch.Begin(in data);
+            }
+
             spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, new Vector2(xScale * pxScale, pxScale),
                 SpriteEffects.None, 0f);
+
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null,
-                Main.UIScaleMatrix);
+            data.SamplerState = SamplerState.LinearClamp;
+            spriteBatch.Begin(in data);
+
             var pxs = quadWidth * xScale;
             drawPos.X += (int)pxs;
         }
@@ -540,6 +554,9 @@ public sealed class DynamicPixelRatioElement : UIElement
         if (width < quadWidth * 2f)
             frame.Width = (int)(frame.Width * ((width - quadWidth) / quadWidth));
         spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+
+        if (effect != null)
+            spriteBatch.Restart(newEffect: null);
     }
 
     public static void DrawAdjustableBox(SpriteBatch spriteBatch, Texture2D tex, in Rectangle rect, Color col,

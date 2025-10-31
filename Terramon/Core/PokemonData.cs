@@ -290,9 +290,9 @@ public class PokemonData
             mode);
     }
 
-    public string GetPacked()
+    public string GetPacked(int? partyIndex = null)
     {
-        var nickname = Nickname ?? Schema.Identifier;
+        var nickname = partyIndex.HasValue ? partyIndex.Value.ToString() : Nickname ?? Schema.Identifier;
         var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
         var heldItem = _heldItem is null ? null : ItemID.Search.GetName(_heldItem.type);
         var shiny = IsShiny ? "S" : null;

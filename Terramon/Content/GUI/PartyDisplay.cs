@@ -279,7 +279,7 @@ public class PartySidebarSlot : UICompositeImage
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
                 Main.UIScaleMatrix);
-            var outlineShader = GameShaders.Misc[$"{nameof(Terramon)}Outline"];
+            var outlineShader = ShaderAssets.Outline;
             var highlightColor = ClientConfig.DefaultHighlightColor;
             outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
             outlineShader.Shader.Parameters["uImageSize0"].SetValue(GetImage(this).Size());

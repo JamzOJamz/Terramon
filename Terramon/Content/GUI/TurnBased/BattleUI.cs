@@ -123,11 +123,7 @@ public sealed class BattleUI : SmartUIState
         
         if (Math.Abs(Main.GameZoomTarget - OldGameZoomTarget) > 0.001f)
             Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.5f).SetEase(Ease.OutExpo);
-        
-        lastExtremePosition = null;
     }
-
-    private static float? lastExtremePosition;
     private static Vector2? GetBetweenPosition()
     {
         var terramon = TerramonPlayer.LocalPlayer;
@@ -139,16 +135,13 @@ public sealed class BattleUI : SmartUIState
         if (myPet is null)
             return null;
 
+        float lerp = Math.Min(battle.TickCount / 60f, 1f);
+
         Entity other = (Entity)battle.WildNPC?.NPC ?? battle.Player2.ActivePetProjectile.Projectile;
         Vector2 otherCenter = other.Center;
-        float target = float.Lerp(myPet.Center.X, otherCenter.X, 0.5f);
+        float target = float.Lerp(myPet.Center.X, otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f)), lerp);
 
-        bool correctDirection = Math.Sign(target - otherCenter.X) == other.direction;
-        if (!lastExtremePosition.HasValue ||
-            (Math.Abs(target) < Math.Abs(lastExtremePosition.Value) && correctDirection))
-            lastExtremePosition = target;
-
-        return new(lastExtremePosition.Value, otherCenter.Y);
+        return new(target, otherCenter.Y);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
