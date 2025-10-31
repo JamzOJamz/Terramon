@@ -81,6 +81,8 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     }
 
     public void ResetAnimation() => Array.Fill(_ballSlotXPositions, -42f);
+    
+    private static readonly Color BackColor = new(10, 9, 22);
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
@@ -140,9 +142,11 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f,
             Vector2.Zero, Vector2.One);
 
+        var hpBarHeight = HPBar.Height() / 2 - 2;
+
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);
-        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + HPBar.Height() * 0.5f, in parallelogramRect);
+        float parallelogramCenterForHp = GetParallelogramCenter(drawHpY + hpBarHeight * 0.5f, in parallelogramRect);
         Vector2 drawHpPosition = new(parallelogramCenterForHp - (hpWidth * 0.5f) - (sideShift * 0.75f), drawHpY);
         
         // Remove floating points from draw position
@@ -154,7 +158,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         else
             _hpVisual = monHpFactor;
 
-        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, Color.Black,
+        DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth, BackColor,
             zoom);
         if (_hpVisual != monHpFactor)
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, HPBar.Value, drawHpPosition, hpWidth * _hpVisual,
@@ -164,7 +168,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
         string hpDisplay = CurrentMon is null ? "??? / ???" : $"HP: {CurrentMon.HP} / {CurrentMon.MaxHP}";
         Vector2 hpDisplaySize = smallFont.MeasureString(hpDisplay);
-        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (HPBar.Height() + 8) * 0.5f * zoom) -
+        Vector2 hpDisplayPosition = drawHpPosition + new Vector2(hpWidth * 0.5f, (hpBarHeight + 8) * 0.5f * zoom) -
                                     hpDisplaySize * 0.5f;
 
         ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, hpDisplay, hpDisplayPosition, Color.White,
@@ -173,13 +177,13 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         if (DrawEXPBar)
         {
             float xDifference = 128f;
-            Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, HPBar.Height());
+            Vector2 expDrawPos = drawHpPosition + new Vector2(xDifference, hpBarHeight);
             float expWidth = hpWidth - xDifference - HPBar.Width() / 3;
             float expFactor = CurrentMon is null ? 0f :
                 monLevel == Terramon.MaxPokemonLevel ? 1f :
                 CurrentMon.TotalEXP /
                 (float)ExperienceLookupTable.GetLevelTotalExp(monLevel + 1, CurrentMon.Schema.GrowthRate);
-            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, Color.Black,
+            DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth, BackColor,
                 zoom);
             DynamicPixelRatioElement.DrawAdjustableBar(spriteBatch, EXPBar.Value, expDrawPos, expWidth * expFactor,
                 Color.White, zoom);

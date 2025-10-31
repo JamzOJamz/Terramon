@@ -147,6 +147,7 @@ public sealed class TestBattleUI : SmartUIState
             });
             return;
         }
+
         SoundEngine.PlaySound(Cancel);
         ChangePanel(_optionsPanel);
     }
@@ -509,7 +510,7 @@ public sealed class DynamicPixelRatioElement : UIElement
         Vector2 drawPos = pos;
         float quadWidth = tex.Width / 3f * pxScale;
         var xScale = (width - quadWidth * 2f) / quadWidth;
-        Rectangle frame = tex.Frame(3);
+        Rectangle frame = tex.Frame(3, 2, frameY: col == Color.White ? 0 : 1);
         int oldWidth = frame.Width;
         if (width < quadWidth)
             frame.Width = (int)(frame.Width * (width / quadWidth));
@@ -528,7 +529,7 @@ public sealed class DynamicPixelRatioElement : UIElement
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null,
                 Main.UIScaleMatrix);
             var pxs = quadWidth * xScale;
-            drawPos.X += pxs;
+            drawPos.X += (int)pxs;
         }
         else
             drawPos.X = pos.X + quadWidth;
