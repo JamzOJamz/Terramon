@@ -81,9 +81,9 @@ public class ProjectileGenericPet : ProjectileComponent
         bool playerDown = false;
         bool goingIntoTileX = false;
 
-        bool inBattle = true;// o.Terramon().Battle != null;
+        bool inBattle = o.Terramon().Battle != null;
 
-        Vector2 targetPosition = inBattle ? Main.MouseWorld : o.Center;
+        Vector2 targetPosition = inBattle ? Main.MouseWorld : o.Center; // change for position calculated from enemy npc direction later
         Vector2 targetSize = inBattle ? Vector2.Zero : o.Size;
         Vector2 targetCenter = targetPosition + targetSize * 0.5f;
         Vector2 targetVelo = inBattle ? Vector2.Zero : o.velocity;
@@ -118,7 +118,7 @@ public class ProjectileGenericPet : ProjectileComponent
             {
                 p.position = targetPosition - (p.Size * 0.5f);
             }
-            else if (distToPlayerSq > fastDistance || (Math.Abs(toPlayer.Y) > 300f))
+            else if (distToPlayerSq > fastDistance || Math.Abs(toPlayer.Y) > 300f)
             {
                 if (toPlayer.Y > 0f && p.velocity.Y < 0f)
                     p.velocity.Y = 0f;
@@ -190,14 +190,6 @@ public class ProjectileGenericPet : ProjectileComponent
             else if (p.velocity.X < -0.5f)
                 p.spriteDirection = 1;
 
-            p.frameCounter++;
-            if (p.frameCounter > 4)
-            {
-                p.frame++;
-                p.frameCounter = 0;
-            }
-            if (p.frame < 6 || p.frame > 9)
-                p.frame = 6;
             p.rotation = MathHelper.Clamp(p.velocity.X * 0.025f, -0.4f, 0.4f);
         }
         else
@@ -214,12 +206,12 @@ public class ProjectileGenericPet : ProjectileComponent
             }
 
             p.tileCollide = true;
-            float num73 = 6f;
+            float maxXSpeed = 6f;
             float num72 = 0.2f;
             float roughLength = Math.Abs(targetVelo.X) + Math.Abs(targetVelo.Y);
-            if (num73 < roughLength)
+            if (maxXSpeed < roughLength)
             {
-                num73 = roughLength;
+                maxXSpeed = roughLength;
                 num72 = 0.3f;
             }
 
@@ -336,40 +328,22 @@ public class ProjectileGenericPet : ProjectileComponent
                     }
                 }
             }
-            if (p.velocity.X > num73)
-                p.velocity.X = num73;
-            if (p.velocity.X < 0f - num73)
-                p.velocity.X = 0f - num73;
-            if (p.velocity.X < 0f)
-                p.direction = -1;
-            if (p.velocity.X > 0f)
-                p.direction = 1;
+            if (p.velocity.X > maxXSpeed)
+                p.velocity.X = maxXSpeed;
+            if (p.velocity.X < 0f - maxXSpeed)
+                p.velocity.X = 0f - maxXSpeed;
 
-            if (p.velocity.X > num72 && playerRight)
-                p.direction = 1;
-            if (p.velocity.X < 0f - num72 && playerLeft)
-                p.direction = -1;
-
-            p.spriteDirection = -p.direction;
-
-            if (p.velocity.Y != 0f)
-                p.frame = 1;
-            else if (p.position.X - p.oldPosition.X == 0f)
-                p.frame = 0;
-            else
+            if (p.velocity.X < 0f || (p.velocity.X < -num72 && playerLeft))
             {
-                float num83 = p.velocity.Length();
-                p.frameCounter += (int)num83;
-                if (p.frameCounter > 6)
-                {
-                    p.frame++;
-                    p.frameCounter = 0;
-                }
-                if (p.frame < 0 || p.frame > 5)
-                {
-                    p.frame = 0;
-                }
+                p.direction = -1;
+                p.spriteDirection = 1;
             }
+            if (p.velocity.X > 0f || (p.velocity.X > num72 && playerRight))
+            {
+                p.direction = 1;
+                p.spriteDirection = -1;
+            }
+
             p.velocity.Y += 0.4f;
             if (p.velocity.Y > 10f)
             {

@@ -14,12 +14,11 @@ public class ProjectileFlyingPet : ProjectileComponent
     
     public override void SetDefaults(Projectile proj)
     {
-        base.SetDefaults(proj);
         if (!Enabled) return;
 
         proj.CloneDefaults(ProjectileID.LilHarpy);
-
-        proj.ModProjectile.AIType = ProjectileID.LilHarpy;
+		proj.aiStyle = 0;
+        proj.tileCollide = false;
         
         Main.projFrames[proj.type] = FrameCount;
         ProjectileID.Sets.CharacterPreviewAnimations[proj.type] = new SettingsForCharacterPreview
@@ -46,12 +45,118 @@ public class ProjectileFlyingPet : ProjectileComponent
         }
     }
     
-    public override void AI(Projectile projectile)
+    public override void AI(Projectile p)
     {
         if (!Enabled) return;
         
-        var petProj = (PokemonPet)projectile.ModProjectile;
+        var petProj = (PokemonPet)p.ModProjectile;
         petProj.CustomFrameCounter++;
+
+        Player o = Main.player[p.owner];
+
+        if (!o.active)
+        {
+            p.active = false;
+            return;
+        }
+
+        float speed = 0.4f;
+        const float teleportDistance = 2000f;
+        bool shouldTeleport = false;
+
+        bool inBattle = o.Terramon().Battle != null;
+
+        Vector2 targetPosition = inBattle ? Main.MouseWorld : o.position;
+        Vector2 targetSize = inBattle ? Vector2.Zero : o.Size;
+        Vector2 targetCenter = targetPosition + targetSize * 0.5f;
+        Vector2 targetVelo = inBattle ? Vector2.Zero : o.velocity;
+        int targetDir = inBattle ? 0 : o.direction;
+
+        Vector2 projCenter = p.Center;
+        float extraDistance = inBattle ? 0f : 60f;
+        float randomFactor = inBattle ? 0f : 1f;
+
+        float toPlayerX = targetCenter.X - projCenter.X;
+        float toPlayerY = targetCenter.Y - projCenter.Y;
+
+        if (randomFactor != 0f)
+        {
+            toPlayerY += Main.rand.Next(-10, 21) * randomFactor;
+            toPlayerX += Main.rand.Next(-10, 21) * randomFactor;
+        }
+
+        toPlayerX += extraDistance * -targetDir;
+        toPlayerY -= extraDistance;
+
+        float distToPlayer = (float)Math.Sqrt(toPlayerX * toPlayerX + toPlayerY * toPlayerY);
+        float num141 = (distToPlayer >= 400f) ? 10f : 6f;
+        if (distToPlayer < 100f && targetVelo.Y == 0f && p.position.Y + p.height <= targetPosition.Y + targetSize.Y && !Collision.SolidCollision(p.position, p.width, p.height))
+        {
+            p.ai[0] = 0f;
+            if (p.velocity.Y < -6f)
+                p.velocity.Y = -6f;
+        }
+        if (distToPlayer < 50f)
+        {
+            if (Math.Abs(p.velocity.X) > 2f || Math.Abs(p.velocity.Y) > 2f)
+                p.velocity *= 0.99f;
+            speed = 0.01f;
+        }
+        else
+        {
+            if (distToPlayer < 100f)
+                speed = 0.1f;
+            if (distToPlayer > teleportDistance)
+                shouldTeleport = true;
+
+            distToPlayer = num141 / distToPlayer;
+            toPlayerX *= distToPlayer;
+            toPlayerY *= distToPlayer;
+        }
+        if (p.velocity.X < toPlayerX)
+        {
+            p.velocity.X += speed;
+            if (speed > 0.05f && p.velocity.X < 0f)
+                p.velocity.X += speed;
+        }
+        if (p.velocity.X > toPlayerX)
+        {
+            p.velocity.X -= speed;
+            if (speed > 0.05f && p.velocity.X > 0f)
+                p.velocity.X -= speed;
+        }
+        if (p.velocity.Y < toPlayerY)
+        {
+            p.velocity.Y += speed;
+            if (speed > 0.05f && p.velocity.Y < 0f)
+                p.velocity.Y += speed * 2f;
+        }
+        if (p.velocity.Y > toPlayerY)
+        {
+            p.velocity.Y -= speed;
+            if (speed > 0.05f && p.velocity.Y > 0f)
+                p.velocity.Y -= speed * 2f;
+        }
+        if (p.velocity.X > 0.25)
+            p.spriteDirection = p.direction = -1;
+        else if (p.velocity.X < -0.25)
+            p.spriteDirection = p.direction = 1;
+        p.rotation = p.velocity.X * 0.05f;
+        if (shouldTeleport)
+        {
+            for (int k = 0; k < 12; k++)
+            {
+                float dustSpeedX = 1f - Main.rand.NextFloat() * 2f;
+                float dustSpeedY = 1f - Main.rand.NextFloat() * 2f;
+                Dust d = Dust.NewDustDirect(p.position, p.width, p.height, DustID.Smoke, dustSpeedX, dustSpeedY);
+                d.noLightEmittence = true;
+                d.noGravity = true;
+            }
+            p.Center = targetCenter;
+            p.velocity = Vector2.Zero;
+            if (Main.myPlayer == p.owner)
+                p.netUpdate = true;
+        }
     }
 
     private void FindFrame(PokemonPet proj)

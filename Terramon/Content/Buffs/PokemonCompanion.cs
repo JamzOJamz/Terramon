@@ -103,6 +103,6 @@ public class PokemonCompanion : ModBuff
     public override void Unload()
     {
         if (Main.dedServ) return;
-        Main.QueueMainThreadAction(() => _rt.Dispose());
+        Main.QueueMainThreadAction(_rt.Dispose);
     }
 }
