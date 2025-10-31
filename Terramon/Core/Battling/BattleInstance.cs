@@ -6,6 +6,7 @@ using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.NPCs;
+using Terramon.Content.Projectiles;
 
 namespace Terramon.Core.Battling;
 
@@ -60,6 +61,7 @@ public class BattleInstance
             var npc = WildNPC.NPC;
             npc.spriteDirection = npc.direction = Main.player[Player1Index].position.X > npc.position.X ? 1 : -1;
             npc.ShowNameOnHover = false;
+            Player1.ActivePetProjectile.ConfrontFoe(this);
         }
 
         BattleUI.ApplyStartEffects();

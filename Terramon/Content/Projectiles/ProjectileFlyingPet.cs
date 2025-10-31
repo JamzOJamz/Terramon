@@ -64,9 +64,10 @@ public class ProjectileFlyingPet : ProjectileComponent
         const float teleportDistance = 2000f;
         bool shouldTeleport = false;
 
-        bool inBattle = o.Terramon().Battle != null;
+        var battle = o.Terramon().Battle;
+        bool inBattle = battle != null;
 
-        Vector2 targetPosition = inBattle ? Main.MouseWorld : o.position;
+        Vector2 targetPosition = petProj.CustomTargetPosition ?? o.position;
         Vector2 targetSize = inBattle ? Vector2.Zero : o.Size;
         Vector2 targetCenter = targetPosition + targetSize * 0.5f;
         Vector2 targetVelo = inBattle ? Vector2.Zero : o.velocity;
@@ -137,7 +138,13 @@ public class ProjectileFlyingPet : ProjectileComponent
             if (speed > 0.05f && p.velocity.Y > 0f)
                 p.velocity.Y -= speed * 2f;
         }
-        if (p.velocity.X > 0.25)
+
+        if (inBattle)
+        {
+            Vector2 oppoCenter = battle.WildNPC?.NPC.Center ?? battle.Player2.ActivePetProjectile.Projectile.Center;
+            p.spriteDirection = p.direction = (oppoCenter.X < projCenter.X) ? 1 : -1;
+        }
+        else if (p.velocity.X > 0.25)
             p.spriteDirection = p.direction = -1;
         else if (p.velocity.X < -0.25)
             p.spriteDirection = p.direction = 1;

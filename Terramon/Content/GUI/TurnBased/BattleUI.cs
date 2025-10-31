@@ -123,28 +123,31 @@ public sealed class BattleUI : SmartUIState
         
         if (Math.Abs(Main.GameZoomTarget - OldGameZoomTarget) > 0.001f)
             Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.35f).SetEase(Ease.OutExpo);
+
+        lastExtremePosition = null;
     }
 
+    private static Vector2? lastExtremePosition;
     private static Vector2? GetBetweenPosition()
     {
         var terramon = TerramonPlayer.LocalPlayer;
         var battle = terramon.Battle;
         if (battle is null)
             return null;
-        Projectile myPet = GetActiveMonProjectile(terramon);
+        Projectile myPet = terramon.ActivePetProjectile?.Projectile;
         if (myPet is null)
             return null;
-        Vector2? other = battle.WildNPC?.NPC.Center ??
-                         (battle.Player2Index.HasValue ? GetActiveMonProjectile(battle.Player2)?.Center : null);
+        Vector2? other = battle.WildNPC?.NPC.Center ?? battle.Player2.ActivePetProjectile?.Projectile.Center;
         if (!other.HasValue)
             return null;
-        return Vector2.Lerp(myPet.Center, other.Value, 0.5f);
+        Vector2 target = Vector2.Lerp(myPet.Center, other.Value, 0.5f);
 
-        static Projectile GetActiveMonProjectile(TerramonPlayer t)
-        {
-            return Main.projectile.FirstOrDefault(p =>
-                p.owner == t.Player.whoAmI && p.ModProjectile is PokemonPet pet && pet.Data == t.GetActivePokemon());
-        }
+        if (!lastExtremePosition.HasValue ||
+            (Math.Abs(target.X) < Math.Abs(lastExtremePosition.Value.X) &&
+            Math.Sign(target.X) == Math.Sign(lastExtremePosition.Value.X)))
+            lastExtremePosition = target; // nsadfnpoasdfniodfsaioasdfonif will finish this tomorrow
+
+        return target;
     }
 
     public override void Draw(SpriteBatch spriteBatch)

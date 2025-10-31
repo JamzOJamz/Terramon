@@ -80,9 +80,10 @@ public class ProjectileGenericPet : ProjectileComponent
         bool playerDown = false;
         bool goingIntoTileX = false;
 
-        bool inBattle = o.Terramon().Battle != null;
+        var battle = o.Terramon().Battle;
+        bool inBattle = battle != null;
 
-        Vector2 targetPosition = inBattle ? Main.MouseWorld : o.Center; // change for position calculated from enemy npc direction later
+        Vector2 targetPosition = petProj.CustomTargetPosition ?? o.Center;
         Vector2 targetSize = inBattle ? Vector2.Zero : o.Size;
         Vector2 targetCenter = targetPosition + targetSize * 0.5f;
         Vector2 targetVelo = inBattle ? Vector2.Zero : o.velocity;
@@ -332,12 +333,18 @@ public class ProjectileGenericPet : ProjectileComponent
             if (p.velocity.X < 0f - maxXSpeed)
                 p.velocity.X = 0f - maxXSpeed;
 
-            if (p.velocity.X < 0f || (p.velocity.X < -num72 && playerLeft))
+            if (inBattle && p.velocity.X == 0f)
+            {
+                int oppoDir = battle.WildNPC?.NPC.direction ?? battle.Player2.ActivePetProjectile.Projectile.direction;
+                p.direction = -oppoDir;
+                p.spriteDirection = oppoDir;
+            }
+            else if (p.velocity.X < 0f || (p.velocity.X < -num72 && playerLeft))
             {
                 p.direction = -1;
                 p.spriteDirection = 1;
             }
-            if (p.velocity.X > 0f || (p.velocity.X > num72 && playerRight))
+            else if (p.velocity.X > 0f || (p.velocity.X > num72 && playerRight))
             {
                 p.direction = 1;
                 p.spriteDirection = -1;

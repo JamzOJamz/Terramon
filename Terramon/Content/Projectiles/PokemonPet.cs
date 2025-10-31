@@ -5,7 +5,9 @@ using ReLogic.Content;
 using Terramon.Content.Buffs;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
+using Terramon.Content.NPCs;
 using Terramon.Core.Abstractions;
+using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
 using Terramon.Core.ProjectileComponents;
 using Terramon.Helpers;
@@ -17,7 +19,7 @@ using Terraria.Localization;
 namespace Terramon.Content.Projectiles;
 
 [Autoload(false)]
-public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProjectile, IPokemonEntity
+public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProjectile, IPokemonEntity
 {
     public delegate void CustomFindFrame(PokemonPet proj);
 
@@ -26,6 +28,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     private int _shinySparkleTimer;
     public int CustomFrameCounter;
     public int? CustomSpriteDirection;
+    public Vector2? CustomTargetPosition;
     public CustomFindFrame FindFrame;
 
     static PokemonPet()
@@ -104,8 +107,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
 
     public override void OnSpawn(IEntitySource source)
     {
+        var owningPlayer = Main.player[Projectile.owner];
+        var modPlayer = owningPlayer.Terramon();
         // Move ahead of player
-        var direction = Main.player[Projectile.owner].direction;
+        var direction = owningPlayer.direction;
         CustomSpriteDirection = direction;
         Projectile.position.X += direction * (MathF.Abs(Main.player[Projectile.owner].velocity.X) < 1.5f ? 40 : -30);
 
@@ -121,8 +126,8 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
 
-        var owningPlayer = Main.player[Projectile.owner];
-        var modPlayer = owningPlayer.GetModPlayer<TerramonPlayer>();
+        ConfrontFoe(modPlayer.Battle);
+
         Data = modPlayer.GetActivePokemon();
         modPlayer.ActivePetProjectile = this;
         _cachedID = ID;
@@ -250,6 +255,34 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     {
         // Call FindFrame delegate to determine the frame of the pet (set by behaviour components)
         FindFrame?.Invoke(this);
+    }
+
+    public void ConfrontFoe(BattleInstance battle = null)
+    {
+        if (battle is null)
+        {
+            CustomTargetPosition = null;
+            return;
+        }
+
+        Vector2 foePos;
+        int foeDir;
+
+        PokemonNPC wild = battle.WildNPC;
+        if (wild != null)
+        {
+            foePos = wild.NPC.Center;
+            foeDir = wild.NPC.direction;
+        }
+        else
+        {
+            PokemonPet foePet = battle.Player2.ActivePetProjectile;
+            foePos = foePet.Projectile.Center;
+            foeDir = foePet.Projectile.direction;
+        }
+
+        float xTarget = foePos.X + (foeDir * 128f);
+        CustomTargetPosition = new(xTarget, foePos.Y);
     }
 
     private void ShinyEffect()
