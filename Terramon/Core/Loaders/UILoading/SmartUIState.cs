@@ -91,7 +91,7 @@ public abstract class SmartUIState : UIState
     /// <param name="width">The width in pixels</param>
     /// <param name="height">The height in pixels</param>
     /// <param name="appendTo">The element to append to</param>
-    internal void AddElement(UIElement element, int x, int y, int width, int height, UIElement appendTo)
+    internal static void AddElement(UIElement element, int x, int y, int width, int height, UIElement appendTo)
     {
         element.Left.Set(x, 0);
         element.Top.Set(y, 0);
@@ -135,7 +135,7 @@ public abstract class SmartUIState : UIState
     /// <param name="height">The height in pixels</param>
     /// <param name="heightPercent">The height in percentage of the parents height</param>
     /// <param name="appendTo">The element to append to</param>
-    internal void AddElement(UIElement element, int x, float xPercent, int y, float yPercent, int width,
+    internal static void AddElement(UIElement element, int x, float xPercent, int y, float yPercent, int width,
         float widthPercent, int height, float heightPercent, UIElement appendTo)
     {
         element.Left.Set(x, xPercent);

@@ -38,7 +38,7 @@ public class TerramonItemLoader : ModSystem
         var items = (from t in AssemblyManager.GetLoadableTypes(Mod.Code)
             where !t.IsAbstract && t.IsSubclassOf(typeof(TerramonItem)) && t.GetConstructor(Type.EmptyTypes) != null &&
                   !t.GetCustomAttributes<AutoloadAttribute>(false).Any()
-            select (ModItem)Activator.CreateInstance(t, null)).ToList();
+            select (ModItem)Activator.CreateInstance(t, null));
 
         // Group items by LoadGroup, sort each group by LoadWeight, and then flatten the result
         var sortedItems = items
@@ -64,8 +64,7 @@ public class TerramonItemLoader : ModSystem
                     // Default to a weight of 0 if no LoadWeight attribute is present, which will sort the item first
                     return loadWeightAttribute?.Weight ?? 0;
                 })
-            )
-            .ToList();
+            );
 
         // Add sorted items to the mod content
         foreach (var item in sortedItems) Mod.AddContent(item);

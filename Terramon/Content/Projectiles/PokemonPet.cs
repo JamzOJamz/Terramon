@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Buffs;
@@ -42,7 +41,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             orig(self, player, animated, panel, scale, clone);
 
             // Get the pet projectiles from the UICharacter
-            ref var petProjectiles = ref GetPetProjectiles(self);
+            ref var petProjectiles = ref self._petProjectiles;
             if (petProjectiles.Length > 0) return;
 
             var modPlayer = player.GetModPlayer<TerramonPlayer>();
@@ -59,9 +58,6 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             petProjectiles = [projectile];
         };
         return;
-
-        [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_petProjectiles")]
-        static extern ref Projectile[] GetPetProjectiles(UICharacter instance);
     }
 
 

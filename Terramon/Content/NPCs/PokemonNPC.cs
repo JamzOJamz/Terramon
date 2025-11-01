@@ -1,12 +1,9 @@
 using System.Reflection;
-using Microsoft.Xna.Framework.Audio;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
-using Terramon.Content.GUI;
-using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Projectiles;
@@ -19,7 +16,6 @@ using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 using Terraria.UI.Chat;
 

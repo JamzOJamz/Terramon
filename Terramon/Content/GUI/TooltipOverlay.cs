@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Items;
@@ -71,8 +70,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
             {
                 if (Main.HoverItem.type > ItemID.None)
                 {
-                    typeof(Main).GetField("_mouseTextCache", BindingFlags.Instance | BindingFlags.NonPublic)!
-                        .SetValue(Main.instance, null);
+                    Main.instance._mouseTextCache = default;
                     if (_hoveringTrash)
                         Main.instance.MouseText(
                             $"{(Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift) ? "Left" : "Shift")} click to release {_heldPokemon.DisplayName}",

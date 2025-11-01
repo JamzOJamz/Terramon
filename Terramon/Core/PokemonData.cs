@@ -258,19 +258,17 @@ public class PokemonData
             var remainingSlots = maxMoves - movesAboveLevelOne.Count;
 
             var levelOneMoves = Schema.LevelUpLearnset
-                .Where(moveEntry => moveEntry.AtLevel == 1)
-                .ToList();
+                .Where(moveEntry => moveEntry.AtLevel == 1);
 
-            if (levelOneMoves.Count > remainingSlots)
+            if (levelOneMoves.Count() > remainingSlots)
             {
                 levelOneMoves = levelOneMoves
                     .OrderBy(x => Main.rand.Next())
-                    .Take(remainingSlots)
-                    .ToList();
+                    .Take(remainingSlots);
             }
             else
             {
-                levelOneMoves = levelOneMoves.Take(remainingSlots).ToList();
+                levelOneMoves = levelOneMoves.Take(remainingSlots);
             }
 
             learnset.AddRange(levelOneMoves);

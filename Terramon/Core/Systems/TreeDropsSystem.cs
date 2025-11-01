@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using MonoMod.Cil;
 using Terramon.Content.Items;
 using Terraria.Enums;
@@ -107,15 +106,6 @@ public class TreeDropsGlobalTile : GlobalTile
         }
     }
 
-    [UnsafeAccessor(UnsafeAccessorKind.StaticField, Name = "numTreeShakes")]
-    private static extern ref int GetNumTreeShakes(WorldGen instance);
-
-    [UnsafeAccessor(UnsafeAccessorKind.StaticField, Name = "treeShakeX")]
-    private static extern ref int[] GetTreeShakeX(WorldGen instance);
-
-    [UnsafeAccessor(UnsafeAccessorKind.StaticField, Name = "treeShakeY")]
-    private static extern ref int[] GetTreeShakeY(WorldGen instance);
-
     private static void WorldGenShakeTree_Detour(On_WorldGen.orig_ShakeTree orig, int i, int j)
     {
         if (ApricornItems.Length == 0)
@@ -125,9 +115,9 @@ public class TreeDropsGlobalTile : GlobalTile
         }
 
         WorldGen.GetTreeBottom(i, j, out var x, out var y);
-        var numTreeShakes = GetNumTreeShakes(null);
-        var treeShakeX = GetTreeShakeX(null);
-        var treeShakeY = GetTreeShakeY(null);
+        var numTreeShakes = WorldGen.numTreeShakes;
+        var treeShakeX = WorldGen.treeShakeX;
+        var treeShakeY = WorldGen.treeShakeY;
         for (var k = 0; k < numTreeShakes; k++)
         {
             if (treeShakeX[k] != x || treeShakeY[k] != y) continue;

@@ -19,7 +19,7 @@ public sealed class TestBattleUI : SmartUIState
     private readonly static UIElement _pokemonPanel;
     private static DynamicPixelRatioElement _mainPanel;
 
-    private static Point16 _dimensions;
+    private static Point16 _screenDimensions;
     private static bool _opened;
 
     static TestBattleUI()
@@ -194,7 +194,7 @@ public sealed class TestBattleUI : SmartUIState
         FoePanel.ResetAnimation();
 
         Instance.Recalculate();
-        _dimensions = new(Main.screenWidth, Main.screenHeight);
+        _screenDimensions = new(Main.screenWidth, Main.screenHeight);
         if (Main.playerInventory)
             Main.LocalPlayer.ToggleInv();
 
@@ -358,10 +358,10 @@ public sealed class TestBattleUI : SmartUIState
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         Point16 newDim = new(Main.screenWidth, Main.screenHeight);
-        if (newDim != _dimensions)
+        if (newDim != _screenDimensions)
         {
             Recalculate();
-            _dimensions = newDim;
+            _screenDimensions = newDim;
         }
         /*
         RemoveAllChildren();

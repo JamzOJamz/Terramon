@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using ReLogic.Content;
+﻿using ReLogic.Content;
 
 namespace Terramon.Content.Menus;
 
@@ -50,9 +49,7 @@ public class TerramonMenu : ModMenu
     /// </summary>
     public void ForceSwitchToThis()
     {
-        var menuLoaderType = typeof(MenuLoader);
-        menuLoaderType.GetField("switchToMenu", BindingFlags.NonPublic | BindingFlags.Static)?.SetValue(null, this);
-        menuLoaderType.GetField("LastSelectedModMenu", BindingFlags.NonPublic | BindingFlags.Static)?
-            .SetValue(null, FullName);
+        MenuLoader.switchToMenu = this;
+        MenuLoader.LastSelectedModMenu = FullName;
     }
 }

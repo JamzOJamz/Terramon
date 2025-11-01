@@ -2,6 +2,7 @@ using System.Reflection;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.UI;
 
 namespace Terramon.Core.Systems;
 
@@ -37,7 +38,6 @@ public class AnimatedIconSystem : ModSystem
         for (var i = 0; i < IconFramePaths.Length; i++)
             _iconFrameTextures[i] = ModContent.Request<Texture2D>(IconFramePaths[i]);
         
-        var modLoaderAssembly = typeof(ModContent).Assembly;
         Type uiModItemType;
         
         // Concise Mods List compatibility
@@ -48,7 +48,7 @@ public class AnimatedIconSystem : ModSystem
         }
         else
         {
-            uiModItemType = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem");
+            uiModItemType = typeof(UIModItem);
         }
         
         // If the UIModItem type is not found, the system cannot be initialized so return
@@ -57,8 +57,8 @@ public class AnimatedIconSystem : ModSystem
         var uiModItemInitialize = uiModItemType!.GetMethod("OnInitialize", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModItemInitialize, UIModItemInitialize_Detour);
         
-        var uiModsUpdate = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIMods")
-            ?.GetMethod("Update", BindingFlags.Instance | BindingFlags.Public);
+        var uiModsUpdate = typeof(UIMods)
+            .GetMethod("Update", BindingFlags.Instance | BindingFlags.Public);
         MonoModHooks.Add(uiModsUpdate, UIModsUpdate_Detour);
     }
 
@@ -73,23 +73,15 @@ public class AnimatedIconSystem : ModSystem
         _iconFrameTextures = null;
     }
 
-    private static void UIModItemInitialize_Detour(OrigUIModItemInitialize orig, object self)
+    private static void UIModItemInitialize_Detour(OrigUIModItemInitialize orig, UIModItem self)
     {
         orig(self);
 
-        var modLoaderAssembly = typeof(ModContent).Assembly;
-        var modField = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
-            ?.GetField("_mod", BindingFlags.NonPublic | BindingFlags.Instance);
-        var mod = modField?.GetValue(self);
-        var modNameProperty = mod?.GetType().GetProperty("Name");
-        var modName = (string)modNameProperty?.GetValue(mod);
-        var modIconField = modLoaderAssembly.GetType("Terraria.ModLoader.UI.UIModItem")
-            ?.GetField("_modIcon", BindingFlags.NonPublic | BindingFlags.Instance);
-        if (modName is not nameof(Terramon)) return;
-        _modIcon = (UIImage)modIconField?.GetValue(self);
+        if (self._mod.Name is not nameof(Terramon)) return;
+        _modIcon = self._modIcon;
     }
 
-    private static void UIModsUpdate_Detour(OrigUIModsUpdate orig, object self, GameTime gameTime)
+    private static void UIModsUpdate_Detour(OrigUIModsUpdate orig, UIMods self, GameTime gameTime)
     {
         orig(self, gameTime);
 
@@ -105,7 +97,7 @@ public class AnimatedIconSystem : ModSystem
         _modIcon.SetImage(_iconFrameTextures[frameIndex].Value);
     }
 
-    private delegate void OrigUIModItemInitialize(object self);
+    private delegate void OrigUIModItemInitialize(UIModItem self);
 
-    private delegate void OrigUIModsUpdate(object self, GameTime gameTime);
+    private delegate void OrigUIModsUpdate(UIMods self, GameTime gameTime);
 }

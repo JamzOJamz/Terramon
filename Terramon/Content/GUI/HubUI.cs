@@ -1336,13 +1336,13 @@ internal sealed class PokedexOverviewPanel : UIPanel
 
             // Types
             var mainType = schema.Types[0];
-            _mainTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{mainType.ToString()}"));
+            _mainTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{mainType}"));
             _mainTypePanel.BackgroundColor = mainType.GetColor();
             var dualType = schema.Types.Count > 1;
             if (dualType)
             {
                 var altType = schema.Types[1];
-                _altTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{altType.ToString()}"));
+                _altTypeText.SetText(Language.GetTextValue($"Mods.Terramon.Types.{altType}"));
                 _altTypePanel.BackgroundColor = altType.GetColor();
             }
             else

@@ -266,9 +266,6 @@ public class PartySidebarSlot : UICompositeImage
         }
     }
 
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_texture")]
-    private static extern ref Asset<Texture2D> GetImage(UIImage self);
-
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         // RemoveFloatingPointsFromDrawPosition = !PartyDisplay.IsDraggingSlot;
@@ -282,7 +279,7 @@ public class PartySidebarSlot : UICompositeImage
             var outlineShader = ShaderAssets.Outline;
             var highlightColor = ClientConfig.DefaultHighlightColor;
             outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
-            outlineShader.Shader.Parameters["uImageSize0"].SetValue(GetImage(this).Size());
+            outlineShader.Shader.Parameters["uImageSize0"].SetValue(_texture.Size());
             outlineShader
                 .UseColor(highlightColor)
                 .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f))

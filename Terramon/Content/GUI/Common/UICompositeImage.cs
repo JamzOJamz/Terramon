@@ -39,7 +39,7 @@ public class UICompositeImage : UIImage, ILoadable
     {
         // Reparent to dummy element for correct drawing behaviour
         var oldParent = Parent;
-        SetParent(this, DummyElement);
+        Parent = DummyElement;
 
         // Spoof position
         var oldTop = Top;
@@ -75,12 +75,12 @@ public class UICompositeImage : UIImage, ILoadable
         Left = oldLeft;
 
         // Restore old parent
-        SetParent(this, oldParent);
+        Parent = oldParent;
 
         Recalculate();
 
         // Store dimensions for ContainsPoint
-        _storedDimensions = GetDimensions(this);
+        _storedDimensions = _dimensions;
 
         // Draw the render target
         var dimensions = _storedDimensions;
@@ -112,10 +112,4 @@ public class UICompositeImage : UIImage, ILoadable
             }
         });
     }
-
-    [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "set_Parent")]
-    private static extern void SetParent(UIElement element, UIElement parent);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "_dimensions")]
-    private static extern ref CalculatedStyle GetDimensions(UIElement element);
 }

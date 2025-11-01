@@ -24,7 +24,7 @@ internal class Program
     private static void DoLaunch(string[] args)
     {
         args = args.Append("-console").ToArray();
-        typeof(ModLoader).Assembly.GetType("Terraria.MonoLaunch")!.GetMethod("Main",
+        typeof(MonoLaunch).GetMethod("Main",
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)!.CreateDelegate<Action<string[]>>()
             .Invoke(args);
     }
