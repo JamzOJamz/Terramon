@@ -2,7 +2,6 @@ using System.Reflection;
 using Terramon.Content.Configs;
 using Terramon.Core.NPCComponents;
 using Terramon.ID;
-using Terraria.ModLoader.Core;
 using Terraria.ModLoader.Utilities;
 
 // ReSharper disable UnassignedField.Global
@@ -122,10 +121,8 @@ public class NPCSpawnController : NPCComponent
     {
         orig();
 
-        var hookList = (GlobalHookList<GlobalNPC>)typeof(NPCLoader).GetField("HookEditSpawnPool",
-            BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
-        var hookGlobals = (GlobalNPC[])typeof(GlobalHookList<GlobalNPC>).GetField("hookGlobals",
-            BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(hookList)!;
+        var hookList = NPCLoader.HookEditSpawnPool;
+        var hookGlobals = hookList.hookGlobals;
 
         // Finds this type (NPCSpawnController) in the array and move it to the end to ensure it runs last
         for (var i = 0; i < hookGlobals.Length; i++)
@@ -137,7 +134,7 @@ public class NPCSpawnController : NPCComponent
 
         return;
 
-        void MoveToEnd<T>(IList<T> array, int index)
+        static void MoveToEnd<T>(IList<T> array, int index)
         {
             if (index < 0 || index >= array.Count) return;
 

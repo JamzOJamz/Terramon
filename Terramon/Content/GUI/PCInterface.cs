@@ -175,7 +175,7 @@ public class PCInterface : SmartUIState
             {
                 if (_pendingColorChange)
                 {
-                    var currentColor = _colorPicker.GetColor();
+                    var currentColor = PCColorPicker.GetColor();
                     _pcService.Boxes[DisplayedBoxIndex].Color = currentColor == GetDefaultColorForCurrentBox()
                         ? Color.Transparent
                         : currentColor;
@@ -203,7 +203,7 @@ public class PCInterface : SmartUIState
                 if (UILinkPointNavigator.InUse)
                 {;
                     Main.clrInput();
-                    UIVirtualKeyboard uIVirtualKeyboard = new UIVirtualKeyboard(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
+                    UIVirtualKeyboard uIVirtualKeyboard = new(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
                         text =>
                         {
                             SetNameForCurrentBox(text);
@@ -883,7 +883,7 @@ internal sealed class PCColorPicker : UIContainer
 
     public event Action<Color> OnColorChange;
 
-    public Color GetColor()
+    public static Color GetColor()
     {
         return ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z);
     }
@@ -985,19 +985,15 @@ internal sealed class PCColorPicker : UIContainer
         UpdateHSLValue(HSLSliderId.Luminance, value);
     }
 
-    private float GetHSLSliderPosition(HSLSliderId id)
+    private static float GetHSLSliderPosition(HSLSliderId id)
     {
-        switch (id)
+        return id switch
         {
-            case HSLSliderId.Hue:
-                return TerramonPlayer.LocalPlayer.ColorPickerHSL.X;
-            case HSLSliderId.Saturation:
-                return TerramonPlayer.LocalPlayer.ColorPickerHSL.Y;
-            case HSLSliderId.Luminance:
-                return TerramonPlayer.LocalPlayer.ColorPickerHSL.Z;
-            default:
-                return 1f;
-        }
+            HSLSliderId.Hue => TerramonPlayer.LocalPlayer.ColorPickerHSL.X,
+            HSLSliderId.Saturation => TerramonPlayer.LocalPlayer.ColorPickerHSL.Y,
+            HSLSliderId.Luminance => TerramonPlayer.LocalPlayer.ColorPickerHSL.Z,
+            _ => 1f,
+        };
     }
 
     private void UpdateHSLValue(HSLSliderId id, float value)
@@ -1046,7 +1042,7 @@ internal sealed class PCColorPicker : UIContainer
         return Main.hslToRgb(hue, saturation, luminosity * 0.85f + 0.15f);
     }
 
-    private Color GetHSLSliderColorAt(HSLSliderId id, float pointAt)
+    private static Color GetHSLSliderColorAt(HSLSliderId id, float pointAt)
     {
         return id switch
         {

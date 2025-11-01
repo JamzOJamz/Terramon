@@ -104,20 +104,20 @@ public class Terramon : Mod
     {
         var loadCountDataPath = Path.Combine(SavePath, "LoadCount.dat");
 
-        if (!File.Exists(loadCountDataPath))
+        if (!System.IO.File.Exists(loadCountDataPath))
         {
             var legacyLoadCountDataPath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
 
-            if (!File.Exists(legacyLoadCountDataPath))
+            if (!System.IO.File.Exists(legacyLoadCountDataPath))
             {
-                using var writer = new BinaryWriter(File.Open(loadCountDataPath, FileMode.Create));
+                using var writer = new BinaryWriter(System.IO.File.Open(loadCountDataPath, FileMode.Create));
                 writer.Write(1u);
                 return 1;
             }
 
             try
             {
-                File.Move(legacyLoadCountDataPath, loadCountDataPath);
+                System.IO.File.Move(legacyLoadCountDataPath, loadCountDataPath);
             }
             catch (Exception ex)
             {
@@ -129,7 +129,7 @@ public class Terramon : Mod
 
         try
         {
-            using var reader = new BinaryReader(File.Open(loadCountDataPath, FileMode.Open));
+            using var reader = new BinaryReader(System.IO.File.Open(loadCountDataPath, FileMode.Open));
             result = reader.ReadUInt32();
         }
         catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
@@ -138,7 +138,7 @@ public class Terramon : Mod
         }
 
         result++;
-        using (var writer = new BinaryWriter(File.Open(loadCountDataPath, FileMode.Create)))
+        using (var writer = new BinaryWriter(System.IO.File.Open(loadCountDataPath, FileMode.Create)))
         {
             writer.Write(result);
         }

@@ -1,4 +1,3 @@
-using System.Reflection;
 using ReLogic.Content;
 using Terramon.Content.Items;
 using Terramon.Helpers;
@@ -11,24 +10,17 @@ namespace Terramon.Content.GUI;
 internal class CharacterSelectPartyIndicator : ILoadable
 {
     private static Asset<Texture2D> _emptyPokeBallTexture;
-    private static FieldInfo _buttonLabelField;
-    private static FieldInfo _deleteButtonLabelField;
-    private static FieldInfo _deleteButtonField;
 
     public void Load(Mod mod)
     {
         _emptyPokeBallTexture = mod.Assets.Request<Texture2D>("Assets/GUI/Miscellaneous/EmptyPokeBall");
         var type = typeof(UICharacterListItem);
-        _buttonLabelField = type.GetField("_buttonLabel", BindingFlags.NonPublic | BindingFlags.Instance);
-        _deleteButtonLabelField = type.GetField("_deleteButtonLabel", BindingFlags.NonPublic | BindingFlags.Instance);
-        _deleteButtonField = type.GetField("_deleteButton", BindingFlags.NonPublic | BindingFlags.Instance);
         On_UICharacterListItem.DrawSelf += UICharacterListItemDrawSelf_Detour;
     }
 
     public void Unload()
     {
         _emptyPokeBallTexture = null;
-        _buttonLabelField = null;
         On_UICharacterListItem.DrawSelf -= UICharacterListItemDrawSelf_Detour;
     }
 
@@ -37,7 +29,7 @@ internal class CharacterSelectPartyIndicator : ILoadable
     {
         orig(self, spriteBatch);
 
-        if (((UIText)_buttonLabelField.GetValue(self))!.Text != string.Empty)
+        if (self._buttonLabel.Text != string.Empty)
             return;
 
         var modPlayer = self.Data.Player.GetModPlayer<TerramonPlayer>();
@@ -48,7 +40,7 @@ internal class CharacterSelectPartyIndicator : ILoadable
             return;
 
         var indicatorDrawPos = selfPosition + new Vector2(110, 71);
-        var deleteButtonLabel = (UIText)_deleteButtonLabelField.GetValue(self)!;
+        var deleteButtonLabel = self._deleteButtonLabel;
         var hoverConsumed = false;
         for (var i = 0; i < modPlayer.Party.Length; i++)
         {
@@ -66,7 +58,7 @@ internal class CharacterSelectPartyIndicator : ILoadable
             hoverConsumed = true;
         }
 
-        if (hoverConsumed || ((UIImageButton)_deleteButtonField.GetValue(self))!.IsMouseHovering) return;
+        if (hoverConsumed || self._deleteButton.IsMouseHovering) return;
         deleteButtonLabel.SetText(string.Empty);
         deleteButtonLabel.TextColor = Color.White;
     }

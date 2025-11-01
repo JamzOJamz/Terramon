@@ -1,8 +1,8 @@
-using System.Reflection;
 using ReLogic.Graphics;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.ModLoader.UI;
 
 namespace Terramon.Content.GUI;
 
@@ -66,15 +66,9 @@ internal static class MenuSocialWidget
                 SoundEngine.PlaySound(SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
 
-                var interfaceType = typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.UI.Interface");
-                var modConfigList = interfaceType!
-                    .GetField("modConfigList", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null);
-                var modToSelectOnOpen = modConfigList!
-                    .GetType().GetField("ModToSelectOnOpen", BindingFlags.Instance | BindingFlags.Public);
-                modToSelectOnOpen!.SetValue(modConfigList, Terramon.Instance);
-                Main.menuMode =
-                    (int)interfaceType.GetField("modConfigListID", BindingFlags.Static | BindingFlags.NonPublic)!
-                        .GetValue(null)!;
+                var modConfigList = Interface.modConfigList;
+                modConfigList.ModToSelectOnOpen = Terramon.Instance;
+                Main.menuMode = Interface.modConfigListID;
             }
 
             LastHoveringInteractableText[4] = true;

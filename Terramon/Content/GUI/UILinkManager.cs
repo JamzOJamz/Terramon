@@ -72,7 +72,7 @@ public class UILinkManager : ILoadable
         
         //add party slots
         for (int i = TerramonPointID.Party0; i <= TerramonPointID.Party5; i++) {
-            UILinkPoint newPoint = new UILinkPoint(i, enabled: true, i - 1, i + 1, 43 + (i - 9600 - slotOffset), -1);
+            UILinkPoint newPoint = new(i, enabled: true, i - 1, i + 1, 43 + (i - 9600 - slotOffset), -1);
             partyPage.LinkMap.Add(i, newPoint);
         }
         
@@ -199,7 +199,7 @@ public class UILinkManager : ILoadable
             {
                 var pointID = TerramonPointID.PC0 + (x + y * 6);
                 UILinkPoint newPoint =
-                    new UILinkPoint(pointID, enabled: true, pointID - 1, pointID + 1, pointID - 6, pointID + 6);
+                    new(pointID, enabled: true, pointID - 1, pointID + 1, pointID - 6, pointID + 6);
                 if (x == 0)
                     newPoint.Left = -1;
                 if (x == 5)

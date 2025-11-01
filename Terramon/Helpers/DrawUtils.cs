@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Terramon.Helpers;
+﻿namespace Terramon.Helpers;
 
 public struct SpriteBatchData
 {
@@ -16,40 +9,19 @@ public struct SpriteBatchData
     public RasterizerState RasterizerState;
     public Effect Effect;
     public Matrix Matrix;
-    public SpriteBatchData(SpriteBatch spriteBatch)
+    public SpriteBatchData(SpriteBatch sb)
     {
-        if (spriteBatch is null)
+        if (sb is null)
             return;
 
-        SortMode = GetSortMode(spriteBatch);
-        BlendState = GetBlendState(spriteBatch);
-        SamplerState = GetSamplerState(spriteBatch);
-        DepthStencilState = GetDepthStencilState(spriteBatch);
-        RasterizerState = GetRasterizerState(spriteBatch);
-        Effect = GetCustomEffect(spriteBatch);
-        Matrix = GetTransformMatrix(spriteBatch);
+        SortMode = sb.sortMode;
+        BlendState = sb.blendState;
+        SamplerState = sb.samplerState;
+        DepthStencilState = sb.depthStencilState;
+        RasterizerState = sb.rasterizerState;
+        Effect = sb.customEffect;
+        Matrix = sb.transformMatrix;
     }
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "sortMode")]
-    public static extern ref SpriteSortMode GetSortMode(SpriteBatch self);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "blendState")]
-    public static extern ref BlendState GetBlendState(SpriteBatch self);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "samplerState")]
-    public static extern ref SamplerState GetSamplerState(SpriteBatch self);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "depthStencilState")]
-    public static extern ref DepthStencilState GetDepthStencilState(SpriteBatch self);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "rasterizerState")]
-    public static extern ref RasterizerState GetRasterizerState(SpriteBatch self);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "customEffect")]
-    public static extern ref Effect GetCustomEffect(SpriteBatch self);
-
-    [UnsafeAccessor(UnsafeAccessorKind.Field, Name = "transformMatrix")]
-    public static extern ref Matrix GetTransformMatrix(SpriteBatch self);
 }
 public static class DrawUtils
 {

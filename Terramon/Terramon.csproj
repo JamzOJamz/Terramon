@@ -6,8 +6,29 @@
         <OutputType>Exe</OutputType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+		<NoWarn>$(NoWarn);CS0436</NoWarn>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+	
+	<ItemGroup>
+		<Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false" />
+		<Publicize Include="FNA" />
+		<DoNotPublicize Include="tModLoader:Terraria.WorldBuilding.GenPass" />
+		<DoNotPublicize Include="tModLoader:Terraria.UI.UIElement" />
+		<DoNotPublicize Include="tModLoader:Terraria.GameContent.UI.Elements.UIImage.DrawSelf" />
+		<DoNotPublicize Include="tModLoader:Terraria.GameContent.UI.Elements.UIPanel.DrawSelf" />
+		<DoNotPublicize Include="tModLoader:Terraria.Main.OnResolutionChanged" />
+	    <DoNotPublicize Include="tModLoader:Terraria.ModLoader.ModType`2" />
+		<Publicize Include="tModLoader:Terraria.UI.UIElement.Parent" />
+		<Publicize Include="tModLoader:Terraria.UI.UIElement._dimensions" />
+	</ItemGroup>
+	
     <ItemGroup>
         <Reference Include="EasyPacketsLib">
             <HintPath>lib\EasyPacketsLib.dll</HintPath>

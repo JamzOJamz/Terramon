@@ -163,14 +163,14 @@ public class PokemonEntityLoader : ModSystem
 
     public override void Load()
     {
-        IDToNPCType = new Dictionary<ushort, int>();
-        IDToPetType = new Dictionary<ushort, int>();
-        IDToBannerType = new Dictionary<ushort, int>();
-        NPCSchemaCache = new Dictionary<ushort, JToken>();
-        PetSchemaCache = new Dictionary<ushort, JToken>();
-        GlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
-        ShinyGlowTextureCache = new Dictionary<ushort, Asset<Texture2D>>();
-        HighlightTextures = new Dictionary<ushort, Texture2D>();
+        IDToNPCType = [];
+        IDToPetType = [];
+        IDToBannerType = [];
+        NPCSchemaCache = [];
+        PetSchemaCache = [];
+        GlowTextureCache = [];
+        ShinyGlowTextureCache = [];
+        HighlightTextures = [];
         ShinyBanners = [];
     }
 
