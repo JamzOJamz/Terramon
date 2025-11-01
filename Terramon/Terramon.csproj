@@ -6,7 +6,7 @@
         <OutputType>Exe</OutputType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-	    <NoWarn>$(NoWarn);CS0436</NoWarn>
+		<NoWarn>$(NoWarn);CS0436</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
