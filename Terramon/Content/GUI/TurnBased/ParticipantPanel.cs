@@ -152,7 +152,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         ChatManager.DrawColorCodedStringWithShadow(spriteBatch, smallFont, lv, drawLevelLabelPosition, Color.White, 0f,
             Vector2.Zero, Vector2.One);
 
-        var hpBarHeight = HPBar.Height() - 2;
+        var hpBarHeight = HPBar.Height();
 
         float hpWidth = dims.Width - 84f;
         float drawHpY = dims.Y + dims.Height - (DrawEXPBar ? 68f : 52f);

@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
@@ -7,7 +6,6 @@ using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
-using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 using Terraria.UI;
 using Terraria.UI.Gamepad;
@@ -110,8 +108,7 @@ public sealed class PartyDisplay : SmartUIState
             if ((slot.Data == null && partyData != null) ||
                 (slot.Data != null && partyData == null) ||
                 (partyData != null && partyData.IsNetStateDirty(slot.CloneData,
-                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname | PokemonData.BitIsShiny,
-                    out _)))
+                    PokemonData.BitID | PokemonData.BitLevel | PokemonData.BitNickname | PokemonData.BitHP, out _)))
                 UpdateSlot(partyData, slot.Index);
         }
 
@@ -225,7 +222,7 @@ public class PartySidebarSlot : UICompositeImage
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
     private UIBlendedImage _heldItemBox;
 #pragma warning restore CS0649
-    private UIImage _hpMeter;
+    private PartySidebarHPMeter _hpMeter;
     private int _index;
     private bool _isActiveSlot;
     private bool _isHovered;
@@ -593,12 +590,11 @@ public class PartySidebarSlot : UICompositeImage
         }
 
         // HP meter
-        _hpMeter = new UIImage(assetRepository.Request<Texture2D>("Assets/GUI/Party/HPMeter",
-            AssetRequestMode.ImmediateLoad))
+        _hpMeter = new PartySidebarHPMeter
         {
             Left = { Pixels = 112 },
             Top = { Pixels = 12 },
-            RemoveFloatingPointsFromDrawPosition = true
+            Percent = (float)data.HP / data.MaxHP
         };
         var ball = new UIImage(BallAssets.GetBallIcon(data.Ball))
         {
@@ -608,5 +604,61 @@ public class PartySidebarSlot : UICompositeImage
         };
         _hpMeter.Append(ball);
         Append(_hpMeter);
+    }
+}
+
+public class PartySidebarHPMeter : UIElement
+{
+    private const int FrameCount = 4;
+    private static readonly Asset<Texture2D> Texture;
+
+    static PartySidebarHPMeter()
+    {
+        Texture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HPMeter");
+    }
+
+    /// <summary>
+    ///     HP fill percentage (0f = empty, 1f = full)
+    /// </summary>
+    public float Percent { get; init; } = 1f;
+
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        var dimensions = GetDimensions();
+        var drawPos = dimensions.Position().Floor();
+
+        var backgroundFrame = Texture.Frame(FrameCount, frameX: 3);
+        spriteBatch.Draw(Texture.Value, drawPos, backgroundFrame, Color.White);
+
+        var colorFrameX = Percent switch
+        {
+            > 0.5f => 0,
+            > 0.2f => 1,
+            _ => 2
+        };
+
+        var clampedPercent = Utils.Clamp(Percent, 0f, 1f);
+
+        var fillFrame = Texture.Frame(FrameCount, frameX: colorFrameX);
+        var fullHeight = fillFrame.Height;
+
+        const int insetPxTop = 2;
+        const int insetPxBottom = 2;
+
+        var innerFullHeight = Math.Max(0, fullHeight - insetPxTop - insetPxBottom);
+        var visibleInnerHeight = (int)(innerFullHeight * clampedPercent);
+        visibleInnerHeight = Math.Max(0, visibleInnerHeight);
+
+        if (visibleInnerHeight > 0)
+        {
+            var src = fillFrame;
+            src.Y += insetPxTop + (innerFullHeight - visibleInnerHeight);
+            src.Height = visibleInnerHeight;
+
+            var dest = drawPos;
+            dest.Y += insetPxTop + (innerFullHeight - visibleInnerHeight);
+
+            spriteBatch.Draw(Texture.Value, dest, src, Color.White);
+        }
     }
 }

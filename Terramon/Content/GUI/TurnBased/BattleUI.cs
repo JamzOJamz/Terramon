@@ -124,6 +124,7 @@ public sealed class BattleUI : SmartUIState
         if (Math.Abs(Main.GameZoomTarget - OldGameZoomTarget) > 0.001f)
             Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.5f).SetEase(Ease.OutExpo);
     }
+    
     private static Vector2? GetBetweenPosition()
     {
         var terramon = TerramonPlayer.LocalPlayer;
