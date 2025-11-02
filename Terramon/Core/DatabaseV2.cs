@@ -207,6 +207,8 @@ public class DatabaseV2
         public byte SpAtk => this[3];
         public byte SpDef => this[4];
         public byte Speed => this[5];
+        public byte HPEffort => this[6];
+        public byte AttackEffort => this[7];
         public byte DefenseEffort => this[8];
         public byte SpAtkEffort => this[9];
         public byte SpDefEffort => this[10];
