@@ -191,7 +191,7 @@ public class DatabaseV2
         }
     }
 
-    public class StatsTableSchema : List<byte>
+    public sealed class StatsTableSchema : List<byte>
     {
         public StatsTableSchema()
         {
@@ -207,12 +207,17 @@ public class DatabaseV2
         public byte SpAtk => this[3];
         public byte SpDef => this[4];
         public byte Speed => this[5];
+        public byte DefenseEffort => this[8];
+        public byte SpAtkEffort => this[9];
+        public byte SpDefEffort => this[10];
+        public byte SpeedEffort => this[11];
 
         public byte this[StatID stat] => this[(int)stat];
+        public byte GetEffort(StatID stat) => this[(int)stat + 6];
     }
 
     [JsonConverter(typeof(MultiPropertyNameConverter))]
-    public record LevelEntrySchema(
+    public sealed record LevelEntrySchema(
         [property: JsonProperty("id")]
         [property: JsonPropertyAlias("i")]
         ushort ID,
@@ -225,7 +230,7 @@ public class DatabaseV2
     }
 
     [JsonConverter(typeof(MultiPropertyNameConverter))]
-    public record AbilitiesSchema(
+    public sealed record AbilitiesSchema(
         [property: JsonProperty("1", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: DefaultValue(AbilityID.None)]
         AbilityID Ability1,
@@ -244,7 +249,7 @@ public class DatabaseV2
     }
 
     [JsonConverter(typeof(MultiPropertyNameConverter))]
-    public record MoveSchema(
+    public sealed record MoveSchema(
         [property: JsonProperty("type", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("t")]
         [property: DefaultValue(PokemonType.Normal)]
@@ -275,7 +280,7 @@ public class DatabaseV2
 }
 
 [AttributeUsage(AttributeTargets.Property)]
-internal class JsonPropertyAliasAttribute(string alias) : Attribute
+internal sealed class JsonPropertyAliasAttribute(string alias) : Attribute
 {
     public string Alias { get; } = alias;
 }

@@ -1,12 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.NPCs;
-using Terramon.Content.Projectiles;
 
 namespace Terramon.Core.Battling;
 

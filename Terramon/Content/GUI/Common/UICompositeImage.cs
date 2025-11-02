@@ -1,4 +1,5 @@
 ﻿using ReLogic.Content;
+using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -6,7 +7,7 @@ namespace Terramon.Content.GUI.Common;
 
 public class UICompositeImage : UIImage, ILoadable
 {
-    private static readonly Dictionary<Point, RenderTarget2D> RenderTargetCache = [];
+    private static readonly Dictionary<Point16, RenderTarget2D> RenderTargetCache = [];
 
     private static readonly UIElement DummyElement = new();
     private RenderTarget2D _rt;
@@ -14,11 +15,12 @@ public class UICompositeImage : UIImage, ILoadable
 
     public Color CompositeColor = Color.White;
 
-    protected UICompositeImage(Asset<Texture2D> texture, Point rtSize) : base(texture)
+    protected UICompositeImage(Asset<Texture2D> texture, Point16 rtSize) : base(texture)
     {
+        if (RenderTargetCache.TryGetValue(rtSize, out _rt))
+            return;
         Main.QueueMainThreadAction(() =>
         {
-            if (RenderTargetCache.TryGetValue(rtSize, out _rt)) return;
             _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, rtSize.X, rtSize.Y);
             RenderTargetCache[rtSize] = _rt;
         });
@@ -108,7 +110,7 @@ public class UICompositeImage : UIImage, ILoadable
         {
             foreach (var rt in RenderTargetCache.Values)
             {
-                rt?.Dispose();
+                rt!.Dispose();
             }
             RenderTargetCache.Clear();
         });

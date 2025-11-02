@@ -177,8 +177,14 @@ internal static class Program
                 Enum.Parse<PokemonType>(
                     FormatIdentifier(e.GetProperty("type").GetProperty("name").GetString())));
         var baseExperience = root.GetProperty("base_experience").GetUInt16();
-        var stats = new DatabaseV2.StatsTableSchema(root.GetProperty("stats").EnumerateArray()
-            .Select(e => e.GetProperty("base_stat").GetByte()));
+        var statsArray = root.GetProperty("stats").EnumerateArray();
+        var statsBuf = new byte[12];
+        int cur = 0;
+        foreach (var stat in statsArray)
+            statsBuf[cur++] = stat.GetProperty("base_stat").GetByte();
+        foreach (var stat in statsArray)
+            statsBuf[cur++] = stat.GetProperty("effort").GetByte();
+        var stats = new DatabaseV2.StatsTableSchema(statsBuf);
         var height = root.GetProperty("height").GetUInt16();
         var weight = root.GetProperty("weight").GetUInt16();
         var abilities = ProcessAbilities(root.GetProperty("abilities"));

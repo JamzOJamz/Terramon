@@ -40,6 +40,10 @@ public class TerramonPlayer : ModPlayer
     public bool HasChosenStarter;
     public bool HasPokeBanner;
     public bool HasShinyCharm;
+    public bool HasExpCharm;
+    public ExpShareSettings ParticipantSettings = new();
+    public ExpShareSettings NonParticipantSettings = new(0.5f);
+    public bool HasExpShare;
     public BattleInstance Battle;
 
     public int ActivePCTileEntityID
@@ -225,6 +229,7 @@ public class TerramonPlayer : ModPlayer
     public override void ResetEffects()
     {
         HasShinyCharm = false;
+        HasExpShare = false;
     }
 
     public override void PostUpdateBuffs()

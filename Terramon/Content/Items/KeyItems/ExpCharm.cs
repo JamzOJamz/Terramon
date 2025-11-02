@@ -1,6 +1,6 @@
-namespace Terramon.Content.Items;
+﻿namespace Terramon.Content.Items.KeyItems;
 
-public sealed class ShinyCharm : KeyItem
+public sealed class ExpCharm : KeyItem
 {
     public override void SetDefaults()
     {
@@ -8,9 +8,9 @@ public sealed class ShinyCharm : KeyItem
         Item.width = 24;
         Item.height = 30;
     }
-    
+
     public override void UpdateInventory(Player player)
     {
-        player.Terramon().HasShinyCharm = true;
+        player.Terramon().HasExpCharm = true;
     }
 }

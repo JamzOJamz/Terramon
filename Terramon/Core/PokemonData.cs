@@ -3,6 +3,7 @@ using ReLogic.Content;
 using Showdown.NET.Definitions;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
+using Terramon.Content.Items.HeldItems;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
@@ -129,6 +130,27 @@ public class PokemonData
             //Main.NewText("Level up!");
             levelsGained++;
         }
+    }
+
+    public int ExperienceFromDefeat(PokemonData defeated, ref ExpShareSettings expShare,
+        TerramonPlayer owner, int partySlot)
+    {
+        const float SmallBonus = 4915f / 4096f;
+
+        var b = defeated.Schema.BaseExp;
+        var e = _heldItem.ModItem is LuckyEgg ? 1.5f : 1f;
+        var f = Happiness >= 220 ? SmallBonus : 1f;
+        var L = defeated.Level;
+        var Lp = Level;
+        var p = owner.HasExpCharm ? 1.5f : 1f;
+        var s = partySlot == -1 ? 1f : expShare[partySlot]; // multiplier instead of divisor
+        var t = defeated._ot.Equals(owner.Player.name) ? 1f : 1.5f;
+        var v = Level >= Schema.Evolution.AtLevel ? SmallBonus : 1f;
+        var pow = (2 * L + 10) / (L + Lp + 10);
+        var powFinal = pow * pow * Math.Sqrt(pow);
+        var firstMult = b * L * 0.2f * s * powFinal + 1;
+        var finalExp = firstMult * t * e * v * f * p;
+        return (int)finalExp;
     }
 
     /// <summary>
