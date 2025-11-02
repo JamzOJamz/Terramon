@@ -201,10 +201,26 @@ Configs: {
 
 	SpawningStage: {
 		Tooltip: ""
-		Basic.Label: Unentwickelte Pokémon / Basis-Pokémon
-		Stage1.Label: Erstentwickelte / Stufe-1-Pokémon
-		Stage2.Label: Zweitentwickelte / Stufe-2-Pokémon
-		Legendary.Label: Legendäre / Mysteriöse Pokémon
+
+		Basic: {
+			Label: Unentwickelte Pokémon / Basis-Pokémon
+			// Tooltip: ""
+		}
+
+		Stage1: {
+			Label: Erstentwickelte / Stufe-1-Pokémon
+			// Tooltip: ""
+		}
+
+		Stage2: {
+			Label: Zweitentwickelte / Stufe-2-Pokémon
+			// Tooltip: ""
+		}
+
+		Legendary: {
+			Label: Legendäre / Mysteriöse Pokémon
+			// Tooltip: ""
+		}
 	}
 }
 

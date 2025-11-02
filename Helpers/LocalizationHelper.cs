@@ -37,7 +37,13 @@ namespace Terramon.Helpers;
 public static class LocalizationHelper
 {
     private static readonly MethodInfo LocalizationLoader_LoadTranslations =
-        typeof(LocalizationLoader).GetMethod("LoadTranslations", BindingFlags.NonPublic | BindingFlags.Static);
+        typeof(LocalizationLoader).GetMethod(
+            "LoadTranslations",
+            BindingFlags.NonPublic | BindingFlags.Static,
+            null,
+            [typeof(Mod), typeof(GameCulture)],
+            null
+        );
 
     private static readonly MethodInfo LocalizedText_SetValue =
         typeof(LocalizedText).GetMethod("SetValue", BindingFlags.NonPublic | BindingFlags.Instance);

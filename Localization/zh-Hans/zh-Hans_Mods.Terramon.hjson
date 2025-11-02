@@ -201,10 +201,26 @@ Configs: {
 
 	SpawningStage: {
 		Tooltip: ""
-		Basic.Label: 未进化宝可梦/基础宝可梦
-		Stage1.Label: 第一阶段进化/阶段 1 宝可梦
-		Stage2.Label: 第二阶段进化/阶段 2 宝可梦
-		Legendary.Label: 传说/幻之宝可梦
+
+		Basic: {
+			Label: 未进化宝可梦/基础宝可梦
+			// Tooltip: ""
+		}
+
+		Stage1: {
+			Label: 第一阶段进化/阶段 1 宝可梦
+			// Tooltip: ""
+		}
+
+		Stage2: {
+			Label: 第二阶段进化/阶段 2 宝可梦
+			// Tooltip: ""
+		}
+
+		Legendary: {
+			Label: 传说/幻之宝可梦
+			// Tooltip: ""
+		}
 	}
 }
 
