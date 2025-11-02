@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using ReLogic.Content;
+﻿using ReLogic.Content;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -7,7 +6,7 @@ namespace Terramon.Content.GUI.Common;
 
 public class UICompositeImage : UIImage, ILoadable
 {
-    private static readonly List<UICompositeImage> Instances = [];
+    private static readonly Dictionary<Point, RenderTarget2D> RenderTargetCache = [];
 
     private static readonly UIElement DummyElement = new();
     private RenderTarget2D _rt;
@@ -19,9 +18,10 @@ public class UICompositeImage : UIImage, ILoadable
     {
         Main.QueueMainThreadAction(() =>
         {
+            if (RenderTargetCache.TryGetValue(rtSize, out _rt)) return;
             _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, rtSize.X, rtSize.Y);
+            RenderTargetCache[rtSize] = _rt;
         });
-        Instances.Add(this);
     }
 
     public bool IsLoadingEnabled(Mod mod) => !Main.dedServ;
@@ -106,10 +106,11 @@ public class UICompositeImage : UIImage, ILoadable
     {
         Main.QueueMainThreadAction(() =>
         {
-            foreach (var instance in Instances)
+            foreach (var rt in RenderTargetCache.Values)
             {
-                instance._rt?.Dispose();
+                rt?.Dispose();
             }
+            RenderTargetCache.Clear();
         });
     }
 }
