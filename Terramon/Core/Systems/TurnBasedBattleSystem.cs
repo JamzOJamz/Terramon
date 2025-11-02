@@ -2,7 +2,11 @@ using ReLogic.OS;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Zip;
 using Showdown.NET;
+using Showdown.NET.Definitions;
+using Showdown.NET.Protocol;
+using Showdown.NET.Simulator;
 using Terraria.Graphics;
+using Terraria.ModLoader.UI;
 
 namespace Terramon.Core.Systems;
 
@@ -52,6 +56,13 @@ public class TurnBasedBattleSystem : ModSystem
 
         // Initialize Showdown.NET runtime
         ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesPath);
+
+        // Start a battle to warm up the engine
+        Interface.loadMods.SubProgressText = "Warming up battle engine";
+        // note: running this using Task.Run makes literally no difference
+        // other than making what's lagging out less clear (bc the subprogress message changes)
+        using BattleStream stream = new();
+        stream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen1CustomGame));
     }
 
     public override void Unload()
