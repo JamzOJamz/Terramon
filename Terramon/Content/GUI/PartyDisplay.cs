@@ -265,8 +265,6 @@ public class PartySidebarSlot : UICompositeImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        // RemoveFloatingPointsFromDrawPosition = !PartyDisplay.IsDraggingSlot;
-
         var outlined = IsMouseHovering && Data != null;
         if (outlined)
         {
@@ -291,7 +289,7 @@ public class PartySidebarSlot : UICompositeImage
                 Main.UIScaleMatrix);
         }
 
-        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
+        if (Data != null && ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
         if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
         if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
         {
