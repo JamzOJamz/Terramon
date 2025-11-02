@@ -46,6 +46,9 @@ public class UICompositeImage : UIImage, ILoadable
         var oldLeft = Left;
         Top.Set(0, 0f);
         Left.Set(0, 0f);
+        
+        // Store dimensions for ContainsPoint
+        _storedDimensions = _dimensions;
 
         Recalculate();
 
@@ -78,9 +81,6 @@ public class UICompositeImage : UIImage, ILoadable
         Parent = oldParent;
 
         Recalculate();
-
-        // Store dimensions for ContainsPoint
-        _storedDimensions = _dimensions;
 
         // Draw the render target
         var dimensions = _storedDimensions;
