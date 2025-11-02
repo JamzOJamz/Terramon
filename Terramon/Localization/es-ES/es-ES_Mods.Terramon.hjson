@@ -220,10 +220,26 @@ Configs: {
 
 	SpawningStage: {
 		// Tooltip: ""
-		Basic.Label: Pokémon sin evolucionar/basicos
-		Stage1.Label: Pokémon de primera evolución/etapa 1
-		Stage2.Label: Pokémon de segunda evolución/etapa 2
-		Legendary.Label: Pokémon legendarios/singulares
+
+		Basic: {
+			Label: Pokémon sin evolucionar/basicos
+			// Tooltip: ""
+		}
+
+		Stage1: {
+			Label: Pokémon de primera evolución/etapa 1
+			// Tooltip: ""
+		}
+
+		Stage2: {
+			Label: Pokémon de segunda evolución/etapa 2
+			// Tooltip: ""
+		}
+
+		Legendary: {
+			Label: Pokémon legendarios/singulares
+			// Tooltip: ""
+		}
 	}
 }
 

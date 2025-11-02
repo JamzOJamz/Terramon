@@ -224,10 +224,26 @@ Configs: {
 
 	SpawningStage: {
 		Tooltip: ""
-		Basic.Label: Unevolved Pokémon/Basic Pokémon
-		Stage1.Label: First-Evolved/Stage 1 Pokémon
-		Stage2.Label: Second-Evolved/Stage 2 Pokémon
-		Legendary.Label: Legendary/Mythical Pokémon
+
+		Basic: {
+			Label: Unevolved Pokémon/Basic Pokémon
+			Tooltip: ""
+		}
+
+		Stage1: {
+			Label: First-Evolved/Stage 1 Pokémon
+			Tooltip: ""
+		}
+
+		Stage2: {
+			Label: Second-Evolved/Stage 2 Pokémon
+			Tooltip: ""
+		}
+
+		Legendary: {
+			Label: Legendary/Mythical Pokémon
+			Tooltip: ""
+		}
 	}
 }
 
