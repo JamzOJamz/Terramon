@@ -181,7 +181,7 @@ Configs: {
 
 		ShinyLockedStarters: {
 			Label: Shiny-Locked Starters
-			Tooltip: Prevents starter Pokémon from being Shiny
+			Tooltip: If enabled, prevents starter Pokémon from being Shiny
 		}
 
 		DebugMode: {
