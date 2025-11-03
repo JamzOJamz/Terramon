@@ -661,6 +661,21 @@ Items: {
 			Right click while holding to cycle through visual styles
 			'''
 	}
+
+	LuckyEgg: {
+		DisplayName: Lucky Egg
+		Tooltip: ""
+	}
+
+	ExpShare: {
+		DisplayName: Exp Share
+		Tooltip: ""
+	}
+
+	ExpCharm: {
+		DisplayName: Exp Charm
+		Tooltip: ""
+	}
 }
 
 Keybinds: {
