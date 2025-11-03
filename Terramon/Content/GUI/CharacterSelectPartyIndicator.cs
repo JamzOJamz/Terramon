@@ -14,7 +14,6 @@ internal class CharacterSelectPartyIndicator : ILoadable
     public void Load(Mod mod)
     {
         _emptyPokeBallTexture = mod.Assets.Request<Texture2D>("Assets/GUI/Miscellaneous/EmptyPokeBall");
-        var type = typeof(UICharacterListItem);
         On_UICharacterListItem.DrawSelf += UICharacterListItemDrawSelf_Detour;
     }
 
