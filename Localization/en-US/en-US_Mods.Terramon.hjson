@@ -1,7 +1,12 @@
 Buffs: {
 	PokemonCompanion: {
-		DisplayName: Pokémon companion
+		DisplayName: Pokémon Companion
 		Description: "{0} is following you around!"
+	}
+
+	PokeBannerBuff: {
+		DisplayName: Pokémon Banner
+		Description: Bonuses active for nearby companions:
 	}
 }
 
@@ -83,6 +88,14 @@ Commands: {
 		NopUpgrade: No Pokémon were found in the inventory to upgrade
 		Success: Successfully upgraded and transferred {0} Pokémon to {1}'s PC
 	}
+
+	BannerData: {
+		Description: Change the tier of the currently held Pokémon banner
+		Usage: /bannerset <tier>
+		NotHoldingBanner: The currently held item is not a Pokémon banner
+		ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
@@ -113,6 +126,11 @@ Configs: {
 		ReducedMotion: {
 			Label: (Inventory Slots) Reduced Motion
 			Tooltip: Disables the sliding animation when toggling inventory party slots
+		}
+
+		ShowPetNameOnHover: {
+			Label: Show Pokémon Companion Name on Hover
+			Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
 		}
 
 		ModIconType: {
@@ -181,7 +199,7 @@ Configs: {
 
 		ShinyLockedStarters: {
 			Label: Shiny-Locked Starters
-			Tooltip: Prevents starter Pokémon from being Shiny
+			Tooltip: If enabled, prevents starter Pokémon from being Shiny
 		}
 
 		DebugMode: {
@@ -614,6 +632,16 @@ Items: {
 		DisplayName: Erika's Invitation
 		Tooltip: "'L. Walter'"
 	}
+
+	PokeBannerItem: {
+		DisplayName: "{0} Banner"
+		ShinyDisplayName: Shiny {0} Banner
+		Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			'''
+	}
 }
 
 Keybinds: {
@@ -713,6 +741,10 @@ Misc: {
 	CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
 	CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
 	CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
+	CatchMilestone3: You've obtained your 3rd {0}!
+	CatchMilestone6: You've obtained your 6th {0}!
+	CatchMilestone9: You've obtained your 9th {0}!
+	CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: "{0}'s data was added to the Pokédex."
 	PCBoxDefaultName: Box {0}
 	RequireStarter: Choose a starter Pokémon first!
@@ -722,10 +754,16 @@ Misc: {
 	PokemonEvolutionReady: "{0} seems ready to evolve!"
 	RareCandyUse: "{0} grew to Lv. {1}!"
 	ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	Trainer: Trainer
 	MOTD:
 		'''
 		You've installed {0} v{1}—enjoy! [i:{2}]
 
 		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
 		'''
+}
+
+RecipeGroup: {
+	AnySilverBar: Any Silver Bar
+	AnyGoldBar: Any Gold Bar
 }

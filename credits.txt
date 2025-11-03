@@ -19,6 +19,9 @@ Mod logo
 Pokémon sprites
 es-ES translation
 
+- Pablo -
+Pokémon sprites
+
 - SmokeEntangles -
 Official soundtrack
 

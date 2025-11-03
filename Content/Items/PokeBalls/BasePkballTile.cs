@@ -77,7 +77,8 @@ public abstract class BasePkballTile : ModTile
         if (TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e) && !e.Item.IsAir && !e.Disposable)
         {
             player.cursorItemIconID = e.Item.type;
-            player.cursorItemIconText = "  x" + e.Item.stack;
+            if (e.Item.maxStack > 1)
+                player.cursorItemIconText = "  x" + e.Item.stack;
         }
         else
             player.cursorItemIconID = DropItem;

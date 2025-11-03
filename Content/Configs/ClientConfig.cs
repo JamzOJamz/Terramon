@@ -22,6 +22,9 @@ public class ClientConfig : ModConfig
     [DefaultValue(false)] [ReloadRequired]
     public bool ReducedMotion;
 
+    [DefaultValue(true)]
+    public bool ShowPetNameOnHover;
+
     [Header("Accessibility")] [DefaultValue(true)]
     [ReloadRequired]
     public bool AnimatedModIcon;

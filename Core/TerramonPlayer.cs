@@ -1,10 +1,13 @@
 using EasyPacketsLib;
 using Terramon.Content.Buffs;
+using Terramon.Content.Commands;
 using Terramon.Content.GUI;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Packets;
+using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terraria.Audio;
@@ -22,8 +25,8 @@ public class TerramonPlayer : ModPlayer
     private readonly PokedexService _shinyDex = new();
     
     private int _activePCTileEntityID = -1;
-    private bool _hasPokemon = false;
-    private int _activeSlot = 0;
+    private bool _hasPokemon;
+    private int _activeSlot;
 
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
@@ -31,6 +34,8 @@ public class TerramonPlayer : ModPlayer
 
     public bool HasChosenStarter;
     public Vector3 ColorPickerHSL;
+
+    public bool HasPokeBanner;
 
     public int ActivePCTileEntityID
     {
@@ -56,6 +61,10 @@ public class TerramonPlayer : ModPlayer
             // Toggle off dedicated pet slot
             if (!_hasPokemon && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
+            
+            // Cancel Pokémon cry sound in party display UI
+            PartySidebarSlot.CrySoundSource?.Cancel();
+            
             if (value != -1)
             {
                 _activeSlot = value;
@@ -230,6 +239,12 @@ public class TerramonPlayer : ModPlayer
         _premierBonusCount = 0;
     }
 
+    public override void PreUpdateBuffs()
+    {
+        if (HasPokeBanner)
+            Player.AddBuff(ModContent.BuffType<PokeBannerBuff>(), 2, quiet: false);
+    }
+
     public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item)
     {
         //use CanSellItem rather than PostSellItem because PostSellItem doesn't return item data correctly
@@ -283,26 +298,74 @@ public class TerramonPlayer : ModPlayer
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
         var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
         var entryUpdated = false;
+
         if (hasEntry)
+        {
             if (entry.Status < status || force)
             {
                 entry.Status = status;
                 entryUpdated = true;
             }
 
+            if (status == PokedexEntryStatus.Registered)
+            {
+                entry.CaughtCount++;
+                HandleCatchMilestoneRewards(id, entry.CaughtCount);
+            }
+        }
+
         if (shiny)
         {
             var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
             if (hasShinyEntry)
+            {
                 if (shinyEntry.Status < status || force)
                     shinyEntry.Status = status;
+
+                if (shinyEntry.Status == PokedexEntryStatus.Registered)
+                    shinyEntry.CaughtCount++;
+            }
         }
 
-        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id, shiny);
+        if (HubUI.Active) UILoader.GetUIState<HubUI>().RefreshPokedex(id);
         if (!force && status == PokedexEntryStatus.Registered && entryUpdated &&
             _pokedex.RegisteredCount == Terramon.LoadedPokemonCount && !_receivedShinyCharm)
             GiveShinyCharmReward();
         return force ? hasEntry : entryUpdated;
+    }
+
+    private void HandleCatchMilestoneRewards(ushort id, int caughtCount)
+    {
+        var milestone = GetMilestoneFromCaughtCount(caughtCount);
+        if (milestone == null) return;
+
+        TerramonWorld.QueueNewText(Language.GetTextValue($"Mods.Terramon.Misc.CatchMilestone{caughtCount}",
+            Terramon.DatabaseV2.GetLocalizedPokemonName(id).Value), TerramonCommand.ChatColorYellow);
+
+        GiveBannerReward(id, milestone.Value);
+    }
+
+    private static BannerTier? GetMilestoneFromCaughtCount(int caughtCount)
+    {
+        return caughtCount switch
+        {
+            3 => BannerTier.Tier1,
+            6 => BannerTier.Tier2,
+            9 => BannerTier.Tier3,
+            12 => BannerTier.Tier4,
+            _ => null
+        };
+    }
+
+    private void GiveBannerReward(ushort id, BannerTier tier)
+    {
+        if (!PokemonEntityLoader.IDToBannerType.TryGetValue(id, out var bannerType)) return;
+
+        var bannerItem = new Item();
+        bannerItem.SetDefaults(bannerType);
+        var modItem = bannerItem.ModItem as PokeBannerItem;
+        modItem!.Tier = tier;
+        Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), bannerItem);
     }
 
     private void GiveShinyCharmReward()

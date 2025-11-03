@@ -3,6 +3,11 @@ Buffs: {
 		DisplayName: Compañero Pokémon
 		Description: ¡{0} te está acompañando!
 	}
+
+	PokeBannerBuff: {
+		// DisplayName: Pokémon Banner
+		// Description: Bonuses active for nearby companions:
+	}
 }
 
 Commands: {
@@ -83,6 +88,14 @@ Commands: {
 		NopUpgrade: No se encontraron Pokémon para actualizar en el inventario
 		Success: Se ha actualizado y transferido a {0} Pokémon al PC de {1} exitosamente
 	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
@@ -113,6 +126,11 @@ Configs: {
 		ReducedMotion: {
 			Label: (Ranuras del inventario) Movimiento reducido
 			Tooltip: Desactiva la animación de deslize al activar o desactivar las ranuras de equipo en el inventario
+		}
+
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
 		}
 
 		ModIconType: {
@@ -610,6 +628,16 @@ Items: {
 		DisplayName: La Invitación de Erika
 		// Tooltip: "'L. Walter'"
 	}
+
+	PokeBannerItem: {
+		// DisplayName: "{0} Banner"
+		// ShinyDisplayName: Shiny {0} Banner
+		/* Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			''' */
+	}
 }
 
 Keybinds: {
@@ -709,6 +737,10 @@ Misc: {
 	CatchSuccess: ¡Te tengo! ¡[c/{0}:{1}] fue atrapado!
 	CatchSuccessPC: ¡Te tengo! ¡[c/{0}:{1}] fue capturado y transferido a {2} en el PC de {3}!
 	CatchSuccessPCNoRoom: ¡Te tengo! [c/{0}:{1}] fue capturado, ¡pero no había espacio en el PC de {2}!
+	// CatchMilestone3: You've obtained your 3rd {0}!
+	// CatchMilestone6: You've obtained your 6th {0}!
+	// CatchMilestone9: You've obtained your 9th {0}!
+	// CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: Los datos de {0} fueron añadidos a la Pokédex.
 	PCBoxDefaultName: Caja {0}
 	RequireStarter: ¡Escoge primero un Pokémon inicial!
@@ -718,10 +750,16 @@ Misc: {
 	PokemonEvolutionReady: ¡Parece que {0} está listo para evolucionar!
 	RareCandyUse: ¡{0} subió a nivel {1}!
 	ExpCandyUse: ¡Tu Pokémon ha ganado {0} puntos de experiencia!
+	// Trainer: Trainer
 	MOTD:
 		'''
 		Has instalado {0} v{1}—¡disfrútalo! [i:{2}]
 
 		[c/C9C9E5:Asegúrate de personalizar el mod a tus gustos en el menú de Configuración de mods, y asigna los comandos de teclas del mod en el menú de Controles.]
 		'''
+}
+
+RecipeGroup: {
+	// AnySilverBar: Any Silver Bar
+	// AnyGoldBar: Any Gold Bar
 }

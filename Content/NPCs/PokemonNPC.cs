@@ -20,6 +20,7 @@ namespace Terramon.Content.NPCs;
 public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity
 {
     private int _cryTimer;
+    private PokemonData _data;
     private Asset<Texture2D> _mainTexture;
     private int _mouseHoverTimer;
     private int _plasmaStateTime;
@@ -40,7 +41,16 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public DatabaseV2.PokemonSchema Schema { get; } = schema;
 
-    public PokemonData Data { get; set; }
+    public PokemonData Data
+    {
+        get => _data;
+        set
+        {
+            _data = value;
+            NPC.lifeMax = _data.MaxHP;
+            NPC.life = _data.HP;
+        }
+    }
 
     public override void SetStaticDefaults()
     {
@@ -101,7 +111,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
             }
 
-            _cryTimer = 10;
+            _cryTimer = 30;
         }
 
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
@@ -210,10 +220,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         PlasmaState = reader.ReadBoolean();
 
         if (isFirstSync)
-        {
             // In multiplayer, load the proper texture after receiving the data from the server
             _mainTexture = PokemonEntityLoader.RequestTexture(this);
-        }
     }
 
     public override void AI()
@@ -224,7 +232,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
             {
                 var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                    { Volume = 0.21f };
+                    { Volume = 0.15f };
                 SoundEngine.PlaySound(cry, NPC.position);
             }
         }
@@ -259,7 +267,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             return;
         }
 
-        if (Data is { IsShiny: true }) ShinyEffect();
+        if (Data is not { IsShiny: true }) return;
+
+        if (_mainTexture == null)
+            SoundEngine.PlaySound(SoundID.Item30, NPC.position);
+
+        ShinyEffect();
     }
 
     private void ShinyEffect()
@@ -283,7 +296,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public override bool? CanBeHitByProjectile(Projectile projectile)
     {
-        return projectile.ModProjectile is BasePkballProjectile;
+        return projectile.ModProjectile is BasePkballProjectile && !PlasmaState;
     }
 
     /*public override bool CanBeHitByNPC(NPC attacker)

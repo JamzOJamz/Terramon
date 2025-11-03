@@ -3,6 +3,11 @@ Buffs: {
 		DisplayName: Pokémon-Begleiter
 		Description: "{0} folgt dir!"
 	}
+
+	PokeBannerBuff: {
+		// DisplayName: Pokémon Banner
+		// Description: Bonuses active for nearby companions:
+	}
 }
 
 Commands: {
@@ -83,6 +88,14 @@ Commands: {
 		NopUpgrade: Keine Pokémon im Inventar gefunden, die aktualisiert werden können
 		Success: "{0} Pokémon erfolgreich in {1}'s PC übertragen"
 	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
@@ -113,6 +126,11 @@ Configs: {
 		ReducedMotion: {
 			Label: (Inventarslots) Reduzierte Bewegung
 			Tooltip: Deaktiviert die Gleitanimation beim Umschalten von Inventar-Team-Slots
+		}
+
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
 		}
 
 		ModIconType: {
@@ -614,6 +632,16 @@ Items: {
 		DisplayName: Erikas Einladung
 		Tooltip: "'L. Walter'"
 	}
+
+	PokeBannerItem: {
+		// DisplayName: "{0} Banner"
+		// ShinyDisplayName: Shiny {0} Banner
+		/* Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			''' */
+	}
 }
 
 Keybinds: {
@@ -713,6 +741,10 @@ Misc: {
 	CatchSuccess: Geschafft! [c/{0}:{1}] wurde gefangen!
 	CatchSuccessPC: Geschafft! [c/{0}:{1}] wurde gefangen und in {2} in {3}'s PC übertragen!
 	CatchSuccessPCNoRoom: Geschafft! [c/{0}:{1}] wurde gefangen, aber es war kein Platz in {2}'s PC!
+	// CatchMilestone3: You've obtained your 3rd {0}!
+	// CatchMilestone6: You've obtained your 6th {0}!
+	// CatchMilestone9: You've obtained your 9th {0}!
+	// CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: "{0}'s Daten wurden dem Pokédex hinzugefügt."
 	PCBoxDefaultName: Box {0}
 	RequireStarter: Wähle zuerst ein Starter-Pokémon!
@@ -722,10 +754,16 @@ Misc: {
 	PokemonEvolutionReady: "{0} scheint bereit für eine Entwicklung zu sein!"
 	RareCandyUse: "{0} ist auf Lv. {1} gestiegen!"
 	ExpCandyUse: Dein Pokémon hat {0} EP erhalten!
+	// Trainer: Trainer
 	MOTD:
 		'''
 		Du hast {0} v{1} installiert—viel Spaß! [i:{2}]
 
 		[c/C9C9E5:Vergiss nicht, die Mod in den Mod-Einstellungen anzupassen und deine Tastenbelegungen im Steuerungsmenü festzulegen.]
 		'''
+}
+
+RecipeGroup: {
+	// AnySilverBar: Any Silver Bar
+	// AnyGoldBar: Any Gold Bar
 }

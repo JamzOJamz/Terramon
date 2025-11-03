@@ -27,6 +27,7 @@ public class BetterUIText : UIElement
     private Vector2 _textSize = Vector2.Zero;
     private string _visibleText;
     public bool DynamicallyScaleDownToWidth;
+    public bool RemoveFloatingPointsFromDrawPosition;
 
     public BetterUIText(string text, float textScale = 1f, bool large = false)
     {
@@ -141,6 +142,9 @@ public class BetterUIText : UIElement
         var baseScale = new Vector2(num);
         var snippets = ChatManager.ParseMessage(useText, _color).ToArray();
         ChatManager.ConvertNormalSnippets(snippets);
+        
+        if (RemoveFloatingPointsFromDrawPosition)
+            position = new Vector2((int)position.X, (int)position.Y);
 
         foreach (var t in ShadowDirections)
             ChatManager.DrawColorCodedString(spriteBatch, value, snippets, position + t * ShadowSpread, baseColor, 0f,

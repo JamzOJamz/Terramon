@@ -3,12 +3,18 @@
   {
     Transform:
     {
-      DrawOffsetY: -2
+      Width: 32
+      Height: 28
     }
   }
   NPC:
   {
-    WalkingBehaviour: {}
+    WalkingBehaviour: {
+      FrameCount: 5
+      FrameTime: 5
+      AnimationType: IdleForward
+      IsClassic: false
+    }
     SpawnController:
     {
       Stage: 2
@@ -17,13 +23,18 @@
         {
           Overworld: true
           DayTime: true
-          Chance: 0.1
+          Chance: 0.05
         }
       ]
     }
   }
   Projectile:
   {
-    GenericPet: {}
+    GenericPet: {
+      FrameCount: 5
+      FrameTime: 5
+      AnimationType: IdleForward
+      IsClassic: false
+    }
   }
 }

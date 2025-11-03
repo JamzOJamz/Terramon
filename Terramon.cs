@@ -1,6 +1,7 @@
 using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
+using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 
 namespace Terramon;
@@ -12,7 +13,7 @@ public class Terramon : Mod
      * This will be removed at a later date.
      * It exists because there are Pokémon in the DB that shouldn't be loaded as mod content (yet).
      */
-    public const ushort MaxPokemonID = 151;
+    public const ushort MaxPokemonIDToLoad = 491;
 
     /// <summary>
     ///     The maximum level a Pokémon can reach.
@@ -26,9 +27,15 @@ public class Terramon : Mod
 
     /// <summary>
     ///     The amount of Pokémon that have actually been loaded into the game.
-    ///     This is the minimum of the amount of Pokémon in the database and <see cref="MaxPokemonID" />.
+    ///     This is calculated once after loading the database.
     /// </summary>
-    public static int LoadedPokemonCount => Math.Min(MaxPokemonID, DatabaseV2.Pokemon.Count);
+    public static int LoadedPokemonCount { get; private set; }
+
+    /// <summary>
+    ///     The highest Pokémon ID loaded into the game.
+    ///     This is calculated once after loading the database.
+    /// </summary>
+    public static int HighestPokemonID { get; private set; }
 
     public static Terramon Instance => ModContent.GetInstance<Terramon>();
 
@@ -40,6 +47,28 @@ public class Terramon : Mod
     ///     directory.
     /// </summary>
     public static uint TimesLoaded { get; private set; }
+
+    /// <summary>
+    ///     Calculates and caches the loaded Pokémon count and highest ID.
+    ///     Called once after the database is loaded.
+    /// </summary>
+    private static void CalculatePokemonMetrics()
+    {
+        if (DatabaseV2?.Pokemon == null)
+        {
+            LoadedPokemonCount = 0;
+            HighestPokemonID = 0;
+            return;
+        }
+
+        // Calculate loaded count
+        LoadedPokemonCount = Math.Min(MaxPokemonIDToLoad, DatabaseV2.Pokemon.Count);
+
+        // Calculate highest ID (highest ID that is <= MaxPokemonIDToLoad)
+        HighestPokemonID = DatabaseV2.Pokemon.Keys
+            .Where(id => id <= MaxPokemonIDToLoad)
+            .Max();
+    }
 
     /// <summary>
     ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
@@ -69,20 +98,10 @@ public class Terramon : Mod
         EasyPacketDLL.HandlePacket(reader, whoAmI);
     }
 
-    private void SetupCrossModCompatibility()
-    {
-        if (Main.dedServ) return;
-
-        // Wikithis compatibility
-        if (!ModLoader.TryGetMod("Wikithis", out var wikiThis)) return;
-        wikiThis.Call(0, this, "https://terrariamods.wiki.gg/wiki/Terramon_Mod/{}");
-        wikiThis.Call(3, this, ModContent.Request<Texture2D>("Terramon/icon_small"));
-    }
-
     private uint CheckLoadCount()
     {
         var datFilePath = Path.Combine(Main.SavePath, "TerramonLoadCount.dat");
-    
+
         if (!File.Exists(datFilePath))
         {
             using var writer = new BinaryWriter(File.Open(datFilePath, FileMode.Create));
@@ -99,7 +118,7 @@ public class Terramon : Mod
         }
         catch (Exception ex) when (ex is IOException or EndOfStreamException or ArgumentException or FormatException)
         {
-            Logger.Warn($"Failed to read load count from file! Error: {ex.Message}");
+            Logger.Warn($"Failed to read count from file! Error: {ex.Message}");
         }
 
         result++;
@@ -113,15 +132,19 @@ public class Terramon : Mod
 
     public override void Load()
     {
+        // Load items, then entities
+        AddContent<TerramonItemLoader>();
+        AddContent<PokemonEntityLoader>();
+
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
 
+        // Calculate and cache Pokémon metrics after loading the database
+        CalculatePokemonMetrics();
+
         // Register the mod in EasyPacketsLib
         EasyPacketDLL.RegisterMod(this);
-
-        // Setup cross-mod compatibility
-        SetupCrossModCompatibility();
 
         // Don't run the rest of the method on servers
         if (Main.dedServ) return;
@@ -137,6 +160,8 @@ public class Terramon : Mod
     public override void Unload()
     {
         DatabaseV2 = null;
+        LoadedPokemonCount = 0;
+        HighestPokemonID = 0;
         EasyPacketDLL.Unload();
     }
 }

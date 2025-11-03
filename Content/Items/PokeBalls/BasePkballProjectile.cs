@@ -243,8 +243,6 @@ internal abstract class BasePkballProjectile : ModProjectile
             }
             case (float)ActionState.Catch:
             {
-                _capture?.Encapsulate(Projectile.position); //Destroy Pokemon NPC
-
                 if (AITimer <
                     45 * _animSpeedMultiplier) //Stay still (no velocity) if 45 frames havent passed yet (60fps)
                 {
@@ -466,6 +464,8 @@ internal abstract class BasePkballProjectile : ModProjectile
         {
             Projectile.spriteDirection = -1;
         }
+        
+        _capture.Encapsulate(Projectile.position); // Destroy Pokémon NPC
 
         // Queue resync for the proojectile in multiplayer
         Projectile.netUpdate = true;

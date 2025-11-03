@@ -3,10 +3,12 @@ using System.Runtime.CompilerServices;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using Terramon.Content.Buffs;
+using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Loaders;
 using Terramon.Core.ProjectileComponents;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -20,10 +22,10 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
     public delegate void CustomFindFrame(PokemonPet proj);
 
     private ushort _cachedID;
-    public int? CustomSpriteDirection;
     private Asset<Texture2D> _mainTexture;
     private int _shinySparkleTimer;
     public int CustomFrameCounter;
+    public int? CustomSpriteDirection;
     public CustomFindFrame FindFrame;
 
     static PokemonPet()
@@ -118,7 +120,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         Dust.NewDust(new Vector2(mainPosition.X + 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
-        
+
         var owningPlayer = Main.player[Projectile.owner];
         Data = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
         _cachedID = ID;
@@ -145,14 +147,20 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
                 ? SpriteEffects.FlipHorizontally
                 : SpriteEffects.None;
 
-        // Draw nickname on mouse hover
-        if (!string.IsNullOrEmpty(Data?.Nickname))
+        // Draw name on mouse hover
+        if (!Projectile.isAPreviewDummy && ModContent.GetInstance<ClientConfig>().ShowPetNameOnHover)
         {
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X, (int)originOffsetDrawPos.Y, (int)frameSize.X,
                 (int)frameSize.Y);
             if (drawRect.Contains(Main.MouseScreen.ToPoint()))
-                Main.instance.MouseText(Data.Nickname);
+            {
+                var mouseTextMult = Main.mouseTextColor / 255f;
+                var subColor = new Color((byte)(182f * mouseTextMult), (byte)(187f * mouseTextMult),
+                    (byte)(203f * mouseTextMult));
+                Main.instance.MouseText(
+                    $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/{subColor.ToHexString()}:{Language.GetTextValue("Mods.Terramon.Misc.Trainer")}: {Main.player[Projectile.owner].name}]");
+            }
         }
 
         // Desaturate the lightColor for Gastly
@@ -189,7 +197,7 @@ public class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : ModProject
         var grayValue = (int)(0.299f * color.R + 0.587f * color.G + 0.114f * color.B);
         return new Color(grayValue, grayValue, grayValue, color.A); // Maintain original alpha
     }
-    
+
     public override void SendExtraAI(BinaryWriter writer)
     {
         Data.NetWrite(writer, PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant);
