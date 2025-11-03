@@ -49,6 +49,11 @@ internal static class MenuSocialWidget
             $"{mod.DisplayNameClean} v{mod.Version}", drawPos, Color.White, 0f, Vector2.Zero,
             1.07f, SpriteEffects.None, 0f, alphaMult: 0.76f);
 
+        // Only draw the links if we are in the main menu
+        if (Main.menuMode != MenuID.Title)
+            return;
+
+        // TODO: why isn't the code below a function that gets called like 5 times? - Ben
         // Draw Mod Config link text
         const string configText = "Mod Config";
         var configTextSize = FontAssets.MouseText.Value.MeasureString(configText);
