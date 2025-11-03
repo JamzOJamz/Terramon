@@ -26,7 +26,7 @@ internal class GreatBallItem : BasePkballItem
     public override void AddRecipes()
     {
         CreateRecipe()
-            .AddRecipeGroup($"{nameof(Terramon)}:SilverBar", 2)
+            .AddRecipeGroup(nameof(ItemID.SilverBar), 2)
             .AddIngredient<BlueApricorn>(2)
             .AddIngredient<RedApricorn>(2)
             .AddTile(TileID.Anvils)
