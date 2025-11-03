@@ -1,5 +1,7 @@
-using System.Text;
 using EasyPacketsLib;
+using Showdown.NET.Definitions;
+using System;
+using System.Text;
 using Terramon.Content.Buffs;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
@@ -40,6 +42,10 @@ public class TerramonPlayer : ModPlayer
     public bool HasChosenStarter;
     public bool HasPokeBanner;
     public bool HasShinyCharm;
+    public bool HasExpCharm;
+    public ExpShareSettings ParticipantSettings = new();
+    public ExpShareSettings NonParticipantSettings = new(0.5f);
+    public bool ExpShareOn;
     public BattleInstance Battle;
 
     public int ActivePCTileEntityID
@@ -225,6 +231,7 @@ public class TerramonPlayer : ModPlayer
     public override void ResetEffects()
     {
         HasShinyCharm = false;
+        ExpShareOn = false;
     }
 
     public override void PostUpdateBuffs()
@@ -505,6 +512,62 @@ public class TerramonPlayer : ModPlayer
             sb.Append($"{p.GetPacked(i)}]");
         }
         return sb.ToString().TrimEnd(']');
+    }
+
+    public void DefeatedPokemon(PokemonData defeated, bool battleLogs)
+    {
+        if (!ExpShareOn)
+        {
+            var active = GetActivePokemon();
+            if (active.Status == NonVolatileStatus.Fnt)
+                return;
+            var expGain = active.ExperienceFromDefeat(defeated, 1f, this);
+            var evGain = active.EVsFromDefeat(defeated, false);
+            active.GainExperience(expGain, out var levelsGained, out _);
+            active.TrainEVs(evGain, out _);
+            if (battleLogs)
+                LogYield(active, expGain, levelsGained, evGain);
+            return;
+        }
+        var p = Party;
+        ParticipantSettings.Recalculate(p, true);
+        NonParticipantSettings.Recalculate(p, false);
+        for (int i = 0; i < Party.Length; i++)
+        {
+            var poke = Party[i];
+            if (poke is null)
+                continue;
+            ref ExpShareSettings settings = ref(poke.Participated ? ref ParticipantSettings : ref NonParticipantSettings);
+            float myMult = settings[i];
+            if (myMult == 0f)
+                continue;
+            var expGain = poke.ExperienceFromDefeat(defeated, myMult, this);
+            var evGain = poke.EVsFromDefeat(defeated, settings.Disabled[i]);
+            poke.GainExperience(expGain, out var levelsGained, out _);
+            poke.TrainEVs(evGain, out _);
+            if (battleLogs)
+                LogYield(poke, expGain, levelsGained, evGain);
+        }
+    }
+
+    private static void LogYield(PokemonData recipient, int expGain, int levelsGained, IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
+    {
+        BattleInstance.ConsoleWrite($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
+        if (levelsGained != 0)
+            BattleInstance.ConsoleWrite($"{recipient.DisplayName} is now level {recipient.Level}!", BattleInstance.BattleReceiveFollowup);
+        if (gains is null)
+            return;
+        foreach (var (stat, increase) in gains)
+            BattleInstance.ConsoleWrite($"{recipient.DisplayName}'s {stat} EV increased by {increase}!", BattleInstance.MetaFollowup);
+    }
+
+    public void PrepareForBattle()
+    {
+        foreach (var p in Party)
+        {
+            if (p is null) continue;
+            p.Participated = false;
+        }
     }
 
     #region Network Sync

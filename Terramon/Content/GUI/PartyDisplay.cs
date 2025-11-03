@@ -236,7 +236,7 @@ public class PartySidebarSlot : UICompositeImage
     public PokemonData Data;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
-        "Terramon/Assets/GUI/Party/SidebarClosed"), new Point(126, 76))
+        "Terramon/Assets/GUI/Party/SidebarClosed"), 126, 76)
     {
         _partyDisplay = partyDisplay;
         Index = index;

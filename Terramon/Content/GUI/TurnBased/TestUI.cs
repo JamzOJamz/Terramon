@@ -548,12 +548,13 @@ public sealed class DynamicPixelRatioElement : UIElement
         else
             drawPos.X = pos.X + quadWidth;
 
-        if (width <= quadWidth)
-            return;
-        frame.X += frame.Width;
-        if (width < quadWidth * 2f)
-            frame.Width = (int)(frame.Width * ((width - quadWidth) / quadWidth));
-        spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+        if (width > quadWidth)
+        {
+            frame.X += frame.Width;
+            if (width < quadWidth * 2f)
+                frame.Width = (int)(frame.Width * ((width - quadWidth) / quadWidth));
+            spriteBatch.Draw(tex, drawPos, frame, col, 0f, Vector2.Zero, pxScale, SpriteEffects.None, 0f);
+        }
 
         if (effect != null)
             spriteBatch.Restart(newEffect: null);
