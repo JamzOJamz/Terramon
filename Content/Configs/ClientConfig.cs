@@ -23,6 +23,9 @@ public class ClientConfig : ModConfig
     public bool ReducedMotion;
 
     [DefaultValue(true)]
+    public bool UseOnlyPokeballsInPlayerList;
+
+    [DefaultValue(true)]
     public bool ShowPetNameOnHover;
 
     [Header("Accessibility")] [DefaultValue(true)]

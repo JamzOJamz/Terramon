@@ -147,6 +147,15 @@ Configs: {
 			Label: Texto arcoíris para el efecto
 			Tooltip: El nombre del efecto para el Compañero Pokémon irá a través de los colores del arcoíris
 		}
+
+		UseOnlyPokeballsInPlayerList: {
+			// Label: (Player Select) Only use regular Pokéballs for party preview
+			/* Tooltip:
+				'''
+				If enabled, the party preview in the player select menu will use regular Pokéballs
+				If disabled, the party preview will use the Pokéballs the Pokémon were caught in
+				''' */
+		}
 	}
 
 	GameplayConfig: {

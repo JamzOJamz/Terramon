@@ -147,6 +147,15 @@ Configs: {
 			Label: 彩虹效果增益文本
 			Tooltip: 宝可梦伙伴的增益名称将循环显示彩虹颜色
 		}
+
+		UseOnlyPokeballsInPlayerList: {
+			// Label: (Player Select) Only use regular Pokéballs for party preview
+			/* Tooltip:
+				'''
+				If enabled, the party preview in the player select menu will use regular Pokéballs
+				If disabled, the party preview will use the Pokéballs the Pokémon were caught in
+				''' */
+		}
 	}
 
 	GameplayConfig: {
