@@ -19,19 +19,21 @@ public class LoadWeightAttribute(float weight) : Attribute
 [Autoload(false)]
 public class TerramonItemLoader : ModSystem
 {
-    private enum LoadGroup
-    {
-        Apricorns,
-        PokeBalls,
-        EvolutionaryItems,
-        Vitamins,
-        HeldItems,
-        KeyItems,
-        Interactive,
-        MusicBoxes,
-        PokeBallMinis,
-        TrainerVanity,
-    }
+    // TODO: Keep this as a List<string> (not an enum) to ensure addon mods will be able to extend the available groups dynamically
+    private static readonly List<string> LoadGroupList =
+    [
+        "Apricorns",
+        "PokeBalls",
+        "Recovery",
+        "EvolutionaryItems",
+        "Vitamins",
+        "HeldItems",
+        "KeyItems",
+        "Interactive",
+        "MusicBoxes",
+        "PokeBallMinis",
+        "TrainerVanity"
+    ];
 
     public override void OnModLoad()
     {
@@ -50,10 +52,11 @@ public class TerramonItemLoader : ModSystem
                     return int.MaxValue; // Items without a LoadGroup load last
 
                 // Find the index of the LoadGroup in TerramonItemAPI.LoadGroups
-                if (!Enum.TryParse<LoadGroup>(loadGroupAttribute.Group, out var index))
+                var index = LoadGroupList.IndexOf(loadGroupAttribute.Group);
+                if (index == -1)
                     return (int?)null; // Items with no matching LoadGroup should not be loaded
 
-                return (int)index;
+                return index;
             })
             .Where(group => group.Key.HasValue) // Filter out items without a valid LoadGroup
             .OrderBy(group => group.Key.Value) // Sort groups by their index, with no-group items at the end
