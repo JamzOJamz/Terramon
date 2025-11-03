@@ -519,6 +519,8 @@ public class TerramonPlayer : ModPlayer
         if (!ExpShareOn)
         {
             var active = GetActivePokemon();
+            if (active.Status == NonVolatileStatus.Fnt)
+                return;
             var expGain = active.ExperienceFromDefeat(defeated, 1f, this);
             var evGain = active.EVsFromDefeat(defeated, false);
             active.GainExperience(expGain, out var levelsGained, out _);
@@ -537,7 +539,8 @@ public class TerramonPlayer : ModPlayer
                 continue;
             ref ExpShareSettings settings = ref(poke.Participated ? ref ParticipantSettings : ref NonParticipantSettings);
             float myMult = settings[i];
-            Main.NewText($"Mult for {poke.DisplayName}: {myMult}");
+            if (myMult == 0f)
+                continue;
             var expGain = poke.ExperienceFromDefeat(defeated, myMult, this);
             var evGain = poke.EVsFromDefeat(defeated, settings.Disabled[i]);
             poke.GainExperience(expGain, out var levelsGained, out _);
