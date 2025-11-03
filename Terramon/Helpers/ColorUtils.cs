@@ -22,21 +22,23 @@ public static class ColorUtils
                                  (byte)((hexValue >> 16) & 0xFF))
         };
     }
-    
+
     /// <summary>
-    /// Converts an XNA Color to a hex string without the # symbol
+    ///     Converts an XNA Color to a hex string without the # symbol
     /// </summary>
     /// <param name="color">The XNA Color to convert</param>
     /// <returns>Hex string in format "RRGGBB" or "RRGGBBAA" if alpha is not 255</returns>
     public static string ToHexString(this Color color)
     {
-        return color.A == 255 ?
+        return color.A == 255
+            ?
             // RGB format (no alpha)
-            $"{color.R:X2}{color.G:X2}{color.B:X2}" :
+            $"{color.R:X2}{color.G:X2}{color.B:X2}"
+            :
             // RGBA format (include alpha)
             $"{color.R:X2}{color.G:X2}{color.B:X2}{color.A:X2}";
     }
-    
+
     public static Color HueShift(this Color color, float amt, float shiftLumi = 0f, float direction = 0f)
     {
         // Thresholds for determining best hue shifting direction
@@ -51,5 +53,22 @@ public static class ColorUtils
         col.X = (changedHue % 1f + 1f) % 1f; // Bidirectional wrapping
         col.Z = Math.Clamp(col.Z + shiftLumi, 0f, 1f);
         return Main.hslToRgb(col);
+    }
+
+    /// <summary>
+    ///     Performs multiplicative blending between two colors, simulating how lighting affects a texture.
+    ///     Each RGB component is multiplied together and normalized to the 0-255 range.
+    /// </summary>
+    /// <param name="lightColor">The lighting color that modulates the base color</param>
+    /// <param name="baseColor">The base texture/material color to be lit</param>
+    /// <returns>A new Color with the blended result, alpha is always set to 255</returns>
+    public static Color MultiplyBlend(Color lightColor, Color baseColor)
+    {
+        return new Color(
+            lightColor.R * baseColor.R / 255,
+            lightColor.G * baseColor.G / 255,
+            lightColor.B * baseColor.B / 255,
+            255
+        );
     }
 }

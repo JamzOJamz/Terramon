@@ -1,6 +1,5 @@
 using EasyPacketsLib;
 using Showdown.NET.Definitions;
-using System;
 using System.Text;
 using Terramon.Content.Buffs;
 using Terramon.Content.Commands;

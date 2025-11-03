@@ -6,7 +6,7 @@ namespace Terramon.Content.Items;
 public class FireStone : EvolutionaryItem
 {
     protected override int UseRarity => ModContent.RarityType<FireStoneRarity>();
-    
+
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();

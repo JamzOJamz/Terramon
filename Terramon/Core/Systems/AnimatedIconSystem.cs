@@ -39,7 +39,7 @@ public class AnimatedIconSystem : ModSystem
             _iconFrameTextures[i] = ModContent.Request<Texture2D>(IconFramePaths[i]);
         
         Type uiModItemType;
-        
+
         // Concise Mods List compatibility
         if (ModLoader.TryGetMod("ConciseModList", out var conciseModList))
         {
@@ -50,7 +50,7 @@ public class AnimatedIconSystem : ModSystem
         {
             uiModItemType = typeof(UIModItem);
         }
-        
+
         // If the UIModItem type is not found, the system cannot be initialized so return
         if (uiModItemType == null) return;
 

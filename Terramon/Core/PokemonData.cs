@@ -27,7 +27,7 @@ public class PokemonData
     private string _worldName;
     public AbilityID Ability;
     public BallID Ball = BallID.PokeBall;
-    public PokemonEVs EVs = default;
+    public PokemonEVs EVs;
     public Gender Gender;
     public byte Happiness;
     public bool IsShiny;
@@ -82,6 +82,8 @@ public class PokemonData
 
     public ushort MaxHP
         => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (EVs.HP / 4) + 100) * Level / 100 + 10);
+    
+    public ushort RegenHP { get; private set; }
 
     /// <summary>
     ///     The total experience points the Pokémon has gained.
@@ -98,6 +100,30 @@ public class PokemonData
             Ability = DetermineAbility(Schema, value);
             _personalityValue = value;
         }
+    }
+    
+    public void Damage(ushort amount, bool isRealtime = false)
+    {
+        if (isRealtime && RegenHP == 0)
+            RegenHP = _hp;
+
+        // Prevent underflow - ensure HP doesn't go below 0
+        if (HP > amount)
+            HP -= amount;
+        else
+            HP = 0;
+    }
+
+    public void Heal(ushort amount)
+    {
+        // Prevent overflow - ensure HP doesn't exceed MaxHP
+        if (HP <= MaxHP - amount)
+            HP += amount;
+        else
+            HP = MaxHP;
+
+        if (RegenHP != 0 && _hp >= RegenHP)
+            RegenHP = 0;
     }
 
     public void GainExperience(int amount, out int levelsGained, out int overflow)
@@ -135,27 +161,29 @@ public class PokemonData
 
     public int ExperienceFromDefeat(PokemonData defeated, float shareMultiplier, TerramonPlayer myOwner)
     {
-        const float SmallBonus = 4915f / 4096f;
+        const float smallBonus = 4915f / 4096f;
 
         var b = defeated.Schema.BaseExp;
         var e = _heldItem?.ModItem is LuckyEgg ? 1.5f : 1f;
-        var f = Happiness >= 220 ? SmallBonus : 1f;
+        var f = Happiness >= 220 ? smallBonus : 1f;
         var L = defeated.Level;
         var Lp = Level;
         var p = myOwner.HasExpCharm ? 1.5f : 1f;
         var s = shareMultiplier;
         var t = _ot.Equals(myOwner.Player.name) ? 1f : 1.5f;
-        var v = (Schema.Evolution is not null && Level >= Schema.Evolution.AtLevel) ? SmallBonus : 1f;
+        var v = (Schema.Evolution is not null && Level >= Schema.Evolution.AtLevel) ? smallBonus : 1f;
         var pow = (2 * L + 10) / (L + Lp + 10);
         var powFinal = pow * pow * Math.Sqrt(pow);
         var firstMult = b * L * 0.2f * s * powFinal + 1;
         var finalExp = firstMult * t * e * v * f * p;
         return (int)finalExp;
     }
+    
     public byte TrainEV(StatID stat, byte effortIncrease)
     {
         return EVs.Increase(stat, effortIncrease);
     }
+    
     public void TrainEVs(IEnumerable<(StatID Stat, byte EffortIncrease)> evs, out (StatID Stat, byte Overflow)[] overflows)
     {
         overflows = null;
@@ -171,6 +199,7 @@ public class PokemonData
         }
         Array.Resize(ref overflows, cur);
     }
+    
     public IEnumerable<(StatID Stat, byte EffortIncrease)> EVsFromDefeat(PokemonData defeated, bool disabled)
     {
         if (disabled)
@@ -207,11 +236,30 @@ public class PokemonData
     {
         if (Level >= Terramon.MaxPokemonLevel)
             return false;
+
+        var oldMaxHP = MaxHP;
+        var oldHP = HP;
+
         Level++;
+        var newMaxHP = MaxHP;
+
+        // Official formula: HP increases by how much MaxHP increased
+        var hpDiff = newMaxHP - oldMaxHP;
+        var newHP = (ushort)(oldHP + hpDiff);
+        HP = newHP;
+
+        // RegenHP should reflect the *actual HP gained*, not the theoretical hpDiff
+        // (e.g. if HP was near max and clamped, actual gain may be smaller)
+        var actualHpGain = (ushort)(HP - oldHP);
+        if (RegenHP != 0)
+            RegenHP += actualHpGain;
+
         if (ensureMinimumExperience)
             TotalEXP = Math.Max(TotalEXP, ExperienceLookupTable.GetLevelTotalExp(Level, Schema.GrowthRate));
+
         return true;
     }
+
 
     /// <summary>
     ///     Returns the ID of the species the Pokémon should evolve into.
@@ -250,34 +298,16 @@ public class PokemonData
     {
         ID = id;
     }
-
-    public static PokemonData Create(Player player, ushort id, byte level = 1)
+    
+    public static Builder Create(ushort id, byte level = 1)
     {
-        var pokemon = new PokemonData
-        {
-            ID = id, // Setting the ID automatically assigns the corresponding Schema from the database
-            Level = level,
-            _ot = player.name,
-            _metDate = DateTime.Now,
-            _metLevel = level,
-            _worldName = Main.worldName,
-            PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
-            IsShiny = RollShiny(player),
-            IVs = PokemonIVs.Random()
-        };
-
-        pokemon.HP = pokemon.MaxHP;
-        pokemon.TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, pokemon.Schema.GrowthRate);
-        pokemon.Happiness = pokemon.Schema.BaseHappiness;
-        pokemon.Moves = pokemon.GetInitialMoves();
-
-        return pokemon;
+        return new Builder(id, level);
     }
 
     private static bool RollShiny(Player player)
     {
         var shinyChance = GameplayConfig.Instance.ShinySpawnRate;
-        var rolls = player.GetModPlayer<TerramonPlayer>().HasShinyCharm ? 3 : 1;
+        var rolls = player.Terramon().HasShinyCharm ? 3 : 1;
         for (var i = 0; i < rolls; i++)
             if (Main.rand.NextBool(shinyChance))
                 return true;
@@ -398,6 +428,83 @@ public class PokemonData
     {
         return (PokemonData)MemberwiseClone();
     }
+    
+    public class Builder
+    {
+        private readonly PokemonData _pokemon;
+        private Player _shinyPlayer;
+        
+        public Builder(ushort id, byte level)
+        {
+            _pokemon = new PokemonData
+            {
+                ID = id, // Setting the ID automatically assigns the corresponding Schema
+                Level = level,
+                _metDate = DateTime.Now,
+                _metLevel = level,
+                _worldName = Main.worldName,
+                PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
+                IVs = PokemonIVs.Random()
+            };
+
+            _pokemon.TotalEXP = ExperienceLookupTable.GetLevelTotalExp(level, _pokemon.Schema.GrowthRate);
+            _pokemon.Happiness = _pokemon.Schema.BaseHappiness;
+            _pokemon.Moves = _pokemon.GetInitialMoves();
+        }
+
+        public Builder CaughtBy(Player player)
+        {
+            return ForPlayer(player).OwnedBy(player);
+        }
+
+        // ReSharper disable once MemberCanBePrivate.Global
+        public Builder OwnedBy(Player player)
+        {
+            _pokemon._ot = player?.name;
+            return this;
+        }
+
+        public Builder ForPlayer(Player player)
+        {
+            _shinyPlayer = player;
+            return this;
+        }
+
+        public Builder WithBall(BallID ball)
+        {
+            _pokemon.Ball = ball;
+            return this;
+        }
+
+        public Builder WithNickname(string nickname)
+        {
+            _pokemon.Nickname = nickname;
+            return this;
+        }
+
+        public Builder WithVariant(string variant)
+        {
+            _pokemon.Variant = variant;
+            return this;
+        }
+
+        public Builder ForceShiny(bool isShiny = true)
+        {
+            _pokemon.IsShiny = isShiny;
+            _shinyPlayer = null; // Don't roll if forced
+            return this;
+        }
+
+        public PokemonData Build()
+        {
+            // Only roll for shiny if not already forced and we have a player
+            if (_shinyPlayer != null && !_pokemon.IsShiny)
+                _pokemon.IsShiny = RollShiny(_shinyPlayer);
+
+            _pokemon._hp = _pokemon.MaxHP;
+            return _pokemon;
+        }
+    }
 
     #region NBT Serialization
 
@@ -407,6 +514,7 @@ public class PokemonData
         {
             ["id"] = ID,
             ["lvl"] = Level,
+            ["hp"] = _hp,
             ["exp"] = TotalEXP,
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
@@ -414,34 +522,43 @@ public class PokemonData
             ["ivs"] = IVs.Packed,
             ["version"] = Version
         };
+        
+        // Optional fields - only serialize if different from defaults
         if (Ball != BallID.PokeBall)
             tag["ball"] = (byte)Ball;
+        
         if (IsShiny)
             tag["isShiny"] = true;
+        
         if (!string.IsNullOrEmpty(Nickname))
             tag["n"] = Nickname;
+        
         if (!string.IsNullOrEmpty(Variant))
             tag["variant"] = Variant;
+        
         if (_heldItem != null)
             tag["item"] = new ItemDefinition(_heldItem.type);
+        
         if (_metDate.HasValue)
             tag["met"] = _metDate.Value.ToBinary();
+        
         if (_metLevel != 0)
             tag["metlvl"] = _metLevel;
+        
         if (!string.IsNullOrEmpty(_worldName))
             tag["world"] = _worldName;
+        
         var moves = Moves.SerializeData();
         if (moves != null)
             tag["moves"] = moves;
+        
         return tag;
     }
 
     public static PokemonData Load(TagCompound tag)
     {
-        // Try to load the tag version. If it doesn't exist, it's version 0.
-        ushort loadedVersion = 0;
-        if (tag.ContainsKey("version"))
-            loadedVersion = tag.Get<ushort>("version");
+        // Handle versioning
+        var loadedVersion = tag.ContainsKey("version") ? tag.Get<ushort>("version") : (ushort)0;
 
         if (loadedVersion > Version)
             Terramon.Instance.Logger.Warn("Unsupported PokemonData version " + loadedVersion +
@@ -450,6 +567,7 @@ public class PokemonData
         /*else if (loadedVersion < Version)
             Upgrade(tag, loadedVersion);*/
 
+        // Load required fields
         var data = new PokemonData
         {
             ID = (ushort)tag.GetShort("id"),
@@ -457,37 +575,51 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
-
+        
+        // Load optional fields
+        data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
+        
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
+        
         if (tag.TryGet<bool>("isShiny", out var isShiny))
             data.IsShiny = isShiny;
+        
         if (tag.TryGet<string>("n", out var nickname))
             data.Nickname = nickname;
+        
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
+        
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
+        
         if (tag.TryGet<long>("met", out var metDate))
             data._metDate = DateTime.FromBinary(metDate);
+        
         data._metLevel = tag.TryGet<byte>("metlvl", out var metLevel) ? metLevel : data.Level;
+        
         if (tag.TryGet<string>("world", out var worldName))
             data._worldName = worldName;
+        
         data.Happiness = tag.TryGet("hap", out byte hap)
             ? hap
             : data.Schema.BaseHappiness;
+        
         data.IVs = tag.TryGet<uint>("ivs", out var ivs)
             ? new PokemonIVs(ivs)
             : PokemonIVs.Random();
+        
         data.Moves = tag.TryGet<TagCompound>("moves", out var moves)
             ? PokemonMoves.Load(moves)
             : data.GetInitialMoves();
-        data.GainExperience(tag.TryGet<int>("exp", out var exp) // Ensures that the Pokémon's total EXP is set correctly
+        
+        // Set experience last to ensure proper level calculation
+        var expToSet = tag.TryGet<int>("exp", out var exp)
             ? exp
-            : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate), out _, out _);
+            : ExperienceLookupTable.GetLevelTotalExp(data.Level, data.Schema.GrowthRate);
 
-        // TODO: actually store and load HP value
-        data.HP = data.MaxHP;
+        data.GainExperience(expToSet, out _, out _);
 
         return data;
     }

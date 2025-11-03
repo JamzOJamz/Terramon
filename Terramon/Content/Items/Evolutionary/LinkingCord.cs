@@ -14,7 +14,7 @@ public class LinkingCord : EvolutionaryItem
         Item.height = 36;
         Item.value = Item.buyPrice(gold: 5);
     }
-    
+
     public override ushort GetEvolvedSpecies(PokemonData data)
     {
         return data.ID switch

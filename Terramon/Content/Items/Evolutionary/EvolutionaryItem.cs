@@ -16,6 +16,29 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
     /// </summary>
     public virtual EvolutionTrigger Trigger => EvolutionTrigger.DirectUse;
 
+    public bool AffectedByPokemonDirectUse(PokemonData data)
+    {
+        return Trigger == EvolutionTrigger.DirectUse && GetEvolvedSpecies(data) != 0;
+    }
+
+    public int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
+    {
+        if (player.whoAmI != Main.myPlayer) return 0;
+        var evolvedSpecies = GetEvolvedSpecies(data);
+        var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolvedSpecies);
+        Main.NewText(
+            Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
+                evolvedSpeciesName), new Color(50, 255, 130));
+        data.EvolveInto(evolvedSpecies);
+        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+        var justRegistered = player.GetModPlayer<TerramonPlayer>()
+            .UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered, shiny: data.IsShiny);
+        if (!justRegistered || !ClientConfig.Instance.ShowPokedexRegistrationMessages) return 1;
+        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
+            new Color(159, 162, 173));
+        return 1;
+    }
+
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 3;
@@ -40,29 +63,6 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
     public virtual ushort GetEvolvedSpecies(PokemonData data)
     {
         return 0;
-    }
-
-    public bool AffectedByPokemonDirectUse(PokemonData data)
-    {
-        return Trigger == EvolutionTrigger.DirectUse && GetEvolvedSpecies(data) != 0;
-    }
-
-    public int PokemonDirectUse(Player player, PokemonData data, int amount = 1)
-    {
-        if (player.whoAmI != Main.myPlayer) return 0;
-        var evolvedSpecies = GetEvolvedSpecies(data);
-        var evolvedSpeciesName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(evolvedSpecies);
-        Main.NewText(
-            Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
-                evolvedSpeciesName), new Color(50, 255, 130));
-        data.EvolveInto(evolvedSpecies);
-        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-        var justRegistered = player.GetModPlayer<TerramonPlayer>()
-            .UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered, shiny: data.IsShiny);
-        if (!justRegistered || !ClientConfig.Instance.ShowPokedexRegistrationMessages) return 1;
-        Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.PokedexRegistered", evolvedSpeciesName),
-            new Color(159, 162, 173));
-        return 1;
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)

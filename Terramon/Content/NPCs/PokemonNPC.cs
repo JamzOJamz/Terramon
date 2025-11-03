@@ -17,6 +17,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
 namespace Terramon.Content.NPCs;
@@ -31,6 +32,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     private int _cryTimer;
     private PokemonData _data;
+
+    private bool _isSpawnedFromRelease;
     private Asset<Texture2D> _mainTexture;
     private int _mouseHoverTimer;
     private int _plasmaStateTime;
@@ -127,22 +130,29 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     {
         if (source is { Context: "PokemonRelease" })
         {
-            var dust = ModContent.DustType<SummonCloud>();
-            for (var i = 0; i < 4; i++)
-            {
-                var angle = MathHelper.PiOver2 * i;
-                var (y, x) = MathF.SinCos(angle);
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, x / 2, y / 2);
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, dust, x, y);
-            }
-
+            SpawnReleaseEffect();
             _cryTimer = 30;
+            _isSpawnedFromRelease = true;
         }
 
         if (Main.netMode == NetmodeID.MultiplayerClient) return;
+
         var spawningPlayer = Player.FindClosest(NPC.Center, NPC.width, NPC.height);
-        Data = PokemonData.Create(Main.player[spawningPlayer], ID, 5);
+        Data = PokemonData.Create(ID, 5).ForPlayer(Main.player[spawningPlayer]).Build();
         NPC.netUpdate = true;
+    }
+
+    private void SpawnReleaseEffect()
+    {
+        var dust = ModContent.DustType<SummonCloud>();
+        for (var i = 0; i < 4; i++)
+        {
+            var angle = MathHelper.PiOver2 * i;
+            var x = (float)Math.Cos(angle);
+            var y = (float)Math.Sin(angle);
+            Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x / 2, y / 2);
+            Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, dust, x, y);
+        }
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -153,7 +163,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var frameSize = NPC.frame.Size();
         var effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         var drawPos = NPC.Center - screenPos +
-                      new Vector2(0f, NPC.gfxOffY + DrawOffsetY + (int)Math.Ceiling(NPC.height / 2f) + 4);
+                      new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
 
         var isHighlighted = NPC.whoAmI == _highlightedNPCIndex;
         if (isHighlighted)
@@ -201,10 +211,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 ? PokemonPet.GrayscaleColor(drawColor)
                 : drawColor;
 
-            spriteBatch.Draw(mainTextureValue,
-                drawPos,
-                NPC.frame, adjustedColor, NPC.rotation,
-                frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
+            spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, adjustedColor, NPC.rotation,
+                frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
 
             if (isHighlighted)
             {
@@ -221,7 +229,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 drawColor = Color.White;
                 if (ID == NationalDexID.Gastly) drawColor.A = 128;
                 spriteBatch.Draw(glowTexture.Value, drawPos, NPC.frame, drawColor, NPC.rotation,
-                    frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
+                    frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
             }
         }
 
@@ -238,9 +246,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
             .Apply();
 
-        spriteBatch.Draw(mainTextureValue,
-            NPC.Center - screenPos + new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4),
-            NPC.frame, drawColor, NPC.rotation, frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
+        spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation, frameSize / new Vector2(2, 2),
+            NPC.scale, effects, 0f);
 
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
@@ -288,24 +295,27 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public override void SendExtraAI(BinaryWriter writer)
     {
         Data.NetWrite(writer, PokemonData.BitIsShiny | PokemonData.BitPersonalityValue | PokemonData.BitVariant);
-        writer.Write(PlasmaState);
+        writer.WriteFlags(PlasmaState, _isSpawnedFromRelease);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         var isFirstSync = Data == null;
-        Data ??= new PokemonData
-        {
-            ID = ID,
-            Level = 5
-        };
+        Data ??= PokemonData.Create(ID, 5).Build();
 
         Data.NetRead(reader);
-        PlasmaState = reader.ReadBoolean();
+        reader.ReadFlags(out var plasmaState, out var isSpawnedFromRelease);
+        PlasmaState = plasmaState;
+        _isSpawnedFromRelease = isSpawnedFromRelease;
 
-        if (isFirstSync)
-            // In multiplayer, load the proper texture after receiving the data from the server
-            _mainTexture = PokemonEntityLoader.RequestTexture(this);
+        if (!isFirstSync)
+            return;
+
+        _mainTexture = PokemonEntityLoader.RequestTexture(this);
+
+        if (!_isSpawnedFromRelease) return;
+        SpawnReleaseEffect();
+        _cryTimer = 30;
     }
 
     public override void AI()
@@ -435,7 +445,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         if (mouseIntersects)
         {
-            if (++_mouseHoverTimer != 60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
+            if (++_mouseHoverTimer !=
+                60) // 1 second assuming 60 FPS. TODO: Make independent of framerate, but only if it matters
                 return true;
             // Register as seen in the player's Pokédex
             TerramonPlayer.LocalPlayer.UpdatePokedex(ID, PokedexEntryStatus.Seen,
@@ -446,7 +457,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         {
             _mouseHoverTimer = 0;
         }
-        
+
         return true;
     }
 
@@ -491,11 +502,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         // Keep references to the battle alive on both the player and the NPC
         player.Terramon().Battle = battle;
         Battle = battle;
-        
+
         // Start the battle
         battle.Start();
     }
-    
+
     public void EndBattle()
     {
         Battle?.BattleStream?.Dispose();

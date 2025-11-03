@@ -342,6 +342,9 @@ CommonTooltips: {
 		''' */
 	// EvolutionaryItem: Evolutionary item
 	// KeyItem: Key item
+	// RecoveryItem: Pokémon recovery item
+	// Potion: A spray-type medicine for wounds
+	// Revive: A medicine that revives a fainted Pokémon
 	// Vitamin: Vitamin
 	// RightClickPlace: Can be placed using right click
 	// PCItems: Accesses the Pokémon Storage System
@@ -457,6 +460,36 @@ Items: {
 	AetherBallMiniItem: {
 		// DisplayName: "{$Items.AetherBallItem.DisplayName} (Mini)"
 		// Tooltip: ""
+	}
+
+	Potion: {
+		// DisplayName: Potion
+		// Tooltip: Restores the HP of one Pokémon by just 20 points
+	}
+
+	SuperPotion: {
+		// DisplayName: Super Potion
+		// Tooltip: Restores the HP of one Pokémon by 50 points
+	}
+
+	HyperPotion: {
+		// DisplayName: Hyper Potion
+		// Tooltip: Restores the HP of one Pokémon by 200 points
+	}
+
+	MaxPotion: {
+		// DisplayName: Max Potion
+		// Tooltip: Completely restores the HP of a single Pokémon
+	}
+
+	Revive: {
+		// DisplayName: Revive
+		// Tooltip: Restores half the Pokémon's maximum HP
+	}
+
+	MaxRevive: {
+		// DisplayName: Max Revive
+		// Tooltip: Fully restores the Pokémon's HP
 	}
 
 	RareCandy: {
@@ -788,10 +821,13 @@ Misc: {
 	// PokemonEvolutionReady: "{0} seems ready to evolve!"
 	// RareCandyUse: "{0} grew to Lv. {1}!"
 	// ExpCandyUse: Your Pokémon gained {0} Exp. Points!
+	// PotionUse: "{0}'s HP was restored by {1} {^1:point;points}!"
+	// ReviveUse: "{0} was revived with half its HP restored!"
+	// MaxReviveUse: "{0} was revived with full HP restored!"
 	// Trainer: Trainer
 	/* MOTD:
 		'''
-		You've installed {0} v{1}—enjoy! [i:{2}]
+		Greetings, Trainer! Welcome to {0} v{1}! [i:{2}]
 
 		[c/C9C9E5:Make sure to customize the mod to your liking in the Mod Config menu and set up keybindings in the Controls menu.]
 		''' */

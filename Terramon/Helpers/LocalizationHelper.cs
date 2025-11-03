@@ -42,7 +42,7 @@ public static class LocalizationHelper
     public static void ForceLoadModHJsonLocalization(Mod mod)
     {
         var lang = LanguageManager.Instance;
-        foreach (var (key, value) in (LocalizationLoader.LoadTranslations(mod, Language.ActiveCulture)))
+        foreach (var (key, value) in LocalizationLoader.LoadTranslations(mod, Language.ActiveCulture))
         {
             var text = lang.GetText(key);
             text.SetValue(value); // can only set the value of existing keys. Cannot register new keys.

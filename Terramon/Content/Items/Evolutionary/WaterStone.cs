@@ -19,7 +19,7 @@ public class WaterStone : EvolutionaryItem
         Item.width = 24;
         Item.height = 26;
     }
-    
+
     public override ushort GetEvolvedSpecies(PokemonData data)
     {
         return data.ID switch

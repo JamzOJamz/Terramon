@@ -13,7 +13,7 @@ public class LeafStone : EvolutionaryItem
         Item.width = 24;
         Item.height = 28;
     }
-    
+
     public override ushort GetEvolvedSpecies(PokemonData data)
     {
         return data.ID switch

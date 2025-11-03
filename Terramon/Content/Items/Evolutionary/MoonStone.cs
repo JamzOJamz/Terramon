@@ -12,7 +12,7 @@ public class MoonStone : EvolutionaryItem
         Item.width = 28;
         Item.height = 28;
     }
-    
+
     public override ushort GetEvolvedSpecies(PokemonData data)
     {
         return data.ID switch
