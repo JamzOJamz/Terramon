@@ -7,19 +7,19 @@ using Terramon.Content.NPCs;
 namespace Terramon.Core.Battling;
 public sealed partial class BattleInstance
 {
-    private const ConsoleColor BattleAction = ConsoleColor.Yellow;
-    private const ConsoleColor BattleFollowup = ConsoleColor.DarkYellow;
-    private const ConsoleColor BattleReceive = ConsoleColor.Magenta;
-    private const ConsoleColor BattleReceiveFollowup = ConsoleColor.DarkMagenta;
-    private const ConsoleColor Meta = ConsoleColor.Cyan;
-    private const ConsoleColor MetaProgress = ConsoleColor.DarkCyan;
-    private const ConsoleColor MetaFollowup = ConsoleColor.DarkGray;
-    private const ConsoleColor ChronoAction = ConsoleColor.Blue;
-    private const ConsoleColor FieldAction = ConsoleColor.DarkBlue;
-    private const ConsoleColor Faint = ConsoleColor.Red;
-    private const ConsoleColor Error = ConsoleColor.DarkRed;
-    private const ConsoleColor Win = ConsoleColor.Green;
-    private const ConsoleColor NotWin = ConsoleColor.DarkGreen;
+    public const ConsoleColor BattleAction = ConsoleColor.Yellow;
+    public const ConsoleColor BattleFollowup = ConsoleColor.DarkYellow;
+    public const ConsoleColor BattleReceive = ConsoleColor.Magenta;
+    public const ConsoleColor BattleReceiveFollowup = ConsoleColor.DarkMagenta;
+    public const ConsoleColor Meta = ConsoleColor.Cyan;
+    public const ConsoleColor MetaProgress = ConsoleColor.DarkCyan;
+    public const ConsoleColor MetaFollowup = ConsoleColor.DarkGray;
+    public const ConsoleColor ChronoAction = ConsoleColor.Blue;
+    public const ConsoleColor FieldAction = ConsoleColor.DarkBlue;
+    public const ConsoleColor Faint = ConsoleColor.Red;
+    public const ConsoleColor Error = ConsoleColor.DarkRed;
+    public const ConsoleColor Win = ConsoleColor.Green;
+    public const ConsoleColor NotWin = ConsoleColor.DarkGreen;
     private void HandleSingleElement_Inner(ProtocolElement element, in Details details, in ShowdownPokemonData source, in ShowdownPokemonData target,
         TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
     {
@@ -74,10 +74,12 @@ public sealed partial class BattleInstance
             case SwitchElement switchMessage:
                 if (target.Player != null)
                     ConsoleWrite($"Player {target.PlayerName} switches to {target.PokeName}", BattleAction);
+                target.Data.Participated = true;
                 break;
             case DragElement dragMessage:
                 if (target.Player != null)
                     ConsoleWrite($"Player {target.PlayerName} had their Pokémon forcefully switched to {target.PokeName}!", BattleAction);
+                target.Data.Participated = true;
                 break;
             case DetailsChangeElement detailsChangeMessage:
                 // THINGS
@@ -297,6 +299,11 @@ public sealed partial class BattleInstance
             case FaintElement faintMessage:
                 ConsoleWrite($"{target} has fainted!", Faint);
                 target.Data.Faint();
+                if (target.Wild is null)
+                    break;
+                int opposite = 3 - target.Index;
+                TerramonPlayer attackerParty = opposite == 1 ? p1 : p2;
+                attackerParty.DefeatedPokemon(target.Data, true);
                 break;
             case WinElement winMessage:
                 if (p1.Player.name == winMessage.Username)

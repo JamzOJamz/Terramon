@@ -15,13 +15,14 @@ public class UICompositeImage : UIImage, ILoadable
 
     public Color CompositeColor = Color.White;
 
-    protected UICompositeImage(Asset<Texture2D> texture, Point16 rtSize) : base(texture)
+    protected UICompositeImage(Asset<Texture2D> texture, int rtSizeX, int rtSizeY) : base(texture)
     {
+        var rtSize = new Point16(rtSizeX, rtSizeY);
         if (RenderTargetCache.TryGetValue(rtSize, out _rt))
             return;
         Main.QueueMainThreadAction(() =>
         {
-            _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, rtSize.X, rtSize.Y);
+            _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, rtSizeX, rtSizeY);
             RenderTargetCache[rtSize] = _rt;
         });
     }

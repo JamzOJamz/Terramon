@@ -1,9 +1,9 @@
+global using NonVolatileStatus = Showdown.NET.Definitions.StatusID;
 using System.Diagnostics.CodeAnalysis;
 using ReLogic.Content;
 using Showdown.NET.Definitions;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
-using Terramon.Content.Items.HeldItems;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
@@ -39,7 +39,8 @@ public class PokemonData
     public string Variant;
 
     public StatStages StatStages;
-    public Showdown.NET.Definitions.StatusID Status;
+    public NonVolatileStatus Status;
+    public bool Participated;
 
     public ushort ID
     {
@@ -132,25 +133,66 @@ public class PokemonData
         }
     }
 
-    public int ExperienceFromDefeat(PokemonData defeated, ref ExpShareSettings expShare,
-        TerramonPlayer owner, int partySlot)
+    public int ExperienceFromDefeat(PokemonData defeated, float shareMultiplier, TerramonPlayer myOwner)
     {
         const float SmallBonus = 4915f / 4096f;
 
         var b = defeated.Schema.BaseExp;
-        var e = _heldItem.ModItem is LuckyEgg ? 1.5f : 1f;
+        var e = _heldItem?.ModItem is LuckyEgg ? 1.5f : 1f;
         var f = Happiness >= 220 ? SmallBonus : 1f;
         var L = defeated.Level;
         var Lp = Level;
-        var p = owner.HasExpCharm ? 1.5f : 1f;
-        var s = partySlot == -1 ? 1f : expShare[partySlot]; // multiplier instead of divisor
-        var t = defeated._ot.Equals(owner.Player.name) ? 1f : 1.5f;
-        var v = Level >= Schema.Evolution.AtLevel ? SmallBonus : 1f;
+        var p = myOwner.HasExpCharm ? 1.5f : 1f;
+        var s = shareMultiplier;
+        var t = _ot.Equals(myOwner.Player.name) ? 1f : 1.5f;
+        var v = (Schema.Evolution is not null && Level >= Schema.Evolution.AtLevel) ? SmallBonus : 1f;
         var pow = (2 * L + 10) / (L + Lp + 10);
         var powFinal = pow * pow * Math.Sqrt(pow);
         var firstMult = b * L * 0.2f * s * powFinal + 1;
         var finalExp = firstMult * t * e * v * f * p;
         return (int)finalExp;
+    }
+    public byte TrainEV(StatID stat, byte effortIncrease)
+    {
+        return EVs.Increase(stat, effortIncrease);
+    }
+    public void TrainEVs(IEnumerable<(StatID Stat, byte EffortIncrease)> evs, out (StatID Stat, byte Overflow)[] overflows)
+    {
+        overflows = null;
+        if (evs is null)
+            return;
+        overflows = new (StatID Stat, byte Overflow)[6];
+        int cur = 0;
+        foreach ((StatID stat, byte effortIncrease) in evs)
+        {
+            var overflow = TrainEV(stat, effortIncrease);
+            if (overflow != 0)
+                overflows[cur++] = (stat, overflow);
+        }
+        Array.Resize(ref overflows, cur);
+    }
+    public IEnumerable<(StatID Stat, byte EffortIncrease)> EVsFromDefeat(PokemonData defeated, bool disabled)
+    {
+        if (disabled)
+            yield break;
+
+        var mult = 1;
+
+        _ = this;
+        /*
+        if (_heldItem.ModItem is MachoBrace)
+            mult *= 2;
+        if (Pokerus)
+            mult *= 2;
+        */
+
+        var stats = defeated.Schema.BaseStats;
+        for (StatID i = StatID.HP; i <= StatID.Spe; i++)
+        {
+            byte e = stats.GetEffort(i);
+            if (e != 0)
+                yield return (i, (byte)(e * mult));
+        }
     }
 
     /// <summary>
@@ -338,17 +380,17 @@ public class PokemonData
 
     public bool CureStatus()
     {
-        if (Status == Showdown.NET.Definitions.StatusID.Fnt)
+        if (Status == NonVolatileStatus.Fnt)
             return false;
-        Status = Showdown.NET.Definitions.StatusID.None;
+        Status = NonVolatileStatus.None;
         return true;
     }
 
     public bool Faint()
     {
-        if (Status == Showdown.NET.Definitions.StatusID.Fnt)
+        if (Status == NonVolatileStatus.Fnt)
             return false;
-        Status = Showdown.NET.Definitions.StatusID.Fnt;
+        Status = NonVolatileStatus.Fnt;
         return true;
     }
 

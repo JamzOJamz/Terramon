@@ -61,6 +61,9 @@ public sealed partial class BattleInstance
 
         Player1.ActivePetProjectile.ConfrontFoe(this);
 
+        Player1.PrepareForBattle();
+        Player2?.PrepareForBattle();
+
         BattleUI.ApplyStartEffects();
         StartStream();
     }
@@ -168,6 +171,7 @@ public sealed partial class BattleInstance
     }
     private struct ShowdownPokemonData()
     {
+        public int Index;
         private TerramonPlayer _owner;
         private PokemonNPC _wild;
         private PokemonData _data;
@@ -199,6 +203,7 @@ public sealed partial class BattleInstance
                 {
                     Name += PlayerName + "'s ";
                     _team = _owner.Party;
+                    Index = _owner.Player.whoAmI == Main.myPlayer ? 1 : 2;
                 }
             }
         }
@@ -213,6 +218,7 @@ public sealed partial class BattleInstance
                     Name += "Wild ";
                     Data = _wild.Data;
                     _team = [Data];
+                    Index = 2;
                 }
             }
         }
@@ -224,7 +230,7 @@ public sealed partial class BattleInstance
             set => _data.HP = value;
         }
 
-        public readonly ref Showdown.NET.Definitions.StatusID Status => ref _data.Status;
+        public readonly ref NonVolatileStatus Status => ref _data.Status;
 
         public readonly ref StatStages StatStages => ref _data.StatStages;
 
@@ -262,7 +268,7 @@ public sealed partial class BattleInstance
 
         HandleSingleElement_Inner(element, in details, in source, in target, p1, p2, wild);
     }
-    private static void ConsoleWrite(string str, ConsoleColor color)
+    public static void ConsoleWrite(string str, ConsoleColor color)
     {
         lock (str)
         {

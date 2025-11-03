@@ -19,87 +19,78 @@ public sealed class ExpShare : KeyItem
     public override void UpdateInventory(Player player)
     {
         if (Enabled)
-            player.Terramon().HasExpShare = true;
+            player.Terramon().ExpShareOn = true;
     }
 }
 
 public struct ExpShareSettings
 {
-    private readonly float[] _relativePercentages = new float[6];
+    private float BaseMultiplier = 1f;
     private readonly byte[] _reverseAmounts = new byte[6];
-    private readonly bool[] _disabled = new bool[6];
-    private bool _changed = true;
-
+    public readonly float[] RelativePercentages = new float[6];
+    public readonly bool[] Disabled = new bool[6];
     public ExpShareSettings()
     {
-        Recalculate();
+
     }
-    public ExpShareSettings(float initialPercentage)
+    public ExpShareSettings(float mult)
     {
-        Array.Fill(_reverseAmounts, ReverseFromPercentage(initialPercentage));
-        Recalculate();
+        BaseMultiplier = mult;
     }
-    public void Disable(int i)
+    public readonly float this[int i]
     {
-        ref var d = ref _disabled[i];
-        if (d)
-            return;
-        _disabled[i] = true;
-        _changed = true;
-    }
-    public void Enable(int i)
-    {
-        ref var d = ref _disabled[i];
-        if (!d)
-            return;
-        _disabled[i] = false;
-        _changed = true;
-    }
-    public float this[int i]
-    {
-        readonly get
-        {
-            Recalculate();
-            return _relativePercentages[i];
-        }
-        set
-        {
-            byte rev = ReverseFromPercentage(value);
-            ref var a = ref _reverseAmounts[i];
-            if (a == rev)
-                return;
-            a = rev;
-            _changed = true;
-        }
+        get => RelativePercentages[i];
+        set => RelativePercentages[i] = ReverseFromPercentage(value);
     }
     private static byte ReverseFromPercentage(float initialPercentage)
     {
         initialPercentage = Math.Clamp(initialPercentage, 0f, 1f);
         return (byte)(byte.MaxValue - (byte)(initialPercentage * byte.MaxValue));
     }
-    public readonly void Recalculate()
+    /// <summary>
+    ///     Recalculates the relative percentages (real EXP multipliers) based on the given <see cref="TerramonPlayer.Party"/>
+    /// </summary>
+    /// <param name="p">The <see cref="TerramonPlayer.Party"/> to base the calculations on</param>
+    /// <param name="countParticipants">
+    ///     Controls how Pokémon are counted based on their participation in the battle
+    ///     <list type="bullet">
+    ///         <item>
+    ///             <see langword="true"/>: Only Pokémon who participated in battle are counted
+    ///         </item>
+    ///         <item>
+    ///             <see langword="false"/>: Only Pokémon who didn't participate in battle are counted
+    ///         </item>
+    ///         <item>
+    ///             <see langword="null"/>: Both are counted.
+    ///         </item>
+    ///     </list>
+    /// </param>
+    public readonly void Recalculate(PokemonData[] p, bool? countParticipants)
     {
-        if (!_changed)
-            return;
-
-        int sum = 0;
+        var sum = 0;
 
         for (int i = 0; i < _reverseAmounts.Length; i++)
         {
-            if (!_disabled[i])
+            var mon = p[i];
+            if (!Disabled[i] && mon != null &&
+                mon.Status != NonVolatileStatus.Fnt &&
+                (countParticipants.HasValue ? countParticipants.Value == mon.Participated : true))
             {
                 var amt = byte.MaxValue - _reverseAmounts[i];
                 sum += amt;
-                _relativePercentages[i] = amt;
+                RelativePercentages[i] = amt;
                 continue;
             }
-            _relativePercentages[i] = 0f;
+            RelativePercentages[i] = 0f;
         }
 
         if (sum == 0)
             return;
 
         for (int i = 0; i < _reverseAmounts.Length; i++)
-            _relativePercentages[i] /= sum;
+        {
+            ref var relativePercentage = ref RelativePercentages[i];
+            relativePercentage = relativePercentage / sum * BaseMultiplier;
+        }
     }
 }
