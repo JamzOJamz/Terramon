@@ -58,7 +58,7 @@ public class TurnBasedBattleSystem : ModSystem
         ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesPath);
 
         // Start a battle to warm up the engine
-        Interface.loadMods.SubProgressText = "Warming up battle engine";
+        Interface.loadMods.SubProgressText = "Warming Up Battle Engine";
         // note: running this using Task.Run makes literally no difference
         // other than making what's lagging out less clear (bc the subprogress message changes)
         using BattleStream stream = new();

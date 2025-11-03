@@ -79,6 +79,8 @@ public sealed class BattleUI : SmartUIState
 
     public static void ApplyStartEffects()
     {
+        _smoothCamPos = null;
+        
         OldGameZoomTarget = Main.GameZoomTarget;
 
         var partySidebar = PartyDisplay.Sidebar;
@@ -125,6 +127,8 @@ public sealed class BattleUI : SmartUIState
             Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.5f).SetEase(Ease.OutExpo);
     }
     
+    private static Vector2? _smoothCamPos;
+
     private static Vector2? GetBetweenPosition()
     {
         var terramon = TerramonPlayer.LocalPlayer;
@@ -136,13 +140,20 @@ public sealed class BattleUI : SmartUIState
         if (myPet is null)
             return null;
 
-        float lerp = Math.Min(battle.TickCount / 60f, 1f);
-
         Entity other = (Entity)battle.WildNPC?.NPC ?? battle.Player2.ActivePetProjectile.Projectile;
         Vector2 otherCenter = other.Center;
-        float target = float.Lerp(myPet.Center.X, otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f)), lerp);
 
-        return new(target, otherCenter.Y);
+        float targetX = otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f));
+        float targetY = (myPet.Center.Y + otherCenter.Y) * 0.5f;
+        Vector2 target = new Vector2(targetX, targetY);
+
+        if (_smoothCamPos is null)
+            _smoothCamPos = target;
+
+        float smoothFactor = 0.1f;
+        _smoothCamPos = Vector2.Lerp(_smoothCamPos.Value, target, smoothFactor);
+
+        return _smoothCamPos;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
