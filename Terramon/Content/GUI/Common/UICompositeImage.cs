@@ -20,6 +20,7 @@ public class UICompositeImage : UIImage, ILoadable
         var rtSize = new Point16(rtSizeX, rtSizeY);
         if (RenderTargetCache.TryGetValue(rtSize, out _rt))
             return;
+        
         Main.QueueMainThreadAction(() =>
         {
             _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, rtSizeX, rtSizeY);
@@ -65,6 +66,13 @@ public class UICompositeImage : UIImage, ILoadable
         gd.SetRenderTarget(_rt);
         gd.Clear(Color.Transparent);
 
+        float? oldUIScale = null;
+        if (Math.Abs(Main.UIScale - 1f) > 0.001f)
+        {
+            oldUIScale = Main.UIScale;
+            Main.UIScale = 1f;
+        }
+
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
 
         base.Draw(spriteBatch);
@@ -73,6 +81,9 @@ public class UICompositeImage : UIImage, ILoadable
 
         // Reset the render target
         gd.SetRenderTarget(null);
+
+        if (oldUIScale.HasValue)
+            Main.UIScale = oldUIScale.Value;
 
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
 
