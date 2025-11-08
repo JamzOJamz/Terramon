@@ -425,7 +425,7 @@ public class UILinkManager : ILoadable
         }
         
         //modify trash slot hint if a Pokémon is held within the PC
-        if (PCInterface.Active && TooltipOverlay.GetHeldPokemon(out var source) != null)
+        if (PCInterface.Active && TooltipOverlay.IsHoldingPokemon())
             invPage.LinkMap[GamepadPointID.TrashItem].OnSpecialInteracts += () => PlayerInput.BuildCommand(
                 Language.GetTextValue("Mods.Terramon.GUI.ControllerHints.Release"), false,
                 PlayerInput.ProfileGamepadUI.KeyStatus["MouseLeft"]);

@@ -1,4 +1,5 @@
 ﻿using Terramon.Content.Configs;
+using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
 using Terramon.ID;
 using Terraria.Audio;
@@ -70,11 +71,21 @@ internal abstract class BasePkballProjectile : ModProjectile
     {
         var texture = TextureAssets.Projectile[Type].Value;
 
-        var drawOrigin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
-        var drawPos = Projectile.position - Main.screenPosition + drawOrigin + new Vector2(Projectile.gfxOffY);
-        Main.EntitySpriteDraw(texture, drawPos - new Vector2(5, 5), new Rectangle(0, Projectile.frame * 24, 24, 24),
-            Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale,
+        var origin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
+        var drawPos = Projectile.position - Main.screenPosition + origin + new Vector2(Projectile.gfxOffY) - new Vector2(5, 5);
+        Main.EntitySpriteDraw(texture, drawPos, new Rectangle(0, Projectile.frame * 24, 24, 24),
+            Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale,
             Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
+
+        if (_capture != null)
+        {
+            var originOffsetDrawPos = drawPos - origin;
+            var drawRect = new Rectangle((int)originOffsetDrawPos.X + 4, (int)originOffsetDrawPos.Y + 4, 16, 16);
+            if (drawRect.Contains(Main.mouseX, Main.mouseY))
+            {
+                TooltipOverlay.DrawPokemonAtMouse(Main.spriteBatch, _capture.Data);
+            }   
+        }
 
         return false;
     }

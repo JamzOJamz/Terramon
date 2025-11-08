@@ -1,6 +1,6 @@
+using System.Text;
 using EasyPacketsLib;
 using Showdown.NET.Definitions;
-using System.Text;
 using Terramon.Content.Buffs;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
@@ -30,22 +30,22 @@ public class TerramonPlayer : ModPlayer
     private readonly PokedexService _shinyDex = new();
 
     private int _activePCTileEntityID = -1;
+    private PokemonPet _activePetProjectile;
     private int _activeSlot;
     private int _lastActiveSlot = -1;
-    private PokemonPet _activePetProjectile;
     private bool _lastPlayerInventory;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
-    
+    public BattleInstance Battle;
+
     public Vector3 ColorPickerHSL;
+    public bool ExpShareOn;
     public bool HasChosenStarter;
+    public bool HasExpCharm;
     public bool HasPokeBanner;
     public bool HasShinyCharm;
-    public bool HasExpCharm;
-    public ExpShareSettings ParticipantSettings = new();
     public ExpShareSettings NonParticipantSettings = new(0.5f);
-    public bool ExpShareOn;
-    public BattleInstance Battle;
+    public ExpShareSettings ParticipantSettings = new();
 
     public int ActivePCTileEntityID
     {
@@ -70,7 +70,7 @@ public class TerramonPlayer : ModPlayer
         {
             // Don't double execute logic here
             if (_activeSlot == value) return;
-            
+
             // Toggle off dedicated pet slot
             if (_activeSlot == -1 && !Player.miscEquips[0].IsAir)
                 Player.hideMisc[0] = true;
@@ -78,7 +78,7 @@ public class TerramonPlayer : ModPlayer
             // Cancel Pokémon cry sound in party display UI
             if (Player == Main.LocalPlayer)
                 PartySidebarSlot.CrySoundSource?.Cancel();
-            
+
             _activeSlot = value;
             if (value != -1)
                 _lastActiveSlot = _activeSlot;
@@ -162,7 +162,7 @@ public class TerramonPlayer : ModPlayer
         if (_activeSlot >= 0 && !Player.HasBuff(ModContent.BuffType<PokemonCompanion>()))
             Player.AddBuff(ModContent.BuffType<PokemonCompanion>(), 2);
     }
-    
+
     public override void SetControls()
     {
         if (TestBattleUI.Instance.Visible && Player.controlInv && Player.releaseInventory)
@@ -260,7 +260,9 @@ public class TerramonPlayer : ModPlayer
         var premierBonus = _premierBonusCount / 10;
         if (premierBonus > 0)
         {
-            Main.NewText(Language.GetTextValue($"Mods.Terramon.GUI.NPCShop.PremierBonus{(premierBonus != 1 ? "Plural" : string.Empty)}", premierBonus));
+            Main.NewText(Language.GetTextValue(
+                $"Mods.Terramon.GUI.NPCShop.PremierBonus{(premierBonus != 1 ? "Plural" : string.Empty)}",
+                premierBonus));
 
             Player.QuickSpawnItem(Player.GetSource_GiftOrReward(), ModContent.ItemType<PremierBallItem>(),
                 premierBonus);
@@ -510,6 +512,7 @@ public class TerramonPlayer : ModPlayer
             if (p == null) continue;
             sb.Append($"{p.GetPacked(i)}]");
         }
+
         return sb.ToString().TrimEnd(']');
     }
 
@@ -528,6 +531,7 @@ public class TerramonPlayer : ModPlayer
                 LogYield(active, expGain, levelsGained, evGain);
             return;
         }
+
         var p = Party;
         ParticipantSettings.Recalculate(p, true);
         NonParticipantSettings.Recalculate(p, false);
@@ -536,7 +540,8 @@ public class TerramonPlayer : ModPlayer
             var poke = Party[i];
             if (poke is null)
                 continue;
-            ref ExpShareSettings settings = ref(poke.Participated ? ref ParticipantSettings : ref NonParticipantSettings);
+            ref ExpShareSettings settings =
+                ref (poke.Participated ? ref ParticipantSettings : ref NonParticipantSettings);
             float myMult = settings[i];
             if (myMult == 0f)
                 continue;
@@ -549,15 +554,19 @@ public class TerramonPlayer : ModPlayer
         }
     }
 
-    private static void LogYield(PokemonData recipient, int expGain, int levelsGained, IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
+    private static void LogYield(PokemonData recipient, int expGain, int levelsGained,
+        IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
     {
-        BattleInstance.ConsoleWrite($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
+        BattleInstance.ConsoleWrite($"{recipient.DisplayName} gained {expGain} EXP!",
+            BattleInstance.BattleReceiveFollowup);
         if (levelsGained != 0)
-            BattleInstance.ConsoleWrite($"{recipient.DisplayName} is now level {recipient.Level}!", BattleInstance.BattleReceiveFollowup);
+            BattleInstance.ConsoleWrite($"{recipient.DisplayName} is now level {recipient.Level}!",
+                BattleInstance.BattleReceiveFollowup);
         if (gains is null)
             return;
         foreach (var (stat, increase) in gains)
-            BattleInstance.ConsoleWrite($"{recipient.DisplayName}'s {stat} EV increased by {increase}!", BattleInstance.MetaFollowup);
+            BattleInstance.ConsoleWrite($"{recipient.DisplayName}'s {stat} EV increased by {increase}!",
+                BattleInstance.MetaFollowup);
     }
 
     public void PrepareForBattle()
