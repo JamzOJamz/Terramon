@@ -1,4 +1,6 @@
-﻿namespace Terramon.Core.Battling;
+﻿using Terramon.Core.Battling.BattlePackets;
+
+namespace Terramon.Core.Battling;
 public interface IBattleProvider
 {
     BattleProviderType ProviderType { get; }

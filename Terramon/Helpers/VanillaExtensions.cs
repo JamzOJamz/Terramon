@@ -2,6 +2,7 @@ using EasyPacketsLib;
 using ReLogic.Reflection;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling;
+using Terramon.Core.Battling.BattlePackets;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
