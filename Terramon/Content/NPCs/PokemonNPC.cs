@@ -1,6 +1,7 @@
-using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using System.IO;
+using System.Reflection;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
@@ -23,7 +24,7 @@ using Terraria.UI.Chat;
 namespace Terramon.Content.NPCs;
 
 [Autoload(false)]
-public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity
+public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IPokemonEntity, IBattleProvider
 {
     /// <summary>
     ///     The index of the Pokémon NPC under the mouse cursor.
@@ -39,6 +40,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
+    private BattleClient _battleClient;
+
 
     static PokemonNPC()
     {
@@ -47,7 +50,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             orig(self, tiles);
 
             if (!_highlightedNPCIndex.HasValue ||
-                TerramonPlayer.LocalPlayer.Battle?.WildNPCIndex == _highlightedNPCIndex) return;
+                (BattleClient.LocalClient.Foe is PokemonNPC npc &&
+                npc.NPC.whoAmI == _highlightedNPCIndex)) return;
 
             var highlightedNPC = Main.npc[_highlightedNPCIndex.Value];
             DrawLevelText(Main.spriteBatch, highlightedNPC);
@@ -62,7 +66,21 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
     public bool PlasmaState { get; private set; }
 
-    public BattleInstance Battle { get; private set; }
+    #region IBattleProvider
+    public BattleProviderType ProviderType => BattleProviderType.PokemonNPC;
+    public BattleClient BattleClient => _battleClient;
+    public Entity SyncedEntity => NPC;
+    public string BattleName => "Wild" + Data.DisplayName;
+    public PokemonData[] GetBattleTeam() => [Data];
+    public void StartBattleEffects()
+    {
+
+    }
+    public void StopBattleEffects()
+    {
+        NPC.ShowNameOnHover = true;
+    }
+    #endregion
 
     public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
 
@@ -124,6 +142,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         // Stop the stopwatch and log the time taken to apply all components.
         // stopwatch.Stop();
         // Mod.Logger.Debug("Time taken to apply components: " + stopwatch.Elapsed + "ms");
+
+        _battleClient = new(this);
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -171,7 +191,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             _highlightedNPCIndex = null;
         }
 
-        if (!PlasmaState && TerramonPlayer.LocalPlayer.Battle == null)
+        if (!PlasmaState && BattleClient.LocalClient.Foe == null)
         {
             if (isHighlighted && NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
             {
@@ -419,7 +439,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             if (NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
             {
                 var modPlayer = TerramonPlayer.LocalPlayer;
-                if (modPlayer.Battle == null && Main.mouseRight && Main.mouseRightRelease)
+                if (modPlayer.BattleClient.Foe == null && Main.mouseRight && Main.mouseRightRelease)
                 {
                     if (!modPlayer.HasChosenStarter)
                     {
@@ -434,7 +454,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     else
                     {
                         SoundEngine.PlaySound(SoundID.MenuTick);
-                        StartBattle();
+                        modPlayer.BattleClient.RequestBattleWith(this);
                     }
                 }
             }
@@ -484,33 +504,5 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         NPC.noGravity = true; // Disable gravity
         NPC.ShowNameOnHover = false; // Disable showing name on hover
         NPC.netUpdate = true;
-    }
-
-    private void StartBattle()
-    {
-        // Main.NewText($"Starting battle with wild {DisplayName}");
-
-        var player = Main.LocalPlayer;
-
-        // Create a new BattleInstance for this battle
-        var battle = new BattleInstance
-        {
-            Player1Index = player.whoAmI,
-            WildNPCIndex = NPC.whoAmI
-        };
-
-        // Keep references to the battle alive on both the player and the NPC
-        player.Terramon().Battle = battle;
-        Battle = battle;
-
-        // Start the battle
-        battle.Start();
-    }
-
-    public void EndBattle()
-    {
-        Battle?.BattleStream?.Dispose();
-        Battle = null;
-        NPC.ShowNameOnHover = true;
     }
 }

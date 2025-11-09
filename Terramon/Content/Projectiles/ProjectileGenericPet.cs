@@ -80,8 +80,8 @@ public class ProjectileGenericPet : ProjectileComponent
         bool playerDown = false;
         bool goingIntoTileX = false;
 
-        var battle = o.Terramon().Battle;
-        bool inBattle = battle != null;
+        var battle = o.Terramon().BattleClient;
+        bool inBattle = battle != null && battle.BattleOngoing;
         bool hasCustomTarget = petProj.CustomTargetPosition.HasValue;
 
         Vector2 targetPosition = hasCustomTarget ? petProj.CustomTargetPosition.Value : o.position;
@@ -336,7 +336,10 @@ public class ProjectileGenericPet : ProjectileComponent
 
             if (inBattle && p.velocity.X == 0f)
             {
-                int oppoDir = battle.WildNPC?.NPC.direction ?? battle.Player2.ActivePetProjectile.Projectile.direction;
+                var pokeAvatar = battle.Foe.SyncedEntity;
+                if (pokeAvatar is Player plr)
+                    pokeAvatar = plr.Terramon().ActivePetProjectile.Projectile;
+                int oppoDir = pokeAvatar.direction;
                 p.direction = -oppoDir;
                 p.spriteDirection = oppoDir;
             }

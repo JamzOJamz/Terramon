@@ -1,5 +1,6 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
+using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terramon.ID;
@@ -97,7 +98,7 @@ public class PokemonCompanion : ModBuff
     public override bool RightClick(int buffIndex)
     {
         // Only allow removing outside of battles
-        return TerramonPlayer.LocalPlayer.Battle == null;
+        return !BattleClient.LocalBattleOngoing;
     }
 
     public override void Load()

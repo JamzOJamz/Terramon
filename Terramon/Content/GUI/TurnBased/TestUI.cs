@@ -198,14 +198,6 @@ public sealed class TestBattleUI : SmartUIState
         if (Main.playerInventory)
             Main.LocalPlayer.ToggleInv();
 
-        var terramon = TerramonPlayer.LocalPlayer;
-        var battle = terramon.Battle;
-        if (battle != null)
-        {
-            PlayerPanel.CurrentMon = terramon.GetActivePokemon();
-            FoePanel.CurrentMon = battle.WildNPC?.Data ?? battle.Player2?.GetActivePokemon();
-        }
-
         _opened = true;
     }
 
@@ -262,12 +254,14 @@ public sealed class TestBattleUI : SmartUIState
     {
         SoundEngine.PlaySound(Decide);
         var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
+        /*
         var battle = TerramonPlayer.LocalPlayer.Battle;
         if (battle.MakeMove(move.Move + 1))
         {
             ChangePanel(_optionsPanel);
             battle.MakeMove(2, -1);
         }
+        */
     }
 
     public static void UpdatePokemon()
@@ -316,6 +310,7 @@ public sealed class TestBattleUI : SmartUIState
         var data = pokeRef.DataRef;
         string send = string.IsNullOrEmpty(data.Nickname) ? data.Schema.Identifier : data.Nickname;
         var terramon = TerramonPlayer.LocalPlayer;
+        /*
         var battle = terramon.Battle;
         if (battle.MakeSwitch(send))
         {
@@ -324,6 +319,7 @@ public sealed class TestBattleUI : SmartUIState
             ChangePanel(_optionsPanel);
             battle.MakeMove(2, -1);
         }
+        */
     }
 
     private static void FightButton(UIMouseEvent evt, UIElement listeningElement)
@@ -335,9 +331,11 @@ public sealed class TestBattleUI : SmartUIState
         using Stream stream = File.OpenRead(path);
         Forest = Terramon.Instance.Assets.CreateUntracked<Texture2D>(stream, path);
         */
+        /*
         if (TerramonPlayer.LocalPlayer.Battle?.HasToSwitch ?? false)
             return;
         ChangePanel(_movesPanel);
+        */
     }
 
     private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
@@ -351,7 +349,7 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        TerramonPlayer.LocalPlayer.Battle.Stop();
+        // TerramonPlayer.LocalPlayer.Battle.Stop();
         SoundEngine.PlaySound(Run);
     }
 

@@ -1,363 +1,189 @@
-﻿using System.Runtime.InteropServices;
-using System.Text.Json;
+﻿using EasyPacketsLib;
 using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
-using Terramon.Content.GUI.TurnBased;
-using Terramon.Content.NPCs;
+using System.Runtime.InteropServices;
+using System.Text;
+using Terramon.Core.Battling.BattlePackets;
 
 namespace Terramon.Core.Battling;
 
-public sealed partial class BattleInstance
+public sealed class BattleInstance
 {
-    /// <summary>
-    ///     In wild battles, holds the index of the <see cref="PokemonNPC" /> currently being battled.
-    ///     For trainer or other battle types, this value is null.
-    /// </summary>
-    public int? WildNPCIndex { get; init; }
+    public const ConsoleColor BattleAction = ConsoleColor.Yellow;
+    public const ConsoleColor BattleFollowup = ConsoleColor.DarkYellow;
+    public const ConsoleColor BattleReceive = ConsoleColor.Magenta;
+    public const ConsoleColor BattleReceiveFollowup = ConsoleColor.DarkMagenta;
+    public const ConsoleColor Meta = ConsoleColor.Cyan;
+    public const ConsoleColor MetaProgress = ConsoleColor.DarkCyan;
+    public const ConsoleColor MetaFollowup = ConsoleColor.DarkGray;
+    public const ConsoleColor ChronoAction = ConsoleColor.Blue;
+    public const ConsoleColor FieldAction = ConsoleColor.DarkBlue;
+    public const ConsoleColor Faint = ConsoleColor.Red;
+    public const ConsoleColor Error = ConsoleColor.DarkRed;
+    public const ConsoleColor Win = ConsoleColor.Green;
+    public const ConsoleColor NotWin = ConsoleColor.DarkGreen;
 
-    public PokemonNPC WildNPC => WildNPCIndex.HasValue ? (PokemonNPC)Main.npc[WildNPCIndex.Value].ModNPC : null;
+    public BattleState State;
+    public BattleObserver Omniscient; // omniscient viewer
+    public BattleClient ClientA; // requester
+    public BattleClient ClientB; // requestee
+    // 1-indices
+    public BattleStream Stream; // battle stream
 
-    /// <summary>
-    ///     The index of the player who initiated the battle or the host.
-    ///     In wild battles, this is always the local player.
-    ///     In trainer battles, this is the host player, and the other player is Player2.
-    /// </summary>
-    public int Player1Index { get; init; }
+    private MemoryStream _secret;
+    private MemoryStream _public;
 
-    public TerramonPlayer Player1 => Main.player[Player1Index].Terramon();
 
-    /// <summary>
-    ///     The index of other player in the battle (only applicable in trainer battles).
-    ///     Null in wild battles.
-    /// </summary>
-    public int? Player2Index { get; init; }
+    public bool ShouldStart =>
+        State == BattleState.Picking &&
+        ClientA.Pick != 0 &&
+        ClientA.Pick != 0;
 
-    public TerramonPlayer Player2 => Player2Index.HasValue ? Main.player[Player2Index.Value].Terramon() : null;
+    public BattleClient SubmitTeam(BattleParticipant participant, SimplePackedPokemon[] packedTeam)
+    {
+        BattleClient client;
+        if (ClientA == participant.Client)
+            client = ClientA;
+        else if (ClientB == participant.Client)
+            client = ClientB;
+        else
+            throw new Exception(
+                $"Participant {participant} ({participant.Client.Name}) wasn't found in battle. Instead, {ClientA.Name} and {ClientB.Name} were found.");
 
-    public int TickCount { get; set; }
+        SubmitTeam_Internal(client, packedTeam);
+        return client;
+    }
 
-    public BattleStream BattleStream { get; set; }
+    private void SubmitTeam_Internal(BattleClient client, SimplePackedPokemon[] packedTeam)
+    {
+        EnsureStreamStarted();
 
-    public bool CanChoose { get; private set; }
+        bool a = client == ClientA;
+        var plr = a ? 1 : 2;
+        var sb = new StringBuilder();
+        for (int i = 0; i < packedTeam.Length - 1; i++)
+        {
+            sb.Append(packedTeam[i]);
+            sb.Append(']');
+        }
+        sb.Append(packedTeam[^1]);
 
-    public bool HasToSwitch { get; private set; }
+        const string defaultSpec = "123456";
+        string spec = client.Pick == 1 ? defaultSpec : $"{client.Pick}{defaultSpec.Replace(client.Pick.ToString(), string.Empty)}";
 
-    public bool Player2HasToWait { get; private set; }
+        Stream.Write(ProtocolCodec.EncodeSetPlayerCommand(plr, client.Name, sb.ToString()));
+        Stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(plr, "team", spec));
+    }
+
+    public void EnsureStreamStarted()
+    {
+        if (Stream != null)
+            return;
+
+        Stream = new BattleStream();
+        Task.Run(RunAsync);
+    }
 
     public void Start()
     {
-        // Only the local player can start a battle
-        if (Player1Index != Main.myPlayer)
-            throw new Exception("Battle started by non-local player.");
-
-        if (WildNPC != null)
-        {
-            // Turn towards the player and disable hover behaviour
-            var npc = WildNPC.NPC;
-            npc.spriteDirection = npc.direction = Main.player[Player1Index].position.X > npc.position.X ? 1 : -1;
-            npc.ShowNameOnHover = false;
-        }
-
-        Player1.ActivePetProjectile.ConfrontFoe(this);
-
-        Player1.PrepareForBattle();
-        Player2?.PrepareForBattle();
-
-        BattleUI.ApplyStartEffects();
-        StartStream();
+        ClientA.State = ClientBattleState.Ongoing;
+        ClientB.State = ClientBattleState.Ongoing;
+        ClientA.Provider.StartBattleEffects();
+        ClientB.Provider.StartBattleEffects();
     }
 
-    public void Update()
+    public void Stop()
     {
-        TickCount++;
-    }
 
-    #region Battle Stream
-
-    private void StartStream()
-    {
-        Task.Run(RunAsync);
-        Main.NewText("Battle started and running in background!");
     }
 
     private async Task RunAsync()
     {
         try
         {
-            var s = BattleStream = new();
+            Stream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen9CustomGame));
+            var mgr = BattleManager.Instance;
 
-            var player = Main.player[Player1Index];
-            var modPlayer = player.Terramon();
-            var packedTeam = modPlayer.GetPackedTeam();
+            // I would love to write directly to a packet on multiplayer
+            // But IDK if that's possible with EasyPacketsLib
+            // I think that we can probably do some hack for it anyway
+            // Or come up with a better solution than EasyPacketsLib but I digress
 
-            var wild = WildNPC;
-            var p2 = Player2;
+            _public = new();
+            _secret = new();
 
-            string otherName = wild != null ? wild.DisplayName.Value : p2 != null ? p2.Player.name : "Green";
-            string otherTeam = wild != null ? wild.Data.GetPacked() : p2?.GetPackedTeam();
+            using var pWriter = new BinaryWriter(_public);
+            using var sWriter = new BinaryWriter(_secret);
+            using var w = new BinaryWriter(new DoubleStream(_public, _secret));
 
-            ConsoleWrite($"Battle started by {player.name} against {otherName}", ConsoleColor.Blue);
+            bool inMainFrame = false;
 
-            string start = JsonSerializer.Serialize(new
-            {
-                formatid = FormatID.Gen9CustomGame,
-                p1 = new
-                {
-                    player.name,
-                    team = packedTeam,
-                },
-                p2 = new
-                {
-                    name = otherName,
-                    team = otherTeam,
-                },
-            });
-
-            s.Write($">start {start}");
-
-            const string defaultSpec = "123456";
-            string p1activeSlot = (modPlayer.ActiveSlot + 1).ToString();
-            string p1spec = modPlayer.ActiveSlot == 0 ? defaultSpec : p1activeSlot + defaultSpec.Replace(p1activeSlot, string.Empty);
-            s.Write(ProtocolCodec.EncodePlayerChoiceCommand(1, "team", p1spec));
-            s.Write(ProtocolCodec.EncodePlayerChoiceCommand(2, "team", defaultSpec));
-
-            await foreach (var output in s.ReadOutputsAsync())
+            await foreach (var output in Stream.ReadOutputsAsync())
             {
                 var frame = ProtocolCodec.Parse(output);
                 if (frame is null || frame.Elements == null) continue;
+                if (frame is UpdateFrame)
+                    inMainFrame = true;
+                else if (frame is SideUpdateFrame && inMainFrame)
+                {
+                    SendToObservers();
+                }
                 // Console.WriteLine($"Received message of type {frame.GetType().Name} from simulator");
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
-                    var finalElement = element is ISplitElement split ? split.Secret : element;
-                    HandleSingleElement(finalElement, modPlayer, p2, wild);
+                    if (element is ISplitElement split)
+                    {
+                        int tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
+                        mgr.HandleSingleElement(this, sWriter, split.Secret, toClient: -1, exclusive: true);
+                        mgr.HandleSingleElement(this, pWriter, split.Public, toClient: tgt, exclusive: true);
+                        continue;
+                    }
+                    mgr.HandleSingleElement(this, w, element, toClient: -1, exclusive: false);
                 }
             }
         }
         catch (Exception ex)
         {
-            ConsoleWrite($"Battle encountered an error: {ex.GetType()}: {ex.Message}", ConsoleColor.Red);
-            ConsoleWrite(ex.StackTrace ?? "No stack trace.", ConsoleColor.Red);
+            Log($"Battle encountered an error: {ex.GetType()}: {ex.Message}", ConsoleColor.Red);
+            Log(ex.StackTrace ?? "No stack trace.", ConsoleColor.Red);
             Stop();
         }
         finally
         {
-            if (BattleStream != null && BattleStream.IsDisposed)
+            if (Stream != null && !Stream.IsDisposed)
             {
-                ConsoleWrite($"Disposing battle stream", ConsoleColor.Yellow);
-                BattleStream.Dispose();
+                Log($"Disposing battle stream", ConsoleColor.Yellow);
+                Stream.Dispose();
             }
         }
     }
 
-    /// <summary>
-    ///     Gets the corresponding Pokémon data for a Pokémon given its ID as output by Showdown.
-    /// </summary>
-    /// <param name="showdownMon"></param>
-    private void GetPokemonFromShowdown(string showdownMon, out ShowdownPokemonData data)
+    private void SendToObservers()
     {
-        data = default;
+        var participant = ClientA.Provider.GetParticipantID();
+        _public.WriteByte(0);
+        var payload = new BattlePayloadRpc(participant, _public);
+        Terramon.Instance.SendPacket(in payload);
 
-        if (string.IsNullOrEmpty(showdownMon))
-            return;
-
-        var finalID = PokemonID.Parse(showdownMon);
-        int plr = finalID.Player;
-        data.Player = plr == 1 ? Player1 : Player2;
-        if (data.Player is null)
-            data.Wild = WildNPC;
-        else
-            data.Data = data.Player.Party[int.Parse(finalID.Name)];
+        BattleManager.Instance.Observe(participant, _secret);
     }
-    private struct ShowdownPokemonData()
-    {
-        public int Index;
-        private TerramonPlayer _owner;
-        private PokemonNPC _wild;
-        private PokemonData _data;
-        private PokemonData[] _team;
 
-        public string Name { get; set; } = string.Empty;
-        public bool Active { get; set; }
-
-        public PokemonData Data
-        {
-            readonly get => _data;
-            set
-            {
-                _data = value;
-                if (_data != null)
-                {
-                    Name += _data.DisplayName;
-                    Active = true;
-                }
-            }
-        }
-        public TerramonPlayer Player
-        {
-            readonly get => _owner;
-            set
-            {
-                _owner = value;
-                if (_owner != null)
-                {
-                    Name += PlayerName + "'s ";
-                    _team = _owner.Party;
-                    Index = _owner.Player.whoAmI == Main.myPlayer ? 1 : 2;
-                }
-            }
-        }
-        public PokemonNPC Wild
-        {
-            readonly get => _wild;
-            set
-            {
-                _wild = value;
-                if (_wild != null)
-                {
-                    Name += "Wild ";
-                    Data = _wild.Data;
-                    _team = [Data];
-                    Index = 2;
-                }
-            }
-        }
-        public readonly PokemonData[] Team => _team;
-
-        public readonly ushort HP
-        {
-            get => _data.HP;
-            set => _data.HP = value;
-        }
-
-        public readonly ref NonVolatileStatus Status => ref _data.Status;
-
-        public readonly ref StatStages StatStages => ref _data.StatStages;
-
-        public readonly string PlayerName => _owner.Player.name;
-
-        public readonly string PokeName => _data.DisplayName;
-
-        public readonly override string ToString() => Name;
-    }
-    private void HandleSingleElement(ProtocolElement element, TerramonPlayer p1, TerramonPlayer p2, PokemonNPC wild)
-    {
-        ShowdownPokemonData source = default;
-        ShowdownPokemonData target = default;
-
-        if (element is IPokemonArgs args)
-        {
-            string src = args.Source ?? args.Attacker;
-            string tgt = args.Target ?? args.Defender;
-
-            if (src is null)
-            {
-                if (tgt is null)
-                    tgt = args.Pokemon;
-                else
-                    src = args.Pokemon;
-            }
-
-            GetPokemonFromShowdown(src, out source);
-            GetPokemonFromShowdown(tgt, out target);
-        }
-
-        Details details = default;
-        if (element is IDetailsArg deet)
-            details = Details.Parse(deet.Details);
-
-        HandleSingleElement_Inner(element, in details, in source, in target, p1, p2, wild);
-    }
-    public static void ConsoleWrite(string str, ConsoleColor color)
+    public static void Log(string str, ConsoleColor col = ConsoleColor.Gray)
     {
         lock (str)
         {
-            Console.ForegroundColor = color;
+            Console.ForegroundColor = col;
             Console.WriteLine(str);
             Console.ResetColor();
         }
     }
+}
 
-    public bool MakeMove(int moveIndex) => MakeMove(1, moveIndex);
-
-    public bool MakeMove(int playerIndex, int moveIndex)
-    {
-        if (BattleStream.IsDisposed)
-            return false;
-        if (playerIndex == 2 && Player2HasToWait)
-        {
-            Console.WriteLine("Player 2 waits");
-            Player2HasToWait = false;
-            return true;
-        }
-
-        if (playerIndex == 1)
-        {
-            if (!CanChoose || HasToSwitch)
-                return false;
-            CanChoose = false;
-        }
-
-        string choice = moveIndex == -1 ? GetBestAction(playerIndex) : $"move {moveIndex}";
-        BattleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand(playerIndex, choice));
-        return true;
-    }
-
-    public bool MakeSwitch(string pokemon) => MakeSwitch(1, pokemon);
-
-    public bool MakeSwitch(int playerIndex, string pokemon)
-    {
-        if (BattleStream.IsDisposed)
-            return false;
-        if (playerIndex == 1)
-        {
-            if (!CanChoose)
-                return false;
-            CanChoose = false;
-        }
-
-        BattleStream.Write(ProtocolCodec.EncodePlayerChoiceCommand(playerIndex, $"switch {pokemon}"));
-        return true;
-    }
-
-    public string GetBestAction(int playerIndex)
-    {
-        _ = WildNPCIndex;
-        return "default";
-    }
-
-    public bool AutoRespond(int playerIndex)
-    {
-        if (playerIndex == 2)
-        {
-            if (WildNPCIndex.HasValue)
-                return MakeMove(2, -1);
-            return false;
-        }
-
-        return MakeMove(1, -1);
-    }
-
-    #endregion
-
-    public void Stop()
-    {
-        var p1 = Player1;
-        var p2 = Player2;
-        var w = WildNPC;
-
-        if (w != null)
-            w.EndBattle();
-        else
-            BattleStream?.Dispose();
-
-        p1.Battle = null;
-        if (p2 != null)
-            p2.Battle = null;
-
-        p1.ActivePetProjectile.ConfrontFoe();
-        p2?.ActivePetProjectile?.ConfrontFoe();
-
-        BattleUI.ApplyEndEffects();
-    }
+public enum BattleState : byte
+{
+    Request,
+    Picking,
+    Ongoing,
+    Ended,
 }

@@ -64,8 +64,8 @@ public class ProjectileFlyingPet : ProjectileComponent
         const float teleportDistance = 2000f;
         bool shouldTeleport = false;
 
-        var battle = o.Terramon().Battle;
-        bool inBattle = battle != null;
+        var battle = o.Terramon().BattleClient;
+        bool inBattle = battle != null && battle.BattleOngoing;
         bool hasCustomTarget = petProj.CustomTargetPosition.HasValue;
 
         Vector2 targetPosition = hasCustomTarget ? petProj.CustomTargetPosition.Value : o.position;
@@ -142,7 +142,10 @@ public class ProjectileFlyingPet : ProjectileComponent
 
         if (inBattle)
         {
-            Vector2 oppoCenter = battle.WildNPC?.NPC.Center ?? battle.Player2.ActivePetProjectile.Projectile.Center;
+            var pokeAvatar = battle.Foe.SyncedEntity;
+            if (pokeAvatar is Player plr)
+                pokeAvatar = plr.Terramon().ActivePetProjectile.Projectile;
+            Vector2 oppoCenter = pokeAvatar.Center;
             p.spriteDirection = p.direction = (oppoCenter.X < projCenter.X) ? 1 : -1;
         }
         else if (p.velocity.X > 0.25)

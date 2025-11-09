@@ -34,7 +34,7 @@ public abstract class NPCAIComponent : NPCComponent
     /// <summary>
     ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).Battle</c>.
     /// </summary>
-    protected BattleInstance Battle => ((PokemonNPC)NPC.ModNPC).Battle;
+    protected bool InBattle => ((PokemonNPC)NPC.ModNPC).BattleClient.BattleOngoing;
 
     public override void SetDefaults(NPC npc)
     {

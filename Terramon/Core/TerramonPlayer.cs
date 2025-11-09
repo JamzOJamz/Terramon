@@ -1,4 +1,5 @@
 using EasyPacketsLib;
+using MonoMod.Cil;
 using Showdown.NET.Definitions;
 using System.Text;
 using Terramon.Content.Buffs;
@@ -12,10 +13,13 @@ using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Core.Battling;
+using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terramon.ID;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
@@ -23,7 +27,7 @@ using Terraria.ModLoader.IO;
 
 namespace Terramon.Core;
 
-public class TerramonPlayer : ModPlayer
+public class TerramonPlayer : ModPlayer, IBattleProvider
 {
     private readonly PCService _pc = new();
     private readonly PokedexService _pokedex = new();
@@ -45,7 +49,9 @@ public class TerramonPlayer : ModPlayer
     public ExpShareSettings ParticipantSettings = new();
     public ExpShareSettings NonParticipantSettings = new(0.5f);
     public bool ExpShareOn;
-    public BattleInstance Battle;
+    internal BattleClient _battleClient;
+    public static int HoveredPlayer = -1;
+    public static int BattleTicks;
 
     public int ActivePCTileEntityID
     {
@@ -105,6 +111,49 @@ public class TerramonPlayer : ModPlayer
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
 
+    #region IBattleProvider
+    public BattleProviderType ProviderType => BattleProviderType.Player;
+    public BattleClient BattleClient => _battleClient;
+    public Entity SyncedEntity => Player;
+    public string BattleName => Player.name;
+    public PokemonData[] GetBattleTeam() => Party;
+    public void StartBattleEffects()
+    {
+        ActivePetProjectile?.ConfrontFoe(_battleClient);
+        if (Player.whoAmI == Main.myPlayer)
+        {
+            BattleTicks = 0;
+            BattleClient.StartLocalBattle();
+        }
+    }
+    public void StopBattleEffects()
+    {
+
+    }
+    #endregion
+
+    public override void Load()
+    {
+        if (Main.dedServ)
+            return;
+        IL_Main.DrawMouseOver += static (il) =>
+        {
+            var c = new ILCursor(il);
+
+            var playerIndex = 0;
+            c.GotoNext(
+                i => i.MatchLdsfld<Main>(nameof(Main.player)),
+                i => i.MatchLdsfld<Main>(nameof(Main.myPlayer)),
+                i => i.MatchLdelemRef(),
+                i => i.MatchLdcI4(0),
+                i => i.MatchStfld<Player>(nameof(Player.cursorItemIconEnabled)),
+                i => i.MatchLdsfld<Main>(nameof(Main.player)),
+                i => i.MatchLdloc(out playerIndex));
+
+            c.EmitLdloc(playerIndex);
+            c.EmitStsfld(typeof(TerramonPlayer).GetField(nameof(HoveredPlayer)));
+        };
+    }
     /// <summary>
     ///     Returns this player's currently active Pokémon, or null if there is none.
     /// </summary>
@@ -179,9 +228,26 @@ public class TerramonPlayer : ModPlayer
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
 
+        if (_battleClient != null && HoveredPlayer != -1 && _battleClient.State == ClientBattleState.None)
+        {
+            if (Main.mouseRight && Main.mouseRightRelease)
+                StartMultiplayerBattle(HoveredPlayer);
+            HoveredPlayer = -1;
+        }
+
         if (!KeybindSystem.TogglePartyKeybind.JustPressed) return;
         var inventoryParty = UILoader.GetUIState<InventoryParty>();
         if (inventoryParty.Visible) inventoryParty.SimulateToggleSlots();
+    }
+
+    public bool StartMultiplayerBattle(int other)
+    {
+        var otherPlayer = Main.player[other].Terramon();
+        var c = otherPlayer._battleClient;
+        if (c is null || c.State != ClientBattleState.None)
+            return false;
+        BattleClient.RequestBattleWith(otherPlayer);
+        return true;
     }
 
     private void ProcessActiveMonTriggers()
@@ -269,9 +335,35 @@ public class TerramonPlayer : ModPlayer
         _premierBonusCount = 0;
     }
 
+    private bool _locallyRequestedClient;
+
     public override void PostUpdate()
     {
-        Battle?.Update();
+        if (BattleClient.LocalBattleOngoing)
+            BattleTicks++;
+        if (_battleClient is null)
+        {
+            switch (Main.netMode)
+            {
+                case NetmodeID.SinglePlayer:
+                    _battleClient = new(this);
+                    break;
+                case NetmodeID.MultiplayerClient:
+                    if (Player.whoAmI == Main.myPlayer)
+                        goto case NetmodeID.SinglePlayer;
+                    if (_locallyRequestedClient)
+                        break;
+                    Mod.SendPacket(new RequestClientRpc(), Player.whoAmI, Main.myPlayer, true);
+                    _locallyRequestedClient = true;
+                    break;
+                case NetmodeID.Server:
+                    if (_locallyRequestedClient)
+                        break;
+                    Mod.SendPacket(new RequestClientRpc(), Player.whoAmI);
+                    _locallyRequestedClient = true;
+                    break;
+            }
+        }
     }
 
     public override void PreUpdateBuffs()
@@ -331,7 +423,7 @@ public class TerramonPlayer : ModPlayer
     public bool UpdatePokedex(ushort id, PokedexEntryStatus status, bool force = false, bool shiny = false)
     {
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
-        var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
+        var hasEntry = _pokedex.Entries.TryGetValue((ushort)id, out var entry);
         var entryUpdated = false;
 
         if (hasEntry)
@@ -351,7 +443,7 @@ public class TerramonPlayer : ModPlayer
 
         if (shiny)
         {
-            var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
+            var hasShinyEntry = _shinyDex.Entries.TryGetValue((ushort)id, out var shinyEntry);
             if (hasShinyEntry)
             {
                 if (shinyEntry.Status < status || force)
@@ -507,7 +599,7 @@ public class TerramonPlayer : ModPlayer
         for (int i = 0; i < Party.Length; i++)
         {
             var p = Party[i];
-            if (p == null) continue;
+            if (p == null) break;
             sb.Append($"{p.GetPacked(i)}]");
         }
         return sb.ToString().TrimEnd(']');
@@ -551,22 +643,13 @@ public class TerramonPlayer : ModPlayer
 
     private static void LogYield(PokemonData recipient, int expGain, int levelsGained, IEnumerable<(StatID Stat, byte EffortIncrease)> gains)
     {
-        BattleInstance.ConsoleWrite($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
+        BattleInstance.Log($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
         if (levelsGained != 0)
-            BattleInstance.ConsoleWrite($"{recipient.DisplayName} is now level {recipient.Level}!", BattleInstance.BattleReceiveFollowup);
+            BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!", BattleInstance.BattleReceiveFollowup);
         if (gains is null)
             return;
         foreach (var (stat, increase) in gains)
-            BattleInstance.ConsoleWrite($"{recipient.DisplayName}'s {stat} EV increased by {increase}!", BattleInstance.MetaFollowup);
-    }
-
-    public void PrepareForBattle()
-    {
-        foreach (var p in Party)
-        {
-            if (p is null) continue;
-            p.Participated = false;
-        }
+            BattleInstance.Log($"{recipient.DisplayName}'s {stat} EV increased by {increase}!", BattleInstance.MetaFollowup);
     }
 
     #region Network Sync
@@ -614,8 +697,8 @@ public class TerramonPlayer : ModPlayer
                      out var dirtyFields))
             Mod.SendPacket(new UpdateActivePokemonRpc((byte)Player.whoAmI, activePokemonData, dirtyFields), -1,
                 Main.myPlayer, true);
-        if (HasChosenStarter == clone.HasChosenStarter) return;
-        Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), -1, Main.myPlayer, true);
+        if (HasChosenStarter != clone.HasChosenStarter)
+            Mod.SendPacket(new PlayerFlagsRpc((byte)Player.whoAmI, HasChosenStarter), -1, Main.myPlayer, true);
     }
 
     #endregion

@@ -4,6 +4,8 @@ using ReLogic.Content;
 using Showdown.NET.Definitions;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
+using Terramon.Core.Battling;
+using Terramon.Core.Battling.BattlePackets;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
@@ -101,6 +103,8 @@ public class PokemonData
             _personalityValue = value;
         }
     }
+
+    public ref Item HeldItem => ref _heldItem;
     
     public void Damage(ushort amount, bool isRealtime = false)
     {
@@ -406,6 +410,31 @@ public class PokemonData
             $"{shiny}|" +
             $"{Level}|" +
             $"{Happiness},{Ball},{hiddenPowerType},{gmax},{dmaxLevel},{teratype}";
+    }
+
+    public SimplePackedPokemon GetNetPacked(int? partyIndex = null)
+    {
+        var nickOverride = partyIndex.HasValue ? partyIndex.Value.ToString() : null;
+        return new(this, nickOverride);
+    }
+
+    public void SetFromNetPacked(in SimplePackedPokemon packed, bool setNickname = false)
+    {
+        if (setNickname)
+            Nickname = packed.Nickname;
+        if (_heldItem?.type != packed.Item)
+            _heldItem = new(packed.Item);
+        Gender = packed.Gender;
+        Ball = packed.Ball;
+        ID = packed.Species;
+        Ability = packed.Ability;
+        Nature = packed.Nature;
+        IVs = packed.IVs;
+        EVs = packed.EVs;
+        Happiness = packed.Happiness;
+        IsShiny = packed.IsShiny;
+        Level = packed.Level;
+        Moves = packed.Moves;
     }
 
     public bool CureStatus()
@@ -1114,6 +1143,17 @@ public readonly struct PokemonMoves
             // TODO: look for max pp for move and do stuff here to then pass into movedata ctor
             this[i] = new MoveData(move, 0, 0);
         }
+    }
+
+    public PokemonMoves(uint movesA, byte movesB) : this
+    (
+        (MoveID)(movesA & 0x3FF),
+        (MoveID)((movesA >> 10) & 0x3FF),
+        (MoveID)((movesA >> 20) & 0x3FF),
+        (MoveID)(((movesA) >> 30) | ((uint)movesB << 2))
+    )
+    {
+
     }
 
     private PokemonMoves(params uint[] moves)

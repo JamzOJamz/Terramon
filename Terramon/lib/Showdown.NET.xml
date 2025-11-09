@@ -803,7 +803,7 @@
                 (For example: Tailwind, Stealth Rock, Reflect)
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.SideStartElement.#ctor(System.Int32,System.String)">
+        <member name="M:Showdown.NET.Protocol.SideStartElement.#ctor(Showdown.NET.Definitions.Side,System.String)">
             <summary>
                 A side condition <see cref="P:Showdown.NET.Protocol.SideStartElement.Condition" /> has started on <see cref="P:Showdown.NET.Protocol.SideStartElement.Side" />.
                 Side conditions are all effects that affect one side of the field.
@@ -815,7 +815,7 @@
                 Indicates that the side condition <see cref="P:Showdown.NET.Protocol.SideEndElement.Condition" /> ended for the given <see cref="P:Showdown.NET.Protocol.SideEndElement.Side" />.
             </summary>
         </member>
-        <member name="M:Showdown.NET.Protocol.SideEndElement.#ctor(System.Int32,System.String)">
+        <member name="M:Showdown.NET.Protocol.SideEndElement.#ctor(Showdown.NET.Definitions.Side,System.String)">
             <summary>
                 Indicates that the side condition <see cref="P:Showdown.NET.Protocol.SideEndElement.Condition" /> ended for the given <see cref="P:Showdown.NET.Protocol.SideEndElement.Side" />.
             </summary>
