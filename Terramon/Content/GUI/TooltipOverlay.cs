@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.UI;
@@ -30,23 +31,23 @@ public class TooltipOverlay : SmartUIState, ILoadable
     private static Action<PokemonData> _onReturn;
     private static Action<PokemonData, HeldPokemonSource> _onPlace;
 
-    public override bool Visible => true;
-
     private static readonly Asset<Texture2D> ReleaseTexture;
     private static readonly Asset<Texture2D> TrashTexture;
-    
+
     static TooltipOverlay()
     {
         if (Main.dedServ) return;
-        
+
         ReleaseTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Miscellaneous/Release");
         TrashTexture = ModContent.Request<Texture2D>("Terraria/Images/Trash");
     }
 
+    public override bool Visible => true;
+
     public void Load(Mod mod)
     {
         if (Main.dedServ) return;
-        
+
         On_Main.DrawInterface += static (orig, self, gameTime) =>
         {
             orig(self, gameTime);
@@ -202,7 +203,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         return _heldPokemon != null;
     }
-    
+
     public static void SetHoveringAnyPCTile(bool hovering)
     {
         _hoveringAnyPCTile = hovering;
@@ -213,7 +214,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
         if (_heldPokemon != null)
         {
             TextureAssets.Trash = InventoryParty.InPCMode ? ReleaseTexture : TrashTexture;
-            
+
             if (!_hoveringAnyPCTile && Main.mouseRight && Main.mouseRightRelease)
             {
                 SoundEngine.PlaySound(SoundID.Grab);
@@ -272,9 +273,17 @@ public class TooltipOverlay : SmartUIState, ILoadable
 
     private static void DrawHeldPokemon(SpriteBatch spriteBatch)
     {
-        var sprite = _heldPokemon.GetMiniSprite();
-        spriteBatch.Draw(sprite.Value, Main.MouseScreen - new Vector2(7, 2), null, Color.White, 0f, Vector2.Zero,
-            Main.cursorScale * 0.85f, SpriteEffects.None, 0f);
+        DrawPokemonAtMouse(spriteBatch, _heldPokemon);
+    }
+
+    public static void DrawPokemonAtMouse(SpriteBatch spriteBatch, PokemonData pokemon)
+    {
+        using (spriteBatch.Override(sampler: SamplerState.LinearClamp))
+        {
+            var sprite = pokemon.GetMiniSprite();
+            spriteBatch.Draw(sprite.Value, Main.MouseScreen - new Vector2(7, 2), null, Color.White, 0f, Vector2.Zero,
+                Main.cursorScale * 0.85f, SpriteEffects.None, 0f);
+        }
     }
 
     public override void SafeUpdate(GameTime gameTime)
@@ -291,7 +300,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
         _icon = null;
         _hoveringTrash = false;
         _hoveringAnyPCTile = false;
-        
+
         var needsClear = false;
         if (_heldPokemon != null)
             switch (_heldPokemonSource)

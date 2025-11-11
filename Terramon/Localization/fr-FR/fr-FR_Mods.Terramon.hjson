@@ -341,6 +341,7 @@ CommonTooltips: {
 		Can be used to craft assorted Poké Balls
 		''' */
 	// EvolutionaryItem: Evolutionary item
+	// HeldItem: Held item
 	// KeyItem: Key item
 	// RecoveryItem: Pokémon recovery item
 	// Potion: A spray-type medicine for wounds
@@ -697,17 +698,21 @@ Items: {
 
 	LuckyEgg: {
 		// DisplayName: Lucky Egg
-		// Tooltip: ""
+		// Tooltip: An egg filled with happiness that earns the holder extra Exp. Points
 	}
 
 	ExpShare: {
-		// DisplayName: Exp Share
-		// Tooltip: ""
+		// DisplayName: Exp. Share
+		// Tooltip: Turning on this special device will allow all the Pokémon on your team to receive Exp. Points from battles
 	}
 
 	ExpCharm: {
-		// DisplayName: Exp Charm
-		// Tooltip: ""
+		// DisplayName: Exp. Charm
+		/* Tooltip:
+			'''
+			Having one of these charms increases the Exp. Points your Pokémon get
+			It's a strange, stretchy charm that encourages growth
+			''' */
 	}
 }
 
