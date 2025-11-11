@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using ReLogic.Content;
+using Terramon.Core.Battling;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terramon.ID;
@@ -8,12 +9,12 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
+using Terramon.Core.Battling.BattlePackets;
 
 namespace Terramon.Content.GUI.TurnBased;
 
 public sealed class TestBattleUI : SmartUIState
 {
-    public static Asset<Texture2D> Forest;
     private readonly static UIElement _optionsPanel;
     private readonly static UIElement _movesPanel;
     private readonly static UIElement _pokemonPanel;
@@ -254,14 +255,11 @@ public sealed class TestBattleUI : SmartUIState
     {
         SoundEngine.PlaySound(Decide);
         var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
-        /*
-        var battle = TerramonPlayer.LocalPlayer.Battle;
-        if (battle.MakeMove(move.Move + 1))
+
+        if (BattleClient.LocalClient.MakeChoice(BattleChoice.Move, move.Move))
         {
             ChangePanel(_optionsPanel);
-            battle.MakeMove(2, -1);
         }
-        */
     }
 
     public static void UpdatePokemon()
@@ -308,18 +306,12 @@ public sealed class TestBattleUI : SmartUIState
         if (pokeRef is null)
             return;
         var data = pokeRef.DataRef;
-        string send = string.IsNullOrEmpty(data.Nickname) ? data.Schema.Identifier : data.Nickname;
-        var terramon = TerramonPlayer.LocalPlayer;
-        /*
-        var battle = terramon.Battle;
-        if (battle.MakeSwitch(send))
+
+        if (BattleClient.LocalClient.MakeChoice(BattleChoice.Switch, pokeRef.PartySlot))
         {
-            terramon.ActiveSlot = pokeRef.PartySlot;
             Open();
             ChangePanel(_optionsPanel);
-            battle.MakeMove(2, -1);
         }
-        */
     }
 
     private static void FightButton(UIMouseEvent evt, UIElement listeningElement)
@@ -331,11 +323,9 @@ public sealed class TestBattleUI : SmartUIState
         using Stream stream = File.OpenRead(path);
         Forest = Terramon.Instance.Assets.CreateUntracked<Texture2D>(stream, path);
         */
-        /*
-        if (TerramonPlayer.LocalPlayer.Battle?.HasToSwitch ?? false)
+        if (!BattleClient.LocalClient.CanMakeChoice(BattleChoice.Move))
             return;
         ChangePanel(_movesPanel);
-        */
     }
 
     private static void BagButton(UIMouseEvent evt, UIElement listeningElement)
@@ -349,8 +339,8 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        // TerramonPlayer.LocalPlayer.Battle.Stop();
         SoundEngine.PlaySound(Run);
+        BattleClient.LocalClient.RequestBattleEnd();
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -46,7 +46,7 @@ public readonly record struct SimpleMon
     {
         var id = PokemonID.Parse(showdownMon);
         int side = id.Player;
-        int slot = id.Name[0] - '0';
+        int slot = id.Name[0] - '0' - 1;
         Packed = (byte)((slot << 4) | side);
     }
     public readonly int Side => Packed & 0xF;
@@ -63,8 +63,16 @@ public readonly record struct SimpleHP
     {
         var parts = showdownHP.Split('/', 2);
         uint hp = uint.Parse(parts[0]);
-        uint maxHp = uint.Parse(parts[1]);
-        Packed = (maxHp << 8) | hp;
+
+        if (parts.Length != 2)
+        {
+            Packed = hp;
+        }
+        else
+        {
+            uint maxHp = uint.Parse(parts[1]);
+            Packed = (maxHp << 8) | hp;
+        }
     }
     public readonly ushort HP => (ushort)(Packed & 0xFF);
     public readonly ushort MaxHP => (ushort)(Packed >> 8);
@@ -254,7 +262,8 @@ public readonly record struct SimplePackedPokemon
         }
         SimplePackedPokemon[] final = new SimplePackedPokemon[arrLength];
         for (int i = 0; i < final.Length; i++)
-            final[i] = new(team[i], nicknamesArePartySlots ? i.ToString() : null);
+            // because of how the switch choice works in showdown, the number can't actually be the slot directly
+            final[i] = new(team[i], nicknamesArePartySlots ? (i + 1).ToString() : null);
         return final;
     }
 }
@@ -264,51 +273,4 @@ public readonly record struct BattleParticipant(byte WhoAmI, BattleProviderType 
     public static BattleParticipant None => new();
     public BattleClient Client => BattleManager.GetClient(this);
     public IBattleProvider Provider => BattleManager.GetProvider(this);
-}
-
-public sealed class DoubleStream(Stream a, Stream b) : Stream
-{
-    public override bool CanRead => a.CanRead && b.CanRead;
-
-    public override bool CanSeek => a.CanSeek && b.CanSeek;
-
-    public override bool CanWrite => a.CanWrite && b.CanWrite;
-
-    public override long Length => a.Length;
-
-    public override long Position
-    {
-        get => a.Position;
-        set => b.Position = a.Position = value;
-    }
-
-    public override void Flush()
-    {
-        a.Flush();
-        b.Flush();
-    }
-
-    public override int Read(byte[] buffer, int offset, int count)
-    {
-        a.Read(buffer, offset, count);
-        return b.Read(buffer, offset, count);
-    }
-
-    public override long Seek(long offset, SeekOrigin origin)
-    {
-        a.Seek(offset, origin);
-        return b.Seek(offset, origin);
-    }
-
-    public override void SetLength(long value)
-    {
-        a.SetLength(value);
-        b.SetLength(value);
-    }
-
-    public override void Write(byte[] buffer, int offset, int count)
-    {
-        a.Write(buffer, offset, count);
-        b.Write(buffer, offset, count);
-    }
 }

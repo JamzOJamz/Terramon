@@ -1,7 +1,4 @@
-﻿using Showdown.NET.Definitions;
-using System.Collections;
-using Terramon.Content.NPCs;
-using Terramon.ID;
+﻿using System.Collections;
 
 namespace Terramon.Core.Battling;
 public sealed class BattleSide : IEnumerable<PokemonData>
@@ -17,16 +14,19 @@ public sealed class BattleSide : IEnumerable<PokemonData>
     public void SetActivePokemon(byte slot)
     {
         _activeSlot = slot;
-        if (Provider is TerramonPlayer plr)
-            plr.ActiveSlot = _activeSlot;
+        Provider.SetActiveSlot(slot);
     }
 
     public BattleSide(IBattleProvider baseOn)
     {
+        Provider = baseOn;
         var team = baseOn.GetBattleTeam();
-        for (int i = 0; i < Team.Length; i++)
+        for (int i = 0; i < team.Length; i++)
         {
-            Team[i].Side = this;
+            Team[i] = new()
+            {
+                Side = this
+            };
 
             var mon = team[i];
             if (mon is null)
@@ -46,6 +46,18 @@ public sealed class BattleSide : IEnumerable<PokemonData>
         => GetEnumerator();
 
     public ref BattlePokemon this[int slot] => ref Team[slot];
+
+    public static BattleSide LocalSide
+    {
+        get
+        {
+            var loc = BattleClient.LocalClient;
+            var sd = loc.SideIndex;
+            if (sd == 0)
+                return null;
+            return loc.Battle[sd];
+        }
+    }
 }
 
 public enum SideCondition : byte
@@ -73,6 +85,6 @@ public enum ShowdownRequest : byte
 {
     None,
     Any,
-    ForcedMove,
+    Wait,
     ForcedSwitch,
 }

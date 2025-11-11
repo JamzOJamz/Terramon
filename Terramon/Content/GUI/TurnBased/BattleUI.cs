@@ -142,7 +142,11 @@ public sealed class BattleUI : SmartUIState
 
         Entity other = BattleClient.LocalClient.Foe.SyncedEntity;
         if (other is Player plr)
-            other = plr.Terramon().ActivePetProjectile.Projectile;
+        {
+            var pet = plr.Terramon().ActivePetProjectile;
+            if (pet != null)
+                other = pet.Projectile;
+        }
         Vector2 otherCenter = other.Center;
 
         float targetX = otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f));

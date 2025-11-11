@@ -1,11 +1,8 @@
 ﻿using EasyPacketsLib;
-using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
-using Showdown.NET.Simulator;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
+using Terramon.Content.GUI.TurnBased;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.ID;
 
@@ -20,9 +17,9 @@ public sealed class BattleManager
     public static Terramon Mod => Terramon.Instance;
 
     public static BattleManager Instance { get; set; }
-    private Dictionary<BattleParticipant, BattleInstance> _activeBattles = [];
+    private readonly Dictionary<BattleParticipant, BattleInstance> _activeBattles = [];
 
-    public void HandleSingleElement(BattleInstance source, BinaryWriter w, ProtocolElement element, int toClient, bool exclusive)
+    public void HandleSingleElement(BattleInstance source, BinaryWriter w, ProtocolElement element, int toSide)
     {
         switch (element)
         {
@@ -40,7 +37,7 @@ public sealed class BattleManager
                 {
                     w.Write(new SimpleMon(move.Pokemon));
                     var anim = mvD.Animation ?? move.Move;
-                    if (!Enum.TryParse(anim, out MoveID animID))
+                    if (!Enum.TryParse(anim.Replace(" ", string.Empty), out MoveID animID))
                         Mod.Logger.Error($"{anim} not recognized as a move in MoveID");
                     w.Write((ushort)animID);
                 }
@@ -322,16 +319,16 @@ public sealed class BattleManager
                 break;
             // Messages with special handling
             case RequestElement req:
-                HandleRequest(req.Request);
+                HandleRequest(source, req.Request);
                 break;
             case ErrorElement err:
-                HandleError(err, toClient);
+                HandleError(source, err, LatestInteractor);
                 break;
             case WinElement win:
-                EndBattle(win.Username);
+                EndBattle(source, win.Username[0] - '0', BattleOutcome.Win);
                 break;
-            case TieElement tie:
-                EndBattle(null);
+            case TieElement:
+                EndBattle(source, 0, BattleOutcome.Tie);
                 break;
         }
 
@@ -380,27 +377,84 @@ public sealed class BattleManager
         throw new Exception($"'{rawName}' wasn't recognized as a valid volatile effect");
     }
 
-    public void HandleError(ErrorElement error, int toClient)
+    public static void HandleError(BattleInstance source, ErrorElement error, int toSide)
     {
+        if (toSide <= 0)
+            return;
 
+        var id = BattleErrorParser.Parse(error.Message);
+        var client = source[toSide];
+        if (Main.dedServ && client.Provider is TerramonPlayer plr)
+        {
+            var sendErr = new BattleErrorRpc(error.Type, id);
+            Mod.SendPacket(in sendErr, plr.Player.whoAmI);
+        }
+        else
+        {
+            client.Battle[toSide].CurrentRequest = ShowdownRequest.None;
+            // do stuff with error type and subtype
+        }
     }
 
-    public void HandleRequest(string rawRequest)
+    public static void HandleRequest(BattleInstance source, string rawRequest)
     {
-        JsonObject o = JsonSerializer.Deserialize<JsonObject>(rawRequest);
-        if (o.ContainsKey("teamPreview"))
+        using var req = JsonDocument.Parse(rawRequest);
+
+        var root = req.RootElement;
+
+        if (!root.TryGetProperty("side", out var side))
             return;
-        var side = o["side"];
-        if (side is null)
+
+        var sd = side.GetProperty("id").ToString()[1] - '0';
+        var client = source[sd];
+
+        if (root.TryGetProperty("teamPreview", out _))
+        {
+            var spec = client.CachedTeamSpec;
+            Console.WriteLine(spec);
+            source.Stream.Write(spec);
+            client.CachedTeamSpec = null;
             return;
-        int plrID = side["id"].ToString()[1] - '0';
-        bool forceSwitch = o.ContainsKey("forceSwitch");
-        bool wait = o.ContainsKey("wait");
+        }
+
+        var forceSwitch = root.TryGetProperty("forceSwitch", out _);
+        var wait = root.TryGetProperty("wait", out _);
+
+        var sr = forceSwitch ? ShowdownRequest.ForcedSwitch : wait ? ShowdownRequest.Wait : ShowdownRequest.Any;
+
+        if (Main.dedServ && client.Provider.SyncedEntity is Player plr)
+        {
+            var sendReq = new ShowdownRequestRpc(sr);
+            Mod.SendPacket(in sendReq, plr.whoAmI);
+        }
+        else
+        {
+            client.Battle[sd].CurrentRequest = sr;
+        }
     }
 
-    public void EndBattle(string winner)
+    public void EndBattle(BattleInstance source, int winningSide, BattleOutcome outcome)
     {
+        var winnerOrOwner = winningSide == 0 ? source.ClientA : source[winningSide];
+        var loserOrOther = winnerOrOwner.Foe.BattleClient;
 
+        var a = winnerOrOwner.Provider.GetParticipantID();
+        var b = winnerOrOwner.Foe.GetParticipantID();
+
+        source.Stop();
+
+        if (Main.dedServ) // mp
+        {
+            var battleEnd = new EndBattleRpc(a, outcome);
+            Mod.SendPacket(in battleEnd);
+        }
+        else
+        {
+            EndBattleRpc.EndMessage(outcome, winnerOrOwner, loserOrOther);
+        }
+
+        _activeBattles.Remove(a);
+        _activeBattles.Remove(b);
     }
 
     public void SetPick(byte playerParticipant, byte pick)
@@ -414,7 +468,7 @@ public sealed class BattleManager
         else
         */
         cur = pick;
-        plr.BattleClient.State = ClientBattleState.SetSlot;
+        plr._battleClient.State = ClientBattleState.SetSlot;
 
         var battle = _activeBattles[plr.GetParticipantID()];
         if (battle.ShouldStart)
@@ -422,7 +476,15 @@ public sealed class BattleManager
             // I'm unclear on whether it should immediately send a packet but I'm guessing yes?
             // Otherwise wait for a tick using an int timer
             var teamRequest = new BattleTeamRequestRpc();
-            Mod.SendPacket(in teamRequest, playerParticipant);
+
+            var a = battle.ClientA.Provider.SyncedEntity;
+            var b = battle.ClientB.Provider.SyncedEntity;
+
+            if (a is not Player pa) throw new Exception("hwoahwowa");
+            if (b is not Player pb) throw new Exception("hwoahwowa");
+
+            Mod.SendPacket(in teamRequest, pa.whoAmI);
+            Mod.SendPacket(in teamRequest, pb.whoAmI);
         }
         else
         {
@@ -451,12 +513,35 @@ public sealed class BattleManager
             StartBattle(battle);
     }
 
+    public int LatestInteractor;
+
+    public void HandleChoice(BattleParticipant participant, BattleChoice choice, int operand)
+    {
+        var b = _activeBattles[participant];
+        var c = participant.Client;
+
+        LatestInteractor = c == b.ClientA ? 1 : 2;
+
+        b.SubmitChoice(LatestInteractor, choice, operand + 1);
+    }
+
     public static void StartBattle(BattleInstance battle)
     {
         battle.Start();
 
         if (Main.dedServ)
         {
+            var bf = new BattleField()
+            {
+                A = new(battle.ClientA.Provider),
+                B = new(battle.ClientB.Provider),
+            };
+
+            battle.ClientA.Battle = bf;
+            battle.ClientB.Battle = bf;
+
+            battle.Omniscient = new(bf);
+
             // Send message to every client communicating of the start of the battle
             var startBattleMessage = new BattleStartRpc(
                 battle.ClientA.Provider.GetParticipantID(),
@@ -464,6 +549,9 @@ public sealed class BattleManager
 
             Mod.SendPacket(in startBattleMessage);
         }
+
+        battle.ClientA.Foe = battle.ClientB.Provider;
+        battle.ClientB.Foe = battle.ClientA.Provider;
 
         battle.State = BattleState.Ongoing;
     }
@@ -473,10 +561,36 @@ public sealed class BattleManager
         var battle = _activeBattles[requester];
         _activeBattles.Add(requestee, battle);
 
-        SetTeam(requestee, SimplePackedPokemon.Team(requestee.Provider.GetBattleTeam()));
+        var c = requestee.Client;
+        c.Pick = 1;
+        SetTeam(requestee, c.Provider.GetNetTeam());
 
         var req = new BattleTeamRequestRpc();
         Mod.SendPacket(in req, requester.WhoAmI);
+    }
+
+    public void SubmitEndRequest(byte requester, bool resign = true)
+    {
+        var participant = new BattleParticipant(requester, BattleProviderType.Player);
+        var b = _activeBattles[participant];
+        var c = participant.Client;
+
+        if (resign)
+        {
+            int winSide = c == b.ClientA ? 2 : 1;
+            EndBattle(b, winSide, BattleOutcome.AgreedWin);
+        }
+        else
+        {
+            if (c.TieRequest)
+                return;
+
+            c.TieRequest = true;
+            if (c.Foe.BattleClient.TieRequest)
+            {
+                EndBattle(b, 0, BattleOutcome.AgreedTie);
+            }
+        }
     }
 
     public void SubmitRequest(BattleParticipant requester, BattleParticipant requestee)
@@ -547,32 +661,35 @@ public sealed class BattleManager
         Mod.SendPacket(in response, broadcast ? -1 : requester.WhoAmI);
     }
 
-    public void Observe(BattleParticipant battleOwner, MemoryStream buffer)
+    public void Observe(BattleParticipant battleOwner, MemoryStream buffer, bool onlyToSelf)
     {
-        buffer.WriteByte(0);
-        using var reader = new BinaryReader(buffer);
-        _activeBattles[battleOwner].Omniscient.Receive(reader);
+        buffer.Position = 0;
+        using var reader = new BinaryReader(buffer, Encoding.UTF8, true);
+        var b = _activeBattles[battleOwner];
+
+        b.Omniscient.Receive(reader);
+        buffer.Position = 0;
+
+        if (!onlyToSelf)
+        {
+            b.ClientA.Battle.Observer.Receive(reader);
+        }
+
+        reader.Dispose();
     }
 
     // Called in singleplayer
     public void QuickStartBattle(BattleParticipant requester, BattleParticipant requestee)
     {
-        var inst = new BattleInstance
-        {
-            ClientA = requester.Client,
-            ClientB = requestee.Client,
-        };
-
-        inst.ClientA.Foe = inst.ClientB.Provider;
-        inst.ClientB.Foe = inst.ClientA.Provider;
+        var inst = BattleInstance.Create(requester.Client, requestee.Client);
 
         _activeBattles.Add(requester, inst);
         _activeBattles.Add(requestee, inst);
 
+        inst.State = BattleState.Picking;
+
         SetTeam(requester, requester.Provider.GetNetTeam());
         SetTeam(requestee, requestee.Provider.GetNetTeam());
-
-        StartBattle(inst);
     }
 
     public static IBattleProvider GetProvider(byte whoAmI, BattleProviderType type = BattleProviderType.Player)
@@ -588,7 +705,7 @@ public sealed class BattleManager
         {
             BattleProviderType.Player => Main.player[whoAmI].Terramon(),
             BattleProviderType.PokemonNPC => Main.npc[whoAmI].Pokemon(),
-            _ => null,
+            _ => throw new Exception(),
         };
     }
     public static IBattleProvider GetProvider(BattleParticipant participant)

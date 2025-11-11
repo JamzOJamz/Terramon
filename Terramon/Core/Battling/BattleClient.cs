@@ -1,5 +1,6 @@
 ﻿using EasyPacketsLib;
 using Terramon.Content.GUI.TurnBased;
+using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;
 
 namespace Terramon.Core.Battling;
@@ -30,25 +31,46 @@ public sealed class BattleClient(IBattleProvider provider)
     public ClientBattleState State;
     // Instance is shared between both battlers
     public BattleField Battle;
-    // This isn't used by clients at all, only on the server
-    // But I didn't wanna make another wrapper class lol
+    public BattleSide Side => Battle is null ? null : Provider == Battle.A.Provider ? Battle[1] : Battle[2];
+
+    // These arent't used by remote clients
     public byte Pick;
+    public bool TieRequest;
+
+    // This is only used by the server
+    public string CachedTeamSpec;
+
     public string Name => Provider.BattleName;
     public Entity Entity => Provider.SyncedEntity;
     public bool BattleOngoing => State == ClientBattleState.Ongoing;
     public bool IsLocal => Provider.SyncedEntity is Player plr && plr.whoAmI == Main.myPlayer;
+    public int SideIndex
+    {
+        get
+        {
+            if (!BattleOngoing)
+                return 0;
+            return Battle.A.Provider == Provider ? 1 : 2;
+        }
+    }
     public void RequestBattleWith(IBattleProvider otherProvider)
     {
         // Singleplayer
         if (Main.netMode == NetmodeID.SinglePlayer)
         {
-            switch (Provider.SyncedEntity)
+            switch (Provider)
             {
-                case Player:
+                case TerramonPlayer plr:
                     BattleManager mgr = BattleManager.Instance;
+                    var active = plr.ActiveSlot;
+                    if (active == -1)
+                        return;
+                    Pick = (byte)(active + 1);
+                    otherProvider.BattleClient.Pick = 1;
                     mgr.QuickStartBattle(Provider.GetParticipantID(), otherProvider.GetParticipantID());
                     break;
-                case NPC:
+                case PokemonNPC:
+                    Pick = 1;
                     break;
             }
             return;
@@ -92,6 +114,73 @@ public sealed class BattleClient(IBattleProvider provider)
         }
     }
 
+    public bool CanMakeChoice(BattleChoice choice)
+    {
+        if (State != ClientBattleState.Ongoing)
+            return false;
+
+        var s = Side;
+        if (s is null)
+            return false;
+
+        return s.CurrentRequest switch
+        {
+            ShowdownRequest.None => false,
+            ShowdownRequest.Any => true,
+            ShowdownRequest.Wait => false,
+            ShowdownRequest.ForcedSwitch => choice is BattleChoice.Default or BattleChoice.Switch,
+            _ => false,
+        };
+    }
+
+    public bool MakeChoice(BattleChoice choice, int operand = -1)
+    {
+        if (!CanMakeChoice(choice))
+            return false;
+
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            var packet = new BattleChoiceRpc(choice, (byte)operand);
+            Terramon.Instance.SendPacket(in packet);
+        }
+        else
+        {
+            BattleManager.Instance.HandleChoice(Provider.GetParticipantID(), choice, (byte)operand);
+        }
+
+        if (Foe is PokemonNPC npc)
+        {
+            npc.BattleClient.MakeChoice(BattleChoice.Default);
+        }
+
+        return true;
+    }
+
+    public void RequestBattleEnd(bool resign = true)
+    {
+        var m = Terramon.Instance;
+
+        if (!resign)
+        {
+            if (TieRequest)
+                return;
+            TieRequest = true;
+        }
+
+        if (Main.netMode == NetmodeID.MultiplayerClient)
+        {
+            var packet = new EndBattleRequestRpc(resign);
+            if (Foe.SyncedEntity is Player plr)
+                m.SendPacket(in packet, plr.whoAmI, Main.myPlayer, true);
+            else
+                m.SendPacket(in packet);
+        }
+        else
+        {
+            BattleManager.Instance.SubmitEndRequest((byte)Main.myPlayer, resign);
+        }
+    }
+
     public static void StartLocalBattle()
     {
         // Clients receive almost no information about the current battle
@@ -104,6 +193,15 @@ public sealed class BattleClient(IBattleProvider provider)
     public static void EndLocalBattle()
     {
         BattleUI.ApplyEndEffects();
+    }
+
+    public void BattleStopped()
+    {
+        Provider.StopBattleEffects();
+        Battle = null;
+        Pick = 0;
+        TieRequest = false;
+        Foe = null;
     }
 }
 

@@ -338,7 +338,11 @@ public class ProjectileGenericPet : ProjectileComponent
             {
                 var pokeAvatar = battle.Foe.SyncedEntity;
                 if (pokeAvatar is Player plr)
-                    pokeAvatar = plr.Terramon().ActivePetProjectile.Projectile;
+                {
+                    var pet = plr.Terramon().ActivePetProjectile;
+                    if (pet != null)
+                        pokeAvatar = pet.Projectile;
+                }
                 int oppoDir = pokeAvatar.direction;
                 p.direction = -oppoDir;
                 p.spriteDirection = oppoDir;

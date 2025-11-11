@@ -110,6 +110,7 @@ public readonly struct BattleStartRpc(BattleParticipant whoStarted, BattlePartic
     public void Receive(in BattleStartRpc packet, in SenderInfo sender, ref bool handled)
     {
         // This packet is received by every client
+        handled = true;
         this.DebugLog();
         if (Main.dedServ)
             throw new Exception($"Somehow, a {nameof(BattleStartRpc)} packet was received on the server");
@@ -130,5 +131,101 @@ public readonly struct BattleStartRpc(BattleParticipant whoStarted, BattlePartic
         clientB.Battle = battle;
 
         Main.NewText($"Battle started by {clientA.Name} against {clientB.Name}!", Color.Aqua);
+    }
+}
+
+public enum BattleOutcome : byte
+{
+    Win,
+    AgreedWin,
+    Tie,
+    AgreedTie,
+    ForcedTie,
+}
+
+public readonly struct EndBattleRpc(BattleParticipant winner, BattleOutcome outcome)
+    : IEasyPacket<EndBattleRpc>, IEasyPacketHandler<EndBattleRpc>
+{
+    // with ties, this will just be the battle owner instead
+    private readonly BattleParticipant _winner = winner;
+    private readonly BattleOutcome _outcome = outcome;
+
+    public void Serialise(BinaryWriter writer)
+    {
+        writer.Write(_winner);
+        writer.Write((byte)_outcome);
+    }
+
+    public EndBattleRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    {
+        var winner = reader.ReadParticipant();
+        var outcome = (BattleOutcome)reader.ReadByte();
+        return new(winner, outcome);
+    }
+
+    public void Receive(in EndBattleRpc packet, in SenderInfo sender, ref bool handled)
+    {
+        // Sent from server to all clients
+        handled = true;
+        this.DebugLog();
+
+        var a = BattleManager.GetClient(packet._winner);
+        var b = a.Foe.BattleClient;
+
+        a.BattleStopped();
+        b.BattleStopped();
+
+        EndMessage(packet._outcome, a, b);
+    }
+
+    public static void EndMessage(BattleOutcome outcome, BattleClient a, BattleClient b)
+    {
+        var endMsg = outcome switch
+        {
+            BattleOutcome.Win => "{0} defeated {1}!",
+            BattleOutcome.AgreedWin => "{1} forfeited their battle against {0}!",
+            BattleOutcome.Tie => "{0} and {1}'s battle ended in a tie!",
+            BattleOutcome.AgreedTie => "{0} and {1} agreed to a tie!",
+            BattleOutcome.ForcedTie => "{0} and {1}'s battle was forcibly ended!",
+            _ => throw new Exception()
+        };
+
+        var formatted = string.Format(endMsg, a.Name, b.Name);
+        var msgColor =
+            outcome < BattleOutcome.Tie ? Color.Green :
+            outcome != BattleOutcome.ForcedTie ? Color.Yellow :
+            Color.Red;
+
+        Main.NewText(formatted, msgColor);
+    }
+}
+
+public readonly struct EndBattleRequestRpc(bool resign) // as opposed to tie request
+    : IEasyPacket<EndBattleRequestRpc>, IEasyPacketHandler<EndBattleRequestRpc>
+{
+    private readonly bool _resign = resign;
+
+    public void Serialise(BinaryWriter writer)
+    {
+        writer.Write(_resign);
+    }
+
+    public EndBattleRequestRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    {
+        var resign = reader.ReadBoolean();
+        return new(resign);
+    }
+
+    public void Receive(in EndBattleRequestRpc packet, in SenderInfo sender, ref bool handled)
+    {
+        // Sent from client to server if resign
+        // Sent from client to other client through forwarding if tie request
+        handled = true;
+        this.DebugLog();
+
+        if (Main.dedServ)
+            BattleManager.Instance.SubmitEndRequest(sender.WhoAmI, packet._resign);
+        else if (!packet._resign)
+            Main.NewText($"{Main.player[sender.WhoAmI].name} asked to agree to a tie");
     }
 }

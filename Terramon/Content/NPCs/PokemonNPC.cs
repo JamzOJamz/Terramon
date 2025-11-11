@@ -5,6 +5,7 @@ using System.Reflection;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
+using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Projectiles;
@@ -80,6 +81,12 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     {
         NPC.ShowNameOnHover = true;
     }
+    public void SetActiveSlot(byte newSlot)
+    {
+        if (BattleClient.LocalClient.Foe == this)
+            TestBattleUI.FoePanel.CurrentMon = Data;
+    }
+
     #endregion
 
     public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;

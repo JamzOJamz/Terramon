@@ -10,6 +10,7 @@ public interface IBattleProvider
     PokemonData[] GetBattleTeam();
     void StartBattleEffects();
     void StopBattleEffects();
+    void SetActiveSlot(byte newActive);
 }
 
 public static class BattleProviderExtensions

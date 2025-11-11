@@ -40,6 +40,7 @@ public struct BattlePokemon()
         };
 
     public HashSet<VolatileEffect> Volatiles = [];
+    private ushort _hp;
     private ushort _species;
     private Gender _gender;
     private bool _shiny;
@@ -49,10 +50,15 @@ public struct BattlePokemon()
     private StatStages _statStages;
     private AbilityID _ability;
     public bool AbilitySuppressed;
-    public readonly ushort HP
+    public ushort HP
     {
-        get => Data.HP;
-        set => Data.HP = value;
+        readonly get => Data?.HP ?? _hp;
+        set
+        {
+            if (Data != null)
+                Data.HP = value;
+            _hp = value;
+        }
     }
     public ushort Species
     {

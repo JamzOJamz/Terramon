@@ -131,8 +131,27 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     }
     public void StopBattleEffects()
     {
-
+        if (Player.whoAmI == Main.myPlayer)
+        {
+            BattleClient.EndLocalBattle();
+        }
     }
+    public void SetActiveSlot(byte newSlot)
+    {
+        ActiveSlot = newSlot;
+
+        var loc = BattleClient.LocalClient;
+
+        if (loc == BattleClient)
+        {
+            TestBattleUI.PlayerPanel.CurrentMon = GetActivePokemon();
+        }
+        else if (loc.Foe == this)
+        {
+            TestBattleUI.FoePanel.CurrentMon = GetActivePokemon();
+        }
+    }
+
     #endregion
 
     public override void Load()

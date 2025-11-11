@@ -11,7 +11,6 @@ public readonly struct BattlePayloadRpc(BattleParticipant battleOwner, MemoryStr
         writer.Write(_battleOwner);
         writer.Write((int)_buffer.Length);
         _buffer.WriteTo(writer.BaseStream);
-        _buffer.Position = 0;
     }
 
     public BattlePayloadRpc Deserialise(BinaryReader reader, in SenderInfo sender)
@@ -27,6 +26,8 @@ public readonly struct BattlePayloadRpc(BattleParticipant battleOwner, MemoryStr
         // Being sent from server to clients
         this.DebugLog();
         handled = true;
+
+        Main.NewText($"Received payload with {packet._buffer.Length} bytes of content!");
 
         using var reader = new BinaryReader(packet._buffer);
         var o = packet._battleOwner.Client.Battle.Observer;
