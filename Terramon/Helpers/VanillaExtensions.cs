@@ -74,11 +74,16 @@ public static class VanillaExtensions
         => (ushort)search.GetId($"{nameof(Terramon)}/{name}");
     public static void Write(this BinaryWriter writer, BattleParticipant participant)
     {
-        writer.Write(participant.WhoAmI);
         writer.Write((byte)participant.Type);
+        // if (participant.Type != BattleProviderType.None)
+            writer.Write(participant.WhoAmI);
     }
     public static BattleParticipant ReadParticipant(this BinaryReader reader)
-        => new(reader.ReadByte(), (BattleProviderType)reader.ReadByte());
+    {
+        var type = (BattleProviderType)reader.ReadByte();
+        var whoAmI = reader.ReadByte(); // type == BattleProviderType.None ? (byte)0 : reader.ReadByte();
+        return new(whoAmI, type);
+    }
     public static void Write(this BinaryWriter writer, SimpleMon mon) => writer.Write(mon.Packed);
     public static SimpleMon ReadPokemonID(this BinaryReader reader) => new(reader.ReadByte());
     public static void Write(this BinaryWriter writer, SimpleMonPair pair) => writer.Write(pair.Packed);
@@ -108,8 +113,19 @@ public static class VanillaExtensions
             Speed = reader.ReadByte(),
         };
     }
-    public static void DebugLog<T>(this IEasyPacket<T> packet, string extraMessage = null) where T : struct, IEasyPacket<T>
+    public static void DebugLog<T>(this IEasyPacket<T> packet, string pre, string post = null) where T : struct, IEasyPacket<T>
     {
-        ModContent.GetInstance<Terramon>().Logger.Debug($"Received {packet.GetType().Name} on {(Main.dedServ ? "server" : "client")} " + extraMessage);
+        var msg = (Main.dedServ ? "Server: " : "Client: ") + pre + $" {packet.GetType().Name} " + post;
+        ModContent.GetInstance<Terramon>().Logger.Debug(msg);
+        if (Main.dedServ)
+            Console.WriteLine(msg);
+    }
+    public static void ReceiveLog<T>(this IEasyPacket<T> packet, string post = null) where T : struct, IEasyPacket<T>
+    {
+        DebugLog(packet, "Received", post);
+    }
+    public static void SendLog<T>(this IEasyPacket<T> packet, string post = null) where T : struct, IEasyPacket<T>
+    {
+        DebugLog(packet, "Sent", post);
     }
 }

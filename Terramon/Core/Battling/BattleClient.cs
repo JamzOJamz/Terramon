@@ -29,8 +29,10 @@ public sealed class BattleClient(IBattleProvider provider)
     }
     public BattleParticipant FoeID => _foe?.GetParticipantID() ?? BattleParticipant.None;
     public ClientBattleState State;
+
     // Instance is shared between both battlers
     public BattleField Battle;
+
     public BattleSide Side => Battle is null ? null : Provider == Battle.A.Provider ? Battle[1] : Battle[2];
 
     // These arent't used by remote clients
@@ -42,8 +44,14 @@ public sealed class BattleClient(IBattleProvider provider)
 
     public string Name => Provider.BattleName;
     public Entity Entity => Provider.SyncedEntity;
-    public bool BattleOngoing => State == ClientBattleState.Ongoing;
-    public bool IsLocal => Provider.SyncedEntity is Player plr && plr.whoAmI == Main.myPlayer;
+    public bool BattleOngoing
+    {
+        get
+        {
+            return State == ClientBattleState.Ongoing;
+        }
+    }
+    public bool IsLocal => Provider.IsLocal;
     public int SideIndex
     {
         get
@@ -51,47 +59,6 @@ public sealed class BattleClient(IBattleProvider provider)
             if (!BattleOngoing)
                 return 0;
             return Battle.A.Provider == Provider ? 1 : 2;
-        }
-    }
-    public void RequestBattleWith(IBattleProvider otherProvider)
-    {
-        // Singleplayer
-        if (Main.netMode == NetmodeID.SinglePlayer)
-        {
-            switch (Provider)
-            {
-                case TerramonPlayer plr:
-                    BattleManager mgr = BattleManager.Instance;
-                    var active = plr.ActiveSlot;
-                    if (active == -1)
-                        return;
-                    Pick = (byte)(active + 1);
-                    otherProvider.BattleClient.Pick = 1;
-                    mgr.QuickStartBattle(Provider.GetParticipantID(), otherProvider.GetParticipantID());
-                    break;
-                case PokemonNPC:
-                    Pick = 1;
-                    break;
-            }
-            return;
-        }
-
-        // This method may be called from the client or the server
-        // Called on local client when a player requests a battle with either another player or an NPC
-        // Called on server when an NPC requests a battle with a player (such as a trainer spotting the player or an NPC encounter of some kind)
-        switch (Provider.SyncedEntity)
-        {
-            case Player plr when plr.whoAmI == Main.myPlayer:
-                var request = new BattleRequestRpc(BattleRequestType.Request, Provider.GetParticipantID(), otherProvider.GetParticipantID());
-                Terramon.Instance.SendPacket(in request);
-                break;
-            case NPC npc when Main.dedServ:
-                break;
-            default:
-                throw new Exception(
-                $"A {Provider.SyncedEntity.GetType().Name} " +
-                $"attempted to start a battle with a {otherProvider.SyncedEntity.GetType().Name}" +
-                $"from the {(Main.dedServ ? "server" : "local client")}");
         }
     }
 
@@ -156,31 +123,6 @@ public sealed class BattleClient(IBattleProvider provider)
         return true;
     }
 
-    public void RequestBattleEnd(bool resign = true)
-    {
-        var m = Terramon.Instance;
-
-        if (!resign)
-        {
-            if (TieRequest)
-                return;
-            TieRequest = true;
-        }
-
-        if (Main.netMode == NetmodeID.MultiplayerClient)
-        {
-            var packet = new EndBattleRequestRpc(resign);
-            if (Foe.SyncedEntity is Player plr)
-                m.SendPacket(in packet, plr.whoAmI, Main.myPlayer, true);
-            else
-                m.SendPacket(in packet);
-        }
-        else
-        {
-            BattleManager.Instance.SubmitEndRequest((byte)Main.myPlayer, resign);
-        }
-    }
-
     public static void StartLocalBattle()
     {
         // Clients receive almost no information about the current battle
@@ -197,6 +139,9 @@ public sealed class BattleClient(IBattleProvider provider)
 
     public void BattleStopped()
     {
+        if (IsLocal)
+            EndLocalBattle();
+
         Provider.StopBattleEffects();
         Battle = null;
         Pick = 0;

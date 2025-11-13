@@ -1,9 +1,10 @@
 ﻿using EasyPacketsLib;
+using EasyPacketsLib.Internals;
 using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
-using Terramon.Content.GUI.TurnBased;
 using Terramon.Core.Battling.BattlePackets;
+using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.ID;
 
 namespace Terramon.Core.Battling;
@@ -19,6 +20,184 @@ public sealed class BattleManager
     public static BattleManager Instance { get; set; }
     private readonly Dictionary<BattleParticipant, BattleInstance> _activeBattles = [];
 
+    public void Reply(BattleMessage m)
+    {
+        // Even though the server owns NPCs, messages sent to those are received specifically by them
+        // This method only takes into account messages sent specifically to the server
+
+        switch (m)
+        {
+            case ForfeitOrder:
+                // Send the forfeit message to self (server)
+                var forfeit = new ForfeitStatement(forfeiter: m.Sender);
+                forfeit.Send();
+                break;
+            case ForfeitStatement f:
+                // Remove from active battle list
+                var inst = _activeBattles[f.Forfeiter.ID];
+                _activeBattles.Remove(inst.ClientA.ID);
+                _activeBattles.Remove(inst.ClientB.ID);
+
+                // Reset client fields
+                BattleInstance.Destroy(inst);
+                break;
+            case SlotChoice:
+                // Received when both have chosen
+                inst = _activeBattles[m.Sender.ID];
+
+                // Set states
+                inst.ClientA.State = inst.ClientB.State = ClientBattleState.PollingTeam;
+
+                // Start the stream
+                inst.EnsureStreamStarted();
+
+                // Ask both participants for their team
+                var teamQuestion = new TeamQuestion();
+                teamQuestion.Send(inst.ClientA.Provider);
+                teamQuestion.Send(inst.ClientB.Provider);
+                break;
+            case TeamAnswer s:
+                // Received once for each participant
+                inst = _activeBattles[s.Sender.ID];
+                inst.SubmitTeam(s.Sender.ID, s.Team);
+
+                // Set state
+                s.Sender.State = ClientBattleState.SetTeam;
+
+                // Check if both participants have submitted their team
+                if (inst.ClientA.State == ClientBattleState.SetTeam &&
+                    inst.ClientB.State == ClientBattleState.SetTeam)
+                {
+                    // If so, start the battle
+                    inst.StartEffects();
+
+                    // Send start message to self
+                    var start = new StartBattleStatement(inst.ClientA.Provider);
+                    start.Send();
+                }
+                break;
+            case TieStatement t:
+                // Remove from active battles list
+                inst = _activeBattles[t.EitherParticipant.ID];
+                _activeBattles.Remove(inst.ClientA.ID);
+                _activeBattles.Remove(inst.ClientB.ID);
+
+                // Reset client fields
+                BattleInstance.Destroy(inst);
+                break;
+        }
+    }
+    public bool Witness(BattleMessage m)
+    {
+        // Messages that are meant for a client or server-owned provider pass through here first
+        // Return false to intercept the message if it shouldn't be sent to the recipient
+
+        // TODO: I want to make sure that intercepted messages are still witnessed by other clients
+        // Or, at least make sure we understand the behavior of messages perfectly
+
+        switch (m)
+        {
+            // Messages related to challenging someone to a battle
+
+            case ChallengeQuestion:
+
+                // This only checks if the recipient is already in a battle,
+                // since the ability for a client to request a battle is handled clientside
+                if (_activeBattles.ContainsKey(m.Recipient.ID))
+                    // If they're already in a battle, intercept with an error
+                    return m.Return<ChallengeError>();
+
+                var inst = BattleInstance.Create(
+                    m.Sender.BattleClient,
+                    m.Recipient.BattleClient);
+
+                // Add the requester
+                // The requestee is only added if they accept
+                _activeBattles.Add(m.Sender.ID, inst);
+
+                // Set states
+                m.Sender.State = ClientBattleState.Requested;
+                break;
+            case ChallengeTakeback:
+
+                // Sent by original requester
+
+                // Remove from active battles list
+                _activeBattles.Remove(m.Sender.ID, out inst);
+
+                // Reset requester's fields
+                inst.ClientA.Battle = null;
+                inst.ClientA.Foe = null;
+                inst.ClientA.State = ClientBattleState.None;
+                break;
+            case ChallengeAnswer c:
+
+                // It's possible that when trying to answer a question,
+                // that provider's question has already been taken back.
+                // In that case, intercept, since they don't need the answer anymore
+                if (!_activeBattles.TryGetValue(m.Recipient.ID, out inst))
+                    return false;
+
+                if (c.Yes) // If the sender accepted
+                {
+                    // Add the requestee
+                    _activeBattles.Add(m.Sender.ID, inst);
+
+                    // Set states
+                    inst.State = BattleState.Picking;
+                    m.Sender.State = m.Recipient.State = ClientBattleState.PollingSlot;
+                }
+                else // If the sender declined
+                {
+                    // Reset client fields
+                    BattleInstance.Destroy(inst);
+
+                    // Remove from active battles list
+                    _activeBattles.Remove(m.Recipient.ID);
+                }
+                break;
+
+            // Messages related to setting up a battle
+
+            case SlotChoice s:
+                m.Sender.Pick = s.Slot;
+                m.Sender.State = ClientBattleState.SetSlot;
+                break;
+
+            // Messages related to intentionally ending a battle
+
+            case ForfeitStatement:
+
+                // Remove from active battles list
+                _activeBattles.Remove(m.Sender.ID, out inst);
+
+                // Reset client fields
+                BattleInstance.Destroy(inst);
+                break;
+            case TieQuestion:
+
+                // Set tie request flag
+                m.Sender.TieRequest = true;
+
+                // Check if the other client also requested a tie
+                if (m.Recipient.TieRequest)
+                {
+                    // If so, intercept, and send the agreed tie message to self (server)
+                    var agreedTie = new TieStatement(eitherParticipant: m.Sender, type: TieStatement.TieType.Agreed);
+                    agreedTie.Send();
+                    return false;
+                }
+                break;
+            case TieTakeback:
+
+                // Unset tie request flag
+                m.Sender.TieRequest = false;
+                break;
+
+        }
+
+        return true;
+    }
     public void HandleSingleElement(BattleInstance source, BinaryWriter w, ProtocolElement element, int toSide)
     {
         switch (element)
@@ -152,7 +331,7 @@ public sealed class BattleManager
                 break;
             case CureTeamElement nvs:
                 int side = nvs.Pokemon[1] - '0';
-                var sideTeamCount = source.Omniscient.Field[side].TeamCount;
+                var sideTeamCount = source.Omniscient[side].TeamCount;
                 for (int i = 0; i < sideTeamCount; i++)
                 {
                     Write(BattleActionID.SetPokemonStatus, true);
@@ -325,10 +504,13 @@ public sealed class BattleManager
                 HandleError(source, err, LatestInteractor);
                 break;
             case WinElement win:
-                EndBattle(source, win.Username[0] - '0', BattleOutcome.Win);
+                var winner = source[win.Username[0] - '0'].Provider;
+                var dubs = new WinStatement(winner);
+                dubs.Send();
                 break;
             case TieElement:
-                EndBattle(source, 0, BattleOutcome.Tie);
+                var tie = new TieStatement(eitherParticipant: source.ClientA.Provider, TieStatement.TieType.Regular);
+                tie.Send();
                 break;
         }
 
@@ -341,7 +523,6 @@ public sealed class BattleManager
             w.Write(b);
         }
     }
-
     private static VolatileEffect GetVolatile(string rawName)
     {
         // ooh boy
@@ -376,7 +557,6 @@ public sealed class BattleManager
 
         throw new Exception($"'{rawName}' wasn't recognized as a valid volatile effect");
     }
-
     public static void HandleError(BattleInstance source, ErrorElement error, int toSide)
     {
         if (toSide <= 0)
@@ -395,7 +575,6 @@ public sealed class BattleManager
             // do stuff with error type and subtype
         }
     }
-
     public static void HandleRequest(BattleInstance source, string rawRequest)
     {
         using var req = JsonDocument.Parse(rawRequest);
@@ -432,89 +611,7 @@ public sealed class BattleManager
             client.Battle[sd].CurrentRequest = sr;
         }
     }
-
-    public void EndBattle(BattleInstance source, int winningSide, BattleOutcome outcome)
-    {
-        var winnerOrOwner = winningSide == 0 ? source.ClientA : source[winningSide];
-        var loserOrOther = winnerOrOwner.Foe.BattleClient;
-
-        var a = winnerOrOwner.Provider.GetParticipantID();
-        var b = winnerOrOwner.Foe.GetParticipantID();
-
-        source.Stop();
-
-        if (Main.dedServ) // mp
-        {
-            var battleEnd = new EndBattleRpc(a, outcome);
-            Mod.SendPacket(in battleEnd);
-        }
-        else
-        {
-            EndBattleRpc.EndMessage(outcome, winnerOrOwner, loserOrOther);
-        }
-
-        _activeBattles.Remove(a);
-        _activeBattles.Remove(b);
-    }
-
-    public void SetPick(byte playerParticipant, byte pick)
-    {
-        var plr = Main.player[playerParticipant].Terramon();
-        ref byte cur = ref plr._battleClient.Pick;
-
-        /*
-        if (cur != 0) // somehow already picked
-            // ???
-        else
-        */
-        cur = pick;
-        plr._battleClient.State = ClientBattleState.SetSlot;
-
-        var battle = _activeBattles[plr.GetParticipantID()];
-        if (battle.ShouldStart)
-        {
-            // I'm unclear on whether it should immediately send a packet but I'm guessing yes?
-            // Otherwise wait for a tick using an int timer
-            var teamRequest = new BattleTeamRequestRpc();
-
-            var a = battle.ClientA.Provider.SyncedEntity;
-            var b = battle.ClientB.Provider.SyncedEntity;
-
-            if (a is not Player pa) throw new Exception("hwoahwowa");
-            if (b is not Player pb) throw new Exception("hwoahwowa");
-
-            Mod.SendPacket(in teamRequest, pa.whoAmI);
-            Mod.SendPacket(in teamRequest, pb.whoAmI);
-        }
-        else
-        {
-            Mod.Logger.Warn($"Battle didn't start because {battle.ClientA.Pick} and {battle.ClientB.Pick} and {battle.State}");
-        }
-    }
-
-    public void SetTeam(byte playerParticipant, SimplePackedPokemon[] packedTeam)
-        => SetTeam(new BattleParticipant(playerParticipant, BattleProviderType.Player), packedTeam);
-
-    public void SetTeam(BattleParticipant participant, SimplePackedPokemon[] packedTeam)
-    {
-        var battle = _activeBattles[participant];
-        var party = battle.SubmitTeam(participant, packedTeam).Provider.GetBattleTeam();
-
-        // Replicate the client's local team on the server
-        for (int i = 0; i < packedTeam.Length; i++)
-        {
-            party[i] ??= new();
-            party[i].SetFromNetPacked(in packedTeam[i]);
-        }
-
-        // Check if both players have their team set
-        // If so, start the battle
-        if (battle.ShouldStart)
-            StartBattle(battle);
-    }
-
     public int LatestInteractor;
-
     public void HandleChoice(BattleParticipant participant, BattleChoice choice, int operand)
     {
         var b = _activeBattles[participant];
@@ -524,143 +621,6 @@ public sealed class BattleManager
 
         b.SubmitChoice(LatestInteractor, choice, operand + 1);
     }
-
-    public static void StartBattle(BattleInstance battle)
-    {
-        battle.Start();
-
-        if (Main.dedServ)
-        {
-            var bf = new BattleField()
-            {
-                A = new(battle.ClientA.Provider),
-                B = new(battle.ClientB.Provider),
-            };
-
-            battle.ClientA.Battle = bf;
-            battle.ClientB.Battle = bf;
-
-            battle.Omniscient = new(bf);
-
-            // Send message to every client communicating of the start of the battle
-            var startBattleMessage = new BattleStartRpc(
-                battle.ClientA.Provider.GetParticipantID(),
-                battle.ClientB.Provider.GetParticipantID());
-
-            Mod.SendPacket(in startBattleMessage);
-        }
-
-        battle.ClientA.Foe = battle.ClientB.Provider;
-        battle.ClientB.Foe = battle.ClientA.Provider;
-
-        battle.State = BattleState.Ongoing;
-    }
-
-    public void StartNPCBattle(BattleParticipant requester, BattleParticipant requestee)
-    {
-        var battle = _activeBattles[requester];
-        _activeBattles.Add(requestee, battle);
-
-        var c = requestee.Client;
-        c.Pick = 1;
-        SetTeam(requestee, c.Provider.GetNetTeam());
-
-        var req = new BattleTeamRequestRpc();
-        Mod.SendPacket(in req, requester.WhoAmI);
-    }
-
-    public void SubmitEndRequest(byte requester, bool resign = true)
-    {
-        var participant = new BattleParticipant(requester, BattleProviderType.Player);
-        var b = _activeBattles[participant];
-        var c = participant.Client;
-
-        if (resign)
-        {
-            int winSide = c == b.ClientA ? 2 : 1;
-            EndBattle(b, winSide, BattleOutcome.AgreedWin);
-        }
-        else
-        {
-            if (c.TieRequest)
-                return;
-
-            c.TieRequest = true;
-            if (c.Foe.BattleClient.TieRequest)
-            {
-                EndBattle(b, 0, BattleOutcome.AgreedTie);
-            }
-        }
-    }
-
-    public void SubmitRequest(BattleParticipant requester, BattleParticipant requestee)
-    {
-        // this only checks if the requestee is already in a battle,
-        // since the ability for a client to request a battle is handled clientside
-        if (_activeBattles.TryGetValue(requestee, out var instance) &&
-            instance.State is BattleState.Picking or BattleState.Ongoing)
-        {
-            DeclineRequest(requester, requestee, error: true);
-            return;
-        }
-        var inst = new BattleInstance
-        {
-            ClientA = requester.Client,
-            ClientB = requestee.Client,
-        };
-        // add the requester. the requestee is only added if they accept or if they're an NPC
-        _activeBattles.Add(requester, inst);
-        if (requestee.Type != BattleProviderType.Player)
-        {
-            StartNPCBattle(requester, requestee);
-        }
-        else
-        {
-            var request = new BattleRequestRpc(BattleRequestType.Request, requester, requestee);
-            // send back to all clients
-            Mod.SendPacket(in request);
-        }
-    }
-
-    public void CancelRequest(BattleParticipant requester, BattleParticipant requestee)
-    {
-        // attempt to remove requester from battles list
-        // if not found, that means other clients don't know about the request anyway, so just return
-        if (!_activeBattles.Remove(requester))
-            return;
-        var cancellation = new BattleRequestRpc(BattleRequestType.Cancel, requester, requestee);
-        // send back to all clients
-        Mod.SendPacket(in cancellation);
-    }
-
-    public void AcceptRequest(BattleParticipant requester, BattleParticipant requestee)
-    {
-        // it is possible that when attempting to accept a request,
-        // that person's request has already been cancelled
-        if (!_activeBattles.TryGetValue(requester, out var instance))
-        {
-            // simply return here.
-            // cancellation will be replicated shortly, so no need to send another packet
-            return;
-        }
-        // change the requester's battle state to Picking and add the requestee to avoid any other requests
-        instance.State = BattleState.Picking;
-        _activeBattles.Add(requestee, instance);
-        var response = new BattleRequestRpc(BattleRequestType.Accept, requestee, requester);
-        // send back to all clients
-        Mod.SendPacket(in response);
-    }
-
-    public void DeclineRequest(BattleParticipant requester, BattleParticipant requestee, bool error = false)
-    {
-        // runs on the server
-        var response = new BattleRequestRpc(error ? BattleRequestType.Error : BattleRequestType.Decline, requestee, requester);
-        // if the request ends up in _activeBattles, that means every client knows about the request (data stored in _battleClient)
-        // so the packet has to be forwarded to everyone
-        bool broadcast = _activeBattles.Remove(requester);
-        Mod.SendPacket(in response, broadcast ? -1 : requester.WhoAmI);
-    }
-
     public void Observe(BattleParticipant battleOwner, MemoryStream buffer, bool onlyToSelf)
     {
         buffer.Position = 0;
@@ -672,24 +632,10 @@ public sealed class BattleManager
 
         if (!onlyToSelf)
         {
-            b.ClientA.Battle.Observer.Receive(reader);
+            b.ClientA.Battle.Receive(reader);
         }
 
         reader.Dispose();
-    }
-
-    // Called in singleplayer
-    public void QuickStartBattle(BattleParticipant requester, BattleParticipant requestee)
-    {
-        var inst = BattleInstance.Create(requester.Client, requestee.Client);
-
-        _activeBattles.Add(requester, inst);
-        _activeBattles.Add(requestee, inst);
-
-        inst.State = BattleState.Picking;
-
-        SetTeam(requester, requester.Provider.GetNetTeam());
-        SetTeam(requestee, requestee.Provider.GetNetTeam());
     }
 
     public static IBattleProvider GetProvider(byte whoAmI, BattleProviderType type = BattleProviderType.Player)
@@ -705,7 +651,7 @@ public sealed class BattleManager
         {
             BattleProviderType.Player => Main.player[whoAmI].Terramon(),
             BattleProviderType.PokemonNPC => Main.npc[whoAmI].Pokemon(),
-            _ => throw new Exception(),
+            _ => null,
         };
     }
     public static IBattleProvider GetProvider(BattleParticipant participant)

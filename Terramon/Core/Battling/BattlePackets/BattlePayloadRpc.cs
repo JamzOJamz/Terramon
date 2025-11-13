@@ -9,14 +9,14 @@ public readonly struct BattlePayloadRpc(BattleParticipant battleOwner, MemoryStr
     public void Serialise(BinaryWriter writer)
     {
         writer.Write(_battleOwner);
-        writer.Write((int)_buffer.Length);
+        writer.Write((ushort)_buffer.Length);
         _buffer.WriteTo(writer.BaseStream);
     }
 
     public BattlePayloadRpc Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         var battleOwner = reader.ReadParticipant();
-        var length = reader.ReadInt32();
+        var length = reader.ReadUInt16();
         var buffer = new MemoryStream(reader.ReadBytes(length));
         return new(battleOwner, buffer);
     }
@@ -24,13 +24,14 @@ public readonly struct BattlePayloadRpc(BattleParticipant battleOwner, MemoryStr
     public void Receive(in BattlePayloadRpc packet, in SenderInfo sender, ref bool handled)
     {
         // Being sent from server to clients
-        this.DebugLog();
+        this.ReceiveLog();
         handled = true;
 
         Main.NewText($"Received payload with {packet._buffer.Length} bytes of content!");
 
         using var reader = new BinaryReader(packet._buffer);
-        var o = packet._battleOwner.Client.Battle.Observer;
+        var c = packet._battleOwner.Client;
+        var o = c.Battle;
         o.Receive(reader);
     }
 }

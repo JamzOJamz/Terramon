@@ -25,7 +25,8 @@ public sealed class BattleSide : IEnumerable<PokemonData>
         {
             Team[i] = new()
             {
-                Side = this
+                Side = this,
+                Slot = (byte)i
             };
 
             var mon = team[i];

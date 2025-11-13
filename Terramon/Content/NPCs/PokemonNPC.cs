@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using System.IO;
@@ -11,10 +12,12 @@ using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Projectiles;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Battling;
+using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
 using Terramon.ID;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -71,11 +74,13 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public BattleProviderType ProviderType => BattleProviderType.PokemonNPC;
     public BattleClient BattleClient => _battleClient;
     public Entity SyncedEntity => NPC;
-    public string BattleName => "Wild" + Data.DisplayName;
+    public string BattleName => "Wild " + Data.DisplayName;
     public PokemonData[] GetBattleTeam() => [Data];
     public void StartBattleEffects()
     {
-
+        // Turn towards the player and disable hover behaviour
+        NPC.spriteDirection = NPC.direction = BattleClient.Foe.SyncedEntity.position.X > NPC.position.X ? 1 : -1;
+        NPC.ShowNameOnHover = false;
     }
     public void StopBattleEffects()
     {
@@ -86,7 +91,43 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (BattleClient.LocalClient.Foe == this)
             TestBattleUI.FoePanel.CurrentMon = Data;
     }
+    public void Reply(BattleMessage m)
+    {
+        switch (m)
+        {
+            case ChallengeQuestion:
 
+                // Accept immediately
+                m.Return(new ChallengeAnswer(yes: true));
+                break;
+            case ChallengeAnswer c: // Wild Pokemon in tall grass?
+
+                if (c.Yes)
+                {
+                    // Imbalanced operation: Will send battle pick to foe here,
+                    // and the other one's pick will be sent in SlotChoice to server
+                    m.Return(new SlotChoice(slot: 1));
+                }
+                break;
+            case SlotChoice: // Challenge to this mon
+                var pick = new SlotChoice(slot: 1)
+                {
+                    Sender = this
+                };
+                pick.Send();
+                break;
+            case TeamQuestion:
+                m.Return(new TeamAnswer(this.GetNetTeam()));
+                break;
+            default:
+                Main.NewText(m.GetType());
+                break;
+        }
+    }
+    public void Witness(BattleMessage message)
+    {
+        
+    }
     #endregion
 
     public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
@@ -461,7 +502,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     else
                     {
                         SoundEngine.PlaySound(SoundID.MenuTick);
-                        modPlayer.BattleClient.RequestBattleWith(this);
+                        modPlayer.StartBattle(this);
                     }
                 }
             }

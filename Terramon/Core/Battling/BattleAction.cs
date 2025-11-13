@@ -1,5 +1,4 @@
-﻿using Showdown.NET.Definitions;
-using Showdown.NET.Protocol;
+﻿using Showdown.NET.Protocol;
 using Terramon.ID;
 
 namespace Terramon.Core.Battling;

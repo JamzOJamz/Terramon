@@ -14,6 +14,7 @@ using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
+using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
@@ -24,6 +25,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using Terraria.Social.Base;
 
 namespace Terramon.Core;
 
@@ -48,9 +50,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public bool HasExpCharm;
     public bool HasPokeBanner;
     public bool HasShinyCharm;
-    public ExpShareSettings ParticipantSettings = new();
     public ExpShareSettings NonParticipantSettings = new(0.5f);
-    public bool ExpShareOn;
+    public ExpShareSettings ParticipantSettings = new();
 
     internal BattleClient _battleClient;
     public static int HoveredPlayer = -1;
@@ -135,6 +136,168 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         {
             BattleClient.EndLocalBattle();
         }
+        ActivePetProjectile?.ConfrontFoe(null);
+    }
+    public void Reply(BattleMessage m)
+    {
+        switch (m)
+        {
+            case ChallengeQuestion:
+
+                // Open UI to accept challenge
+                Main.NewText($"This ({m.Sender.BattleName}) Fucker Wants to Battle you");
+
+                // DEBUG: Accept immediately
+                m.Return(new ChallengeAnswer(yes: true));
+                break;
+            case ChallengeAnswer c:
+
+                if (c.Yes)
+                {
+                    Main.NewText($"{m.Sender} has accepted your challenge");
+                    // Imbalanced operation: Will send battle pick to foe here,
+                    // and the other one's pick will be sent in SlotChoice to server
+                    var slot = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
+                    m.Return(new SlotChoice(slot: slot));
+                }
+                else
+                    Main.NewText($"{m.Sender} has declined your challenge");
+                break;
+            case SlotChoice:
+                var slot0 = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
+                var pick = new SlotChoice(slot: slot0)
+                {
+                    Sender = this
+                };
+                pick.Send();
+                break;
+            case TeamQuestion:
+                m.Return(new TeamAnswer(this.GetNetTeam()));
+                break;
+            case TieQuestion:
+
+                // Show like a little notification and/or change the color of the tie button
+                Main.NewText($"{m.Sender.BattleName} asked to agree to a tie");
+                break;
+            case TieTakeback:
+
+                // Reverse the effect from the above message
+                Main.NewText($"{m.Sender.BattleName} doesn't want a tie anymore");
+                break;
+        }
+    }
+    public void Witness(BattleMessage m)
+    {
+        switch (m)
+        {
+            case ChallengeQuestion:
+
+                // Set client fields
+                // Keep in mind that this is also witnessed by the sender
+                m.Sender.State = ClientBattleState.Requested;
+                m.Sender.Foe = m.Recipient;
+                break;
+            case ChallengeTakeback:
+
+                // Unset client fields
+                m.Sender.State = ClientBattleState.None;
+                m.Sender.Foe = null;
+                break;
+            case ChallengeAnswer c:
+
+                if (c.Yes) // If the sender accepted
+                {
+                    // Set client fields
+                    m.Sender.State = m.Recipient.State = ClientBattleState.PollingSlot;
+                    m.Sender.Foe = m.Recipient;
+
+                    // Create battle field early to avoid nullrefs
+                    var bf = new BattleField()
+                    {
+                        A = new(m.Recipient),
+                        B = new(m.Sender),
+                    };
+
+                    m.Recipient.Field = m.Sender.Field = bf;
+                }
+                else
+                {
+                    // Unset client fields
+                    m.Recipient.State = ClientBattleState.None;
+                    m.Recipient.Foe = null;
+                }
+                break;
+            case SlotChoice s:
+                m.Sender.Pick = s.Slot;
+                break;
+            case TeamAnswer:
+                m.Sender.State = ClientBattleState.SetTeam;
+                break;
+            case StartBattleStatement s:
+
+                // Show start message and do battle start effects
+                var owner = s.BattleOwner;
+                var other = owner.Foe;
+                var a = owner.BattleName;
+                var b = other.BattleName;
+
+                Main.NewText($"{a} started a battle against {b}!", Color.Aqua);
+
+                // No this isn't a mistake, but because Terraria isn't a quantum program,
+                // we can't make it so that both sides run after the other one at the same time
+                // unless we do this
+                owner.StartBattleEffects();
+                other.StartBattleEffects();
+                owner.StartBattleEffects();
+                other.StartBattleEffects();
+
+                // Set states
+                owner.State = other.State = ClientBattleState.Ongoing;
+                break;
+            case ForfeitStatement f:
+
+                // Show forfeit message and do battle end effects
+                var forfeiter = f.Forfeiter;
+                var winner = forfeiter.Foe;
+                a = forfeiter.BattleName;
+                b = winner.BattleName;
+
+                Main.NewText($"{a} forfeited their battle against {b}!", Color.Lime);
+
+                forfeiter.BattleStopped();
+                winner.BattleStopped();
+                break;
+            case TieQuestion:
+                m.Sender.TieRequest = true;
+                break;
+            case TieTakeback:
+                m.Sender.TieRequest = false;
+                break;
+            case TieStatement t:
+
+                // Show tie messsage and do battle end effects
+                var either = t.EitherParticipant;
+                other = either.Foe;
+                a = either.BattleName;
+                b = other.BattleName;
+
+                switch (t.Type)
+                {
+                    case TieStatement.TieType.Regular:
+                        Main.NewText($"{a} and {b}'s battle ended in a tie!", Color.Yellow);
+                        break;
+                    case TieStatement.TieType.Agreed:
+                        Main.NewText($"{a} and {b} agreed to a tie!", Color.Yellow);
+                        break;
+                    case TieStatement.TieType.Forced:
+                        Main.NewText($"{a} and {b}'s battle was forcibly ended!", Color.Red);
+                        break;
+                }
+
+                either.BattleStopped();
+                other.BattleStopped();
+                break;
+        }
     }
     public void SetActiveSlot(byte newSlot)
     {
@@ -153,6 +316,21 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     }
 
     #endregion
+
+    public bool StartBattle(IBattleProvider other)
+    {
+        var c = other.BattleClient;
+        if (c is null || c.State != ClientBattleState.None)
+            return false;
+
+        var question = new ChallengeQuestion
+        {
+            Sender = this
+        };
+        question.Send(other);
+        return true;
+    }
+
 
     public override void Load()
     {
@@ -253,23 +431,13 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (_battleClient != null && HoveredPlayer != -1 && _battleClient.State == ClientBattleState.None)
         {
             if (Main.mouseRight && Main.mouseRightRelease)
-                StartMultiplayerBattle(HoveredPlayer);
+                StartBattle(Main.player[HoveredPlayer].Terramon());
             HoveredPlayer = -1;
         }
 
         if (!KeybindSystem.TogglePartyKeybind.JustPressed) return;
         var inventoryParty = UILoader.GetUIState<InventoryParty>();
         if (inventoryParty.Visible) inventoryParty.SimulateToggleSlots();
-    }
-
-    public bool StartMultiplayerBattle(int other)
-    {
-        var otherPlayer = Main.player[other].Terramon();
-        var c = otherPlayer._battleClient;
-        if (c is null || c.State != ClientBattleState.None)
-            return false;
-        BattleClient.RequestBattleWith(otherPlayer);
-        return true;
     }
 
     private void ProcessActiveMonTriggers()

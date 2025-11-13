@@ -698,9 +698,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             return;
         if (foeEntity is Player plr)
         {
-            var modPlayer = plr.Terramon();
-            if (modPlayer.ActivePetProjectile != null)
-                foeEntity = modPlayer.ActivePetProjectile.Projectile;
+            var pet = plr.Terramon().ActivePetProjectile;
+            if (pet != null)
+                foeEntity = pet.Projectile;
         }
         foePos = foeEntity.Center;
         foeDir = foeEntity.direction;

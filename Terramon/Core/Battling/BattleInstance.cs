@@ -5,6 +5,7 @@ using Showdown.NET.Simulator;
 using System.Runtime.InteropServices;
 using System.Text;
 using Terramon.Core.Battling.BattlePackets;
+using Terramon.Core.Battling.BattlePackets.Messages;
 
 namespace Terramon.Core.Battling;
 
@@ -35,8 +36,7 @@ public sealed class BattleInstance
             B = new(pb),
         };
 
-        a.Battle = bf;
-        b.Battle = bf;
+        a.Battle = b.Battle = bf;
         a.Foe = pb;
         b.Foe = pa;
 
@@ -44,12 +44,18 @@ public sealed class BattleInstance
         {
             ClientA = a,
             ClientB = b,
-            Omniscient = new(bf),
+            Omniscient = bf,
         };
+    }
+    public static void Destroy(BattleInstance i)
+    {
+        i.ClientA.Battle = i.ClientB.Battle = null;
+        i.ClientA.Foe = i.ClientB.Foe = null;
+        i.ClientA.State = i.ClientB.State = ClientBattleState.None;
     }
 
     public BattleState State;
-    public BattleObserver Omniscient; // omniscient viewer
+    public BattleField Omniscient; // omniscient viewer
     public BattleClient ClientA; // requester
     public BattleClient ClientB; // requestee
     // 1-indices
@@ -62,17 +68,14 @@ public sealed class BattleInstance
 
     public BattleClient SubmitTeam(BattleParticipant participant, SimplePackedPokemon[] packedTeam)
     {
-        BattleClient client;
-        if (ClientA == participant.Client)
-            client = ClientA;
-        else if (ClientB == participant.Client)
-            client = ClientB;
-        else
-            throw new Exception(
-                $"Participant {participant} ({participant.Client.Name}) wasn't found in battle. Instead, {ClientA.Name} and {ClientB.Name} were found.");
-
-        SubmitTeam_Internal(client, packedTeam);
-        return client;
+        var c = participant.Client;
+        if (ClientA == c || ClientB == c)
+        {
+            SubmitTeam_Internal(c, packedTeam);
+            return c;
+        }
+        throw new Exception(
+            $"Participant {participant} ({participant.Client.Name}) wasn't found in battle. Instead, {ClientA.Name} and {ClientB.Name} were found.");
     }
 
     private void SubmitTeam_Internal(BattleClient client, SimplePackedPokemon[] packedTeam)
@@ -147,10 +150,18 @@ public sealed class BattleInstance
         Task.Run(RunAsync);
     }
 
-    public void Start()
+    public void StartEffects()
     {
+        State = BattleState.Ongoing;
+
         ClientA.State = ClientBattleState.Ongoing;
         ClientB.State = ClientBattleState.Ongoing;
+
+        // No this isn't a mistake, but because Terraria isn't a quantum program,
+        // we can't make it so that both sides run after the other one at the same time
+        // unless we do this
+        ClientA.Provider.StartBattleEffects();
+        ClientB.Provider.StartBattleEffects();
         ClientA.Provider.StartBattleEffects();
         ClientB.Provider.StartBattleEffects();
     }
@@ -213,7 +224,7 @@ public sealed class BattleInstance
                 // Console.WriteLine($"Received message of type {frame.GetType().Name} from simulator");
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
-                    Console.WriteLine(element);
+                    Main.NewText(element);
                     if (element is ISplitElement split)
                     {
                         int tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
@@ -229,7 +240,8 @@ public sealed class BattleInstance
         {
             Log($"Battle encountered an error: {ex.GetType()}: {ex.Message}", ConsoleColor.Red);
             Log(ex.StackTrace ?? "No stack trace.", ConsoleColor.Red);
-            BattleManager.Instance.EndBattle(this, 0, BattleOutcome.ForcedTie);
+            var battleEnd = new TieStatement(eitherParticipant: ClientA.Provider, type: TieStatement.TieType.Forced);
+            battleEnd.Send();
         }
         finally
         {

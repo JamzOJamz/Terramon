@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terramon.Core.Battling.BattlePackets;
+using Terramon.Core.Battling.BattlePackets.Messages;
 
 namespace Terramon.Content.GUI.TurnBased;
 
@@ -340,7 +341,12 @@ public sealed class TestBattleUI : SmartUIState
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
         SoundEngine.PlaySound(Run);
-        BattleClient.LocalClient.RequestBattleEnd();
+
+        var forfeit = new ForfeitOrder()
+        {
+            Sender = TerramonPlayer.LocalPlayer
+        };
+        forfeit.Send();
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
