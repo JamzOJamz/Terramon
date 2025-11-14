@@ -9,6 +9,7 @@ public sealed class BattleField
     public BattleSide B;
     public BattleWeather Weather;
     public FieldCondition Condition;
+    public int Turn;
 
     public void ModifyBoosts(BoostModifierAction action)
     {
@@ -46,6 +47,9 @@ public sealed class BattleField
                 break;
             case BattleActionID.ActionFail:
                 break;
+            case BattleActionID.PokemonWait:
+                this[r.ReadByte()].Trapped = 1;
+                break;
             case BattleActionID.SetPokemonStatus:
                 ref var mon = ref GetMon(r);
                 if (a.Flags[0]) // is cure status
@@ -80,6 +84,11 @@ public sealed class BattleField
                     ModifyBoosts(BoostModifierAction.ClearAll);
                 else
                     GetMon(r).ModifyBoosts((BoostModifierAction)r.ReadByte());
+                break;
+            case BattleActionID.AdvanceTurn:
+                Turn++;
+                A.AdvanceTurn();
+                B.AdvanceTurn();
                 break;
             case BattleActionID.SetWeather:
                 Weather = (BattleWeather)r.ReadByte();

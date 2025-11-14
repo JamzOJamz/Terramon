@@ -8,15 +8,19 @@ public sealed class BattleSide : IEnumerable<PokemonData>
     public int TeamCount;
     public BattlePokemon[] Team = new BattlePokemon[6];
     public IBattleProvider Provider;
-    public ShowdownRequest CurrentRequest;
     public SideCondition Condition;
+    public int Trapped;
     public ref BattlePokemon ActivePokemon => ref Team[_activeSlot];
     public void SetActivePokemon(byte slot)
     {
         _activeSlot = slot;
         Provider.SetActiveSlot(slot);
     }
-
+    public void AdvanceTurn()
+    {
+        if (Trapped != 0)
+            Trapped--;
+    }
     public BattleSide(IBattleProvider baseOn)
     {
         Provider = baseOn;

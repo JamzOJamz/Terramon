@@ -205,48 +205,30 @@ public abstract class BattleMessage : ILoadable
         public readonly void Serialise(BinaryWriter writer)
         {
             var start = writer.BaseStream.Length;
-            var cur = start;
 
             writer.Write(_underlying.ID);
-            LogSize();
             writer.Write(_underlying.Sender);
-            LogSize();
             writer.Write(_underlying.Recipient);
-            LogSize();
             _underlying.Write(writer);
-            LogSize();
 
-            Console.WriteLine($"Wrote a total of {writer.BaseStream.Length - start} bytes for {_underlying.GetType().Name} from {_underlying.Sender?.BattleName ?? "server"} to {_underlying.Recipient?.BattleName ?? "server"}");
-
-            void LogSize()
-            {
-                Console.WriteLine($"Wrote {writer.BaseStream.Length - cur} bytes");
-                cur = writer.BaseStream.Length;
-            }
+            Console.WriteLine(
+                $"Wrote {writer.BaseStream.Length - start} bytes for {_underlying.GetType().Name} " +
+                $"from {_underlying.Sender?.BattleName ?? "server"} to {_underlying.Recipient?.BattleName ?? "server"}");
         }
 
         public void Deserialise(BinaryReader reader, in SenderInfo sender)
         {
             var start = reader.BaseStream.Position;
-            var cur = start;
 
             var id = reader.ReadByte();
-            LogSize();
             _underlying = (BattleMessage)Activator.CreateInstance(_messageTypes[id]);
             _underlying.Sender = reader.ReadParticipant();
-            LogSize();
             _underlying.Recipient = reader.ReadParticipant();
-            LogSize();
             _underlying.Read(reader);
-            LogSize();
 
-            Console.WriteLine($"Read a total of {reader.BaseStream.Position - start} bytes for {_underlying.GetType().Name}");
-
-            void LogSize()
-            {
-                Console.WriteLine($"Read {reader.BaseStream.Position - cur} bytes");
-                cur = reader.BaseStream.Position;
-            }
+            Console.WriteLine(
+                $"Received {reader.BaseStream.Position - start} bytes for {_underlying.GetType().Name} " +
+                $"from {_underlying.Sender?.BattleName ?? "server"} to {_underlying.Recipient?.BattleName ?? "server"}");
         }
 
         public readonly void Receive(in SenderInfo sender, ref bool handled)
@@ -274,11 +256,13 @@ public abstract class BattleMessage : ILoadable
                 {
                     if (BattleManager.Instance.Witness(msg))
                         msg.Send(msg.Recipient, selfWitness: false);
+                    return;
                 }
-                else if (target.IsLocal)
+
+                TerramonPlayer.LocalPlayer.Witness(msg);
+
+                if (target.IsLocal)
                     target.Reply(msg);
-                else
-                    TerramonPlayer.LocalPlayer.Witness(msg);
             }
         }
     }

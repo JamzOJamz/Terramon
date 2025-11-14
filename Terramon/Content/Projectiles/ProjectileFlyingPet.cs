@@ -144,7 +144,11 @@ public class ProjectileFlyingPet : ProjectileComponent
         {
             var pokeAvatar = battle.Foe.SyncedEntity;
             if (pokeAvatar is Player plr)
-                pokeAvatar = plr.Terramon().ActivePetProjectile.Projectile;
+            {
+                var pet = plr.Terramon().ActivePetProjectile;
+                if (pet != null)
+                    pokeAvatar = pet.Projectile;
+            }
             Vector2 oppoCenter = pokeAvatar.Center;
             p.spriteDirection = p.direction = (oppoCenter.X < projCenter.X) ? 1 : -1;
         }

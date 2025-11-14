@@ -18,6 +18,6 @@ public struct ShowdownRequestRpc(ShowdownRequest request) : IEasyPacket
     {
         // Sent from server to target client only
         handled = true;
-        BattleSide.LocalSide.CurrentRequest = _request;
+        BattleClient.LocalClient.CurrentRequest = _request;
     }
 }

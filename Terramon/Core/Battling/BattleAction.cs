@@ -43,55 +43,63 @@ public enum BattleActionID : byte
     /// </summary>
     SetPokemonHP,
     /// <summary>
-    /// <see cref="MoveElement"/>
+    ///     <see cref="MoveElement"/>
     /// </summary>
     MoveAnimation,
     /// <summary>
-    /// <see cref="SwitchElement"/> and <see cref="DragElement"/>
+    ///     <see cref="SwitchElement"/> and <see cref="DragElement"/>
     /// </summary>
     SwitchPokemon,
     /// <summary>
-    /// <see cref="CantElement"/>, <see cref="FailElement"/>, <see cref="BlockElement"/>, <see cref="NoTargetElement"/>, <see cref="MissElement"/> and <see cref="ImmuneElement"/>
+    ///     <see cref="CantElement"/>, <see cref="FailElement"/>, <see cref="BlockElement"/>, <see cref="NoTargetElement"/>, <see cref="MissElement"/> and <see cref="ImmuneElement"/>
     /// </summary>
     ActionFail,
     /// <summary>
-    /// <see cref="StatusElement"/>, <see cref="CureStatusElement"/> and <see cref="CureTeamElement"/>
+    ///     <see cref="PrepareElement"/> and <see cref="MustRechargeElement"/>
+    /// </summary>
+    PokemonWait,
+    /// <summary>
+    ///     <see cref="StatusElement"/>, <see cref="CureStatusElement"/> and <see cref="CureTeamElement"/>
     /// </summary>
     SetPokemonStatus,
     /// <summary>
-    /// <see cref="BoostElement"/>, <see cref="UnboostElement"/>, <see cref="SetBoostElement"/>, <see cref="SwapBoostElement"/>, and <see cref="CopyBoostElement"/>
+    ///     <see cref="BoostElement"/>, <see cref="UnboostElement"/>, <see cref="SetBoostElement"/>, <see cref="SwapBoostElement"/>, and <see cref="CopyBoostElement"/>
     /// </summary>
     SetPokemonBoost,
     /// <summary>
-    /// <see cref="InvertBoostElement"/>, <see cref="ClearBoostElement"/>, <see cref="ClearAllBoostElement"/>, <see cref="ClearPositiveBoostElement"/>, and <see cref="ClearNegativeBoostElement"/>
+    ///     <see cref="InvertBoostElement"/>, <see cref="ClearBoostElement"/>, <see cref="ClearAllBoostElement"/>, <see cref="ClearPositiveBoostElement"/>, and <see cref="ClearNegativeBoostElement"/>
     /// </summary>
     AllPokemonBoost,
     /// <summary>
-    /// <see cref="WeatherElement"/>
+    ///     <see cref="TurnElement"/>
+    /// </summary>
+    AdvanceTurn,
+    /// <summary>
+    ///     <see cref="WeatherElement"/>
     /// </summary>
     SetWeather,
     /// <summary>
-    /// <see cref="FieldStartElement"/> and <see cref="FieldEndElement"/>
+    ///     <see cref="FieldStartElement"/> and <see cref="FieldEndElement"/>
     /// </summary>
     SetFieldCondition,
     /// <summary>
-    /// <see cref="SideStartElement"/>, <see cref="SideEndElement"/> and <see cref="SwapSideConditionsElement"/>
+    ///     <see cref="SideStartElement"/>, <see cref="SideEndElement"/> and <see cref="SwapSideConditionsElement"/>
     /// </summary>
     SetSideCondition,
     /// <summary>
-    /// <see cref="StartVolatileElement"/> and <see cref="EndVolatileElement"/>
+    ///     <see cref="StartVolatileElement"/> and <see cref="EndVolatileElement"/>
     /// </summary>
     SetPokemonVolatile,
     /// <summary>
-    /// <see cref="ItemElement"/> and <see cref="EndItemElement"/>
+    ///     <see cref="ItemElement"/> and <see cref="EndItemElement"/>
     /// </summary>
     PokemonItem,
     /// <summary>
-    /// <see cref="AbilityElement"/> and <see cref="EndAbilityElement"/>
+    ///     <see cref="AbilityElement"/> and <see cref="EndAbilityElement"/>
     /// </summary>
     PokemonAbility,
     /// <summary>
-    /// <see cref="TransformElement"/>, <see cref="MegaElement"/>, <see cref="PrimalElement"/> and <see cref="BurstElement"/>
+    ///     <see cref="TransformElement"/>, <see cref="MegaElement"/>, <see cref="PrimalElement"/> and <see cref="BurstElement"/>
     /// </summary>
     PokemonTransformDetails
 }

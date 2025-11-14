@@ -28,6 +28,7 @@ public sealed class BattleClient(IBattleProvider provider)
     }
     public BattleParticipant FoeID => _foe?.ID ?? BattleParticipant.None;
     public ClientBattleState State;
+    public ShowdownRequest CurrentRequest;
 
     // Instance is shared between both battlers
     public BattleField Battle;
@@ -84,12 +85,10 @@ public sealed class BattleClient(IBattleProvider provider)
     {
         if (State != ClientBattleState.Ongoing)
             return false;
-
-        var s = Side;
-        if (s is null)
+        if (Side.Trapped != 0)
             return false;
 
-        return s.CurrentRequest switch
+        return CurrentRequest switch
         {
             ShowdownRequest.None => false,
             ShowdownRequest.Any => true,
@@ -114,10 +113,7 @@ public sealed class BattleClient(IBattleProvider provider)
             BattleManager.Instance.HandleChoice(ID, choice, (byte)operand);
         }
 
-        if (Foe is PokemonNPC npc)
-        {
-            npc.BattleClient.MakeChoice(BattleChoice.Default);
-        }
+        CurrentRequest = ShowdownRequest.Wait;
 
         return true;
     }

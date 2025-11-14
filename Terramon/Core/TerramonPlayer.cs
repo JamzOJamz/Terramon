@@ -179,6 +179,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     }
     public void Witness(BattleMessage m)
     {
+        Console.WriteLine($"Client: Witnessing a {m.GetType().Name}");
+
         switch (m)
         {
             case ChallengeQuestion:
@@ -234,6 +236,9 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
                 Main.NewText($"{a} started a battle against {b}!", Color.Aqua);
 
+                // Set states
+                owner.State = other.State = ClientBattleState.Ongoing;
+
                 // No this isn't a mistake, but because Terraria isn't a quantum program,
                 // we can't make it so that both sides run after the other one at the same time
                 // unless we do this
@@ -241,9 +246,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 other.StartBattleEffects();
                 owner.StartBattleEffects();
                 other.StartBattleEffects();
-
-                // Set states
-                owner.State = other.State = ClientBattleState.Ongoing;
                 break;
             case ForfeitStatement f:
 

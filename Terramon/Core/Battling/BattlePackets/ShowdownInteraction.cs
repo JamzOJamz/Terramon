@@ -24,7 +24,7 @@ public struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError)
     public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         // Packet is received by a single client
-        BattleSide.LocalSide.CurrentRequest = ShowdownRequest.None;
+        BattleClient.LocalClient.CurrentRequest = ShowdownRequest.None;
         // do stuff with error type and subtype
     }
 }

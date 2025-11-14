@@ -1,6 +1,7 @@
 ﻿using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
+using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.ID;
@@ -98,9 +99,6 @@ public sealed class BattleManager
     {
         // Messages that are meant for a client or server-owned provider pass through here first
         // Return false to intercept the message if it shouldn't be sent to the recipient
-
-        // TODO: I want to make sure that intercepted messages are still witnessed by other clients
-        // Or, at least make sure we understand the behavior of messages perfectly
 
         Console.WriteLine($"Server: Witnessing a {m.GetType().Name}");
 
@@ -215,6 +213,20 @@ public sealed class BattleManager
             case MissElement:
             case ImmuneElement:
                 Write(BattleActionID.ActionFail);
+                break;
+            case PrepareElement prep:
+                var side = prep.Attacker[1] - '0';
+                Write(BattleActionID.PokemonWait);
+                {
+                    w.Write((byte)side);
+                }
+                break;
+            case MustRechargeElement prep:
+                side = prep.Pokemon[1] - '0';
+                Write(BattleActionID.PokemonWait);
+                {
+                    w.Write((byte)side);
+                }
                 break;
             case MoveElement move:
                 var mvD = move.Details;
@@ -336,7 +348,7 @@ public sealed class BattleManager
                 }
                 break;
             case CureTeamElement nvs:
-                int side = nvs.Pokemon[1] - '0';
+                side = nvs.Pokemon[1] - '0';
                 var sideTeamCount = source.Omniscient[side].TeamCount;
                 for (int i = 0; i < sideTeamCount; i++)
                 {
@@ -417,6 +429,9 @@ public sealed class BattleManager
                 break;
             case ClearAllBoostElement:
                 Write(BattleActionID.AllPokemonBoost, true);
+                break;
+            case TurnElement:
+                Write(BattleActionID.AdvanceTurn);
                 break;
             case WeatherElement wth:
                 Write(BattleActionID.SetWeather, wth.Upkeep);
@@ -577,7 +592,7 @@ public sealed class BattleManager
         }
         else
         {
-            client.Battle[toSide].CurrentRequest = ShowdownRequest.None;
+            client.CurrentRequest = ShowdownRequest.None;
             // do stuff with error type and subtype
         }
     }
@@ -614,7 +629,9 @@ public sealed class BattleManager
         }
         else
         {
-            client.Battle[sd].CurrentRequest = sr;
+            client.CurrentRequest = sr;
+            if (client.Provider is PokemonNPC npc)
+                npc.AutoBattleChoice();
         }
     }
     public int LatestInteractor;

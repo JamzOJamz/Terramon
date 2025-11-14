@@ -125,6 +125,10 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     {
         
     }
+    public void AutoBattleChoice()
+    {
+        _battleClient.MakeChoice(Core.Battling.BattlePackets.BattleChoice.Default);
+    }
     #endregion
 
     public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
