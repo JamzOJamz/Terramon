@@ -1,7 +1,5 @@
-using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
-using System.IO;
 using System.Reflection;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
@@ -17,7 +15,6 @@ using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
 using Terramon.ID;
-using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;

@@ -4,7 +4,6 @@ using ReLogic.Content;
 using Terramon.Content.Buffs;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
-using Terramon.Content.NPCs;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders;

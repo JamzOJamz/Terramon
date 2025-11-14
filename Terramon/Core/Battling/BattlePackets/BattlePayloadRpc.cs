@@ -1,36 +1,32 @@
-﻿using EasyPacketsLib;
-
-namespace Terramon.Core.Battling.BattlePackets;
-public readonly struct BattlePayloadRpc(BattleParticipant battleOwner, MemoryStream buffer)
-    : IEasyPacket<BattlePayloadRpc>, IEasyPacketHandler<BattlePayloadRpc>
+﻿namespace Terramon.Core.Battling.BattlePackets;
+public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer) : IEasyPacket
 {
-    private readonly BattleParticipant _battleOwner = battleOwner;
-    private readonly MemoryStream _buffer = buffer;
-    public void Serialise(BinaryWriter writer)
+    private IBattleProvider _battleOwner = battleOwner;
+    private MemoryStream _buffer = buffer;
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write(_battleOwner);
         writer.Write((ushort)_buffer.Length);
         _buffer.WriteTo(writer.BaseStream);
     }
 
-    public BattlePayloadRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        var battleOwner = reader.ReadParticipant();
+        _battleOwner = reader.ReadParticipant();
         var length = reader.ReadUInt16();
-        var buffer = new MemoryStream(reader.ReadBytes(length));
-        return new(battleOwner, buffer);
+        _buffer = new MemoryStream(reader.ReadBytes(length));
     }
 
-    public void Receive(in BattlePayloadRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         // Being sent from server to clients
         this.ReceiveLog();
         handled = true;
 
-        Main.NewText($"Received payload with {packet._buffer.Length} bytes of content!");
+        Main.NewText($"Received payload with {_buffer.Length} bytes of content!");
 
-        using var reader = new BinaryReader(packet._buffer);
-        var c = packet._battleOwner.Client;
+        using var reader = new BinaryReader(_buffer);
+        var c = _battleOwner.BattleClient;
         var o = c.Battle;
         o.Receive(reader);
     }

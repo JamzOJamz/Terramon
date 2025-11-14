@@ -1,15 +1,19 @@
 ﻿namespace Terramon.Core.Battling.BattlePackets.Messages;
 
-public sealed class SlotChoice(byte slot) : BattleMessage
+public sealed class SlotChoice : BattleMessage
 {
-    public byte Slot = slot;
+    public byte Slot;
+    public SlotChoice() { }
+    public SlotChoice(byte slot) => Slot = slot;
     public override void Write(BinaryWriter w) => w.Write(Slot);
     public override void Read(BinaryReader r) => Slot = r.ReadByte();
 }
 public sealed class TeamQuestion : BattleMessage;
-public sealed class TeamAnswer(SimplePackedPokemon[] team) : BattleMessage
+public sealed class TeamAnswer : BattleMessage
 {
-    public SimplePackedPokemon[] Team = team;
+    public SimplePackedPokemon[] Team;
+    public TeamAnswer() { }
+    public TeamAnswer(SimplePackedPokemon[] team) => Team = team;
     public override void Write(BinaryWriter w)
     {
         w.Write((byte)Team.Length);
@@ -24,9 +28,11 @@ public sealed class TeamAnswer(SimplePackedPokemon[] team) : BattleMessage
             Team[i] = new(r);
     }
 }
-public sealed class StartBattleStatement(IBattleProvider battleOwner) : BattleMessage
+public sealed class StartBattleStatement : BattleMessage
 {
-    public IBattleProvider BattleOwner = battleOwner;
-    public override void Write(BinaryWriter w) => w.Write(BattleOwner.ID);
-    public override void Read(BinaryReader r) => BattleOwner = r.ReadParticipant().Provider;
+    public IBattleProvider BattleOwner;
+    public StartBattleStatement() { }
+    public StartBattleStatement(IBattleProvider battleOwner) => BattleOwner = battleOwner;
+    public override void Write(BinaryWriter w) => w.Write(BattleOwner);
+    public override void Read(BinaryReader r) => BattleOwner = r.ReadParticipant();
 }

@@ -19,7 +19,6 @@
 	<ItemGroup>
 		<Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false" />
 		<Publicize Include="FNA" />
-		<Publicize Include="EasyPacketsLib" />
 		<DoNotPublicize Include="tModLoader:Terraria.WorldBuilding.GenPass" />
 		<DoNotPublicize Include="tModLoader:Terraria.UI.UIElement" />
 		<DoNotPublicize Include="tModLoader:Terraria.GameContent.UI.Elements.UIImage.DrawSelf" />
@@ -31,9 +30,6 @@
 	</ItemGroup>
 	
     <ItemGroup>
-        <Reference Include="EasyPacketsLib">
-            <HintPath>lib\EasyPacketsLib.dll</HintPath>
-        </Reference>
         <Reference Include="SharpCompress">
           <HintPath>lib\SharpCompress.dll</HintPath>
         </Reference>
@@ -56,6 +52,7 @@
         <Using Include="Terraria" />
         <Using Include="Terraria.ID" />
         <Using Include="Terraria.ModLoader" />
+        <Using Include="Terramon.Content.Packets" />
         <Using Include="Terramon.Helpers.VanillaExtensions" Static="True" />
     </ItemGroup>
 </Project>

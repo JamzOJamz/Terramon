@@ -4,7 +4,6 @@ using ReLogic.Content;
 using Showdown.NET.Definitions;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
-using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.ID;
 using Terraria.ModLoader.Config;
@@ -83,7 +82,7 @@ public class PokemonData
     }
 
     public ushort MaxHP
-        => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (EVs.HP / 4) + 100) * Level / 100 + 10);
+        => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (int)(EVs.HP / 4d) + 100) * Level / 100d + 10);
     
     public ushort RegenHP { get; private set; }
 

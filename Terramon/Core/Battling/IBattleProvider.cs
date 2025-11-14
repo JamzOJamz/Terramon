@@ -46,8 +46,6 @@ public interface IBattleProvider
 
 public static class BattleProviderExtensions
 {
-    public static BattleParticipant GetParticipantID(this IBattleProvider provider)
-        => new((byte)provider.SyncedEntity.whoAmI, provider.ProviderType);
     public static SimplePackedPokemon[] GetNetTeam(this IBattleProvider provider)
         => SimplePackedPokemon.Team(provider.GetBattleTeam());
 }

@@ -1,6 +1,4 @@
-﻿using EasyPacketsLib;
-
-namespace Terramon.Core.Battling.BattlePackets.Messages;
+﻿namespace Terramon.Core.Battling.BattlePackets.Messages;
 public abstract class BattleMessage : ILoadable
 {
     private static readonly Dictionary<Type, BattleMessage> _messagesByType = [];
@@ -20,6 +18,9 @@ public abstract class BattleMessage : ILoadable
     {
         ID = (byte)_messageTypes.Count;
         var t = GetType();
+
+        Terramon.Instance.Logger.Info($"Name: {t.Name}, ID: {ID}");
+
         _messageTypes.Add(t);
         _messagesByType.Add(t, this);
     }
@@ -70,7 +71,7 @@ public abstract class BattleMessage : ILoadable
     ///     </para>
     /// </summary>
     /// <param name="other">If null, the battle manager, else, the target provider</param>
-    public void Send(IBattleProvider other = null)
+    public void Send(IBattleProvider other = null, bool selfWitness = true)
     {
         Recipient = other;
         if (Main.netMode == NetmodeID.SinglePlayer)
@@ -82,6 +83,7 @@ public abstract class BattleMessage : ILoadable
             {
                 // "Client" or "server-owned" provider is sending to "server"
                 // Simulate a packet being received by the server
+                BattleManager.Instance.Witness(this);
                 BattleManager.Instance.Reply(this);
             }
             else // Sending from "client" to "server-owned" provider or vice versa
@@ -96,15 +98,23 @@ public abstract class BattleMessage : ILoadable
 
         if (Main.dedServ)
         {
-            if (Sender is null && other is null) // Server is sending to server
+            if (other is null) // Server or server-owned provider is sending to server
             {
                 // The behavior for this is that everyone witnesses the message and only the server replies
+
+                // If has sender (server-owned provider), make them witness the message
+                Sender?.Witness(this);
+                BattleManager.Instance.Witness(this);
+
                 var msgPacket = new BattleMessageRpc(this);
-                Terramon.Instance.SendPacket(in msgPacket);
+                Terramon.Instance.SendPacket(msgPacket);
 
                 BattleManager.Instance.Reply(this);
                 return;
             }
+
+            if (selfWitness)
+                BattleManager.Instance.Witness(this);
 
             switch (other.OwningSide) // Server is sending to client or to server-owned provider (Wild Pokemon and Trainer NPCs)
             {
@@ -115,6 +125,7 @@ public abstract class BattleMessage : ILoadable
                     Terramon.Instance.SendPacket(msgPacket);
                     break;
                 case ModSide.Server:
+                    other.Witness(this);
                     other.Reply(this);
                     break;
                 default: // Shouldn't happen but just for completeness
@@ -124,9 +135,16 @@ public abstract class BattleMessage : ILoadable
         }
         else // Client is sending to server or another client
         {
+            if (Sender is null)
+            {
+                Terramon.Instance.Logger.Warn($"Client {Main.myPlayer} tried to send a message as the server");
+                return;
+            }
+            if (selfWitness)
+                Sender.Witness(this);
             // Everything is already handled by the server
             var msgPacket = new BattleMessageRpc(this);
-            Terramon.Instance.SendPacket(in msgPacket);
+            Terramon.Instance.SendPacket(msgPacket);
         }
     }
 
@@ -180,52 +198,73 @@ public abstract class BattleMessage : ILoadable
         
     }
 
-    public readonly struct BattleMessageRpc(BattleMessage underlying)
-    : IEasyPacket<BattleMessageRpc>, IEasyPacketHandler<BattleMessageRpc>
+    public struct BattleMessageRpc(BattleMessage underlying) : IEasyPacket
     {
-        private readonly BattleMessage _underlying = underlying;
+        private BattleMessage _underlying = underlying;
 
-        public void Serialise(BinaryWriter writer)
+        public readonly void Serialise(BinaryWriter writer)
         {
-            var sender = _underlying.Sender?.GetParticipantID() ?? BattleParticipant.None;
-            var recipient = _underlying.Recipient?.GetParticipantID() ?? BattleParticipant.None;
-
-            var cur = writer.BaseStream.Length;
+            var start = writer.BaseStream.Length;
+            var cur = start;
 
             writer.Write(_underlying.ID);
-            writer.Write(sender);
-            writer.Write(recipient);
+            LogSize();
+            writer.Write(_underlying.Sender);
+            LogSize();
+            writer.Write(_underlying.Recipient);
+            LogSize();
             _underlying.Write(writer);
+            LogSize();
 
-            Console.WriteLine($"Wrote {writer.BaseStream.Length - cur} bytes for message of type {_underlying.GetType().Name}");
+            Console.WriteLine($"Wrote a total of {writer.BaseStream.Length - start} bytes for {_underlying.GetType().Name} from {_underlying.Sender?.BattleName ?? "server"} to {_underlying.Recipient?.BattleName ?? "server"}");
+
+            void LogSize()
+            {
+                Console.WriteLine($"Wrote {writer.BaseStream.Length - cur} bytes");
+                cur = writer.BaseStream.Length;
+            }
         }
 
-        public BattleMessageRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+        public void Deserialise(BinaryReader reader, in SenderInfo sender)
         {
-            var cur = reader.BaseStream.Position;
+            var start = reader.BaseStream.Position;
+            var cur = start;
 
             var id = reader.ReadByte();
-            var newMsg = (BattleMessage)Activator.CreateInstance(_messageTypes[id]);
-            newMsg.Sender = reader.ReadParticipant().Provider;
-            newMsg.Recipient = reader.ReadParticipant().Provider;
-            newMsg.Read(reader);
+            LogSize();
+            _underlying = (BattleMessage)Activator.CreateInstance(_messageTypes[id]);
+            _underlying.Sender = reader.ReadParticipant();
+            LogSize();
+            _underlying.Recipient = reader.ReadParticipant();
+            LogSize();
+            _underlying.Read(reader);
+            LogSize();
 
-            Console.WriteLine($"Read {reader.BaseStream.Position - cur} bytes for message of type {newMsg.GetType().Name}");
+            Console.WriteLine($"Read a total of {reader.BaseStream.Position - start} bytes for {_underlying.GetType().Name}");
 
-            return new(newMsg);
+            void LogSize()
+            {
+                Console.WriteLine($"Read {reader.BaseStream.Position - cur} bytes");
+                cur = reader.BaseStream.Position;
+            }
         }
 
-        public void Receive(in BattleMessageRpc packet, in SenderInfo sender, ref bool handled)
+        public readonly void Receive(in SenderInfo sender, ref bool handled)
         {
+            EasyPacket.lastProcessedPacket = _underlying.GetType();
+
             handled = true;
 
-            var msg = packet._underlying;
+            var msg = _underlying;
             var target = msg.Recipient;
 
             if (target is null) // Sent to server
             {
                 if (Main.dedServ)
+                {
+                    BattleManager.Instance.Witness(msg);
                     BattleManager.Instance.Reply(msg);
+                }
                 else
                     TerramonPlayer.LocalPlayer.Witness(msg);
             }
@@ -234,7 +273,7 @@ public abstract class BattleMessage : ILoadable
                 if (Main.dedServ)
                 {
                     if (BattleManager.Instance.Witness(msg))
-                        msg.Send(msg.Recipient);
+                        msg.Send(msg.Recipient, selfWitness: false);
                 }
                 else if (target.IsLocal)
                     target.Reply(msg);

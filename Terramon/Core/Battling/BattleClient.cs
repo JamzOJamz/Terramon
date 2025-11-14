@@ -1,5 +1,4 @@
-﻿using EasyPacketsLib;
-using Terramon.Content.GUI.TurnBased;
+﻿using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;
 
@@ -12,7 +11,7 @@ namespace Terramon.Core.Battling;
 public sealed class BattleClient(IBattleProvider provider)
 {
     public IBattleProvider Provider { get; } = provider;
-    public BattleParticipant ID => Provider.GetParticipantID();
+    public BattleParticipant ID => Provider.ID;
     private IBattleProvider _foe;
     public IBattleProvider Foe
     {
@@ -27,7 +26,7 @@ public sealed class BattleClient(IBattleProvider provider)
             _foe = value;
         }
     }
-    public BattleParticipant FoeID => _foe?.GetParticipantID() ?? BattleParticipant.None;
+    public BattleParticipant FoeID => _foe?.ID ?? BattleParticipant.None;
     public ClientBattleState State;
 
     // Instance is shared between both battlers
@@ -108,11 +107,11 @@ public sealed class BattleClient(IBattleProvider provider)
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
             var packet = new BattleChoiceRpc(choice, (byte)operand);
-            Terramon.Instance.SendPacket(in packet);
+            Terramon.Instance.SendPacket(packet);
         }
         else
         {
-            BattleManager.Instance.HandleChoice(Provider.GetParticipantID(), choice, (byte)operand);
+            BattleManager.Instance.HandleChoice(ID, choice, (byte)operand);
         }
 
         if (Foe is PokemonNPC npc)

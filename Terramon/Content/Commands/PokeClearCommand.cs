@@ -1,4 +1,3 @@
-using EasyPacketsLib;
 using Terramon.Content.NPCs;
 using Terraria.Localization;
 
@@ -13,11 +12,6 @@ public class PokeClearCommand : DebugCommand
     public override string Description => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Description");
 
     public override string Usage => Language.GetTextValue("Mods.Terramon.Commands.PokeClear.Usage");
-
-    public override void Load()
-    {
-        Mod.AddPacketHandler<PokeClearRpc>(OnPokeClearRpcReceived);
-    }
 
     public override void Action(CommandCaller caller, string input, string[] args)
     {
@@ -40,29 +34,27 @@ public class PokeClearCommand : DebugCommand
         return clearCount;
     }
 
-    private static void OnPokeClearRpcReceived(in PokeClearRpc packet, in SenderInfo sender, ref bool handled)
+    private struct PokeClearRpc(byte clearedByPlayer) : IEasyPacket
     {
-        var clearedCount = ClearPokemonNpcs();
-        if (Main.myPlayer != packet.ClearedByPlayer)
-            Main.NewText(
-                Language.GetTextValue("Mods.Terramon.Commands.PokeClear.SuccessByPlayer",
-                    Main.player[packet.ClearedByPlayer].name, clearedCount),
-                ChatColorYellow);
-        handled = true;
-    }
+        public byte ClearedByPlayer = clearedByPlayer;
 
-    private readonly struct PokeClearRpc(byte clearedByPlayer) : IEasyPacket<PokeClearRpc>
-    {
-        public readonly byte ClearedByPlayer = clearedByPlayer;
-
-        public void Serialise(BinaryWriter writer)
+        public readonly void Serialise(BinaryWriter writer)
         {
             writer.Write(ClearedByPlayer);
         }
-
-        public PokeClearRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+        public void Deserialise(BinaryReader reader, in SenderInfo sender)
         {
-            return new PokeClearRpc(reader.ReadByte());
+            ClearedByPlayer = reader.ReadByte();
+        }
+        public readonly void Receive(in SenderInfo sender, ref bool handled)
+        {
+            var clearedCount = ClearPokemonNpcs();
+            if (Main.myPlayer != ClearedByPlayer)
+                Main.NewText(
+                    Language.GetTextValue("Mods.Terramon.Commands.PokeClear.SuccessByPlayer",
+                        Main.player[ClearedByPlayer].name, clearedCount),
+                    ChatColorYellow);
+            handled = true;
         }
     }
 }

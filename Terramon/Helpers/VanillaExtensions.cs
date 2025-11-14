@@ -1,9 +1,7 @@
-using EasyPacketsLib;
 using ReLogic.Reflection;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
-using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Terramon.Helpers;
@@ -72,17 +70,20 @@ public static class VanillaExtensions
         };
     public static ushort Terramon(this IdDictionary search, string name)
         => (ushort)search.GetId($"{nameof(Terramon)}/{name}");
-    public static void Write(this BinaryWriter writer, BattleParticipant participant)
+    public static void Write(this BinaryWriter writer, IBattleProvider participant)
     {
-        writer.Write((byte)participant.Type);
-        // if (participant.Type != BattleProviderType.None)
-            writer.Write(participant.WhoAmI);
+        var type = participant?.ProviderType ?? BattleProviderType.None;
+        writer.Write((byte)type);
+        if (type != BattleProviderType.None)
+            writer.Write((byte)participant.SyncedEntity.whoAmI);
     }
-    public static BattleParticipant ReadParticipant(this BinaryReader reader)
+    public static IBattleProvider ReadParticipant(this BinaryReader reader)
     {
         var type = (BattleProviderType)reader.ReadByte();
-        var whoAmI = reader.ReadByte(); // type == BattleProviderType.None ? (byte)0 : reader.ReadByte();
-        return new(whoAmI, type);
+        byte whoAmI = 0;
+        if (type != BattleProviderType.None)
+            whoAmI = reader.ReadByte();
+        return BattleManager.GetProvider(whoAmI, type);
     }
     public static void Write(this BinaryWriter writer, SimpleMon mon) => writer.Write(mon.Packed);
     public static SimpleMon ReadPokemonID(this BinaryReader reader) => new(reader.ReadByte());
@@ -113,18 +114,18 @@ public static class VanillaExtensions
             Speed = reader.ReadByte(),
         };
     }
-    public static void DebugLog<T>(this IEasyPacket<T> packet, string pre, string post = null) where T : struct, IEasyPacket<T>
+    public static void DebugLog(this IEasyPacket packet, string pre, string post = null)
     {
         var msg = (Main.dedServ ? "Server: " : "Client: ") + pre + $" {packet.GetType().Name} " + post;
         ModContent.GetInstance<Terramon>().Logger.Debug(msg);
         if (Main.dedServ)
             Console.WriteLine(msg);
     }
-    public static void ReceiveLog<T>(this IEasyPacket<T> packet, string post = null) where T : struct, IEasyPacket<T>
+    public static void ReceiveLog(this IEasyPacket packet, string post = null)
     {
         DebugLog(packet, "Received", post);
     }
-    public static void SendLog<T>(this IEasyPacket<T> packet, string post = null) where T : struct, IEasyPacket<T>
+    public static void SendLog(this IEasyPacket packet, string post = null)
     {
         DebugLog(packet, "Sent", post);
     }

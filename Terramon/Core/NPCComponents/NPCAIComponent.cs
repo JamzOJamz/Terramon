@@ -1,5 +1,4 @@
 using Terramon.Content.NPCs;
-using Terramon.Core.Battling;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;

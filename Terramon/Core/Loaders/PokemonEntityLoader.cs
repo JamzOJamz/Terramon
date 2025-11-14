@@ -3,12 +3,10 @@ using System.Text;
 using Hjson;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
-using Terramon.ID;
 using Terramon.Content.NPCs;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
-using Terraria.Graphics.Shaders;
 using Terramon.Helpers;
 
 namespace Terramon.Core.Loaders;

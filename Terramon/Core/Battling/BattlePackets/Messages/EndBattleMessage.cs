@@ -1,21 +1,25 @@
 ﻿namespace Terramon.Core.Battling.BattlePackets.Messages;
 
-public sealed class WinStatement(IBattleProvider winner) : BattleMessage
+public sealed class WinStatement : BattleMessage
 {
-    public IBattleProvider Winner = winner;
-    public override void Write(BinaryWriter w) => w.Write(Winner.ID);
-    public override void Read(BinaryReader r) => Winner = r.ReadParticipant().Provider;
+    public IBattleProvider Winner;
+    public WinStatement() { }
+    public WinStatement(IBattleProvider winner) => Winner = winner;
+    public override void Write(BinaryWriter w) => w.Write(Winner);
+    public override void Read(BinaryReader r) => Winner = r.ReadParticipant();
 }
 public sealed class ForfeitOrder : BattleMessage;
-public sealed class ForfeitStatement(IBattleProvider forfeiter) : BattleMessage
+public sealed class ForfeitStatement : BattleMessage
 {
-    public IBattleProvider Forfeiter = forfeiter;
-    public override void Write(BinaryWriter w) => w.Write(Forfeiter.ID);
-    public override void Read(BinaryReader r) => Forfeiter = r.ReadParticipant().Provider;
+    public IBattleProvider Forfeiter;
+    public ForfeitStatement() { }
+    public ForfeitStatement(IBattleProvider forfeiter) => Forfeiter = forfeiter;
+    public override void Write(BinaryWriter w) => w.Write(Forfeiter);
+    public override void Read(BinaryReader r) => Forfeiter = r.ReadParticipant();
 }
 public sealed class TieQuestion : BattleMessage;
 public sealed class TieTakeback : BattleMessage;
-public sealed class TieStatement(IBattleProvider eitherParticipant, TieStatement.TieType type) : BattleMessage
+public sealed class TieStatement : BattleMessage
 {
     public enum TieType : byte
     {
@@ -23,16 +27,22 @@ public sealed class TieStatement(IBattleProvider eitherParticipant, TieStatement
         Agreed,
         Forced,
     }
-    public IBattleProvider EitherParticipant = eitherParticipant;
-    public TieType Type = type;
+    public IBattleProvider EitherParticipant;
+    public TieType Type;
+    public TieStatement() { }
+    public TieStatement(IBattleProvider eitherParticipant, TieType type)
+    {
+        EitherParticipant = eitherParticipant;
+        Type = type;
+    }
     public override void Write(BinaryWriter w)
     {
-        w.Write(EitherParticipant.ID);
+        w.Write(EitherParticipant);
         w.Write((byte)Type);
     }
     public override void Read(BinaryReader r)
     {
-        EitherParticipant = r.ReadParticipant().Provider;
+        EitherParticipant = r.ReadParticipant();
         Type = (TieType)r.ReadByte();
     }
 }

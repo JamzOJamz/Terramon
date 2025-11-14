@@ -1,4 +1,3 @@
-using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Core.Loaders.UILoading;
 
@@ -7,12 +6,11 @@ namespace Terramon.Content.Packets;
 /// <summary>
 ///     A packet for synchronizing any updates to the World Dex with all clients.
 /// </summary>
-public readonly struct UpdateWorldDexRpc((ushort, PokedexEntry)[] entries)
-    : IEasyPacket<UpdateWorldDexRpc>, IEasyPacketHandler<UpdateWorldDexRpc>
+public struct UpdateWorldDexRpc((ushort, PokedexEntry)[] entries) : IEasyPacket
 {
-    private readonly (ushort, PokedexEntry)[] _entries = entries;
+    private (ushort, PokedexEntry)[] _entries = entries;
 
-    public void Serialise(BinaryWriter writer)
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write7BitEncodedInt(_entries.Length);
         foreach (var (id, entry) in _entries)
@@ -23,27 +21,25 @@ public readonly struct UpdateWorldDexRpc((ushort, PokedexEntry)[] entries)
         }
     }
 
-    public UpdateWorldDexRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        var readEntries = new (ushort, PokedexEntry)[reader.Read7BitEncodedInt()];
-        for (var i = 0; i < readEntries.Length; i++)
+        _entries = new (ushort, PokedexEntry)[reader.Read7BitEncodedInt()];
+        for (var i = 0; i < _entries.Length; i++)
         {
             var id = (ushort)reader.Read7BitEncodedInt();
             var status = (PokedexEntryStatus)reader.ReadByte();
             var lastUpdatedBy = reader.ReadString();
-            readEntries[i] = (id, new PokedexEntry(status, lastUpdatedBy));
+            _entries[i] = (id, new PokedexEntry(status, lastUpdatedBy));
         }
-
-        return new UpdateWorldDexRpc(readEntries);
     }
 
-    public void Receive(in UpdateWorldDexRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         sender.Mod.Logger.Debug(
             $"Received UpdateWorldDexRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} from player {sender.WhoAmI}");
         var fromServer = sender.WhoAmI == 255; // 255 is the server
         var hubActive = HubUI.Active;
-        foreach (var (id, entry) in packet._entries)
+        foreach (var (id, entry) in _entries)
         {
             TerramonWorld.UpdateWorldDex(id, entry.Status,
                 fromServer ? entry.LastUpdatedBy : Main.player[sender.WhoAmI].name, netSend: false);

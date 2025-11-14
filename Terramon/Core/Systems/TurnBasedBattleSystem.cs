@@ -1,4 +1,3 @@
-using MonoMod.Cil;
 using ReLogic.OS;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Zip;

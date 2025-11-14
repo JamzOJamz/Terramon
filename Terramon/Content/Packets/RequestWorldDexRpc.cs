@@ -1,23 +1,20 @@
-using EasyPacketsLib;
-
 namespace Terramon.Content.Packets;
 
 /// <summary>
 ///     A packet for requesting a full sync of the World Dex.
 /// </summary>
-public readonly struct RequestWorldDexRpc
-    : IEasyPacket<RequestWorldDexRpc>, IEasyPacketHandler<RequestWorldDexRpc>
+public readonly struct RequestWorldDexRpc : IEasyPacket
 {
     public void Serialise(BinaryWriter writer) // This is empty because the packet has no data
     {
     }
 
-    public RequestWorldDexRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        return new RequestWorldDexRpc();
+
     }
 
-    public void Receive(in RequestWorldDexRpc packet, in SenderInfo sender, ref bool handled)
+    public void Receive(in SenderInfo sender, ref bool handled)
     {
         if (Main.netMode != NetmodeID.Server) return;
         sender.Mod.Logger.Debug(

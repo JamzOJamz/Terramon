@@ -1,29 +1,27 @@
-﻿using EasyPacketsLib;
-using Showdown.NET.Protocol;
+﻿using Showdown.NET.Protocol;
 
 namespace Terramon.Core.Battling.BattlePackets;
 
-public readonly struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError)
-    : IEasyPacket<BattleErrorRpc>, IEasyPacketHandler<BattleErrorRpc>
+public struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError)
+    : IEasyPacket
 {
-    private readonly ErrorType _error = error;
-    private readonly ErrorSubtype _specificError = specificError;
+    private ErrorType _error = error;
+    private ErrorSubtype _specificError = specificError;
 
-    public void Serialise(BinaryWriter writer)
+    public readonly void Serialise(BinaryWriter writer)
     {
         byte fullError = (byte)((byte)_error | ((byte)_specificError << 2));
         writer.Write(fullError);
     }
 
-    public BattleErrorRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         var fullError = reader.ReadByte();
-        var error = (ErrorType)(fullError & 0b11);
-        var specificError = (ErrorSubtype)(fullError >> 2);
-        return new(error, specificError);
+        _error = (ErrorType)(fullError & 0b11);
+        _specificError = (ErrorSubtype)(fullError >> 2);
     }
 
-    public void Receive(in BattleErrorRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         // Packet is received by a single client
         BattleSide.LocalSide.CurrentRequest = ShowdownRequest.None;
@@ -31,29 +29,27 @@ public readonly struct BattleErrorRpc(ErrorType error, ErrorSubtype specificErro
     }
 }
 
-public readonly struct BattleChoiceRpc(BattleChoice choice, byte operand)
-    : IEasyPacket<BattleChoiceRpc>, IEasyPacketHandler<BattleChoiceRpc>
+public struct BattleChoiceRpc(BattleChoice choice, byte operand) : IEasyPacket
 {
-    private readonly BattleChoice _choice = choice;
-    private readonly byte _operand = operand;
+    private BattleChoice _choice = choice;
+    private byte _operand = operand;
 
-    public void Serialise(BinaryWriter writer)
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write((byte)_choice);
         writer.Write(_operand);
     }
 
-    public BattleChoiceRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        var choice = (BattleChoice)reader.ReadByte();
-        var operand = reader.ReadByte();
-        return new(choice, operand);
+        _choice = (BattleChoice)reader.ReadByte();
+        _operand = reader.ReadByte();
     }
 
-    public void Receive(in BattleChoiceRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         // Sent from client to server
-        BattleManager.Instance.HandleChoice(new BattleParticipant(sender.WhoAmI, BattleProviderType.Player), packet._choice, packet._operand);
+        BattleManager.Instance.HandleChoice(new BattleParticipant(sender.WhoAmI, BattleProviderType.Player), _choice, _operand);
     }
 }
 

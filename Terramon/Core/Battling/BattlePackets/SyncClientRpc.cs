@@ -1,13 +1,11 @@
-﻿using EasyPacketsLib;
+﻿namespace Terramon.Core.Battling.BattlePackets;
 
-namespace Terramon.Core.Battling.BattlePackets;
-
-public readonly struct SyncClientRpc(BattleParticipant foe, ClientBattleState state)
-    : IEasyPacket<SyncClientRpc>, IEasyPacketHandler<SyncClientRpc>
+public struct SyncClientRpc(BattleParticipant foe, ClientBattleState state)
+    : IEasyPacket
 {
-    private readonly BattleParticipant _foe = foe;
-    private readonly ClientBattleState _state = state;
-    public void Serialise(BinaryWriter writer)
+    private BattleParticipant _foe = foe;
+    private ClientBattleState _state = state;
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write((byte)_foe.Type);
         if (_foe.Type != BattleProviderType.None)
@@ -16,46 +14,45 @@ public readonly struct SyncClientRpc(BattleParticipant foe, ClientBattleState st
             writer.Write((byte)_state);
         }
     }
-    public SyncClientRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
         var foeType = (BattleProviderType)reader.ReadByte();
-        var foe = (byte)0;
-        var state = ClientBattleState.None;
+        byte foe = 0;
         if (foeType != BattleProviderType.None)
         {
             foe = reader.ReadByte();
-            state = (ClientBattleState)reader.ReadByte();
+            _state = (ClientBattleState)reader.ReadByte();
         }
-        return new(new(foe, foeType), state);
+        _foe = new BattleParticipant(foe, foeType);
     }
 
-    public void Receive(in SyncClientRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         var modPlayer = Main.player[sender.WhoAmI].Terramon();
         modPlayer._battleClient = new(modPlayer)
         {
-            Foe = packet._foe.Type == BattleProviderType.None ? null : packet._foe.Provider,
-            State = packet._state,
+            Foe = _foe.Type == BattleProviderType.None ? null : _foe.Provider,
+            State = _state,
         };
         handled = true;
     }
 }
 
 public readonly struct RequestClientRpc()
-    : IEasyPacket<RequestClientRpc>, IEasyPacketHandler<RequestClientRpc>
+    : IEasyPacket
 {
     public void Serialise(BinaryWriter writer) { }
-    public RequestClientRpc Deserialise(BinaryReader reader, in SenderInfo sender) => new();
-    public void Receive(in RequestClientRpc packet, in SenderInfo sender, ref bool handled)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender) { }
+    public void Receive(in SenderInfo sender, ref bool handled)
     {
         // Sent from remote to local client or from server to local client
         var local = BattleClient.LocalClient;
         var response = new SyncClientRpc(local.FoeID, local.State);
         var m = Terramon.Instance;
         if (sender.WhoAmI == 255)
-            m.SendPacket(in response);
+            m.SendPacket(response);
         else
-            m.SendPacket(in response, sender.WhoAmI, Main.myPlayer, true);
+            m.SendPacket(response, sender.WhoAmI, Main.myPlayer, true);
         handled = true;
     }
 }

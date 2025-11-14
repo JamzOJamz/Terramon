@@ -1,5 +1,4 @@
 using System.Text;
-using EasyPacketsLib;
 using MonoMod.Cil;
 using Showdown.NET.Definitions;
 using Terramon.Content.Buffs;
@@ -8,7 +7,6 @@ using Terramon.Content.GUI;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
-using Terramon.Content.Packets;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
@@ -18,14 +16,11 @@ using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
-using Terramon.ID;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
-using Terraria.Social.Base;
 
 namespace Terramon.Core;
 
@@ -132,10 +127,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     }
     public void StopBattleEffects()
     {
-        if (Player.whoAmI == Main.myPlayer)
-        {
-            BattleClient.EndLocalBattle();
-        }
         ActivePetProjectile?.ConfrontFoe(null);
     }
     public void Reply(BattleMessage m)
@@ -154,14 +145,14 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
                 if (c.Yes)
                 {
-                    Main.NewText($"{m.Sender} has accepted your challenge");
+                    Main.NewText($"{m.Sender.BattleName} has accepted your challenge");
                     // Imbalanced operation: Will send battle pick to foe here,
                     // and the other one's pick will be sent in SlotChoice to server
                     var slot = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
                     m.Return(new SlotChoice(slot: slot));
                 }
                 else
-                    Main.NewText($"{m.Sender} has declined your challenge");
+                    Main.NewText($"{m.Sender.BattleName} has declined your challenge");
                 break;
             case SlotChoice:
                 var slot0 = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
@@ -266,6 +257,19 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
                 forfeiter.BattleStopped();
                 winner.BattleStopped();
+                break;
+            case WinStatement w:
+
+                // Show win message and do battle end effects
+                winner = w.Winner;
+                var loser = winner.Foe;
+                a = winner.BattleName;
+                b = loser.BattleName;
+
+                Main.NewText($"{a} defeated {b}!", Color.Lime);
+
+                winner.BattleStopped();
+                loser.BattleStopped();
                 break;
             case TieQuestion:
                 m.Sender.TieRequest = true;

@@ -1,6 +1,4 @@
-﻿using EasyPacketsLib;
-using EasyPacketsLib.Internals;
-using Showdown.NET.Protocol;
+﻿using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
 using Terramon.Core.Battling.BattlePackets;
@@ -32,9 +30,18 @@ public sealed class BattleManager
                 var forfeit = new ForfeitStatement(forfeiter: m.Sender);
                 forfeit.Send();
                 break;
-            case ForfeitStatement f:
+            case ForfeitStatement w:
                 // Remove from active battle list
-                var inst = _activeBattles[f.Forfeiter.ID];
+                var inst = _activeBattles[w.Forfeiter.ID];
+                _activeBattles.Remove(inst.ClientA.ID);
+                _activeBattles.Remove(inst.ClientB.ID);
+
+                // Reset client fields
+                BattleInstance.Destroy(inst);
+                break;
+            case WinStatement w:
+                // Remove from active battle list
+                inst = _activeBattles[w.Winner.ID];
                 _activeBattles.Remove(inst.ClientA.ID);
                 _activeBattles.Remove(inst.ClientB.ID);
 
@@ -95,6 +102,8 @@ public sealed class BattleManager
         // TODO: I want to make sure that intercepted messages are still witnessed by other clients
         // Or, at least make sure we understand the behavior of messages perfectly
 
+        Console.WriteLine($"Server: Witnessing a {m.GetType().Name}");
+
         switch (m)
         {
             // Messages related to challenging someone to a battle
@@ -103,6 +112,7 @@ public sealed class BattleManager
 
                 // This only checks if the recipient is already in a battle,
                 // since the ability for a client to request a battle is handled clientside
+                Console.WriteLine($"{m.Sender.BattleName} is checking {m.Recipient.BattleName}'s availability");
                 if (_activeBattles.ContainsKey(m.Recipient.ID))
                     // If they're already in a battle, intercept with an error
                     return m.Return<ChallengeError>();
@@ -114,6 +124,7 @@ public sealed class BattleManager
                 // Add the requester
                 // The requestee is only added if they accept
                 _activeBattles.Add(m.Sender.ID, inst);
+                Console.WriteLine($"Added {m.Sender.BattleName} from question");
 
                 // Set states
                 m.Sender.State = ClientBattleState.Requested;
@@ -142,6 +153,7 @@ public sealed class BattleManager
                 {
                     // Add the requestee
                     _activeBattles.Add(m.Sender.ID, inst);
+                    Console.WriteLine($"Added {m.Sender.BattleName} from yes answer");
 
                     // Set states
                     inst.State = BattleState.Picking;
@@ -166,14 +178,6 @@ public sealed class BattleManager
 
             // Messages related to intentionally ending a battle
 
-            case ForfeitStatement:
-
-                // Remove from active battles list
-                _activeBattles.Remove(m.Sender.ID, out inst);
-
-                // Reset client fields
-                BattleInstance.Destroy(inst);
-                break;
             case TieQuestion:
 
                 // Set tie request flag
@@ -193,6 +197,8 @@ public sealed class BattleManager
                 // Unset tie request flag
                 m.Sender.TieRequest = false;
                 break;
+
+            // Messages related to ending a battle
 
         }
 
@@ -435,7 +441,7 @@ public sealed class BattleManager
                 }
                 break;
             case SideStartElement sd:
-                Write(BattleActionID.SetSideCondition, sd.Tags.Contains("[persistent]"));
+                Write(BattleActionID.SetSideCondition, sd.Tags != null && sd.Tags.Contains("[persistent]"));
                 {
                     var sanitizedName = (sd.Condition[0] is 'm' ? sd.Condition[6..] : sd.Condition).Replace(" ", string.Empty);
                     w.Write((byte)sd.Side.Player);
@@ -453,7 +459,7 @@ public sealed class BattleManager
                 Write(BattleActionID.SetSideCondition, true); // is swap
                 break;
             case StartVolatileElement vol:
-                Write(BattleActionID.SetPokemonVolatile, true, vol.Tags.Contains("[silent]"), vol.Tags.Contains("[upkeep]")); // is start
+                Write(BattleActionID.SetPokemonVolatile, true, vol.Tags != null && vol.Tags.Contains("[silent]"), vol.Tags != null && vol.Tags.Contains("[upkeep]")); // is start
                 {
                     w.Write(new SimpleMon(vol.Pokemon));
                     w.Write((byte)GetVolatile(vol.Effect));
@@ -567,7 +573,7 @@ public sealed class BattleManager
         if (Main.dedServ && client.Provider is TerramonPlayer plr)
         {
             var sendErr = new BattleErrorRpc(error.Type, id);
-            Mod.SendPacket(in sendErr, plr.Player.whoAmI);
+            Mod.SendPacket(sendErr, plr.Player.whoAmI);
         }
         else
         {
@@ -604,7 +610,7 @@ public sealed class BattleManager
         if (Main.dedServ && client.Provider.SyncedEntity is Player plr)
         {
             var sendReq = new ShowdownRequestRpc(sr);
-            Mod.SendPacket(in sendReq, plr.whoAmI);
+            Mod.SendPacket(sendReq, plr.whoAmI);
         }
         else
         {

@@ -1,5 +1,4 @@
-﻿using EasyPacketsLib;
-using Showdown.NET.Definitions;
+﻿using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using System.Runtime.InteropServices;
@@ -49,9 +48,11 @@ public sealed class BattleInstance
     }
     public static void Destroy(BattleInstance i)
     {
+        i.Stop();
         i.ClientA.Battle = i.ClientB.Battle = null;
         i.ClientA.Foe = i.ClientB.Foe = null;
         i.ClientA.State = i.ClientB.State = ClientBattleState.None;
+
     }
 
     public BattleState State;
@@ -224,7 +225,7 @@ public sealed class BattleInstance
                 // Console.WriteLine($"Received message of type {frame.GetType().Name} from simulator");
                 foreach (var element in CollectionsMarshal.AsSpan(frame.Elements))
                 {
-                    Main.NewText(element);
+                    Log(element.ToString());
                     if (element is ISplitElement split)
                     {
                         int tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
@@ -259,7 +260,7 @@ public sealed class BattleInstance
     /// </summary>
     public void Observe(ref BinaryWriter p, ref BinaryWriter s)
     {
-        var owner = ClientA.Provider.GetParticipantID();
+        var owner = ClientA.Provider;
 
         if (p.BaseStream.Length != 0)
         {
@@ -270,13 +271,13 @@ public sealed class BattleInstance
                 Console.WriteLine($"Sent payload with {p.BaseStream.Length} bytes of content.");
 
                 var payload = new BattlePayloadRpc(owner, (MemoryStream)p.BaseStream);
-                Terramon.Instance.SendPacket(in payload);
+                Terramon.Instance.SendPacket(payload);
                 p.Dispose();
                 p = null;
             }
             else
             {
-                BattleManager.Instance.Observe(owner, (MemoryStream)p.BaseStream, onlyToSelf: false);
+                BattleManager.Instance.Observe(owner.ID, (MemoryStream)p.BaseStream, onlyToSelf: false);
                 p = null;
             }
         }
@@ -284,7 +285,7 @@ public sealed class BattleInstance
         if (s.BaseStream.Length != 0)
         {
             s.BaseStream.WriteByte(0); // footer
-            BattleManager.Instance.Observe(owner, (MemoryStream)s.BaseStream, onlyToSelf: true);
+            BattleManager.Instance.Observe(owner.ID, (MemoryStream)s.BaseStream, onlyToSelf: true);
             p = null;
         }
     }
