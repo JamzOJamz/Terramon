@@ -98,6 +98,8 @@ public abstract class BattleMessage : ILoadable
 
         if (Main.dedServ)
         {
+            var msgPacket = new BattleMessageRpc(this);
+
             if (other is null) // Server or server-owned provider is sending to server
             {
                 // The behavior for this is that everyone witnesses the message and only the server replies
@@ -106,7 +108,6 @@ public abstract class BattleMessage : ILoadable
                 Sender?.Witness(this);
                 BattleManager.Instance.Witness(this);
 
-                var msgPacket = new BattleMessageRpc(this);
                 Terramon.Instance.SendPacket(msgPacket);
 
                 BattleManager.Instance.Reply(this);
@@ -116,21 +117,13 @@ public abstract class BattleMessage : ILoadable
             if (selfWitness)
                 BattleManager.Instance.Witness(this);
 
-            switch (other.OwningSide) // Server is sending to client or to server-owned provider (Wild Pokemon and Trainer NPCs)
-            {
-                case ModSide.Client:
+            // All clients should witness this packet
+            Terramon.Instance.SendPacket(msgPacket);
 
-                    // Original sender will also witness the packet being sent
-                    var msgPacket = new BattleMessageRpc(this);
-                    Terramon.Instance.SendPacket(msgPacket);
-                    break;
-                case ModSide.Server:
-                    other.Witness(this);
-                    other.Reply(this);
-                    break;
-                default: // Shouldn't happen but just for completeness
-                    Terramon.Instance.Logger.Warn($"Server tried to send a {GetType().Name} to an invalid {nameof(IBattleProvider)}");
-                    break;
+            if (other.OwningSide == ModSide.Server) // Server is sending to server-owned provider (Wild Pokemon and Trainer NPCs)
+            {
+                other.Witness(this);
+                other.Reply(this);
             }
         }
         else // Client is sending to server or another client
