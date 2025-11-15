@@ -3,7 +3,7 @@ using Terramon.Helpers;
 
 namespace Terramon.ID;
 
-public enum PokemonType
+public enum PokemonType : byte
 {
     None,
     Normal,

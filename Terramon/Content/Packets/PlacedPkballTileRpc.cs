@@ -1,4 +1,3 @@
-using EasyPacketsLib;
 using Terramon.Content.Items.PokeBalls;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,23 +9,22 @@ namespace Terramon.Content.Packets;
 ///     <see cref="Player.altFunctionUse" /> with a <see cref="BasePkballItem" />.
 ///     When received by other multiplayer clients, the sending player's use animation and tile placement sound are played.
 /// </summary>
-public readonly struct PlacedPkballTileRpc(Point16 tileCoords)
-    : IEasyPacket<PlacedPkballTileRpc>, IEasyPacketHandler<PlacedPkballTileRpc>
+public struct PlacedPkballTileRpc(Point16 tileCoords) : IEasyPacket
 {
-    private readonly Point16 _tileCoords = tileCoords;
+    private Point16 _tileCoords = tileCoords;
 
-    public void Serialise(BinaryWriter writer)
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write(_tileCoords.X);
         writer.Write(_tileCoords.Y);
     }
 
-    public PlacedPkballTileRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        return new PlacedPkballTileRpc(new Point16(reader.ReadInt16(), reader.ReadInt16()));
+        _tileCoords = new Point16(reader.ReadUInt16(), reader.ReadUInt16());
     }
 
-    public void Receive(in PlacedPkballTileRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         sender.Mod.Logger.Debug(
             $"Received PlacedPkballTileRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {sender.WhoAmI}");
@@ -35,7 +33,7 @@ public readonly struct PlacedPkballTileRpc(Point16 tileCoords)
             var player = Main.player[sender.WhoAmI];
             player.itemRotation = 0;
             player.SetItemAnimation(15);
-            SoundEngine.PlaySound(SoundID.Dig, packet._tileCoords.ToWorldCoordinates());
+            SoundEngine.PlaySound(SoundID.Dig, _tileCoords.ToWorldCoordinates());
         }
 
         handled = true;

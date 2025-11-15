@@ -1,4 +1,3 @@
-using EasyPacketsLib;
 using Terramon.Content.GUI;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders;
@@ -97,7 +96,7 @@ public class Terramon : Mod
 
     public override void HandlePacket(BinaryReader reader, int whoAmI)
     {
-        EasyPacketDLL.HandlePacket(reader, whoAmI);
+        EasyPacketExtensions.HandlePacket_Internal(reader, whoAmI);
     }
 
     private uint CheckLoadCount()
@@ -163,7 +162,7 @@ public class Terramon : Mod
         CalculatePokemonMetrics();
 
         // Register the mod in EasyPacketsLib
-        EasyPacketDLL.RegisterMod(this);
+        EasyPacketLoader.RegisterMod();
 
         // Don't run the rest of the method on servers
         if (Main.dedServ) return;
@@ -178,7 +177,7 @@ public class Terramon : Mod
 
     public override void Unload()
     {
-        EasyPacketDLL.Unload();
+        EasyPacketLoader.ClearStatics();
         LoadedPokemonCount = 0;
         HighestPokemonID = 0;
         DatabaseV2 = null;

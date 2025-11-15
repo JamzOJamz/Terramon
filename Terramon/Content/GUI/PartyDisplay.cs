@@ -1,6 +1,7 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
+using Terramon.Core.Battling;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
@@ -174,7 +175,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         Elements.CopyTo(elementsStatic);
         foreach (var element in elementsStatic) element.Update(gameTime);
 
-        var openKey = KeybindSystem.TogglePartyKeybind.Current && TerramonPlayer.LocalPlayer.Battle == null;
+        var openKey = KeybindSystem.TogglePartyKeybind.Current && !BattleClient.LocalBattleOngoing;
         switch (openKey)
         {
             case true when _keyUp:
