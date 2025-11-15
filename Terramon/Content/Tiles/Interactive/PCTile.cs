@@ -1,15 +1,12 @@
-using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
-using Terramon.Content.Packets;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
-using Terraria.UI.Gamepad;
 
 namespace Terramon.Content.Tiles.Interactive;
 

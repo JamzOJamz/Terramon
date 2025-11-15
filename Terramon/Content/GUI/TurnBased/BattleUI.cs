@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Scenes;
+using Terramon.Core.Battling;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -70,7 +71,7 @@ public sealed class BattleUI : SmartUIState
     private static bool OldSidebarToggleState;
     private static float OldGameZoomTarget;
 
-    public override bool Visible => TerramonPlayer.LocalPlayer.Battle != null;
+    public override bool Visible => BattleClient.LocalBattleOngoing;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
@@ -132,23 +133,27 @@ public sealed class BattleUI : SmartUIState
     private static Vector2? GetBetweenPosition()
     {
         var terramon = TerramonPlayer.LocalPlayer;
-        var battle = terramon.Battle;
-        if (battle is null)
+        if (!BattleClient.LocalBattleOngoing)
             return null;
 
         Projectile myPet = terramon.ActivePetProjectile?.Projectile;
         if (myPet is null)
             return null;
 
-        Entity other = (Entity)battle.WildNPC?.NPC ?? battle.Player2.ActivePetProjectile.Projectile;
+        Entity other = BattleClient.LocalClient.Foe.SyncedEntity;
+        if (other is Player plr)
+        {
+            var pet = plr.Terramon().ActivePetProjectile;
+            if (pet != null)
+                other = pet.Projectile;
+        }
         Vector2 otherCenter = other.Center;
 
         float targetX = otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f));
         float targetY = (myPet.Center.Y + otherCenter.Y) * 0.5f;
-        Vector2 target = new Vector2(targetX, targetY);
+        Vector2 target = new(targetX, targetY);
 
-        if (_smoothCamPos is null)
-            _smoothCamPos = target;
+        _smoothCamPos ??= target;
 
         float smoothFactor = 0.1f;
         _smoothCamPos = Vector2.Lerp(_smoothCamPos.Value, target, smoothFactor);
@@ -158,11 +163,10 @@ public sealed class BattleUI : SmartUIState
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        var battle = TerramonPlayer.LocalPlayer.Battle;
-        if (battle == null)
+        if (!BattleClient.LocalBattleOngoing)
             return;
 
-        var ticks = battle.TickCount;
+        var ticks = TerramonPlayer.BattleTicks;
         var opacity = GetCutsceneOpacity(ticks);
         TestBattleUI.PlayerPanel?.Animate(ticks);
         TestBattleUI.FoePanel?.Animate(ticks);

@@ -1,8 +1,5 @@
-using EasyPacketsLib;
 using ReLogic.Utilities;
 using Terramon.Content.GUI;
-using Terramon.Content.NPCs;
-using Terramon.Content.Packets;
 using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.Enums;

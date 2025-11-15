@@ -1,5 +1,3 @@
-using EasyPacketsLib;
-using Terramon.Content.Packets;
 using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;

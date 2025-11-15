@@ -4,7 +4,6 @@ using ReLogic.Content;
 using Terramon.Content.Buffs;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
-using Terramon.Content.NPCs;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
@@ -169,7 +168,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y + 2), Projectile.width, Projectile.height, dust);
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
 
-        ConfrontFoe(modPlayer.Battle);
+        ConfrontFoe(modPlayer.BattleClient);
         
         Data = modPlayer.GetActivePokemon();
         modPlayer.ActivePetProjectile = this;
@@ -682,7 +681,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public const float DistanceFromFoe = 128f;
 
-    public void ConfrontFoe(BattleInstance battle = null)
+    public void ConfrontFoe(BattleClient battle = null)
     {
         if (battle is null)
         {
@@ -693,18 +692,17 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         Vector2 foePos;
         int foeDir;
 
-        PokemonNPC wild = battle.WildNPC;
-        if (wild != null)
+        Entity foeEntity = battle.Foe?.SyncedEntity;
+        if (foeEntity is null)
+            return;
+        if (foeEntity is Player plr)
         {
-            foePos = wild.NPC.Center;
-            foeDir = wild.NPC.direction;
+            var pet = plr.Terramon().ActivePetProjectile;
+            if (pet != null)
+                foeEntity = pet.Projectile;
         }
-        else
-        {
-            PokemonPet foePet = battle.Player2.ActivePetProjectile;
-            foePos = foePet.Projectile.Center;
-            foeDir = foePet.Projectile.direction;
-        }
+        foePos = foeEntity.Center;
+        foeDir = foeEntity.direction;
 
         float xTarget = foePos.X + (foeDir * DistanceFromFoe);
         CustomTargetPosition = new Vector2(xTarget, foePos.Y);

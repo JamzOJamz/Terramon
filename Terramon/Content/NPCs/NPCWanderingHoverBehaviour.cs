@@ -28,7 +28,7 @@ public sealed class NPCWanderingHoverBehaviour : NPCAIComponent
     {
         if (!Enabled || PlasmaState) return;
         
-        if (Battle != null)
+        if (InBattle)
         {
             NPC.velocity *= 0.95f; // Quickly slow down
             AITimer = 0;

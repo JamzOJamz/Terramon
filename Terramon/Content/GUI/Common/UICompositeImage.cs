@@ -1,4 +1,5 @@
 ﻿using ReLogic.Content;
+using Terramon.Helpers;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -85,7 +86,7 @@ public class UICompositeImage : UIImage, ILoadable
         if (oldUIScale.HasValue)
             Main.UIScale = oldUIScale.Value;
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, OverrideSamplerState, null, null, null, Main.UIScaleMatrix);
 
         // Restore position
         Top = oldTop;
@@ -105,6 +106,9 @@ public class UICompositeImage : UIImage, ILoadable
 
         spriteBatch.Draw(_rt, drawPos, null, CompositeColor, Rotation, rtSize * NormalizedOrigin, ImageScale,
             SpriteEffects.None, 0f);
+
+        if (OverrideSamplerState != null)
+            spriteBatch.Restart(newSamplerState: null);
     }
 
     public override bool ContainsPoint(Vector2 point)

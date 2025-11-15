@@ -1,33 +1,31 @@
-using EasyPacketsLib;
-
 namespace Terramon.Content.Packets;
 
 /// <summary>
 ///     A packet for synchronizing various player flags (booleans) with all clients.
 /// </summary>
-public readonly struct PlayerFlagsRpc(byte player, bool starterChosen)
-    : IEasyPacket<PlayerFlagsRpc>, IEasyPacketHandler<PlayerFlagsRpc>
+public struct PlayerFlagsRpc(byte player, bool starterChosen) : IEasyPacket
 {
-    private readonly byte _player = player;
-    private readonly bool _starterChosen = starterChosen;
+    private byte _player = player;
+    private bool _starterChosen = starterChosen;
 
-    public void Serialise(BinaryWriter writer)
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         writer.Write(_starterChosen);
     }
 
-    public PlayerFlagsRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        return new PlayerFlagsRpc(reader.ReadByte(), reader.ReadBoolean());
+        _player = reader.ReadByte();
+        _starterChosen = reader.ReadBoolean();
     }
 
-    public void Receive(in PlayerFlagsRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         sender.Mod.Logger.Debug(
-            $"Received PlayerFlagsRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {packet._player}");
-        var player = Main.player[packet._player].GetModPlayer<TerramonPlayer>();
-        player.HasChosenStarter = packet._starterChosen;
+            $"Received PlayerFlagsRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {_player}");
+        var player = Main.player[_player].GetModPlayer<TerramonPlayer>();
+        player.HasChosenStarter = _starterChosen;
         handled = true;
     }
 }

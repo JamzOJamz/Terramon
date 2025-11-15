@@ -102,7 +102,7 @@ public class BattleCommand : DebugCommand
             moveSpec = possibleName;
         }
 
-        BattleStream stream = _currentBattle.BattleStream;
+        BattleStream stream = _currentBattle.Stream;
 
         stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(1, $"move {moveSpec}"));
         stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(2, "default"));
@@ -151,7 +151,7 @@ public class BattleCommand : DebugCommand
             }
         }
 
-        BattleStream stream = _currentBattle.BattleStream;
+        BattleStream stream = _currentBattle.Stream;
 
         stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(1, $"switch {switchSpec}"));
         stream.Write(ProtocolCodec.EncodePlayerChoiceCommand(2, "default"));
@@ -175,7 +175,7 @@ public class BattleCommand : DebugCommand
         try
         {
             var battleStream = new BattleStream();
-            battleInstance.BattleStream = battleStream;
+            battleInstance.Stream = battleStream;
             
             var player = Main.LocalPlayer;
             var modPlayer = player.GetModPlayer<TerramonPlayer>();
@@ -207,7 +207,7 @@ public class BattleCommand : DebugCommand
         }
         finally
         {
-            battleInstance.BattleStream?.Dispose();
+            battleInstance.Stream?.Dispose();
         }
     }
 }
