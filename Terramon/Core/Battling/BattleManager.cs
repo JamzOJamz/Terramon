@@ -1,6 +1,7 @@
 ﻿using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
+using Terramon.Content.Commands;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
@@ -65,24 +66,31 @@ public sealed class BattleManager
                 teamQuestion.Send(inst.ClientB.Provider);
                 break;
             case TeamAnswer s:
+
                 // Received once for each participant
                 inst = _activeBattles[s.Sender.ID];
-                inst.SubmitTeam(s.Sender.ID, s.Team);
-
                 // Set state
+                Console.WriteLine($"Setting state of {s.Sender.BattleName} to SetTeam");
                 s.Sender.State = ClientBattleState.SetTeam;
 
+                var shouldStart =
+                    inst.ClientA.State == ClientBattleState.SetTeam &&
+                    inst.ClientB.State == ClientBattleState.SetTeam;
+
                 // Check if both participants have submitted their team
-                if (inst.ClientA.State == ClientBattleState.SetTeam &&
-                    inst.ClientB.State == ClientBattleState.SetTeam)
+                if (shouldStart)
                 {
                     // If so, start the battle
+                    Console.WriteLine("Setting both clients states to Ongoing");
                     inst.StartEffects();
 
                     // Send start message to self
+                    // TODO: Test to make sure this doesn't require some sort of delay later
                     var start = new StartBattleStatement(inst.ClientA.Provider);
                     start.Send();
                 }
+
+                inst.SubmitTeam(s.Sender.BattleClient, s.Team);
                 break;
             case TieStatement t:
                 // Remove from active battles list
@@ -104,6 +112,12 @@ public sealed class BattleManager
 
         switch (m)
         {
+            case ResetEverythingStatement:
+                foreach (var inst0 in _activeBattles.Values)
+                    inst0.Stop();
+                _activeBattles.Clear();
+                break;
+
             // Messages related to challenging someone to a battle
 
             case ChallengeQuestion:
@@ -625,13 +639,16 @@ public sealed class BattleManager
         if (Main.dedServ && client.Provider.SyncedEntity is Player plr)
         {
             var sendReq = new ShowdownRequestRpc(sr);
-            Mod.SendPacket(sendReq, plr.whoAmI);
+            Mod.SendPacket(sendReq, toClient: plr.whoAmI);
         }
         else
         {
             client.CurrentRequest = sr;
             if (client.Provider is PokemonNPC npc)
+            {
+                Console.WriteLine($"{npc.BattleName} is responding automatically...");
                 npc.AutoBattleChoice();
+            }
         }
     }
     public int LatestInteractor;

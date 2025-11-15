@@ -84,9 +84,17 @@ public sealed class BattleClient(IBattleProvider provider)
     public bool CanMakeChoice(BattleChoice choice)
     {
         if (State != ClientBattleState.Ongoing)
+        {
+            Console.WriteLine("Can't make choice because no battle");
             return false;
+        }
         if (Side.Trapped != 0)
+        {
+            Console.WriteLine($"Can't make choice because trapped for {Side.Trapped} turns");
             return false;
+        }
+
+        Console.WriteLine($"Checking ability for {CurrentRequest} to make choice");
 
         return CurrentRequest switch
         {
@@ -103,6 +111,10 @@ public sealed class BattleClient(IBattleProvider provider)
         if (!CanMakeChoice(choice))
             return false;
 
+        Console.WriteLine($"{Provider.BattleName} is making choice {choice}");
+
+        CurrentRequest = ShowdownRequest.Wait;
+
         if (Main.netMode == NetmodeID.MultiplayerClient)
         {
             var packet = new BattleChoiceRpc(choice, (byte)operand);
@@ -112,8 +124,6 @@ public sealed class BattleClient(IBattleProvider provider)
         {
             BattleManager.Instance.HandleChoice(ID, choice, (byte)operand);
         }
-
-        CurrentRequest = ShowdownRequest.Wait;
 
         return true;
     }
@@ -142,6 +152,7 @@ public sealed class BattleClient(IBattleProvider provider)
         Pick = 0;
         TieRequest = false;
         Foe = null;
+        CurrentRequest = ShowdownRequest.None;
     }
 }
 

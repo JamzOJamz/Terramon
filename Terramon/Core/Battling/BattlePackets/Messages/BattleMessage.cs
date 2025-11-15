@@ -140,8 +140,8 @@ public abstract class BattleMessage : ILoadable
                 Terramon.Instance.Logger.Warn($"Client {Main.myPlayer} tried to send a message as the server");
                 return;
             }
-            if (selfWitness)
-                Sender.Witness(this);
+            // Witness
+            TerramonPlayer.LocalPlayer.Witness(this);
             // Everything is already handled by the server
             var msgPacket = new BattleMessageRpc(this);
             Terramon.Instance.SendPacket(msgPacket);
@@ -238,30 +238,24 @@ public abstract class BattleMessage : ILoadable
             handled = true;
 
             var msg = _underlying;
+            var senderr = msg.Sender;
             var target = msg.Recipient;
 
-            if (target is null) // Sent to server
+            if (Main.dedServ) // Sent from client
             {
-                if (Main.dedServ)
+                BattleManager.Instance.Witness(msg);
+                if (target is null) // Sent to server
                 {
-                    BattleManager.Instance.Witness(msg);
                     BattleManager.Instance.Reply(msg);
-                }
-                else
-                    TerramonPlayer.LocalPlayer.Witness(msg);
-            }
-            else // Sent to client or server-owned provider
-            {
-                if (Main.dedServ)
-                {
-                    if (BattleManager.Instance.Witness(msg))
-                        msg.Send(msg.Recipient, selfWitness: false);
                     return;
                 }
-
+                msg.Send(target, selfWitness: false);
+            }
+            else // Sent from server
+            {
                 TerramonPlayer.LocalPlayer.Witness(msg);
 
-                if (target.IsLocal)
+                if (target != null && target.IsLocal)
                     target.Reply(msg);
             }
         }

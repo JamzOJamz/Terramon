@@ -183,6 +183,17 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
         switch (m)
         {
+            case ResetEverythingStatement:
+
+                foreach (var plr in Main.ActivePlayers)
+                    ((IBattleProvider)plr.Terramon()).BattleStopped();
+                foreach (var npc in Main.ActiveNPCs)
+                {
+                    if (npc.ModNPC is IBattleProvider p)
+                        p.BattleStopped();
+                }
+
+                break;
             case ChallengeQuestion:
 
                 // Set client fields

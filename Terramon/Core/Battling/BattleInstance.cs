@@ -67,24 +67,11 @@ public sealed class BattleInstance
         ClientA.Pick != 0 &&
         ClientB.Pick != 0;
 
-    public BattleClient SubmitTeam(BattleParticipant participant, SimplePackedPokemon[] packedTeam)
-    {
-        var c = participant.Client;
-        if (ClientA == c || ClientB == c)
-        {
-            SubmitTeam_Internal(c, packedTeam);
-            return c;
-        }
-        throw new Exception(
-            $"Participant {participant} ({participant.Client.Name}) wasn't found in battle. Instead, {ClientA.Name} and {ClientB.Name} were found.");
-    }
-
-    private void SubmitTeam_Internal(BattleClient client, SimplePackedPokemon[] packedTeam)
+    public void SubmitTeam(BattleClient client, SimplePackedPokemon[] packedTeam)
     {
         EnsureStreamStarted();
 
-        bool a = client == ClientA;
-        var plr = a ? 1 : 2;
+        var plr = client == ClientA ? 1 : 2;
         var sb = new StringBuilder();
         for (int i = 0; i < packedTeam.Length - 1; i++)
         {
