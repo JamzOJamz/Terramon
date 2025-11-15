@@ -203,10 +203,6 @@ public abstract class BattleMessage : ILoadable
             writer.Write(_underlying.Sender);
             writer.Write(_underlying.Recipient);
             _underlying.Write(writer);
-
-            Console.WriteLine(
-                $"Wrote {writer.BaseStream.Length - start} bytes for {_underlying.GetType().Name} " +
-                $"from {_underlying.Sender?.BattleName ?? "server"} to {_underlying.Recipient?.BattleName ?? "server"}");
         }
 
         public void Deserialise(BinaryReader reader, in SenderInfo sender)
@@ -218,10 +214,6 @@ public abstract class BattleMessage : ILoadable
             _underlying.Sender = reader.ReadParticipant();
             _underlying.Recipient = reader.ReadParticipant();
             _underlying.Read(reader);
-
-            Console.WriteLine(
-                $"Received {reader.BaseStream.Position - start} bytes for {_underlying.GetType().Name} " +
-                $"from {_underlying.Sender?.BattleName ?? "server"} to {_underlying.Recipient?.BattleName ?? "server"}");
         }
 
         public readonly void Receive(in SenderInfo sender, ref bool handled)

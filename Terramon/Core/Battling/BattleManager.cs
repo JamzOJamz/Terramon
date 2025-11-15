@@ -124,7 +124,6 @@ public sealed class BattleManager
 
                 // This only checks if the recipient is already in a battle,
                 // since the ability for a client to request a battle is handled clientside
-                Console.WriteLine($"{m.Sender.BattleName} is checking {m.Recipient.BattleName}'s availability");
                 if (_activeBattles.ContainsKey(m.Recipient.ID))
                     // If they're already in a battle, intercept with an error
                     return m.Return<ChallengeError>();
@@ -136,7 +135,6 @@ public sealed class BattleManager
                 // Add the requester
                 // The requestee is only added if they accept
                 _activeBattles.Add(m.Sender.ID, inst);
-                Console.WriteLine($"Added {m.Sender.BattleName} from question");
 
                 // Set states
                 m.Sender.State = ClientBattleState.Requested;
@@ -165,7 +163,6 @@ public sealed class BattleManager
                 {
                     // Add the requestee
                     _activeBattles.Add(m.Sender.ID, inst);
-                    Console.WriteLine($"Added {m.Sender.BattleName} from yes answer");
 
                     // Set states
                     inst.State = BattleState.Picking;

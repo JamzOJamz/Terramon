@@ -23,8 +23,6 @@ public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer)
         this.ReceiveLog();
         handled = true;
 
-        Main.NewText($"Received payload with {_buffer.Length} bytes of content!");
-
         using var reader = new BinaryReader(_buffer);
         var c = _battleOwner.BattleClient;
         var o = c.Battle;

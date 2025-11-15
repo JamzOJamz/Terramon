@@ -37,14 +37,7 @@ public interface IBattleProvider
         set => BattleClient.Foe = value;
     }
     public BattleParticipant FoeID => Foe.ID;
-    public ref ClientBattleState State
-    {
-        get
-        {
-            Console.WriteLine($"Getting or setting state of {BattleName}");
-            return ref BattleClient.State;
-        }
-    }
+    public ref ClientBattleState State => ref BattleClient.State;
     public ref bool TieRequest => ref BattleClient.TieRequest;
     public ref byte Pick => ref BattleClient.Pick;
     public ref BattleField Field => ref BattleClient.Battle;
