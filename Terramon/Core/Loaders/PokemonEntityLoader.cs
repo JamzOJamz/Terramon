@@ -24,7 +24,6 @@ public class PokemonEntityLoader : ModSystem
     public static Dictionary<ushort, ushort> IDToNPCType { get; private set; }
     public static Dictionary<ushort, ushort> IDToPetType { get; private set; }
     public static Dictionary<ushort, ushort> IDToBannerType { get; private set; }
-    public static Dictionary<ushort, ushort> MegaStoneToID { get; private set; }
     public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; }
     public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; }
     private static BitArray HasGenderDifference { get; set; }
@@ -122,20 +121,6 @@ public class PokemonEntityLoader : ModSystem
         
         // Load Pokémon banner
         if (Mod.FileExists($"Assets/Tiles/Banners/{schema.Identifier}Banner.rawimg")) LoadBanner(id, schema);
-
-        // Load Mega Stones
-        MegaStone.LoadPalettes(Mod);
-
-        if (Enum.TryParse<MegaStoneID>(schema.Identifier, out var mega))
-        {
-            LoadMegaStone(id, mega);
-        }
-        else if (Enum.TryParse(schema.Identifier + "X", out mega))
-        {
-            LoadMegaStone(id, mega);
-            mega = Enum.Parse<MegaStoneID>(schema.Identifier + "Y");
-            LoadMegaStone(id, mega);
-        }
     }
 
     private void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
@@ -154,14 +139,6 @@ public class PokemonEntityLoader : ModSystem
         foreach (var banner in ShinyBanners) Mod.AddContent(banner);
 
         ShinyBanners = null;
-    }
-
-    private void LoadMegaStone(ushort id, MegaStoneID mega)
-    {
-        // Load Mega Stone item
-        var megaStone = new MegaStone(mega);
-        Mod.AddContent(megaStone);
-        MegaStoneToID.Add((ushort)megaStone.Type, id);
     }
 
     public static Asset<Texture2D> RequestTexture(IPokemonEntity entity)
@@ -188,7 +165,6 @@ public class PokemonEntityLoader : ModSystem
         IDToNPCType = [];
         IDToPetType = [];
         IDToBannerType = [];
-        MegaStoneToID = [];
         NPCSchemaCache = [];
         PetSchemaCache = [];
         GlowTextureCache = [];
@@ -202,7 +178,6 @@ public class PokemonEntityLoader : ModSystem
         IDToNPCType = null;
         IDToPetType = null;
         IDToBannerType = null;
-        MegaStoneToID = null;
         NPCSchemaCache = null;
         PetSchemaCache = null;
         HasGenderDifference = null;

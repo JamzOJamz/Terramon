@@ -1,9 +1,11 @@
 using System.Reflection;
 using Terramon.Content.Items;
+using Terramon.Content.Items.HeldItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.Content.Tiles.Paintings;
+using Terraria.ModLoader.Core;
 
 namespace Terramon.Core.Loaders;
 
@@ -25,7 +27,7 @@ public enum TerramonItemGroup
 
 internal sealed class TerramonItemRegistration : ModSystem
 {
-    public override void Load()
+    public TerramonItemRegistration()
     {
         // Add Apricorns
         TerramonItemRegistry
@@ -82,7 +84,8 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add held items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.HeldItems)
-            .AddAllOfType<HeldItem>();
+            .AddAllOfType<HeldItem>()
+            .AddMany(MegaStone.LoadMegaStones());
 
         // Add key items
         TerramonItemRegistry
@@ -130,26 +133,18 @@ internal sealed class TerramonItemRegistration : ModSystem
 [Autoload(false)]
 public class TerramonItemLoader : ModSystem
 {
-    public override void OnModLoad()
+    public override void Load()
     {
-        foreach (var type in TerramonItemRegistry.GetSortedTypes())
+        foreach (var item in TerramonItemRegistry.GetSortedTypes())
         {
-            try
-            {
-                if (Activator.CreateInstance(type) is ModItem item)
-                    Mod.AddContent(item);
-            }
-            catch (Exception ex)
-            {
-                Mod.Logger.Error($"Failed to load item '{type.FullName}': {ex}");
-            }
+            Mod.AddContent(item);
         }
     }
 }
 
 public static class TerramonItemRegistry
 {
-    private static readonly Dictionary<string, GroupData> Groups = new();
+    private static readonly Dictionary<string, GroupData> Groups = [];
 
     public static GroupBuilder Group(TerramonItemGroup group)
     {
@@ -197,9 +192,10 @@ public static class TerramonItemRegistry
             throw new Exception($"Group '{groupName}' has not been registered.");
 
         var itemOrder = order ?? group.Items.Count;
+        var item = (ModItem)Activator.CreateInstance(itemType);
 
-        group.Items.Add(itemType);
-        group.ItemOrders[itemType] = itemOrder;
+        group.Items.Add(item);
+        group.ItemOrders[item] = itemOrder;
 
         Groups[groupName] = group;
     }
@@ -209,7 +205,7 @@ public static class TerramonItemRegistry
         RegisterItem(itemType, group.ToString(), order);
     }
 
-    public static IEnumerable<Type> GetSortedTypes()
+    public static IEnumerable<ModItem> GetSortedTypes()
     {
         return Groups
             .OrderBy(g => g.Value.Order)
@@ -221,8 +217,8 @@ public static class TerramonItemRegistry
 
     public class GroupData
     {
-        public readonly Dictionary<Type, int> ItemOrders = new();
-        public readonly List<Type> Items = [];
+        public readonly Dictionary<ModItem, int> ItemOrders = new();
+        public readonly List<ModItem> Items = [];
         public int Order;
     }
 
@@ -236,22 +232,38 @@ public static class TerramonItemRegistry
         }
 
         public GroupBuilder Add<T>() where T : ModItem
-        {
-            var type = typeof(T);
-            var order = _group.Items.Count;
+            => Add(typeof(T));
 
-            _group.Items.Add(type);
-            _group.ItemOrders[type] = order;
+        public GroupBuilder Add(Type itemType)
+        {
+            try
+            {
+                var item = (ModItem)Activator.CreateInstance(itemType);
+
+                Add(item);
+            }
+            catch (InvalidCastException)
+            {
+                Terramon.Instance.Logger.Error($"Failed to load item '{itemType.FullName}': Given type is not a {nameof(ModItem)}");
+            }
 
             return this;
         }
 
-        public GroupBuilder Add(Type itemType)
+        public GroupBuilder Add(ModItem item)
         {
             var order = _group.Items.Count;
 
-            _group.Items.Add(itemType);
-            _group.ItemOrders[itemType] = order;
+            _group.Items.Add(item);
+            _group.ItemOrders[item] = order;
+
+            return this;
+        }
+
+        public GroupBuilder AddMany(IEnumerable<ModItem> items)
+        {
+            foreach (var item in items)
+                Add(item);
 
             return this;
         }
@@ -261,25 +273,14 @@ public static class TerramonItemRegistry
             var baseType = typeof(TBase);
 
             // Search all assemblies that might contain mod item classes
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = ModLoader.Mods.Select(m => m.Code);
 
             foreach (var asm in assemblies)
             {
-                Type[] types;
-                try
-                {
-                    types = asm.GetTypes();
-                }
-                catch (ReflectionTypeLoadException e)
-                {
-                    types = e.Types.Where(t => t != null).ToArray()!;
-                }
+                var types = AssemblyManager.GetLoadableTypes(asm);
 
                 foreach (var t in types)
                 {
-                    if (t == null)
-                        continue;
-
                     // Must be a subclass of the base type AND not abstract
                     if (t.IsSubclassOf(baseType) && !t.IsAbstract)
                     {
