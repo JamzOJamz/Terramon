@@ -150,9 +150,9 @@ public class Terramon : Mod
         // Create the save directory if it doesn't exist
         Directory.CreateDirectory(SavePath);
         
-        // Load items, then entities
-        AddContent<TerramonItemLoader>();
+        // Load entities, then items
         AddContent<PokemonEntityLoader>();
+        AddContent<TerramonItemLoader>();
 
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");

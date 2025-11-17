@@ -17,9 +17,11 @@ namespace Terramon.Core.Loaders;
 [Autoload(false)]
 public class PokemonEntityLoader : ModSystem
 {
+    private static readonly TerramonItemRegistry.GroupBuilder BannerItemGroup =
+        TerramonItemRegistry.Group(TerramonItemGroup.Banners);
+
     public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; }
     public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; }
-    public static Dictionary<ushort, Texture2D> HighlightTextures;
     public static Dictionary<ushort, int> IDToNPCType { get; private set; }
     public static Dictionary<ushort, int> IDToPetType { get; private set; }
     public static Dictionary<ushort, int> IDToBannerType { get; private set; }
@@ -49,7 +51,7 @@ public class PokemonEntityLoader : ModSystem
             if (!HjsonSchemaExists(pokemon.Identifier)) continue;
             LoadEntities(id, pokemon);
         }
-        
+
         // Done in a second pass to add them all after the standard banners are loaded
         LoadShinyBanners();
 
@@ -117,25 +119,24 @@ public class PokemonEntityLoader : ModSystem
             Mod.AddContent(pet);
             IDToPetType.Add(id, pet.Projectile.type);
         }
-        
+
         // Load Pokémon banner
         if (ModContent.HasAsset($"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner")) LoadBanner(id, schema);
     }
 
-    private void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
+    private static void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
     {
-        // Load banner item
+        // Add banner item to item registry
         var banner = new PokeBannerItem(id, schema);
-        Mod.AddContent(banner);
-        IDToBannerType.Add(id, banner.Type);
-        
-        ShinyBanners.Add(new PokeBannerItem(id, schema, banner.Type));
+        BannerItemGroup.Add(banner);
+
+        ShinyBanners.Add(banner.MakeShinyInstance());
     }
 
-    private void LoadShinyBanners()
+    private static void LoadShinyBanners()
     {
-        // Add shiny banners to mod content
-        foreach (var banner in ShinyBanners) Mod.AddContent(banner);
+        // Add shiny banners to item registry
+        foreach (var banner in ShinyBanners) BannerItemGroup.Add(banner);
 
         ShinyBanners = null;
     }
@@ -148,7 +149,7 @@ public class PokemonEntityLoader : ModSystem
         if (HasGenderDifference[i])
             if ((data != null ? data.Gender == Gender.Female ? 1 : 0 : 0) != 0)
                 pathBuilder.Append('F');
-        if (HasPetExclusiveTexture[i] && entity.GetType() == typeof(PokemonPet))
+        if (HasPetExclusiveTexture[i] && entity is PokemonPet)
             pathBuilder.Append("_Pet");
         var str = data?.Variant;
         if (!string.IsNullOrEmpty(str))
@@ -168,7 +169,6 @@ public class PokemonEntityLoader : ModSystem
         PetSchemaCache = [];
         GlowTextureCache = [];
         ShinyGlowTextureCache = [];
-        HighlightTextures = [];
         ShinyBanners = [];
     }
 
@@ -183,7 +183,6 @@ public class PokemonEntityLoader : ModSystem
         HasPetExclusiveTexture = null;
         GlowTextureCache = null;
         ShinyGlowTextureCache = null;
-        HighlightTextures = null;
         ShinyBanners = null;
     }
 }

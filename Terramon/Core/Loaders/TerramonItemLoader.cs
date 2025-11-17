@@ -20,6 +20,7 @@ public enum TerramonItemGroup
     MusicBoxes,
     PokeBallMinis,
     Vanity,
+    Banners,
     Uncategorized
 }
 
@@ -46,13 +47,11 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add recovery items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Recovery)
-
             // Potions
             .Add<Potion>()
             .Add<SuperPotion>()
             .Add<HyperPotion>()
             .Add<MaxPotion>()
-
             // Revives
             .Add<Revive>()
             .Add<MaxRevive>();
@@ -60,7 +59,6 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add evolutionary items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.EvolutionaryItems)
-
             // Evolution stones
             .Add<FireStone>()
             .Add<WaterStone>()
@@ -69,7 +67,6 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<MoonStone>()
             .Add<DuskStone>()
             .Add<IceStone>()
-
             // Misc evolutionary items
             .Add<LinkingCord>();
 
@@ -113,11 +110,13 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add vanity items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Vanity)
-            
             // Trainer vanity
             .Add<TrainerCap>()
             .Add<TrainerTorso>()
             .Add<TrainerLegs>();
+
+        // Register banner group (populated in PokemonEntityLoader)
+        TerramonItemRegistry.RegisterGroup(TerramonItemGroup.Banners);
 
         // Add uncategorized items
         TerramonItemRegistry
@@ -132,16 +131,16 @@ public class TerramonItemLoader : ModSystem
 {
     public override void OnModLoad()
     {
-        foreach (var type in TerramonItemRegistry.GetSortedTypes())
+        foreach (var entry in TerramonItemRegistry.GetSortedItems())
         {
             try
             {
-                if (Activator.CreateInstance(type) is ModItem item)
-                    Mod.AddContent(item);
+                var item = entry.IsInstance ? entry.Instance! : (ModItem)Activator.CreateInstance(entry.ItemType!)!;
+                Mod.AddContent(item);
             }
             catch (Exception ex)
             {
-                Mod.Logger.Error($"Failed to load item '{type.FullName}': {ex}");
+                Mod.Logger.Error($"Failed to load item '{entry.ItemType?.FullName}': {ex}");
             }
         }
     }
@@ -151,10 +150,7 @@ public static class TerramonItemRegistry
 {
     private static readonly Dictionary<string, GroupData> Groups = new();
 
-    public static GroupBuilder Group(TerramonItemGroup group)
-    {
-        return Group(group.ToString());
-    }
+    public static GroupBuilder Group(TerramonItemGroup group) => Group(group.ToString());
 
     public static GroupBuilder Group(string groupName)
     {
@@ -163,6 +159,9 @@ public static class TerramonItemRegistry
 
         return new GroupBuilder(group);
     }
+
+    internal static GroupBuilder RegisterGroup(TerramonItemGroup group, int? explicitOrder = null) =>
+        RegisterGroup(group.ToString(), explicitOrder);
 
     public static GroupBuilder RegisterGroup(string groupName, int? explicitOrder = null)
     {
@@ -186,11 +185,6 @@ public static class TerramonItemRegistry
         return new GroupBuilder(group);
     }
 
-    internal static GroupBuilder RegisterGroup(TerramonItemGroup group, int? explicitOrder = null)
-    {
-        return RegisterGroup(group.ToString(), explicitOrder);
-    }
-
     public static void RegisterItem(Type itemType, string groupName, int? order = null)
     {
         if (!Groups.TryGetValue(groupName, out var group))
@@ -198,8 +192,10 @@ public static class TerramonItemRegistry
 
         var itemOrder = order ?? group.Items.Count;
 
-        group.Items.Add(itemType);
-        group.ItemOrders[itemType] = itemOrder;
+        var entry = new ItemEntry(itemType);
+
+        group.Items.Add(entry);
+        group.ItemOrders[entry] = itemOrder;
 
         Groups[groupName] = group;
     }
@@ -209,21 +205,40 @@ public static class TerramonItemRegistry
         RegisterItem(itemType, group.ToString(), order);
     }
 
-    public static IEnumerable<Type> GetSortedTypes()
+    public static IEnumerable<ItemEntry> GetSortedItems()
     {
         return Groups
             .OrderBy(g => g.Value.Order)
             .SelectMany(g =>
                 g.Value.Items
                     .OrderBy(t => g.Value.ItemOrders[t])
-                    .ThenBy(t => t.FullName));
+                    .ThenBy(t => t.ItemType!.FullName));
     }
 
     public class GroupData
     {
-        public readonly Dictionary<Type, int> ItemOrders = new();
-        public readonly List<Type> Items = [];
+        public readonly Dictionary<ItemEntry, int> ItemOrders = new();
+        public readonly List<ItemEntry> Items = [];
         public int Order;
+    }
+
+    public sealed class ItemEntry
+    {
+        public ItemEntry(Type type)
+        {
+            ItemType = type;
+        }
+
+        public ItemEntry(ModItem instance)
+        {
+            Instance = instance;
+            ItemType = instance.GetType();
+        }
+
+        public Type ItemType { get; }
+        public ModItem Instance { get; }
+
+        public bool IsInstance => Instance != null;
     }
 
     public sealed class GroupBuilder
@@ -235,23 +250,18 @@ public static class TerramonItemRegistry
             _group = group;
         }
 
-        public GroupBuilder Add<T>() where T : ModItem
-        {
-            var type = typeof(T);
-            var order = _group.Items.Count;
+        public GroupBuilder Add<T>() where T : ModItem => Add(typeof(T));
 
-            _group.Items.Add(type);
-            _group.ItemOrders[type] = order;
+        public GroupBuilder Add(Type itemType) => AddEntry(new ItemEntry(itemType));
 
-            return this;
-        }
+        public GroupBuilder Add(ModItem instance) => AddEntry(new ItemEntry(instance));
 
-        public GroupBuilder Add(Type itemType)
+        private GroupBuilder AddEntry(ItemEntry entry)
         {
             var order = _group.Items.Count;
 
-            _group.Items.Add(itemType);
-            _group.ItemOrders[itemType] = order;
+            _group.Items.Add(entry);
+            _group.ItemOrders[entry] = order;
 
             return this;
         }
