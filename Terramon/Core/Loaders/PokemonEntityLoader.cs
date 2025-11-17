@@ -10,6 +10,7 @@ using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
 using Terraria.Graphics.Shaders;
 using Terramon.Helpers;
+using Terramon.Content.Items.HeldItems;
 
 namespace Terramon.Core.Loaders;
 
@@ -22,9 +23,10 @@ public class PokemonEntityLoader : ModSystem
     public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; }
     public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; }
     public static Dictionary<ushort, Texture2D> HighlightTextures;
-    public static Dictionary<ushort, int> IDToNPCType { get; private set; }
-    public static Dictionary<ushort, int> IDToPetType { get; private set; }
-    public static Dictionary<ushort, int> IDToBannerType { get; private set; }
+    public static Dictionary<ushort, ushort> IDToNPCType { get; private set; }
+    public static Dictionary<ushort, ushort> IDToPetType { get; private set; }
+    public static Dictionary<ushort, ushort> IDToBannerType { get; private set; }
+    public static Dictionary<ushort, ushort> MegaStoneToID { get; private set; }
     public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; }
     public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; }
     private static BitArray HasGenderDifference { get; set; }
@@ -103,7 +105,7 @@ public class PokemonEntityLoader : ModSystem
             NPCSchemaCache.Add(id, npcSchema);
             var npc = new PokemonNPC(id, schema);
             Mod.AddContent(npc);
-            IDToNPCType.Add(id, npc.NPC.type);
+            IDToNPCType.Add(id, (ushort)npc.NPC.type);
         }
 
         // Load Pokémon pet projectile
@@ -117,11 +119,25 @@ public class PokemonEntityLoader : ModSystem
             PetSchemaCache.Add(id, petSchema);
             var pet = new PokemonPet(id, schema);
             Mod.AddContent(pet);
-            IDToPetType.Add(id, pet.Projectile.type);
+            IDToPetType.Add(id, (ushort)pet.Projectile.type);
         }
         
         // Load Pokémon banner
-        if (ModContent.HasAsset($"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner")) LoadBanner(id, schema);
+        if (Mod.FileExists($"Assets/Tiles/Banners/{schema.Identifier}Banner.rawimg")) LoadBanner(id, schema);
+
+        // Load Mega Stones
+        MegaStone.LoadPalettes(Mod);
+
+        if (Enum.TryParse<MegaStoneID>(schema.Identifier, out var mega))
+        {
+            LoadMegaStone(id, mega);
+        }
+        else if (Enum.TryParse(schema.Identifier + "X", out mega))
+        {
+            LoadMegaStone(id, mega);
+            mega = Enum.Parse<MegaStoneID>(schema.Identifier + "Y");
+            LoadMegaStone(id, mega);
+        }
     }
 
     private void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
@@ -129,7 +145,7 @@ public class PokemonEntityLoader : ModSystem
         // Load banner item
         var banner = new PokeBannerItem(id, schema);
         Mod.AddContent(banner);
-        IDToBannerType.Add(id, banner.Type);
+        IDToBannerType.Add(id, (ushort)banner.Type);
         
         ShinyBanners.Add(new PokeBannerItem(id, schema, banner.Type));
     }
@@ -140,6 +156,14 @@ public class PokemonEntityLoader : ModSystem
         foreach (var banner in ShinyBanners) Mod.AddContent(banner);
 
         ShinyBanners = null;
+    }
+
+    private void LoadMegaStone(ushort id, MegaStoneID mega)
+    {
+        // Load Mega Stone item
+        var megaStone = new MegaStone(mega);
+        Mod.AddContent(megaStone);
+        MegaStoneToID.Add((ushort)megaStone.Type, id);
     }
 
     public static Asset<Texture2D> RequestTexture(IPokemonEntity entity)
@@ -166,6 +190,7 @@ public class PokemonEntityLoader : ModSystem
         IDToNPCType = [];
         IDToPetType = [];
         IDToBannerType = [];
+        MegaStoneToID = [];
         NPCSchemaCache = [];
         PetSchemaCache = [];
         GlowTextureCache = [];
@@ -179,6 +204,7 @@ public class PokemonEntityLoader : ModSystem
         IDToNPCType = null;
         IDToPetType = null;
         IDToBannerType = null;
+        MegaStoneToID = null;
         NPCSchemaCache = null;
         PetSchemaCache = null;
         HasGenderDifference = null;

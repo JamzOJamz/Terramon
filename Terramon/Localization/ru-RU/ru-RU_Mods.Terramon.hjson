@@ -354,6 +354,12 @@ CommonTooltips: {
 		'For decorative purposes'
 		Can be placed on item frames
 		''' */
+	// MegaStone: Mega Stone - {0}
+	/* MegaStoneTip:
+		'''
+		One of a variety of mysterious Mega Stones.
+		Any {0} holding this stone will be able to Mega Evolve during battle.
+		''' */
 	// Unobtainable: Unobtainable
 }
 
@@ -714,6 +720,30 @@ Items: {
 			It's a strange, stretchy charm that encourages growth
 			''' */
 	}
+}
+
+MegaStoneNames: {
+	// Venusaur: Venusaurite
+	// CharizardX: Charizardite X
+	// CharizardY: Charizardite Y
+	// Blastoise: Blastoisinite
+	// Beedrill: Beedrillite
+	// Pidgeot: Pidgeotite
+	// RaichuX: Raichunite X
+	// RaichuY: Raichunite Y
+	// Clefable: Clefablite
+	// Alakazam: Alakazite
+	// Victreebel: Victreebelite
+	// Slowbro: Slowbronite
+	// Gengar: Gengarite
+	// Kangaskhan: Kangaskhanite
+	// Starmie: Starminite
+	// Pinsir: Pinsirite
+	// Gyarados: Gyaradosite
+	// Aerodactyl: Aerodactylite
+	// Dragonite: Dragoninite
+	// MewtwoX: Mewtwonite X
+	// MewtwoY: Mewtwonite Y
 }
 
 Keybinds: {

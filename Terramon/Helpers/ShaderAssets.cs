@@ -8,6 +8,7 @@ public static class ShaderAssets
 
     public static MiscShaderData FadeToColor { get; private set; }
     public static MiscShaderData Outline { get; private set; }
+    public static Asset<Effect> Palette { get; private set; }
 
     private static AssetRepository _repo;
     internal static void Load(AssetRepository repo)
@@ -16,6 +17,7 @@ public static class ShaderAssets
 
         FadeToColor = Register("FadeToColor", "FadePass");
         Outline = Register("Outline", "ShaderPass");
+        Palette = _repo.Request<Effect>(Effects + "Palette");
     }
 
     private static MiscShaderData Register(string name, string passName = null)
