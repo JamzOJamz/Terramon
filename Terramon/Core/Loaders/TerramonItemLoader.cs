@@ -19,7 +19,7 @@ public enum TerramonItemGroup
     Interactive,
     MusicBoxes,
     PokeBallMinis,
-    TrainerVanity,
+    Vanity,
     Uncategorized
 }
 
@@ -110,9 +110,11 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<CherishBallMiniItem>()
             .Add<AetherBallMiniItem>();
 
-        // Add Trainer vanity set
+        // Add vanity items
         TerramonItemRegistry
-            .RegisterGroup(TerramonItemGroup.TrainerVanity)
+            .RegisterGroup(TerramonItemGroup.Vanity)
+            
+            // Trainer vanity
             .Add<TrainerCap>()
             .Add<TrainerTorso>()
             .Add<TrainerLegs>();
@@ -214,8 +216,7 @@ public static class TerramonItemRegistry
             .SelectMany(g =>
                 g.Value.Items
                     .OrderBy(t => g.Value.ItemOrders[t])
-                    .ThenBy(t => t.FullName))
-            .ToList();
+                    .ThenBy(t => t.FullName));
     }
 
     public class GroupData
@@ -279,7 +280,7 @@ public static class TerramonItemRegistry
                     if (t == null)
                         continue;
 
-                    // Must be subclass of baseType AND not abstract
+                    // Must be a subclass of the base type AND not abstract
                     if (t.IsSubclassOf(baseType) && !t.IsAbstract)
                     {
                         Add(t);
