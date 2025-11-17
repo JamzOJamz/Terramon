@@ -42,20 +42,26 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<PremierBallItem>()
             .Add<CherishBallItem>()
             .Add<AetherBallItem>();
-        
+
         // Add recovery items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Recovery)
+
+            // Potions
             .Add<Potion>()
             .Add<SuperPotion>()
             .Add<HyperPotion>()
             .Add<MaxPotion>()
+
+            // Revives
             .Add<Revive>()
             .Add<MaxRevive>();
-        
+
         // Add evolutionary items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.EvolutionaryItems)
+
+            // Evolution stones
             .Add<FireStone>()
             .Add<WaterStone>()
             .Add<ThunderStone>()
@@ -63,34 +69,36 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<MoonStone>()
             .Add<DuskStone>()
             .Add<IceStone>()
+
+            // Misc evolutionary items
             .Add<LinkingCord>();
-        
+
         // Add vitamins
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Vitamins)
             .Add<RareCandy>()
             .AddAllOfType<ExpCandy>();
-        
+
         // Add held items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.HeldItems)
             .AddAllOfType<HeldItem>();
-        
+
         // Add key items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.KeyItems)
             .AddAllOfType<KeyItem>();
-        
+
         // Add interactive items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Interactive)
             .AddAllOfType<PCItem>();
-        
+
         // Add music boxes
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.MusicBoxes)
             .AddAllOfType<MusicItem>();
-        
+
         // Add Poké Ball minis
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.PokeBallMinis)
@@ -101,14 +109,14 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<PremierBallMiniItem>()
             .Add<CherishBallMiniItem>()
             .Add<AetherBallMiniItem>();
-        
+
         // Add Trainer vanity set
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.TrainerVanity)
             .Add<TrainerCap>()
             .Add<TrainerTorso>()
             .Add<TrainerLegs>();
-        
+
         // Add uncategorized items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Uncategorized)
@@ -172,7 +180,7 @@ public static class TerramonItemRegistry
             var max = Groups.Values.Count > 0 ? Groups.Values.Max(g => g.Order) : -1;
             group.Order = max + 1;
         }
-        
+
         return new GroupBuilder(group);
     }
 
@@ -246,7 +254,7 @@ public static class TerramonItemRegistry
 
             return this;
         }
-        
+
         public GroupBuilder AddAllOfType<TBase>() where TBase : ModItem
         {
             var baseType = typeof(TBase);
