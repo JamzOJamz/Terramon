@@ -1,9 +1,7 @@
-using Terramon.Core.Loaders;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
 
-[LoadGroup("PokeBallMinis")]
 public abstract class BasePkballMiniItem : TerramonItem
 {
 

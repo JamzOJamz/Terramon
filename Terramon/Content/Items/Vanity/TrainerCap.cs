@@ -1,9 +1,6 @@
-﻿using Terramon.Core.Loaders;
-
-namespace Terramon.Content.Items;
+﻿namespace Terramon.Content.Items;
 
 [AutoloadEquip(EquipType.Head)]
-[LoadGroup("TrainerVanity")]
 public class TrainerCap : VanityItem
 {
     public override void SetStaticDefaults()

@@ -1,8 +1,5 @@
-using Terramon.Core.Loaders;
-
 namespace Terramon.Content.Items;
 
-[LoadWeight(5f)] // After Revive (4f)
 public class MaxRevive : BaseReviveItem
 {
     protected override float RestorationPercentage => 1f;

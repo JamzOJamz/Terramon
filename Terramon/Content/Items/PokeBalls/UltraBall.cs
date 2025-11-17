@@ -1,5 +1,4 @@
-﻿using Terramon.Core.Loaders;
-using Terramon.Helpers;
+﻿using Terramon.Helpers;
 
 namespace Terramon.Content.Items.PokeBalls;
 
@@ -9,13 +8,11 @@ internal class UltraBallProjectile : BasePkballProjectile
     protected override float CatchModifier => 2f;
 }
 
-[LoadWeight(2f)] // After UltraBallMiniItem (1f)
 internal class UltraBallMiniItem : BasePkballMiniItem
 {
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();
 }
 
-[LoadWeight(2f)] // After GreatBallItem (1f)
 internal class UltraBallItem : BasePkballItem
 {
     protected override int UseRarity => ModContent.RarityType<UltraBallRarity>();

@@ -1,10 +1,8 @@
-using Terramon.Core.Loaders;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-[LoadGroup("Recovery")]
 public abstract class RecoveryItem : TerramonItem, IPokemonDirectUse
 {
     public virtual bool AffectedByPokemonDirectUse(PokemonData data)
