@@ -1,21 +1,19 @@
-using EasyPacketsLib;
-
 namespace Terramon.Content.Packets;
 
 /// <summary>
 ///     A packet for synchronizing a player's active Pokémon with all clients.
 /// </summary>
-public readonly struct UpdateActivePokemonRpc(
+public struct UpdateActivePokemonRpc(
     byte player,
     PokemonData data,
     int syncFields = PokemonData.AllFieldsBitmask)
-    : IEasyPacket<UpdateActivePokemonRpc>, IEasyPacketHandler<UpdateActivePokemonRpc>
+    : IEasyPacket
 {
-    private readonly byte _player = player;
-    private readonly PokemonData _data = data;
-    private readonly int _syncFields = syncFields;
+    private byte _player = player;
+    private PokemonData _data = data;
+    private int _syncFields = syncFields;
 
-    public void Serialise(BinaryWriter writer)
+    public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write(_player);
         var hasData = _data != null;
@@ -26,22 +24,21 @@ public readonly struct UpdateActivePokemonRpc(
         _data?.NetWrite(writer, _syncFields);
     }
 
-    public UpdateActivePokemonRpc Deserialise(BinaryReader reader, in SenderInfo sender)
+    public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-        var readPlayer = reader.ReadByte();
+        _player = reader.ReadByte();
         if (!reader.ReadBoolean())
-            return new UpdateActivePokemonRpc(readPlayer, null);
-        var readSyncFields = reader.Read7BitEncodedInt();
-        var readData = new PokemonData().NetRead(reader);
-        return new UpdateActivePokemonRpc(readPlayer, readData, readSyncFields);
+            return;
+        _syncFields = reader.Read7BitEncodedInt();
+        _data = new PokemonData().NetRead(reader);
     }
 
-    public void Receive(in UpdateActivePokemonRpc packet, in SenderInfo sender, ref bool handled)
+    public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         sender.Mod.Logger.Debug(
-            $"Received SetActivePokemonRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {packet._player}");
-        var player = Main.player[packet._player].GetModPlayer<TerramonPlayer>();
-        if (packet._data == null)
+            $"Received SetActivePokemonRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {_player}");
+        var player = Main.player[_player].GetModPlayer<TerramonPlayer>();
+        if (_data == null)
         {
             player.Party[0] = null;
             player.ActiveSlot = -1;
@@ -49,7 +46,7 @@ public readonly struct UpdateActivePokemonRpc(
         else
         {
             player.Party[0] ??= new PokemonData();
-            packet._data.CopyNetStateTo(player.Party[0], packet._syncFields);
+            _data.CopyNetStateTo(player.Party[0], _syncFields);
             player.ActiveSlot = 0;
         }
 

@@ -1,14 +1,13 @@
-using Terramon.Core.Loaders;
 using Terramon.Helpers;
 
 namespace Terramon.Content.Items;
 
-[LoadWeight(4f)] // After MaxPotion (3f)
 public class Revive : BaseReviveItem
 {
     protected override float RestorationPercentage => 0.5f;
+
     protected override int UseRarity => ModContent.RarityType<ReviveRarity>();
-    
+
     public override void SetDefaults()
     {
         base.SetDefaults();

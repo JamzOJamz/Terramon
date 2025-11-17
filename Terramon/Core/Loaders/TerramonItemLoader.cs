@@ -1,75 +1,294 @@
 using System.Reflection;
 using Terramon.Content.Items;
-using Terraria.ModLoader.Core;
+using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Tiles.Interactive;
+using Terramon.Content.Tiles.MusicBoxes;
+using Terramon.Content.Tiles.Paintings;
 
 namespace Terramon.Core.Loaders;
 
-[AttributeUsage(AttributeTargets.Class)]
-public class LoadGroupAttribute(string group) : Attribute
+public enum TerramonItemGroup
 {
-    public string Group { get; } = group;
+    Apricorns,
+    PokeBalls,
+    Recovery,
+    EvolutionaryItems,
+    Vitamins,
+    HeldItems,
+    KeyItems,
+    Interactive,
+    MusicBoxes,
+    PokeBallMinis,
+    Vanity,
+    Uncategorized
 }
 
-[AttributeUsage(AttributeTargets.Class)]
-public class LoadWeightAttribute(float weight) : Attribute
+internal sealed class TerramonItemRegistration : ModSystem
 {
-    public float Weight { get; } = weight;
+    public override void Load()
+    {
+        // Add Apricorns
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.Apricorns)
+            .AddAllOfType<ApricornItem>();
+
+        // Add Poké Balls
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.PokeBalls)
+            .Add<PokeBallItem>()
+            .Add<GreatBallItem>()
+            .Add<UltraBallItem>()
+            .Add<MasterBallItem>()
+            .Add<PremierBallItem>()
+            .Add<CherishBallItem>()
+            .Add<AetherBallItem>();
+
+        // Add recovery items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.Recovery)
+
+            // Potions
+            .Add<Potion>()
+            .Add<SuperPotion>()
+            .Add<HyperPotion>()
+            .Add<MaxPotion>()
+
+            // Revives
+            .Add<Revive>()
+            .Add<MaxRevive>();
+
+        // Add evolutionary items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.EvolutionaryItems)
+
+            // Evolution stones
+            .Add<FireStone>()
+            .Add<WaterStone>()
+            .Add<ThunderStone>()
+            .Add<LeafStone>()
+            .Add<MoonStone>()
+            .Add<DuskStone>()
+            .Add<IceStone>()
+
+            // Misc evolutionary items
+            .Add<LinkingCord>();
+
+        // Add vitamins
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.Vitamins)
+            .Add<RareCandy>()
+            .AddAllOfType<ExpCandy>();
+
+        // Add held items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.HeldItems)
+            .AddAllOfType<HeldItem>();
+
+        // Add key items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.KeyItems)
+            .AddAllOfType<KeyItem>();
+
+        // Add interactive items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.Interactive)
+            .AddAllOfType<PCItem>();
+
+        // Add music boxes
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.MusicBoxes)
+            .AddAllOfType<MusicItem>();
+
+        // Add Poké Ball minis
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.PokeBallMinis)
+            .Add<PokeBallMiniItem>()
+            .Add<GreatBallMiniItem>()
+            .Add<UltraBallMiniItem>()
+            .Add<MasterBallMiniItem>()
+            .Add<PremierBallMiniItem>()
+            .Add<CherishBallMiniItem>()
+            .Add<AetherBallMiniItem>();
+
+        // Add vanity items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.Vanity)
+            
+            // Trainer vanity
+            .Add<TrainerCap>()
+            .Add<TrainerTorso>()
+            .Add<TrainerLegs>();
+
+        // Add uncategorized items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.Uncategorized)
+            .Add<ErikaPaintingItem>()
+            .Add<ShimmerStateDrive>();
+    }
 }
 
 [Autoload(false)]
 public class TerramonItemLoader : ModSystem
 {
-    // TODO: Keep this as a List<string> (not an enum) to ensure addon mods will be able to extend the available groups dynamically
-    private static readonly List<string> LoadGroupList =
-    [
-        "Apricorns",
-        "PokeBalls",
-        "Recovery",
-        "EvolutionaryItems",
-        "Vitamins",
-        "HeldItems",
-        "KeyItems",
-        "Interactive",
-        "MusicBoxes",
-        "PokeBallMinis",
-        "TrainerVanity"
-    ];
-
     public override void OnModLoad()
     {
-        // Load all item types across all mods loaded
-        var items = (from t in AssemblyManager.GetLoadableTypes(Mod.Code)
-            where !t.IsAbstract && t.IsSubclassOf(typeof(TerramonItem)) && t.GetConstructor(Type.EmptyTypes) != null &&
-                  !t.GetCustomAttributes<AutoloadAttribute>(false).Any()
-            select (ModItem)Activator.CreateInstance(t, null));
-
-        // Group items by LoadGroup, sort each group by LoadWeight, and then flatten the result
-        var sortedItems = items
-            .GroupBy(item =>
+        foreach (var type in TerramonItemRegistry.GetSortedTypes())
+        {
+            try
             {
-                var loadGroupAttribute = item.GetType().GetCustomAttribute<LoadGroupAttribute>();
-                if (loadGroupAttribute == null)
-                    return int.MaxValue; // Items without a LoadGroup load last
+                if (Activator.CreateInstance(type) is ModItem item)
+                    Mod.AddContent(item);
+            }
+            catch (Exception ex)
+            {
+                Mod.Logger.Error($"Failed to load item '{type.FullName}': {ex}");
+            }
+        }
+    }
+}
 
-                // Find the index of the LoadGroup in TerramonItemAPI.LoadGroups
-                var index = LoadGroupList.IndexOf(loadGroupAttribute.Group);
-                if (index == -1)
-                    return (int?)null; // Items with no matching LoadGroup should not be loaded
+public static class TerramonItemRegistry
+{
+    private static readonly Dictionary<string, GroupData> Groups = new();
 
-                return index;
-            })
-            .Where(group => group.Key.HasValue) // Filter out items without a valid LoadGroup
-            .OrderBy(group => group.Key.Value) // Sort groups by their index, with no-group items at the end
-            .SelectMany(group => group
-                .OrderBy(item =>
+    public static GroupBuilder Group(TerramonItemGroup group)
+    {
+        return Group(group.ToString());
+    }
+
+    public static GroupBuilder Group(string groupName)
+    {
+        if (!Groups.TryGetValue(groupName, out var group))
+            throw new Exception($"Group '{groupName}' has not been registered.");
+
+        return new GroupBuilder(group);
+    }
+
+    public static GroupBuilder RegisterGroup(string groupName, int? explicitOrder = null)
+    {
+        if (!Groups.TryGetValue(groupName, out var group))
+        {
+            group = new GroupData();
+            Groups[groupName] = group;
+        }
+
+        if (explicitOrder.HasValue)
+        {
+            group.Order = explicitOrder.Value;
+        }
+        else
+        {
+            // Default behaviour is to auto-assign to end of list
+            var max = Groups.Values.Count > 0 ? Groups.Values.Max(g => g.Order) : -1;
+            group.Order = max + 1;
+        }
+
+        return new GroupBuilder(group);
+    }
+
+    internal static GroupBuilder RegisterGroup(TerramonItemGroup group, int? explicitOrder = null)
+    {
+        return RegisterGroup(group.ToString(), explicitOrder);
+    }
+
+    public static void RegisterItem(Type itemType, string groupName, int? order = null)
+    {
+        if (!Groups.TryGetValue(groupName, out var group))
+            throw new Exception($"Group '{groupName}' has not been registered.");
+
+        var itemOrder = order ?? group.Items.Count;
+
+        group.Items.Add(itemType);
+        group.ItemOrders[itemType] = itemOrder;
+
+        Groups[groupName] = group;
+    }
+
+    public static void RegisterItem(Type itemType, TerramonItemGroup group, int? order = null)
+    {
+        RegisterItem(itemType, group.ToString(), order);
+    }
+
+    public static IEnumerable<Type> GetSortedTypes()
+    {
+        return Groups
+            .OrderBy(g => g.Value.Order)
+            .SelectMany(g =>
+                g.Value.Items
+                    .OrderBy(t => g.Value.ItemOrders[t])
+                    .ThenBy(t => t.FullName));
+    }
+
+    public class GroupData
+    {
+        public readonly Dictionary<Type, int> ItemOrders = new();
+        public readonly List<Type> Items = [];
+        public int Order;
+    }
+
+    public sealed class GroupBuilder
+    {
+        private readonly GroupData _group;
+
+        internal GroupBuilder(GroupData group)
+        {
+            _group = group;
+        }
+
+        public GroupBuilder Add<T>() where T : ModItem
+        {
+            var type = typeof(T);
+            var order = _group.Items.Count;
+
+            _group.Items.Add(type);
+            _group.ItemOrders[type] = order;
+
+            return this;
+        }
+
+        public GroupBuilder Add(Type itemType)
+        {
+            var order = _group.Items.Count;
+
+            _group.Items.Add(itemType);
+            _group.ItemOrders[itemType] = order;
+
+            return this;
+        }
+
+        public GroupBuilder AddAllOfType<TBase>() where TBase : ModItem
+        {
+            var baseType = typeof(TBase);
+
+            // Search all assemblies that might contain mod item classes
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var asm in assemblies)
+            {
+                Type[] types;
+                try
                 {
-                    var loadWeightAttribute = item.GetType().GetCustomAttribute<LoadWeightAttribute>();
-                    // Default to a weight of 0 if no LoadWeight attribute is present, which will sort the item first
-                    return loadWeightAttribute?.Weight ?? 0;
-                })
-            );
+                    types = asm.GetTypes();
+                }
+                catch (ReflectionTypeLoadException e)
+                {
+                    types = e.Types.Where(t => t != null).ToArray()!;
+                }
 
-        // Add sorted items to the mod content
-        foreach (var item in sortedItems) Mod.AddContent(item);
+                foreach (var t in types)
+                {
+                    if (t == null)
+                        continue;
+
+                    // Must be a subclass of the base type AND not abstract
+                    if (t.IsSubclassOf(baseType) && !t.IsAbstract)
+                    {
+                        Add(t);
+                    }
+                }
+            }
+
+            return this;
+        }
     }
 }

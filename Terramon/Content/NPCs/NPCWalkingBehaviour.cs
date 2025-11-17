@@ -53,7 +53,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
     {
         if (!Enabled || PlasmaState) return;
 
-        if (Battle != null)
+        if (InBattle)
         {
             NPC.velocity = Vector2.Zero;
             AIState = (float)ActionState.Idle;

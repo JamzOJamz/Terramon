@@ -1,8 +1,10 @@
 // ReSharper disable UnusedMember.Global
 
+using ReLogic.Reflection;
+
 namespace Terramon.ID;
 
-public static class NationalDexID
+public class NationalDexID
 {
     public const ushort Missingno = 0;
     public const ushort Bulbasaur = 1;
@@ -176,4 +178,6 @@ public static class NationalDexID
     public const ushort Rowlet = 722;
     public const ushort Litten = 725;
     public const ushort Popplio = 728;
+    public static IdDictionary Search { get; } = IdDictionary.Create<NationalDexID, ushort>();
+    public static ushort FromSpecies(string species) => (ushort)Search.GetId(species.Replace("-", string.Empty));
 }

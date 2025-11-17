@@ -1,11 +1,9 @@
 using Terramon.Content.Commands;
-using Terramon.Core.Loaders;
 using Terraria.Audio;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items.PokeBalls;
 
-[LoadGroup("PokeBalls")]
 public abstract class BasePkballItem : TerramonItem
 {
     protected abstract int PokeballThrow { get; }

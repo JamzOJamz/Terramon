@@ -1,19 +1,17 @@
-using Terramon.Core.Loaders;
 using Terramon.Helpers;
 
 namespace Terramon.Content.Items;
 
-[LoadWeight(2f)] // After SuperPotion (1f)
 public class HyperPotion : BasePotionItem
 {
     protected override ushort HealAmount => 200;
-    
+
+    protected override int UseRarity => ModContent.RarityType<HyperPotionRarity>();
+
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 10;
     }
-    
-    protected override int UseRarity => ModContent.RarityType<HyperPotionRarity>();
 }
 
 public class HyperPotionRarity : ModRarity

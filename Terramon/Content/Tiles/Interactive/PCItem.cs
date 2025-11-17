@@ -1,10 +1,8 @@
 using Terramon.Content.Items;
-using Terramon.Core.Loaders;
 using Terraria.Localization;
 
 namespace Terramon.Content.Tiles.Interactive;
 
-[LoadGroup("Interactive")]
 public abstract class PCItem : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Tiles/Interactive/" + GetType().Name;

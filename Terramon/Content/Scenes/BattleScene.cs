@@ -6,7 +6,11 @@ public class BattleScene : ModSceneEffect
     
     public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
 
-    public override bool IsSceneEffectActive(Player player) => player.Terramon().Battle != null;
+    public override bool IsSceneEffectActive(Player player)
+    {
+        var modPlayer = player.Terramon();
+        return modPlayer._battleClient != null && modPlayer._battleClient.BattleOngoing;
+    }
 
     public override void SpecialVisuals(Player player, bool isActive)
     {

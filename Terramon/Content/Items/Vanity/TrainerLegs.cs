@@ -1,10 +1,6 @@
-﻿using Terramon.Core.Loaders;
-
-namespace Terramon.Content.Items;
+﻿namespace Terramon.Content.Items;
 
 [AutoloadEquip(EquipType.Legs)]
-[LoadGroup("TrainerVanity")]
-[LoadWeight(2f)] // After TrainerTorso (1f)
 public class TrainerLegs : VanityItem
 {
     public override void SetStaticDefaults()

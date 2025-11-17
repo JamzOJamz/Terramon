@@ -1,9 +1,7 @@
-using Terramon.Core.Loaders;
 using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-[LoadGroup("Vitamins")]
 public abstract class Vitamin : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/Vitamins/" + GetType().Name;

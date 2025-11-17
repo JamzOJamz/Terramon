@@ -5,12 +5,13 @@ using Showdown.NET;
 using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
+using Terramon.Core.Battling;
 using Terraria.Graphics;
 using Terraria.ModLoader.UI;
 
 namespace Terramon.Core.Systems;
 
-public class TurnBasedBattleSystem : ModSystem
+public sealed class TurnBasedBattleSystem : ModSystem
 {
     private static readonly string RuntimesPath = Path.Combine(Terramon.SavePath, "Runtimes");
 
@@ -65,6 +66,11 @@ public class TurnBasedBattleSystem : ModSystem
         stream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen1CustomGame));
     }
 
+    public override void PreUpdateWorld()
+    {
+        BattleManager.Instance ??= new();
+    }
+
     public override void Unload()
     {
         ShowdownHost.Unload();
@@ -73,7 +79,7 @@ public class TurnBasedBattleSystem : ModSystem
     
     public override void ModifyTransformMatrix(ref SpriteViewMatrix transform)
     {
-        if (Main.gameMenu || TerramonPlayer.LocalPlayer.Battle == null) return;
+        if (Main.gameMenu || !BattleClient.LocalBattleOngoing) return;
         
         // Allows GameZoomTarget to go beyond the vanilla cap of 2f (200%)
         transform.Zoom = new Vector2(Main.GameZoomTarget);

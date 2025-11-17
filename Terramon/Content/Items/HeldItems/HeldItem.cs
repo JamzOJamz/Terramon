@@ -1,9 +1,7 @@
-﻿using Terramon.Core.Loaders;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace Terramon.Content.Items;
 
-[LoadGroup("HeldItems")]
 public abstract class HeldItem : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/HeldItems/" + GetType().Name;
