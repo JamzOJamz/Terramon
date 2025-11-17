@@ -758,3 +758,8 @@ Misc: {
 		[c/C9C9E5:Asegúrate de personalizar el mod a tus gustos en el menú de Configuración de mods, y asigna los comandos de teclas del mod en el menú de Controles.]
 		'''
 }
+
+RecipeGroup: {
+	// AnySilverBar: Any Silver Bar
+	// AnyGoldBar: Any Gold Bar
+}

@@ -26,7 +26,7 @@ internal class UltraBallItem : BasePkballItem
     public override void AddRecipes()
     {
         CreateRecipe()
-            .AddRecipeGroup($"{nameof(Terramon)}:GoldBar", 2)
+            .AddRecipeGroup(nameof(ItemID.GoldBar), 2)
             .AddIngredient<BlackApricorn>(2)
             .AddIngredient<YellowApricorn>(2)
             .AddTile(TileID.Anvils)

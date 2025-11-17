@@ -762,3 +762,8 @@ Misc: {
 		[c/C9C9E5:Vergiss nicht, die Mod in den Mod-Einstellungen anzupassen und deine Tastenbelegungen im Steuerungsmenü festzulegen.]
 		'''
 }
+
+RecipeGroup: {
+	// AnySilverBar: Any Silver Bar
+	// AnyGoldBar: Any Gold Bar
+}
