@@ -1,9 +1,10 @@
-using System.Reflection;
 using Terramon.Content.Items;
+using Terramon.Content.Items.HeldItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.Content.Tiles.Paintings;
+using Terraria.ModLoader.Core;
 
 namespace Terramon.Core.Loaders;
 
@@ -16,6 +17,7 @@ public enum TerramonItemGroup
     Vitamins,
     HeldItems,
     KeyItems,
+    MegaStones,
     Interactive,
     MusicBoxes,
     PokeBallMinis,
@@ -26,7 +28,7 @@ public enum TerramonItemGroup
 
 internal sealed class TerramonItemRegistration : ModSystem
 {
-    public override void Load()
+    public TerramonItemRegistration()
     {
         // Add Apricorns
         TerramonItemRegistry
@@ -81,6 +83,10 @@ internal sealed class TerramonItemRegistration : ModSystem
             .RegisterGroup(TerramonItemGroup.HeldItems)
             .AddAllOfType<HeldItem>();
 
+        // Register mega stone group (populated in MegaStone)
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.MegaStones);
+
         // Add key items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.KeyItems)
@@ -129,26 +135,18 @@ internal sealed class TerramonItemRegistration : ModSystem
 [Autoload(false)]
 public class TerramonItemLoader : ModSystem
 {
-    public override void OnModLoad()
+    public override void Load()
     {
-        foreach (var entry in TerramonItemRegistry.GetSortedItems())
+        foreach (var item in TerramonItemRegistry.GetSortedItems())
         {
-            try
-            {
-                var item = entry.IsInstance ? entry.Instance! : (ModItem)Activator.CreateInstance(entry.ItemType!)!;
-                Mod.AddContent(item);
-            }
-            catch (Exception ex)
-            {
-                Mod.Logger.Error($"Failed to load item '{entry.ItemType?.FullName}': {ex}");
-            }
+            Mod.AddContent(item);
         }
     }
 }
 
 public static class TerramonItemRegistry
 {
-    private static readonly Dictionary<string, GroupData> Groups = new();
+    private static readonly Dictionary<string, GroupData> Groups = [];
 
     public static GroupBuilder Group(TerramonItemGroup group) => Group(group.ToString());
 
@@ -191,11 +189,10 @@ public static class TerramonItemRegistry
             throw new Exception($"Group '{groupName}' has not been registered.");
 
         var itemOrder = order ?? group.Items.Count;
+        var item = (ModItem)Activator.CreateInstance(itemType);
 
-        var entry = new ItemEntry(itemType);
-
-        group.Items.Add(entry);
-        group.ItemOrders[entry] = itemOrder;
+        group.Items.Add(item);
+        group.ItemOrders[item] = itemOrder;
 
         Groups[groupName] = group;
     }
@@ -205,40 +202,21 @@ public static class TerramonItemRegistry
         RegisterItem(itemType, group.ToString(), order);
     }
 
-    public static IEnumerable<ItemEntry> GetSortedItems()
+    public static IEnumerable<ModItem> GetSortedItems()
     {
         return Groups
             .OrderBy(g => g.Value.Order)
             .SelectMany(g =>
                 g.Value.Items
                     .OrderBy(t => g.Value.ItemOrders[t])
-                    .ThenBy(t => t.ItemType!.FullName));
+                    .ThenBy(t => t.Name));
     }
 
     public class GroupData
     {
-        public readonly Dictionary<ItemEntry, int> ItemOrders = new();
-        public readonly List<ItemEntry> Items = [];
+        public readonly Dictionary<ModItem, int> ItemOrders = new();
+        public readonly List<ModItem> Items = [];
         public int Order;
-    }
-
-    public sealed class ItemEntry
-    {
-        public ItemEntry(Type type)
-        {
-            ItemType = type;
-        }
-
-        public ItemEntry(ModItem instance)
-        {
-            Instance = instance;
-            ItemType = instance.GetType();
-        }
-
-        public Type ItemType { get; }
-        public ModItem Instance { get; }
-
-        public bool IsInstance => Instance != null;
     }
 
     public sealed class GroupBuilder
@@ -250,18 +228,31 @@ public static class TerramonItemRegistry
             _group = group;
         }
 
-        public GroupBuilder Add<T>() where T : ModItem => Add(typeof(T));
+        public GroupBuilder Add<T>() where T : ModItem
+            => Add(typeof(T));
 
-        public GroupBuilder Add(Type itemType) => AddEntry(new ItemEntry(itemType));
+        public GroupBuilder Add(Type itemType)
+        {
+            try
+            {
+                var item = (ModItem)Activator.CreateInstance(itemType);
 
-        public GroupBuilder Add(ModItem instance) => AddEntry(new ItemEntry(instance));
+                Add(item);
+            }
+            catch (InvalidCastException)
+            {
+                Terramon.Instance.Logger.Error($"Failed to load item '{itemType.FullName}': Given type is not a {nameof(ModItem)}");
+            }
 
-        private GroupBuilder AddEntry(ItemEntry entry)
+            return this;
+        }
+
+        public GroupBuilder Add(ModItem item)
         {
             var order = _group.Items.Count;
 
-            _group.Items.Add(entry);
-            _group.ItemOrders[entry] = order;
+            _group.Items.Add(item);
+            _group.ItemOrders[item] = order;
 
             return this;
         }
@@ -271,25 +262,14 @@ public static class TerramonItemRegistry
             var baseType = typeof(TBase);
 
             // Search all assemblies that might contain mod item classes
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = ModLoader.Mods.Select(m => m.Code);
 
             foreach (var asm in assemblies)
             {
-                Type[] types;
-                try
-                {
-                    types = asm.GetTypes();
-                }
-                catch (ReflectionTypeLoadException e)
-                {
-                    types = e.Types.Where(t => t != null).ToArray()!;
-                }
+                var types = AssemblyManager.GetLoadableTypes(asm);
 
                 foreach (var t in types)
                 {
-                    if (t == null)
-                        continue;
-
                     // Must be a subclass of the base type AND not abstract
                     if (t.IsSubclassOf(baseType) && !t.IsAbstract)
                     {

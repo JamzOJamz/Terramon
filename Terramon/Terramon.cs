@@ -1,4 +1,5 @@
 using Terramon.Content.GUI;
+using Terramon.Content.Items.HeldItems;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
@@ -38,7 +39,7 @@ public class Terramon : Mod
     /// </summary>
     public static int HighestPokemonID { get; private set; }
 
-    public static Terramon Instance => ModContent.GetInstance<Terramon>();
+    public static Terramon Instance;
 
     public static DatabaseV2 DatabaseV2 { get; private set; }
 
@@ -145,14 +146,16 @@ public class Terramon : Mod
         return result;
     }
 
+    public Terramon()
+    {
+        // Set instance
+        Instance = this;
+    }
+
     public override void Load()
     {
         // Create the save directory if it doesn't exist
         Directory.CreateDirectory(SavePath);
-        
-        // Load entities, then items
-        AddContent<PokemonEntityLoader>();
-        AddContent<TerramonItemLoader>();
 
         // Load the database
         var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
@@ -160,6 +163,11 @@ public class Terramon : Mod
 
         // Calculate and cache Pokémon metrics after loading the database
         CalculatePokemonMetrics();
+
+        // Load entities, then items
+        AddContent<PokemonEntityLoader>();
+        MegaStone.LoadMegaStones();
+        AddContent<TerramonItemLoader>();
 
         // Register the mod in EasyPacketsLib
         EasyPacketLoader.RegisterMod();

@@ -8,6 +8,7 @@ using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
 using Terramon.Helpers;
+using Terramon.Content.Items.HeldItems;
 
 namespace Terramon.Core.Loaders;
 
@@ -20,18 +21,18 @@ public class PokemonEntityLoader : ModSystem
     private static readonly TerramonItemRegistry.GroupBuilder BannerItemGroup =
         TerramonItemRegistry.Group(TerramonItemGroup.Banners);
 
-    public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; }
-    public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; }
-    public static Dictionary<ushort, int> IDToNPCType { get; private set; }
-    public static Dictionary<ushort, int> IDToPetType { get; private set; }
-    public static Dictionary<ushort, int> IDToBannerType { get; private set; }
-    public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; }
-    public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; }
+    public static Dictionary<ushort, Asset<Texture2D>> GlowTextureCache { get; private set; } = [];
+    public static Dictionary<ushort, Asset<Texture2D>> ShinyGlowTextureCache { get; private set; } = [];
+    public static Dictionary<ushort, int> IDToNPCType { get; private set; } = [];
+    public static Dictionary<ushort, int> IDToPetType { get; private set; } = [];
+    public static Dictionary<ushort, int> IDToBannerType { get; private set; } = [];
+    public static Dictionary<ushort, JToken> NPCSchemaCache { get; private set; } = [];
+    public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; } = [];
     private static BitArray HasGenderDifference { get; set; }
     private static BitArray HasPetExclusiveTexture { get; set; }
-    private static List<PokeBannerItem> ShinyBanners { get; set; }
+    private static List<PokeBannerItem> ShinyBanners { get; set; } = [];
 
-    public override void OnModLoad()
+    public override void Load()
     {
         // The initialization of these arrays is done here rather than in Load to avoid a null ref exception reading HighestPokemonID
         var highestPokemonID = Terramon.HighestPokemonID;
@@ -103,7 +104,7 @@ public class PokemonEntityLoader : ModSystem
             NPCSchemaCache.Add(id, npcSchema);
             var npc = new PokemonNPC(id, schema);
             Mod.AddContent(npc);
-            IDToNPCType.Add(id, npc.NPC.type);
+            IDToNPCType.Add(id, (ushort)npc.NPC.type);
         }
 
         // Load Pokémon pet projectile
@@ -117,11 +118,11 @@ public class PokemonEntityLoader : ModSystem
             PetSchemaCache.Add(id, petSchema);
             var pet = new PokemonPet(id, schema);
             Mod.AddContent(pet);
-            IDToPetType.Add(id, pet.Projectile.type);
+            IDToPetType.Add(id, (ushort)pet.Projectile.type);
         }
 
         // Load Pokémon banner
-        if (ModContent.HasAsset($"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner")) LoadBanner(id, schema);
+        if (Mod.FileExists($"Assets/Tiles/Banners/{schema.Identifier}Banner.rawimg")) LoadBanner(id, schema);
     }
 
     private static void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)
@@ -159,19 +160,6 @@ public class PokemonEntityLoader : ModSystem
         return ModContent.Request<Texture2D>(pathBuilder.ToString());
     }
 
-
-    public override void Load()
-    {
-        IDToNPCType = [];
-        IDToPetType = [];
-        IDToBannerType = [];
-        NPCSchemaCache = [];
-        PetSchemaCache = [];
-        GlowTextureCache = [];
-        ShinyGlowTextureCache = [];
-        ShinyBanners = [];
-    }
-
     public override void Unload()
     {
         IDToNPCType = null;
@@ -183,6 +171,5 @@ public class PokemonEntityLoader : ModSystem
         HasPetExclusiveTexture = null;
         GlowTextureCache = null;
         ShinyGlowTextureCache = null;
-        ShinyBanners = null;
     }
 }
