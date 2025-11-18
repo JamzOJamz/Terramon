@@ -77,7 +77,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale,
             Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
 
-        if (_capture != null)
+        if (_capture != null && Main.mouseItem.IsAir && !Main.LocalPlayer.cursorItemIconEnabled && !TooltipOverlay.IsHoldingPokemon())
         {
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X + 4, (int)originOffsetDrawPos.Y + 4, 16, 16);

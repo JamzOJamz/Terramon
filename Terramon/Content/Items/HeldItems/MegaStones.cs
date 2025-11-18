@@ -5,61 +5,53 @@ using Terramon.ID;
 using Terraria.GameContent;
 using Terraria.Localization;
 
-namespace Terramon.Content.Items.HeldItems;
+namespace Terramon.Content.Items;
 
 [Autoload(false)]
-public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
+public sealed class MegaStone(MegaStoneID id, ushort evolves) : HeldItem
 {
-    public readonly record struct MegaStonePalette(Color Main, Color Streak, Color StreakA, Color StreakB);
-    public static MegaStonePalette[] Palettes { get; private set; }
-
-    private static readonly Vector3[] _colorsBuf = new Vector3[8];
-
+    private static readonly Vector3[] ColorsBuf = new Vector3[8];
+    private static readonly TerramonItemRegistry.GroupBuilder MegaStoneItemGroup =
+        TerramonItemRegistry.Group(TerramonItemGroup.MegaStones);
     private static RenderTarget2D _rt;
-
-    public MegaStoneID ID = id;
-    public ushort EvolvesPokemon = evolves;
-
+    
+    private static Palette[] Palettes { get; set; }
+    
     private LocalizedText _pokeName;
-
-    private LocalizedText _formattedTip;
-
+    
     protected override bool CloneNewInstances => true;
-    public override string Name => $"{ID}MegaStone";
+    public override string Name => $"{id}MegaStone";
     protected override int UseRarity => ModContent.RarityType<MegaRarity>();
     public override string Texture => "Terramon/Assets/Items/HeldItems/MegaStone";
-    public override LocalizedText DisplayName => Mod.GetLocalization($"MegaStoneNames.{ID}", ID.ToString);
-    public override LocalizedText Tooltip => _formattedTip;
-
-    public override void Unload() => _rt.Dispose();
+    public override LocalizedText DisplayName => Mod.GetLocalization($"MegaStoneNames.{id}", id.ToString);
+    public override LocalizedText Tooltip =>
+        Mod.GetLocalization("CommonTooltips.MegaStoneTip").WithFormatArgs(_pokeName);
 
     public override void SetStaticDefaults()
     {
-        Item.ResearchUnlockCount = 1;
-        _pokeName =
-            Terramon.DatabaseV2.GetLocalizedPokemonName(EvolvesPokemon);
-        _formattedTip =
-            Mod.GetLocalization("CommonTooltips.MegaStoneTip").WithFormatArgs(_pokeName);
+        base.SetStaticDefaults();
+        TerramonItemAPI.Sets.Unobtainable.Add(Type);
+        _pokeName = Terramon.DatabaseV2.GetLocalizedPokemonName(evolves);
+    }
+    
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.width = Item.height = 22;
     }
 
     public override void ModifyTooltips(List<TooltipLine> tooltips)
     {
+        base.ModifyTooltips(tooltips);
         tooltips.Add(
-            new TooltipLine(Mod, "MegaStone", Mod.GetLocalization("CommonTooltips.MegaStone").Format(_pokeName.Value)) 
-            { 
-                OverrideColor = Color.Aquamarine 
+            new TooltipLine(Mod, "MegaStone", Mod.GetLocalization("CommonTooltips.MegaStone").Format(_pokeName.Value))
+            {
+                OverrideColor = Color.Aquamarine
             });
     }
 
-    public override void SetDefaults()
-    {
-        Item.width = Item.height = 22;
-        Item.rare = UseRarity;
-        Item.maxStack = 1;
-        Item.value = 0;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor,
+        Color itemColor, Vector2 origin, float scale)
     {
         PrepareRenderTarget(spriteBatch);
 
@@ -68,7 +60,8 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
         return false;
     }
 
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation,
+        ref float scale, int whoAmI)
     {
         PrepareRenderTarget(spriteBatch);
 
@@ -85,18 +78,18 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
         var shader = ShaderAssets.Palette.Value;
         var tex = TextureAssets.Item[Type].Value;
 
-        ref var palette = ref Palettes[(int)ID];
+        ref var palette = ref Palettes[(int)id];
 
         var main = palette.Main;
 
-        _colorsBuf[1] = main.HueShift(0.1f, -0.5f).ToVector3();
-        _colorsBuf[2] = main.HueShift(0.05f, -0.1f).ToVector3();
-        _colorsBuf[3] = main.ToVector3();
-        _colorsBuf[4] = palette.Streak.ToVector3();
-        _colorsBuf[5] = palette.StreakA.ToVector3();
-        _colorsBuf[6] = palette.StreakB.ToVector3();
+        ColorsBuf[1] = main.HueShift(0.1f, -0.5f).ToVector3();
+        ColorsBuf[2] = main.HueShift(0.05f, -0.1f).ToVector3();
+        ColorsBuf[3] = main.ToVector3();
+        ColorsBuf[4] = palette.Streak.ToVector3();
+        ColorsBuf[5] = palette.StreakA.ToVector3();
+        ColorsBuf[6] = palette.StreakB.ToVector3();
 
-        shader.Parameters["uColors"].SetValue(_colorsBuf);
+        shader.Parameters["uColors"].SetValue(ColorsBuf);
 
         var gd = Main.graphics.GraphicsDevice;
 
@@ -109,13 +102,14 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
         gd.SetRenderTarget(_rt);
         gd.Clear(Color.Transparent);
 
-        sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, shader);
+        sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None,
+            RasterizerState.CullNone, shader);
         sb.Draw(tex, Vector2.Zero, Color.White);
         sb.End();
 
-        for (int i = 0; i < oldTargets.Length; i++)
+        foreach (var t in oldTargets)
         {
-            if (oldTargets[i].RenderTarget is RenderTarget2D rt)
+            if (t.RenderTarget is RenderTarget2D rt)
                 rt.RenderTargetUsage = RenderTargetUsage.PreserveContents;
         }
 
@@ -126,14 +120,14 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
 
     private static void LoadPalettes(Mod mod)
     {
-        _colorsBuf[0] = Color.Black.ToVector3();
-        _colorsBuf[^1] = Color.White.ToVector3();
+        ColorsBuf[0] = Color.Black.ToVector3();
+        ColorsBuf[^1] = Color.White.ToVector3();
 
         using var stream = mod.GetFileStream("Assets/Items/HeldItems/MegaStonePalettes.plt");
-        int max = (int)MegaStoneID.Baxcalibur + 1;
-        Palettes = new MegaStonePalette[max];
+        const int max = (int)MegaStoneID.Baxcalibur + 1;
+        Palettes = new Palette[max];
         Span<byte> buffer = stackalloc byte[3];
-        for (int i = 0; i < max; i++)
+        for (var i = 0; i < max; i++)
         {
             // Main
             stream.ReadExactly(buffer);
@@ -148,12 +142,9 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
             stream.ReadExactly(buffer);
             var streakB = new Color(buffer[0], buffer[1], buffer[2]);
 
-            Palettes[i] = new(main, streak, streakA, streakB);
+            Palettes[i] = new Palette(main, streak, streakA, streakB);
         }
     }
-
-    private static readonly TerramonItemRegistry.GroupBuilder MegaStoneItemGroup =
-        TerramonItemRegistry.Group(TerramonItemGroup.MegaStones);
 
     internal static void LoadMegaStones()
     {
@@ -162,7 +153,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
 
         // Load RT for drawing mega stones
         Main.QueueMainThreadAction(() =>
-            _rt = new(Main.graphics.GraphicsDevice, 22, 22));
+            _rt = new RenderTarget2D(Main.graphics.GraphicsDevice, 22, 22));
 
         // Load mega stones
         for (var start = MegaStoneID.Gengar; start <= MegaStoneID.Baxcalibur; start++)
@@ -172,6 +163,10 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
                 MegaStoneItemGroup.Add(new MegaStone(start, (ushort)id));
         }
     }
+    
+    public override void Unload() => Main.QueueMainThreadAction(_rt.Dispose);
+
+    private readonly record struct Palette(Color Main, Color Streak, Color StreakA, Color StreakB);
 }
 
 public sealed class MegaRarity : DiscoRarity
@@ -182,8 +177,6 @@ public sealed class MegaRarity : DiscoRarity
         new(30, 183, 223),
         new(223, 139, 190)
     ];
-
-    protected override float Time => base.Time;
 }
 
 public enum MegaStoneID
@@ -266,4 +259,3 @@ public enum MegaStoneID
     RaichuY,
     Baxcalibur,
 }
-

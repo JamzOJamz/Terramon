@@ -632,7 +632,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public bool UpdatePokedex(ushort id, PokedexEntryStatus status, bool force = false, bool shiny = false)
     {
         TerramonWorld.UpdateWorldDex(id, status, Player.name, force);
-        var hasEntry = _pokedex.Entries.TryGetValue((ushort)id, out var entry);
+        var hasEntry = _pokedex.Entries.TryGetValue(id, out var entry);
         var entryUpdated = false;
 
         if (hasEntry)

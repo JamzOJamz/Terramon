@@ -357,8 +357,8 @@ CommonTooltips: {
 	// MegaStone: Mega Stone - {0}
 	/* MegaStoneTip:
 		'''
-		One of a variety of mysterious Mega Stones.
-		Any {0} holding this stone will be able to Mega Evolve during battle.
+		One of a variety of mysterious Mega Stones
+		Any {0} holding this stone will be able to Mega Evolve during battle
 		''' */
 	// Unobtainable: Unobtainable
 }

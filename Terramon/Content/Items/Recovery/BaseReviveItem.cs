@@ -30,7 +30,7 @@ public abstract class BaseReviveItem : RecoveryItem
 
         Main.NewText(
             Language.GetTextValue(
-                RestorationPercentage == 1f ? "Mods.Terramon.Misc.MaxReviveUse" : "Mods.Terramon.Misc.ReviveUse",
+                Math.Abs(RestorationPercentage - 1f) < 0.001f ? "Mods.Terramon.Misc.MaxReviveUse" : "Mods.Terramon.Misc.ReviveUse",
                 data.DisplayName));
 
         SoundEngine.PlaySound(SoundID.Item29);

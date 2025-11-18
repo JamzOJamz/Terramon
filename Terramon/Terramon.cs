@@ -1,5 +1,5 @@
 using Terramon.Content.GUI;
-using Terramon.Content.Items.HeldItems;
+using Terramon.Content.Items;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
@@ -27,6 +27,10 @@ public class Terramon : Mod
         if (!Main.dedServ) MenuSocialWidget.Setup();
     }
 
+    public Terramon() => Instance = this;
+
+    public static Terramon Instance { get; private set; }
+
     /// <summary>
     ///     The amount of Pokémon that have actually been loaded into the game.
     ///     This is calculated once after loading the database.
@@ -38,8 +42,6 @@ public class Terramon : Mod
     ///     This is calculated once after loading the database.
     /// </summary>
     public static int HighestPokemonID { get; private set; }
-
-    public static Terramon Instance;
 
     public static DatabaseV2 DatabaseV2 { get; private set; }
 
@@ -144,12 +146,6 @@ public class Terramon : Mod
         }
 
         return result;
-    }
-
-    public Terramon()
-    {
-        // Set instance
-        Instance = this;
     }
 
     public override void Load()

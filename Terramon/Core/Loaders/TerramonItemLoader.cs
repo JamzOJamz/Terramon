@@ -1,5 +1,4 @@
 using Terramon.Content.Items;
-using Terramon.Content.Items.HeldItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Content.Tiles.MusicBoxes;
@@ -81,9 +80,9 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add held items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.HeldItems)
-            .AddAllOfType<HeldItem>();
+            .Add<LuckyEgg>();
 
-        // Register mega stone group (populated in MegaStone)
+        // Register mega stone group (populated in MegaStones)
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.MegaStones);
 
@@ -192,7 +191,7 @@ public static class TerramonItemRegistry
         var item = (ModItem)Activator.CreateInstance(itemType);
 
         group.Items.Add(item);
-        group.ItemOrders[item] = itemOrder;
+        group.ItemOrders[item!] = itemOrder;
 
         Groups[groupName] = group;
     }

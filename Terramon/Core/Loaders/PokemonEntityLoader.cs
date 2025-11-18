@@ -8,7 +8,6 @@ using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
 using Terramon.Helpers;
-using Terramon.Content.Items.HeldItems;
 
 namespace Terramon.Core.Loaders;
 

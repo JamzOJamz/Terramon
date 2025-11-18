@@ -37,11 +37,10 @@ public class PokemonData
     public PokemonMoves Moves;
     public NatureID Nature;
     public string Nickname;
-    public string Variant;
-
+    public bool Participated;
     public StatStages StatStages;
     public NonVolatileStatus Status;
-    public bool Participated;
+    public string Variant;
 
     public ushort ID
     {
@@ -83,7 +82,7 @@ public class PokemonData
 
     public ushort MaxHP
         => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (int)(EVs.HP / 4d) + 100) * Level / 100d + 10);
-    
+
     public ushort RegenHP { get; private set; }
 
     /// <summary>
@@ -104,7 +103,7 @@ public class PokemonData
     }
 
     public ref Item HeldItem => ref _heldItem;
-    
+
     public void Damage(ushort amount, bool isRealtime = false)
     {
         if (isRealtime && RegenHP == 0)
@@ -181,13 +180,14 @@ public class PokemonData
         var finalExp = firstMult * t * e * v * f * p;
         return (int)finalExp;
     }
-    
+
     public byte TrainEV(StatID stat, byte effortIncrease)
     {
         return EVs.Increase(stat, effortIncrease);
     }
-    
-    public void TrainEVs(IEnumerable<(StatID Stat, byte EffortIncrease)> evs, out (StatID Stat, byte Overflow)[] overflows)
+
+    public void TrainEVs(IEnumerable<(StatID Stat, byte EffortIncrease)> evs,
+        out (StatID Stat, byte Overflow)[] overflows)
     {
         overflows = null;
         if (evs is null)
@@ -200,9 +200,10 @@ public class PokemonData
             if (overflow != 0)
                 overflows[cur++] = (stat, overflow);
         }
+
         Array.Resize(ref overflows, cur);
     }
-    
+
     public IEnumerable<(StatID Stat, byte EffortIncrease)> EVsFromDefeat(PokemonData defeated, bool disabled)
     {
         if (disabled)
@@ -228,6 +229,26 @@ public class PokemonData
     }
 
     /// <summary>
+    ///     Adjusts current <see cref="HP" /> proportionally when <see cref="MaxHP" /> changes. Used during level-ups and
+    ///     evolution.
+    /// </summary>
+    private void AdjustHPForMaxHPChange(ushort oldMaxHP, ushort oldHP)
+    {
+        var newMaxHP = MaxHP;
+
+        // Official formula: HP increases by how much MaxHP increased
+        var hpDiff = newMaxHP - oldMaxHP;
+        var newHP = (ushort)(oldHP + hpDiff);
+        HP = newHP;
+
+        // RegenHP should reflect the *actual HP gained*, not the theoretical hpDiff
+        // (e.g. if HP was near max and clamped, actual gain may be smaller)
+        var actualHpGain = (ushort)(HP - oldHP);
+        if (RegenHP != 0)
+            RegenHP += actualHpGain;
+    }
+
+    /// <summary>
     ///     Increases the Pokémon's level by 1.
     ///     Returns false if the Pokémon is already at level 100.
     /// </summary>
@@ -244,25 +265,14 @@ public class PokemonData
         var oldHP = HP;
 
         Level++;
-        var newMaxHP = MaxHP;
 
-        // Official formula: HP increases by how much MaxHP increased
-        var hpDiff = newMaxHP - oldMaxHP;
-        var newHP = (ushort)(oldHP + hpDiff);
-        HP = newHP;
-
-        // RegenHP should reflect the *actual HP gained*, not the theoretical hpDiff
-        // (e.g. if HP was near max and clamped, actual gain may be smaller)
-        var actualHpGain = (ushort)(HP - oldHP);
-        if (RegenHP != 0)
-            RegenHP += actualHpGain;
+        AdjustHPForMaxHPChange(oldMaxHP, oldHP);
 
         if (ensureMinimumExperience)
             TotalEXP = Math.Max(TotalEXP, ExperienceLookupTable.GetLevelTotalExp(Level, Schema.GrowthRate));
 
         return true;
     }
-
 
     /// <summary>
     ///     Returns the ID of the species the Pokémon should evolve into.
@@ -299,9 +309,14 @@ public class PokemonData
     /// <param name="id">The ID of the species to evolve into.</param>
     public void EvolveInto(ushort id)
     {
+        var oldMaxHP = MaxHP;
+        var oldHP = HP;
+
         ID = id;
+
+        AdjustHPForMaxHPChange(oldMaxHP, oldHP);
     }
-    
+
     public static Builder Create(ushort id, byte level = 1)
     {
         return new Builder(id, level);
@@ -356,11 +371,12 @@ public class PokemonData
 
             var levelOneMoves = Schema.LevelUpLearnset
                 .Where(moveEntry => moveEntry.AtLevel == 1);
+            levelOneMoves = levelOneMoves as DatabaseV2.LevelEntrySchema[] ?? levelOneMoves.ToArray();
 
             if (levelOneMoves.Count() > remainingSlots)
             {
                 levelOneMoves = levelOneMoves
-                    .OrderBy(x => Main.rand.Next())
+                    .OrderBy(_ => Main.rand.Next())
                     .Take(remainingSlots);
             }
             else
@@ -456,12 +472,12 @@ public class PokemonData
     {
         return (PokemonData)MemberwiseClone();
     }
-    
+
     public class Builder
     {
         private readonly PokemonData _pokemon;
         private Player _shinyPlayer;
-        
+
         public Builder(ushort id, byte level)
         {
             _pokemon = new PokemonData
@@ -550,36 +566,36 @@ public class PokemonData
             ["ivs"] = IVs.Packed,
             ["version"] = Version
         };
-        
+
         // Optional fields - only serialize if different from defaults
         if (Ball != BallID.PokeBall)
             tag["ball"] = (byte)Ball;
-        
+
         if (IsShiny)
             tag["isShiny"] = true;
-        
+
         if (!string.IsNullOrEmpty(Nickname))
             tag["n"] = Nickname;
-        
+
         if (!string.IsNullOrEmpty(Variant))
             tag["variant"] = Variant;
-        
+
         if (_heldItem != null)
             tag["item"] = new ItemDefinition(_heldItem.type);
-        
+
         if (_metDate.HasValue)
             tag["met"] = _metDate.Value.ToBinary();
-        
+
         if (_metLevel != 0)
             tag["metlvl"] = _metLevel;
-        
+
         if (!string.IsNullOrEmpty(_worldName))
             tag["world"] = _worldName;
-        
+
         var moves = Moves.SerializeData();
         if (moves != null)
             tag["moves"] = moves;
-        
+
         return tag;
     }
 
@@ -603,45 +619,45 @@ public class PokemonData
             _ot = tag.GetString("ot"),
             PersonalityValue = tag.Get<uint>("pv")
         };
-        
+
         // Load optional fields
         data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
-        
+
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
-        
+
         if (tag.TryGet<bool>("isShiny", out var isShiny))
             data.IsShiny = isShiny;
-        
+
         if (tag.TryGet<string>("n", out var nickname))
             data.Nickname = nickname;
-        
+
         if (tag.TryGet<string>("variant", out var variant))
             data.Variant = variant;
-        
+
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
-        
+
         if (tag.TryGet<long>("met", out var metDate))
             data._metDate = DateTime.FromBinary(metDate);
-        
+
         data._metLevel = tag.TryGet<byte>("metlvl", out var metLevel) ? metLevel : data.Level;
-        
+
         if (tag.TryGet<string>("world", out var worldName))
             data._worldName = worldName;
-        
+
         data.Happiness = tag.TryGet("hap", out byte hap)
             ? hap
             : data.Schema.BaseHappiness;
-        
+
         data.IVs = tag.TryGet<uint>("ivs", out var ivs)
             ? new PokemonIVs(ivs)
             : PokemonIVs.Random();
-        
+
         data.Moves = tag.TryGet<TagCompound>("moves", out var moves)
             ? PokemonMoves.Load(moves)
             : data.GetInitialMoves();
-        
+
         // Set experience last to ensure proper level calculation
         var expToSet = tag.TryGet<int>("exp", out var exp)
             ? exp
@@ -1152,7 +1168,6 @@ public readonly struct PokemonMoves
         (MoveID)(((movesA) >> 30) | ((uint)movesB << 2))
     )
     {
-
     }
 
     private PokemonMoves(params uint[] moves)
