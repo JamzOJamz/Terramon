@@ -31,14 +31,6 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
     public override LocalizedText DisplayName => Mod.GetLocalization($"MegaStoneNames.{ID}", ID.ToString);
     public override LocalizedText Tooltip => _formattedTip;
 
-    public override void Load()
-    {
-        if (_rt != null)
-            return;
-        Main.QueueMainThreadAction(() =>
-            _rt = new(Main.graphics.GraphicsDevice, 22, 22));
-    }
-
     public override void Unload() => _rt.Dispose();
 
     public override void SetStaticDefaults()
