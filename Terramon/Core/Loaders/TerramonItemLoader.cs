@@ -1,4 +1,3 @@
-using System.Reflection;
 using Terramon.Content.Items;
 using Terramon.Content.Items.HeldItems;
 using Terramon.Content.Items.PokeBalls;
@@ -18,10 +17,12 @@ public enum TerramonItemGroup
     Vitamins,
     HeldItems,
     KeyItems,
+    MegaStones,
     Interactive,
     MusicBoxes,
     PokeBallMinis,
     Vanity,
+    Banners,
     Uncategorized
 }
 
@@ -48,13 +49,11 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add recovery items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Recovery)
-
             // Potions
             .Add<Potion>()
             .Add<SuperPotion>()
             .Add<HyperPotion>()
             .Add<MaxPotion>()
-
             // Revives
             .Add<Revive>()
             .Add<MaxRevive>();
@@ -62,7 +61,6 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add evolutionary items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.EvolutionaryItems)
-
             // Evolution stones
             .Add<FireStone>()
             .Add<WaterStone>()
@@ -71,7 +69,6 @@ internal sealed class TerramonItemRegistration : ModSystem
             .Add<MoonStone>()
             .Add<DuskStone>()
             .Add<IceStone>()
-
             // Misc evolutionary items
             .Add<LinkingCord>();
 
@@ -84,8 +81,11 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add held items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.HeldItems)
-            .AddAllOfType<HeldItem>()
-            .AddMany(MegaStone.LoadMegaStones());
+            .AddAllOfType<HeldItem>();
+
+        // Register mega stone group (populated in MegaStone)
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.MegaStones);
 
         // Add key items
         TerramonItemRegistry
@@ -116,11 +116,13 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add vanity items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Vanity)
-            
             // Trainer vanity
             .Add<TrainerCap>()
             .Add<TrainerTorso>()
             .Add<TrainerLegs>();
+
+        // Register banner group (populated in PokemonEntityLoader)
+        TerramonItemRegistry.RegisterGroup(TerramonItemGroup.Banners);
 
         // Add uncategorized items
         TerramonItemRegistry
@@ -135,7 +137,7 @@ public class TerramonItemLoader : ModSystem
 {
     public override void Load()
     {
-        foreach (var item in TerramonItemRegistry.GetSortedTypes())
+        foreach (var item in TerramonItemRegistry.GetSortedItems())
         {
             Mod.AddContent(item);
         }
@@ -146,10 +148,7 @@ public static class TerramonItemRegistry
 {
     private static readonly Dictionary<string, GroupData> Groups = [];
 
-    public static GroupBuilder Group(TerramonItemGroup group)
-    {
-        return Group(group.ToString());
-    }
+    public static GroupBuilder Group(TerramonItemGroup group) => Group(group.ToString());
 
     public static GroupBuilder Group(string groupName)
     {
@@ -158,6 +157,9 @@ public static class TerramonItemRegistry
 
         return new GroupBuilder(group);
     }
+
+    internal static GroupBuilder RegisterGroup(TerramonItemGroup group, int? explicitOrder = null) =>
+        RegisterGroup(group.ToString(), explicitOrder);
 
     public static GroupBuilder RegisterGroup(string groupName, int? explicitOrder = null)
     {
@@ -181,11 +183,6 @@ public static class TerramonItemRegistry
         return new GroupBuilder(group);
     }
 
-    internal static GroupBuilder RegisterGroup(TerramonItemGroup group, int? explicitOrder = null)
-    {
-        return RegisterGroup(group.ToString(), explicitOrder);
-    }
-
     public static void RegisterItem(Type itemType, string groupName, int? order = null)
     {
         if (!Groups.TryGetValue(groupName, out var group))
@@ -205,14 +202,14 @@ public static class TerramonItemRegistry
         RegisterItem(itemType, group.ToString(), order);
     }
 
-    public static IEnumerable<ModItem> GetSortedTypes()
+    public static IEnumerable<ModItem> GetSortedItems()
     {
         return Groups
             .OrderBy(g => g.Value.Order)
             .SelectMany(g =>
                 g.Value.Items
                     .OrderBy(t => g.Value.ItemOrders[t])
-                    .ThenBy(t => t.FullName));
+                    .ThenBy(t => t.Name));
     }
 
     public class GroupData
@@ -256,14 +253,6 @@ public static class TerramonItemRegistry
 
             _group.Items.Add(item);
             _group.ItemOrders[item] = order;
-
-            return this;
-        }
-
-        public GroupBuilder AddMany(IEnumerable<ModItem> items)
-        {
-            foreach (var item in items)
-                Add(item);
 
             return this;
         }

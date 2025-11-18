@@ -1,6 +1,7 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.Items;
+using Terramon.Core.Loaders;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -24,7 +25,8 @@ public enum BannerTier : byte
     Tier4
 }
 
-public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shimmerItem = 0) : TerramonItem
+public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, PokeBannerItem shimmerItem = null)
+    : TerramonItem
 {
     private static Asset<Texture2D> _tierOverlay;
 
@@ -36,7 +38,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
     // As this is purely visual and freely cyclable, this does not need the same treatment as the above.
     public BannerTier VisualTier = BannerTier.None;
 
-    private bool IsShiny => shimmerItem > 0;
+    private bool IsShiny => shimmerItem != null;
 
     protected override bool CloneNewInstances => true;
 
@@ -57,6 +59,9 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
 
     public override void SetStaticDefaults()
     {
+        if (shimmerItem == null)
+            PokemonEntityLoader.IDToBannerType.Add(id, Type);
+
         if (!Main.dedServ)
         {
             _tierOverlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTierOverlay");
@@ -69,7 +74,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
                 Vertical = false,
                 SizeOffset = -2
             });
-            
+
             // Fix for Wikithis
             CrossModSystem.Wikithis?.Call(1, Type,
                 $"https://terrariamods.wiki.gg/wiki/Terramon_Mod/{DisplayName.Value.Replace(' ', '_')}");
@@ -79,8 +84,8 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
 
         // Banner is able to shimmer into its shiny version and vice versa
         if (!IsShiny) return;
-        ItemID.Sets.ShimmerTransformToItem[Type] = shimmerItem;
-        ItemID.Sets.ShimmerTransformToItem[shimmerItem] = Type;
+        ItemID.Sets.ShimmerTransformToItem[Type] = shimmerItem.Type;
+        ItemID.Sets.ShimmerTransformToItem[shimmerItem.Type] = Type;
     }
 
     public override void SetDefaults()
@@ -91,6 +96,8 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, int shim
         Item.width = 12;
         Item.height = 28;
     }
+
+    public PokeBannerItem MakeShinyInstance() => new(id, schema, this);
 
     public override void SaveData(TagCompound tag)
     {
@@ -379,7 +386,8 @@ public class PokeBannerTile : ModTile
         _isRenderingToPlacementPreviewRt = false;
     }
 
-    public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame, ref Vector2 position,
+    public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame,
+        ref Vector2 position,
         ref Color color, bool validPlacement, ref SpriteEffects spriteEffects)
     {
         if (Main.LocalPlayer.HeldItem.ModItem is not PokeBannerItem bannerItem ||
@@ -454,7 +462,7 @@ public class PokeBannerTile : ModTile
     public override void NearbyEffects(int i, int j, bool closer)
     {
         if (closer) return;
-        
+
         //var tileStyle = TileObjectData.GetTileStyle(Main.tile[i, j]) + 1;
         TerramonPlayer.LocalPlayer.HasPokeBanner = true;
     }
@@ -505,7 +513,7 @@ public class ShinyPokeBannerTile : PokeBannerTile
 public class PokeBannerBuff : ModBuff
 {
     public override string Texture => "Terramon/Assets/Buffs/PokeBannerBuff";
-    
+
     public override void SetStaticDefaults()
     {
         Main.buffNoTimeDisplay[Type] = true;

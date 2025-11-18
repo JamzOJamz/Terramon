@@ -259,17 +259,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     .UseColor(highlightColor.MultiplyRGB(drawColor))
                     .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f).MultiplyRGB(drawColor))
                     .Apply();
-
-                /*if (!PokemonEntityLoader.HighlightTextures.TryGetValue(ID, out var highlightTexture))
-                    highlightTexture = CreateHighlightTexture(); // Creates highlight texture and adds it to cache
-
-                foreach (var off in ChatManager.ShadowDirections) // For each shadow direction
-                {
-                    var offset = off;
-                    offset *= 2;
-                    spriteBatch.Draw(highlightTexture, drawPos + offset, NPC.frame,
-                        drawColor, NPC.rotation, frameSize / new Vector2(2, 1), NPC.scale, effects, 0f);
-                }*/
             }
         }
 
