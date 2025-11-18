@@ -1,4 +1,5 @@
 ﻿using Terramon.Content.Rarities;
+using Terramon.Core.Loaders;
 using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.GameContent;
@@ -131,7 +132,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
         sb.Begin(in oldData);
     }
 
-    internal static void LoadPalettes(Mod mod)
+    private static void LoadPalettes(Mod mod)
     {
         _colorsBuf[0] = Color.Black.ToVector3();
         _colorsBuf[^1] = Color.White.ToVector3();
@@ -159,7 +160,10 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
         }
     }
 
-    internal static IEnumerable<ModItem> LoadMegaStones()
+    private static readonly TerramonItemRegistry.GroupBuilder MegaStoneItemGroup =
+        TerramonItemRegistry.Group(TerramonItemGroup.MegaStones);
+
+    internal static void LoadMegaStones()
     {
         // Load palettes from file
         LoadPalettes(Terramon.Instance);
@@ -173,7 +177,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : TerramonItem
         {
             var startName = start.ToString().TrimEnd('X', 'Y');
             if (NationalDexID.Search.TryGetId(startName, out var id))
-                yield return new MegaStone(start, (ushort)id);
+                MegaStoneItemGroup.Add(new MegaStone(start, (ushort)id));
         }
     }
 }

@@ -30,7 +30,7 @@ public class PokemonEntityLoader : ModSystem
     public static Dictionary<ushort, JToken> PetSchemaCache { get; private set; } = [];
     private static BitArray HasGenderDifference { get; set; }
     private static BitArray HasPetExclusiveTexture { get; set; }
-    private static List<PokeBannerItem> ShinyBanners { get; set; }
+    private static List<PokeBannerItem> ShinyBanners { get; set; } = [];
 
     public override void Load()
     {
@@ -171,6 +171,5 @@ public class PokemonEntityLoader : ModSystem
         HasPetExclusiveTexture = null;
         GlowTextureCache = null;
         ShinyGlowTextureCache = null;
-        ShinyBanners = null;
     }
 }
