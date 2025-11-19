@@ -141,11 +141,43 @@ public class DatabaseV2
 */
 
     [JsonConverter(typeof(MultiPropertyNameConverter))]
-    public record PokemonSchema(
+    public sealed record FormSchema(
         [property: JsonProperty("name")]
         [property: JsonPropertyAlias("n")]
         string Identifier,
-        [property: JsonPropertyAlias("t")] List<PokemonType> Types,
+        [property: JsonPropertyAlias("t")]
+        List<PokemonType> Types,
+        [property: JsonPropertyAlias("b")]
+        ushort BaseExp,
+        [property: JsonPropertyAlias("s")]
+        StatsTableSchema BaseStats,
+        [property: JsonPropertyAlias("h")]
+        ushort Height,
+        [property: JsonPropertyAlias("w")]
+        ushort Weight,
+        [property: JsonPropertyAlias("a")]
+        AbilitiesSchema Abilities,
+        [property: JsonProperty("moves")]
+        [property: JsonPropertyAlias("m")]
+        List<LevelEntrySchema> LevelUpLearnset
+    )
+    {
+        public FormSchema() : this(
+            string.Empty,
+            [],
+            0,
+            null,
+            0,
+            0,
+            new AbilitiesSchema(),
+            []
+        )
+        {
+        }
+    }
+
+    [JsonConverter(typeof(MultiPropertyNameConverter))]
+    public sealed record PokemonSchema(
         [property: JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("f")]
         [property: DefaultValue((byte)70)]
@@ -154,38 +186,38 @@ public class DatabaseV2
         [property: JsonPropertyAlias("c")]
         [property: DefaultValue((byte)45)]
         byte CatchRate,
-        [property: JsonPropertyAlias("b")] ushort BaseExp,
         [property: JsonPropertyAlias("r")]
         [property: DefaultValue(ExperienceGroup.MediumFast)]
         ExperienceGroup GrowthRate,
-        [property: JsonPropertyAlias("s")] StatsTableSchema BaseStats,
-        [property: JsonPropertyAlias("e")] LevelEntrySchema Evolution,
         [property: JsonProperty("genderRate", DefaultValueHandling = DefaultValueHandling.Ignore)]
         [property: JsonPropertyAlias("g")]
         [property: DefaultValue((sbyte)4)]
         sbyte GenderRatio,
-        [property: JsonPropertyAlias("h")] ushort Height,
-        [property: JsonPropertyAlias("w")] ushort Weight,
-        [property: JsonPropertyAlias("a")] AbilitiesSchema Abilities,
-        [property: JsonProperty("moves")]
-        [property: JsonPropertyAlias("m")]
-        List<LevelEntrySchema> LevelUpLearnset
+        [property: JsonPropertyAlias("e")]
+        LevelEntrySchema Evolution,
+        [property: JsonPropertyAlias("b")]
+        FormSchema BaseForm,
+        [property: JsonPropertyAlias("v")]
+        ReadOnlyDictionary<string, FormSchema> Forms
     )
     {
+        // Shortcuts to BaseForm properties
+        [JsonIgnore] public string Identifier => BaseForm.Identifier;
+        [JsonIgnore] public ushort Height => BaseForm.Height;
+        [JsonIgnore] public ushort Weight => BaseForm.Weight;
+        [JsonIgnore] public List<PokemonType> Types => BaseForm.Types;
+        [JsonIgnore] public StatsTableSchema BaseStats => BaseForm.BaseStats;
+        [JsonIgnore] public ushort BaseExp => BaseForm.BaseExp;
+        [JsonIgnore] public AbilitiesSchema Abilities => BaseForm.Abilities;
+        [JsonIgnore] public List<LevelEntrySchema> LevelUpLearnset => BaseForm.LevelUpLearnset;
         public PokemonSchema() : this(
-            string.Empty,
-            [],
             70,
             45,
-            0,
             ExperienceGroup.MediumFast,
-            [],
-            null,
             4,
-            0,
-            0,
-            new AbilitiesSchema(),
-            []
+            null,
+            null,
+            null
         )
         {
         }
@@ -312,6 +344,8 @@ internal class MultiPropertyNameConverter : JsonConverter
         foreach (var property in objectType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic |
                                                           BindingFlags.Instance))
         {
+            if (property.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+                continue;
             var jsonProperty = property.GetCustomAttribute<JsonPropertyAttribute>();
             var alias = property.GetCustomAttribute<JsonPropertyAliasAttribute>();
 
@@ -359,6 +393,8 @@ internal class MultiPropertyNameConverter : JsonConverter
                      BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
         {
             if (!property.CanRead)
+                continue;
+            if (property.GetCustomAttribute<JsonIgnoreAttribute>() != null)
                 continue;
 
             var propValue = property.GetValue(value);
