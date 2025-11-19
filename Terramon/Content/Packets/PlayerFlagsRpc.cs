@@ -26,7 +26,7 @@ public struct PlayerFlagsRpc(byte player, bool starterChosen) : IEasyPacket
     {
         sender.Mod.Logger.Debug(
             $"Received PlayerFlagsRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {_player}");
-        var player = Main.player[_player].GetModPlayer<TerramonPlayer>();
+        var player = Main.player[_player].Terramon();
         player.HasChosenStarter = _starterChosen;
         handled = true;
     }

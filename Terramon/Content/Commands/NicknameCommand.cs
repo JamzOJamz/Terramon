@@ -26,7 +26,7 @@ public class NicknameCommand : TerramonCommand
         base.Action(caller, input, args);
         if (!Allowed) return;
 
-        var player = caller.Player.GetModPlayer<TerramonPlayer>();
+        var player = caller.Player.Terramon();
         var activePokemonData = player.GetActivePokemon();
         if (activePokemonData == null)
         {

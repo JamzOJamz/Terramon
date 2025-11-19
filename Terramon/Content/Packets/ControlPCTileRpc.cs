@@ -45,7 +45,7 @@ public struct ControlPCTileRpc(int id, bool poweredOn) : IEasyPacket
             // Multiplayer client manually toggling the PC
             var player = Main.player[sender.WhoAmI];
             pc.User = _poweredOn ? sender.WhoAmI : -1;
-            player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = _poweredOn ? _id : -1;
+            player.Terramon().ActivePCTileEntityID = _poweredOn ? _id : -1;
         }
 
         handled = true;

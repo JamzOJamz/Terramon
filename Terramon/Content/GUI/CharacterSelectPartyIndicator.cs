@@ -31,7 +31,7 @@ internal class CharacterSelectPartyIndicator : ILoadable
         if (self._buttonLabel.Text != string.Empty)
             return;
 
-        var modPlayer = self.Data.Player.GetModPlayer<TerramonPlayer>();
+        var modPlayer = self.Data.Player.Terramon();
         var selfPosition = self.GetDimensions().Position();
         if (!modPlayer.HasChosenStarter ||
             new Rectangle((int)selfPosition.X + 11, (int)selfPosition.Y + 69, 92, 20).Contains(

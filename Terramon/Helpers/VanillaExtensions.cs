@@ -9,15 +9,24 @@ namespace Terramon.Helpers;
 
 public static class VanillaExtensions
 {
-    public static TerramonPlayer Terramon(this Player player)
-    {
-        return player.GetModPlayer<TerramonPlayer>();
-    }
-    
-    public static PokemonNPC Pokemon(this NPC npc)
-    {
-        return (PokemonNPC)npc.ModNPC;
-    }
+    /// <summary>
+    ///     Gets the <see cref="TerramonPlayer" /> instance associated with this <see cref="Player" />.
+    /// </summary>
+    /// <param name="player">The player whose Terramon mod player data should be retrieved.</param>
+    /// <returns>The <see cref="TerramonPlayer" /> tied to the given <see cref="Player" />.</returns>
+    public static TerramonPlayer Terramon(this Player player) => player.GetModPlayer<TerramonPlayer>();
+
+    /// <summary>
+    ///     Gets the <see cref="PokemonNPC" /> instance associated with this <see cref="NPC" />.
+    /// </summary>
+    /// <param name="npc">The NPC whose <see cref="PokemonNPC" /> should be retrieved.</param>
+    /// <returns>
+    ///     The <see cref="PokemonNPC" /> instance backing the given <see cref="NPC" />.
+    /// </returns>
+    /// <exception cref="InvalidCastException">
+    ///     Thrown if the NPC's <see cref="ModNPC" /> is not a <see cref="PokemonNPC" />.
+    /// </exception>
+    public static PokemonNPC Pokemon(this NPC npc) => (PokemonNPC)npc.ModNPC;
 
     /// <summary>
     ///     A wrapper for <see cref="Main.NewText(object, Color?)" /> that only sends the message if the player is the local
@@ -69,15 +78,18 @@ public static class VanillaExtensions
             'N' or null => Gender.Unspecified,
             _ => throw new ArgumentOutOfRangeException(nameof(c), c, null)
         };
+    
     public static ushort Terramon(this IdDictionary search, string name)
         => (ushort)search.GetId($"{nameof(Terramon)}/{name}");
+    
     public static void Write(this BinaryWriter writer, IBattleProvider participant)
     {
         var type = participant?.ProviderType ?? BattleProviderType.None;
         writer.Write((byte)type);
         if (type != BattleProviderType.None)
-            writer.Write((byte)participant.SyncedEntity.whoAmI);
+            writer.Write((byte)participant!.SyncedEntity.whoAmI);
     }
+    
     public static IBattleProvider ReadParticipant(this BinaryReader reader)
     {
         var type = (BattleProviderType)reader.ReadByte();
@@ -86,14 +98,23 @@ public static class VanillaExtensions
             whoAmI = reader.ReadByte();
         return BattleManager.GetProvider(whoAmI, type);
     }
+    
     public static void Write(this BinaryWriter writer, SimpleMon mon) => writer.Write(mon.Packed);
+    
     public static SimpleMon ReadPokemonID(this BinaryReader reader) => new(reader.ReadByte());
+    
     public static void Write(this BinaryWriter writer, SimpleMonPair pair) => writer.Write(pair.Packed);
+    
     public static SimpleMonPair ReadPokemonIDs(this BinaryReader reader) => new(reader.ReadByte());
+    
     public static void Write(this BinaryWriter writer, SimpleHP hp) => writer.Write(hp.Packed);
+    
     public static SimpleHP ReadPokemonHP(this BinaryReader reader) => new(reader.ReadUInt32());
+    
     public static void Write(this BinaryWriter writer, SimpleDetails details) => writer.Write(details.Packed);
+    
     public static SimpleDetails ReadPokemonDetails(this BinaryReader reader) => new(reader.ReadUInt32());
+    
     public static void Write(this BinaryWriter writer, PokemonEVs evs)
     {
         writer.Write(evs.HP);
@@ -103,6 +124,7 @@ public static class VanillaExtensions
         writer.Write(evs.SpDefense);
         writer.Write(evs.Speed);
     }
+    
     public static PokemonEVs ReadEVs(this BinaryReader reader)
     {
         return new PokemonEVs

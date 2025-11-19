@@ -109,7 +109,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         set => _activePetProjectile = value;
     }
 
-    public static TerramonPlayer LocalPlayer => Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
+    public static TerramonPlayer LocalPlayer => Main.LocalPlayer.Terramon();
 
     #region IBattleProvider
     public BattleProviderType ProviderType => BattleProviderType.Player;
@@ -349,7 +349,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         return true;
     }
 
-
     public override void Load()
     {
         if (Main.dedServ)
@@ -372,6 +371,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
             c.EmitStsfld(typeof(TerramonPlayer).GetField(nameof(HoveredPlayer)));
         };
     }
+    
     /// <summary>
     ///     Returns this player's currently active Pokémon, or null if there is none.
     /// </summary>

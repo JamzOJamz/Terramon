@@ -218,8 +218,7 @@ public class PokemartClerk : ModNPC
         // What the chat buttons are when you open up the chat UI
         button = Language.GetTextValue("LegacyInterface.28");
 
-        var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
-        var activePokemonData = player.GetActivePokemon();
+        var activePokemonData = TerramonPlayer.LocalPlayer.GetActivePokemon();
         if (activePokemonData != null && activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp) != 0)
             button2 = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.EvolveButton",
                 activePokemonData.DisplayName);
@@ -230,7 +229,7 @@ public class PokemartClerk : ModNPC
         if (firstButton) shopName = "Shop";
         else
         {
-            var player = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
+            var player = TerramonPlayer.LocalPlayer;
             var activePokemonData = player.GetActivePokemon();
             if (activePokemonData == null) return;
             var queuedEvolution = activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp);

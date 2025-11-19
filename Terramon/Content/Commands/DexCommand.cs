@@ -17,7 +17,7 @@ public class DexCommand : TerramonCommand
     {
         base.Action(caller, input, args);
         if (!Allowed) return;
-        if (caller.Player.GetModPlayer<TerramonPlayer>().HasChosenStarter)
+        if (caller.Player.Terramon().HasChosenStarter)
             HubUI.SetActive(true, false);
         else
             caller.Reply(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), ChatColorYellow);

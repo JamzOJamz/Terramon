@@ -452,7 +452,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         SoundEngine.PlaySound(s);
 
         // Register as seen in the player's Pokedex
-        var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
+        var ownerPlayer = Main.player[Projectile.owner].Terramon();
         ownerPlayer.UpdatePokedex(_capture.ID, PokedexEntryStatus.Seen, shiny: _capture.Data?.IsShiny ?? false);
 
         AIState = (float)ActionState.Catch;

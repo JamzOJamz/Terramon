@@ -89,7 +89,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             ref var petProjectiles = ref self._petProjectiles;
             if (petProjectiles.Length > 0) return;
 
-            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var modPlayer = player.Terramon();
             var activePokemon = modPlayer.GetActivePokemon();
 
             if (activePokemon == null) return;
@@ -102,7 +102,6 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
                 activePokemon; // Set the pet's data to the player's active Pokémon (hacky)
             petProjectiles = [projectile];
         };
-        return;
     }
 
 
@@ -414,7 +413,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     public override void AI()
     {
         var owningPlayer = Main.player[Projectile.owner];
-        var activePokemon = owningPlayer.GetModPlayer<TerramonPlayer>().GetActivePokemon();
+        var activePokemon = owningPlayer.Terramon().GetActivePokemon();
 
         var isShiny = Data is { IsShiny: true };
 

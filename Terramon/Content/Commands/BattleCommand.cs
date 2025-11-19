@@ -136,7 +136,7 @@ public class BattleCommand : DebugCommand
         else
         {
             string possibleName = args[1];
-            foreach (var mon in Main.LocalPlayer.GetModPlayer<TerramonPlayer>().Party)
+            foreach (var mon in TerramonPlayer.LocalPlayer.Party)
             {
                 if (mon.Nickname == possibleName || mon.Schema.Identifier == possibleName)
                 {
@@ -178,7 +178,7 @@ public class BattleCommand : DebugCommand
             battleInstance.Stream = battleStream;
             
             var player = Main.LocalPlayer;
-            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var modPlayer = player.Terramon();
             var packedTeam = modPlayer.GetPackedTeam();
 
             // Initialize battle

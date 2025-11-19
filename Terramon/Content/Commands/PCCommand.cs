@@ -18,7 +18,7 @@ public class PCCommand : DebugCommand
         base.Action(caller, input, args);
         if (!Allowed) return;
 
-        var modPlayer = caller.Player.GetModPlayer<TerramonPlayer>();
+        var modPlayer = caller.Player.Terramon();
         if (!modPlayer.HasChosenStarter)
         {
             caller.Reply(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), ChatColorYellow);

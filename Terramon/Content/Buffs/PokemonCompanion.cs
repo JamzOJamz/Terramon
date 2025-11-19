@@ -32,7 +32,7 @@ public class PokemonCompanion : ModBuff
         player.buffTime[buffIndex] = 18000;
 
         // Spawn the pet if needed
-        var id = player.GetModPlayer<TerramonPlayer>().GetActivePokemon()?.ID ?? 0;
+        var id = player.Terramon().GetActivePokemon()?.ID ?? 0;
         if (id == 0) return;
         var unused = false;
         player.BuffHandle_SpawnPetIfNeededAndSetTime(buffIndex, ref unused,

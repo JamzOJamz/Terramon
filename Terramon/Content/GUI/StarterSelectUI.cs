@@ -279,7 +279,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         OnLeftClick += (_, _) =>
         {
             var player = Main.LocalPlayer;
-            var modPlayer = player.GetModPlayer<TerramonPlayer>();
+            var modPlayer = player.Terramon();
             var dataBuilder = PokemonData.Create(pokemon, 5).CaughtBy(player);
             if (GameplayConfig.Instance.ShinyLockedStarters)
                 dataBuilder.ForceShiny(false);

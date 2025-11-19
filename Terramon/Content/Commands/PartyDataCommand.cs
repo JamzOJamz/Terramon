@@ -34,7 +34,7 @@ public class PartyDataCommand : DebugCommand
             return;
         }
 
-        var player = caller.Player.GetModPlayer<TerramonPlayer>();
+        var player = caller.Player.Terramon();
         var data = player.Party[slot - 1];
         if (data == null)
         {

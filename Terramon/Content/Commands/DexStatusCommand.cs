@@ -26,7 +26,7 @@ public class DexStatusCommand : TerramonCommand
             return;
         }
 
-        var player = caller.Player.GetModPlayer<TerramonPlayer>();
+        var player = caller.Player.Terramon();
         var dex = player.GetPokedex();
 
         var hasValidId2 = dex.Entries.ContainsKey((ushort)id);

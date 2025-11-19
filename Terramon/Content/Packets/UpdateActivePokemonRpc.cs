@@ -39,7 +39,7 @@ public struct UpdateActivePokemonRpc(
     {
         sender.Mod.Logger.Debug(
             $"Received SetActivePokemonRpc on {(Main.netMode == NetmodeID.Server ? "server" : "client")} for player {_player}");
-        var player = Main.player[_player].GetModPlayer<TerramonPlayer>();
+        var player = Main.player[_player].Terramon();
         if (_data == null)
         {
             player.Party[0] = null;

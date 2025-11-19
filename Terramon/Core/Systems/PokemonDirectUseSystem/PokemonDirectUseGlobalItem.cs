@@ -20,7 +20,7 @@ public class PokemonDirectUseGlobalItem : GlobalItem
 
     public override bool CanUseItem(Item item, Player player)
     {
-        var activePokemonData = player.GetModPlayer<TerramonPlayer>().GetActivePokemon();
+        var activePokemonData = player.Terramon().GetActivePokemon();
         if (activePokemonData == null)
         {
             player.NewText(Language.GetTextValue("Mods.Terramon.Misc.NoActivePokemon"),
@@ -37,7 +37,7 @@ public class PokemonDirectUseGlobalItem : GlobalItem
 
     public override bool? UseItem(Item item, Player player)
     {
-        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        var modPlayer = player.Terramon();
         var directUseItem = (IPokemonDirectUse)item.ModItem;
         directUseItem.PokemonDirectUse(player, modPlayer.GetActivePokemon());
         return true;

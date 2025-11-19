@@ -6,7 +6,7 @@ public class RealtimeCombatPlayer : ModPlayer
 {
     public override void OnHurt(Player.HurtInfo info)
     {
-        var terramonPlayer = Player.GetModPlayer<TerramonPlayer>();
+        var terramonPlayer = Player.Terramon();
         var activePet = terramonPlayer.ActivePetProjectile;
 
         if (activePet == null)
