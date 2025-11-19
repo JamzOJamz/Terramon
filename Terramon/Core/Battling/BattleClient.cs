@@ -1,5 +1,5 @@
-﻿using Terramon.Content.GUI.TurnBased;
-using Terramon.Content.NPCs;
+﻿using EasyPacketsLib;
+using Terramon.Content.GUI.TurnBased;
 using Terramon.Core.Battling.BattlePackets;
 
 namespace Terramon.Core.Battling;

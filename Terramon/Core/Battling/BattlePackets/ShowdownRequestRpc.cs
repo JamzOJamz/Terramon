@@ -1,4 +1,6 @@
-﻿namespace Terramon.Core.Battling.BattlePackets;
+﻿using EasyPacketsLib;
+
+namespace Terramon.Core.Battling.BattlePackets;
 
 public struct ShowdownRequestRpc(ShowdownRequest request) : IEasyPacket
 {

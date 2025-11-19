@@ -1,10 +1,12 @@
-﻿namespace Terramon.Core.Battling.BattlePackets;
+﻿using EasyPacketsLib;
 
-public struct SyncClientRpc(BattleParticipant foe, ClientBattleState state)
-    : IEasyPacket
+namespace Terramon.Core.Battling.BattlePackets;
+
+public struct SyncClientRpc(BattleParticipant foe, ClientBattleState state) : IEasyPacket
 {
     private BattleParticipant _foe = foe;
     private ClientBattleState _state = state;
+    
     public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write((byte)_foe.Type);
@@ -38,11 +40,12 @@ public struct SyncClientRpc(BattleParticipant foe, ClientBattleState state)
     }
 }
 
-public readonly struct RequestClientRpc()
-    : IEasyPacket
+public readonly struct RequestClientRpc : IEasyPacket
 {
     public void Serialise(BinaryWriter writer) { }
+    
     public void Deserialise(BinaryReader reader, in SenderInfo sender) { }
+    
     public void Receive(in SenderInfo sender, ref bool handled)
     {
         // Sent from remote to local client or from server to local client

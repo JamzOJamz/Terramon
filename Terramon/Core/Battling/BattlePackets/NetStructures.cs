@@ -40,8 +40,8 @@ public readonly record struct SimpleMon
     public SimpleMon(string showdownMon)
     {
         var id = PokemonID.Parse(showdownMon);
-        int side = id.Player;
-        int slot = id.Name[0] - '0' - 1;
+        var side = id.Player;
+        var slot = id.Name[0] - '0' - 1;
         Packed = (byte)((slot << 4) | side);
     }
     public readonly int Side => Packed & 0xF;
@@ -57,7 +57,7 @@ public readonly record struct SimpleHP
     public SimpleHP(string showdownHP)
     {
         var parts = showdownHP.Split('/', 2);
-        uint hp = uint.Parse(parts[0]);
+        var hp = uint.Parse(parts[0]);
 
         if (parts.Length != 2)
         {
@@ -65,7 +65,7 @@ public readonly record struct SimpleHP
         }
         else
         {
-            uint maxHp = uint.Parse(parts[1]);
+            var maxHp = uint.Parse(parts[1]);
             Packed = (maxHp << 8) | hp;
         }
     }
@@ -174,15 +174,15 @@ public readonly record struct SimplePackedPokemon
 
         MovesA |= (uint)moves[0].ID;
 
-        uint id1 = (uint)moves[1].ID;
+        var id1 = (uint)moves[1].ID;
         if (id1 != 0u)
             MovesA |= id1 << 10;
 
-        uint id2 = (uint)moves[2].ID;
+        var id2 = (uint)moves[2].ID;
         if (id2 != 0u)
             MovesA |= id2 << 20;
 
-        uint id3 = (uint)moves[3].ID;
+        var id3 = (uint)moves[3].ID;
         if (id3 != 0u)
         {
             MovesA |= id3 << 30;
@@ -249,14 +249,14 @@ public readonly record struct SimplePackedPokemon
 
     public static SimplePackedPokemon[] Team(PokemonData[] team, bool nicknamesArePartySlots = true)
     {
-        int arrLength = 0;
-        for (int i = 0; i < team.Length; i++)
+        var arrLength = 0;
+        for (var i = 0; i < team.Length; i++)
         {
             if (team[i] == null) break;
             arrLength++;
         }
-        SimplePackedPokemon[] final = new SimplePackedPokemon[arrLength];
-        for (int i = 0; i < final.Length; i++)
+        var final = new SimplePackedPokemon[arrLength];
+        for (var i = 0; i < final.Length; i++)
             // because of how the switch choice works in showdown, the number can't actually be the slot directly
             final[i] = new(team[i], nicknamesArePartySlots ? (i + 1).ToString() : null);
         return final;

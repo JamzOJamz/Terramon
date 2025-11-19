@@ -1,8 +1,12 @@
-﻿namespace Terramon.Core.Battling.BattlePackets;
+﻿using EasyPacketsLib;
+
+namespace Terramon.Core.Battling.BattlePackets;
+
 public struct BattlePayloadRpc(IBattleProvider battleOwner, MemoryStream buffer) : IEasyPacket
 {
     private IBattleProvider _battleOwner = battleOwner;
     private MemoryStream _buffer = buffer;
+    
     public readonly void Serialise(BinaryWriter writer)
     {
         writer.Write(_battleOwner);

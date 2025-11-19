@@ -1,6 +1,7 @@
 ﻿using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
+using EasyPacketsLib;
 using Terramon.Content.Commands;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;

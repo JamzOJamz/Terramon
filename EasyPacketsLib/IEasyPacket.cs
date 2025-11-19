@@ -5,7 +5,7 @@
 
 using System.Diagnostics.Contracts;
 
-namespace Terramon.Content.Packets;
+namespace EasyPacketsLib;
 
 /// <summary>
 ///     An easy solution for handled received easy packets and sending/receiving ModPackets with custom data.

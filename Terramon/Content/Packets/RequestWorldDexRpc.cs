@@ -1,3 +1,5 @@
+using EasyPacketsLib;
+
 namespace Terramon.Content.Packets;
 
 /// <summary>
@@ -11,7 +13,6 @@ public readonly struct RequestWorldDexRpc : IEasyPacket
 
     public void Deserialise(BinaryReader reader, in SenderInfo sender)
     {
-
     }
 
     public void Receive(in SenderInfo sender, ref bool handled)

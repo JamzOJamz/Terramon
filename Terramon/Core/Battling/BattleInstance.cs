@@ -3,6 +3,7 @@ using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using System.Runtime.InteropServices;
 using System.Text;
+using EasyPacketsLib;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 

@@ -1,16 +1,16 @@
-﻿using Showdown.NET.Protocol;
+﻿using EasyPacketsLib;
+using Showdown.NET.Protocol;
 
 namespace Terramon.Core.Battling.BattlePackets;
 
-public struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError)
-    : IEasyPacket
+public struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError) : IEasyPacket
 {
     private ErrorType _error = error;
     private ErrorSubtype _specificError = specificError;
 
     public readonly void Serialise(BinaryWriter writer)
     {
-        byte fullError = (byte)((byte)_error | ((byte)_specificError << 2));
+        var fullError = (byte)((byte)_error | ((byte)_specificError << 2));
         writer.Write(fullError);
     }
 
@@ -24,6 +24,7 @@ public struct BattleErrorRpc(ErrorType error, ErrorSubtype specificError)
     public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         handled = true;
+
         // Packet is received by a single client
         BattleClient.LocalClient.CurrentRequest = ShowdownRequest.None;
         // do stuff with error type and subtype
@@ -50,8 +51,10 @@ public struct BattleChoiceRpc(BattleChoice choice, byte operand) : IEasyPacket
     public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         handled = true;
+
         // Sent from client to server
-        BattleManager.Instance.HandleChoice(new BattleParticipant(sender.WhoAmI, BattleProviderType.Player), _choice, _operand);
+        BattleManager.Instance.HandleChoice(new BattleParticipant(sender.WhoAmI, BattleProviderType.Player), _choice,
+            _operand);
     }
 }
 

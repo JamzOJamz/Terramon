@@ -1,24 +1,28 @@
-/*
+﻿/*
  *  EasyPacket.cs
  *  DavidFDev
  */
 
-using MonoMod.Cil;
 using System.Reflection;
-using Terramon.Core.Battling.BattlePackets.Messages;
+using MonoMod.Cil;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
-namespace Terramon.Content.Packets;
+namespace EasyPacketsLib.Internals;
 
 /// <summary>
 ///     Used to receive an incoming packet and detour it to the struct.
 /// </summary>
-internal static class EasyPacket
+public static class EasyPacket
 {
 // #if DEBUG
-    internal static Type lastProcessedPacket;
+    public static Type lastProcessedPacket;
+
     static EasyPacket()
     {
-        var handlePacketMethod = typeof(ModNet).GetMethod("HandleModPacket", BindingFlags.Static | BindingFlags.NonPublic);
+        var handlePacketMethod =
+            typeof(ModNet).GetMethod("HandleModPacket", BindingFlags.Static | BindingFlags.NonPublic);
         MonoModHooks.Modify(handlePacketMethod, static il =>
         {
             var c = new ILCursor(il);
@@ -26,10 +30,8 @@ internal static class EasyPacket
             c.EmitDelegate(() =>
             {
                 if (lastProcessedPacket != null)
-                {
-                    Terramon.Instance.Logger.Error(
+                    EasyPacketLoader.RegisteredMod.Logger.Error(
                         $"Read underflow for {(lastProcessedPacket.IsValueType ? "packet" : "message")} of type {lastProcessedPacket.Name}");
-                }
             });
         });
     }
@@ -44,7 +46,8 @@ internal static class EasyPacket
         // Check if the packet should be automatically forwarded to clients
         if (Main.netMode == NetmodeID.Server && sender.Forwarded)
         {
-            EasyPacketExtensions.SendPacket_Internal(sender.Mod, in packet, sender.WhoAmI, sender.ToClient, sender.IgnoreClient, true);
+            EasyPacketExtensions.SendPacket_Internal(sender.Mod, in packet, sender.WhoAmI, sender.ToClient,
+                sender.IgnoreClient, true);
         }
 
         // Handle the received packet

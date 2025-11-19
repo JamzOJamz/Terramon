@@ -1,4 +1,5 @@
 using System.Text;
+using EasyPacketsLib;
 using MonoMod.Cil;
 using Showdown.NET.Definitions;
 using Terramon.Content.Buffs;

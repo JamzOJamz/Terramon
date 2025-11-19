@@ -1,3 +1,5 @@
+using EasyPacketsLib;
+using EasyPacketsLib.Internals;
 using Terramon.Content.GUI;
 using Terramon.Content.Items;
 using Terramon.Content.Menus;
@@ -97,10 +99,7 @@ public class Terramon : Mod
         UILoader.GetUIState<HubUI>().ResetPokedex();
     }
 
-    public override void HandlePacket(BinaryReader reader, int whoAmI)
-    {
-        EasyPacketExtensions.HandlePacket_Internal(reader, whoAmI);
-    }
+    public override void HandlePacket(BinaryReader reader, int whoAmI) => EasyPacketExtensions.HandlePacket(reader, whoAmI);
 
     private uint CheckLoadCount()
     {
@@ -166,7 +165,7 @@ public class Terramon : Mod
         AddContent<TerramonItemLoader>();
 
         // Register the mod in EasyPacketsLib
-        EasyPacketLoader.RegisterMod();
+        EasyPacketLoader.RegisterMod(this);
 
         // Don't run the rest of the method on servers
         if (Main.dedServ) return;
