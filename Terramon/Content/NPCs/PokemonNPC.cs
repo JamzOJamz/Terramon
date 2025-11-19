@@ -72,8 +72,8 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         var scale = 0.4f;
         var size = font.MeasureString(text) * scale;
 
-        var textXPos = npc.position.X - Main.screenPosition.X;
-        var textYPos = npc.position.Y - Main.screenPosition.Y;
+        var textXPos = npc.position.X - Main.screenPosition.X + 8f;
+        var textYPos = npc.position.Y - Main.screenPosition.Y + npc.gfxOffY;
         if (Main.LocalPlayer.gravDir == -1f)
             textYPos = Main.screenHeight - textYPos;
 
