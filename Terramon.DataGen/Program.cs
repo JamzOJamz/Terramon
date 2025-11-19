@@ -92,16 +92,16 @@ internal static class Program
 
         for (ushort id = 1; id <= MaxPokemonIDToFetch; id++)
         {
-            //try
+            try
             {
                 Console.WriteLine($"Fetching Pokémon ID {id}...");
                 var pokemonSchema = await FetchSpeciesData(id);
                 Console.WriteLine($"Fetched {pokemonSchema.BaseForm.Identifier} (ID {id}) successfully.\n");
                 pokemon[id] = pokemonSchema;
             }
-            //catch (Exception ex)
+            catch (Exception ex)
             {
-                //Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
+                Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
             }
         }
         
