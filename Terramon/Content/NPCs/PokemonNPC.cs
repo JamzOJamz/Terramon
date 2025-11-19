@@ -15,6 +15,7 @@ using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
 using Terramon.ID;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -43,20 +44,46 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     private int _shinySparkleTimer;
     private BattleClient _battleClient;
 
-
     static PokemonNPC()
     {
-        On_Main.DrawNPCs += (orig, self, tiles) =>
+        On_Main.DrawItemTextPopups += (orig, scaleTarget) =>
         {
-            orig(self, tiles);
+            orig(scaleTarget);
 
             if (!_highlightedNPCIndex.HasValue ||
                 (BattleClient.LocalClient.Foe is PokemonNPC npc &&
                 npc.NPC.whoAmI == _highlightedNPCIndex)) return;
 
             var highlightedNPC = Main.npc[_highlightedNPCIndex.Value];
+            _highlightedNPCIndex = null;
             DrawLevelText(Main.spriteBatch, highlightedNPC);
         };
+    }
+
+    /// <summary>
+    ///     Draws the NPC’s level text above its sprite.
+    /// </summary>
+    private static void DrawLevelText(SpriteBatch spriteBatch, NPC npc)
+    {
+        var modNPC = (PokemonNPC)npc.ModNPC;
+        string text = modNPC.Mod.GetLocalization("GUI.Party.LevelDisplay").Format(modNPC.Data.Level);
+        var font = FontAssets.DeathText.Value;
+
+        var scale = 0.4f;
+        var size = font.MeasureString(text) * scale;
+
+        var textXPos = npc.position.X - Main.screenPosition.X;
+        var textYPos = npc.position.Y - Main.screenPosition.Y;
+        if (Main.LocalPlayer.gravDir == -1f)
+            textYPos = Main.screenHeight - textYPos;
+
+        var textDrawPos = new Vector2(textXPos, textYPos);
+
+        using (spriteBatch.Override(sampler: SamplerState.LinearClamp))
+        {
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, text, textDrawPos - size,
+                Main.MouseTextColorReal, 0f, Vector2.Zero, new(scale));
+        }
     }
 
     protected override bool CloneNewInstances => true;
@@ -235,10 +262,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                       new Vector2(0f, NPC.gfxOffY + DrawOffsetY - (frameSize.Y - NPC.height) / 2f + 4);
 
         var isHighlighted = NPC.whoAmI == _highlightedNPCIndex;
-        if (isHighlighted)
-        {
-            _highlightedNPCIndex = null;
-        }
 
         if (!PlasmaState && BattleClient.LocalClient.Foe == null)
         {
@@ -312,42 +335,6 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         return false;
-    }
-
-    /// <summary>
-    ///     Draws the NPC’s level text above its sprite.
-    /// </summary>
-    private static void DrawLevelText(SpriteBatch spriteBatch, NPC npc)
-    {
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
-            DepthStencilState.None, Main.Rasterizer, null);
-
-        const string text = "Lv. 5";
-        var computedScale = 0.8f * Main.GameZoomTarget;
-        var useFont = computedScale > 1f ? FontAssets.DeathText.Value : FontAssets.MouseText.Value;
-
-        if (computedScale > 1f)
-            computedScale /= 2.5f;
-
-        var textScale = new Vector2(computedScale);
-        var textSize = ChatManager.GetStringSize(useFont, text, Vector2.One) * textScale.X / Main.GameZoomTarget;
-        var textDrawPos = npc.position - Main.screenPosition - textSize + new Vector2(8, npc.gfxOffY);
-
-        if (Math.Abs(Main.GameZoomTarget - 1f) < 1e-5)
-        {
-            // Clamp to pixel values
-            textDrawPos.X = (int)textDrawPos.X;
-            textDrawPos.Y = (int)textDrawPos.Y;
-        }
-
-        var transformedPos = Vector2.Transform(textDrawPos, Main.GameViewMatrix.ZoomMatrix);
-        ChatManager.DrawColorCodedStringWithShadow(spriteBatch, useFont, text, transformedPos,
-            Main.MouseTextColorReal, 0f, Vector2.Zero, textScale);
-
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
-            DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void SendExtraAI(BinaryWriter writer)
