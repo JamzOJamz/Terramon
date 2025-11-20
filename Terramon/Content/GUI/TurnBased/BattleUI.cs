@@ -11,12 +11,13 @@ using Terraria.UI;
 namespace Terramon.Content.GUI.TurnBased;
 
 /// <summary>
-///     So basically, this is where the battle cinematics happen. As with all other user interfaces in the mod, it's completely client-side, and progresses
+///     Handles the client-side battle cinematics and presentation layer for turn-based battles.
 /// </summary>
 public sealed class BattleUI : SmartUIState
 {
     private static readonly SubjectModifier FocusBetween = new(GetBetweenPosition);
 
+    private static int _ticks;
     private static bool _effectsActive;
     private static bool _oldSidebarToggleState;
     private static float _oldGameZoomTarget;
@@ -29,18 +30,23 @@ public sealed class BattleUI : SmartUIState
         return layers.Count;
     }
 
+    public override void SafeUpdate(GameTime gameTime)
+    {
+        if (_ticks < int.MaxValue) // TODO: Decide how to handle _ticks reaching int.MaxValue in extremely long battles
+            _ticks++;
+    }
+
     public static void ApplyStartEffects()
     {
         if (_effectsActive)
             throw new InvalidOperationException(
-                "ApplyStartEffects() was called twice without ApplyEndEffects().");
+                "ApplyStartEffects() was called twice without first calling ApplyEndEffects().");
 
         _effectsActive = true;
 
+        _ticks = 0;
         _smoothCamPos = null;
-
         _oldGameZoomTarget = Main.GameZoomTarget;
-
         var partySidebar = PartyDisplay.Sidebar;
         _oldSidebarToggleState = partySidebar.IsToggled;
         partySidebar.Close();
@@ -127,12 +133,11 @@ public sealed class BattleUI : SmartUIState
         if (!BattleClient.LocalBattleOngoing)
             return;
 
-        var ticks = TerramonPlayer.BattleTicks;
-        var opacity = GetCutsceneOpacity(ticks);
-        TestBattleUI.PlayerPanel?.Animate(ticks);
-        TestBattleUI.FoePanel?.Animate(ticks);
+        var opacity = GetCutsceneOpacity(_ticks);
+        TestBattleUI.PlayerPanel?.Animate(_ticks);
+        TestBattleUI.FoePanel?.Animate(_ticks);
 
-        if (ticks == 160)
+        if (_ticks == 160)
             Main.GameZoomTarget = 1.5f;
 
         if (opacity > 0f)
@@ -202,13 +207,13 @@ public sealed class SubjectModifier(Func<Vector2?> subject, float cameraSpeed = 
 */
 
     public string UniqueIdentity => nameof(Terramon) + nameof(SubjectModifier);
-    
+
     public bool Finished => _progress <= 0.00005f && _returning;
 
     public void Update(ref CameraInfo cameraPosition)
     {
         // Main.NewText($"{_returning}:{_progress}:{_latestTargetPosition}");
-        
+
         if (!_returning)
         {
             var check = subject();

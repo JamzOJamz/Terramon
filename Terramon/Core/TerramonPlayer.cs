@@ -55,7 +55,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public bool HasShinyCharm;
     public ExpShareSettings NonParticipantSettings = new(0.5f);
     public ExpShareSettings ParticipantSettings = new();
-    public static int BattleTicks { get; private set; }
 
     public int ActivePCTileEntityID
     {
@@ -329,9 +328,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public override void PostUpdate()
     {
-        if (BattleClient.LocalBattleOngoing)
-            BattleTicks++;
-
         if (_battleClient is null)
         {
             switch (Main.netMode)
@@ -666,7 +662,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (before)
         {
             if (Player.whoAmI != Main.myPlayer) return;
-            BattleTicks = 0;
             BattleUI.ApplyStartEffects();
         }
         else ActivePetProjectile?.ConfrontFoe(_battleClient);
