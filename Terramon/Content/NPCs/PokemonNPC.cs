@@ -100,7 +100,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public Entity SyncedEntity => NPC;
     public string BattleName => "Wild " + Data.DisplayName;
     public PokemonData[] GetBattleTeam() => [Data];
-    public void StartBattleEffects()
+    public void StartBattleEffects(bool before)
     {
         // Turn towards the player and disable hover behaviour
         NPC.spriteDirection = NPC.direction = BattleClient.Foe.SyncedEntity.position.X > NPC.position.X ? 1 : -1;

@@ -117,9 +117,10 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public Entity SyncedEntity => Player;
     public string BattleName => Player.name;
     public PokemonData[] GetBattleTeam() => Party;
-    public void StartBattleEffects()
+    public void StartBattleEffects(bool before)
     {
-        ActivePetProjectile?.ConfrontFoe(_battleClient);
+        if (!before)
+            ActivePetProjectile?.ConfrontFoe(_battleClient);
         if (Player.whoAmI == Main.myPlayer)
         {
             BattleTicks = 0;
@@ -248,16 +249,17 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
                 Main.NewText($"{a} started a battle against {b}!", Color.Aqua);
 
+                // If we're in singleplayer, break early so this stuff only runs from BattleManager
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    break;
+
                 // Set states
                 owner.State = other.State = ClientBattleState.Ongoing;
 
-                // No this isn't a mistake, but because Terraria isn't a quantum program,
-                // we can't make it so that both sides run after the other one at the same time
-                // unless we do this
-                owner.StartBattleEffects();
-                other.StartBattleEffects();
-                owner.StartBattleEffects();
-                other.StartBattleEffects();
+                // Effects
+                owner.StartBattleEffects(before: true);
+                other.StartBattleEffects(before: false);
+                owner.StartBattleEffects(before: false);
                 break;
             case ForfeitStatement f:
 
