@@ -30,10 +30,10 @@ public sealed class BattleInstance
         var pa = a.Provider;
         var pb = b.Provider;
 
-        var bf = new BattleField()
+        var bf = new BattleField
         {
-            A = new(pa),
-            B = new(pb),
+            A = new BattleSide(pa),
+            B = new BattleSide(pb),
         };
 
         a.Battle = b.Battle = bf;
@@ -53,7 +53,6 @@ public sealed class BattleInstance
         i.ClientA.Battle = i.ClientB.Battle = null;
         i.ClientA.Foe = i.ClientB.Foe = null;
         i.ClientA.State = i.ClientB.State = ClientBattleState.None;
-
     }
 
     public BattleState State;
@@ -74,7 +73,7 @@ public sealed class BattleInstance
 
         var plr = client == ClientA ? 1 : 2;
         var sb = new StringBuilder();
-        for (int i = 0; i < packedTeam.Length - 1; i++)
+        for (var i = 0; i < packedTeam.Length - 1; i++)
         {
             sb.Append(packedTeam[i]);
             sb.Append(']');
@@ -82,7 +81,7 @@ public sealed class BattleInstance
         sb.Append(packedTeam[^1]);
 
         const string defaultSpec = "123456";
-        string spec = client.Pick == 1 ? defaultSpec : $"{client.Pick}{defaultSpec.Replace(client.Pick.ToString(), string.Empty)}";
+        var spec = client.Pick == 1 ? defaultSpec : $"{client.Pick}{defaultSpec.Replace(client.Pick.ToString(), string.Empty)}";
 
         // Name is written as its side for simplicity when parsing, similar to how team names are written
         var setPlayer = ProtocolCodec.EncodeSetPlayerCommand(plr, plr.ToString(), sb.ToString());
@@ -121,7 +120,7 @@ public sealed class BattleInstance
             };
         }
 
-        string final = choice is BattleChoice.Default ?
+        var final = choice is BattleChoice.Default ?
             ProtocolCodec.EncodePlayerChoiceCommand(plr, main) : secondary == null ?
             ProtocolCodec.EncodePlayerChoiceCommand(plr, main, operand.ToString()) :
             ProtocolCodec.EncodePlayerChoiceCommand(plr, main, secondary, operand.ToString());
@@ -153,14 +152,22 @@ public sealed class BattleInstance
 
     public void Stop()
     {
-        ClientA.BattleStopped();
-        ClientB.BattleStopped();
+        if (Main.netMode == NetmodeID.Server)
+        {
+            ClientA.BattleStopped();
+            ClientB.BattleStopped();
+        }
 
         Stream?.Dispose();
     }
 
     public BattleClient this[int side]
-        => side == 1 ? ClientA : side == 2 ? ClientB : null;
+        => side switch
+        {
+            1 => ClientA,
+            2 => ClientB,
+            _ => null
+        };
 
     private async Task RunAsync()
     {
@@ -176,7 +183,7 @@ public sealed class BattleInstance
             // I think that we can probably do some hack for it anyway
             // Or come up with a better solution than EasyPacketsLib but I digress
 
-            bool inMainFrame = false;
+            var inMainFrame = false;
 
             // Kept per-round
             BinaryWriter pWriter = null;
@@ -212,7 +219,7 @@ public sealed class BattleInstance
                     Log(element.ToString());
                     if (element is ISplitElement split)
                     {
-                        int tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
+                        var tgt = (split.PlayerID is 1 or 2) ? split.PlayerID : -1;
                         mgr.HandleSingleElement(this, sWriter, split.Secret, toSide: -1);
                         mgr.HandleSingleElement(this, pWriter, split.Public, toSide: tgt);
                         continue;

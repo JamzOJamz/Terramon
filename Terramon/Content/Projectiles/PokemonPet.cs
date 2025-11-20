@@ -680,7 +680,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public const float DistanceFromFoe = 128f;
 
-    public void ConfrontFoe(BattleClient battle = null)
+    public void ConfrontFoe(BattleClient battle)
     {
         if (battle is null)
         {

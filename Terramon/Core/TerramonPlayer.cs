@@ -112,25 +112,35 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.Terramon();
 
     #region IBattleProvider
+    
     public BattleProviderType ProviderType => BattleProviderType.Player;
+    
     public BattleClient BattleClient => _battleClient;
+    
     public Entity SyncedEntity => Player;
+    
     public string BattleName => Player.name;
+    
     public PokemonData[] GetBattleTeam() => Party;
+    
     public void StartBattleEffects(bool before)
     {
-        if (!before)
-            ActivePetProjectile?.ConfrontFoe(_battleClient);
-        if (Player.whoAmI == Main.myPlayer)
+        if (before)
         {
+            if (Player.whoAmI != Main.myPlayer) return;
             BattleTicks = 0;
-            BattleClient.StartLocalBattle();
-        }
+            BattleUI.ApplyStartEffects();
+        } else ActivePetProjectile?.ConfrontFoe(_battleClient);
     }
+    
     public void StopBattleEffects()
     {
-        ActivePetProjectile?.ConfrontFoe(null);
+        if (Player.whoAmI == Main.myPlayer)
+            BattleUI.ApplyEndEffects();
+        if (ActivePetProjectile != null) 
+            ActivePetProjectile.CustomTargetPosition = null;
     }
+    
     public void Reply(BattleMessage m)
     {
         switch (m)
@@ -179,6 +189,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 break;
         }
     }
+    
     public void Witness(BattleMessage m)
     {
         Console.WriteLine($"Client: Witnessing a {m.GetType().Name}");
@@ -319,6 +330,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 break;
         }
     }
+    
     public void SetActiveSlot(byte newSlot)
     {
         ActiveSlot = newSlot;
@@ -553,6 +565,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         if (BattleClient.LocalBattleOngoing)
             BattleTicks++;
+        
         if (_battleClient is null)
         {
             switch (Main.netMode)
