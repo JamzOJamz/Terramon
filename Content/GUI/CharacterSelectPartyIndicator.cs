@@ -1,5 +1,6 @@
 using System.Reflection;
 using ReLogic.Content;
+using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.Helpers;
 using Terramon.ID;
@@ -54,7 +55,7 @@ internal class CharacterSelectPartyIndicator : ILoadable
         {
             var poke = modPlayer.Party[i];
             var ballDrawPos = indicatorDrawPos + new Vector2(i * 18, 0);
-            spriteBatch.Draw(poke != null ? BallAssets.GetBallIcon(BallID.PokeBall).Value : _emptyPokeBallTexture.Value,
+            spriteBatch.Draw(poke != null ? BallAssets.GetBallIcon(ModContent.GetInstance<ClientConfig>().UseOnlyPokeballsInPlayerList ? BallID.PokeBall : poke.Ball).Value : _emptyPokeBallTexture.Value,
                 ballDrawPos, null,
                 Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             if (hoverConsumed || poke == null ||

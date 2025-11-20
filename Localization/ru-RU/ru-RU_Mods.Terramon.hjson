@@ -147,6 +147,15 @@ Configs: {
 			// Label: Rainbow Buff Text
 			// Tooltip: The Pokémon companion buff name will cycle through the colors of the rainbow
 		}
+
+		UseOnlyPokeballsInPlayerList: {
+			// Label: (Player Select) Only use regular Pokéballs for party preview
+			/* Tooltip:
+				'''
+				If enabled, the party preview in the player select menu will use regular Pokéballs
+				If disabled, the party preview will use the Pokéballs the Pokémon were caught in
+				''' */
+		}
 	}
 
 	GameplayConfig: {
