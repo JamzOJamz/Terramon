@@ -10,60 +10,9 @@ using Terraria.UI;
 
 namespace Terramon.Content.GUI.TurnBased;
 
-public sealed class SubjectModifier : ICameraModifier
-{
-    private readonly float _cameraSpeed;
-    private readonly Func<Vector2?> _wantedSubject;
-    private int _frames;
-    private Vector2 _latestTargetPosition;
-    private float _progress;
-    private bool _returning;
-
-    public SubjectModifier(Func<Vector2?> subject, float cameraSpeed = 0.1f)
-    {
-        _wantedSubject = subject;
-        _cameraSpeed = cameraSpeed;
-    }
-
-    public SubjectModifier(Func<Vector2> subject, int frames, float cameraSpeed = 0.1f)
-    {
-        _frames = frames;
-        _wantedSubject = () => _frames <= 0 ? null : subject();
-        _cameraSpeed = cameraSpeed;
-    }
-
-    public string UniqueIdentity => nameof(Terramon) + nameof(SubjectModifier);
-    public bool Finished => _progress <= 0.00005f && _returning;
-
-    public void Update(ref CameraInfo cameraPosition)
-    {
-        // Main.NewText($"{_returning}:{_progress}:{_latestTargetPosition}");
-
-        if (!_returning)
-        {
-            var check = _wantedSubject();
-            if (check.HasValue)
-                _latestTargetPosition = check.Value - new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
-            else
-                _returning = true;
-        }
-
-        cameraPosition.CameraPosition = Vector2.Lerp(cameraPosition.CameraPosition, _latestTargetPosition, _progress);
-
-        if (Main.gameInactive || Main.gamePaused)
-            return;
-
-        _progress = float.Lerp(_progress, _returning ? 0f : 1f, _cameraSpeed);
-        _frames--;
-    }
-
-    public void Reset()
-    {
-        _returning = false;
-        _progress = 0f;
-    }
-}
-
+/// <summary>
+///     So basically, this is where the battle cinematics happen. As with all other user interfaces in the mod, it's completely client-side, and progresses
+/// </summary>
 public sealed class BattleUI : SmartUIState
 {
     private static readonly SubjectModifier FocusBetween = new(GetBetweenPosition);
@@ -231,5 +180,56 @@ public sealed class BattleUI : SmartUIState
     private static float FadeOut(int ticks, int start, int end)
     {
         return MathHelper.Clamp(1f - (ticks - start) / (float)(end - start), 0f, 1f);
+    }
+}
+
+public sealed class SubjectModifier(Func<Vector2?> subject, float cameraSpeed = 0.1f) : ICameraModifier
+{
+/*
+    private int _frames;
+*/
+    private Vector2 _latestTargetPosition;
+    private float _progress;
+    private bool _returning;
+
+    /*
+    public SubjectModifier(Func<Vector2> subject, int frames, float cameraSpeed = 0.1f)
+    {
+        _frames = frames;
+        _wantedSubject = () => _frames <= 0 ? null : subject();
+        _cameraSpeed = cameraSpeed;
+    }
+*/
+
+    public string UniqueIdentity => nameof(Terramon) + nameof(SubjectModifier);
+    
+    public bool Finished => _progress <= 0.00005f && _returning;
+
+    public void Update(ref CameraInfo cameraPosition)
+    {
+        // Main.NewText($"{_returning}:{_progress}:{_latestTargetPosition}");
+        
+        if (!_returning)
+        {
+            var check = subject();
+            if (check.HasValue)
+                _latestTargetPosition = check.Value - new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
+            else
+                _returning = true;
+        }
+
+        cameraPosition.CameraPosition = Vector2.Lerp(cameraPosition.CameraPosition, _latestTargetPosition, _progress);
+
+        if (Main.gameInactive || Main.gamePaused)
+            return;
+
+        _progress = float.Lerp(_progress, _returning ? 0f : 1f, cameraSpeed);
+        // _frames--;
+    }
+
+    public void Reset()
+    {
+        _returning = false;
+        _progress = 0f;
     }
 }

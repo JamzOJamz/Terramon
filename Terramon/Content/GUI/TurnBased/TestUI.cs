@@ -140,7 +140,7 @@ public sealed class TestBattleUI : SmartUIState
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
     }
 
-    public static void HandleExit()
+    public static void GoBack()
     {
         if (_optionsPanel.Parent != null)
         {

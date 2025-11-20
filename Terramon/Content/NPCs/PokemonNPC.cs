@@ -49,9 +49,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         {
             orig(scaleTarget);
 
-            if (!_highlightedNPCIndex.HasValue ||
-                (BattleClient.LocalClient.Foe is PokemonNPC npc &&
-                npc.NPC.whoAmI == _highlightedNPCIndex)) return;
+            if (_highlightedNPCIndex.HasValue)
+            {
+                if (BattleClient.LocalClient.Foe is PokemonNPC npc && npc.NPC.whoAmI == _highlightedNPCIndex)
+                {
+                    _highlightedNPCIndex = null;
+                    return;
+                }
+            }
+            else return;
 
             var highlightedNPC = Main.npc[_highlightedNPCIndex.Value];
             _highlightedNPCIndex = null;
@@ -73,7 +79,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         var textXPos = npc.position.X - Main.screenPosition.X + 8f;
         var textYPos = npc.position.Y - Main.screenPosition.Y + npc.gfxOffY;
-        if (Main.LocalPlayer.gravDir == -1f)
+        if (Math.Abs(Main.LocalPlayer.gravDir - -1f) < 0.001f)
             textYPos = Main.screenHeight - textYPos;
 
         var textDrawPos = new Vector2(textXPos, textYPos);

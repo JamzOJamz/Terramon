@@ -9,7 +9,7 @@ public class BattleScene : ModSceneEffect
     public override bool IsSceneEffectActive(Player player)
     {
         var modPlayer = player.Terramon();
-        return modPlayer._battleClient != null && modPlayer._battleClient.BattleOngoing;
+        return modPlayer.BattleClient != null && modPlayer.BattleClient.BattleOngoing;
     }
 
     public override void SpecialVisuals(Player player, bool isActive)

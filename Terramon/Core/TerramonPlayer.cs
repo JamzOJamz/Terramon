@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using EasyPacketsLib;
 using MonoMod.Cil;
@@ -27,15 +28,21 @@ namespace Terramon.Core;
 
 public class TerramonPlayer : ModPlayer, IBattleProvider
 {
+    private static int _hoveredPlayer = -1;
     private readonly PCService _pc = new();
     private readonly PokedexService _pokedex = new();
     private readonly PokedexService _shinyDex = new();
 
     private int _activePCTileEntityID = -1;
     private PokemonPet _activePetProjectile;
-    private int _activeSlot;
+    private int _activeSlot = -1;
+
+    // ReSharper disable once InconsistentNaming
+    internal BattleClient _battleClient;
     private int _lastActiveSlot = -1;
     private bool _lastPlayerInventory;
+
+    private bool _locallyRequestedClient;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
     public BattleInstance Battle;
@@ -48,10 +55,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public bool HasShinyCharm;
     public ExpShareSettings NonParticipantSettings = new(0.5f);
     public ExpShareSettings ParticipantSettings = new();
-
-    internal BattleClient _battleClient;
-    public static int HoveredPlayer = -1;
-    public static int BattleTicks;
+    public static int BattleTicks { get; private set; }
 
     public int ActivePCTileEntityID
     {
@@ -111,244 +115,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.Terramon();
 
-    #region IBattleProvider
-    
-    public BattleProviderType ProviderType => BattleProviderType.Player;
-    
-    public BattleClient BattleClient => _battleClient;
-    
-    public Entity SyncedEntity => Player;
-    
-    public string BattleName => Player.name;
-    
-    public PokemonData[] GetBattleTeam() => Party;
-    
-    public void StartBattleEffects(bool before)
-    {
-        if (before)
-        {
-            if (Player.whoAmI != Main.myPlayer) return;
-            BattleTicks = 0;
-            BattleUI.ApplyStartEffects();
-        } else ActivePetProjectile?.ConfrontFoe(_battleClient);
-    }
-    
-    public void StopBattleEffects()
-    {
-        if (Player.whoAmI == Main.myPlayer)
-            BattleUI.ApplyEndEffects();
-        if (ActivePetProjectile != null) 
-            ActivePetProjectile.CustomTargetPosition = null;
-    }
-    
-    public void Reply(BattleMessage m)
-    {
-        switch (m)
-        {
-            case ChallengeQuestion:
-
-                // Open UI to accept challenge
-                Main.NewText($"This ({m.Sender.BattleName}) Fucker Wants to Battle you");
-
-                // DEBUG: Accept immediately
-                m.Return(new ChallengeAnswer(yes: true));
-                break;
-            case ChallengeAnswer c:
-
-                if (c.Yes)
-                {
-                    Main.NewText($"{m.Sender.BattleName} has accepted your challenge");
-                    // Imbalanced operation: Will send battle pick to foe here,
-                    // and the other one's pick will be sent in SlotChoice to server
-                    var slot = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
-                    m.Return(new SlotChoice(slot: slot));
-                }
-                else
-                    Main.NewText($"{m.Sender.BattleName} has declined your challenge");
-                break;
-            case SlotChoice:
-                var slot0 = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
-                var pick = new SlotChoice(slot: slot0)
-                {
-                    Sender = this
-                };
-                pick.Send();
-                break;
-            case TeamQuestion:
-                m.Return(new TeamAnswer(this.GetNetTeam()));
-                break;
-            case TieQuestion:
-
-                // Show like a little notification and/or change the color of the tie button
-                Main.NewText($"{m.Sender.BattleName} asked to agree to a tie");
-                break;
-            case TieTakeback:
-
-                // Reverse the effect from the above message
-                Main.NewText($"{m.Sender.BattleName} doesn't want a tie anymore");
-                break;
-        }
-    }
-    
-    public void Witness(BattleMessage m)
-    {
-        Console.WriteLine($"Client: Witnessing a {m.GetType().Name}");
-
-        switch (m)
-        {
-            case ResetEverythingStatement:
-
-                foreach (var plr in Main.ActivePlayers)
-                    ((IBattleProvider)plr.Terramon()).BattleStopped();
-                foreach (var npc in Main.ActiveNPCs)
-                {
-                    if (npc.ModNPC is IBattleProvider p)
-                        p.BattleStopped();
-                }
-
-                break;
-            case ChallengeQuestion:
-
-                // Set client fields
-                // Keep in mind that this is also witnessed by the sender
-                m.Sender.State = ClientBattleState.Requested;
-                m.Sender.Foe = m.Recipient;
-                break;
-            case ChallengeTakeback:
-
-                // Unset client fields
-                m.Sender.State = ClientBattleState.None;
-                m.Sender.Foe = null;
-                break;
-            case ChallengeAnswer c:
-
-                if (c.Yes) // If the sender accepted
-                {
-                    // Set client fields
-                    m.Sender.State = m.Recipient.State = ClientBattleState.PollingSlot;
-                    m.Sender.Foe = m.Recipient;
-
-                    // Create battle field early to avoid nullrefs
-                    var bf = new BattleField()
-                    {
-                        A = new(m.Recipient),
-                        B = new(m.Sender),
-                    };
-
-                    m.Recipient.Field = m.Sender.Field = bf;
-                }
-                else
-                {
-                    // Unset client fields
-                    m.Recipient.State = ClientBattleState.None;
-                    m.Recipient.Foe = null;
-                }
-                break;
-            case SlotChoice s:
-                m.Sender.Pick = s.Slot;
-                break;
-            case TeamAnswer:
-                m.Sender.State = ClientBattleState.SetTeam;
-                break;
-            case StartBattleStatement s:
-
-                // Show start message and do battle start effects
-                var owner = s.BattleOwner;
-                var other = owner.Foe;
-                var a = owner.BattleName;
-                var b = other.BattleName;
-
-                Main.NewText($"{a} started a battle against {b}!", Color.Aqua);
-
-                // If we're in singleplayer, break early so this stuff only runs from BattleManager
-                if (Main.netMode == NetmodeID.SinglePlayer)
-                    break;
-
-                // Set states
-                owner.State = other.State = ClientBattleState.Ongoing;
-
-                // Effects
-                owner.StartBattleEffects(before: true);
-                other.StartBattleEffects(before: false);
-                owner.StartBattleEffects(before: false);
-                break;
-            case ForfeitStatement f:
-
-                // Show forfeit message and do battle end effects
-                var forfeiter = f.Forfeiter;
-                var winner = forfeiter.Foe;
-                a = forfeiter.BattleName;
-                b = winner.BattleName;
-
-                Main.NewText($"{a} forfeited their battle against {b}!", Color.Lime);
-
-                forfeiter.BattleStopped();
-                winner.BattleStopped();
-                break;
-            case WinStatement w:
-
-                // Show win message and do battle end effects
-                winner = w.Winner;
-                var loser = winner.Foe;
-                a = winner.BattleName;
-                b = loser.BattleName;
-
-                Main.NewText($"{a} defeated {b}!", Color.Lime);
-
-                winner.BattleStopped();
-                loser.BattleStopped();
-                break;
-            case TieQuestion:
-                m.Sender.TieRequest = true;
-                break;
-            case TieTakeback:
-                m.Sender.TieRequest = false;
-                break;
-            case TieStatement t:
-
-                // Show tie messsage and do battle end effects
-                var either = t.EitherParticipant;
-                other = either.Foe;
-                a = either.BattleName;
-                b = other.BattleName;
-
-                switch (t.Type)
-                {
-                    case TieStatement.TieType.Regular:
-                        Main.NewText($"{a} and {b}'s battle ended in a tie!", Color.Yellow);
-                        break;
-                    case TieStatement.TieType.Agreed:
-                        Main.NewText($"{a} and {b} agreed to a tie!", Color.Yellow);
-                        break;
-                    case TieStatement.TieType.Forced:
-                        Main.NewText($"{a} and {b}'s battle was forcibly ended!", Color.Red);
-                        break;
-                }
-
-                either.BattleStopped();
-                other.BattleStopped();
-                break;
-        }
-    }
-    
-    public void SetActiveSlot(byte newSlot)
-    {
-        ActiveSlot = newSlot;
-
-        var loc = BattleClient.LocalClient;
-
-        if (loc == BattleClient)
-        {
-            TestBattleUI.PlayerPanel.CurrentMon = GetActivePokemon();
-        }
-        else if (loc.Foe == this)
-        {
-            TestBattleUI.FoePanel.CurrentMon = GetActivePokemon();
-        }
-    }
-
-    #endregion
-
     public bool StartBattle(IBattleProvider other)
     {
         var c = other.BattleClient;
@@ -367,7 +133,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         if (Main.dedServ)
             return;
-        IL_Main.DrawMouseOver += static (il) =>
+
+        IL_Main.DrawMouseOver += static il =>
         {
             var c = new ILCursor(il);
 
@@ -382,10 +149,11 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
                 i => i.MatchLdloc(out playerIndex));
 
             c.EmitLdloc(playerIndex);
-            c.EmitStsfld(typeof(TerramonPlayer).GetField(nameof(HoveredPlayer)));
+            c.EmitStsfld(typeof(TerramonPlayer).GetField(nameof(_hoveredPlayer),
+                BindingFlags.NonPublic | BindingFlags.Static)!);
         };
     }
-    
+
     /// <summary>
     ///     Returns this player's currently active Pokémon, or null if there is none.
     /// </summary>
@@ -448,7 +216,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         if (TestBattleUI.Instance.Visible && Player.controlInv && Player.releaseInventory)
         {
-            TestBattleUI.HandleExit();
+            TestBattleUI.GoBack();
             Player.releaseInventory = false;
         }
     }
@@ -460,11 +228,11 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (HasChosenStarter && KeybindSystem.HubKeybind.JustPressed)
             HubUI.ToggleActive();
 
-        if (_battleClient != null && HoveredPlayer != -1 && _battleClient.State == ClientBattleState.None)
+        if (_battleClient != null && _hoveredPlayer != -1 && _battleClient.State == ClientBattleState.None)
         {
             if (Main.mouseRight && Main.mouseRightRelease)
-                StartBattle(Main.player[HoveredPlayer].Terramon());
-            HoveredPlayer = -1;
+                StartBattle(Main.player[_hoveredPlayer].Terramon());
+            _hoveredPlayer = -1;
         }
 
         if (!KeybindSystem.TogglePartyKeybind.JustPressed) return;
@@ -559,13 +327,11 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         _premierBonusCount = 0;
     }
 
-    private bool _locallyRequestedClient;
-
     public override void PostUpdate()
     {
         if (BattleClient.LocalBattleOngoing)
             BattleTicks++;
-        
+
         if (_battleClient is null)
         {
             switch (Main.netMode)
@@ -668,7 +434,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
         if (shiny)
         {
-            var hasShinyEntry = _shinyDex.Entries.TryGetValue((ushort)id, out var shinyEntry);
+            var hasShinyEntry = _shinyDex.Entries.TryGetValue(id, out var shinyEntry);
             if (hasShinyEntry)
             {
                 if (shinyEntry.Status < status || force)
@@ -874,12 +640,255 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         BattleInstance.Log($"{recipient.DisplayName} gained {expGain} EXP!", BattleInstance.BattleReceiveFollowup);
         if (levelsGained != 0)
-            BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!", BattleInstance.BattleReceiveFollowup);
+            BattleInstance.Log($"{recipient.DisplayName} is now level {recipient.Level}!",
+                BattleInstance.BattleReceiveFollowup);
         if (gains is null)
             return;
         foreach (var (stat, increase) in gains)
-            BattleInstance.Log($"{recipient.DisplayName}'s {stat} EV increased by {increase}!", BattleInstance.MetaFollowup);
+            BattleInstance.Log($"{recipient.DisplayName}'s {stat} EV increased by {increase}!",
+                BattleInstance.MetaFollowup);
     }
+
+    #region IBattleProvider
+
+    public BattleProviderType ProviderType => BattleProviderType.Player;
+
+    public BattleClient BattleClient => _battleClient;
+
+    public Entity SyncedEntity => Player;
+
+    public string BattleName => Player.name;
+
+    public PokemonData[] GetBattleTeam() => Party;
+
+    public void StartBattleEffects(bool before)
+    {
+        if (before)
+        {
+            if (Player.whoAmI != Main.myPlayer) return;
+            BattleTicks = 0;
+            BattleUI.ApplyStartEffects();
+        }
+        else ActivePetProjectile?.ConfrontFoe(_battleClient);
+    }
+
+    public void StopBattleEffects()
+    {
+        if (Player.whoAmI == Main.myPlayer)
+            BattleUI.ApplyEndEffects();
+        if (ActivePetProjectile != null)
+            ActivePetProjectile.CustomTargetPosition = null;
+    }
+
+    public void Reply(BattleMessage m)
+    {
+        switch (m)
+        {
+            case ChallengeQuestion:
+
+                // Open UI to accept challenge
+                Main.NewText($"This ({m.Sender.BattleName}) Fucker Wants to Battle you");
+
+                // DEBUG: Accept immediately
+                m.Return(new ChallengeAnswer(yes: true));
+                break;
+            case ChallengeAnswer c:
+
+                if (c.Yes)
+                {
+                    Main.NewText($"{m.Sender.BattleName} has accepted your challenge");
+                    // Imbalanced operation: Will send battle pick to foe here,
+                    // and the other one's pick will be sent in SlotChoice to server
+                    var slot = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
+                    m.Return(new SlotChoice(slot: slot));
+                }
+                else
+                    Main.NewText($"{m.Sender.BattleName} has declined your challenge");
+
+                break;
+            case SlotChoice:
+                var slot0 = (byte)(_activeSlot == -1 ? 1 : _activeSlot + 1);
+                var pick = new SlotChoice(slot: slot0)
+                {
+                    Sender = this
+                };
+                pick.Send();
+                break;
+            case TeamQuestion:
+                m.Return(new TeamAnswer(this.GetNetTeam()));
+                break;
+            case TieQuestion:
+
+                // Show like a little notification and/or change the color of the tie button
+                Main.NewText($"{m.Sender.BattleName} asked to agree to a tie");
+                break;
+            case TieTakeback:
+
+                // Reverse the effect from the above message
+                Main.NewText($"{m.Sender.BattleName} doesn't want a tie anymore");
+                break;
+        }
+    }
+
+    public void Witness(BattleMessage m)
+    {
+        Console.WriteLine($"Client: Witnessing a {m.GetType().Name}");
+
+        switch (m)
+        {
+            case ResetEverythingStatement:
+
+                foreach (var plr in Main.ActivePlayers)
+                    ((IBattleProvider)plr.Terramon()).BattleStopped();
+                foreach (var npc in Main.ActiveNPCs)
+                {
+                    if (npc.ModNPC is IBattleProvider p)
+                        p.BattleStopped();
+                }
+
+                break;
+            case ChallengeQuestion:
+
+                // Set client fields
+                // Keep in mind that this is also witnessed by the sender
+                m.Sender.State = ClientBattleState.Requested;
+                m.Sender.Foe = m.Recipient;
+                break;
+            case ChallengeTakeback:
+
+                // Unset client fields
+                m.Sender.State = ClientBattleState.None;
+                m.Sender.Foe = null;
+                break;
+            case ChallengeAnswer c:
+
+                if (c.Yes) // If the sender accepted
+                {
+                    // Set client fields
+                    m.Sender.State = m.Recipient.State = ClientBattleState.PollingSlot;
+                    m.Sender.Foe = m.Recipient;
+
+                    // Create battle field early to avoid nullrefs
+                    var bf = new BattleField
+                    {
+                        A = new(m.Recipient),
+                        B = new(m.Sender),
+                    };
+
+                    m.Recipient.Field = m.Sender.Field = bf;
+                }
+                else
+                {
+                    // Unset client fields
+                    m.Recipient.State = ClientBattleState.None;
+                    m.Recipient.Foe = null;
+                }
+
+                break;
+            case SlotChoice s:
+                m.Sender.Pick = s.Slot;
+                break;
+            case TeamAnswer:
+                m.Sender.State = ClientBattleState.SetTeam;
+                break;
+            case StartBattleStatement s:
+
+                // Show start message and do battle start effects
+                var owner = s.BattleOwner;
+                var other = owner.Foe;
+                var a = owner.BattleName;
+                var b = other.BattleName;
+
+                Main.NewText($"{a} started a battle against {b}!", Color.Aqua);
+
+                // If we're in singleplayer, break early so this stuff only runs from BattleManager
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    break;
+
+                // Set states
+                owner.State = other.State = ClientBattleState.Ongoing;
+
+                // Effects
+                owner.StartBattleEffects(before: true);
+                other.StartBattleEffects(before: false);
+                owner.StartBattleEffects(before: false);
+                break;
+            case ForfeitStatement f:
+
+                // Show forfeit message and do battle end effects
+                var forfeiter = f.Forfeiter;
+                var winner = forfeiter.Foe;
+                a = forfeiter.BattleName;
+                b = winner.BattleName;
+
+                Main.NewText($"{a} forfeited their battle against {b}!", Color.Lime);
+
+                forfeiter.BattleStopped();
+                winner.BattleStopped();
+                break;
+            case WinStatement w:
+
+                // Show win message and do battle end effects
+                winner = w.Winner;
+                var loser = winner.Foe;
+                a = winner.BattleName;
+                b = loser.BattleName;
+
+                Main.NewText($"{a} defeated {b}!", Color.Lime);
+
+                winner.BattleStopped();
+                loser.BattleStopped();
+                break;
+            case TieQuestion:
+                m.Sender.TieRequest = true;
+                break;
+            case TieTakeback:
+                m.Sender.TieRequest = false;
+                break;
+            case TieStatement t:
+
+                // Show tie messsage and do battle end effects
+                var either = t.EitherParticipant;
+                other = either.Foe;
+                a = either.BattleName;
+                b = other.BattleName;
+
+                switch (t.Type)
+                {
+                    case TieStatement.TieType.Regular:
+                        Main.NewText($"{a} and {b}'s battle ended in a tie!", Color.Yellow);
+                        break;
+                    case TieStatement.TieType.Agreed:
+                        Main.NewText($"{a} and {b} agreed to a tie!", Color.Yellow);
+                        break;
+                    case TieStatement.TieType.Forced:
+                        Main.NewText($"{a} and {b}'s battle was forcibly ended!", Color.Red);
+                        break;
+                }
+
+                either.BattleStopped();
+                other.BattleStopped();
+                break;
+        }
+    }
+
+    public void SetActiveSlot(byte newSlot)
+    {
+        ActiveSlot = newSlot;
+
+        var loc = BattleClient.LocalClient;
+
+        if (loc == BattleClient)
+        {
+            TestBattleUI.PlayerPanel.CurrentMon = GetActivePokemon();
+        }
+        else if (loc.Foe == this)
+        {
+            TestBattleUI.FoePanel.CurrentMon = GetActivePokemon();
+        }
+    }
+
+    #endregion
 
     #region Network Sync
 

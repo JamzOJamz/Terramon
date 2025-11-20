@@ -31,7 +31,7 @@ public struct SyncClientRpc(BattleParticipant foe, ClientBattleState state) : IE
     public readonly void Receive(in SenderInfo sender, ref bool handled)
     {
         var modPlayer = Main.player[sender.WhoAmI].Terramon();
-        modPlayer._battleClient = new(modPlayer)
+        modPlayer._battleClient = new BattleClient(modPlayer)
         {
             Foe = _foe.Type == BattleProviderType.None ? null : _foe.Provider,
             State = _state,

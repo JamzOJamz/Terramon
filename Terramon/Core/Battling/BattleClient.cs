@@ -72,7 +72,7 @@ public sealed class BattleClient(IBattleProvider provider)
         get
         {
             var modPlayer = TerramonPlayer.LocalPlayer;
-            modPlayer._battleClient ??= new(modPlayer);
+            modPlayer._battleClient ??= new BattleClient(modPlayer);
             return modPlayer._battleClient;
         }
     }
