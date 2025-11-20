@@ -28,12 +28,12 @@ public abstract class NPCAIComponent : NPCComponent
     /// <summary>
     ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).PlasmaState</c>.
     /// </summary>
-    protected bool PlasmaState => ((PokemonNPC)NPC.ModNPC).PlasmaState;
+    protected bool PlasmaState => NPC.Pokemon().PlasmaState;
 
     /// <summary>
     ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).Battle</c>.
     /// </summary>
-    protected bool InBattle => ((PokemonNPC)NPC.ModNPC).BattleClient.BattleOngoing;
+    protected bool InBattle => NPC.Pokemon().BattleClient.BattleOngoing;
 
     public override void SetDefaults(NPC npc)
     {

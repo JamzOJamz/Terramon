@@ -9,7 +9,7 @@ using Terraria.DataStructures;
 namespace Terramon.Content.NPCs;
 
 /// <summary>
-///     A <see cref="NPCComponent" /> to add variants to Pokemon NPCs.
+///     A <see cref="NPCComponent" /> to add variants to Pokémon NPCs.
 /// </summary>
 public class NPCVariants : NPCComponent
 {
@@ -22,7 +22,7 @@ public class NPCVariants : NPCComponent
         base.OnSpawn(npc, source);
         if (!Enabled) return;
         
-        var modNPC = (PokemonNPC)npc.ModNPC;
+        var modNPC = npc.Pokemon();
 
         //TODO: add array, iterate through each variant, etc.
         //also probably mp sync

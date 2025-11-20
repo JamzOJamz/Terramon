@@ -36,7 +36,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         base.SetDefaults(npc);
         if (!Enabled) return;
 
-        var speedStat = ((PokemonNPC)npc.ModNPC).Schema.BaseStats.Speed;
+        var speedStat = npc.Pokemon().Schema.BaseStats.Speed;
         WalkSpeed = MapSpeed(speedStat);
     }
 
@@ -45,7 +45,7 @@ public sealed class NPCWalkingBehaviour : NPCAIComponent
         base.OnSpawn(npc, source);
         if (!Enabled) return;
 
-        var nature = ((PokemonNPC)npc.ModNPC).Data.Nature; // TODO: Make sure this syncs in MP
+        var nature = npc.Pokemon().Data.Nature; // TODO: Make sure this syncs in MP
         WalkSpeed *= GetSpeedNatureMultiplier(nature);
     }
 

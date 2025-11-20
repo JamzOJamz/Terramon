@@ -66,11 +66,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     }
 
     /// <summary>
-    ///     Draws the NPC’s level text above its sprite.
+    ///     Draws the NPC's level text above its sprite.
     /// </summary>
     private static void DrawLevelText(SpriteBatch spriteBatch, NPC npc)
     {
-        var modNPC = (PokemonNPC)npc.ModNPC;
+        var modNPC = npc.Pokemon();
         var text = modNPC.Mod.GetLocalization("GUI.Party.LevelDisplay").Format(modNPC.Data.Level);
         var font = FontAssets.DeathText.Value;
 
