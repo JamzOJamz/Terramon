@@ -145,13 +145,10 @@ public sealed class BattleInstance
 
         ClientA.State = ClientB.State = ClientBattleState.Ongoing;
 
-        // No this isn't a mistake, but because Terraria isn't a quantum program,
-        // we can't make it so that both sides run after the other one at the same time
-        // unless we do this
-        ClientA.Provider.StartBattleEffects();
-        ClientB.Provider.StartBattleEffects();
-        ClientA.Provider.StartBattleEffects();
-        ClientB.Provider.StartBattleEffects();
+        // Effects
+        ClientA.Provider.StartBattleEffects(before: true);
+        ClientB.Provider.StartBattleEffects(before: false);
+        ClientA.Provider.StartBattleEffects(before: false);
     }
 
     public void Stop()

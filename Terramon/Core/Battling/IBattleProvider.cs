@@ -9,7 +9,12 @@ public interface IBattleProvider
     Entity SyncedEntity { get; }
     string BattleName { get; }
     PokemonData[] GetBattleTeam();
-    void StartBattleEffects();
+    /// <summary>
+    ///     Things this <see cref="IBattleProvider"/> should do the moment it starts a battle.
+    ///     Called twice on the server, local, and remote clients. In Singleplayer, called only by <see cref="BattleManager"/>.
+    /// </summary>
+    /// <param name="before">Whether the method is running before the <see cref="Foe"/> has gotten the chance to.</param>
+    void StartBattleEffects(bool before);
     void StopBattleEffects();
     void SetActiveSlot(byte newActive);
     /// <summary>
