@@ -185,5 +185,8 @@ internal class UILoader : ModSystem
     public override void UpdateUI(GameTime gameTime)
     {
         _mousePosition = Main.MouseScreen;
+        if (_mousePosition.X < 0 || _mousePosition.Y < 0 || _mousePosition.X > Main.screenWidth ||
+            _mousePosition.Y > Main.screenHeight)
+            _mousePosition = new Vector2(-int.MaxValue, -int.MaxValue); // TODO: This is kind of hacky but works
     }
 }
