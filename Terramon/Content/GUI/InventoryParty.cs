@@ -685,7 +685,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                      directUseItem.AffectedByPokemonDirectUse(Data))
                 {
                     Main.instance.MouseText(
-                        Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipUseItem", Main.mouseItem.PrettyName()));
+                        Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipUseItem", Main.mouseItem.PrettyName(false)));
                 }
                 else if (TerramonItemAPI.Sets.HeldItem.Contains(Main.mouseItem.type))
                 {

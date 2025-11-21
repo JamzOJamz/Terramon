@@ -176,7 +176,7 @@ public class PokemonData
         const float smallBonus = 4915f / 4096f;
 
         var b = defeated.Schema.BaseExp;
-        var e = _heldItem?.ModItem is LuckyEgg ? 1.5f : 1f;
+        var e = _heldItem.ModItem is LuckyEgg ? 1.5f : 1f;
         var f = Happiness >= 220 ? smallBonus : 1f;
         var L = defeated.Level;
         var Lp = Level;
@@ -308,7 +308,7 @@ public class PokemonData
         }
 
         // Check for Pokémon that evolve through held items
-        if (_heldItem?.ModItem is EvolutionaryItem item && item.Trigger == trigger)
+        if (_heldItem.ModItem is EvolutionaryItem item && item.Trigger == trigger)
             return item.GetEvolvedSpecies(this);
         return 0;
     }
@@ -415,7 +415,7 @@ public class PokemonData
     {
         var nickname = partyIndex.HasValue ? partyIndex.Value.ToString() : Nickname ?? Schema.Identifier;
         var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
-        var heldItem = _heldItem is null ? null : ItemID.Search.GetName(_heldItem.type);
+        var heldItem = _heldItem.IsAir ? null : ItemID.Search.GetName(_heldItem.type);
         var shiny = IsShiny ? "S" : null;
         string hiddenPowerType = null;
         string gmax = null;
@@ -447,7 +447,7 @@ public class PokemonData
     {
         if (setNickname)
             Nickname = packed.Nickname;
-        if (_heldItem?.type != packed.Item)
+        if (_heldItem.type != packed.Item)
             _heldItem = new(packed.Item);
         Gender = packed.Gender;
         Ball = packed.Ball;
@@ -497,6 +497,7 @@ public class PokemonData
                 _metDate = DateTime.Now,
                 _metLevel = level,
                 _worldName = Main.worldName,
+                _heldItem = new Item(),
                 PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
                 IVs = PokemonIVs.Random()
             };
@@ -590,7 +591,7 @@ public class PokemonData
         if (!string.IsNullOrEmpty(Variant))
             tag["variant"] = Variant;
 
-        if (_heldItem != null)
+        if (!_heldItem.IsAir)
             tag["item"] = new ItemDefinition(_heldItem.type);
 
         if (_metDate.HasValue)
@@ -647,6 +648,8 @@ public class PokemonData
 
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
+        else
+            data._heldItem = new Item();
 
         if (tag.TryGet<long>("met", out var metDate))
             data._metDate = DateTime.FromBinary(metDate);
@@ -743,7 +746,7 @@ public class PokemonData
         if ((compareFields & BitNickname) != 0 && Nickname != compareData.Nickname) dirtyFields |= BitNickname;
         if ((compareFields & BitVariant) != 0 && Variant != compareData.Variant) dirtyFields |= BitVariant;
         if ((compareFields & BitOT) != 0 && _ot != compareData._ot) dirtyFields |= BitOT;
-        if ((compareFields & BitHeldItem) != 0 && _heldItem?.type != compareData._heldItem?.type)
+        if ((compareFields & BitHeldItem) != 0 && _heldItem.type != compareData._heldItem.type)
             dirtyFields |= BitHeldItem;
         if ((compareFields & BitEXP) != 0 && TotalEXP != compareData.TotalEXP) dirtyFields |= BitEXP;
         if ((compareFields & BitHP) != 0 && _hp != compareData._hp) dirtyFields |= BitHP;
@@ -786,7 +789,7 @@ public class PokemonData
         if ((fields & BitNickname) != 0) writer.Write(Nickname ?? string.Empty);
         if ((fields & BitVariant) != 0) writer.Write(Variant ?? string.Empty);
         if ((fields & BitOT) != 0) writer.Write(_ot ?? string.Empty);
-        if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
+        if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem.type);
         if ((fields & BitEXP) != 0) writer.Write(TotalEXP);
         if ((fields & BitHP) != 0) writer.Write7BitEncodedInt(_hp);
     }
@@ -811,7 +814,7 @@ public class PokemonData
         if ((fields & BitHeldItem) != 0)
         {
             var heldItem = reader.Read7BitEncodedInt();
-            _heldItem = heldItem == 0 ? null : new Item(heldItem);
+            _heldItem = heldItem == 0 ? new Item() : new Item(heldItem);
         }
 
         if ((fields & BitEXP) != 0) TotalEXP = reader.ReadInt32();
