@@ -569,7 +569,6 @@ public class PokemonData
         {
             ["id"] = ID,
             ["lvl"] = Level,
-            ["hp"] = _hp,
             ["exp"] = TotalEXP,
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
@@ -579,6 +578,9 @@ public class PokemonData
         };
 
         // Optional fields - only serialize if different from defaults
+        if (_hp != MaxHP)
+            tag["hp"] = _hp;
+
         if (Ball != BallID.PokeBall)
             tag["ball"] = (byte)Ball;
 
@@ -632,7 +634,6 @@ public class PokemonData
         };
 
         // Load optional fields
-        data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
 
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
@@ -670,6 +671,9 @@ public class PokemonData
         data.Moves = tag.TryGet<TagCompound>("moves", out var moves)
             ? PokemonMoves.Load(moves)
             : data.GetInitialMoves();
+
+        // Set HP last to ensure proper MaxHP calculation
+        data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
 
         // Set experience last to ensure proper level calculation
         var expToSet = tag.TryGet<int>("exp", out var exp)
