@@ -6,7 +6,6 @@ using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -221,15 +220,25 @@ public sealed class PartyHeldItemSlot(PartySidebarSlot parent) : UIElement
     public PartySidebarSlot Slot = parent;
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        // help idk why dimension width and height returns 0 even tho i'm setting it in partysidebarslot constructor
-        var dims = _dimensions with { Height = 24f, Width = 24f };
+        var dims = GetDimensions();
         spriteBatch.Draw(BackTexture.Value, dims.Position(), Color.White);
 
         var item = Slot.Data?.HeldItem;
         if (item is null || item.IsAir)
             return;
 
-        ItemSlot.DrawItemIcon(item, ItemSlot.Context.MouseItem, spriteBatch, dims.Center(), 1f, 20f, Color.White);
+        ItemSlot.DrawItemIcon(item, ItemSlot.Context.MouseItem, spriteBatch, dims.Center(), 1f, 16f, Color.White);
+    }
+    public override void Recalculate()
+    {
+        var parentDimensions = Parent.GetInnerDimensions();
+        _dimensions = new CalculatedStyle
+        {
+            X = Left.GetValue(parentDimensions.Width) + parentDimensions.X,
+            Y = Top.GetValue(parentDimensions.Height) + parentDimensions.Y,
+            Width = Width.Pixels,
+            Height = Height.Pixels,
+        };
     }
 }
 

@@ -368,7 +368,7 @@ internal sealed class CustomPartyItemSlot : UIImage
     private void HeldItemInteraction(Item item)
     {
         var heldItem = Data.HeldItem;
-        if (item.IsAir && (heldItem is null || heldItem.IsAir))
+        if (item.IsAir && heldItem.IsAir)
             return;
 
         Data.HeldItem = item;
@@ -610,7 +610,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             _minispriteImage.Color = Color;
             Append(_minispriteImage);
 
-            if (data.HeldItem != null && !data.HeldItem.IsAir)
+            if (!data.HeldItem.IsAir)
             {
                 _heldItemIcon ??= new(PartySlotHeldItemTexture);
 
@@ -690,7 +690,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                 else if (TerramonItemAPI.Sets.HeldItem.Contains(Main.mouseItem.type))
                 {
                     string text = string.Empty;
-                    var alreadyHoldingItem = Data.HeldItem != null && !Data.HeldItem.IsAir;
+                    var alreadyHoldingItem = !Data.HeldItem.IsAir;
                     if (alreadyHoldingItem)
                         text += Language.GetTextValue(
                             "Mods.Terramon.GUI.Inventory.SlotTooltipDisplayHeldItem",
