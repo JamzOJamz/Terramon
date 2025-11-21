@@ -9,6 +9,7 @@ public abstract class HeldItem : TerramonItem
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 1;
+        TerramonItemAPI.Sets.HeldItem.Add(Type);
     }
 
     public override void SetDefaults()

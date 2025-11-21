@@ -30,6 +30,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : HeldItem
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
+        TerramonItemAPI.Sets.HeldItem.Add(Type);
         TerramonItemAPI.Sets.Unobtainable.Add(Type);
         _pokeName = Terramon.DatabaseV2.GetLocalizedPokemonName(evolves);
     }

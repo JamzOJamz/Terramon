@@ -6,6 +6,7 @@ using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -213,16 +214,33 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
     }
 }
 
-public class PartySidebarSlot : UICompositeImage
+public sealed class PartyHeldItemSlot(PartySidebarSlot parent) : UIElement
+{
+    private static readonly Asset<Texture2D> BackTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox");
+
+    public PartySidebarSlot Slot = parent;
+    protected override void DrawSelf(SpriteBatch spriteBatch)
+    {
+        // help idk why dimension width and height returns 0 even tho i'm setting it in partysidebarslot constructor
+        var dims = _dimensions with { Height = 24f, Width = 24f };
+        spriteBatch.Draw(BackTexture.Value, dims.Position(), Color.White);
+
+        var item = Slot.Data?.HeldItem;
+        if (item is null || item.IsAir)
+            return;
+
+        ItemSlot.DrawItemIcon(item, ItemSlot.Context.MouseItem, spriteBatch, dims.Center(), 1f, 20f, Color.White);
+    }
+}
+
+public sealed class PartySidebarSlot : UICompositeImage
 {
     private readonly UIText _levelText;
     private readonly UIText _nameText;
     private readonly PartyDisplay _partyDisplay;
     private bool _dragging;
     private UIImage _genderIcon;
-#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
-    private UIBlendedImage _heldItemBox;
-#pragma warning restore CS0649
+    private readonly PartyHeldItemSlot _heldItemBox;
     private PartySidebarHPMeter _hpMeter;
     private int _index;
     private bool _isActiveSlot;
@@ -249,6 +267,11 @@ public class PartySidebarSlot : UICompositeImage
         _levelText.Left.Set(7, 0);
         _levelText.Top.Set(10, 0);
         Append(_levelText);
+        _heldItemBox = new(this);
+        _heldItemBox.Top.Pixels = 24f;
+        _heldItemBox.Left.Pixels = 10f;
+        _heldItemBox.Width.Pixels = _heldItemBox.Height.Pixels = 24f;
+        Append(_heldItemBox);
         RemoveFloatingPointsFromDrawPosition = true;
     }
 
@@ -547,14 +570,16 @@ public class PartySidebarSlot : UICompositeImage
 
     private void RemoveUIElements()
     {
-        _heldItemBox?.Remove();
         _spriteBox?.Remove();
         _genderIcon?.Remove();
         _hpMeter?.Remove();
+        _heldItemBox.Remove();
     }
 
     private void CreateUIElements(PokemonData data)
     {
+        Append(_heldItemBox);
+
         var assetRepository = Terramon.Instance.Assets;
 
         // Sprite box

@@ -2,6 +2,8 @@ using ReLogic.Reflection;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
+using Terraria.GameContent.UI;
+using Terraria.GameContent.UI.Chat;
 using Terraria.Utilities;
 
 namespace Terramon.Helpers;
@@ -70,6 +72,27 @@ public static class VanillaExtensions
         };
     public static ushort Terramon(this IdDictionary search, string name)
         => (ushort)search.GetId($"{nameof(Terramon)}/{name}");
+
+    /// <summary>
+    ///     Returns the item name normalized, prefixed with an item chat tag, and with the color of its rarity.
+    /// </summary>
+    public static string PrettyName(this Item i, bool itemIcon = true)
+    {
+        var oldStack = i.stack;
+        i.stack = 1;
+
+        var rarityColor = i.rare switch
+        {
+            ItemRarityID.Expert => Main.DiscoColor,
+            ItemRarityID.Master => new Color(255, (byte)(Main.masterColor * 200f), 0),
+            >= ItemRarityID.Count => RarityLoader.GetRarity(i.rare).RarityColor,
+            _ => ItemRarity._rarities.GetValueOrDefault(i.rare, Color.White)
+        };
+
+        var result = (itemIcon ? ItemTagHandler.GenerateTag(i) + ' ' : string.Empty) + $"[c/{rarityColor.ToHexString()}:{i.Name}]";
+        i.stack = oldStack;
+        return result;
+    }
     public static void Write(this BinaryWriter writer, IBattleProvider participant)
     {
         var type = participant?.ProviderType ?? BattleProviderType.None;
