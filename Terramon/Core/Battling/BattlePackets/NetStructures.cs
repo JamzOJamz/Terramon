@@ -165,9 +165,9 @@ public readonly record struct SimplePackedPokemon
         // 5 bits [25]
         Bulk |= (uint)data.Nature << 20;
         // 30 bits [55]
-        Bulk |= data.IVs.Packed << 25;
+        Bulk |= (ulong)data.IVs.Packed << 25;
         // 8 bits [63]
-        Bulk |= (uint)data.Happiness << 55;
+        Bulk |= (ulong)data.Happiness << 55;
         // 1 bit [64]
         if (data.IsShiny)
             Bulk |= 1ul << 63;
