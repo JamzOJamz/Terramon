@@ -441,7 +441,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private void HitPkmn(NPC target)
     {
         _hasContainedLocal = true;
-        _capture = (PokemonNPC)target.ModNPC;
+        _capture = target.Pokemon();
 
         // Play sound effect
         var s = new SoundStyle
@@ -452,7 +452,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         SoundEngine.PlaySound(s);
 
         // Register as seen in the player's Pokedex
-        var ownerPlayer = Main.player[Projectile.owner].GetModPlayer<TerramonPlayer>();
+        var ownerPlayer = Main.player[Projectile.owner].Terramon();
         ownerPlayer.UpdatePokedex(_capture.ID, PokedexEntryStatus.Seen, shiny: _capture.Data?.IsShiny ?? false);
 
         AIState = (float)ActionState.Catch;
@@ -494,7 +494,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             var newNPC =
                 NPC.NewNPC(source, (int)Projectile.Center.X, (int)Projectile.Center.Y,
                     _capture.Type); // spawn a new NPC at the new position
-            var newPoke = (PokemonNPC)Main.npc[newNPC].ModNPC;
+            var newPoke = Main.npc[newNPC].Pokemon();
             newPoke.Data = _capture.Data;
             newPoke.NPC.spriteDirection = _capture.NPC.spriteDirection;
             newPoke.NPC.FindFrame();

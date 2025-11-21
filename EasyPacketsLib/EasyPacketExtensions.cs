@@ -3,7 +3,12 @@
  *  DavidFDev
  */
 
-namespace Terramon.Content.Packets;
+using EasyPacketsLib.Internals;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace EasyPacketsLib;
 
 /// <summary>
 ///     Extension methods for sending easy packets and handling how they are received.
@@ -24,7 +29,8 @@ public static class EasyPacketExtensions
     /// <param name="toClient">If non-negative, this packet will only be sent to the specified client.</param>
     /// <param name="ignoreClient">If non-negative, this packet will not be sent to the specified client.</param>
     /// <param name="forward">If sending from a client, this packet will be forwarded to other clients through the server.</param>
-    public static void SendPacket(this Mod mod, in IEasyPacket packet, int toClient = -1, int ignoreClient = -1, bool forward = false)
+    public static void SendPacket(this Mod mod, in IEasyPacket packet, int toClient = -1, int ignoreClient = -1,
+        bool forward = false)
     {
         forward = forward && Main.netMode == NetmodeID.MultiplayerClient;
         SendPacket_Internal(mod, in packet, (byte)Main.myPlayer, toClient, ignoreClient, forward);
@@ -54,7 +60,8 @@ public static class EasyPacketExtensions
         return packet;
     }
 
-    internal static void SendPacket_Internal(Mod mod, in IEasyPacket packet, byte whoAmI, int toClient, int ignoreClient, bool forward)
+    internal static void SendPacket_Internal(Mod mod, in IEasyPacket packet, byte whoAmI, int toClient,
+        int ignoreClient, bool forward)
     {
         if (Main.netMode == NetmodeID.SinglePlayer)
         {
@@ -103,7 +110,7 @@ public static class EasyPacketExtensions
         modPacket.Send(toClient, ignoreClient);
     }
 
-    internal static void HandlePacket_Internal(BinaryReader reader, int whoAmI)
+    public static void HandlePacket(BinaryReader reader, int whoAmI)
     {
         if (Main.netMode == NetmodeID.SinglePlayer)
         {
@@ -119,7 +126,8 @@ public static class EasyPacketExtensions
 
         // Get the easy packet mod type using its net id
         var packet = EasyPacketLoader.GetPacket(packetNetId) ??
-            throw new Exception($"HandlePacket received an invalid easy mod packet with Net ID: {packetNetId}. Could not find an easy mod packet with that Net ID.");
+                     throw new Exception(
+                         $"HandlePacket received an invalid easy mod packet with Net ID: {packetNetId}. Could not find an easy mod packet with that Net ID.");
 
         // DEBUG: Store the type of the currently handled packet
 // #if DEBUG
@@ -145,7 +153,8 @@ public static class EasyPacketExtensions
         }
 
         // Let the easy packet mod type receive the packet
-        EasyPacket.ReceivePacket(in packet, reader, new SenderInfo(Terramon.Instance, (byte)whoAmI, flags, toClient, ignoreClient));
+        EasyPacket.ReceivePacket(in packet, reader,
+            new SenderInfo(EasyPacketLoader.RegisteredMod, (byte)whoAmI, flags, toClient, ignoreClient));
     }
 
     #endregion

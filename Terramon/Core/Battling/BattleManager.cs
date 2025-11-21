@@ -1,6 +1,7 @@
 ﻿using Showdown.NET.Protocol;
 using System.Text;
 using System.Text.Json;
+using EasyPacketsLib;
 using Terramon.Content.Commands;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;
@@ -15,7 +16,7 @@ namespace Terramon.Core.Battling;
 /// </summary>
 public sealed class BattleManager
 {
-    public static Terramon Mod => Terramon.Instance;
+    private static Terramon Mod => Terramon.Instance;
 
     public static BattleManager Instance { get; set; }
     private readonly Dictionary<BattleParticipant, BattleInstance> _activeBattles = [];
@@ -103,6 +104,7 @@ public sealed class BattleManager
                 break;
         }
     }
+    
     public bool Witness(BattleMessage m)
     {
         // Messages that are meant for a client or server-owned provider pass through here first
@@ -213,6 +215,7 @@ public sealed class BattleManager
 
         return true;
     }
+    
     public void HandleSingleElement(BattleInstance source, BinaryWriter w, ProtocolElement element, int toSide)
     {
         switch (element)
@@ -555,6 +558,7 @@ public sealed class BattleManager
             w.Write(b);
         }
     }
+    
     private static VolatileEffect GetVolatile(string rawName)
     {
         // ooh boy
@@ -589,6 +593,7 @@ public sealed class BattleManager
 
         throw new Exception($"'{rawName}' wasn't recognized as a valid volatile effect");
     }
+    
     public static void HandleError(BattleInstance source, ErrorElement error, int toSide)
     {
         if (toSide <= 0)
@@ -607,6 +612,7 @@ public sealed class BattleManager
             // do stuff with error type and subtype
         }
     }
+    
     public static void HandleRequest(BattleInstance source, string rawRequest)
     {
         using var req = JsonDocument.Parse(rawRequest);
@@ -648,7 +654,9 @@ public sealed class BattleManager
             }
         }
     }
+    
     public int LatestInteractor;
+    
     public void HandleChoice(BattleParticipant participant, BattleChoice choice, int operand)
     {
         var b = _activeBattles[participant];
@@ -658,6 +666,7 @@ public sealed class BattleManager
 
         b.SubmitChoice(LatestInteractor, choice, operand + 1);
     }
+    
     public void Observe(BattleParticipant battleOwner, MemoryStream buffer, bool onlyToSelf)
     {
         buffer.Position = 0;
@@ -691,11 +700,13 @@ public sealed class BattleManager
             _ => null,
         };
     }
+    
     public static IBattleProvider GetProvider(BattleParticipant participant)
         => GetProvider(participant.WhoAmI, participant.Type);
 
     public static BattleClient GetClient(byte whoAmI, BattleProviderType type = BattleProviderType.Player)
         => GetProvider(whoAmI, type).BattleClient;
+    
     public static BattleClient GetClient(BattleParticipant participant)
         => GetClient(participant.WhoAmI, participant.Type);
 }

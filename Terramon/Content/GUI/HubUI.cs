@@ -1425,7 +1425,7 @@ internal sealed class PokedexPreviewCanvas : UIImage
             };
             _dummyNPCForDrawing.SetDefaults_ForNetId(type, 1);
             _dummyNPCForDrawing.netID = type;
-            var pokemonNpc = (PokemonNPC)_dummyNPCForDrawing.ModNPC;
+            var pokemonNpc = _dummyNPCForDrawing.Pokemon();
             pokemonNpc.Data = new PokemonData
             {
                 ID = value,

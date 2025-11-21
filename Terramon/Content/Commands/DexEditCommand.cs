@@ -40,7 +40,7 @@ public class DexEditCommand : DebugCommand
             return;
         }
 
-        var player = caller.Player.GetModPlayer<TerramonPlayer>();
+        var player = caller.Player.Terramon();
         var success = player.UpdatePokedex((ushort)id, (PokedexEntryStatus)status, true);
         if (success)
             caller.Reply(Language.GetTextValue("Mods.Terramon.Commands.DexEdit.Success", id, statusName),

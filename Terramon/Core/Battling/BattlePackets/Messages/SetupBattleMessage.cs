@@ -17,14 +17,14 @@ public sealed class TeamAnswer : BattleMessage
     public override void Write(BinaryWriter w)
     {
         w.Write((byte)Team.Length);
-        for (int i = 0; i < Team.Length; i++)
+        for (var i = 0; i < Team.Length; i++)
             Team[i].Write(w);
     }
     public override void Read(BinaryReader r)
     {
         var length = r.ReadByte();
         Team = new SimplePackedPokemon[length];
-        for (int i = 0; i < length; i++)
+        for (var i = 0; i < length; i++)
             Team[i] = new(r);
     }
 }

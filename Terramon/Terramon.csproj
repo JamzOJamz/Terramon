@@ -1,5 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    
     <Import Project="..\..\tModLoader.targets" />
+    
     <PropertyGroup>
         <AssemblyName>Terramon</AssemblyName>
         <LangVersion>latest</LangVersion>
@@ -55,4 +57,9 @@
         <Using Include="Terramon.Content.Packets" />
         <Using Include="Terramon.Helpers.VanillaExtensions" Static="True" />
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasyPacketsLib\EasyPacketsLib.csproj" />
+    </ItemGroup>
+    
 </Project>

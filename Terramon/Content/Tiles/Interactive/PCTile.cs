@@ -1,3 +1,4 @@
+using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
@@ -88,7 +89,7 @@ public abstract class PCTile : ModTile
 
         // Starter Pokémon should be chosen before using the PC
         var player = Main.LocalPlayer;
-        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        var modPlayer = player.Terramon();
         if (!modPlayer.HasChosenStarter)
         {
             Main.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), TerramonCommand.ChatColorYellow);
@@ -222,7 +223,7 @@ public sealed class PCTileEntity : ModTileEntity
         PoweredOn = !PoweredOn;
         User = PoweredOn ? player.whoAmI : -1;
         if (!switching)
-            player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = PoweredOn ? ID : -1;
+            player.Terramon().ActivePCTileEntityID = PoweredOn ? ID : -1;
 
         if (Main.netMode == NetmodeID.SinglePlayer)
             return;
@@ -243,7 +244,7 @@ public sealed class PCTileEntity : ModTileEntity
                 if (player.active && !(Vector2.Distance(Position.ToWorldCoordinates(8, 0), pos) > 94f)) return;
                 PoweredOn = false;
                 User = -1;
-                player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = -1;
+                player.Terramon().ActivePCTileEntityID = -1;
                 SoundEngine.PlaySound(SoundID.MenuClose);
                 break;
             }
@@ -255,7 +256,7 @@ public sealed class PCTileEntity : ModTileEntity
                 if (player.active && !(Vector2.Distance(Position.ToWorldCoordinates(8, 0), pos) > 94f)) return;
                 PoweredOn = false;
                 User = -1;
-                player.GetModPlayer<TerramonPlayer>().ActivePCTileEntityID = -1;
+                player.Terramon().ActivePCTileEntityID = -1;
                 // Send a packet to all clients to turn off the PC
                 Mod.SendPacket(new ControlPCTileRpc(ID, false), -1, Main.myPlayer);
                 break;
@@ -280,7 +281,7 @@ public sealed class PCTileEntity : ModTileEntity
 
     public override void OnKill()
     {
-        var modPlayer = Main.LocalPlayer.GetModPlayer<TerramonPlayer>();
+        var modPlayer = TerramonPlayer.LocalPlayer;
         if (modPlayer.ActivePCTileEntityID != ID) return;
         PCInterface.SilenceCloseSound = true;
         modPlayer.ActivePCTileEntityID = -1;

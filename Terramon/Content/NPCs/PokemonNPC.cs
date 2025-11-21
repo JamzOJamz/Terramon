@@ -15,7 +15,6 @@ using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
 using Terramon.Helpers;
 using Terramon.ID;
-using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -50,9 +49,15 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         {
             orig(scaleTarget);
 
-            if (!_highlightedNPCIndex.HasValue ||
-                (BattleClient.LocalClient.Foe is PokemonNPC npc &&
-                npc.NPC.whoAmI == _highlightedNPCIndex)) return;
+            if (_highlightedNPCIndex.HasValue)
+            {
+                if (BattleClient.LocalClient.Foe is PokemonNPC npc && npc.NPC.whoAmI == _highlightedNPCIndex)
+                {
+                    _highlightedNPCIndex = null;
+                    return;
+                }
+            }
+            else return;
 
             var highlightedNPC = Main.npc[_highlightedNPCIndex.Value];
             _highlightedNPCIndex = null;
@@ -61,20 +66,20 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     }
 
     /// <summary>
-    ///     Draws the NPC’s level text above its sprite.
+    ///     Draws the NPC's level text above its sprite.
     /// </summary>
     private static void DrawLevelText(SpriteBatch spriteBatch, NPC npc)
     {
-        var modNPC = (PokemonNPC)npc.ModNPC;
-        string text = modNPC.Mod.GetLocalization("GUI.Party.LevelDisplay").Format(modNPC.Data.Level);
+        var modNPC = npc.Pokemon();
+        var text = modNPC.Mod.GetLocalization("GUI.Party.LevelDisplay").Format(modNPC.Data.Level);
         var font = FontAssets.DeathText.Value;
 
-        var scale = 0.4f;
+        const float scale = 0.375f;
         var size = font.MeasureString(text) * scale;
 
         var textXPos = npc.position.X - Main.screenPosition.X + 8f;
         var textYPos = npc.position.Y - Main.screenPosition.Y + npc.gfxOffY;
-        if (Main.LocalPlayer.gravDir == -1f)
+        if (Math.Abs(Main.LocalPlayer.gravDir - -1f) < 0.001f)
             textYPos = Main.screenHeight - textYPos;
 
         var textDrawPos = new Vector2(textXPos, textYPos);
@@ -82,7 +87,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         using (spriteBatch.Override(sampler: SamplerState.LinearClamp))
         {
             ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, text, textDrawPos - size,
-                Main.MouseTextColorReal, 0f, Vector2.Zero, new(scale));
+                Main.MouseTextColorReal, 0f, Vector2.Zero, new Vector2(scale));
         }
     }
 
@@ -95,26 +100,35 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     public bool PlasmaState { get; private set; }
 
     #region IBattleProvider
+    
     public BattleProviderType ProviderType => BattleProviderType.PokemonNPC;
+    
     public BattleClient BattleClient => _battleClient;
+    
     public Entity SyncedEntity => NPC;
+    
     public string BattleName => "Wild " + Data.DisplayName;
+    
     public PokemonData[] GetBattleTeam() => [Data];
-    public void StartBattleEffects()
+    
+    public void StartBattleEffects(bool before)
     {
         // Turn towards the player and disable hover behaviour
         NPC.spriteDirection = NPC.direction = BattleClient.Foe.SyncedEntity.position.X > NPC.position.X ? 1 : -1;
         NPC.ShowNameOnHover = false;
     }
+    
     public void StopBattleEffects()
     {
         NPC.ShowNameOnHover = true;
     }
+    
     public void SetActiveSlot(byte newSlot)
     {
         if (BattleClient.LocalClient.Foe == this)
             TestBattleUI.FoePanel.CurrentMon = Data;
     }
+    
     public void Reply(BattleMessage m)
     {
         switch (m)
@@ -148,14 +162,16 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 break;
         }
     }
+    
     public void Witness(BattleMessage message)
     {
-        
     }
+    
     public void AutoBattleChoice()
     {
         _battleClient.MakeChoice(Core.Battling.BattlePackets.BattleChoice.Default);
     }
+    
     #endregion
 
     public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;

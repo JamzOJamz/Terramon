@@ -1,5 +1,4 @@
-﻿using Terramon.Content.GUI.TurnBased;
-using Terramon.Content.NPCs;
+﻿using EasyPacketsLib;
 using Terramon.Core.Battling.BattlePackets;
 
 namespace Terramon.Core.Battling;
@@ -15,10 +14,7 @@ public sealed class BattleClient(IBattleProvider provider)
     private IBattleProvider _foe;
     public IBattleProvider Foe
     {
-        get
-        {
-            return _foe;
-        }
+        get => _foe;
         set
         {
             if (value is null)
@@ -42,8 +38,8 @@ public sealed class BattleClient(IBattleProvider provider)
     // This is only used by the server
     public string CachedTeamSpec;
 
-    public string Name => Provider.BattleName;
-    public Entity Entity => Provider.SyncedEntity;
+    //public string Name => Provider.BattleName;
+    //public Entity Entity => Provider.SyncedEntity;
     public bool BattleOngoing
     {
         get
@@ -51,7 +47,7 @@ public sealed class BattleClient(IBattleProvider provider)
             return State == ClientBattleState.Ongoing;
         }
     }
-    public bool IsLocal => Provider.IsLocal;
+    //public bool IsLocal => Provider.IsLocal;
     public int SideIndex
     {
         get
@@ -67,7 +63,7 @@ public sealed class BattleClient(IBattleProvider provider)
         get
         {
             var local = LocalClient;
-            return local != null && local.BattleOngoing;
+            return local is { BattleOngoing: true };
         }
     }
 
@@ -76,7 +72,7 @@ public sealed class BattleClient(IBattleProvider provider)
         get
         {
             var modPlayer = TerramonPlayer.LocalPlayer;
-            modPlayer._battleClient ??= new(modPlayer);
+            modPlayer._battleClient ??= new BattleClient(modPlayer);
             return modPlayer._battleClient;
         }
     }
@@ -118,25 +114,8 @@ public sealed class BattleClient(IBattleProvider provider)
         return true;
     }
 
-    public static void StartLocalBattle()
-    {
-        // Clients receive almost no information about the current battle
-        // It's not necessary because nearly everything is server-authoritative
-        // And any data that does get sent is protected with an extra layer (BattlePokemon)
-        // So what's done here is just the battle effects
-        BattleUI.ApplyStartEffects();
-    }
-
-    public static void EndLocalBattle()
-    {
-        BattleUI.ApplyEndEffects();
-    }
-
     public void BattleStopped()
     {
-        if (IsLocal)
-            EndLocalBattle();
-
         Provider.StopBattleEffects();
         Battle = null;
         Pick = 0;

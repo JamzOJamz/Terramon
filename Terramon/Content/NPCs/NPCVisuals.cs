@@ -27,7 +27,7 @@ public class NPCVisuals : NPCComponent
         base.AI(npc);
 
         PokemonNPC modNPC;
-        if (!Enabled || (modNPC = (PokemonNPC)npc.ModNPC).PlasmaState) return;
+        if (!Enabled || (modNPC = npc.Pokemon()).PlasmaState) return;
 
         if (LightStrength > 0)
             Lighting.AddLight(npc.Center,

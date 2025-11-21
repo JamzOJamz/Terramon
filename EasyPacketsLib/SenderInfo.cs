@@ -1,9 +1,12 @@
-/*
+﻿/*
  *  SenderInfo.cs
  *  DavidFDev
  */
 
-namespace Terramon.Content.Packets;
+using Terraria;
+using Terraria.ModLoader;
+
+namespace EasyPacketsLib;
 
 /// <summary>
 ///     Information regarding the sender of an easy packet that has been received.

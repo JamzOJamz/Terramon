@@ -1,4 +1,7 @@
-﻿namespace Terramon.Core.Battling.BattlePackets.Messages;
+﻿using EasyPacketsLib;
+using EasyPacketsLib.Internals;
+
+namespace Terramon.Core.Battling.BattlePackets.Messages;
 public abstract class BattleMessage : ILoadable
 {
     private static readonly Dictionary<Type, BattleMessage> _messagesByType = [];

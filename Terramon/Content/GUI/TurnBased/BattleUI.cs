@@ -10,66 +10,18 @@ using Terraria.UI;
 
 namespace Terramon.Content.GUI.TurnBased;
 
-public sealed class SubjectModifier : ICameraModifier
-{
-    private int _frames;
-    private Vector2 _latestTargetPosition;
-    private float _progress;
-    private bool _returning;
-    public float CameraSpeed;
-    public Func<Vector2?> WantedSubject;
-
-    public SubjectModifier(Func<Vector2?> subject, float cameraSpeed = 0.1f)
-    {
-        WantedSubject = subject;
-        CameraSpeed = cameraSpeed;
-    }
-
-    public SubjectModifier(Func<Vector2> subject, int frames, float cameraSpeed = 0.1f)
-    {
-        _frames = frames;
-        WantedSubject = () => _frames <= 0 ? null : subject();
-        CameraSpeed = cameraSpeed;
-    }
-
-    public string UniqueIdentity => nameof(Terramon) + nameof(SubjectModifier);
-    public bool Finished => _progress <= 0.00005f && _returning;
-
-    public void Update(ref CameraInfo cameraPosition)
-    {
-        // Main.NewText($"{_returning}:{_progress}:{_latestTargetPosition}");
-
-        if (!_returning)
-        {
-            var check = WantedSubject();
-            if (check.HasValue)
-                _latestTargetPosition = check.Value - new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
-            else
-                _returning = true;
-        }
-
-        cameraPosition.CameraPosition = Vector2.Lerp(cameraPosition.CameraPosition, _latestTargetPosition, _progress);
-
-        if (Main.gameInactive || Main.gamePaused)
-            return;
-
-        _progress = float.Lerp(_progress, _returning ? 0f : 1f, CameraSpeed);
-        _frames--;
-    }
-
-    public void Reset()
-    {
-        _returning = false;
-        _progress = 0f;
-    }
-}
-
+/// <summary>
+///     Handles the client-side battle cinematics and presentation layer for turn-based battles.
+/// </summary>
 public sealed class BattleUI : SmartUIState
 {
-    public static readonly SubjectModifier FocusBetween = new(GetBetweenPosition);
+    private static readonly SubjectModifier FocusBetween = new(GetBetweenPosition);
 
-    private static bool OldSidebarToggleState;
-    private static float OldGameZoomTarget;
+    private static int _ticks;
+    private static bool _effectsActive;
+    private static bool _oldSidebarToggleState;
+    private static float _oldGameZoomTarget;
+    private static Vector2? _smoothCamPos;
 
     public override bool Visible => BattleClient.LocalBattleOngoing;
 
@@ -78,14 +30,25 @@ public sealed class BattleUI : SmartUIState
         return layers.Count;
     }
 
+    public override void SafeUpdate(GameTime gameTime)
+    {
+        if (_ticks < int.MaxValue) // TODO: Decide how to handle _ticks reaching int.MaxValue in extremely long battles
+            _ticks++;
+    }
+
     public static void ApplyStartEffects()
     {
-        _smoothCamPos = null;
-        
-        OldGameZoomTarget = Main.GameZoomTarget;
+        if (_effectsActive)
+            throw new InvalidOperationException(
+                "ApplyStartEffects() was called twice without first calling ApplyEndEffects().");
 
+        _effectsActive = true;
+
+        _ticks = 0;
+        _smoothCamPos = null;
+        _oldGameZoomTarget = Main.GameZoomTarget;
         var partySidebar = PartyDisplay.Sidebar;
-        OldSidebarToggleState = partySidebar.IsToggled;
+        _oldSidebarToggleState = partySidebar.IsToggled;
         partySidebar.Close();
 
         if (Main.audioSystem is LegacyAudioSystem audioSystem)
@@ -118,44 +81,48 @@ public sealed class BattleUI : SmartUIState
 
     public static void ApplyEndEffects()
     {
+        if (!_effectsActive)
+            throw new InvalidOperationException(
+                "ApplyEndEffects() was called before ApplyStartEffects().");
+
+        _effectsActive = false;
+
         TestBattleUI.Close();
-        
+
         var partySidebar = PartyDisplay.Sidebar;
-        if (!partySidebar.IsToggled && OldSidebarToggleState)
+        if (!partySidebar.IsToggled && _oldSidebarToggleState)
             partySidebar.SetToggleState(true);
-        
-        if (Math.Abs(Main.GameZoomTarget - OldGameZoomTarget) > 0.001f)
-            Tween.To(() => Main.GameZoomTarget, OldGameZoomTarget, 0.5f).SetEase(Ease.OutExpo);
+
+        if (Math.Abs(Main.GameZoomTarget - _oldGameZoomTarget) > 0.001f)
+            Tween.To(() => Main.GameZoomTarget, _oldGameZoomTarget, 0.5f).SetEase(Ease.OutExpo);
     }
-    
-    private static Vector2? _smoothCamPos;
 
     private static Vector2? GetBetweenPosition()
     {
-        var terramon = TerramonPlayer.LocalPlayer;
         if (!BattleClient.LocalBattleOngoing)
             return null;
 
-        Projectile myPet = terramon.ActivePetProjectile?.Projectile;
+        var myPet = TerramonPlayer.LocalPlayer.ActivePetProjectile?.Projectile;
         if (myPet is null)
             return null;
 
-        Entity other = BattleClient.LocalClient.Foe.SyncedEntity;
+        var other = BattleClient.LocalClient.Foe.SyncedEntity;
         if (other is Player plr)
         {
             var pet = plr.Terramon().ActivePetProjectile;
             if (pet != null)
                 other = pet.Projectile;
         }
-        Vector2 otherCenter = other.Center;
 
-        float targetX = otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f));
-        float targetY = (myPet.Center.Y + otherCenter.Y) * 0.5f;
+        var otherCenter = other.Center;
+
+        var targetX = otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f));
+        var targetY = (myPet.Center.Y + otherCenter.Y) * 0.5f;
         Vector2 target = new(targetX, targetY);
 
         _smoothCamPos ??= target;
 
-        float smoothFactor = 0.1f;
+        const float smoothFactor = 0.1f;
         _smoothCamPos = Vector2.Lerp(_smoothCamPos.Value, target, smoothFactor);
 
         return _smoothCamPos;
@@ -166,12 +133,11 @@ public sealed class BattleUI : SmartUIState
         if (!BattleClient.LocalBattleOngoing)
             return;
 
-        var ticks = TerramonPlayer.BattleTicks;
-        var opacity = GetCutsceneOpacity(ticks);
-        TestBattleUI.PlayerPanel?.Animate(ticks);
-        TestBattleUI.FoePanel?.Animate(ticks);
+        var opacity = GetCutsceneOpacity(_ticks);
+        TestBattleUI.PlayerPanel?.Animate(_ticks);
+        TestBattleUI.FoePanel?.Animate(_ticks);
 
-        if (ticks == 160)
+        if (_ticks == 160)
             Main.GameZoomTarget = 1.5f;
 
         if (opacity > 0f)
@@ -219,5 +185,56 @@ public sealed class BattleUI : SmartUIState
     private static float FadeOut(int ticks, int start, int end)
     {
         return MathHelper.Clamp(1f - (ticks - start) / (float)(end - start), 0f, 1f);
+    }
+}
+
+public sealed class SubjectModifier(Func<Vector2?> subject, float cameraSpeed = 0.1f) : ICameraModifier
+{
+/*
+    private int _frames;
+*/
+    private Vector2 _latestTargetPosition;
+    private float _progress;
+    private bool _returning;
+
+    /*
+    public SubjectModifier(Func<Vector2> subject, int frames, float cameraSpeed = 0.1f)
+    {
+        _frames = frames;
+        _wantedSubject = () => _frames <= 0 ? null : subject();
+        _cameraSpeed = cameraSpeed;
+    }
+*/
+
+    public string UniqueIdentity => nameof(Terramon) + nameof(SubjectModifier);
+
+    public bool Finished => _progress <= 0.00005f && _returning;
+
+    public void Update(ref CameraInfo cameraPosition)
+    {
+        // Main.NewText($"{_returning}:{_progress}:{_latestTargetPosition}");
+
+        if (!_returning)
+        {
+            var check = subject();
+            if (check.HasValue)
+                _latestTargetPosition = check.Value - new Vector2(Main.screenWidth * 0.5f, Main.screenHeight * 0.5f);
+            else
+                _returning = true;
+        }
+
+        cameraPosition.CameraPosition = Vector2.Lerp(cameraPosition.CameraPosition, _latestTargetPosition, _progress);
+
+        if (Main.gameInactive || Main.gamePaused)
+            return;
+
+        _progress = float.Lerp(_progress, _returning ? 0f : 1f, cameraSpeed);
+        // _frames--;
+    }
+
+    public void Reset()
+    {
+        _returning = false;
+        _progress = 0f;
     }
 }

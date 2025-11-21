@@ -18,7 +18,7 @@ public class PartyClearCommand : DebugCommand
     {
         base.Action(caller, input, args);
         if (!Allowed) return;
-        var player = caller.Player.GetModPlayer<TerramonPlayer>();
+        var player = caller.Player.Terramon();
 
         if (args[0] == "all")
         {

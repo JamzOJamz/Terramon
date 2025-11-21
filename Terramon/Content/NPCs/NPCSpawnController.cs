@@ -212,7 +212,7 @@ public class NPCSpawnController : NPCComponent
     {
         const float chanceMultiplier = 7f / 32f; // 0.21875f
         var spawnChance = 0f;
-        var schema = ((PokemonNPC)spawnController.NPC.ModNPC).Schema;
+        var schema = spawnController.NPC.Pokemon().Schema;
         var primaryType = schema.Types[0];
         if (SimpleSpawnConditions.TryGetValue(primaryType, out var primaryCondition) && primaryCondition(spawnInfo))
             spawnChance = 1f;

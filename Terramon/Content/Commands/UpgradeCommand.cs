@@ -47,14 +47,14 @@ public class UpgradeCommand : TerramonCommand
 
         // Iterates the inventory of the player for legacy Poké Ball items and upgrades them to the new system
         var player = caller.Player;
-        var modPlayer = player.GetModPlayer<TerramonPlayer>();
+        var modPlayer = player.Terramon();
         var transferCount = 0;
         for (var i = 0; i < 50; i++)
         {
             var item = player.inventory[i];
             var modItemType = item.ModItem?.GetType();
             if (modItemType == null || modItemType.BaseType != _basePkballType) continue;
-            var pkball = (object)item.ModItem;
+            object pkball = item.ModItem;
             var data = _basePkballDataField.GetValue(pkball);
             if (data == null) continue;
             var name = _pkmnDataNameField.GetValue(data)?.ToString()?[..^3];
