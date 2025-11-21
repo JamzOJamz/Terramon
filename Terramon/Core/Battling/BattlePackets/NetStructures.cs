@@ -147,10 +147,10 @@ public readonly record struct SimplePackedPokemon
             Header |= 0b1;
             Nickname = nick!;
         }
-        if (data.HeldItem != null)
+        if (!data.HeldItem.IsAir)
         {
             Header |= 0b10;
-            Item = (ushort)data.HeldItem!.type;
+            Item = (ushort)data.HeldItem.type;
         }
         EVs = data.EVs;
         Level = data.Level;

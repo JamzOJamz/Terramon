@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Xml.Linq;
 using Terramon.Core;
 using Terramon.ID;
 
@@ -92,8 +95,8 @@ internal static class Program
             try
             {
                 Console.WriteLine($"Fetching Pokémon ID {id}...");
-                var pokemonSchema = await FetchPokemonData(id);
-                Console.WriteLine($"Fetched {pokemonSchema.Identifier} (ID {id}) successfully.\n");
+                var pokemonSchema = await FetchSpeciesData(id);
+                Console.WriteLine($"Fetched {pokemonSchema.BaseForm.Identifier} (ID {id}) successfully.\n");
                 pokemon[id] = pokemonSchema;
             }
             catch (Exception ex)
@@ -146,26 +149,32 @@ internal static class Program
         return cacheDir;
     }
 
-    private static async Task<DatabaseV2.PokemonSchema> FetchPokemonData(int id)
+    private static async Task<string> GetCachedUrlAsync(string filePath, string url)
     {
         // --- Handle caching in accordance to PokéAPI's fair use policy ---
-        var pokeCacheDir = GetCacheDirectory("Pokemon");
-        var pokeFile = Path.Combine(pokeCacheDir, $"{id}.pkmn");
-        
-        string? jsonContent;
 
-        if (File.Exists(pokeFile))
+        if (File.Exists(filePath))
         {
-            jsonContent = await File.ReadAllTextAsync(pokeFile);
+            return await File.ReadAllTextAsync(filePath);
         }
         else
         {
-            var url = $"https://pokeapi.co/api/v2/pokemon/{id}";
             var response = await HttpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
-            jsonContent = await response.Content.ReadAsStringAsync();
-            await File.WriteAllTextAsync(pokeFile, jsonContent);
+            var jsonContent = await response.Content.ReadAsStringAsync();
+            await File.WriteAllTextAsync(filePath, jsonContent);
+            return jsonContent;
         }
+    }
+
+    private static async Task<DatabaseV2.FormSchema> FetchFormData(string url, string? pokeCacheDir = null)
+    {
+        pokeCacheDir ??= GetCacheDirectory("Pokemon");
+
+        var id = ExtractIdFromUrl(url);
+        var pokeFile = Path.Combine(pokeCacheDir, $"{id}.pkmn");
+
+        var jsonContent = await GetCachedUrlAsync(pokeFile, url);
 
         // --- Basic info ---
         using var doc = JsonDocument.Parse(jsonContent);
@@ -176,7 +185,7 @@ internal static class Program
             .Select(e =>
                 Enum.Parse<PokemonType>(
                     FormatIdentifier(e.GetProperty("type").GetProperty("name").GetString())));
-        var baseExperience = root.GetProperty("base_experience").GetUInt16();
+        var baseExperience = root.GetProperty("base_experience");
         var statsArray = root.GetProperty("stats").EnumerateArray();
         var statsBuf = new byte[12];
         int cur = 0;
@@ -190,48 +199,74 @@ internal static class Program
         var abilities = ProcessAbilities(root.GetProperty("abilities"));
         var learnset = ProcessMoves(name, root.GetProperty("moves"));
 
-        // --- Species info ---
-        var speciesUrl = root.GetProperty("species").GetProperty("url").GetString()!;
-        var speciesResponse = await HttpClient.GetAsync(speciesUrl);
-        speciesResponse.EnsureSuccessStatusCode();
-        var speciesJson = await speciesResponse.Content.ReadAsStringAsync();
+        return new DatabaseV2.FormSchema
+        {
+            Identifier = name,
+            Types = types.ToList(),
+            BaseExp = baseExperience.ValueKind == JsonValueKind.Null ? (ushort)0 : baseExperience.GetUInt16(),
+            BaseStats = stats,
+            Height = height,
+            Weight = weight,
+            Abilities = abilities,
+            LevelUpLearnset = learnset,
+        };
+    }
 
-        using var speciesDoc = JsonDocument.Parse(speciesJson);
-        var baseHappiness = speciesDoc.RootElement.GetProperty("base_happiness").GetByte();
-        var catchRate = speciesDoc.RootElement.GetProperty("capture_rate").GetByte();
+    private static async Task<DatabaseV2.PokemonSchema> FetchSpeciesData(int id)
+    {
+        if (id > 10000)
+            throw new ArgumentOutOfRangeException($"{id} isn't a valid species number.");
+
+        // --- Handle caching in accordance to PokéAPI's fair use policy ---
+        var pokeCacheDir = GetCacheDirectory("Pokemon");
+        var speciesFile = Path.Combine(pokeCacheDir, $"{id}.pksp");
+        var evolveFile = Path.Combine(pokeCacheDir, $"{id}.pkev");
+
+        // --- Species info ---
+
+        var jsonContent = await GetCachedUrlAsync(speciesFile, $"https://pokeapi.co/api/v2/pokemon-species/{id}");
+
+        using var speciesDoc = JsonDocument.Parse(jsonContent);
+        var root = speciesDoc.RootElement;
+
+        var baseHappiness = root.GetProperty("base_happiness").GetByte();
+        var catchRate = root.GetProperty("capture_rate").GetByte();
         var growthRate = Enum.Parse<ExperienceGroup>(
-            FormatIdentifier(speciesDoc.RootElement.GetProperty("growth_rate").GetProperty("name").GetString()!));
-        var genderRate = speciesDoc.RootElement.GetProperty("gender_rate").GetSByte();
+            FormatIdentifier(root.GetProperty("growth_rate").GetProperty("name").GetString()!));
+        var genderRate = root.GetProperty("gender_rate").GetSByte();
+        var forms = await ProcessForms(id, pokeCacheDir, root.GetProperty("varieties"));
+
+        var baseForm = forms[0];
+        var otherForms = new Dictionary<string, DatabaseV2.FormSchema>(forms.Count - 1);
+        foreach (var form in CollectionsMarshal.AsSpan(forms)[1..])
+        {
+            // Since these are always linked to the base form, we can remove the original identifier
+            // All forms start with the Pokemon name (identifier of baseForm)
+
+            string newIdentifier = form.Identifier.Substring(baseForm.Identifier.Length);
+
+            otherForms.Add(newIdentifier, form with { Identifier = newIdentifier } );
+        }
 
         // --- Evolution info ---
-        var evolutionChainUrl = speciesDoc.RootElement.GetProperty("evolution_chain").GetProperty("url").GetString()!;
-        var evolutionChainResponse = await HttpClient.GetAsync(evolutionChainUrl);
-        evolutionChainResponse.EnsureSuccessStatusCode();
-        var evolutionChainJson = await evolutionChainResponse.Content.ReadAsStringAsync();
+
+        var evolutionChainJson = await GetCachedUrlAsync(evolveFile, root.GetProperty("evolution_chain").GetProperty("url").GetString()!);
 
         using var evolutionChainDoc = JsonDocument.Parse(evolutionChainJson);
         var baseEvolutionChainLink = evolutionChainDoc.RootElement.GetProperty("chain");
 
         var evolution = ProcessEvolutions(baseEvolutionChainLink, id);
 
-        var schema = new DatabaseV2.PokemonSchema
+        return new DatabaseV2.PokemonSchema
         {
-            Identifier = name,
-            Types = types.ToList(),
             BaseHappiness = baseHappiness,
             CatchRate = catchRate,
-            BaseExp = baseExperience,
             GrowthRate = growthRate,
-            BaseStats = stats,
-            Evolution = evolution,
             GenderRatio = genderRate,
-            Height = height,
-            Weight = weight,
-            Abilities = abilities,
-            LevelUpLearnset = learnset
+            Evolution = evolution,
+            BaseForm = baseForm,
+            Forms = new ReadOnlyDictionary<string, DatabaseV2.FormSchema>(otherForms)
         };
-
-        return schema;
     }
 
     private static List<DatabaseV2.LevelEntrySchema> ProcessMoves(string name, JsonElement movesArray)
@@ -379,6 +414,24 @@ internal static class Program
         }
 
         return null;
+    }
+
+    private static async Task<List<DatabaseV2.FormSchema>> ProcessForms(int id, string pokeCacheDir, JsonElement varietiesArray)
+    {
+        var forms = new List<DatabaseV2.FormSchema>();
+
+        foreach (var form in varietiesArray.EnumerateArray())
+        {
+            var pokemon = form.GetProperty("pokemon");
+            // TODO: Fetch others at some point
+            if (!form.GetProperty("is_default").GetBoolean() && !pokemon.GetProperty("name").GetString()!.Contains("-mega"))
+                continue;
+
+            var formUrl = 
+                pokemon.GetProperty("url").GetString()!;
+            forms.Add(await FetchFormData(formUrl));
+        }
+        return forms;
     }
 
     private static int ExtractIdFromUrl(string url)

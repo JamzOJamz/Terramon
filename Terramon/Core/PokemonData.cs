@@ -81,7 +81,17 @@ public class PokemonData
     }
 
     public ushort MaxHP
-        => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (int)(EVs.HP / 4d) + 100) * Level / 100d + 10);
+    {
+        get
+        {
+            var evFactor = Math.Truncate(EVs.HP / 4d);
+            var mainCalc = Math.Truncate(2d * Schema.BaseStats.HP + IVs.HP + evFactor + 100d);
+            var afterMult = mainCalc * Level;
+            var afterDiv = afterMult / 100d;
+            // Console.WriteLine($"BaseHP: {Schema.BaseStats.HP}, HPIV: {IVs.HP}, MainCalc: {mainCalc}, EVFactor: {evFactor}, AfterMult: {afterMult}, AfterDiv: {afterDiv}");
+            return (ushort)Math.Truncate(afterDiv + 10d);
+        }
+    }
 
     public ushort RegenHP { get; private set; }
 
@@ -166,7 +176,7 @@ public class PokemonData
         const float smallBonus = 4915f / 4096f;
 
         var b = defeated.Schema.BaseExp;
-        var e = _heldItem?.ModItem is LuckyEgg ? 1.5f : 1f;
+        var e = _heldItem.ModItem is LuckyEgg ? 1.5f : 1f;
         var f = Happiness >= 220 ? smallBonus : 1f;
         var L = defeated.Level;
         var Lp = Level;
@@ -298,7 +308,7 @@ public class PokemonData
         }
 
         // Check for Pokémon that evolve through held items
-        if (_heldItem?.ModItem is EvolutionaryItem item && item.Trigger == trigger)
+        if (_heldItem.ModItem is EvolutionaryItem item && item.Trigger == trigger)
             return item.GetEvolvedSpecies(this);
         return 0;
     }
@@ -405,7 +415,7 @@ public class PokemonData
     {
         var nickname = partyIndex.HasValue ? partyIndex.Value.ToString() : Nickname ?? Schema.Identifier;
         var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
-        var heldItem = _heldItem is null ? null : ItemID.Search.GetName(_heldItem.type);
+        var heldItem = _heldItem.IsAir ? null : ItemID.Search.GetName(_heldItem.type);
         var shiny = IsShiny ? "S" : null;
         string hiddenPowerType = null;
         string gmax = null;
@@ -437,7 +447,7 @@ public class PokemonData
     {
         if (setNickname)
             Nickname = packed.Nickname;
-        if (_heldItem?.type != packed.Item)
+        if (_heldItem.type != packed.Item)
             _heldItem = new(packed.Item);
         Gender = packed.Gender;
         Ball = packed.Ball;
@@ -487,6 +497,7 @@ public class PokemonData
                 _metDate = DateTime.Now,
                 _metLevel = level,
                 _worldName = Main.worldName,
+                _heldItem = new Item(),
                 PersonalityValue = (uint)Main.rand.Next(int.MinValue, int.MaxValue),
                 IVs = PokemonIVs.Random()
             };
@@ -558,7 +569,6 @@ public class PokemonData
         {
             ["id"] = ID,
             ["lvl"] = Level,
-            ["hp"] = _hp,
             ["exp"] = TotalEXP,
             ["ot"] = _ot,
             ["pv"] = PersonalityValue,
@@ -568,6 +578,9 @@ public class PokemonData
         };
 
         // Optional fields - only serialize if different from defaults
+        if (_hp != MaxHP)
+            tag["hp"] = _hp;
+
         if (Ball != BallID.PokeBall)
             tag["ball"] = (byte)Ball;
 
@@ -580,7 +593,7 @@ public class PokemonData
         if (!string.IsNullOrEmpty(Variant))
             tag["variant"] = Variant;
 
-        if (_heldItem != null)
+        if (!_heldItem.IsAir)
             tag["item"] = new ItemDefinition(_heldItem.type);
 
         if (_metDate.HasValue)
@@ -621,7 +634,6 @@ public class PokemonData
         };
 
         // Load optional fields
-        data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
 
         if (tag.TryGet<byte>("ball", out var ball))
             data.Ball = (BallID)ball;
@@ -637,6 +649,8 @@ public class PokemonData
 
         if (tag.TryGet<ItemDefinition>("item", out var itemDefinition))
             data._heldItem = new Item(itemDefinition.Type);
+        else
+            data._heldItem = new Item();
 
         if (tag.TryGet<long>("met", out var metDate))
             data._metDate = DateTime.FromBinary(metDate);
@@ -657,6 +671,9 @@ public class PokemonData
         data.Moves = tag.TryGet<TagCompound>("moves", out var moves)
             ? PokemonMoves.Load(moves)
             : data.GetInitialMoves();
+
+        // Set HP last to ensure proper MaxHP calculation
+        data._hp = tag.TryGet<ushort>("hp", out var hp) ? hp : data.MaxHP;
 
         // Set experience last to ensure proper level calculation
         var expToSet = tag.TryGet<int>("exp", out var exp)
@@ -733,7 +750,7 @@ public class PokemonData
         if ((compareFields & BitNickname) != 0 && Nickname != compareData.Nickname) dirtyFields |= BitNickname;
         if ((compareFields & BitVariant) != 0 && Variant != compareData.Variant) dirtyFields |= BitVariant;
         if ((compareFields & BitOT) != 0 && _ot != compareData._ot) dirtyFields |= BitOT;
-        if ((compareFields & BitHeldItem) != 0 && _heldItem?.type != compareData._heldItem?.type)
+        if ((compareFields & BitHeldItem) != 0 && _heldItem.type != compareData._heldItem.type)
             dirtyFields |= BitHeldItem;
         if ((compareFields & BitEXP) != 0 && TotalEXP != compareData.TotalEXP) dirtyFields |= BitEXP;
         if ((compareFields & BitHP) != 0 && _hp != compareData._hp) dirtyFields |= BitHP;
@@ -776,7 +793,7 @@ public class PokemonData
         if ((fields & BitNickname) != 0) writer.Write(Nickname ?? string.Empty);
         if ((fields & BitVariant) != 0) writer.Write(Variant ?? string.Empty);
         if ((fields & BitOT) != 0) writer.Write(_ot ?? string.Empty);
-        if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem?.type ?? 0);
+        if ((fields & BitHeldItem) != 0) writer.Write7BitEncodedInt(_heldItem.type);
         if ((fields & BitEXP) != 0) writer.Write(TotalEXP);
         if ((fields & BitHP) != 0) writer.Write7BitEncodedInt(_hp);
     }
@@ -801,7 +818,7 @@ public class PokemonData
         if ((fields & BitHeldItem) != 0)
         {
             var heldItem = reader.Read7BitEncodedInt();
-            _heldItem = heldItem == 0 ? null : new Item(heldItem);
+            _heldItem = heldItem == 0 ? new Item() : new Item(heldItem);
         }
 
         if ((fields & BitEXP) != 0) TotalEXP = reader.ReadInt32();

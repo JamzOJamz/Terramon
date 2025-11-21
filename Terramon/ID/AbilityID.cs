@@ -225,7 +225,7 @@ public enum AbilityID : ushort
     SoulHeart,
     TanglingHair,
     Receiver,
-    PowerofAlchemy,
+    PowerOfAlchemy,
     BeastBoost,
     RKSSystem,
     ElectricSurge,

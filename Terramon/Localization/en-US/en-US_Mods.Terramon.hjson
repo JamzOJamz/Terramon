@@ -265,6 +265,9 @@ GUI: {
 			'''
 		SlotTooltipPCMode: "[c/FFFFFF:In Party]"
 		SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
+		SlotTooltipUseItem: Use {0}
+		SlotTooltipDisplayHeldItem: It is holding {0}
+		SlotTooltipGiveHeldItem: Click to give {0}
 		CannotRemoveLastPokemon: Your party must have at least one Pokémon!
 	}
 

@@ -265,6 +265,9 @@ GUI: {
 			'''
 		SlotTooltipPCMode: "[c/FFFFFF:Im Team]"
 		SlotTooltipPCModeActive: "[c/FFFFFF:Im Team (Aktiv)]"
+		// SlotTooltipUseItem: Use {0}
+		// SlotTooltipDisplayHeldItem: It is holding {0}
+		// SlotTooltipGiveHeldItem: Click to give {0}
 		CannotRemoveLastPokemon: Dein Team muss mindestens ein Pokémon enthalten!
 	}
 

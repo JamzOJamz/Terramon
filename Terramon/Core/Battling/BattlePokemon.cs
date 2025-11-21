@@ -15,8 +15,7 @@ public struct BattlePokemon()
         readonly get => (ushort)(Data?.HeldItem.type ?? _heldItem);
         set
         {
-            if (Data != null)
-                Data.HeldItem = value == 0 ? null : new(value);
+            Data?.HeldItem = value == 0 ? new() : new(value);
             _heldItem = value;
         }
     }
@@ -140,7 +139,7 @@ public struct BattlePokemon()
             {
                 if (Data.MaxHP != value.MaxHP)
                     Terramon.Instance.Logger.Warn(
-                        $"Value of Max HP given by Pokémon Showdown and the value calculated by Terramon for Pokémon of species {Species} differ:\n" +
+                        $"Value of Max HP given by Pokémon Showdown and the value calculated by Terramon for {Terramon.DatabaseV2.GetPokemonName(Species)} differ:\n" +
                         $"Terramon: {Data.MaxHP}\n" +
                         $"Showdown: {value.MaxHP}");
             }
