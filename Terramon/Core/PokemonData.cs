@@ -81,17 +81,7 @@ public class PokemonData
     }
 
     public ushort MaxHP
-    {
-        get
-        {
-            var evFactor = Math.Truncate(EVs.HP / 4d);
-            var mainCalc = Math.Truncate(2d * Schema.BaseStats.HP + IVs.HP + evFactor + 100d);
-            var afterMult = mainCalc * Level;
-            var afterDiv = afterMult / 100d;
-            // Console.WriteLine($"BaseHP: {Schema.BaseStats.HP}, HPIV: {IVs.HP}, MainCalc: {mainCalc}, EVFactor: {evFactor}, AfterMult: {afterMult}, AfterDiv: {afterDiv}");
-            return (ushort)Math.Truncate(afterDiv + 10d);
-        }
-    }
+        => (ushort)((2 * Schema.BaseStats.HP + IVs.HP + (int)(EVs.HP / 4d) + 100) * Level / 100d + 10);
 
     public ushort RegenHP { get; private set; }
 
