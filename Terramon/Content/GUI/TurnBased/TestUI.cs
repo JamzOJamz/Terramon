@@ -38,7 +38,7 @@ public sealed class TestBattleUI : SmartUIState
             button.Left.Percent = xFactor * 0.5f;
             button.Top.Percent = yFactor * 0.5f;
             button.Width.Percent = button.Height.Percent = 0.5f;
-            button.OnLeftClick += (_, _) => SoundEngine.PlaySound(Decide);
+            button.OnLeftClick += (_, _) => SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
             button.OnLeftClick += i switch
             {
                 ButtonType.Fight => FightButton,
@@ -106,15 +106,6 @@ public sealed class TestBattleUI : SmartUIState
         Instance = this;
     }
 
-    private static SoundStyle Decide { get; } = new("Terramon/Sounds/battle_decide")
-        { Volume = 0.3f };
-
-    private static SoundStyle Cancel { get; } = new("Terramon/Sounds/battle_cancel")
-        { Volume = 0.3f };
-
-    private static SoundStyle Run { get; } = new("Terramon/Sounds/battle_run")
-        { Volume = 0.3f };
-
     public static TestBattleUI Instance { get; private set; }
     public static ParticipantPanel PlayerPanel { get; private set; }
     public static ParticipantPanel FoePanel { get; private set; }
@@ -144,14 +135,11 @@ public sealed class TestBattleUI : SmartUIState
     {
         if (_optionsPanel.Parent != null)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-            {
-                Volume = 0.25f
-            });
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
             return;
         }
 
-        SoundEngine.PlaySound(Cancel);
+        SoundEngine.PlaySound(in TerramonSoundID.BattleCancel);
         ChangePanel(_optionsPanel);
     }
 
@@ -254,7 +242,7 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void ClickMoveButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(Decide);
+        SoundEngine.PlaySound(in TerramonSoundID.BattleDecide);
         var move = (MoveReference)listeningElement.Children.First(e => e is MoveReference);
 
         if (BattleClient.LocalClient.MakeChoice(BattleChoice.Move, move.Move))
@@ -340,7 +328,7 @@ public sealed class TestBattleUI : SmartUIState
 
     private static void RunButton(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(Run);
+        SoundEngine.PlaySound(in TerramonSoundID.BattleRun);
 
         var forfeit = new ForfeitOrder()
         {

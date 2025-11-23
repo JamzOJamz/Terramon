@@ -1,3 +1,4 @@
+using Terramon.Helpers;
 using Terraria.Audio;
 
 namespace Terramon.Core.Systems.RealtimeCombatSystem;
@@ -15,11 +16,7 @@ public class RealtimeCombatGlobalNPC : GlobalNPC
             return;
 
         // Play a positive gain sound
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/realtime_exp_gain")
-        {
-            Volume = 0.5f,
-            PitchRange = (-0.1f, 0.1f)
-        }, activePet.Projectile.position);
+        SoundEngine.PlaySound(in TerramonSoundID.RealtimeEXPGain, activePet.Projectile.position);
 
         var expAmount = CalculateEXPGain(npc);
         var expGainColor = GetEXPGainCombatTextColor();
@@ -44,7 +41,7 @@ public class RealtimeCombatGlobalNPC : GlobalNPC
         // Display level-up message if applicable
         if (levelsGained > 0)
         {
-            SoundEngine.PlaySound(SoundID.Item20);
+            SoundEngine.PlaySound(in SoundID.Item20);
             CombatText.NewText(activePet.Projectile.getRect(), Color.White, "Level Up!", true);
         }
     }

@@ -1,3 +1,4 @@
+using Terramon.Helpers;
 using Terraria.Audio;
 
 namespace Terramon.Core.Systems.RealtimeCombatSystem;
@@ -13,11 +14,7 @@ public class RealtimeCombatPlayer : ModPlayer
             return;
 
         // Play a hit sound
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/hit_normal_damage")
-        {
-            Volume = 0.165f,
-            PitchVariance = 0.12f
-        }, activePet.Projectile.position);
+        SoundEngine.PlaySound(in TerramonSoundID.HitNormalDamage, activePet.Projectile.position);
 
         // Display text in chat
         var transferredDamage = info.SourceDamage / 3;

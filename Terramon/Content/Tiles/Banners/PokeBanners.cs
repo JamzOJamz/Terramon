@@ -140,7 +140,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, PokeBann
         var upperTier = Tier == BannerTier.None ? 4 : (byte)Tier;
         if (++VisualTier > (BannerTier)upperTier)
             VisualTier = BannerTier.None;
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
     }
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor,

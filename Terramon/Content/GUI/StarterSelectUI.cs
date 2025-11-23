@@ -5,6 +5,7 @@ using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Core.Loaders.UILoading;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -88,13 +89,13 @@ public sealed class StarterSelectUI : SmartUIState
         _showButton.OnMouseOver += (_, _) =>
         {
             if (_starterPanelShowing) return;
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
         };
         _showButton.OnLeftClick += (_, _) =>
         {
             if (_starterPanelShowing) return;
             _showButton.SetIsActive(false);
-            SoundEngine.PlaySound(SoundID.MenuOpen);
+            SoundEngine.PlaySound(in SoundID.MenuOpen);
             _starterPanelShowing = true;
         };
         _showButton.SetIsActive(false);
@@ -169,10 +170,7 @@ public sealed class StarterSelectUI : SmartUIState
         pageLeftButton.Top.Set(194, 0f);
         pageLeftButton.OnLeftClick += (_, _) =>
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-            {
-                Volume = 0.25f
-            });
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
         };
         _topContainer.Append(pageLeftButton);
 
@@ -188,10 +186,7 @@ public sealed class StarterSelectUI : SmartUIState
         pageRightButton.Top.Set(194, 0f);
         pageRightButton.OnLeftClick += (_, _) =>
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-            {
-                Volume = 0.25f
-            });
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
         };
         _topContainer.Append(pageRightButton);
 
@@ -214,7 +209,7 @@ public sealed class StarterSelectUI : SmartUIState
             if (!Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
             {
                 _showButton.SetIsActive(true);
-                SoundEngine.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(in SoundID.MenuClose);
                 _starterPanelShowing = false;
             }
             
@@ -294,7 +289,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
                 data.LocalizedName
             );
             Main.NewText(chosenMessage);
-            SoundEngine.PlaySound(SoundID.Coins);
+            SoundEngine.PlaySound(in SoundID.Coins);
             var ballItemType = ModContent.ItemType<PokeBallItem>();
             if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
                 ballItemType = ModContent.ItemType<MasterBallItem>();
@@ -365,7 +360,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
 
         if (mouseOverThis)
             if (!JustHovered)
-                SoundEngine.PlaySound(new SoundStyle("Terraria/Sounds/Item_32") { Volume = 0.3f });
+                SoundEngine.PlaySound(SoundID.Item32 with { Volume = 0.3f });
 
         base.Update(gameTime);
 
@@ -391,10 +386,9 @@ internal sealed class UIStarterBanner : UIHoverImageButton
                 {
                     _shakeCount = 0;
                     _hoverTextOverrideTimeLeft = 150;
-                    var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(_pokemon))
-                        { Volume = 0.15f };
+                    var cry = TerramonSoundID.GetCry(_pokemon);
                     SetHoverText(Terramon.DatabaseV2.GetLocalizedPokemonName(_pokemon) + GetRandomHoverText());
-                    SoundEngine.PlaySound(cry);
+                    SoundEngine.PlaySound(in cry);
                 }
 
                 _lastXDirection = xDistance > 0 ? 1 : -1;

@@ -118,15 +118,12 @@ public class TooltipOverlay : SmartUIState, ILoadable
                 {
                     if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
                     {
-                        SoundEngine.PlaySound(SoundID.Grab);
+                        SoundEngine.PlaySound(in SoundID.Grab);
                         ClearHeldPokemon();
                     }
                     else
                     {
-                        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-                        {
-                            Volume = 0.25f
-                        });
+                        SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
                     }
                 }
 
@@ -217,7 +214,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
 
             if (!_hoveringAnyPCTile && Main.mouseRight && Main.mouseRightRelease)
             {
-                SoundEngine.PlaySound(SoundID.Grab);
+                SoundEngine.PlaySound(in SoundID.Grab);
                 ClearHeldPokemon(true);
                 return;
             }
@@ -319,7 +316,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
             }
 
         if (!needsClear) return;
-        SoundEngine.PlaySound(SoundID.Grab);
+        SoundEngine.PlaySound(in SoundID.Grab);
         ClearHeldPokemon(true);
     }
 }

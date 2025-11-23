@@ -43,15 +43,6 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public static Asset<Texture2D> BallSlots { get; }
     public static Asset<Texture2D> PanelTexture { get; }
 
-    private static SoundStyle Ping { get; } = new("Terramon/Sounds/battle_tb_ping")
-        { Volume = 0.3f, MaxInstances = 0 };
-
-    private static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/battle_tb_empty")
-        { Volume = 0.3f, MaxInstances = 0 };
-
-    private static SoundStyle Start { get; } = new("Terramon/Sounds/battle_tb_start")
-        { Volume = 0.3f };
-
     /// <summary>
     ///     Use instead of <see cref="UIElement.HAlign" />
     /// </summary>
@@ -70,7 +61,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
         const float initialPosition = -42f;
         
         if (ticks == animationStart - 25)
-            SoundEngine.PlaySound(Start);
+            SoundEngine.PlaySound(in TerramonSoundID.BattleStart);
 
         if (!DrawBallSlots || ticks > animationEnd || ticks < animationStart)
             return;
@@ -80,7 +71,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
             int startTick = animationStart + (i * ticksPerSlot);
 
             if (ticks == startTick + ticksPerSlot - 1)
-                SoundEngine.PlaySound(TerramonPlayer.LocalPlayer.Party[i] != null ? Ping : PingEmpty);
+                SoundEngine.PlaySound(TerramonPlayer.LocalPlayer.Party[i] != null ? TerramonSoundID.BattlePing : TerramonSoundID.BattlePingEmpty);
 
             int endTick = startTick + ticksPerSlot;
             float targetXPosition = -8f + (i * 26f);

@@ -59,11 +59,11 @@ internal static class MenuSocialWidget
         {
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[4])
-                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(in SoundID.MenuTick);
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
             {
-                SoundEngine.PlaySound(SoundID.MenuOpen);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
 
                 var modConfigList = Interface.modConfigList;
@@ -92,7 +92,7 @@ internal static class MenuSocialWidget
         {
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[0])
-                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(in SoundID.MenuTick);
             /*if (_isDiscordClientRunning)
             {
                 FakeItem.SetDefaults(0, true);
@@ -108,7 +108,7 @@ internal static class MenuSocialWidget
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
             {
-                SoundEngine.PlaySound(SoundID.MenuOpen);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
 
                 if (_isDiscordClientRunning)
@@ -138,11 +138,11 @@ internal static class MenuSocialWidget
         {
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[1])
-                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(in SoundID.MenuTick);
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
             {
-                SoundEngine.PlaySound(SoundID.MenuOpen);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
 
                 Utils.OpenToURL(WikiURL);
@@ -170,11 +170,11 @@ internal static class MenuSocialWidget
         {
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[2])
-                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(in SoundID.MenuTick);
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
             {
-                SoundEngine.PlaySound(SoundID.MenuOpen);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
 
                 Utils.OpenToURL(YouTubeURL);
@@ -202,11 +202,11 @@ internal static class MenuSocialWidget
         {
             Main.LocalPlayer.mouseInterface = true;
             if (!LastHoveringInteractableText[3])
-                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(in SoundID.MenuTick);
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
             {
-                SoundEngine.PlaySound(SoundID.MenuOpen);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
                 Main.mouseLeftRelease = false;
 
                 Utils.OpenToURL(GitHubURL);

@@ -18,6 +18,8 @@ using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terramon.Helpers;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
@@ -271,14 +273,12 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (!shouldPlaySound) return;
         if (_activeSlot != -1)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
-                { Volume = 0.2525f });
+            SoundEngine.PlaySound(in TerramonSoundID.PkmnRecall);
+            SoundEngine.PlaySound(Party[_activeSlot].GetCry(0.2525f));
         }
         else
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
-                { Volume = 0.35f });
+            SoundEngine.PlaySound(in TerramonSoundID.PkballConsume);
         }
     }
 
@@ -372,6 +372,27 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         if (item.type == ModContent.ItemType<PokeBallItem>())
             _premierBonusCount++;
+    }
+
+    public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+    {
+        var inWater = !attempt.inLava && !attempt.inHoney;
+        if (!inWater)
+            return;
+        if (!Main.rand.NextBool(6))
+            return;
+
+        itemDrop = -1;
+        var dexID = Main.rand.Next(2) switch
+        {
+            0 => NationalDexID.Magikarp,
+            1 => NationalDexID.Goldeen,
+            _ => throw new Exception()
+        };
+
+        SoundEngine.PlaySound(TerramonSoundID.GetCry(dexID), sonarPosition);
+
+        npcSpawn = PokemonEntityLoader.IDToNPCType[dexID];
     }
 
     /// <summary>

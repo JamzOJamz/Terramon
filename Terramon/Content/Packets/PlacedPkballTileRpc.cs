@@ -34,7 +34,7 @@ public struct PlacedPkballTileRpc(Point16 tileCoords) : IEasyPacket
             var player = Main.player[sender.WhoAmI];
             player.itemRotation = 0;
             player.SetItemAnimation(15);
-            SoundEngine.PlaySound(SoundID.Dig, _tileCoords.ToWorldCoordinates());
+            SoundEngine.PlaySound(in SoundID.Dig, _tileCoords.ToWorldCoordinates());
         }
 
         handled = true;

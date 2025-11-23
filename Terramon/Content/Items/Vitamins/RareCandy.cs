@@ -39,7 +39,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
                 d.noGravity = true;
             }
 
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            SoundEngine.PlaySound(in SoundID.Item4, player.position);
             return 0;
         }
 
@@ -69,7 +69,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
 
         // Visual feedback effects
         CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
-        SoundEngine.PlaySound(SoundID.Item20);
+        SoundEngine.PlaySound(in SoundID.Item20);
         for (var j = 0; j < 40; j++)
         {
             var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
@@ -77,11 +77,11 @@ public class RareCandy : Vitamin, IPokemonDirectUse
             d.noGravity = true;
         }
 
-        SoundEngine.PlaySound(SoundID.Item4);
+        SoundEngine.PlaySound(in SoundID.Item4);
 
         if (evolutions.Count > 0) // Check if the Pokémon evolved
         {
-            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
             var modPlayer = player.Terramon();
             var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
             // Iterate through all evolutions

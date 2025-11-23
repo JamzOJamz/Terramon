@@ -91,7 +91,7 @@ public abstract class BasePkballTile : ModTile
                 MaxInteractDistance)) return false; // Avoid being able to trigger it from long range
         if (!TileUtils.TryGetTileEntityAs<BasePkballEntity>(i, j, out var e)) return false;
         
-        SoundEngine.PlaySound(SoundID.Mech);
+        SoundEngine.PlaySound(in SoundID.Mech);
         
         if (e.Open) //when pokeball is open, insert item + close
         {

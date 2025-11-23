@@ -344,13 +344,9 @@ public sealed class PartySidebarSlot : UICompositeImage
         if (ClientConfig.Instance.ReducedAudio)
             return;
 
-        var s = new SoundStyle
-        {
-            SoundPath = "Terramon/Sounds/button_smm",
-            Pitch = (float)_index / -15 + 0.6f,
-            Volume = 0.2925f
-        };
-        SoundEngine.PlaySound(s);
+        var s = TerramonSoundID.ButtonSmm;
+        s.Pitch += (float)_index / -15;
+        SoundEngine.PlaySound(in s);
     }
 
     public override void LeftMouseDown(UIMouseEvent evt)
@@ -371,9 +367,9 @@ public sealed class PartySidebarSlot : UICompositeImage
         else if (IsMouseHovering && Data != null)
         {
             var s = _isActiveSlot
-                ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.35f }
-                : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f };
-            SoundEngine.PlaySound(s);
+                ? TerramonSoundID.PkballConsume
+                : TerramonSoundID.PkmnRecall;
+            SoundEngine.PlaySound(in s);
 
             CancellationTokenSource token = null;
             if (!_isActiveSlot)
@@ -387,9 +383,8 @@ public sealed class PartySidebarSlot : UICompositeImage
 
                     Main.QueueMainThreadAction(() =>
                     {
-                        var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                            { Volume = 0.15f };
-                        SoundEngine.PlaySound(cry);
+                        var cry = Data.GetCry();
+                        SoundEngine.PlaySound(in cry);
                     });
                 }, token.Token);
             }
@@ -445,7 +440,7 @@ public sealed class PartySidebarSlot : UICompositeImage
     {
         if (Data == null || TerramonPlayer.LocalPlayer.NextFreePartyIndex() < 2) return;
         if (ClientConfig.Instance.ReducedAudio && _partyDisplay.Visible)
-            SoundEngine.PlaySound(SoundID.Tink);
+            SoundEngine.PlaySound(in SoundID.Tink);
         _dragging = false;
         _justEndedDragging = true;
         PartyDisplay.IsDraggingSlot = false;
@@ -528,7 +523,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         {
             if (Data == null || _isHovered) return;
             _isHovered = true;
-            if (!_justEndedDragging) SoundEngine.PlaySound(SoundID.MenuTick);
+            if (!_justEndedDragging) SoundEngine.PlaySound(in SoundID.MenuTick);
             UpdateSprite(true);
         }
         else

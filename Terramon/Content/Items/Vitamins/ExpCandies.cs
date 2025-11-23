@@ -31,7 +31,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
                 d.noGravity = true;
             }
 
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            SoundEngine.PlaySound(in SoundID.Item4, player.position);
             return 0;
         }
 
@@ -51,7 +51,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
         }
 
         // Visual feedback effects
-        SoundEngine.PlaySound(SoundID.Item4);
+        SoundEngine.PlaySound(in SoundID.Item4);
         for (var j = 0; j < 40; j++)
         {
             var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
@@ -64,7 +64,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
             Main.NewText(
                 Language.GetTextValue("Mods.Terramon.Misc.RareCandyUse", data.DisplayName, data.Level));
             CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
-            SoundEngine.PlaySound(SoundID.Item20);
+            SoundEngine.PlaySound(in SoundID.Item20);
             var queuedEvolution = data.GetQueuedEvolution(EvolutionTrigger.LevelUp);
             if (queuedEvolution != 0)
             {
@@ -75,7 +75,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
                         new Color(50, 255, 130));
                     return amount;
                 }
-                TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+                TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
                 var modPlayer = player.Terramon();
                 var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
                 while (queuedEvolution != 0)

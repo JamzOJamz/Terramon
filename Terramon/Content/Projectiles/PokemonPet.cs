@@ -453,7 +453,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             {
                 _activeAttackTimer = 16;
                 _attackCooldown = 120;
-                SoundEngine.PlaySound(new SoundStyle("Terraria/Sounds/Item_7") { Volume = 1f });
+                SoundEngine.PlaySound(in SoundID.Item7);
             }
             else if (_activeAttackTimer == 8)
             {
@@ -518,9 +518,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             _cryTimer--;
             if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                    { Volume = 0.15f };
-                SoundEngine.PlaySound(cry, Projectile.position);
+                SoundEngine.PlaySound(Data.GetCry(), Projectile.position);
             }
         }
 

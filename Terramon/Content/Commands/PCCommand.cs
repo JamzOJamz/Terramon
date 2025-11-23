@@ -28,7 +28,7 @@ public class PCCommand : DebugCommand
         // No need to open the PC if the player is already interacting with a PC
         if (modPlayer.ActivePCTileEntityID != -1) return;
 
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
 
         // If the player is not in the inventory, open it
         Main.playerInventory = true;
