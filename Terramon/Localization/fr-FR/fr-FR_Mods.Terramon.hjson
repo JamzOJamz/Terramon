@@ -723,6 +723,61 @@ Items: {
 			It's a strange, stretchy charm that encourages growth
 			''' */
 	}
+
+	Nugget: {
+		// DisplayName: Nugget
+		// Tooltip: ""
+	}
+
+	BigNugget: {
+		// DisplayName: Big Nugget
+		// Tooltip: ""
+	}
+
+	TinyMushroom: {
+		// DisplayName: Tiny Mushroom
+		// Tooltip: ""
+	}
+
+	BigMushroom: {
+		// DisplayName: Big Mushroom
+		// Tooltip: ""
+	}
+
+	Pearl: {
+		// DisplayName: Pearl
+		// Tooltip: ""
+	}
+
+	BigPearl: {
+		// DisplayName: Big Pearl
+		// Tooltip: ""
+	}
+
+	SilverLeaf: {
+		// DisplayName: Silver Leaf
+		// Tooltip: ""
+	}
+
+	GoldLeaf: {
+		// DisplayName: Gold Leaf
+		// Tooltip: ""
+	}
+
+	RelicCopper: {
+		// DisplayName: Relic Copper
+		// Tooltip: ""
+	}
+
+	RelicSilver: {
+		// DisplayName: Relic Silver
+		// Tooltip: ""
+	}
+
+	RelicGold: {
+		// DisplayName: Relic Gold
+		// Tooltip: ""
+	}
 }
 
 MegaStoneNames: {

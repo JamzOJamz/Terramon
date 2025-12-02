@@ -379,7 +379,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         var inWater = !attempt.inLava && !attempt.inHoney;
         if (!inWater)
             return;
-        if (!Main.rand.NextBool(6))
+        if (!Main.rand.NextBool(8))
             return;
 
         itemDrop = -1;
