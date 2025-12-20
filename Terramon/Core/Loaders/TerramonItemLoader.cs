@@ -91,6 +91,7 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add vitamins
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Vitamins)
+            .Add<RareSweetfish>()
             .Add<RareCandy>()
             .AddAllOfType<ExpCandy>();
 

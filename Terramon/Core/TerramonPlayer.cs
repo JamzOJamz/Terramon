@@ -9,6 +9,7 @@ using Terramon.Content.GUI;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Items.Valuables;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
@@ -25,6 +26,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Terramon.Core;
 
@@ -376,23 +378,32 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
     {
-        var inWater = !attempt.inLava && !attempt.inHoney;
-        if (!inWater)
-            return;
-        if (!Main.rand.NextBool(8))
+        if (attempt.inLava || attempt.inHoney)
             return;
 
-        itemDrop = -1;
-        var dexID = Main.rand.Next(2) switch
+        Console.WriteLine(ValuableItem.Pool.ToString(i => Lang.GetItemName(i).Value));
+
+        //if (!Main.rand.NextBool(8))
+        //    return;
+
+        if (Main.rand.NextBool(3)) // pokemon are less likely
         {
-            0 => NationalDexID.Magikarp,
-            1 => NationalDexID.Goldeen,
-            _ => throw new Exception()
-        };
+            itemDrop = -1;
+            var dexID = Main.rand.Next(2) switch
+            {
+                0 => NationalDexID.Magikarp,
+                1 => NationalDexID.Goldeen,
+                _ => NationalDexID.Missingno
+            };
 
-        SoundEngine.PlaySound(TerramonSoundID.GetCry(dexID), sonarPosition);
+            SoundEngine.PlaySound(TerramonSoundID.GetCry(dexID), sonarPosition);
 
-        npcSpawn = PokemonEntityLoader.IDToNPCType[dexID];
+            npcSpawn = PokemonEntityLoader.IDToNPCType[dexID];
+        }
+        else // items are more likely
+        {
+            itemDrop = ValuableItem.Pool.Get();
+        }
     }
 
     /// <summary>

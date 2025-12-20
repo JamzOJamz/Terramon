@@ -1,15 +1,21 @@
-﻿using Terraria.Localization;
+﻿using Terramon.Helpers;
+using Terraria.Localization;
 
 namespace Terramon.Content.Items.Valuables;
 
-public abstract class ValuableItem(int pokeDollars) : TerramonItem
+public abstract class ValuableItem(ushort pokeDollars) : TerramonItem
 {
+    public const int HighestValue = 30000;
+    public static AliasRandom Pool { get; } = new();
+
     public override string Texture => "Terramon/Assets/Items/Valuables/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 50;
         TerramonItemAPI.Sets.HeldItem.Add(Type);
+        var factor = 1d - (pokeDollars / (double)HighestValue);
+        Pool.Add(Type, factor);
     }
 
     public override void SetDefaults()

@@ -1,4 +1,5 @@
 using Terramon.Content.Configs;
+using Terramon.Content.Items.Valuables;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -111,7 +112,16 @@ public class RareCandy : Vitamin, IPokemonDirectUse
     }
 }
 
-public class RareCandyRarity : ModRarity
+public sealed class RareSweetfish : RareCandy
+{
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        ValuableItem.Pool.Add((ushort)Type, 250);
+    }
+}
+
+public sealed class RareCandyRarity : ModRarity
 {
     public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x6299E5);
 }
