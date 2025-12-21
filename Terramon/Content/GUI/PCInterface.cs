@@ -112,6 +112,8 @@ public class PCInterface : SmartUIState
 
     public static int DisplayedBoxIndex { get; private set; }
 
+    public static bool SilenceCloseSound { get; set; }
+
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
@@ -197,13 +199,14 @@ public class PCInterface : SmartUIState
         _renameBoxButton.OnLeftClick += (_, _) =>
         {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            
+
             if (!_inColorPickerMode)
             {
                 if (UILinkPointNavigator.InUse)
                 {
                     Main.clrInput();
-                    UIVirtualKeyboard uIVirtualKeyboard = new(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
+                    UIVirtualKeyboard uIVirtualKeyboard = new(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"),
+                        _boxNameText.Text,
                         text =>
                         {
                             SetNameForCurrentBox(text);
@@ -218,14 +221,14 @@ public class PCInterface : SmartUIState
                             Main.InGameUI.SetState(null);
                             Main.inFancyUI = false;
                         });
-                
+
                     uIVirtualKeyboard.SetMaxInputLength(27);
                     Main.InGameUI.SetState(uIVirtualKeyboard);
                     UILinkPointNavigator.GoToDefaultPage(1);
                     Main.inFancyUI = true;
                     return;
                 }
-                
+
                 // Rename the box
                 if (!_container.HasChild(_cancelRenameButton))
                 {
@@ -366,7 +369,7 @@ public class PCInterface : SmartUIState
             UILinkPointNavigator.ChangePoint(TerramonPointID.PC0);
             _hasChangedPage = true;
         }
-            
+
         if (_inRenameMode)
         {
             _boxNameText.SetText(_textInput.CurrentValue);
@@ -423,10 +426,7 @@ public class PCInterface : SmartUIState
 
         //mark set page to false (so gamepad page can be correctly set)
         _hasChangedPage = false;
-
     }
-    
-    public static bool SilenceCloseSound { get; set; }
 
     /// <summary>
     ///     Called when the PC interface is closed.
@@ -450,7 +450,8 @@ public class PCInterface : SmartUIState
             {
                 Volume = 0.54f
             });
-        } else
+        }
+        else
         {
             SilenceCloseSound = false;
         }
@@ -632,6 +633,23 @@ internal sealed class CustomPCItemSlot : UIImage
         }
         else if (Main.mouseItem.IsAir)
         {
+            // Special case: quick withdraw Pokémon to party
+            if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
+            {
+                var modPlayer = TerramonPlayer.LocalPlayer;
+                var nextFreePartySlot = modPlayer.NextFreePartyIndex();
+                if (nextFreePartySlot < 6)
+                {
+                    modPlayer.Party[nextFreePartySlot] = data;
+                    SoundEngine.PlaySound(SoundID.Grab);
+                    SetData(null);
+                    SetImage(PCSlotBgEmptyTexture);
+                    _minispriteImage?.Remove();
+                    if (PCInterface.Active) PCInterface.PopulateCustomSlots(_box);
+                    return;
+                }
+            }
+
             // Take or swap the Pokémon from the slot if slot is not empty and player is not holding an item
             SoundEngine.PlaySound(SoundID.Grab);
             TooltipOverlay.SetHeldPokemon(data, TooltipOverlay.HeldPokemonSource.PC, d =>
@@ -680,6 +698,7 @@ internal sealed class CustomPCItemSlot : UIImage
     public override void Draw(SpriteBatch spriteBatch)
     {
         var data = Data;
+        var player = Main.LocalPlayer;
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
         if (IsMouseHovering)
         {
@@ -687,7 +706,7 @@ internal sealed class CustomPCItemSlot : UIImage
             {
                 if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
                 {
-                    HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
+                    HubUI.OpenToPokemon(data.ID, data.IsShiny);
                     return;
                 }
 
@@ -695,6 +714,11 @@ internal sealed class CustomPCItemSlot : UIImage
                 TooltipOverlay.SetTooltip(_tooltipText);
                 TooltipOverlay.SetIcon(BallAssets.GetBallIcon(data.Ball));
                 if (data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
+
+                // Change cursor icon if in PC mode and shift held (for quick deposit)
+                if ((Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift)) &&
+                    !player.Terramon().IsPartyFull())
+                    Main.cursorOverride = CursorOverrideID.ChestToInventory;
             }
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -885,7 +909,8 @@ internal sealed class PCColorPicker : UIContainer
 
     public static Color GetColor()
     {
-        return ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z);
+        return ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y,
+            TerramonPlayer.LocalPlayer.ColorPickerHSL.Z);
     }
 
     public void SetColor(Color color, Color defaultColor)
@@ -1047,8 +1072,10 @@ internal sealed class PCColorPicker : UIContainer
         return id switch
         {
             HSLSliderId.Hue => ScaledHslToRgb(pointAt, 1f, 0.5f),
-            HSLSliderId.Saturation => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, pointAt, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z),
-            HSLSliderId.Luminance => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, pointAt),
+            HSLSliderId.Saturation => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, pointAt,
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Z),
+            HSLSliderId.Luminance => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X,
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, pointAt),
             _ => Color.White
         };
     }

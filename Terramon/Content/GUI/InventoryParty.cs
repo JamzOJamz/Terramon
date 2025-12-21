@@ -414,13 +414,61 @@ internal sealed class CustomPartyItemSlot : UIImage
             if (!Main.mouseItem.IsAir)
                 return;
 
-            // Fix active slots!
             var modPlayer = TerramonPlayer.LocalPlayer;
-            var activePokemon = modPlayer.GetActivePokemon();
-            if (heldPokemon != null && heldPokemon == activePokemon)
-                modPlayer.ActiveSlot = Index;
-            else if (heldPokemon != null && Data == activePokemon)
-                modPlayer.ActiveSlot = _initialSlot?.Index ?? -1;
+
+            // Special case: quick deposit Pokémon from party to PC
+            if (!_pretendToBeEmptyState && InventoryParty.InPCMode)
+            {
+                var holdingAllowed = heldPokemon == null || heldSource == TooltipOverlay.HeldPokemonSource.PC;
+                if (holdingAllowed &&
+                    (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift)))
+                {
+                    var box = modPlayer.GetPC().Boxes[PCInterface.DisplayedBoxIndex];
+
+                    // Check for free space in the box starting from the front
+                    var freeSpaceIndex = -1;
+                    for (var i = 0; i < PCBox.Capacity; i++)
+                        if (box[i] == null)
+                        {
+                            freeSpaceIndex = i;
+                            break;
+                        }
+
+                    if (freeSpaceIndex == -1)
+                        return;
+
+                    box[freeSpaceIndex] = Data;
+                    if (PCInterface.Active) PCInterface.PopulateCustomSlots(box);
+
+                    // Remove from party
+                    var activeMon = modPlayer.GetActivePokemon();
+                    modPlayer.Party[Index] = null;
+                    // Fix any gaps in the party array by cascading the Pokémon down
+                    for (var i = 0; i < modPlayer.Party.Length - 1; i++)
+                        if (modPlayer.Party[i] == null)
+                            for (var j = i; j < modPlayer.Party.Length - 1; j++)
+                                modPlayer.Party[j] = modPlayer.Party[j + 1];
+                    if (modPlayer.Party[4] == modPlayer.Party[5])
+                        modPlayer.Party[5] = null;
+                    if (activeMon != null)
+                        modPlayer.ActiveSlot = Array.IndexOf(modPlayer.Party, activeMon);
+
+                    SoundEngine.PlaySound(SoundID.Grab);
+                    SetData(modPlayer.Party[Index]);
+                    _pretendToBeEmptyState = false;
+                    return;
+                }
+            }
+
+            // Fix active slots!
+            if (heldPokemon != null)
+            {
+                var activePokemon = modPlayer.GetActivePokemon();
+                if (heldPokemon == activePokemon)
+                    modPlayer.ActiveSlot = Index;
+                else if (Data == activePokemon)
+                    modPlayer.ActiveSlot = _initialSlot?.Index ?? -1;
+            }
 
             if (heldPokemon == null && TerramonPlayer.LocalPlayer.Party.Count(d => d != null) == 1)
             {
@@ -658,8 +706,10 @@ internal sealed class CustomPartyItemSlot : UIImage
 
     public override void Draw(SpriteBatch spriteBatch)
     {
+        var player = Main.LocalPlayer;
+
         if (ContainsPoint(Main.MouseScreen))
-            Main.LocalPlayer.mouseInterface = true;
+            player.mouseInterface = true;
 
         if (IsMouseHovering)
         {
@@ -678,6 +728,17 @@ internal sealed class CustomPartyItemSlot : UIImage
 
                     // Draw tooltip overlay
                     ShowTooltipOverlay();
+
+                    // Change cursor icon if in PC mode and shift held (for quick deposit)
+                    if (!_pretendToBeEmptyState && InventoryParty.InPCMode)
+                    {
+                        var heldPokemon = TooltipOverlay.GetHeldPokemon(out var source);
+                        var holdingAllowed = heldPokemon == null || source == TooltipOverlay.HeldPokemonSource.PC;
+                        if (holdingAllowed && (Main.keyState.IsKeyDown(Keys.LeftShift) ||
+                                               Main.keyState.IsKeyDown(Keys.RightShift)) &&
+                            !player.Terramon().IsPCBoxFull(PCInterface.DisplayedBoxIndex))
+                            Main.cursorOverride = CursorOverrideID.InventoryToChest;
+                    }
                 }
             }
             else if (Data != null)
