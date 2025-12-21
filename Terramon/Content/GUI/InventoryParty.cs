@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
@@ -8,7 +9,6 @@ using Terramon.Core.Systems;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
-using Terraria.GameContent.UI.Chat;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -165,7 +165,7 @@ public class InventoryParty : SmartUIState
             tween.Kill();
     }
 
-    private void ToggleSlots(UIMouseEvent evt, UIElement listeningelement)
+    private void ToggleSlots(UIMouseEvent evt, UIElement listeningElement)
     {
         if (_toggleTweens[1] is { IsRunning: true }) return;
 
@@ -217,7 +217,7 @@ public class InventoryParty : SmartUIState
         //UILinkPointNavigator.ChangePoint(9607);
     }
 
-    private static void ToggleSlotsWhenDisabled(UIMouseEvent evt, UIElement listeningelement)
+    private static void ToggleSlotsWhenDisabled(UIMouseEvent evt, UIElement listeningElement)
     {
         SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
         {
@@ -314,8 +314,8 @@ internal sealed class CustomPartyItemSlot : UIImage
     private static CustomPartyItemSlot _initialSlot;
 
     public readonly int Index;
-    private UIImage _minispriteImage;
     private UIImage _heldItemIcon;
+    private UIImage _minispriteImage;
     private bool _pretendToBeEmptyState;
     private string _tooltipName;
     private string _tooltipText;
@@ -344,25 +344,7 @@ internal sealed class CustomPartyItemSlot : UIImage
     public override void LeftClick(UIMouseEvent evt)
     {
         base.LeftClick(evt);
-
-        if (Data == null) return;
-
-        var item = Main.mouseItem;
-
-        if (item.ModItem is IPokemonDirectUse directUseItem)
-            UseItem(directUseItem);
-    }
-
-    public override void RightClick(UIMouseEvent evt)
-    {
-        base.RightClick(evt);
-
-        if (Data == null) return;
-
-        var item = Main.mouseItem;
-
-        if (item.ModItem is IPokemonDirectUse directUseItem)
-            UseItem(directUseItem, true);
+        HandleLeftClick(false);
     }
 
     private void HeldItemInteraction(Item item)
@@ -370,6 +352,13 @@ internal sealed class CustomPartyItemSlot : UIImage
         var heldItem = Data.HeldItem;
         if (item.IsAir && heldItem.IsAir)
             return;
+
+        if (item.stack > 1)
+        {
+            Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotGiveItemStack"),
+                TerramonCommand.ChatColorYellow);
+            return;
+        }
 
         Data.HeldItem = item;
 
@@ -380,7 +369,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         SetData(Data);
     }
 
-    private void UseItem(IPokemonDirectUse item, bool rightClick = false)
+    private void UseItem(IPokemonDirectUse item, bool tryUseAll = false)
     {
         if (!item.AffectedByPokemonDirectUse(Data))
         {
@@ -389,37 +378,40 @@ internal sealed class CustomPartyItemSlot : UIImage
             return;
         }
 
-        var consume = item.PokemonDirectUse(Main.LocalPlayer, Data, rightClick ? Main.mouseItem.stack : 1);
+        var consume = item.PokemonDirectUse(Main.LocalPlayer, Data, tryUseAll ? Main.mouseItem.stack : 1);
         Main.mouseItem.stack -= consume;
         if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
     }
 
-    private void RightClickPCMode()
-    {
-        if (Data == null) return;
-
-        var item = Main.mouseItem;
-        if (item.IsAir || TerramonItemAPI.Sets.HeldItem.Contains(item.type))
-            HeldItemInteraction(item);
-    }
-
-    private void LeftClickPCMode()
+    /// <summary>
+    ///     Handles left mouse button clicks, both immediate (on mouse down) and delayed (on mouse up).
+    /// </summary>
+    /// <param name="immediate">
+    ///     True if the click is immediate (on mouse down), false if it's delayed (on mouse up).
+    /// </param>
+    private void HandleLeftClick(bool immediate)
     {
         var heldPokemon = TooltipOverlay.GetHeldPokemon(out var heldSource);
-        //if (heldPokemon != null && heldPokemonSource != TooltipOverlay.HeldPokemonSource.Party) return; // Only allow Party related operations for now
-
-        //Main.NewText($"_initialSlot: {_initialSlot?.Index}");
 
         if (Data != null)
+            WithData();
+        else
+            WithoutData();
+
+        return;
+
+        void WithData()
         {
-            // If player is holding a held item, handle the interaction and return
-            if (TerramonItemAPI.Sets.HeldItem.Contains(Main.mouseItem.type))
+            if (!immediate)
             {
-                HeldItemInteraction(Main.mouseItem);
+                var mouseItem = Main.mouseItem;
+                if (mouseItem.ModItem is IPokemonDirectUse directUseItem)
+                    UseItem(directUseItem,
+                        tryUseAll: Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift));
                 return;
             }
-            // Also return if the player is holding something
-            else if (!Main.mouseItem.IsAir)
+
+            if (!Main.mouseItem.IsAir)
                 return;
 
             // Fix active slots!
@@ -454,7 +446,7 @@ internal sealed class CustomPartyItemSlot : UIImage
             }
 
             if (heldPokemon != null && heldSource == TooltipOverlay.HeldPokemonSource.PC)
-                // Special case for setting held Pokemon - treat like PC mon
+                // Special case for setting held Pokémon - treat like PC mon
                 TooltipOverlay.SetHeldPokemon(Data, TooltipOverlay.HeldPokemonSource.PC, d =>
                 {
                     var box = modPlayer.GetPC().Boxes[PCInterface.DisplayedBoxIndex];
@@ -543,31 +535,43 @@ internal sealed class CustomPartyItemSlot : UIImage
                 SetData(heldPokemon);
             }
         }
-        else if (!Main.mouseItem.IsAir)
+
+        // Tries to place a Pokémon held under the mouse into this empty slot
+        void WithoutData()
         {
-            if (heldPokemon == null) return;
+            if (!immediate || heldPokemon == null) return;
+
+            // Clear the held Pokémon
             SoundEngine.PlaySound(SoundID.Grab);
-            var modPlayer = TerramonPlayer.LocalPlayer;
-            var activePokemon = modPlayer.GetActivePokemon();
             TooltipOverlay.ClearHeldPokemon();
-            // Find lowest empty slot searching from the current index - 1
+
+            var modPlayer = TerramonPlayer.LocalPlayer;
+
+            // Find the lowest empty slot searching from the current index - 1
             var emptySlot = Index;
             for (var i = Index - 1; i >= 0; i--)
-                if (TerramonPlayer.LocalPlayer.Party[i] == null)
+                if (modPlayer.Party[i] == null)
                     emptySlot = i;
                 else
                     break;
+
+            // Place the held Pokémon into the found empty slot
             modPlayer.Party[emptySlot] = heldPokemon;
-            // Fix any gaps in the party array by cascading the Pokémon down
-            for (var i = 0; i < modPlayer.Party.Length - 1; i++)
-                if (modPlayer.Party[i] == null)
-                    for (var j = i; j < modPlayer.Party.Length - 1; j++)
-                        modPlayer.Party[j] = modPlayer.Party[j + 1];
-            if (modPlayer.Party[4] == modPlayer.Party[5])
-                modPlayer.Party[5] = null;
-            if (activePokemon != null)
-                modPlayer.ActiveSlot = Array.IndexOf(modPlayer.Party, activePokemon);
         }
+    }
+
+    /// <summary>
+    ///     Handles right mouse button click immediately when the button is pressed down.
+    ///     This fires on mouse down rather than on mouse up (like traditional UI events),
+    ///     to correctly emulate vanilla item slot mouse interaction behaviour.
+    /// </summary>
+    private void HandleRightClickImmediate()
+    {
+        if (Data == null) return;
+
+        var item = Main.mouseItem;
+        if (item.IsAir || TerramonItemAPI.Sets.HeldItem.Contains(item.type))
+            HeldItemInteraction(item);
     }
 
     public void SetData(PokemonData data)
@@ -603,7 +607,8 @@ internal sealed class CustomPartyItemSlot : UIImage
             _tooltipName = Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotName", data.DisplayName, data.Level);
             _minispriteImage = new UIImage(data.GetMiniSprite())
             {
-                ImageScale = 0.7f
+                ImageScale = 0.7f,
+                IgnoresMouseInteraction = true
             };
             _minispriteImage.Top.Set(-6, 0f);
             _minispriteImage.Left.Set(-14, 0f);
@@ -612,8 +617,10 @@ internal sealed class CustomPartyItemSlot : UIImage
 
             if (!data.HeldItem.IsAir)
             {
-                _heldItemIcon ??= new(PartySlotHeldItemTexture);
-
+                _heldItemIcon ??= new UIImage(PartySlotHeldItemTexture)
+                {
+                    IgnoresMouseInteraction = true
+                };
                 _heldItemIcon.Left.Pixels = _heldItemIcon.Top.Pixels = 36f;
                 Append(_heldItemIcon);
             }
@@ -651,64 +658,103 @@ internal sealed class CustomPartyItemSlot : UIImage
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
+        if (ContainsPoint(Main.MouseScreen))
+            Main.LocalPlayer.mouseInterface = true;
+
         if (IsMouseHovering)
         {
-            if (Main.mouseItem.IsAir)
+            var mouseItem = Main.mouseItem;
+
+            if (mouseItem.IsAir)
             {
                 if (Data != null)
                 {
+                    // Handle opening Pokédex entry
                     if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
                     {
                         HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
                         return;
                     }
 
-                    TooltipOverlay.SetName(_tooltipName);
-                    var tooltip = _tooltipText;
-                    if (InventoryParty.InPCMode)
-                    {
-                        var key = Data == TerramonPlayer.LocalPlayer.GetActivePokemon()
-                            ? "Mods.Terramon.GUI.Inventory.SlotTooltipPCModeActive"
-                            : "Mods.Terramon.GUI.Inventory.SlotTooltipPCMode";
-                        tooltip += '\n' + Language.GetTextValue(key);
-                    }
-
-                    TooltipOverlay.SetTooltip(tooltip);
-                    TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
-                    if (Data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
+                    // Draw tooltip overlay
+                    ShowTooltipOverlay();
                 }
             }
             else if (Data != null)
             {
-                if (Main.mouseItem.ModItem is IPokemonDirectUse directUseItem &&
-                     directUseItem.AffectedByPokemonDirectUse(Data))
-                {
-                    Main.instance.MouseText(
-                        Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipUseItem", Main.mouseItem.PrettyName(false)));
-                }
-                else if (TerramonItemAPI.Sets.HeldItem.Contains(Main.mouseItem.type))
-                {
-                    string text = string.Empty;
-                    var alreadyHoldingItem = !Data.HeldItem.IsAir;
-                    if (alreadyHoldingItem)
-                        text += Language.GetTextValue(
-                            "Mods.Terramon.GUI.Inventory.SlotTooltipDisplayHeldItem",
-                            Data.HeldItem.PrettyName()) + '\n';
-                    text += Language.GetTextValue(
-                        "Mods.Terramon.GUI.Inventory.SlotTooltipGiveHeldItem",
-                        Main.mouseItem.PrettyName(alreadyHoldingItem));
-                    Main.instance.MouseText(text);
-                }
+                var hoverText = GetHoverTextForMouseItem(mouseItem);
+                if (!string.IsNullOrEmpty(hoverText))
+                    Main.instance.MouseText(hoverText);
             }
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
-                LeftClickPCMode();
+                HandleLeftClick(true);
 
             if (Main.mouseRight && Main.mouseRightRelease)
-                RightClickPCMode();
+                HandleRightClickImmediate();
         }
 
         base.Draw(spriteBatch);
+    }
+
+    private void ShowTooltipOverlay()
+    {
+        TooltipOverlay.SetName(_tooltipName);
+
+        var tooltip = _tooltipText;
+        if (InventoryParty.InPCMode)
+        {
+            var key = Data == TerramonPlayer.LocalPlayer.GetActivePokemon()
+                ? "Mods.Terramon.GUI.Inventory.SlotTooltipPCModeActive"
+                : "Mods.Terramon.GUI.Inventory.SlotTooltipPCMode";
+            tooltip += '\n' + Language.GetTextValue(key);
+        }
+
+        TooltipOverlay.SetTooltip(tooltip);
+        TooltipOverlay.SetIcon(BallAssets.GetBallIcon(Data.Ball));
+        if (Data.IsShiny)
+            TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
+    }
+
+    private string GetHoverTextForMouseItem(Item mouseItem)
+    {
+        var canUseDirect = mouseItem.ModItem is IPokemonDirectUse directUseItem &&
+                           directUseItem.AffectedByPokemonDirectUse(Data);
+        var canHoldItem = TerramonItemAPI.Sets.HeldItem.Contains(mouseItem.type);
+
+        if (!canUseDirect && !canHoldItem)
+            return string.Empty;
+
+        var text = string.Empty;
+        var alreadyHoldingItem = !Data.HeldItem.IsAir;
+
+        // Direct use item text
+        if (canUseDirect)
+        {
+            var shiftHeld = Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift);
+            var itemName = mouseItem.PrettyName(false, stack: shiftHeld);
+            text += Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipUseItem", itemName) + "\n";
+        }
+
+        // Held item text
+        if (canHoldItem)
+        {
+            if (alreadyHoldingItem)
+            {
+                if (!canUseDirect)
+                    text += Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipSwapHeldItemSpecify",
+                        mouseItem.PrettyName(false), Data.HeldItem.PrettyName()) + '\n';
+                else
+                    text += Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipSwapHeldItem",
+                        Data.HeldItem.PrettyName()) + '\n';
+            }
+            else
+            {
+                var itemName = canUseDirect ? string.Empty : mouseItem.PrettyName(false);
+                text += Language.GetTextValue("Mods.Terramon.GUI.Inventory.SlotTooltipGiveHeldItem", itemName);
+            }
+        }
+
+        return text;
     }
 }

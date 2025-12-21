@@ -10,6 +10,7 @@ public class Potion : BasePotionItem
 
     public override void SetStaticDefaults()
     {
+        base.SetStaticDefaults();
         Item.ResearchUnlockCount = 20;
     }
 }

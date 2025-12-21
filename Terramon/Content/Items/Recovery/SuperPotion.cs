@@ -10,6 +10,7 @@ public class SuperPotion : BasePotionItem
 
     public override void SetStaticDefaults()
     {
+        base.SetStaticDefaults();
         Item.ResearchUnlockCount = 15;
     }
 }

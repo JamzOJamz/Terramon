@@ -276,7 +276,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         _levelText.Left.Set(7, 0);
         _levelText.Top.Set(10, 0);
         Append(_levelText);
-        _heldItemBox = new(this);
+        _heldItemBox = new PartyHeldItemSlot(this);
         _heldItemBox.Top.Pixels = 24f;
         _heldItemBox.Left.Pixels = 10f;
         _heldItemBox.Width.Pixels = _heldItemBox.Height.Pixels = 24f;

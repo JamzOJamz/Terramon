@@ -28,8 +28,9 @@ internal class MasterBallItem : BasePkballItem
 
     public override void SetStaticDefaults()
     {
-        TerramonItemAPI.Sets.Unobtainable.Add(Type);
+        base.SetStaticDefaults();
         Item.ResearchUnlockCount = 1;
+        TerramonItemAPI.Sets.Unobtainable.Add(Type);
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale,

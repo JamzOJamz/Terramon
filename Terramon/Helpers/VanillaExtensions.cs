@@ -80,14 +80,14 @@ public static class VanillaExtensions
             'N' or null => Gender.Unspecified,
             _ => throw new ArgumentOutOfRangeException(nameof(c), c, null)
         };
-    
+
     public static ushort Terramon(this IdDictionary search, string name)
         => (ushort)search.GetId($"{nameof(Terramon)}/{name}");
 
     /// <summary>
     ///     Returns the item name normalized, prefixed with an item chat tag, and with the color of its rarity.
     /// </summary>
-    public static string PrettyName(this Item i, bool itemIcon = true)
+    public static string PrettyName(this Item i, bool itemIcon = true, bool stack = false)
     {
         var oldStack = i.stack;
         i.stack = 1;
@@ -100,10 +100,12 @@ public static class VanillaExtensions
             _ => ItemRarity._rarities.GetValueOrDefault(i.rare, Color.White)
         };
 
-        var result = (itemIcon ? ItemTagHandler.GenerateTag(i) + ' ' : string.Empty) + $"[c/{rarityColor.ToHexString()}:{i.Name}]";
+        var result = (itemIcon ? ItemTagHandler.GenerateTag(i) + ' ' : string.Empty) +
+                     $"[c/{rarityColor.ToHexString()}:{i.Name}{(stack ? $" ({oldStack})" : "")}]";
         i.stack = oldStack;
         return result;
     }
+
     public static void Write(this BinaryWriter writer, IBattleProvider participant)
     {
         var type = participant?.ProviderType ?? BattleProviderType.None;
@@ -111,7 +113,7 @@ public static class VanillaExtensions
         if (type != BattleProviderType.None)
             writer.Write((byte)participant!.SyncedEntity.whoAmI);
     }
-    
+
     public static IBattleProvider ReadParticipant(this BinaryReader reader)
     {
         var type = (BattleProviderType)reader.ReadByte();
@@ -120,23 +122,23 @@ public static class VanillaExtensions
             whoAmI = reader.ReadByte();
         return BattleManager.GetProvider(whoAmI, type);
     }
-    
+
     public static void Write(this BinaryWriter writer, SimpleMon mon) => writer.Write(mon.Packed);
-    
+
     public static SimpleMon ReadPokemonID(this BinaryReader reader) => new(reader.ReadByte());
-    
+
     public static void Write(this BinaryWriter writer, SimpleMonPair pair) => writer.Write(pair.Packed);
-    
+
     public static SimpleMonPair ReadPokemonIDs(this BinaryReader reader) => new(reader.ReadByte());
-    
+
     public static void Write(this BinaryWriter writer, SimpleHP hp) => writer.Write(hp.Packed);
-    
+
     public static SimpleHP ReadPokemonHP(this BinaryReader reader) => new(reader.ReadUInt32());
-    
+
     public static void Write(this BinaryWriter writer, SimpleDetails details) => writer.Write(details.Packed);
-    
+
     public static SimpleDetails ReadPokemonDetails(this BinaryReader reader) => new(reader.ReadUInt32());
-    
+
     public static void Write(this BinaryWriter writer, PokemonEVs evs)
     {
         writer.Write(evs.HP);
@@ -146,7 +148,7 @@ public static class VanillaExtensions
         writer.Write(evs.SpDefense);
         writer.Write(evs.Speed);
     }
-    
+
     public static PokemonEVs ReadEVs(this BinaryReader reader)
     {
         return new PokemonEVs
@@ -167,12 +169,12 @@ public static class VanillaExtensions
         if (Main.dedServ)
             Console.WriteLine(msg);
     }
-    
+
     public static void ReceiveLog(this IEasyPacket packet, string post = null)
     {
         DebugLog(packet, "Received", post);
     }
-    
+
     public static void SendLog(this IEasyPacket packet, string post = null)
     {
         DebugLog(packet, "Sent", post);

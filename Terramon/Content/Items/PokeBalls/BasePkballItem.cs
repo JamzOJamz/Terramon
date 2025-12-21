@@ -20,6 +20,7 @@ public abstract class BasePkballItem : TerramonItem
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 50;
+        TerramonItemAPI.Sets.HeldItem.Add(Type);
     }
 
     public override void SetDefaults()

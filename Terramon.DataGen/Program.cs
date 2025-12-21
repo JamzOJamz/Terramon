@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Xml.Linq;
 using Terramon.Core;
 using Terramon.ID;
 
@@ -20,7 +18,7 @@ internal static class Program
     /// <summary>
     ///     Whether the program is running from /bin or launched directly.
     /// </summary>
-    private static bool Exec;
+    private static bool _exec;
 
     /// <summary>
     ///     Extra Pokémon IDs to fetch (like starters from later generations).
@@ -69,11 +67,11 @@ internal static class Program
         var dir = Path.GetFileName(Environment.CurrentDirectory);
         // Console.WriteLine($"dir: {dir}, asm: {assemblyName.Name}");
 
-        Exec = !dir.Equals(assemblyName.Name, StringComparison.Ordinal);
+        _exec = !dir.Equals(assemblyName.Name, StringComparison.Ordinal);
 
         Console.WriteLine("========================================");
         Console.WriteLine($"Running {assemblyName.Name} v{assemblyName.Version}");
-        Console.WriteLine($"Launched {(Exec ? $"from {assemblyName.Name}.exe" : "using dotnet run")}");
+        Console.WriteLine($"Launched {(_exec ? $"from {assemblyName.Name}.exe" : "using dotnet run")}");
         Console.WriteLine("========================================\n");
 
         Console.WriteLine("WARNING: This program will overwrite existing PokemonDB*.json files in:");
@@ -119,7 +117,7 @@ internal static class Program
         var jsonMinified = databaseV2.Serialize(true);
 
         var outDir = Path.Combine(Environment.CurrentDirectory, "..");
-        if (Exec)
+        if (_exec)
             outDir = Path.Combine(outDir, "..", "..", "..");
         outDir = Path.Combine(outDir, "Terramon", "Assets", "Data");
         Directory.CreateDirectory(outDir);
@@ -140,7 +138,7 @@ internal static class Program
     private static string GetCacheDirectory(string? subdir = null)
     {
         var cacheDir = Environment.CurrentDirectory;
-        if (Exec)
+        if (_exec)
             cacheDir = Path.Combine(cacheDir, "..", "..", "..");
         cacheDir = Path.Combine(cacheDir, "Cache");
         if (subdir != null)
@@ -431,6 +429,7 @@ internal static class Program
                 pokemon.GetProperty("url").GetString()!;
             forms.Add(await FetchFormData(formUrl));
         }
+        
         return forms;
     }
 

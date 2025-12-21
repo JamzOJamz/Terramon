@@ -33,14 +33,14 @@ public class PCInterface : SmartUIState
 
     private static readonly Color[] DefaultBoxColors =
     [
-        new Color(152, 200, 96),
-        new Color(94, 218, 229),
-        new Color(98, 168, 239),
-        new Color(156, 123, 247),
-        new Color(241, 134, 238),
-        new Color(239, 98, 98),
-        new Color(255, 149, 104),
-        new Color(255, 223, 66)
+        new(152, 200, 96),
+        new(94, 218, 229),
+        new(98, 168, 239),
+        new(156, 123, 247),
+        new(241, 134, 238),
+        new(239, 98, 98),
+        new(255, 149, 104),
+        new(255, 223, 66)
     ];
 
     private static BetterUIText _boxNameText;
@@ -201,7 +201,7 @@ public class PCInterface : SmartUIState
             if (!_inColorPickerMode)
             {
                 if (UILinkPointNavigator.InUse)
-                {;
+                {
                     Main.clrInput();
                     UIVirtualKeyboard uIVirtualKeyboard = new(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
                         text =>
@@ -217,7 +217,7 @@ public class PCInterface : SmartUIState
                             UILinkPointNavigator.ChangePoint(TerramonPointID.PCRename);
                             Main.InGameUI.SetState(null);
                             Main.inFancyUI = false;
-                        }, 0, false);
+                        });
                 
                     uIVirtualKeyboard.SetMaxInputLength(27);
                     Main.InGameUI.SetState(uIVirtualKeyboard);

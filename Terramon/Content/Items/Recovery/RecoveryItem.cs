@@ -5,6 +5,11 @@ namespace Terramon.Content.Items;
 
 public abstract class RecoveryItem : TerramonItem, IPokemonDirectUse
 {
+    public override void SetStaticDefaults()
+    {
+        TerramonItemAPI.Sets.HeldItem.Add(Type);
+    }
+
     public virtual bool AffectedByPokemonDirectUse(PokemonData data)
     {
         return true;

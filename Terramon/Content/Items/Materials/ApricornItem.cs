@@ -10,6 +10,7 @@ public abstract class ApricornItem : Material
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 20;
+        TerramonItemAPI.Sets.HeldItem.Add(Type);
     }
 
     public override void SetDefaults()
