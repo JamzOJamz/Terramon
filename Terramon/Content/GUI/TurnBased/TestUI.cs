@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using ReLogic.Content;
 using Terramon.Core.Battling;
+using Terramon.Core.Battling.BattlePackets;
+using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terramon.ID;
@@ -9,8 +11,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using Terramon.Core.Battling.BattlePackets;
-using Terramon.Core.Battling.BattlePackets.Messages;
 
 namespace Terramon.Content.GUI.TurnBased;
 
@@ -24,10 +24,29 @@ public sealed class TestBattleUI : SmartUIState
     private static Point16 _screenDimensions;
     private static bool _opened;
 
+    /// <summary>
+    ///     Interface layers that remain active while the battle UI is open/visible.
+    ///     All other layers (except the <see cref="BattleUI" /> layer) are deactivated during battle.
+    /// </summary>
+    private static readonly string[] PreservedInterfaceLayers =
+    [
+        "Vanilla: Cursor",
+        "Vanilla: Entity Health Bars",
+        "Vanilla: Hotbar",
+        "Vanilla: Interface Logic 1",
+        "Vanilla: Interface Logic 2",
+        "Vanilla: Interface Logic 3",
+        "Vanilla: Interface Logic 4",
+        "Vanilla: Mouse Over",
+        "Vanilla: Mouse Text",
+        "Vanilla: Player Chat",
+        "Vanilla: Resource Bars"
+    ];
+
     static TestBattleUI()
     {
         // Create options panel
-        _optionsPanel = new();
+        _optionsPanel = new UIElement();
         _optionsPanel.Left.Percent = _optionsPanel.Width.Percent = 0.5f;
         _optionsPanel.Height.Percent = 1f;
         for (ButtonType i = ButtonType.Fight; i <= ButtonType.Run; i++)
@@ -125,14 +144,14 @@ public sealed class TestBattleUI : SmartUIState
     {
         if (_opened)
         {
+            var battleUILayerName = UILoader.GetLayerName(UILoader.GetUIState<BattleUI>());
+
             foreach (var layer in CollectionsMarshal.AsSpan(layers))
             {
                 var name = layer.Name;
-                if (name is "Vanilla: Resource Bars" or "Vanilla: Hotbar" or "Vanilla: Cursor"
-                    or "Vanilla: Player Chat")
+                if (PreservedInterfaceLayers.Contains(name) || name == battleUILayerName)
                     continue;
-                if (name == UILoader.GetLayerName(UILoader.GetUIState<BattleUI>()))
-                    continue;
+
                 layer.Active = false;
             }
         }
@@ -342,7 +361,7 @@ public sealed class TestBattleUI : SmartUIState
     {
         SoundEngine.PlaySound(Run);
 
-        var forfeit = new ForfeitOrder()
+        var forfeit = new ForfeitOrder
         {
             Sender = TerramonPlayer.LocalPlayer
         };

@@ -57,18 +57,19 @@ public sealed class TurnBasedBattleSystem : ModSystem
 
         // Initialize Showdown.NET runtime
         ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesPath);
-
-        // Start a battle to warm up the engine
-        Interface.loadMods.SubProgressText = "Warming Up Battle Engine";
-        // note: running this using Task.Run makes literally no difference
-        // other than making what's lagging out less clear (bc the subprogress message changes)
-        using BattleStream stream = new();
-        stream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen1CustomGame));
+        
+        // Warm up battle engine to reduce lag spikes later
+        WarmUpBattleEngine();
     }
-
-    public override void PreUpdateWorld()
+    
+    /// <summary>
+    ///     Simulates a battle start to warm up the battle engine. This helps reduce lag spikes when starting the first real battle later.
+    /// </summary>
+    private static void WarmUpBattleEngine()
     {
-        BattleManager.Instance ??= new();
+        Interface.loadMods.SubProgressText = "Warming Up Battle Engine";
+        using BattleStream stream = new();
+        stream.Write(ProtocolCodec.EncodeStartCommand(FormatID.Gen9CustomGame));
     }
 
     public override void Unload()
@@ -83,5 +84,22 @@ public sealed class TurnBasedBattleSystem : ModSystem
         
         // Allows GameZoomTarget to go beyond the vanilla cap of 2f (200%)
         transform.Zoom = new Vector2(Main.GameZoomTarget);
+    }
+}
+
+internal sealed class TurnBasedBattlePlayer : ModPlayer
+{
+    public override void OnEnterWorld()
+    {
+        if (Main.netMode != NetmodeID.MultiplayerClient)
+            BattleManager.Instance ??= new BattleManager();
+    }
+}
+
+internal sealed class TurnBasedBattleGlobalNPC : GlobalNPC
+{
+    public override bool? CanChat(NPC npc)
+    {
+        return BattleClient.LocalBattleOngoing ? false : null;
     }
 }
