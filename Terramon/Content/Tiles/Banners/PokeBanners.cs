@@ -53,7 +53,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, PokeBann
     public override string Name => $"{(IsShiny ? "Shiny" : string.Empty)}{schema.Identifier}Banner";
 
     public override string Texture =>
-        $"Terramon/Assets/Tiles/Banners/{schema.Identifier}Banner";
+        $"Terramon/Assets/Textures/Tiles/Banners/{schema.Identifier}Banner";
 
     protected override int UseRarity => IsShiny ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.Blue;
 
@@ -64,7 +64,7 @@ public class PokeBannerItem(ushort id, DatabaseV2.PokemonSchema schema, PokeBann
 
         if (!Main.dedServ)
         {
-            _tierOverlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTierOverlay");
+            _tierOverlay ??= ModContent.Request<Texture2D>("Terramon/Assets/Textures/Tiles/Banners/BannerTierOverlay");
 
             // For correct item sprite drawing as cursor item icon
             Main.RegisterItemAnimation(Item.type, new DrawAnimationStaticFrame
@@ -227,12 +227,12 @@ public class PokeBannerTile : ModTile
         };
     }
 
-    public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile";
+    public override string Texture => "Terramon/Assets/Textures/Tiles/Banners/PokeBannerTile";
 
     public override void SetStaticDefaults()
     {
         if (!Main.dedServ)
-            _tierUnderlay = ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Banners/BannerTileTiers");
+            _tierUnderlay = ModContent.Request<Texture2D>("Terramon/Assets/Textures/Tiles/Banners/BannerTileTiers");
 
         Main.tileFrameImportant[Type] = true;
         Main.tileNoAttach[Type] = true;
@@ -493,7 +493,7 @@ public class PokeBannerTile : ModTile
 
 public class ShinyPokeBannerTile : PokeBannerTile
 {
-    public override string Texture => "Terramon/Assets/Tiles/Banners/PokeBannerTile_Shiny";
+    public override string Texture => "Terramon/Assets/Textures/Tiles/Banners/PokeBannerTile_Shiny";
 
     public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY,
         Color tileLight, bool visible)
@@ -512,7 +512,7 @@ public class ShinyPokeBannerTile : PokeBannerTile
 
 public class PokeBannerBuff : ModBuff
 {
-    public override string Texture => "Terramon/Assets/Buffs/PokeBannerBuff";
+    public override string Texture => "Terramon/Assets/Textures/Buffs/PokeBannerBuff";
 
     public override void SetStaticDefaults()
     {

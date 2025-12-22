@@ -174,7 +174,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     
     #endregion
 
-    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
+    public override string Texture { get; } = "Terramon/Assets/Textures/Pokemon/" + schema.Identifier;
 
     public ushort ID { get; } = id;
 

@@ -12,8 +12,8 @@ public class TerramonMenu : ModMenu
     {
         if (Main.dedServ) return;
 
-        LogoPurity = ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo_0");
-        LogoCorruption = ModContent.Request<Texture2D>("Terramon/Assets/Misc/MenuLogo_1");
+        LogoPurity = ModContent.Request<Texture2D>("Terramon/Assets/Textures/Branding/MenuLogo_0");
+        LogoCorruption = ModContent.Request<Texture2D>("Terramon/Assets/Textures/Branding/MenuLogo_1");
     }
 
     public override string DisplayName => "Terramon Mod";

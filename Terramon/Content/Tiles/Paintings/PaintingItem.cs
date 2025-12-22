@@ -4,5 +4,5 @@ namespace Terramon.Content.Tiles.Paintings;
 
 public abstract class PaintingItem : TerramonItem
 {
-    public override string Texture => "Terramon/Assets/Tiles/Paintings/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Tiles/Paintings/" + GetType().Name;
 }

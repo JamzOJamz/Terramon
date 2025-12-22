@@ -10,7 +10,7 @@ public abstract class BasePotionItem : RecoveryItem
     /// </summary>
     protected abstract ushort HealAmount { get; }
     
-    public override string Texture => "Terramon/Assets/Items/Recovery/Potions/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/Recovery/Potions/" + GetType().Name;
 
     public override void SetDefaults()
     {

@@ -2,7 +2,7 @@ namespace Terramon.Content.Dusts;
 
 public class SummonCloud : ModDust
 {
-    public override string Texture => "Terramon/Assets/Dusts/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Dusts/" + GetType().Name;
 
     public override void OnSpawn(Dust dust)
     {

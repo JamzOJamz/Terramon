@@ -53,7 +53,7 @@ public sealed class TestBattleUI : SmartUIState
         {
             int xFactor = (int)i % 2;
             int yFactor = (int)i / 2;
-            DynamicPixelRatioElement button = new($"Terramon/Assets/GUI/TurnBased/{i}Button", buttonLike: true);
+            DynamicPixelRatioElement button = new($"Terramon/Assets/Textures/GUI/TurnBased/{i}Button", buttonLike: true);
             button.Left.Percent = xFactor * 0.5f;
             button.Top.Percent = yFactor * 0.5f;
             button.Width.Percent = button.Height.Percent = 0.5f;
@@ -98,7 +98,7 @@ public sealed class TestBattleUI : SmartUIState
         {
             float xFactor = i % 3 / 3f;
             float yFactor = i / 3 * 0.5f;
-            DynamicPixelRatioElement button = new("Terramon/Assets/GUI/TurnBased/Simple", buttonLike: true);
+            DynamicPixelRatioElement button = new("Terramon/Assets/Textures/GUI/TurnBased/Simple", buttonLike: true);
             button.Left.Percent = xFactor;
             button.Top.Percent = yFactor;
             button.Width.Percent = 1f / 3f;
@@ -176,9 +176,9 @@ public sealed class TestBattleUI : SmartUIState
 
     public override void OnInitialize()
     {
-        // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/Forest_NineSlice");
+        // Forest ??= Terramon.Instance.Assets.Request<Texture2D>("Assets/Textures/GUI/TurnBased/Forest_NineSlice");
 
-        var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/GUI/TurnBased/PlayerPanel_Simple");
+        var parallelogram = Terramon.Instance.Assets.Request<Texture2D>("Assets/Textures/GUI/TurnBased/PlayerPanel_Simple");
         PlayerPanel = new(PixelRatioForUI);
         FoePanel = new(PixelRatioForUI);
         PlayerPanel.Width.Pixels = FoePanel.Width.Pixels = 450f;
@@ -192,7 +192,7 @@ public sealed class TestBattleUI : SmartUIState
         Append(PlayerPanel);
         Append(FoePanel);
 
-        DynamicPixelRatioElement p = new("Terramon/Assets/GUI/TurnBased/Simple")
+        DynamicPixelRatioElement p = new("Terramon/Assets/Textures/GUI/TurnBased/Simple")
         {
             BlockExternalInput = true,
             HAlign = 0.5f,
@@ -262,7 +262,7 @@ public sealed class TestBattleUI : SmartUIState
 
             actual.BlockInteractions = false;
             actual.Color = move.Schema.Type.GetColor();
-            actual.UpdateTextures("Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
+            actual.UpdateTextures("Terramon/Assets/Textures/GUI/TurnBased/MoveButton_Normal");
             label.SetText(move.ID.ToString());
             moveRef.DataRef = data;
             moveRef.Move = cur;
@@ -301,7 +301,7 @@ public sealed class TestBattleUI : SmartUIState
             }
 
             bool fainted = poke.DataRef != null && poke.DataRef.HP <= 0;
-            pokemonButton.UpdateTextures("Terramon/Assets/GUI/TurnBased/Simple");
+            pokemonButton.UpdateTextures("Terramon/Assets/Textures/GUI/TurnBased/Simple");
             label.SetText(DatabaseV2.GetLocalizedPokemonName(pokemon.Schema));
             image.SetImage(pokemon.GetMiniSprite());
             if (fainted)

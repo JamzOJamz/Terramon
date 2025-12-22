@@ -4,7 +4,7 @@ namespace Terramon.Content.Items;
 
 public abstract class Vitamin : TerramonItem
 {
-    public override string Texture => "Terramon/Assets/Items/Vitamins/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/Vitamins/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {

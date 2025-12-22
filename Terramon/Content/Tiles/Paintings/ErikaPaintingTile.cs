@@ -5,7 +5,7 @@ namespace Terramon.Content.Tiles.Paintings;
 
 public class ErikaPaintingTile : PaintingTile
 {
-    public override string Texture => "Terramon/Assets/Tiles/Paintings/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Tiles/Paintings/" + GetType().Name;
     
     public override void SetStaticDefaults()
     {

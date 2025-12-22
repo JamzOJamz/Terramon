@@ -10,7 +10,7 @@ public abstract class BaseReviveItem : RecoveryItem
     /// </summary>
     protected abstract float RestorationPercentage { get; }
 
-    public override string Texture => "Terramon/Assets/Items/Recovery/Revives/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/Recovery/Revives/" + GetType().Name;
 
     public override bool AffectedByPokemonDirectUse(PokemonData data)
     {

@@ -61,7 +61,7 @@ public class PokemonEntityLoader : ModSystem
 
     private bool HjsonSchemaExists(string identifier)
     {
-        return Mod.FileExists($"Content/Pokemon/{identifier}.hjson");
+        return Mod.FileExists($"Assets/PokemonSchemas/{identifier}.hjson");
     }
 
     /// <summary>
@@ -70,24 +70,26 @@ public class PokemonEntityLoader : ModSystem
     private void LoadEntities(ushort id, DatabaseV2.PokemonSchema schema)
     {
         // Load corresponding schema from HJSON file
-        var hjsonStream = Mod.GetFileStream($"Content/Pokemon/{schema.Identifier}.hjson");
+        var hjsonStream = Mod.GetFileStream($"Assets/PokemonSchemas/{schema.Identifier}.hjson");
         using var hjsonReader = new StreamReader(hjsonStream);
         var jsonText = HjsonValue.Load(hjsonReader).ToString();
         hjsonReader.Close();
         var hjsonSchema = JObject.Parse(jsonText);
 
         // Load glowmask textures if they exist
-        if (ModContent.RequestIfExists<Texture2D>($"Terramon/Assets/Pokemon/{schema.Identifier}_Glow", out var glowTex))
+        if (ModContent.RequestIfExists<Texture2D>($"Terramon/Assets/Textures/Pokemon/{schema.Identifier}_Glow",
+                out var glowTex))
             GlowTextureCache[id] = glowTex;
-        if (ModContent.RequestIfExists<Texture2D>($"Terramon/Assets/Pokemon/{schema.Identifier}_S_Glow",
+        if (ModContent.RequestIfExists<Texture2D>($"Terramon/Assets/Textures/Pokemon/{schema.Identifier}_S_Glow",
                 out var shinyGlowTex))
             ShinyGlowTextureCache[id] = shinyGlowTex;
 
         // Check if this Pokémon has a gender difference (alternate texture)
-        HasGenderDifference[id - 1] = ModContent.HasAsset($"Terramon/Assets/Pokemon/{schema.Identifier}F");
+        HasGenderDifference[id - 1] = ModContent.HasAsset($"Terramon/Assets/Textures/Pokemon/{schema.Identifier}F");
 
         // Check if this Pokémon has a pet-exclusive texture
-        HasPetExclusiveTexture[id - 1] = ModContent.HasAsset($"Terramon/Assets/Pokemon/{schema.Identifier}_Pet");
+        HasPetExclusiveTexture[id - 1] =
+            ModContent.HasAsset($"Terramon/Assets/Textures/Pokemon/{schema.Identifier}_Pet");
 
         // Get common components
         var commonSchema = hjsonSchema.GetValue("Common");
@@ -121,7 +123,7 @@ public class PokemonEntityLoader : ModSystem
         }
 
         // Load Pokémon banner
-        if (Mod.FileExists($"Assets/Tiles/Banners/{schema.Identifier}Banner.rawimg")) LoadBanner(id, schema);
+        if (Mod.FileExists($"Assets/Textures/Tiles/Banners/{schema.Identifier}Banner.rawimg")) LoadBanner(id, schema);
     }
 
     private static void LoadBanner(ushort id, DatabaseV2.PokemonSchema schema)

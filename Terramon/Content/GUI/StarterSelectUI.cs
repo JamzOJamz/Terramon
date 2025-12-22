@@ -77,7 +77,7 @@ public sealed class StarterSelectUI : SmartUIState
 
     public override void OnInitialize()
     {
-        _showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification"),
+        _showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Starter/Notification"),
             string.Empty);
         _showButton.Width.Set(42, 0);
         _showButton.Height.Set(40, 0);
@@ -107,7 +107,7 @@ public sealed class StarterSelectUI : SmartUIState
         _topContainer.Top.Set(-157 + 10, 0.25f);
 
         _backdropImage = new UIImage(
-            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/BackdropBig"))
+            ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Starter/BackdropBig"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
             Color = Color.White * 0.375f,
@@ -158,7 +158,7 @@ public sealed class StarterSelectUI : SmartUIState
         Append(_topContainer);
 
         var pageLeftButton =
-            new UIHoverImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonLeftDisabled"),
+            new UIHoverImage(ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Starter/PageButtonLeftDisabled"),
                 _comingSoonLocalizedText)
             {
                 RemoveFloatingPointsFromDrawPosition = true
@@ -177,7 +177,7 @@ public sealed class StarterSelectUI : SmartUIState
         _topContainer.Append(pageLeftButton);
 
         var pageRightButton = new UIHoverImage(
-            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonRightDisabled"),
+            ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Starter/PageButtonRightDisabled"),
             _comingSoonLocalizedText)
         {
             RemoveFloatingPointsFromDrawPosition = true
@@ -259,7 +259,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
     {
         if (Main.dedServ) return;
 
-        ShadowTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Shadow");
+        ShadowTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Starter/Shadow");
     }
 
     public UIStarterBanner(ushort pokemon) : base(TextureAssets.Npc[0],
@@ -268,9 +268,9 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         _pokemon = pokemon;
 
         var mainType = Terramon.DatabaseV2.GetPokemon(pokemon).Types[0];
-        var texturePath = $"Terramon/Assets/GUI/Starter/Banner{mainType}";
+        var texturePath = $"Terramon/Assets/Textures/GUI/Starter/Banner{mainType}";
         if (!ModContent.HasAsset(texturePath))
-            texturePath = "Terramon/Assets/GUI/Starter/BannerNormal";
+            texturePath = "Terramon/Assets/Textures/GUI/Starter/BannerNormal";
         var hoverTexturePath = $"{texturePath}Hover";
         SetImage(ModContent.Request<Texture2D>(texturePath));
         SetHoverImage(ModContent.Request<Texture2D>(
@@ -350,7 +350,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         Append(_shadow);
 
         _miniTexture = new UIImage(ModContent.Request<Texture2D>(
-            $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini"))
+            $"Terramon/Assets/Textures/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini"))
         {
             RemoveFloatingPointsFromDrawPosition = true
         };

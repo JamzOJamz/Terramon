@@ -7,7 +7,7 @@ namespace Terramon.Content.Items;
 
 public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
 {
-    public override string Texture => "Terramon/Assets/Items/Evolutionary/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/Evolutionary/" + GetType().Name;
 
     /// <summary>
     ///     The trigger method that causes the evolution. Defaults to <see cref="EvolutionTrigger.DirectUse" />.

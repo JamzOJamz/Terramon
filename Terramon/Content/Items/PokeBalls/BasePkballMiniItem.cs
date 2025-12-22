@@ -5,7 +5,7 @@ namespace Terramon.Content.Items.PokeBalls;
 public abstract class BasePkballMiniItem : TerramonItem
 {
 
-    public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/PokeBalls/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {

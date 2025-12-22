@@ -48,9 +48,9 @@ public abstract class PCTile : ModTile
         };
     }
 
-    public override string Texture => "Terramon/Assets/Tiles/Interactive/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Tiles/Interactive/" + GetType().Name;
 
-    public override string HighlightTexture => "Terramon/Assets/Tiles/Interactive/PCTile_Highlight";
+    public override string HighlightTexture => "Terramon/Assets/Textures/Tiles/Interactive/PCTile_Highlight";
 
     public override void SetStaticDefaults()
     {
@@ -203,7 +203,7 @@ public abstract class PCTile : ModTile
     public override void Load()
     {
         if (_screenGlowTexture == null && !Main.dedServ)
-            _screenGlowTexture = ModContent.Request<Texture2D>("Terramon/Assets/Tiles/Interactive/PCTile_Glow");
+            _screenGlowTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/Tiles/Interactive/PCTile_Glow");
     }
 
     public override void Unload()

@@ -215,7 +215,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
 
 public sealed class PartyHeldItemSlot(PartySidebarSlot parent) : UIElement
 {
-    private static readonly Asset<Texture2D> BackTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox");
+    private static readonly Asset<Texture2D> BackTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Party/HeldItemBox");
 
     public PartySidebarSlot Slot = parent;
     protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -264,7 +264,7 @@ public sealed class PartySidebarSlot : UICompositeImage
     public PokemonData Data;
 
     public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
-        "Terramon/Assets/GUI/Party/SidebarClosed"), 126, 76)
+        "Terramon/Assets/Textures/GUI/Party/SidebarClosed"), 126, 76)
     {
         _partyDisplay = partyDisplay;
         Index = index;
@@ -542,7 +542,7 @@ public sealed class PartySidebarSlot : UICompositeImage
 
     private void UpdateSprite(bool selected = false)
     {
-        var spritePath = "Assets/GUI/Party/Sidebar";
+        var spritePath = "Assets/Textures/GUI/Party/Sidebar";
 
         if (Data != null)
             spritePath += "Open";
@@ -592,7 +592,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         var assetRepository = Terramon.Instance.Assets;
 
         // Sprite box
-        _spriteBox = new UIBlendedImage(assetRepository.Request<Texture2D>("Assets/GUI/Party/SpriteBox",
+        _spriteBox = new UIBlendedImage(assetRepository.Request<Texture2D>("Assets/Textures/GUI/Party/SpriteBox",
             AssetRequestMode.ImmediateLoad))
         {
             RemoveFloatingPointsFromDrawPosition = true
@@ -612,7 +612,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         // Gender icon
         if (data.Gender != Gender.Unspecified)
         {
-            _genderIcon = new UIImage(assetRepository.Request<Texture2D>($"Assets/GUI/Party/Icon{data.Gender}",
+            _genderIcon = new UIImage(assetRepository.Request<Texture2D>($"Assets/Textures/GUI/Party/Icon{data.Gender}",
                 AssetRequestMode.ImmediateLoad))
             {
                 RemoveFloatingPointsFromDrawPosition = true
@@ -647,7 +647,7 @@ public class PartySidebarHPMeter : UIElement
 
     static PartySidebarHPMeter()
     {
-        Texture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HPMeter");
+        Texture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Party/HPMeter");
     }
 
     /// <summary>

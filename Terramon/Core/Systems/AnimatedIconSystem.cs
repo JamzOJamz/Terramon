@@ -15,13 +15,13 @@ public class AnimatedIconSystem : ModSystem
     private static readonly string[] IconFramePaths =
     [
         "Terramon/icon",
-        "Terramon/Assets/Misc/AnimatedIcon_1",
-        "Terramon/Assets/Misc/AnimatedIcon_2",
-        "Terramon/Assets/Misc/AnimatedIcon_3",
-        "Terramon/Assets/Misc/AnimatedIcon_4",
-        "Terramon/Assets/Misc/AnimatedIcon_5",
-        "Terramon/Assets/Misc/AnimatedIcon_6",
-        "Terramon/Assets/Misc/AnimatedIcon_7"
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_1",
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_2",
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_3",
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_4",
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_5",
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_6",
+        "Terramon/Assets/Textures/Branding/AnimatedIcon_7"
     ];
 
     private static Asset<Texture2D>[] _iconFrameTextures;

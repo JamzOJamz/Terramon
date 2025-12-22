@@ -38,7 +38,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
     {
         if (Main.dedServ) return;
 
-        ReleaseTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Miscellaneous/Release");
+        ReleaseTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Miscellaneous/Release");
         TrashTexture = ModContent.Request<Texture2D>("Terraria/Images/Trash");
     }
 

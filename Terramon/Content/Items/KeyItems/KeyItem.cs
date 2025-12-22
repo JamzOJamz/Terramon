@@ -5,7 +5,7 @@ namespace Terramon.Content.Items;
 
 public abstract class KeyItem : TerramonItem
 {
-    public override string Texture => "Terramon/Assets/Items/KeyItems/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/KeyItems/" + GetType().Name;
 
     protected override int UseRarity => ModContent.RarityType<KeyItemRarity>();
 

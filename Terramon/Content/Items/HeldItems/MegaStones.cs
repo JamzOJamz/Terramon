@@ -22,7 +22,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : HeldItem
     protected override bool CloneNewInstances => true;
     public override string Name => $"{id}MegaStone";
     protected override int UseRarity => ModContent.RarityType<MegaRarity>();
-    public override string Texture => "Terramon/Assets/Items/HeldItems/MegaStone";
+    public override string Texture => "Terramon/Assets/Textures/Items/HeldItems/MegaStone";
     public override LocalizedText DisplayName => Mod.GetLocalization($"MegaStoneNames.{id}", id.ToString);
     public override LocalizedText Tooltip =>
         Mod.GetLocalization("CommonTooltips.MegaStoneTip").WithFormatArgs(_pokeName);
@@ -124,7 +124,7 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : HeldItem
         ColorsBuf[0] = Color.Black.ToVector3();
         ColorsBuf[^1] = Color.White.ToVector3();
 
-        using var stream = mod.GetFileStream("Assets/Items/HeldItems/MegaStonePalettes.plt");
+        using var stream = mod.GetFileStream("Assets/Textures/Items/HeldItems/MegaStonePalettes.plt");
         const int max = (int)MegaStoneID.Baxcalibur + 1;
         Palettes = new Palette[max];
         Span<byte> buffer = stackalloc byte[3];

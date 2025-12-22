@@ -8,7 +8,7 @@ namespace Terramon.Content.Tiles.MusicBoxes;
 
 public abstract class MusicTile : ModTile
 {
-    public override string Texture => "Terramon/Assets/Tiles/MusicBoxes/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Tiles/MusicBoxes/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {

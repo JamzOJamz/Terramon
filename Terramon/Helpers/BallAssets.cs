@@ -6,7 +6,7 @@ namespace Terramon.Helpers;
 [Autoload(Side = ModSide.Client)]
 public class BallAssets : ILoadable
 {
-    private const string PokeballIconPathFormat = "Terramon/Assets/Items/PokeBalls/{0}MiniItem";
+    private const string PokeballIconPathFormat = "Terramon/Assets/Textures/Items/PokeBalls/{0}MiniItem";
     private static Asset<Texture2D>[] _ballIcons;
 
     public void Load(Mod mod)

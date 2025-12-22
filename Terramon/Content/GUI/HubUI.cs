@@ -53,16 +53,16 @@ public class HubUI : SmartUIState
         // Don't run this on the server
         if (Main.dedServ) return;
 
-        EmptyTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyTabHeader");
-        EmptyTabHeaderAltTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyTabHeaderAlt");
-        PokedexTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexTabHeader");
-        PokedexTabIconTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexTabIcon");
+        EmptyTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/EmptyTabHeader");
+        EmptyTabHeaderAltTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/EmptyTabHeaderAlt");
+        PokedexTabHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PokedexTabHeader");
+        PokedexTabIconTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PokedexTabIcon");
         BallIconTexture = ModContent.Request<Texture2D>("Terramon/icon_small");
-        BallIconEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/EmptyBallIcon");
-        PlayerDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PlayerDexFilter");
-        WorldDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/WorldDexFilter");
-        PlayerShinyDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PlayerShinyDexFilter");
-        SmallButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/SmallButtonHover");
+        BallIconEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/EmptyBallIcon");
+        PlayerDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PlayerDexFilter");
+        WorldDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/WorldDexFilter");
+        PlayerShinyDexFilterTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PlayerShinyDexFilter");
+        SmallButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/SmallButtonHover");
 
         // Prevents the player from closing the inventory while the hub UI is active, instead closing the hub UI itself
         On_Player.ToggleInv += static (orig, self) =>
@@ -816,7 +816,7 @@ internal sealed class PokedexEntryIcon : UIPanel
     static PokedexEntryIcon()
     {
         QuestionMarkTexture = ModContent.Request<Texture2D>("Terraria/Images/UI/Bestiary/Icon_Locked");
-        HoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexEntryIconHover");
+        HoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PokedexEntryIconHover");
     }
 
     public PokedexEntryIcon(ushort pokemon = 0)
@@ -885,7 +885,7 @@ internal sealed class PokedexEntryIcon : UIPanel
 
         var miniTexture =
             ModContent.Request<Texture2D>(
-                $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(ID)}_Mini{(HubUI.ShinyActive ? "_S" : string.Empty)}");
+                $"Terramon/Assets/Textures/Pokemon/{Terramon.DatabaseV2.GetPokemonName(ID)}_Mini{(HubUI.ShinyActive ? "_S" : string.Empty)}");
         _icon.SetImage(miniTexture);
         _icon.Left.Pixels = -18;
         _icon.Top.Pixels = -6;
@@ -962,8 +962,8 @@ internal sealed class PokedexPageButton : UIHoverImageButton
 
     static PokedexPageButton()
     {
-        PageButtonLeftTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PageButtonLeft");
-        PageButtonRightTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PageButtonRight");
+        PageButtonLeftTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PageButtonLeft");
+        PageButtonRightTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PageButtonRight");
     }
 
     /// <summary>
@@ -1054,8 +1054,8 @@ internal sealed class PokedexOverviewPanel : UIPanel
 
     static PokedexOverviewPanel()
     {
-        OverviewHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewHeader");
-        OverviewDividerTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewDivider");
+        OverviewHeaderTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PokedexOverviewHeader");
+        OverviewDividerTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PokedexOverviewDivider");
     }
 
     public PokedexOverviewPanel()
@@ -1387,7 +1387,7 @@ internal sealed class PokedexPreviewCanvas : UIImage
 
     static PokedexPreviewCanvas()
     {
-        OverviewPreviewTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Hub/PokedexOverviewPreview");
+        OverviewPreviewTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Hub/PokedexOverviewPreview");
     }
 
     public PokedexPreviewCanvas() : base(OverviewPreviewTexture)

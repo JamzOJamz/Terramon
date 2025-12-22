@@ -22,7 +22,7 @@ public class PokemartClerk : ModNPC
     private static readonly Condition TrainerSetCondition =
         new("ClerkTrainerSale", () => Condition.IsNpcShimmered.IsMet() || Main.halloween);
 
-    public override string Texture => "Terramon/Assets/NPCs/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/NPCs/" + GetType().Name;
 
     public override void Load()
     {

@@ -11,7 +11,7 @@ namespace Terramon.Content.Buffs;
 
 public class PokemonCompanion : ModBuff
 {
-    private const string StarIconPath = "Terramon/Assets/Buffs/IconStar";
+    private const string StarIconPath = "Terramon/Assets/Textures/Buffs/IconStar";
     private static RenderTarget2D _rt;
     private static Asset<Texture2D> _starIconTexture;
 

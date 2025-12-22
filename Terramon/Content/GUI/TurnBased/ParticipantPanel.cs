@@ -30,11 +30,11 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
 
     static ParticipantPanel()
     {
-        HPBar = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/HPBar");
-        EXPBar = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/EXPBar");
-        GenderIcon = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/Gender");
-        BallSlots = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/BallSlots_Simple");
-        PanelTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/TurnBased/PlayerPanel_Simple");
+        HPBar = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/TurnBased/HPBar");
+        EXPBar = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/TurnBased/EXPBar");
+        GenderIcon = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/TurnBased/Gender");
+        BallSlots = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/TurnBased/BallSlots_Simple");
+        PanelTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/TurnBased/PlayerPanel_Simple");
     }
 
     public static Asset<Texture2D> HPBar { get; }
@@ -234,7 +234,7 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
                 if (party[i] is null)
                     continue;
 
-                Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Items/PokeBalls/PokeBallMiniItem")
+                Texture2D bola = Terramon.Instance.Assets.Request<Texture2D>("Assets/Textures/Items/PokeBalls/PokeBallMiniItem")
                     .Value;
 
                 drawPosition.X += 12f;

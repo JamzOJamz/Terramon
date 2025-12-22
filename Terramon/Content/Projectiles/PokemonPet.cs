@@ -58,9 +58,9 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         if (Main.dedServ) return;
 
         // Load resource bar textures
-        ResourceBarStartTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Realtime/ResourceBarStart");
-        ResourceBarMiddleTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Realtime/ResourceBarMiddle");
-        ResourceBarEndTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Realtime/ResourceBarEnd");
+        ResourceBarStartTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Realtime/ResourceBarStart");
+        ResourceBarMiddleTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Realtime/ResourceBarMiddle");
+        ResourceBarEndTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Realtime/ResourceBarEnd");
 
         // Draw HP bars on proper layer
         On_Main.DrawInterface_14_EntityHealthBars += (orig, self) =>
@@ -111,7 +111,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override LocalizedText DisplayName => DatabaseV2.GetLocalizedPokemonName(Schema);
 
-    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
+    public override string Texture { get; } = "Terramon/Assets/Textures/Pokemon/" + schema.Identifier;
 
     public ushort ID { get; } = id;
 

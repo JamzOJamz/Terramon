@@ -43,7 +43,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     /// </summary>
     protected virtual int DropItemChanceDenominator => 3;
 
-    public override string Texture => "Terramon/Assets/Items/PokeBalls/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/PokeBalls/" + GetType().Name;
 
     public override LocalizedText DisplayName =>
         Language.GetText($"Mods.Terramon.Items.{GetType().Name.Replace("Projectile", "Item")}.DisplayName");

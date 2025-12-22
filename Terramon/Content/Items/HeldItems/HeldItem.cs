@@ -4,7 +4,7 @@ namespace Terramon.Content.Items;
 
 public abstract class HeldItem : TerramonItem
 {
-    public override string Texture => "Terramon/Assets/Items/HeldItems/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Items/HeldItems/" + GetType().Name;
 
     public override void SetStaticDefaults()
     {

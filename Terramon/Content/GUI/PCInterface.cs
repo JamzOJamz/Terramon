@@ -109,12 +109,12 @@ public class PCInterface : SmartUIState
             orig(state);
         };
 
-        /*ListViewButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/ListViewButton");
-        SingleViewButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SingleViewButton");
-        SmallerButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SmallerButtonHover");*/
-        SmallestButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SmallestButtonHover");
-        SmallPageButtonLeftTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SmallPageButtonLeft");
-        SmallPageButtonRightTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/SmallPageButtonRight");
+        /*ListViewButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/ListViewButton");
+        SingleViewButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/SingleViewButton");
+        SmallerButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/SmallerButtonHover");*/
+        SmallestButtonHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/SmallestButtonHover");
+        SmallPageButtonLeftTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/SmallPageButtonLeft");
+        SmallPageButtonRightTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/SmallPageButtonRight");
     }
 
     public static bool Active => _pcService != null;
@@ -569,10 +569,10 @@ internal sealed class CustomPCItemSlot : UIImage
 
     static CustomPCItemSlot()
     {
-        PCSlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgEmpty");
-        PCSlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBg");
-        PCSlotBgEmptyHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgEmptyHover");
-        PCSlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/PCSlotBgHover");
+        PCSlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/PCSlotBgEmpty");
+        PCSlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/PCSlotBg");
+        PCSlotBgEmptyHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/PCSlotBgEmptyHover");
+        PCSlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/PCSlotBgHover");
     }
 
     public CustomPCItemSlot() : base(PCSlotBgEmptyTexture)
@@ -789,7 +789,7 @@ internal sealed class PCDragBar : UIImage
 
     static PCDragBar()
     {
-        BoxDragBarTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/BoxDragBar");
+        BoxDragBarTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/PC/BoxDragBar");
     }
 
     public PCDragBar() : base(BoxDragBarTexture)

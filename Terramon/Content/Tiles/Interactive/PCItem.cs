@@ -5,7 +5,7 @@ namespace Terramon.Content.Tiles.Interactive;
 
 public abstract class PCItem : TerramonItem
 {
-    public override string Texture => "Terramon/Assets/Tiles/Interactive/" + GetType().Name;
+    public override string Texture => "Terramon/Assets/Textures/Tiles/Interactive/" + GetType().Name;
 
     public override void SetDefaults()
     {

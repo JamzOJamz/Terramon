@@ -39,12 +39,12 @@ public class InventoryParty : SmartUIState
 
     static InventoryParty()
     {
-        PartySlotBallTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBall");
-        PartySlotBallHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBallHover");
-        PartySlotBallGreyedTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBallGreyed");
-        PokedexButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PokedexButton");
+        PartySlotBallTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBall");
+        PartySlotBallHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBallHover");
+        PartySlotBallGreyedTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBallGreyed");
+        PokedexButtonTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PokedexButton");
         PokedexButtonHoverAltTexture =
-            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PokedexButtonHoverAlt");
+            ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PokedexButtonHoverAlt");
     }
 
     public static bool IsCompressed { get; private set; }
@@ -322,13 +322,13 @@ internal sealed class CustomPartyItemSlot : UIImage
 
     static CustomPartyItemSlot()
     {
-        PartySlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmpty");
-        PartySlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBg");
-        PartySlotBgClickedTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgClicked");
+        PartySlotBgEmptyTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBgEmpty");
+        PartySlotBgTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBg");
+        PartySlotBgClickedTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBgClicked");
         PartySlotBgEmptyHoverTexture =
-            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgEmptyHover");
-        PartySlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotBgHover");
-        PartySlotHeldItemTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Inventory/PartySlotHeldItem");
+            ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBgEmptyHover");
+        PartySlotBgHoverTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotBgHover");
+        PartySlotHeldItemTexture = ModContent.Request<Texture2D>("Terramon/Assets/Textures/GUI/Inventory/PartySlotHeldItem");
     }
 
     public CustomPartyItemSlot(int index) : base(PartySlotBgEmptyTexture)
