@@ -273,7 +273,13 @@ GUI: {
 		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
 	}
 
-	// PC.RenameLabel: Rename Box
+	PC: {
+		// RenameLabel: Rename Box
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+	}
 
 	Starter: {
 		Title: Willkommen in der Welt der Pokémon! Danke, dass du die Terramon-Mod installiert hast!
@@ -847,6 +853,7 @@ WorldGen.ItemsPass: Streut Süßigkeiten
 Misc: {
 	CatchSuccess: Geschafft! [c/{0}:{1}] wurde gefangen!
 	CatchSuccessPC: Geschafft! [c/{0}:{1}] wurde gefangen und in {2} in {3}'s PC übertragen!
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
 	CatchSuccessPCNoRoom: Geschafft! [c/{0}:{1}] wurde gefangen, aber es war kein Platz in {2}'s PC!
 	// CatchMilestone3: You've obtained your 3rd {0}!
 	// CatchMilestone6: You've obtained your 6th {0}!

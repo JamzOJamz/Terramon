@@ -273,7 +273,13 @@ GUI: {
 		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
 	}
 
-	// PC.RenameLabel: Rename Box
+	PC: {
+		// RenameLabel: Rename Box
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+	}
 
 	Starter: {
 		Title: 欢迎来到宝可梦的世界！感谢你安装 Terramon 模组！
@@ -847,6 +853,7 @@ WorldGen.ItemsPass: 散落糖果
 Misc: {
 	CatchSuccess: 抓住了！[c/{0}:{1}] 被捕获了！
 	CatchSuccessPC: 抓住了！[c/{0}:{1}] 被捕获并转移到 {2} 的 {3} 的PC中！
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
 	CatchSuccessPCNoRoom: 抓住了！[c/{0}:{1}] 被捕获了，但 {2} 的PC中没有空间了！
 	// CatchMilestone3: You've obtained your 3rd {0}!
 	// CatchMilestone6: You've obtained your 6th {0}!

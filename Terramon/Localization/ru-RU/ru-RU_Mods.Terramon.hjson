@@ -273,7 +273,13 @@ GUI: {
 		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
 	}
 
-	// PC.RenameLabel: Rename Box
+	PC: {
+		// RenameLabel: Rename Box
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+	}
 
 	Starter: {
 		// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
@@ -847,6 +853,7 @@ NPCs: {
 Misc: {
 	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
 	// CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
 	// CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
 	// CatchMilestone3: You've obtained your 3rd {0}!
 	// CatchMilestone6: You've obtained your 6th {0}!

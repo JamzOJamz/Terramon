@@ -72,19 +72,21 @@ internal abstract class BasePkballProjectile : ModProjectile
         var texture = TextureAssets.Projectile[Type].Value;
 
         var origin = new Vector2(texture.Width * 0.5f, 24 * 0.5f);
-        var drawPos = Projectile.position - Main.screenPosition + origin + new Vector2(Projectile.gfxOffY) - new Vector2(5, 5);
+        var drawPos = Projectile.position - Main.screenPosition + origin + new Vector2(Projectile.gfxOffY) -
+                      new Vector2(5, 5);
         Main.EntitySpriteDraw(texture, drawPos, new Rectangle(0, Projectile.frame * 24, 24, 24),
             Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale,
             Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
 
-        if (_capture != null && Main.mouseItem.IsAir && !Main.LocalPlayer.cursorItemIconEnabled && !TooltipOverlay.IsHoldingPokemon())
+        if (_capture != null && Main.mouseItem.IsAir && !Main.LocalPlayer.cursorItemIconEnabled &&
+            !TooltipOverlay.IsHoldingPokemon())
         {
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X + 4, (int)originOffsetDrawPos.Y + 4, 16, 16);
             if (drawRect.Contains(Main.mouseX, Main.mouseY))
             {
                 TooltipOverlay.DrawPokemonAtMouse(Main.spriteBatch, _capture.Data);
-            }   
+            }
         }
 
         return false;
@@ -219,7 +221,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         AITimer++;
 
         // Handle hitting the Pokémon on other clients
-        if (_hasContainedLocal == false && _capture != null)
+        if (!_hasContainedLocal && _capture != null)
             HitPkmn(_capture.NPC);
 
         // Calculate if the Pokémon is successfully caught
@@ -406,7 +408,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (Projectile.owner != Main.myPlayer) return;
 
         TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-        
+
         Projectile.Kill();
         var schema = _capture.Data.Schema;
         var ballName = GetType().Name.Split("Projectile")[0];
@@ -421,15 +423,40 @@ internal abstract class BasePkballProjectile : ModProjectile
         else
         {
             var box = player.TransferPokemonToPC(_capture.Data);
-            Main.NewText(box != null
-                ? Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPC",
-                    schema.Types[0].GetHexColor(),
-                    _capture.DisplayName,
-                    box.GivenName ?? player.GetDefaultNameForPCBox(box), player.Player.name)
-                : Language.GetTextValue("Mods.Terramon.Misc.CatchSuccessPCNoRoom",
+
+            if (box == null)
+            {
+                Main.NewText(Language.GetTextValue(
+                    "Mods.Terramon.Misc.CatchSuccessPCNoRoom",
                     schema.Types[0].GetHexColor(),
                     _capture.DisplayName,
                     player.Player.name));
+                return;
+            }
+
+            var hasCustomName = box.GivenName != null;
+            var messageKey = hasCustomName 
+                ? "Mods.Terramon.Misc.CatchSuccessPCCustomBoxName"
+                : "Mods.Terramon.Misc.CatchSuccessPC";
+
+            var messageArgs = hasCustomName
+                ? new object[] 
+                { 
+                    schema.Types[0].GetHexColor(), 
+                    _capture.DisplayName, 
+                    box.GivenName,
+                    player.GetDefaultNameForPCBox(box), 
+                    player.Player.name 
+                }
+                : new object[] 
+                { 
+                    schema.Types[0].GetHexColor(), 
+                    _capture.DisplayName, 
+                    player.GetDefaultNameForPCBox(box), 
+                    player.Player.name 
+                };
+
+            Main.NewText(Language.GetTextValue(messageKey, messageArgs));
         }
 
         if (!justRegistered ||
@@ -475,7 +502,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         {
             Projectile.spriteDirection = -1;
         }
-        
+
         _capture.Encapsulate(Projectile.position); // Destroy Pokémon NPC
 
         // Queue resync for the proojectile in multiplayer
