@@ -15,7 +15,7 @@ public class RealtimeCombatGlobalNPC : GlobalNPC
             return;
 
         // Play a positive gain sound
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/realtime_exp_gain")
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/realtime_exp_gain")
         {
             Volume = 0.5f,
             PitchRange = (-0.1f, 0.1f)

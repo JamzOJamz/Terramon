@@ -117,7 +117,7 @@ public abstract class PCTile : ModTile
             SoundEngine.PlaySound(SoundID.MenuTick);
         else if (te.PoweredOn)
             SoundEngine.PlaySound(
-                new SoundStyle("Terramon/Sounds/ls_pc_on")
+                new SoundStyle("Terramon/Assets/SFX/ls_pc_on")
                 {
                     Volume = 0.54f
                 });

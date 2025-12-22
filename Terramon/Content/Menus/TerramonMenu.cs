@@ -18,7 +18,7 @@ public class TerramonMenu : ModMenu
 
     public override string DisplayName => "Terramon Mod";
 
-    public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/TitleTheme");
+    public override int Music => MusicLoader.GetMusicSlot(Mod, "Assets/Music/TitleTheme");
 
     public override bool PreDrawLogo(SpriteBatch spriteBatch, ref Vector2 logoDrawCenter, ref float logoRotation,
         ref float logoScale,

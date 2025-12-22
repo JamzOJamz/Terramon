@@ -29,7 +29,7 @@ public abstract class BasePkballItem : TerramonItem
         base.SetDefaults();
         Item.shoot = PokeballThrow;
         Item.shootSpeed = 6.5f;
-        Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw") { Volume = 0.8f };
+        Item.UseSound = new SoundStyle("Terramon/Assets/SFX/pkball_throw") { Volume = 0.8f };
         Item.width = 32;
         Item.height = 32;
         Item.maxStack = 9999;
@@ -53,7 +53,7 @@ public abstract class BasePkballItem : TerramonItem
         {
             Item.shoot = PokeballThrow;
             Item.createTile = -1;
-            Item.UseSound = new SoundStyle("Terramon/Sounds/pkball_throw");
+            Item.UseSound = new SoundStyle("Terramon/Assets/SFX/pkball_throw");
             if (player.Terramon().HasChosenStarter) return true;
             player.NewText(Language.GetTextValue("Mods.Terramon.Misc.RequireStarter"), TerramonCommand.ChatColorYellow);
             return false;

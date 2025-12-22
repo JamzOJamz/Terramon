@@ -518,7 +518,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             _cryTimer--;
             if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
+                var cry = new SoundStyle("Terramon/Assets/SFX/Cries/" + Data.InternalName)
                     { Volume = 0.15f };
                 SoundEngine.PlaySound(cry, Projectile.position);
             }

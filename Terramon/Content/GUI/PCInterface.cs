@@ -169,7 +169,7 @@ public class PCInterface : SmartUIState
         {
             if (_inRenameMode)
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
                 {
                     Volume = 0.25f
                 });
@@ -297,7 +297,7 @@ public class PCInterface : SmartUIState
         {
             if (_pendingColorChange || _inRenameMode)
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
                 {
                     Volume = 0.25f
                 });
@@ -321,7 +321,7 @@ public class PCInterface : SmartUIState
         {
             if (_pendingColorChange || _inRenameMode)
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
                 {
                     Volume = 0.25f
                 });
@@ -458,7 +458,7 @@ public class PCInterface : SmartUIState
         // Play the PC off sound
         if (!SilenceCloseSound)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_pc_off")
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/ls_pc_off")
             {
                 Volume = 0.54f
             });

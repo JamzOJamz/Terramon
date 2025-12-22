@@ -125,13 +125,13 @@ public sealed class TestBattleUI : SmartUIState
         Instance = this;
     }
 
-    private static SoundStyle Decide { get; } = new("Terramon/Sounds/battle_decide")
+    private static SoundStyle Decide { get; } = new("Terramon/Assets/SFX/battle_decide")
         { Volume = 0.3f };
 
-    private static SoundStyle Cancel { get; } = new("Terramon/Sounds/battle_cancel")
+    private static SoundStyle Cancel { get; } = new("Terramon/Assets/SFX/battle_cancel")
         { Volume = 0.3f };
 
-    private static SoundStyle Run { get; } = new("Terramon/Sounds/battle_run")
+    private static SoundStyle Run { get; } = new("Terramon/Assets/SFX/battle_run")
         { Volume = 0.3f };
 
     public static TestBattleUI Instance { get; private set; }
@@ -163,7 +163,7 @@ public sealed class TestBattleUI : SmartUIState
     {
         if (_optionsPanel.Parent != null)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
             {
                 Volume = 0.25f
             });

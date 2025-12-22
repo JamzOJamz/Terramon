@@ -13,7 +13,7 @@ public class RealtimeCombatPlayer : ModPlayer
             return;
 
         // Play a hit sound
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/hit_normal_damage")
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/hit_normal_damage")
         {
             Volume = 0.165f,
             PitchVariance = 0.12f

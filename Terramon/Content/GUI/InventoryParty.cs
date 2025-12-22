@@ -219,7 +219,7 @@ public class InventoryParty : SmartUIState
 
     private static void ToggleSlotsWhenDisabled(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
         {
             Volume = 0.25f
         });
@@ -476,7 +476,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                     Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
                         TerramonCommand.ChatColorYellow);
                 else
-                    SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                    SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
                     {
                         Volume = 0.25f
                     });

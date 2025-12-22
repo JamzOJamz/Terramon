@@ -81,7 +81,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
 
         if (evolutions.Count > 0) // Check if the Pokémon evolved
         {
-            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Assets/SFX/pkball_catch_pla"));
             var modPlayer = player.Terramon();
             var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
             // Iterate through all evolutions

@@ -123,7 +123,7 @@ public class TooltipOverlay : SmartUIState, ILoadable
                     }
                     else
                     {
-                        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
                         {
                             Volume = 0.25f
                         });

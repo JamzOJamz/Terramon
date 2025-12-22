@@ -346,7 +346,7 @@ public sealed class PartySidebarSlot : UICompositeImage
 
         var s = new SoundStyle
         {
-            SoundPath = "Terramon/Sounds/button_smm",
+            SoundPath = "Terramon/Assets/SFX/button_smm",
             Pitch = (float)_index / -15 + 0.6f,
             Volume = 0.2925f
         };
@@ -371,8 +371,8 @@ public sealed class PartySidebarSlot : UICompositeImage
         else if (IsMouseHovering && Data != null)
         {
             var s = _isActiveSlot
-                ? new SoundStyle("Terramon/Sounds/pkball_consume") { Volume = 0.35f }
-                : new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f };
+                ? new SoundStyle("Terramon/Assets/SFX/pkball_consume") { Volume = 0.35f }
+                : new SoundStyle("Terramon/Assets/SFX/pkmn_recall") { Volume = 0.375f };
             SoundEngine.PlaySound(s);
 
             CancellationTokenSource token = null;
@@ -387,7 +387,7 @@ public sealed class PartySidebarSlot : UICompositeImage
 
                     Main.QueueMainThreadAction(() =>
                     {
-                        var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
+                        var cry = new SoundStyle("Terramon/Assets/SFX/Cries/" + Data.InternalName)
                             { Volume = 0.15f };
                         SoundEngine.PlaySound(cry);
                     });

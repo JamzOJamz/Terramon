@@ -271,13 +271,13 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (!shouldPlaySound) return;
         if (_activeSlot != -1)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/pkmn_recall") { Volume = 0.375f });
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/Cries/" + Party[_activeSlot].InternalName)
                 { Volume = 0.2525f });
         }
         else
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/pkball_consume")
                 { Volume = 0.35f });
         }
     }

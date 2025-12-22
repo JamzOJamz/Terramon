@@ -43,13 +43,13 @@ public sealed class ParticipantPanel(Func<float> getPixelRatio = null) : UIEleme
     public static Asset<Texture2D> BallSlots { get; }
     public static Asset<Texture2D> PanelTexture { get; }
 
-    private static SoundStyle Ping { get; } = new("Terramon/Sounds/battle_tb_ping")
+    private static SoundStyle Ping { get; } = new("Terramon/Assets/SFX/battle_tb_ping")
         { Volume = 0.3f, MaxInstances = 0 };
 
-    private static SoundStyle PingEmpty { get; } = new("Terramon/Sounds/battle_tb_empty")
+    private static SoundStyle PingEmpty { get; } = new("Terramon/Assets/SFX/battle_tb_empty")
         { Volume = 0.3f, MaxInstances = 0 };
 
-    private static SoundStyle Start { get; } = new("Terramon/Sounds/battle_tb_start")
+    private static SoundStyle Start { get; } = new("Terramon/Assets/SFX/battle_tb_start")
         { Volume = 0.3f };
 
     /// <summary>

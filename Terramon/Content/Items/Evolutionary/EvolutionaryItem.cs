@@ -28,7 +28,7 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
             Language.GetTextValue("Mods.Terramon.Misc.PokemonEvolved", data.DisplayName,
                 evolvedSpeciesName), new Color(50, 255, 130));
         data.EvolveInto(evolvedSpecies);
-        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Assets/SFX/pkball_catch_pla"));
         var justRegistered = player.Terramon()
             .UpdatePokedex(evolvedSpecies, PokedexEntryStatus.Registered, shiny: data.IsShiny);
         if (!justRegistered || !ClientConfig.Instance.ShowPokedexRegistrationMessages) return 1;

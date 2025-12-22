@@ -118,7 +118,7 @@ public class HubUI : SmartUIState
         }
 
         if (customSound)
-            SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Sounds/dex_open" : "Terramon/Sounds/dex_close")
+            SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Assets/SFX/dex_open" : "Terramon/Assets/SFX/dex_close")
             {
                 Volume = 0.48f
             });
@@ -394,7 +394,7 @@ public class HubUI : SmartUIState
             if ((!dirIsRight && currentRange.Item1 == 1) ||
                 (dirIsRight && currentRange.Item2 == Terramon.LoadedPokemonCount))
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
                 {
                     Volume = 0.25f
                 });
@@ -404,7 +404,7 @@ public class HubUI : SmartUIState
                 _pokedexPage.ChangePage(dirIsRight.ToDirectionInt()); // -1 for left, 1 for right
                 UILoader.GetUIState<HubUI>().RefreshPokedex();
 
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/dex_pageup")
+                SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/dex_pageup")
                 {
                     Volume = 0.325f
                 });
@@ -1010,7 +1010,7 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         if ((!_right && currentRange.Item1 == 1) ||
             (_right && currentRange.Item2 == Terramon.HighestPokemonID))
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
             {
                 Volume = 0.25f
             });
@@ -1020,7 +1020,7 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         _pageDisplay.ChangePage(_right.ToDirectionInt()); // -1 for left, 1 for right
         UILoader.GetUIState<HubUI>().RefreshPokedex();
 
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/dex_pageup")
+        SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/dex_pageup")
         {
             Volume = 0.325f
         });
@@ -1310,7 +1310,7 @@ internal sealed class PokedexOverviewPanel : UIPanel
             // Play Pokémon cry
             if (playCry)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + schema.Identifier)
+                var cry = new SoundStyle("Terramon/Assets/SFX/Cries/" + schema.Identifier)
                     { Volume = 0.15f };
                 SoundEngine.PlaySound(cry);
             }

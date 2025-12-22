@@ -169,7 +169,7 @@ public sealed class StarterSelectUI : SmartUIState
         pageLeftButton.Top.Set(194, 0f);
         pageLeftButton.OnLeftClick += (_, _) =>
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
             {
                 Volume = 0.25f
             });
@@ -188,7 +188,7 @@ public sealed class StarterSelectUI : SmartUIState
         pageRightButton.Top.Set(194, 0f);
         pageRightButton.OnLeftClick += (_, _) =>
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
+            SoundEngine.PlaySound(new SoundStyle("Terramon/Assets/SFX/button_locked")
             {
                 Volume = 0.25f
             });
@@ -391,7 +391,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
                 {
                     _shakeCount = 0;
                     _hoverTextOverrideTimeLeft = 150;
-                    var cry = new SoundStyle("Terramon/Sounds/Cries/" + Terramon.DatabaseV2.GetPokemonName(_pokemon))
+                    var cry = new SoundStyle("Terramon/Assets/SFX/Cries/" + Terramon.DatabaseV2.GetPokemonName(_pokemon))
                         { Volume = 0.15f };
                     SetHoverText(Terramon.DatabaseV2.GetLocalizedPokemonName(_pokemon) + GetRandomHoverText());
                     SoundEngine.PlaySound(cry);
