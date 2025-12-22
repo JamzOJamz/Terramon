@@ -99,6 +99,11 @@ public class BetterUIText : UIElement
     {
         InternalSetText(text, TextScale, _isLarge);
     }
+    
+    public void SetText(object text)
+    {
+        InternalSetText(text, TextScale, _isLarge);
+    }
 
     public void SetText(string text, float textScale, bool large)
     {

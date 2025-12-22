@@ -235,7 +235,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         // stopwatch.Stop();
         // Mod.Logger.Debug("Time taken to apply components: " + stopwatch.Elapsed + "ms");
 
-        _battleClient = new(this);
+        _battleClient = new BattleClient(this);
     }
 
     public override void OnSpawn(IEntitySource source)

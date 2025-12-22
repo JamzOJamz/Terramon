@@ -530,6 +530,18 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         return Language.GetTextValue("Mods.Terramon.Misc.PCBoxDefaultName", _pc.Boxes.IndexOf(box) + 1);
     }
+    
+    public bool IsPartyFull()
+    {
+        return NextFreePartyIndex() == 6;
+    }
+    
+    public bool IsPCBoxFull(int boxIndex)
+    {
+        if (boxIndex < 0 || boxIndex >= _pc.Boxes.Count)
+            return true;
+        return _pc.Boxes[boxIndex].RemainingCapacity == 0;
+    }
 
     public override void SaveData(TagCompound tag)
     {

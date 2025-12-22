@@ -261,13 +261,21 @@ GUI: {
 			''' */
 		SlotTooltipPCMode: "[c/FFFFFF:En el equipo]"
 		SlotTooltipPCModeActive: "[c/FFFFFF:En el equipo (Activo)]"
-		// SlotTooltipUseItem: Use {0}
-		// SlotTooltipDisplayHeldItem: It is holding {0}
-		// SlotTooltipGiveHeldItem: Click to give {0}
+		// SlotTooltipUseItem: Left click to use {0}
+		// SlotTooltipGiveHeldItem: Right click to give {0}
+		// SlotTooltipSwapHeldItem: Right click to swap with held {0}
+		// SlotTooltipSwapHeldItemSpecify: Right click to swap {0} with held {1}
 		CannotRemoveLastPokemon: ¡Tu equipo debe tener al menos un Pokémon!
+		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
 	}
 
-	// PC.RenameLabel: Rename Box
+	PC: {
+		// RenameLabel: Rename Box
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+	}
 
 	Starter: {
 		Title: Bienvenid@ al mundo de Pokémon! Gracias por instalar Terramon!
@@ -906,6 +914,7 @@ WorldGen.ItemsPass: Dispersando caramelos
 Misc: {
 	CatchSuccess: ¡Te tengo! ¡[c/{0}:{1}] fue atrapado!
 	CatchSuccessPC: ¡Te tengo! ¡[c/{0}:{1}] fue capturado y transferido a {2} en el PC de {3}!
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
 	CatchSuccessPCNoRoom: ¡Te tengo! [c/{0}:{1}] fue capturado, ¡pero no había espacio en el PC de {2}!
 	// CatchMilestone3: You've obtained your 3rd {0}!
 	// CatchMilestone6: You've obtained your 6th {0}!

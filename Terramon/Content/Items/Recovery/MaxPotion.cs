@@ -10,6 +10,7 @@ public class MaxPotion : BasePotionItem
 
     public override void SetStaticDefaults()
     {
+        base.SetStaticDefaults();
         Item.ResearchUnlockCount = 5;
     }
 }

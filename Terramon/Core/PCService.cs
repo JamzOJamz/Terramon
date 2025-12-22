@@ -136,6 +136,18 @@ public class PCBox
         get => _givenName;
         set => _givenName = value is { Length: > MaxNameLength } ? value[..MaxNameLength] : value;
     }
+    
+    /// <summary>
+    ///     The number of remaining empty slots in this box.
+    /// </summary>
+    public int RemainingCapacity
+    {
+        get
+        {
+            var used = _slots.Count(t => t != null);
+            return Capacity - used;
+        }
+    }
 
     public PokemonData this[int slot]
     {

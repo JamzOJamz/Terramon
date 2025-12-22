@@ -608,12 +608,12 @@ internal sealed class PokedexPageDisplay : UIElement
 
     private readonly List<PokedexEntryIcon> _entries = [];
 
-    // Cache the sorted Pokemon IDs for efficient paging
+    // Cache the sorted Pokémon IDs for efficient paging
     private readonly List<ushort> _sortedPokemonIds;
 
     private int _cols;
     private int _rows;
-    private ushort _startPokemonId; // Now stores actual Pokemon ID, not array index
+    private ushort _startPokemonId; // Now stores actual Pokémon ID, not array index
 
     public PokedexPageDisplay(int width, int height, int rows, int cols)
     {
@@ -623,8 +623,8 @@ internal sealed class PokedexPageDisplay : UIElement
         Width.Set(width, 0);
         Height.Set(height, 0);
 
-        // Cache and sort all available Pokemon IDs
-        _sortedPokemonIds = Terramon.DatabaseV2.Pokemon.Keys
+        // Cache and sort all available Pokémon IDs
+        _sortedPokemonIds = Terramon.DatabaseV2.Pokemon.Keys!
             .Where(id => id <= Terramon.HighestPokemonID)
             .OrderBy(id => id)
             .ToList();
@@ -696,7 +696,7 @@ internal sealed class PokedexPageDisplay : UIElement
         var buttonSpacingX = (Width.Pixels - _cols * ButtonSize) / (_cols - 1);
         var buttonSpacingY = (Height.Pixels - _rows * ButtonSize) / (_rows - 1);
 
-        // Find the starting index in our sorted Pokemon list
+        // Find the starting index in the sorted Pokémon list
         var startIndex = _sortedPokemonIds.IndexOf(_startPokemonId);
         if (startIndex == -1) startIndex = 0; // Fallback if ID not found
 

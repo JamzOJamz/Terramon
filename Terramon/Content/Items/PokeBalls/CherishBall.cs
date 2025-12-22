@@ -21,6 +21,7 @@ internal class CherishBallItem : BasePkballItem
     
     public override void SetStaticDefaults()
     {
+        base.SetStaticDefaults();
         Item.ResearchUnlockCount = 1;
     }
 

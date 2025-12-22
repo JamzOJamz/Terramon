@@ -265,13 +265,21 @@ GUI: {
 			''' */
 		// SlotTooltipPCMode: "[c/FFFFFF:In Party]"
 		// SlotTooltipPCModeActive: "[c/FFFFFF:In Party (Active)]"
-		// SlotTooltipUseItem: Use {0}
-		// SlotTooltipDisplayHeldItem: It is holding {0}
-		// SlotTooltipGiveHeldItem: Click to give {0}
+		// SlotTooltipUseItem: Left click to use {0}
+		// SlotTooltipGiveHeldItem: Right click to give {0}
+		// SlotTooltipSwapHeldItem: Right click to swap with held {0}
+		// SlotTooltipSwapHeldItemSpecify: Right click to swap {0} with held {1}
 		// CannotRemoveLastPokemon: Your party must have at least one Pokémon!
+		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
 	}
 
-	// PC.RenameLabel: Rename Box
+	PC: {
+		// RenameLabel: Rename Box
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+	}
 
 	Starter: {
 		// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
@@ -910,6 +918,7 @@ NPCs: {
 Misc: {
 	// CatchSuccess: Gotcha! [c/{0}:{1}] was caught!
 	// CatchSuccessPC: Gotcha! [c/{0}:{1}] was caught and transferred to {2} in {3}'s PC!
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
 	// CatchSuccessPCNoRoom: Gotcha! [c/{0}:{1}] was caught, but there was no room in {2}'s PC!
 	// CatchMilestone3: You've obtained your 3rd {0}!
 	// CatchMilestone6: You've obtained your 6th {0}!

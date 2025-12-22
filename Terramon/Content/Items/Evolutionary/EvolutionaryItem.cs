@@ -41,6 +41,7 @@ public abstract class EvolutionaryItem : TerramonItem, IPokemonDirectUse
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 3;
+        TerramonItemAPI.Sets.HeldItem.Add(Type);
     }
 
     public override void SetDefaults()

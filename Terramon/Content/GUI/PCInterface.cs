@@ -33,14 +33,14 @@ public class PCInterface : SmartUIState
 
     private static readonly Color[] DefaultBoxColors =
     [
-        new Color(152, 200, 96),
-        new Color(94, 218, 229),
-        new Color(98, 168, 239),
-        new Color(156, 123, 247),
-        new Color(241, 134, 238),
-        new Color(239, 98, 98),
-        new Color(255, 149, 104),
-        new Color(255, 223, 66)
+        new(152, 200, 96),
+        new(94, 218, 229),
+        new(98, 168, 239),
+        new(156, 123, 247),
+        new(241, 134, 238),
+        new(239, 98, 98),
+        new(255, 149, 104),
+        new(255, 223, 66)
     ];
 
     private static BetterUIText _boxNameText;
@@ -59,6 +59,18 @@ public class PCInterface : SmartUIState
     private static UITextField _textInput;
     private static bool _hasChangedPage;
 
+    private static readonly LocalizedText RenameText = Lang.inter[61];
+    private static readonly LocalizedText SaveText = Lang.inter[47];
+    private static readonly LocalizedText CancelText = Lang.inter[63];
+    private static readonly LocalizedText ChangeColorText = Language.GetText("Mods.Terramon.GUI.PC.ChangeColor");
+    private static readonly LocalizedText SaveColorText = Language.GetText("Mods.Terramon.GUI.PC.SaveColor");
+
+    private static readonly LocalizedText SaveColorUnsavedChangesText =
+        Language.GetText("Mods.Terramon.GUI.PC.SaveColorUnsavedChanges");
+
+    private static readonly LocalizedText BoxDefaultNameText =
+        Language.GetText("Mods.Terramon.Misc.PCBoxDefaultName");
+
     static PCInterface()
     {
         On_Main.DoUpdate_Enter_ToggleChat += orig =>
@@ -70,7 +82,7 @@ public class PCInterface : SmartUIState
                 SoundEngine.PlaySound(in SoundID.MenuClose);
                 SetNameForCurrentBox(_textInput?.CurrentValue);
                 _container?.RemoveChild(_cancelRenameButton);
-                _renameBoxButton?.SetText("Rename");
+                _renameBoxButton?.SetText(RenameText);
                 if (_boxNameText != null)
                 {
                     _boxNameText.SetText(GetNameForCurrentBox());
@@ -112,6 +124,8 @@ public class PCInterface : SmartUIState
 
     public static int DisplayedBoxIndex { get; private set; }
 
+    public static bool SilenceCloseSound { get; set; }
+
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {
         return layers.FindIndex(layer => layer.Name.Equals("Vanilla: Radial Hotbars"));
@@ -140,7 +154,7 @@ public class PCInterface : SmartUIState
             AddElement(slot, slotPositionsX[j] - 120, i * 48 - 4, 50, 50, _container);
         }
 
-        _boxNameText = new BetterUIText("Box 1")
+        _boxNameText = new BetterUIText(Language.GetText("Mods.Terramon.Misc.PCBoxDefaultName").WithFormatArgs(1))
         {
             TextColor = DefaultBoxColors[0]
         };
@@ -148,7 +162,7 @@ public class PCInterface : SmartUIState
         _boxNameText.Top.Set(9, 0);
         _container.Append(_boxNameText);
 
-        _changeColorButton = new PCActionButton("Change Color");
+        _changeColorButton = new PCActionButton(ChangeColorText);
         _changeColorButton.Left.Set(335, 0);
         _changeColorButton.Top.Set(68, 0);
         _changeColorButton.OnLeftClick += (_, _) =>
@@ -163,8 +177,8 @@ public class PCInterface : SmartUIState
             if (!HasChild(_colorPicker))
             {
                 _inColorPickerMode = true;
-                _changeColorButton.SetText("Save Color");
-                _renameBoxButton.SetText("Cancel");
+                _changeColorButton.SetText(SaveColorText);
+                _renameBoxButton.SetText(CancelText);
                 _colorPicker.SetColor(GetColorForCurrentBox(), GetDefaultColorForCurrentBox());
                 Append(_colorPicker);
             }
@@ -181,26 +195,27 @@ public class PCInterface : SmartUIState
                 _boxDragBar.Color = Color.Transparent;
                 _inColorPickerMode = false;
                 _pendingColorChange = false;
-                _changeColorButton.SetText("Change Color");
-                _renameBoxButton.SetText("Rename");
+                _changeColorButton.SetText(ChangeColorText);
+                _renameBoxButton.SetText(RenameText);
                 RemoveChild(_colorPicker);
             }
         };
         _container.Append(_changeColorButton);
 
-        _renameBoxButton = new PCActionButton("Rename");
+        _renameBoxButton = new PCActionButton(RenameText);
         _renameBoxButton.Left.Set(335, 0);
         _renameBoxButton.Top.Set(94, 0);
         _renameBoxButton.OnLeftClick += (_, _) =>
         {
-            SoundEngine.PlaySound(in SoundID.MenuTick);
-            
+            SoundEngine.PlaySound(SoundID.MenuTick);
+
             if (!_inColorPickerMode)
             {
                 if (UILinkPointNavigator.InUse)
-                {;
+                {
                     Main.clrInput();
-                    UIVirtualKeyboard uIVirtualKeyboard = new(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"), _boxNameText.Text,
+                    UIVirtualKeyboard uIVirtualKeyboard = new(Language.GetTextValue("Mods.Terramon.GUI.PC.RenameLabel"),
+                        _boxNameText.Text,
                         text =>
                         {
                             SetNameForCurrentBox(text);
@@ -214,21 +229,21 @@ public class PCInterface : SmartUIState
                             UILinkPointNavigator.ChangePoint(TerramonPointID.PCRename);
                             Main.InGameUI.SetState(null);
                             Main.inFancyUI = false;
-                        }, 0, false);
-                
+                        });
+
                     uIVirtualKeyboard.SetMaxInputLength(27);
                     Main.InGameUI.SetState(uIVirtualKeyboard);
                     UILinkPointNavigator.GoToDefaultPage(1);
                     Main.inFancyUI = true;
                     return;
                 }
-                
+
                 // Rename the box
                 if (!_container.HasChild(_cancelRenameButton))
                 {
                     Main.drawingPlayerChat = false;
                     _container.Append(_cancelRenameButton);
-                    _renameBoxButton.SetText("Save");
+                    _renameBoxButton.SetText(SaveText);
                     _textInput.SetCurrentText(_boxNameText.Text);
                     _textInput.SetTyping();
                     _boxNameText.ShowTypingCaret = true;
@@ -239,7 +254,7 @@ public class PCInterface : SmartUIState
                     SoundEngine.PlaySound(in SoundID.MenuClose);
                     SetNameForCurrentBox(_textInput.CurrentValue);
                     _container.RemoveChild(_cancelRenameButton);
-                    _renameBoxButton.SetText("Rename");
+                    _renameBoxButton.SetText(RenameText);
                     _boxNameText.SetText(GetNameForCurrentBox());
                     _boxNameText.ShowTypingCaret = false;
                     _textInput.SetNotTyping();
@@ -252,14 +267,14 @@ public class PCInterface : SmartUIState
             _colorPicker.Remove();
             _boxNameText.TextColor = GetColorForCurrentBox();
             _boxDragBar.Color = Color.Transparent;
-            _changeColorButton.SetText("Change Color");
-            _renameBoxButton.SetText("Rename");
+            _changeColorButton.SetText(ChangeColorText);
+            _renameBoxButton.SetText(RenameText);
             _pendingColorChange = false;
             _inColorPickerMode = false;
         };
         _container.Append(_renameBoxButton);
 
-        _cancelRenameButton = new PCActionButton("Cancel");
+        _cancelRenameButton = new PCActionButton(CancelText);
         _cancelRenameButton.Left.Set(335, 0);
         _cancelRenameButton.Top.Set(120, 0);
         _cancelRenameButton.OnLeftClick += (_, _) =>
@@ -329,12 +344,12 @@ public class PCInterface : SmartUIState
             if (_pendingColorChange)
             {
                 _boxDragBar.Color = color;
-                _changeColorButton.SetText("Save Color (*)");
+                _changeColorButton.SetText(SaveColorUnsavedChangesText);
             }
             else
             {
                 _boxDragBar.Color = Color.Transparent;
-                _changeColorButton.SetText("Save Color");
+                _changeColorButton.SetText(SaveColorText);
             }
         };
 
@@ -357,7 +372,7 @@ public class PCInterface : SmartUIState
             UILinkPointNavigator.ChangePoint(TerramonPointID.PC0);
             _hasChangedPage = true;
         }
-            
+
         if (_inRenameMode)
         {
             _boxNameText.SetText(_textInput.CurrentValue);
@@ -392,9 +407,9 @@ public class PCInterface : SmartUIState
         {
             _colorPicker.Remove();
             _boxDragBar.Color = Color.Transparent;
-            _changeColorButton.SetText("Change Color");
+            _changeColorButton.SetText(ChangeColorText);
             _container.Append(_renameBoxButton);
-            _renameBoxButton.SetText("Rename");
+            _renameBoxButton.SetText(RenameText);
             _pendingColorChange = false;
             _inColorPickerMode = false;
         }
@@ -414,10 +429,7 @@ public class PCInterface : SmartUIState
 
         //mark set page to false (so gamepad page can be correctly set)
         _hasChangedPage = false;
-
     }
-    
-    public static bool SilenceCloseSound { get; set; }
 
     /// <summary>
     ///     Called when the PC interface is closed.
@@ -436,12 +448,9 @@ public class PCInterface : SmartUIState
 
         // Play the PC off sound
         if (!SilenceCloseSound)
-        {
             SoundEngine.PlaySound(in TerramonSoundID.PCOff);
-        } else
-        {
+        else
             SilenceCloseSound = false;
-        }
     }
 
     public static void ResetToDefault()
@@ -451,9 +460,9 @@ public class PCInterface : SmartUIState
         {
             _colorPicker.Remove();
             _boxDragBar.Color = Color.Transparent;
-            _changeColorButton.SetText("Change Color");
+            _changeColorButton.SetText(ChangeColorText);
             _container.Append(_renameBoxButton);
-            _renameBoxButton.SetText(Lang.inter[61]); // LegacyInterface.61 : Rename
+            _renameBoxButton.SetText(RenameText);
             _pendingColorChange = false;
             _inColorPickerMode = false;
         }
@@ -498,7 +507,7 @@ public class PCInterface : SmartUIState
     {
         if (!_inRenameMode) return;
         _container.RemoveChild(_cancelRenameButton);
-        _renameBoxButton.SetText("Rename");
+        _renameBoxButton.SetText(RenameText);
         _boxNameText.SetText(GetNameForCurrentBox());
         _boxNameText.ShowTypingCaret = false;
         _boxNameText.Recalculate();
@@ -506,10 +515,10 @@ public class PCInterface : SmartUIState
         _inRenameMode = false;
     }
 
-    private static string GetNameForCurrentBox()
+    private static object GetNameForCurrentBox()
     {
-        var name = _pcService.Boxes[DisplayedBoxIndex].GivenName;
-        return string.IsNullOrEmpty(name) ? $"Box {DisplayedBoxIndex + 1}" : name;
+        var customName = _pcService.Boxes[DisplayedBoxIndex].GivenName;
+        return string.IsNullOrEmpty(customName) ? BoxDefaultNameText.WithFormatArgs(DisplayedBoxIndex + 1) : customName;
     }
 
     private static void SetNameForCurrentBox(string name)
@@ -620,6 +629,23 @@ internal sealed class CustomPCItemSlot : UIImage
         }
         else if (Main.mouseItem.IsAir)
         {
+            // Special case: quick withdraw Pokémon to party
+            if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
+            {
+                var modPlayer = TerramonPlayer.LocalPlayer;
+                var nextFreePartySlot = modPlayer.NextFreePartyIndex();
+                if (nextFreePartySlot < 6)
+                {
+                    modPlayer.Party[nextFreePartySlot] = data;
+                    SoundEngine.PlaySound(SoundID.Grab);
+                    SetData(null);
+                    SetImage(PCSlotBgEmptyTexture);
+                    _minispriteImage?.Remove();
+                    if (PCInterface.Active) PCInterface.PopulateCustomSlots(_box);
+                    return;
+                }
+            }
+
             // Take or swap the Pokémon from the slot if slot is not empty and player is not holding an item
             SoundEngine.PlaySound(in SoundID.Grab);
             TooltipOverlay.SetHeldPokemon(data, TooltipOverlay.HeldPokemonSource.PC, d =>
@@ -668,6 +694,7 @@ internal sealed class CustomPCItemSlot : UIImage
     public override void Draw(SpriteBatch spriteBatch)
     {
         var data = Data;
+        var player = Main.LocalPlayer;
         if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
         if (IsMouseHovering)
         {
@@ -675,7 +702,7 @@ internal sealed class CustomPCItemSlot : UIImage
             {
                 if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
                 {
-                    HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
+                    HubUI.OpenToPokemon(data.ID, data.IsShiny);
                     return;
                 }
 
@@ -683,6 +710,11 @@ internal sealed class CustomPCItemSlot : UIImage
                 TooltipOverlay.SetTooltip(_tooltipText);
                 TooltipOverlay.SetIcon(BallAssets.GetBallIcon(data.Ball));
                 if (data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
+
+                // Change cursor icon if in PC mode and shift held (for quick deposit)
+                if ((Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift)) &&
+                    !player.Terramon().IsPartyFull())
+                    Main.cursorOverride = CursorOverrideID.ChestToInventory;
             }
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -695,10 +727,20 @@ internal sealed class CustomPCItemSlot : UIImage
 
 internal sealed class PCActionButton : BetterUIText
 {
-    public PCActionButton(string text) : base(text, 0.75f)
+    private static readonly Color DefaultColor = new(232, 232, 249);
+
+    public PCActionButton(string text) : this((object)text)
+    {
+    }
+
+    public PCActionButton(LocalizedText text) : this((object)text)
+    {
+    }
+
+    private PCActionButton(object text) : base(text, 0.75f)
     {
         Height.Set(34, 0);
-        TextColor = new Color(232, 232, 249);
+        TextColor = DefaultColor;
         TextOriginX = 0f;
         TextOriginY = 0.5f;
     }
@@ -712,13 +754,14 @@ internal sealed class PCActionButton : BetterUIText
 
     public override void MouseOut(UIMouseEvent evt)
     {
-        TextColor = new Color(232, 232, 249);
+        TextColor = DefaultColor;
         Tween.To(() => TextScale, SetTextScale, 0.75f, 1f / 12f);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
+        if (ContainsPoint(Main.MouseScreen))
+            Main.LocalPlayer.mouseInterface = true;
 
         base.DrawSelf(spriteBatch);
     }
@@ -761,6 +804,9 @@ internal sealed class PCDragBar : UIImage
 
 internal sealed class PCColorPicker : UIContainer
 {
+    private static readonly LocalizedText ResetToDefaultColorText =
+        Language.GetText("Mods.Terramon.GUI.PC.ResetToDefaultColor");
+
     private readonly UIColoredImageButton _copyHexButton;
     private readonly UIText _hexCodeText;
     private readonly UIColoredImageButton _pasteHexButton;
@@ -786,7 +832,7 @@ internal sealed class PCColorPicker : UIContainer
         backPanel.Append(CreateHSLSlider(HSLSliderId.Saturation));
         backPanel.Append(CreateHSLSlider(HSLSliderId.Luminance));
 
-        _resetToDefaultButton = new BetterUIText("Reset to Default Color", 0.8125f)
+        _resetToDefaultButton = new BetterUIText(ResetToDefaultColorText, 0.8125f)
         {
             TextColor = new Color(100, 100, 100),
             TextOriginX = 0.5f,
@@ -873,7 +919,8 @@ internal sealed class PCColorPicker : UIContainer
 
     public static Color GetColor()
     {
-        return ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z);
+        return ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y,
+            TerramonPlayer.LocalPlayer.ColorPickerHSL.Z);
     }
 
     public void SetColor(Color color, Color defaultColor)
@@ -1035,8 +1082,10 @@ internal sealed class PCColorPicker : UIContainer
         return id switch
         {
             HSLSliderId.Hue => ScaledHslToRgb(pointAt, 1f, 0.5f),
-            HSLSliderId.Saturation => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, pointAt, TerramonPlayer.LocalPlayer.ColorPickerHSL.Z),
-            HSLSliderId.Luminance => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, pointAt),
+            HSLSliderId.Saturation => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X, pointAt,
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Z),
+            HSLSliderId.Luminance => ScaledHslToRgb(TerramonPlayer.LocalPlayer.ColorPickerHSL.X,
+                TerramonPlayer.LocalPlayer.ColorPickerHSL.Y, pointAt),
             _ => Color.White
         };
     }

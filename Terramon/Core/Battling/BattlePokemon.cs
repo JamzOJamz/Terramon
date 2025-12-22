@@ -15,7 +15,9 @@ public struct BattlePokemon()
         readonly get => (ushort)(Data?.HeldItem.type ?? _heldItem);
         set
         {
-            Data?.HeldItem = value == 0 ? new() : new(value);
+            if (Data != null)
+                Data.HeldItem = value == 0 ? new Item() : new Item(value);
+
             _heldItem = value;
         }
     }

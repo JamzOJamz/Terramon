@@ -10,6 +10,7 @@ public class HyperPotion : BasePotionItem
 
     public override void SetStaticDefaults()
     {
+        base.SetStaticDefaults();
         Item.ResearchUnlockCount = 10;
     }
 }
