@@ -1,4 +1,4 @@
-using Terramon.Helpers;
+using Terramon.Utilities.TModLoader;
 using Terraria.UI;
 
 namespace Terramon.Core.Loaders.UILoading;

@@ -1,7 +1,7 @@
 ﻿using ReLogic.Content;
 using Terraria.Graphics.Shaders;
 
-namespace Terramon.Helpers;
+namespace Terramon.Core.Assets;
 
 public static class ShaderAssets
 {

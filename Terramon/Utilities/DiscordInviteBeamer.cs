@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 
-namespace Terramon.Helpers;
+namespace Terramon.Utilities;
 
 internal static class DiscordInviteBeamer
 {

@@ -1,4 +1,4 @@
-namespace Terramon.Helpers;
+namespace Terramon.Utilities.Xna;
 
 /// <summary>
 ///     Provides utility methods for working with colors.
@@ -39,20 +39,43 @@ public static class ColorUtils
             $"{color.R:X2}{color.G:X2}{color.B:X2}{color.A:X2}";
     }
 
+    /// <summary>
+    ///     Shifts the hue of a color by a specified amount, optionally adjusting lightness and direction.
+    /// </summary>
+    /// <param name="color">The original color to modify.</param>
+    /// <param name="amt">The amount to shift the hue (0-1 range).</param>
+    /// <param name="shiftLumi">Optional adjustment to lightness (-1 to 1, default 0).</param>
+    /// <param name="direction">
+    ///     Optional hue shift direction: 
+    ///     0 = automatic based on hue, 
+    ///     1 = clockwise, 
+    ///     -1 = counterclockwise.
+    /// </param>
+    /// <returns>A new <see cref="Color"/> with the hue shifted and lightness adjusted.</returns>
+    /// <remarks>
+    ///     Converts the color to HSL, shifts the hue with bidirectional wrapping, 
+    ///     optionally modifies the lightness, and converts it back to RGB.
+    /// </remarks>
     public static Color HueShift(this Color color, float amt, float shiftLumi = 0f, float direction = 0f)
     {
         // Thresholds for determining best hue shifting direction
         const float yellow = 0.23529411764f;
         const float blue = 0.94117647058f;
-        var col = Main.rgbToHsl(color);
-        // Everything before yellow should shift counterclockwise (yellow to orange, red to magenta)
-        // Everything before blue should shift clockwise (lime to green, cyan to blue)
+
+        var hsl = Main.rgbToHsl(color);
+
+        /*
+            Shift hue based on thresholds:
+            - Counterclockwise before yellow (yellow → orange, red → magenta)
+            - Clockwise before blue (lime → green, cyan → blue)
+        */
         if (direction == 0f)
-            direction = col.X is < yellow or > blue ? -1f : 1f;
-        var changedHue = col.X + amt * direction;
-        col.X = (changedHue % 1f + 1f) % 1f; // Bidirectional wrapping
-        col.Z = Math.Clamp(col.Z + shiftLumi, 0f, 1f);
-        return Main.hslToRgb(col);
+            direction = hsl.X is < yellow or > blue ? -1f : 1f;
+
+        hsl.X = (hsl.X + amt * direction + 1f) % 1f; // Bidirectional wrapping
+        hsl.Z = Math.Clamp(hsl.Z + shiftLumi, 0f, 1f); // Adjust lightness
+
+        return Main.hslToRgb(hsl);
     }
 
     /// <summary>

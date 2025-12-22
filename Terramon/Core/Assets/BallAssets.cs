@@ -1,7 +1,7 @@
 using ReLogic.Content;
 using Terramon.ID;
 
-namespace Terramon.Helpers;
+namespace Terramon.Core.Assets;
 
 [Autoload(Side = ModSide.Client)]
 public class BallAssets : ILoadable

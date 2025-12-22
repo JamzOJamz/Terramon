@@ -1,5 +1,5 @@
 using ReLogic.Graphics;
-using Terramon.Helpers;
+using Terramon.Utilities;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader.UI;

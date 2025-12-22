@@ -1,10 +1,11 @@
 using ReLogic.Content;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
+using Terramon.Core.Assets;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
-using Terramon.Helpers;
+using Terramon.Utilities.Xna;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;

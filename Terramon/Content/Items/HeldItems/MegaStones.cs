@@ -1,7 +1,8 @@
 ﻿using Terramon.Content.Rarities;
+using Terramon.Core.Assets;
 using Terramon.Core.Loaders;
-using Terramon.Helpers;
 using Terramon.ID;
+using Terramon.Utilities.Xna;
 using Terraria.GameContent;
 using Terraria.Localization;
 

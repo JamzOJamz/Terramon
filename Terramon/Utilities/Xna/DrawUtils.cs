@@ -1,4 +1,4 @@
-﻿namespace Terramon.Helpers;
+﻿namespace Terramon.Utilities.Xna;
 
 public struct SpriteBatchData
 {

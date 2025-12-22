@@ -55,7 +55,7 @@
         <Using Include="Terraria.ID" />
         <Using Include="Terraria.ModLoader" />
         <Using Include="Terramon.Content.Packets" />
-        <Using Include="Terramon.Helpers.VanillaExtensions" Static="True" />
+        <Using Include="Terramon.Utilities.Terraria" />
     </ItemGroup>
 
     <ItemGroup>

@@ -2,7 +2,6 @@ using EasyPacketsLib;
 using ReLogic.Content;
 using Terramon.Content.Commands;
 using Terramon.Content.GUI;
-using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;

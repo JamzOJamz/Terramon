@@ -1,5 +1,5 @@
 ﻿using ReLogic.Content;
-using Terramon.Helpers;
+using Terramon.Utilities.Xna;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;

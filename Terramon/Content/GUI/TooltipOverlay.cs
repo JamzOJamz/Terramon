@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders.UILoading;
-using Terramon.Helpers;
+using Terramon.Utilities.Xna;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.UI;

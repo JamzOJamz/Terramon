@@ -93,7 +93,7 @@ public readonly record struct SimpleDetails
     }
     public SimpleDetails(in Details original) : this(
         NationalDexID.FromSpecies(original.Species),
-        FromShowdownChar(original.Gender),
+        GenderUtils.FromShowdownChar(original.Gender),
         original.Shiny,
         original.Level,
         original.Terastallized is null ? PokemonType.None : Enum.Parse<PokemonType>(original.Terastallized))

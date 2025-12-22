@@ -7,7 +7,7 @@ using Terramon.Content.NPCs;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Core.Abstractions;
-using Terramon.Helpers;
+using Terramon.Core.Assets;
 
 namespace Terramon.Core.Loaders;
 

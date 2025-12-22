@@ -1,6 +1,6 @@
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
-using Terramon.Helpers;
+using Terramon.Utilities.Terraria;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.WorldBuilding;

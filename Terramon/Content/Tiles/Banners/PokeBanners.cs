@@ -3,7 +3,6 @@ using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.Core.Loaders;
 using Terramon.Core.Systems;
-using Terramon.Helpers;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;

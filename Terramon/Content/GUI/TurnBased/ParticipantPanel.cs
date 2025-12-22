@@ -1,6 +1,6 @@
 ﻿using ReLogic.Content;
 using ReLogic.Graphics;
-using Terramon.Helpers;
+using Terramon.Core.Assets;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.UI;

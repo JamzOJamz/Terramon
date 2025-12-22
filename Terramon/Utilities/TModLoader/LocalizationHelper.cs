@@ -1,8 +1,6 @@
 using Terraria.Localization;
 
-// ReSharper disable InconsistentNaming
-
-namespace Terramon.Helpers;
+namespace Terramon.Utilities.TModLoader;
 
 /*
  * MIT License

@@ -1,6 +1,6 @@
 using Terramon.Content.Configs;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
-using Terramon.Helpers;
+using Terramon.Utilities.Xna;
 using Terraria.Audio;
 using Terraria.Localization;
 
