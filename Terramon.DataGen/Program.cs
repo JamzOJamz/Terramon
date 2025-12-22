@@ -75,7 +75,7 @@ internal static class Program
         Console.WriteLine("========================================\n");
 
         Console.WriteLine("WARNING: This program will overwrite existing PokemonDB*.json files in:");
-        Console.WriteLine("Terramon/Assets/Data\n");
+        Console.WriteLine("Terramon/Assets/Database\n");
         Console.WriteLine($"It will generate data for {totalPokemonCount} Pokémon.\n");
 
         Console.WriteLine("Press any key to continue, or CTRL+C to quit...");

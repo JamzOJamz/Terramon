@@ -153,7 +153,7 @@ public class Terramon : Mod
         Directory.CreateDirectory(SavePath);
 
         // Load the database
-        var dbStream = GetFileStream("Assets/Data/PokemonDB-min.json");
+        var dbStream = GetFileStream("Assets/Database/PokemonDB-min.json");
         DatabaseV2 = DatabaseV2.Parse(dbStream);
 
         // Calculate and cache Pokémon metrics after loading the database
