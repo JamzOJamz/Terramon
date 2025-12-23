@@ -1,11 +1,11 @@
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using Terramon.Common.Entities;
 using Terramon.Common.ID;
 using Terramon.Content.Buffs;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
-using Terramon.Core.Abstractions;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
 using Terramon.Core.ProjectileComponents;

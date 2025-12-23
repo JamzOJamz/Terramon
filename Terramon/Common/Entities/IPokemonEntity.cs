@@ -1,4 +1,4 @@
-namespace Terramon.Core.Abstractions;
+namespace Terramon.Common.Entities;
 
 /// <summary>
 ///     Represents a type of <see cref="Terraria.Entity" /> that represents a Pokémon in the database.

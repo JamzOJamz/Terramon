@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using System.Reflection;
+using Terramon.Common.Entities;
 using Terramon.Common.ID;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
@@ -9,7 +10,6 @@ using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Projectiles;
-using Terramon.Core.Abstractions;
 using Terramon.Core.Assets;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets.Messages;

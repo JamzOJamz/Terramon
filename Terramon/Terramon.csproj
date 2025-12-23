@@ -61,9 +61,5 @@
     <ItemGroup>
       <ProjectReference Include="..\EasyPacketsLib\EasyPacketsLib.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Common\" />
-    </ItemGroup>
     
 </Project>
