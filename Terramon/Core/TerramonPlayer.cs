@@ -8,6 +8,7 @@ using Terramon.Content.Commands;
 using Terramon.Content.GUI;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Items.Valuables;
 using Terramon.Content.Projectiles;
@@ -381,14 +382,23 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (attempt.inLava || attempt.inHoney)
             return;
 
-        Console.WriteLine(ValuableItem.Pool.ToString(i => Lang.GetItemName(i).Value));
+        // Console.WriteLine(ValuableItem.Pool.ToString(i => Lang.GetItemName(i).Value));
 
-        //if (!Main.rand.NextBool(8))
-        //    return;
+        var terramonChance = FishingRod.DefaultCatchTerramonChance;
+        if (attempt.bobberType == PokeBallBobber.ProjectileType)
+            terramonChance = ((FishingRod)attempt.playerFishingConditions.Pole.ModItem).CatchTerramonChance;
+
+        if (Main.rand.NextDouble() > terramonChance)
+            return;
 
         if (Main.rand.NextBool(3)) // pokemon are less likely
         {
             itemDrop = -1;
+            // make ts also an AliasRandom eventually
+            // it also needs to be based on an actual pool with conditions
+            // for instance we might want luvdisc (example) to have a larger chance of being fished up during february
+            // or for fishing up certain pokemon to be disabled
+            // i guess you could make a similar argument for items but i think that's less important
             var dexID = Main.rand.Next(2) switch
             {
                 0 => NationalDexID.Magikarp,

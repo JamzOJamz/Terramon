@@ -117,7 +117,7 @@ public sealed class RareSweetfish : RareCandy
     public override void SetStaticDefaults()
     {
         base.SetStaticDefaults();
-        ValuableItem.Pool.Add((ushort)Type, 250);
+        ValuableItem.Pool.Add((ushort)Type, 0.1d);
     }
 }
 

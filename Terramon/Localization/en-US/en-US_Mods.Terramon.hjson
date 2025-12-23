@@ -371,6 +371,7 @@ CommonTooltips: {
 		One of a variety of mysterious Mega Stones
 		Any {0} holding this stone will be able to Mega Evolve during battle
 		'''
+	TerramonFishChance: "{0}% chance to catch Pokémon or treasure"
 	Unobtainable: Unobtainable
 }
 
@@ -795,6 +796,16 @@ Items: {
 	OldRod: {
 		DisplayName: Old Rod
 		Tooltip: ""
+	}
+
+	SuperRod: {
+		Tooltip: ""
+		DisplayName: Super Rod
+	}
+
+	GoodRod: {
+		Tooltip: ""
+		DisplayName: Good Rod
 	}
 }
 
