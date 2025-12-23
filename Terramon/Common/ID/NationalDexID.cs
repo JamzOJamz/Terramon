@@ -2,7 +2,7 @@
 
 using ReLogic.Reflection;
 
-namespace Terramon.ID;
+namespace Terramon.Common.ID;
 
 public class NationalDexID
 {

@@ -1,8 +1,8 @@
-﻿using Terramon.Content.Configs;
+﻿using Terramon.Common.ID;
+using Terramon.Content.Configs;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Tiles.MusicBoxes;
-using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;

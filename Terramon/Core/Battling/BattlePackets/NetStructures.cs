@@ -1,5 +1,5 @@
 ﻿using Showdown.NET.Definitions;
-using Terramon.ID;
+using Terramon.Common.ID;
 
 namespace Terramon.Core.Battling.BattlePackets;
 

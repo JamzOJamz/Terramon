@@ -3,8 +3,8 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using Terramon.Common.ID;
 using Terramon.Core;
-using Terramon.ID;
 
 namespace Terramon.DataGen;
 

@@ -1,5 +1,5 @@
+using Terramon.Common.ID;
 using Terramon.Content.Rarities;
-using Terramon.ID;
 
 namespace Terramon.Content.Items;
 

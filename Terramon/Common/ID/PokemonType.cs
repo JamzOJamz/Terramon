@@ -1,7 +1,7 @@
 using System.Globalization;
 using Terramon.Utilities.Xna;
 
-namespace Terramon.ID;
+namespace Terramon.Common.ID;
 
 public enum PokemonType : byte
 {

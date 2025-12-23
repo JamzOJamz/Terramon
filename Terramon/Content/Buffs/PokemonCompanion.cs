@@ -1,9 +1,9 @@
 using ReLogic.Content;
+using Terramon.Common.ID;
 using Terramon.Content.Configs;
 using Terramon.Core.Assets;
 using Terramon.Core.Battling;
 using Terramon.Core.Loaders;
-using Terramon.ID;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 

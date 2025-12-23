@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
 using System.Reflection;
+using Terramon.Common.ID;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
@@ -14,7 +15,6 @@ using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
-using Terramon.ID;
 using Terramon.Utilities.Xna;
 using Terraria.Audio;
 using Terraria.DataStructures;

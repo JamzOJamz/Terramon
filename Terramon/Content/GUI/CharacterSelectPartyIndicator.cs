@@ -1,7 +1,7 @@
 using ReLogic.Content;
+using Terramon.Common.ID;
 using Terramon.Content.Items;
 using Terramon.Core.Assets;
-using Terramon.ID;
 using Terraria.GameContent.UI.Elements;
 
 namespace Terramon.Content.GUI;

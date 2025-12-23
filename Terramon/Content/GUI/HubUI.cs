@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework.Input;
 using ReLogic.Content;
+using Terramon.Common.ID;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
 using Terramon.Content.NPCs;
 using Terramon.Core.Assets;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
-using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;

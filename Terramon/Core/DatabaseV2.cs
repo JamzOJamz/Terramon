@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Showdown.NET.Definitions;
-using Terramon.ID;
+using Terramon.Common.ID;
 using Terraria.Localization;
 
 // ReSharper disable InconsistentNaming

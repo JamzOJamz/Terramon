@@ -1,7 +1,7 @@
-﻿using Terramon.Content.Configs;
+﻿using Terramon.Common.ID;
+using Terramon.Content.Configs;
 using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
-using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;

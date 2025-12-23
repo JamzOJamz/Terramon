@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using ReLogic.Content;
+using Terramon.Common.ID;
 using Terramon.Core.Battling;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders.UILoading;
-using Terramon.ID;
 using Terramon.Utilities.Xna;
 using Terraria.Audio;
 using Terraria.DataStructures;

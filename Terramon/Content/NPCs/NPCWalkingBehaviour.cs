@@ -1,5 +1,5 @@
+using Terramon.Common.ID;
 using Terramon.Core.NPCComponents;
-using Terramon.ID;
 using Terraria.DataStructures;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global

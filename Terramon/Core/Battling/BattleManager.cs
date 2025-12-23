@@ -2,11 +2,11 @@
 using System.Text;
 using System.Text.Json;
 using EasyPacketsLib;
+using Terramon.Common.ID;
 using Terramon.Content.Commands;
 using Terramon.Content.NPCs;
 using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
-using Terramon.ID;
 
 namespace Terramon.Core.Battling;
 

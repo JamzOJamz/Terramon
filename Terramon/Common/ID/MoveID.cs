@@ -1,4 +1,4 @@
-﻿namespace Terramon.ID;
+﻿namespace Terramon.Common.ID;
 
 public enum MoveID : ushort
 {

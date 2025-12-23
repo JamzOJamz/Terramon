@@ -1,6 +1,6 @@
 ﻿using Showdown.NET.Definitions;
+using Terramon.Common.ID;
 using Terramon.Core.Battling.BattlePackets;
-using Terramon.ID;
 
 namespace Terramon.Core.Battling;
 public sealed class BattleField

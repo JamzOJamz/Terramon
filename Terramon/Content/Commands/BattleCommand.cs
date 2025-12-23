@@ -1,8 +1,8 @@
 using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
+using Terramon.Common.ID;
 using Terramon.Core.Battling;
-using Terramon.ID;
 using Terraria.Localization;
 
 namespace Terramon.Content.Commands;
