@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Terramon.Utilities;
 
-internal static class DiscordInviteBeamer
+internal static class DiscordInviteDispatcher
 {
     private const int RpcVersion = 1;
     private static readonly Tuple<int, int> RpcPortRange = new(6463, 6472);

@@ -37,7 +37,7 @@ internal static class MenuSocialWidget
         if (DateTime.UtcNow - _lastDiscordClientCheck > TimeSpan.FromSeconds(DiscordClientCheckInterval))
         {
             _lastDiscordClientCheck = DateTime.UtcNow;
-            _isDiscordClientRunning = DiscordInviteBeamer.IsClientRunning();
+            _isDiscordClientRunning = DiscordInviteDispatcher.IsClientRunning();
         }
 
         var drawPos = new Vector2(15, 15);
@@ -112,7 +112,7 @@ internal static class MenuSocialWidget
                 Main.mouseLeftRelease = false;
 
                 if (_isDiscordClientRunning)
-                    Task.Run(() => DiscordInviteBeamer.Send(DiscordInviteCode));
+                    Task.Run(() => DiscordInviteDispatcher.Send(DiscordInviteCode));
                 else
                     Utils.OpenToURL(DiscordURL);
             }
