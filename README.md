@@ -27,7 +27,7 @@ Terramon is growing fast, and we have ambitious plans to bring even more of the 
 
 ## Contributors
 Thank you to everyone who has helped improve Terramon! ❤️  
-*Anyone is free to contribute — view all open issues [here](https://github.com/JamzOJamz/Terramon/issues).*
+*Anyone is free to contribute. View all open issues [here](https://github.com/JamzOJamz/Terramon/issues).*
 
 <a href="https://github.com/JamzOJamz/Terramon/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=JamzOJamz/Terramon&max=900&columns=20" />
