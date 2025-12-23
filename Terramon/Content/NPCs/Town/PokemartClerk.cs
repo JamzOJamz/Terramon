@@ -2,6 +2,7 @@
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Tiles.MusicBoxes;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -226,7 +227,7 @@ public class PokemartClerk : ModNPC
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
-        if (firstButton) shopName = "Shop";
+        if (firstButton) shopName = Lang.inter[28].Value;
         else
         {
             var player = TerramonPlayer.LocalPlayer;
@@ -235,7 +236,7 @@ public class PokemartClerk : ModNPC
             var queuedEvolution = activePokemonData.GetQueuedEvolution(EvolutionTrigger.LevelUp);
             if (queuedEvolution == 0) return;
             var queuedEvolutionName = Terramon.DatabaseV2.GetLocalizedPokemonNameDirect(queuedEvolution);
-            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
             Main.npcChatText = Language.GetTextValue("Mods.Terramon.NPCs.PokemartClerk.Dialogue.EvolutionCongrats",
                 activePokemonData.DisplayName, queuedEvolutionName);
             activePokemonData.EvolveInto(queuedEvolution);

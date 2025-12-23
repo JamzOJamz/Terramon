@@ -114,16 +114,12 @@ public abstract class PCTile : ModTile
 
         // Play the appropriate sound for the action
         if (differentPc)
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
         else if (te.PoweredOn)
-            SoundEngine.PlaySound(
-                new SoundStyle("Terramon/Sounds/ls_pc_on")
-                {
-                    Volume = 0.54f
-                });
+            SoundEngine.PlaySound(in TerramonSoundID.PCOn);
         if (!te.PoweredOn)
         {
-            SoundEngine.PlaySound(SoundID.MenuClose); // Could maybe be removed but it fits well
+            SoundEngine.PlaySound(in SoundID.MenuClose); // Could maybe be removed but it fits well
         }
         else
         {
@@ -132,7 +128,7 @@ public abstract class PCTile : ModTile
 
             if (player.sign > -1)
             {
-                SoundEngine.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(in SoundID.MenuClose);
                 player.sign = -1;
                 Main.editSign = false;
                 Main.npcChatText = string.Empty;
@@ -140,7 +136,7 @@ public abstract class PCTile : ModTile
 
             if (Main.editChest)
             {
-                SoundEngine.PlaySound(SoundID.MenuTick);
+                SoundEngine.PlaySound(in SoundID.MenuTick);
                 Main.editChest = false;
                 Main.npcChatText = string.Empty;
             }
@@ -245,7 +241,7 @@ public sealed class PCTileEntity : ModTileEntity
                 PoweredOn = false;
                 User = -1;
                 player.Terramon().ActivePCTileEntityID = -1;
-                SoundEngine.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(in SoundID.MenuClose);
                 break;
             }
             case NetmodeID.Server when User != -1:

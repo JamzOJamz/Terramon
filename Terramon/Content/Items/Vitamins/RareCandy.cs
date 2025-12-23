@@ -1,4 +1,5 @@
 using Terramon.Content.Configs;
+using Terramon.Content.Items.Valuables;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
@@ -39,7 +40,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
                 d.noGravity = true;
             }
 
-            SoundEngine.PlaySound(SoundID.Item4, player.position);
+            SoundEngine.PlaySound(in SoundID.Item4, player.position);
             return 0;
         }
 
@@ -69,7 +70,7 @@ public class RareCandy : Vitamin, IPokemonDirectUse
 
         // Visual feedback effects
         CombatText.NewText(player.getRect(), Color.White, $"Lv. {oldLevel} > {data.Level}");
-        SoundEngine.PlaySound(SoundID.Item20);
+        SoundEngine.PlaySound(in SoundID.Item20);
         for (var j = 0; j < 40; j++)
         {
             var speed = Main.rand.NextVector2CircularEdge(1f, 1f);
@@ -77,11 +78,11 @@ public class RareCandy : Vitamin, IPokemonDirectUse
             d.noGravity = true;
         }
 
-        SoundEngine.PlaySound(SoundID.Item4);
+        SoundEngine.PlaySound(in SoundID.Item4);
 
         if (evolutions.Count > 0) // Check if the Pokémon evolved
         {
-            TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
+            TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
             var modPlayer = player.Terramon();
             var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
             // Iterate through all evolutions
@@ -111,7 +112,16 @@ public class RareCandy : Vitamin, IPokemonDirectUse
     }
 }
 
-public class RareCandyRarity : ModRarity
+public sealed class RareSweetfish : RareCandy
+{
+    public override void SetStaticDefaults()
+    {
+        base.SetStaticDefaults();
+        ValuableItem.Pool.Add((ushort)Type, 0.1d);
+    }
+}
+
+public sealed class RareCandyRarity : ModRarity
 {
     public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x6299E5);
 }

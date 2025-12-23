@@ -219,10 +219,7 @@ public class InventoryParty : SmartUIState
 
     private static void ToggleSlotsWhenDisabled(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-        {
-            Volume = 0.25f
-        });
+        SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
     }
 
     private static void UpdateSlot(PokemonData data, int index)
@@ -365,7 +362,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         Main.mouseItem = heldItem;
         Main.LocalPlayer.inventory[58] = heldItem;
 
-        SoundEngine.PlaySound(SoundID.Grab);
+        SoundEngine.PlaySound(in SoundID.Grab);
         SetData(Data);
     }
 
@@ -476,14 +473,11 @@ internal sealed class CustomPartyItemSlot : UIImage
                     Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
                         TerramonCommand.ChatColorYellow);
                 else
-                    SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-                    {
-                        Volume = 0.25f
-                    });
+                    SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
                 return;
             }
 
-            SoundEngine.PlaySound(SoundID.Grab);
+            SoundEngine.PlaySound(in SoundID.Grab);
             if (heldPokemon == Data)
             {
                 TooltipOverlay.ClearHeldPokemon(place: false);

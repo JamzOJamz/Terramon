@@ -367,6 +367,7 @@ CommonTooltips: {
 		One of a variety of mysterious Mega Stones
 		Any {0} holding this stone will be able to Mega Evolve during battle
 		''' */
+	// TerramonFishChance: "{0}% chance of catching a Pokémon or valuable treasures"
 	Unobtainable: Inobtenible
 }
 
@@ -727,6 +728,81 @@ Items: {
 			It's a strange, stretchy charm that encourages growth
 			''' */
 	}
+
+	Nugget: {
+		// DisplayName: Nugget
+		// Tooltip: ""
+	}
+
+	BigNugget: {
+		// DisplayName: Big Nugget
+		// Tooltip: ""
+	}
+
+	TinyMushroom: {
+		// DisplayName: Tiny Mushroom
+		// Tooltip: ""
+	}
+
+	BigMushroom: {
+		// DisplayName: Big Mushroom
+		// Tooltip: ""
+	}
+
+	Pearl: {
+		// DisplayName: Pearl
+		// Tooltip: ""
+	}
+
+	BigPearl: {
+		// DisplayName: Big Pearl
+		// Tooltip: ""
+	}
+
+	SilverLeaf: {
+		// DisplayName: Silver Leaf
+		// Tooltip: ""
+	}
+
+	GoldLeaf: {
+		// DisplayName: Gold Leaf
+		// Tooltip: ""
+	}
+
+	RelicCopper: {
+		// DisplayName: Relic Copper
+		// Tooltip: ""
+	}
+
+	RelicSilver: {
+		// DisplayName: Relic Silver
+		// Tooltip: ""
+	}
+
+	RelicGold: {
+		// DisplayName: Relic Gold
+		// Tooltip: ""
+	}
+
+	RareSweetfish: {
+		// DisplayName: Rare Sweetfish
+		// Tooltip: ""
+	}
+
+	OldRod: {
+		// DisplayName: Old Rod
+		// Tooltip: ""
+	}
+
+	SuperRod: {
+		// Tooltip: ""
+		// DisplayName: Super Rod
+	}
+
+	GoodRod: {
+		// Tooltip: ""
+		// DisplayName: Good Rod
+	}
 }
 
 MegaStoneNames: {
@@ -875,3 +951,5 @@ Misc: {
 		[c/C9C9E5:Asegúrate de personalizar el mod a tus gustos en el menú de Configuración de mods, y asigna los comandos de teclas del mod en el menú de Controles.]
 		'''
 }
+
+// Projectiles.PokeBallBobber.DisplayName: Poke Ball Bobber

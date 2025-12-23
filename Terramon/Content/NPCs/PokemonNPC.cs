@@ -386,9 +386,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             _cryTimer--;
             if (_cryTimer == 0 && Data != null && Main.netMode != NetmodeID.Server)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + Data.InternalName)
-                    { Volume = 0.15f };
-                SoundEngine.PlaySound(cry, NPC.position);
+                SoundEngine.PlaySound(Data.GetCry(), NPC.position);
             }
         }
 
@@ -425,7 +423,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (Data is not { IsShiny: true }) return;
 
         if (_mainTexture == null)
-            SoundEngine.PlaySound(SoundID.Item30, NPC.position);
+            SoundEngine.PlaySound(in SoundID.Item30, NPC.position);
 
         ShinyEffect();
     }
@@ -494,7 +492,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     }
                     else
                     {
-                        SoundEngine.PlaySound(SoundID.MenuTick);
+                        SoundEngine.PlaySound(in SoundID.MenuTick);
                         modPlayer.StartBattle(this);
                     }
                 }

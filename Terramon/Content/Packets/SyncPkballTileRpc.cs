@@ -60,7 +60,7 @@ public struct SyncPkballTileRpc(Item item, bool isOpen, bool isDisposable, byte 
             player.itemRotation = 0;
             player.SetItemAnimation(18);
 
-            SoundEngine.PlaySound(SoundID.Mech, _tileCoords.ToWorldCoordinates());
+            SoundEngine.PlaySound(in SoundID.Mech, _tileCoords.ToWorldCoordinates());
         }
 
         handled = true;

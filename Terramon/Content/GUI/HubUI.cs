@@ -118,12 +118,9 @@ public class HubUI : SmartUIState
         }
 
         if (customSound)
-            SoundEngine.PlaySound(new SoundStyle(active ? "Terramon/Sounds/dex_open" : "Terramon/Sounds/dex_close")
-            {
-                Volume = 0.48f
-            });
+            SoundEngine.PlaySound(active ? TerramonSoundID.DexOpen : TerramonSoundID.DexClose);
         else
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
     }
 
     public static void ToggleActive()
@@ -224,7 +221,7 @@ public class HubUI : SmartUIState
         _filterButton.SetVisibility(1f, 1f);
         _filterButton.OnLeftClick += (_, _) =>
         {
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             WorldDexMode = !WorldDexMode;
             ShinyActive = false;
             if (WorldDexMode)
@@ -238,7 +235,7 @@ public class HubUI : SmartUIState
             if (WorldDexMode) return; // TODO: Later maybe make a Shiny World Dex
             var shinyDex = TerramonPlayer.LocalPlayer.GetPokedex(true);
             if (shinyDex.SeenCount == 0 && shinyDex.RegisteredCount == 0) return;
-            SoundEngine.PlaySound(SoundID.MaxMana);
+            SoundEngine.PlaySound(in SoundID.MaxMana);
             ShinyActive = !ShinyActive;
             _filterButton.SetImage(ShinyActive ? PlayerShinyDexFilterTexture : PlayerDexFilterTexture);
             _filterButton.SetHoverRarity(ShinyActive ? ModContent.RarityType<KeyItemRarity>() : ItemRarityID.White);
@@ -263,7 +260,7 @@ public class HubUI : SmartUIState
         };
         caughtBallIcon.OnMouseOver += (_, _) =>
         {
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             PokedexEntryIcon.HighlightedStatus = PokedexEntryStatus.Registered;
         };
         caughtBallIcon.OnMouseOut += (_, _) => { PokedexEntryIcon.HighlightedStatus = null; };
@@ -284,7 +281,7 @@ public class HubUI : SmartUIState
         };
         _seenBallIcon.OnMouseOver += (_, _) =>
         {
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             PokedexEntryIcon.HighlightedStatus = PokedexEntryStatus.Seen;
         };
         _seenBallIcon.OnMouseOut += (_, _) => { PokedexEntryIcon.HighlightedStatus = null; };
@@ -350,7 +347,7 @@ public class HubUI : SmartUIState
 
     private static void FadedMouseOver(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
         ((UIPanel)evt.Target).BackgroundColor = new Color(73, 94, 171);
         ((UIPanel)evt.Target).BorderColor = Colors.FancyUIFatButtonMouseOver;
     }
@@ -394,20 +391,14 @@ public class HubUI : SmartUIState
             if ((!dirIsRight && currentRange.Item1 == 1) ||
                 (dirIsRight && currentRange.Item2 == Terramon.LoadedPokemonCount))
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-                {
-                    Volume = 0.25f
-                });
+                SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
             }
             else
             {
                 _pokedexPage.ChangePage(dirIsRight.ToDirectionInt()); // -1 for left, 1 for right
                 UILoader.GetUIState<HubUI>().RefreshPokedex();
 
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/dex_pageup")
-                {
-                    Volume = 0.325f
-                });
+                SoundEngine.PlaySound(in TerramonSoundID.DexPageUp);
             }
 
             UILinkPointNavigator.ChangePoint(TerramonPointID.PokedexMin);
@@ -858,7 +849,7 @@ internal sealed class PokedexEntryIcon : UIPanel
 
     private static void FadedMouseOver(UIEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
         ((UIPanel)evt.Target).BorderColor = new Color(233, 176, 0);
     }
 
@@ -1010,20 +1001,14 @@ internal sealed class PokedexPageButton : UIHoverImageButton
         if ((!_right && currentRange.Item1 == 1) ||
             (_right && currentRange.Item2 == Terramon.HighestPokemonID))
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-            {
-                Volume = 0.25f
-            });
+            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
             return;
         }
 
         _pageDisplay.ChangePage(_right.ToDirectionInt()); // -1 for left, 1 for right
         UILoader.GetUIState<HubUI>().RefreshPokedex();
 
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/dex_pageup")
-        {
-            Volume = 0.325f
-        });
+        SoundEngine.PlaySound(in TerramonSoundID.DexPageUp);
     }
 }
 
@@ -1310,9 +1295,8 @@ internal sealed class PokedexOverviewPanel : UIPanel
             // Play Pokémon cry
             if (playCry)
             {
-                var cry = new SoundStyle("Terramon/Sounds/Cries/" + schema.Identifier)
-                    { Volume = 0.15f };
-                SoundEngine.PlaySound(cry);
+                var cry = schema.GetCry();
+                SoundEngine.PlaySound(in cry);
             }
 
             _speciesText.SetText(Terramon.DatabaseV2.GetPokemonSpeciesDirect(pokemon));

@@ -79,7 +79,7 @@ public class PCInterface : SmartUIState
                 !Main.keyState.IsKeyDown(Keys.RightAlt) && Main.hasFocus) // Submit the rename
             {
                 Main.chatRelease = false;
-                SoundEngine.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(in SoundID.MenuClose);
                 SetNameForCurrentBox(_textInput?.CurrentValue);
                 _container?.RemoveChild(_cancelRenameButton);
                 _renameBoxButton?.SetText(RenameText);
@@ -169,14 +169,11 @@ public class PCInterface : SmartUIState
         {
             if (_inRenameMode)
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-                {
-                    Volume = 0.25f
-                });
+                SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
                 return;
             }
 
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             if (!HasChild(_colorPicker))
             {
                 _inColorPickerMode = true;
@@ -254,7 +251,7 @@ public class PCInterface : SmartUIState
                 }
                 else // Save the new name
                 {
-                    SoundEngine.PlaySound(SoundID.MenuClose);
+                    SoundEngine.PlaySound(in SoundID.MenuClose);
                     SetNameForCurrentBox(_textInput.CurrentValue);
                     _container.RemoveChild(_cancelRenameButton);
                     _renameBoxButton.SetText(RenameText);
@@ -284,8 +281,8 @@ public class PCInterface : SmartUIState
         {
             if (_inColorPickerMode || !_inRenameMode) return;
 
-            SoundEngine.PlaySound(SoundID.MenuTick);
-            SoundEngine.PlaySound(SoundID.MenuClose);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuClose);
             ExitRenameMode();
         };
 
@@ -297,10 +294,7 @@ public class PCInterface : SmartUIState
         {
             if (_pendingColorChange || _inRenameMode)
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-                {
-                    Volume = 0.25f
-                });
+                SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
                 return;
             }
 
@@ -321,10 +315,7 @@ public class PCInterface : SmartUIState
         {
             if (_pendingColorChange || _inRenameMode)
             {
-                SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/button_locked")
-                {
-                    Volume = 0.25f
-                });
+                SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
                 return;
             }
 
@@ -388,7 +379,7 @@ public class PCInterface : SmartUIState
 
             if (!_textInput.IsTyping)
             {
-                SoundEngine.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(in SoundID.MenuClose);
                 ExitRenameMode();
             }
         }
@@ -457,16 +448,9 @@ public class PCInterface : SmartUIState
 
         // Play the PC off sound
         if (!SilenceCloseSound)
-        {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_pc_off")
-            {
-                Volume = 0.54f
-            });
-        }
+            SoundEngine.PlaySound(in TerramonSoundID.PCOff);
         else
-        {
             SilenceCloseSound = false;
-        }
     }
 
     public static void ResetToDefault()
@@ -639,7 +623,7 @@ internal sealed class CustomPCItemSlot : UIImage
         {
             // Place the held Pokémon into the slot if present and slot is empty
             if (heldPokemon == null) return;
-            SoundEngine.PlaySound(SoundID.Grab);
+            SoundEngine.PlaySound(in SoundID.Grab);
             SetData(heldPokemon);
             TooltipOverlay.ClearHeldPokemon();
         }
@@ -663,7 +647,7 @@ internal sealed class CustomPCItemSlot : UIImage
             }
 
             // Take or swap the Pokémon from the slot if slot is not empty and player is not holding an item
-            SoundEngine.PlaySound(SoundID.Grab);
+            SoundEngine.PlaySound(in SoundID.Grab);
             TooltipOverlay.SetHeldPokemon(data, TooltipOverlay.HeldPokemonSource.PC, d =>
             {
                 // Check for free space in the box starting from the end
@@ -763,7 +747,7 @@ internal sealed class PCActionButton : BetterUIText
 
     public override void MouseOver(UIMouseEvent evt)
     {
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
         TextColor = Color.White;
         Tween.To(() => TextScale, SetTextScale, 1f, 1f / 12f);
     }
@@ -861,7 +845,7 @@ internal sealed class PCColorPicker : UIContainer
         _resetToDefaultButton.OnMouseOver += (_, _) =>
         {
             if (IsDefaultColor) return;
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.89f, 1f / 12f);
             _resetToDefaultButton.TextColor = new Color(255, 214, 102);
             _resetToDefaultButton.ShadowColor = new Color(173, 48, 46);
@@ -869,7 +853,7 @@ internal sealed class PCColorPicker : UIContainer
         _resetToDefaultButton.OnMouseOut += (_, _) =>
         {
             if (IsDefaultColor) return;
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
             _resetToDefaultButton.TextColor = new Color(247, 218, 101);
             _resetToDefaultButton.ShadowColor = Color.Black;
@@ -877,7 +861,7 @@ internal sealed class PCColorPicker : UIContainer
         _resetToDefaultButton.OnLeftClick += (_, _) =>
         {
             if (IsDefaultColor) return;
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
             TerramonPlayer.LocalPlayer.ColorPickerHSL = _defaultColorPickerHSL;
             var color = ScaledHslToRgb(_defaultColorPickerHSL.X, _defaultColorPickerHSL.Y, _defaultColorPickerHSL.Z);
@@ -949,13 +933,13 @@ internal sealed class PCColorPicker : UIContainer
 
     private void Click_CopyHex(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
         Platform.Get<IClipboard>().Value = _hexCodeText.Text;
     }
 
     private void Click_PasteHex(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
         var value = Platform.Get<IClipboard>().Value;
         if (!GetHexColor(value, out var hsl)) return;
         //ApplyPendingColor(ScaledHslToRgb(hsl.X, hsl.Y, hsl.Z));
@@ -969,7 +953,7 @@ internal sealed class PCColorPicker : UIContainer
 
     private void Click_RandomizeSingleColor(UIMouseEvent evt, UIElement listeningElement)
     {
-        SoundEngine.PlaySound(SoundID.MenuTick);
+        SoundEngine.PlaySound(in SoundID.MenuTick);
         var randomColorVector = GetRandomColorVector();
         //ApplyPendingColor(ScaledHslToRgb(randomColorVector.X, randomColorVector.Y, randomColorVector.Z));
         TerramonPlayer.LocalPlayer.ColorPickerHSL = randomColorVector;

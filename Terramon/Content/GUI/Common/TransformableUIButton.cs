@@ -76,7 +76,7 @@ public class TransformableUIButton : UIElement
 
         if (ContainsPoint(Main.MouseScreen) && !JustHovered)
         {
-            SoundEngine.PlaySound(SoundID.MenuTick);
+            SoundEngine.PlaySound(in SoundID.MenuTick);
             JustHovered = true;
         }
         else if (!ContainsPoint(Main.MouseScreen))

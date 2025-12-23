@@ -8,7 +8,9 @@ using Terramon.Content.Commands;
 using Terramon.Content.GUI;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
+using Terramon.Content.Items.KeyItems;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Items.Valuables;
 using Terramon.Content.Projectiles;
 using Terramon.Content.Tiles.Banners;
 using Terramon.Content.Tiles.Interactive;
@@ -18,11 +20,14 @@ using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
+using Terramon.Helpers;
+using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Terramon.Core;
 
@@ -271,14 +276,12 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         if (!shouldPlaySound) return;
         if (_activeSlot != -1)
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkmn_recall") { Volume = 0.375f });
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/Cries/" + Party[_activeSlot].InternalName)
-                { Volume = 0.2525f });
+            SoundEngine.PlaySound(in TerramonSoundID.PkmnRecall);
+            SoundEngine.PlaySound(Party[_activeSlot].GetCry(0.2525f));
         }
         else
         {
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_consume")
-                { Volume = 0.35f });
+            SoundEngine.PlaySound(in TerramonSoundID.PkballConsume);
         }
     }
 
@@ -372,6 +375,45 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     {
         if (item.type == ModContent.ItemType<PokeBallItem>())
             _premierBonusCount++;
+    }
+
+    public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+    {
+        if (attempt.inLava || attempt.inHoney)
+            return;
+
+        // Console.WriteLine(ValuableItem.Pool.ToString(i => Lang.GetItemName(i).Value));
+
+        var terramonChance = FishingRod.DefaultCatchTerramonChance;
+        if (attempt.bobberType == PokeBallBobber.ProjectileType)
+            terramonChance = ((FishingRod)attempt.playerFishingConditions.Pole.ModItem).CatchTerramonChance;
+
+        if (Main.rand.NextDouble() > terramonChance)
+            return;
+
+        if (Main.rand.NextBool(3)) // pokemon are less likely
+        {
+            itemDrop = -1;
+            // make ts also an AliasRandom eventually
+            // it also needs to be based on an actual pool with conditions
+            // for instance we might want luvdisc (example) to have a larger chance of being fished up during february
+            // or for fishing up certain pokemon to be disabled
+            // i guess you could make a similar argument for items but i think that's less important
+            var dexID = Main.rand.Next(2) switch
+            {
+                0 => NationalDexID.Magikarp,
+                1 => NationalDexID.Goldeen,
+                _ => NationalDexID.Missingno
+            };
+
+            SoundEngine.PlaySound(TerramonSoundID.GetCry(dexID), sonarPosition);
+
+            npcSpawn = PokemonEntityLoader.IDToNPCType[dexID];
+        }
+        else // items are more likely
+        {
+            itemDrop = ValuableItem.Pool.Get();
+        }
     }
 
     /// <summary>

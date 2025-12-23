@@ -1,6 +1,7 @@
 ﻿using Terramon.Content.Configs;
 using Terramon.Content.GUI;
 using Terramon.Content.NPCs;
+using Terramon.Helpers;
 using Terramon.ID;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,13 +14,6 @@ namespace Terramon.Content.Items.PokeBalls;
 internal abstract class BasePkballProjectile : ModProjectile
 {
     private const int MaxBounces = 5;
-
-    private readonly string[] _wobbleSoundPaths =
-    [
-        "Terramon/Sounds/ls_catch_wobble1",
-        "Terramon/Sounds/ls_catch_wobble2",
-        "Terramon/Sounds/ls_catch_wobble3"
-    ];
 
     private float _animSpeedMultiplier = 1;
     private int _bounces = MaxBounces;
@@ -97,7 +91,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (_bounces > 0)
         {
             _bounces -= 1;
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce") { Volume = 0.75f },
+            SoundEngine.PlaySound(in TerramonSoundID.PkballBounce,
                 Projectile.position);
 
             // If the projectile hits the left or right side of the tile, reverse the X velocity
@@ -128,7 +122,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         Projectile.netUpdate = true;
                     }
 
-                    SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce") { Volume = 0.75f },
+                    SoundEngine.PlaySound(in TerramonSoundID.PkballBounce,
                         Projectile.position);
                     _bounces = -1;
                     break;
@@ -175,7 +169,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (_hasContainedLocal) return;
 
         // Play a sound and spawn dusts when the projectile is destroyed
-        SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+        SoundEngine.PlaySound(in SoundID.Dig, Projectile.position);
         for (var i = 0; i < 14; i++)
         {
             var d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
@@ -287,7 +281,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         if (_isCaught)
                         {
                             Projectile.frame = (int)ActionState.CaptureComplete;
-                            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_catch_click"),
+                            SoundEngine.PlaySound(in TerramonSoundID.CatchClick,
                                 Projectile.position);
                             AIState = (float)ActionState.CaptureComplete;
                             AITimer = 0;
@@ -303,7 +297,7 @@ internal abstract class BasePkballProjectile : ModProjectile
                         _catchTries -= 1;
                         _rotationDirection = !_rotationDirection;
                         _rotationVelocity = _rotationDirection ? shakeIntensity : -shakeIntensity;
-                        SoundEngine.PlaySound(new SoundStyle(_wobbleSoundPaths[2 - _catchTries]),
+                        SoundEngine.PlaySound(TerramonSoundID.CatchWobble[2 - _catchTries],
                             Projectile.position);
                     }
 
@@ -360,7 +354,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         {
             Projectile.shimmerWet = false;
             Projectile.velocity.Y *= -0.8f;
-            SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/pkball_bounce") { Volume = 0.75f },
+            SoundEngine.PlaySound(in TerramonSoundID.PkballBounce,
                 Projectile.position);
             _bounces -= 1;
         }
@@ -407,8 +401,8 @@ internal abstract class BasePkballProjectile : ModProjectile
         // Don't run this code on other clients
         if (Projectile.owner != Main.myPlayer) return;
 
-        TerramonWorld.PlaySoundOverBGM(new SoundStyle("Terramon/Sounds/pkball_catch_pla"));
-
+        TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
+        
         Projectile.Kill();
         var schema = _capture.Data.Schema;
         var ballName = GetType().Name.Split("Projectile")[0];
@@ -471,12 +465,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         _capture = target.Pokemon();
 
         // Play sound effect
-        var s = new SoundStyle
-        {
-            SoundPath = "Terramon/Sounds/pkmn_recall",
-            Volume = 0.375f
-        };
-        SoundEngine.PlaySound(s);
+        SoundEngine.PlaySound(in TerramonSoundID.PkmnRecall);
 
         // Register as seen in the player's Pokedex
         var ownerPlayer = Main.player[Projectile.owner].Terramon();
@@ -512,7 +501,7 @@ internal abstract class BasePkballProjectile : ModProjectile
     private void ReleasePokemon()
     {
         if (_capture == null) return;
-        SoundEngine.PlaySound(new SoundStyle("Terramon/Sounds/ls_catch_fail"), Projectile.position);
+        SoundEngine.PlaySound(in TerramonSoundID.CatchFail, Projectile.position);
 
         // Release (respawn) the Pokémon on the server. It will be synced to all clients.
         if (Main.netMode != NetmodeID.MultiplayerClient)

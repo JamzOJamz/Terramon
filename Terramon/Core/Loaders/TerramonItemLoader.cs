@@ -1,5 +1,6 @@
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
+using Terramon.Content.Items.Valuables;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.Content.Tiles.Paintings;
@@ -10,6 +11,7 @@ namespace Terramon.Core.Loaders;
 public enum TerramonItemGroup
 {
     Apricorns,
+    ValuableItems,
     PokeBalls,
     Recovery,
     EvolutionaryItems,
@@ -33,6 +35,21 @@ internal sealed class TerramonItemRegistration : ModSystem
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Apricorns)
             .AddAllOfType<ApricornItem>();
+
+        // Add valuable items
+        TerramonItemRegistry
+            .RegisterGroup(TerramonItemGroup.ValuableItems)
+            .Add<Nugget>()
+            .Add<BigNugget>()
+            .Add<TinyMushroom>()
+            .Add<BigMushroom>()
+            .Add<Pearl>()
+            .Add<BigPearl>()
+            .Add<SilverLeaf>()
+            .Add<GoldLeaf>()
+            .Add<RelicCopper>()
+            .Add<RelicSilver>()
+            .Add<RelicGold>();
 
         // Add Poké Balls
         TerramonItemRegistry
@@ -74,6 +91,7 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add vitamins
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.Vitamins)
+            .Add<RareSweetfish>()
             .Add<RareCandy>()
             .AddAllOfType<ExpCandy>();
 

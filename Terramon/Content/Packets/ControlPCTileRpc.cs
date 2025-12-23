@@ -37,7 +37,7 @@ public struct ControlPCTileRpc(int id, bool poweredOn) : IEasyPacket
                 pc.User = -1;
                 var modPlayer = TerramonPlayer.LocalPlayer;
                 if (modPlayer.ActivePCTileEntityID != _id) return;
-                SoundEngine.PlaySound(SoundID.MenuClose);
+                SoundEngine.PlaySound(in SoundID.MenuClose);
                 modPlayer.ActivePCTileEntityID = -1;
                 return;
             }

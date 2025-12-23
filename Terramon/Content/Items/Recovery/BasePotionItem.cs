@@ -28,7 +28,7 @@ public abstract class BasePotionItem : RecoveryItem
     {
         if (player.whoAmI != Main.myPlayer)
         {
-            SoundEngine.PlaySound(SoundID.Item13, player.position);
+            SoundEngine.PlaySound(in SoundID.Item13, player.position);
             return 0;
         }
         
@@ -55,7 +55,7 @@ public abstract class BasePotionItem : RecoveryItem
         Main.NewText(
             Language.GetTextValue("Mods.Terramon.Misc.PotionUse", data.DisplayName, hpRestored));
         
-        SoundEngine.PlaySound(SoundID.Item13);
+        SoundEngine.PlaySound(in SoundID.Item13);
         
         // Show healing text above the Pokémon pet (if it is active)
         var activePet = player.Terramon().ActivePetProjectile;
