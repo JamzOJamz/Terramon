@@ -371,7 +371,7 @@ CommonTooltips: {
 		One of a variety of mysterious Mega Stones
 		Any {0} holding this stone will be able to Mega Evolve during battle
 		''' */
-	// TerramonFishChance: "{0}% chance of catching a Pokémon or valuable treasures"
+	// TerramonFishChance: "{0}% chance to catch Pokémon or treasure"
 	Unobtainable: 无法获得
 }
 
