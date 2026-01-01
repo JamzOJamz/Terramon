@@ -78,7 +78,7 @@ public sealed class FishingRodGlobal : GlobalItem
         {
             OverrideColor = ModContent.GetInstance<PokeBallRarity>().RarityColor,
         };
-        tooltips.Insert(index + 1, line);
+        tooltips.Add(line);
     }
 }
 

@@ -1,6 +1,5 @@
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
-using Terramon.Content.Items.Valuables;
 using Terramon.Content.Tiles.Interactive;
 using Terramon.Content.Tiles.MusicBoxes;
 using Terramon.Content.Tiles.Paintings;
@@ -107,7 +106,13 @@ internal sealed class TerramonItemRegistration : ModSystem
         // Add key items
         TerramonItemRegistry
             .RegisterGroup(TerramonItemGroup.KeyItems)
-            .AddAllOfType<KeyItem>();
+            .Add<ExpCharm>()
+            .Add<ShinyCharm>()
+            .Add<ExpShare>()
+            // Fishing rods
+            .Add<OldRod>()
+            .Add<GoodRod>()
+            .Add<SuperRod>();
 
         // Add interactive items
         TerramonItemRegistry

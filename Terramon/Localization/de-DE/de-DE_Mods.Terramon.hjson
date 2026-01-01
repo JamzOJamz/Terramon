@@ -372,6 +372,7 @@ CommonTooltips: {
 		Any {0} holding this stone will be able to Mega Evolve during battle
 		''' */
 	// TerramonFishChance: "{0}% chance to catch Pokémon or treasure"
+	// ValuableItem: Valuable item
 	Unobtainable: Nicht erhältlich
 }
 
@@ -735,77 +736,117 @@ Items: {
 
 	Nugget: {
 		// DisplayName: Nugget
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			''' */
 	}
 
 	BigNugget: {
 		// DisplayName: Big Nugget
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A big nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			''' */
 	}
 
 	TinyMushroom: {
 		// DisplayName: Tiny Mushroom
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A small and rare mushroom
+			It's quite popular with a certain class of collectors
+			''' */
 	}
 
 	BigMushroom: {
 		// DisplayName: Big Mushroom
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A large and rare mushroom
+			It's extremely popular with a certain class of collectors
+			''' */
 	}
 
 	Pearl: {
 		// DisplayName: Pearl
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A rather small pearl that has a nice silvery sheen to it
+			It can be sold at a low price to shops
+			''' */
 	}
 
 	BigPearl: {
 		// DisplayName: Big Pearl
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A rather large pearl that has a nice silvery sheen to it
+			It can be sold at a high price to shops
+			''' */
 	}
 
 	SilverLeaf: {
 		// DisplayName: Silver Leaf
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A mysterious silver leaf
+			No trees with this leaf have been found yet
+			''' */
 	}
 
 	GoldLeaf: {
 		// DisplayName: Gold Leaf
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A mysterious gold leaf
+			No trees with this leaf have been found yet
+			''' */
 	}
 
 	RelicCopper: {
 		// DisplayName: Relic Copper
-		// Tooltip: ""
+		// Tooltip: A copper coin used by an ancient civilization about three thousand years ago
 	}
 
 	RelicSilver: {
 		// DisplayName: Relic Silver
-		// Tooltip: ""
+		// Tooltip: A silver coin used by an ancient civilization about three thousand years ago
 	}
 
 	RelicGold: {
 		// DisplayName: Relic Gold
-		// Tooltip: ""
+		// Tooltip: A gold coin used by an ancient civilization about three thousand years ago
 	}
 
 	RareSweetfish: {
 		// DisplayName: Rare Sweetfish
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A fish that is packed with energy
+			If consumed, it raises a Pokémon's level by one
+			''' */
 	}
 
 	OldRod: {
 		// DisplayName: Old Rod
-		// Tooltip: ""
-	}
-
-	SuperRod: {
-		// Tooltip: ""
-		// DisplayName: Super Rod
+		// Tooltip: An old and beat-up fishing rod
 	}
 
 	GoodRod: {
-		// Tooltip: ""
 		// DisplayName: Good Rod
+		// Tooltip: A new, good-quality fishing rod
+	}
+
+	SuperRod: {
+		// DisplayName: Super Rod
+		/* Tooltip:
+			'''
+			An awesome, high-spec fishing rod
+			Allows fishing in lava
+			''' */
 	}
 }
 

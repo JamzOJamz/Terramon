@@ -6,7 +6,7 @@ public class ShimmerStateDrive : TerramonItem
 {
     public override string Texture => "Terramon/Assets/Items/Miscellaneous/ShimmerStateDrive";
     protected override int UseRarity => ModContent.RarityType<AetherRarity>();
-    
+
     public override void SetStaticDefaults()
     {
         TerramonItemAPI.Sets.Unobtainable.Add(Type);

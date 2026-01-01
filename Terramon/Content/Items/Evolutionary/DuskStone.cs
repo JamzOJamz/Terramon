@@ -24,8 +24,8 @@ public class DuskStoneRarity : DiscoRarity
 {
     protected override Color[] Colors { get; } =
     [
-        new Color(219, 161, 221),
-        new Color(152, 99, 183)
+        new(219, 161, 221),
+        new(152, 99, 183)
     ];
 
     protected override float Time => 2f;

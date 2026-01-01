@@ -1,5 +1,4 @@
 using Terramon.Content.Configs;
-using Terramon.Content.Items.Valuables;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
