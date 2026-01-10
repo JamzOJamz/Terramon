@@ -4,7 +4,7 @@
     
     <PropertyGroup>
         <AssemblyName>Terramon</AssemblyName>
-        <LangVersion>preview</LangVersion>
+        <LangVersion>14.0</LangVersion>
         <OutputType>Exe</OutputType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
