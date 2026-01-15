@@ -133,6 +133,7 @@ public class DatabaseV2
 
     public MoveSchema GetMove(MoveID id)
         => GetMove((ushort)id);
+
 /*
     public bool IsAvailableStarter(ushort id)
     {
@@ -145,18 +146,12 @@ public class DatabaseV2
         [property: JsonProperty("name")]
         [property: JsonPropertyAlias("n")]
         string Identifier,
-        [property: JsonPropertyAlias("t")]
-        List<PokemonType> Types,
-        [property: JsonPropertyAlias("b")]
-        ushort BaseExp,
-        [property: JsonPropertyAlias("s")]
-        StatsTableSchema BaseStats,
-        [property: JsonPropertyAlias("h")]
-        ushort Height,
-        [property: JsonPropertyAlias("w")]
-        ushort Weight,
-        [property: JsonPropertyAlias("a")]
-        AbilitiesSchema Abilities,
+        [property: JsonPropertyAlias("t")] List<PokemonType> Types,
+        [property: JsonPropertyAlias("b")] ushort BaseExp,
+        [property: JsonPropertyAlias("s")] StatsTableSchema BaseStats,
+        [property: JsonPropertyAlias("h")] ushort Height,
+        [property: JsonPropertyAlias("w")] ushort Weight,
+        [property: JsonPropertyAlias("a")] AbilitiesSchema Abilities,
         [property: JsonProperty("moves")]
         [property: JsonPropertyAlias("m")]
         List<LevelEntrySchema> LevelUpLearnset
@@ -193,23 +188,11 @@ public class DatabaseV2
         [property: JsonPropertyAlias("g")]
         [property: DefaultValue((sbyte)4)]
         sbyte GenderRatio,
-        [property: JsonPropertyAlias("e")]
-        LevelEntrySchema Evolution,
-        [property: JsonPropertyAlias("b")]
-        FormSchema BaseForm,
-        [property: JsonPropertyAlias("v")]
-        ReadOnlyDictionary<string, FormSchema> Forms
+        [property: JsonPropertyAlias("e")] LevelEntrySchema Evolution,
+        [property: JsonPropertyAlias("b")] FormSchema BaseForm,
+        [property: JsonPropertyAlias("v")] ReadOnlyDictionary<string, FormSchema> Forms
     )
     {
-        // Shortcuts to BaseForm properties
-        [JsonIgnore] public string Identifier => BaseForm.Identifier;
-        [JsonIgnore] public ushort Height => BaseForm.Height;
-        [JsonIgnore] public ushort Weight => BaseForm.Weight;
-        [JsonIgnore] public List<PokemonType> Types => BaseForm.Types;
-        [JsonIgnore] public StatsTableSchema BaseStats => BaseForm.BaseStats;
-        [JsonIgnore] public ushort BaseExp => BaseForm.BaseExp;
-        [JsonIgnore] public AbilitiesSchema Abilities => BaseForm.Abilities;
-        [JsonIgnore] public List<LevelEntrySchema> LevelUpLearnset => BaseForm.LevelUpLearnset;
         public PokemonSchema() : this(
             70,
             45,
@@ -221,6 +204,16 @@ public class DatabaseV2
         )
         {
         }
+
+        // Shortcuts to BaseForm properties
+        [JsonIgnore] public string Identifier => BaseForm.Identifier;
+        [JsonIgnore] public ushort Height => BaseForm.Height;
+        [JsonIgnore] public ushort Weight => BaseForm.Weight;
+        [JsonIgnore] public List<PokemonType> Types => BaseForm.Types;
+        [JsonIgnore] public StatsTableSchema BaseStats => BaseForm.BaseStats;
+        [JsonIgnore] public ushort BaseExp => BaseForm.BaseExp;
+        [JsonIgnore] public AbilitiesSchema Abilities => BaseForm.Abilities;
+        [JsonIgnore] public List<LevelEntrySchema> LevelUpLearnset => BaseForm.LevelUpLearnset;
     }
 
     public sealed class StatsTableSchema : List<byte>

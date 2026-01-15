@@ -15,60 +15,91 @@ using Terraria.UI;
 
 namespace Terramon.Content.GUI;
 
-// TODO: Should we use "first partner"/"partner" terminology in this UI (instead of "starter")?
-// https://bulbapedia.bulbagarden.net/wiki/Terminology_of_first_partner_Pok%C3%A9mon
 public sealed class StarterSelectUI : SmartUIState
 {
+    private const float BackdropAlpha = 0.3f;
+    private const float FadeDuration = 0.22f;
+    private const int TopContainerOffset = -157 + 10;
+    private const float ShowButtonOriginalMargin = 10f;
+    private const float ShowButtonShakeInterval = 5f; // Measured in seconds
+    private const float ShowButtonShakeDuration = 0.6f;
+
     private static UIImage _backdropImage;
     private static bool _fadeOutAnimationActive;
-    private readonly UIStarterBanner[] _banners = new UIStarterBanner[3];
-    private readonly LocalizedText _comingSoonLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon");
-    private readonly LocalizedText _hintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
-
-    private readonly ushort[] _starters =
-    [
-        NationalDexID.Bulbasaur,
-        NationalDexID.Charmander,
-        NationalDexID.Squirtle
-    ];
-
-    private readonly LocalizedText _subtitleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Subtitle");
-    private readonly LocalizedText _titleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
     private static BetterUIText _hintText;
+    private static UIContainer _topContainer;
+    private static BetterUIText _titleText;
+
+    // private readonly UIStarterBanner[] _banners = new UIStarterBanner[3];
+
+    private static readonly LocalizedText ComingSoonLocalizedText =
+        Language.GetText("Mods.Terramon.GUI.Starter.ComingSoon");
+
+    private static readonly LocalizedText HintLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Hint");
+
+    private static readonly LocalizedText
+        SubtitleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Subtitle");
+
+    private static readonly LocalizedText TitleLocalizedText = Language.GetText("Mods.Terramon.GUI.Starter.Title");
+
+    private static readonly LocalizedText GenerationLocalizedText =
+        Language.GetText("Mods.Terramon.GUI.Starter.Generations.Gen1");
+
+    private static readonly ushort[] Starters =
+        [NationalDexID.Bulbasaur, NationalDexID.Charmander, NationalDexID.Squirtle];
+
     private float _hintTextAlpha;
     private ITweener _hintTextTween;
     private UIHoverImageButton _showButton;
+    private float _showButtonShakeElapsed = -1f;
+    private float _showButtonShakeTimer;
+    private ITweener _showButtonVisibilityTween;
     private bool _starterPanelShowing = true;
-    private static UIContainer _topContainer;
 
-    public override bool Visible =>
-        (!TerramonPlayer.LocalPlayer.HasChosenStarter || (_fadeOutAnimationActive && _backdropImage.Color.A > 0)) &&
-        !Main.playerInventory && !Main.inFancyUI &&
-        !Main.LocalPlayer.dead && Main.LocalPlayer.talkNPC < 0;
+    static StarterSelectUI()
+    {
+        On_WorldGen.playWorldCallBack += (orig, context) =>
+        {
+            SetPlayerNameForTitle(Main.LocalPlayer.name);
+            orig(context);
+        };
+    }
 
-    public static void DoFadeOutAnimation()
+    public override bool Visible => !ClientConfig.Instance.LegacyStarterSelectUI &&
+                                    (!TerramonPlayer.LocalPlayer.HasChosenStarter ||
+                                     (_fadeOutAnimationActive && _backdropImage.Color.A > 0)) &&
+                                    !Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
+                                    Main.LocalPlayer.talkNPC < 0;
+
+    private static void SetPlayerNameForTitle(string playerName)
+    {
+        _titleText.SetText(Language.GetText("Mods.Terramon.GUI.Starter.Title").Format(playerName));
+    }
+
+    internal static void DoFadeOutAnimation()
     {
         if (_fadeOutAnimationActive) return;
         _fadeOutAnimationActive = true;
-        
-        // Hide stuff
+
+        HideUIElements();
+
+        var startingAlpha = _backdropImage.Color.A / 255f;
+        var fadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
+        fadeTween.OnComplete = OnFadeOutComplete;
+    }
+
+    private static void HideUIElements()
+    {
         _topContainer.Top.Set(0, float.MaxValue);
         _hintText.Top.Set(0, float.MaxValue);
-        
-        var startingAlpha = _backdropImage.Color.A / 255f;
-        var fadeTween = Tween.To(() => startingAlpha, a =>
-            {
-                _backdropImage.Color = Color.White * a;
-            }, 0, 0.22f);
-        fadeTween.OnComplete = () =>
-        {
-            _fadeOutAnimationActive = false;
-            _backdropImage.Color = Color.White * 0.375f;
-            
-            // Unhide stuff
-            _topContainer.Top.Set(-157 + 10, 0.25f);
-            _hintText.Top.Set(94, 0.5f);
-        };
+    }
+
+    private static void OnFadeOutComplete()
+    {
+        _fadeOutAnimationActive = false;
+        _backdropImage.Color = Color.White * BackdropAlpha;
+        _topContainer.Top.Set(TopContainerOffset, 0.25f);
+        _hintText.Top.Set(94, 0.5f);
     }
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
@@ -78,18 +109,20 @@ public sealed class StarterSelectUI : SmartUIState
 
     public override void OnInitialize()
     {
-        _showButton = new UIHoverImageButton(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification"),
-            string.Empty);
+        _showButton = new UIHoverImageButton(
+            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Notification"), string.Empty);
         _showButton.Width.Set(42, 0);
         _showButton.Height.Set(40, 0);
         _showButton.HAlign = 1;
         _showButton.VAlign = 1;
-        _showButton.MarginRight = 10;
-        _showButton.MarginBottom = 10;
+        _showButton.MarginRight = ShowButtonOriginalMargin;
+        _showButton.MarginBottom = ShowButtonOriginalMargin;
         _showButton.OnMouseOver += (_, _) =>
         {
             if (_starterPanelShowing) return;
             SoundEngine.PlaySound(in SoundID.MenuTick);
+            _showButton.VisibilityOverride = -1f;
+            _showButtonVisibilityTween?.Kill();
         };
         _showButton.OnLeftClick += (_, _) =>
         {
@@ -101,44 +134,39 @@ public sealed class StarterSelectUI : SmartUIState
         _showButton.SetIsActive(false);
         Append(_showButton);
 
-        _topContainer = new UIContainer(new Vector2(494, 314))
-        {
-            HAlign = 0.5f
-        };
-        _topContainer.Top.Set(-157 + 10, 0.25f);
+        _topContainer = new UIContainer(new Vector2(494, 314)) { HAlign = 0.5f };
+        _topContainer.Top.Set(TopContainerOffset, 0.25f);
 
-        _backdropImage = new UIImage(
-            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/BackdropBig"))
+        _backdropImage = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/BackdropBig"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            Color = Color.White * 0.375f,
-            ImageScale = 2.25f
+            Color = Color.White * BackdropAlpha,
+            ImageScale = 2.25f,
+            HAlign = 0.5f
         };
         _backdropImage.Width.Set(1028, 0f);
         _backdropImage.Height.Set(589, 0f);
-        _backdropImage.Top.Set(-157 + 10 + -146, 0.25f);
-        _backdropImage.Left.Set(-329 + 54 + 50 + 257, 0f);
-        _backdropImage.HAlign = 0.5f;
+        _backdropImage.Top.Set(TopContainerOffset - 146, 0.25f);
+        _backdropImage.Left.Set(32, 0f);
         Append(_backdropImage);
 
-        var titleText = new BetterUIText(_titleLocalizedText)
+        _titleText = new BetterUIText(TitleLocalizedText)
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            TextColor = new Color(239, 245, 255)
+            TextColor = new Color(239, 245, 255),
+            HAlign = 0.5f
         };
-        var subText = new BetterUIText(_subtitleLocalizedText)
+        var subText = new BetterUIText(SubtitleLocalizedText)
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            TextColor = new Color(239, 245, 255)
+            TextColor = new Color(239, 245, 255),
+            HAlign = 0.5f
         };
-        titleText.HAlign = 0.5f;
-        subText.Top.Set(26, 0);
-        subText.HAlign = 0.5f;
-        titleText.Append(subText);
-        _topContainer.Append(titleText);
+        subText.Top.Set(28, 0);
+        _titleText.Append(subText);
+        _topContainer.Append(_titleText);
 
-        var generationText = new BetterUIText(
-            "Generation I (Kanto)", 0.605f, true)
+        var generationText = new BetterUIText(GenerationLocalizedText, 0.605f, true)
         {
             RemoveFloatingPointsFromDrawPosition = true,
             ShadowSpread = 1.88f,
@@ -147,10 +175,10 @@ public sealed class StarterSelectUI : SmartUIState
         generationText.Top.Set(86, 0f);
         _topContainer.Append(generationText);
 
-        for (var i = 0; i < _banners.Length; i++)
+        for (var i = 0; i < Starters.Length; i++)
         {
-            var banner = new UIStarterBanner(_starters[i]);
-            _banners[i] = banner;
+            var banner = new UIStarterBanner(Starters[i]);
+            // _banners[i] = banner;
             banner.Top.Set(130, 0f);
             banner.Left.Set(i * 132 + 58, 0f);
             _topContainer.Append(banner);
@@ -158,25 +186,22 @@ public sealed class StarterSelectUI : SmartUIState
 
         Append(_topContainer);
 
-        var pageLeftButton =
-            new UIHoverImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonLeftDisabled"),
-                _comingSoonLocalizedText)
-            {
-                RemoveFloatingPointsFromDrawPosition = true
-            };
+        var pageLeftButton = new UIHoverImage(
+            ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonLeftDisabled"),
+            ComingSoonLocalizedText)
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
         pageLeftButton.Width.Set(34, 0f);
         pageLeftButton.Height.Set(34, 0f);
         pageLeftButton.Left.Set(2, 0f);
         pageLeftButton.Top.Set(194, 0f);
-        pageLeftButton.OnLeftClick += (_, _) =>
-        {
-            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
-        };
+        pageLeftButton.OnLeftClick += (_, _) => SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
         _topContainer.Append(pageLeftButton);
 
         var pageRightButton = new UIHoverImage(
             ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/PageButtonRightDisabled"),
-            _comingSoonLocalizedText)
+            ComingSoonLocalizedText)
         {
             RemoveFloatingPointsFromDrawPosition = true
         };
@@ -184,13 +209,10 @@ public sealed class StarterSelectUI : SmartUIState
         pageRightButton.Height.Set(34, 0f);
         pageRightButton.Left.Set(458, 0f);
         pageRightButton.Top.Set(194, 0f);
-        pageRightButton.OnLeftClick += (_, _) =>
-        {
-            SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
-        };
+        pageRightButton.OnLeftClick += (_, _) => SoundEngine.PlaySound(in TerramonSoundID.ButtonLocked);
         _topContainer.Append(pageRightButton);
 
-        _hintText = new BetterUIText(_hintLocalizedText)
+        _hintText = new BetterUIText(HintLocalizedText)
         {
             HAlign = 0.5f,
             TextColor = new Color(193, 193, 226),
@@ -212,24 +234,71 @@ public sealed class StarterSelectUI : SmartUIState
                 SoundEngine.PlaySound(in SoundID.MenuClose);
                 _starterPanelShowing = false;
             }
-            
+
             if (_hintTextTween is not { IsRunning: true })
-                _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a, _hintTextAlpha == 1f ? 0f : 1f,
-                    1f);
+                _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a,
+                    _hintTextAlpha == 1f ? 0f : 1f, 1f);
         }
-        
-        _topContainer.Top.Set(-157 + 10, isVisibleCondition ? 0.25f : 4f);
-        _backdropImage.Top.Set(-157 + 10 + -146, _starterPanelShowing ? 0.25f : 4f);
+
+        UpdateShowButtonAnimation(gameTime);
+
+        _topContainer.Top.Set(TopContainerOffset, isVisibleCondition ? 0.25f : 4f);
+        _backdropImage.Top.Set(TopContainerOffset - 146, _starterPanelShowing ? 0.25f : 4f);
         _hintText.Top.Set(94, isVisibleCondition ? 0.5f : 4f);
 
         Recalculate();
     }
 
+    private void UpdateShowButtonAnimation(GameTime gameTime)
+    {
+        if (_starterPanelShowing)
+        {
+            _showButtonShakeElapsed = -1f;
+            _showButton.MarginRight = ShowButtonOriginalMargin;
+            _showButton.VisibilityOverride = -1f;
+            return;
+        }
+
+        var elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        _showButtonShakeTimer += elapsed;
+
+        if (_showButtonShakeTimer >= ShowButtonShakeInterval && _showButtonShakeElapsed <= 0f)
+        {
+            _showButtonShakeTimer -= ShowButtonShakeInterval;
+            _showButtonShakeElapsed = 0f;
+
+            if (!_showButton.IsMouseHovering)
+            {
+                _showButton.VisibilityOverride = _showButton.VisibilityActive;
+                _showButtonVisibilityTween = Tween.To(
+                    () => _showButton.VisibilityOverride,
+                    v => _showButton.VisibilityOverride = v,
+                    _showButton.VisibilityInactive,
+                    ShowButtonShakeDuration);
+                _showButtonVisibilityTween.OnComplete = () => _showButton.VisibilityOverride = -1f;
+            }
+        }
+
+        if (_showButtonShakeElapsed is >= 0f and < ShowButtonShakeDuration)
+        {
+            _showButtonShakeElapsed += elapsed;
+            var t = _showButtonShakeElapsed / ShowButtonShakeDuration;
+            var easeOut = 1f - t;
+            const float freq = 12f;
+            const float amplitude = 6f;
+            var offset = MathF.Sin(t * freq * MathF.PI * 2f) * amplitude * easeOut;
+            _showButton.MarginRight = ShowButtonOriginalMargin + offset;
+        }
+        else if (_showButtonShakeElapsed >= ShowButtonShakeDuration)
+        {
+            _showButtonShakeElapsed = -1f;
+            _showButton.MarginRight = ShowButtonOriginalMargin;
+        }
+    }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
         _hintText.TextColor = Color.Lerp(new Color(193, 193, 226), new Color(157, 157, 184), _hintTextAlpha);
-
         base.Draw(spriteBatch);
     }
 }
@@ -237,15 +306,33 @@ public sealed class StarterSelectUI : SmartUIState
 internal sealed class UIStarterBanner : UIHoverImageButton
 {
     private static readonly Asset<Texture2D> ShadowTexture;
+
+    private static readonly LocalizedText PickThisOneLocalizedText =
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.PickThisOne");
+
+    private static readonly LocalizedText[] SecretHoverTextLocalizedTexts =
+    [
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.ReadyToStart"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.GoodMood"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.FullOfExcitement"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.Curious"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.Waiting"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.SparkOfEnergy"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.BouncingWithExcitement"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.ReadyToPlay"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.EagerToShow"),
+        Language.GetText("Mods.Terramon.GUI.Starter.Banner.SecretHoverText.ReadyToImpress")
+    ];
+
     private readonly UIImage _miniTexture;
     private readonly ushort _pokemon;
     private readonly UIImage _shadow;
     private readonly BetterUIText _speciesText;
     private readonly BetterUIText _suffixText;
+
     private int _hoverTextOverrideTimeLeft;
     private int _jumpCount;
     private int _jumpTime;
-
     private Vector2? _lastMousePosition;
     private int _lastXDirection;
     private int _shakeCount;
@@ -253,12 +340,10 @@ internal sealed class UIStarterBanner : UIHoverImageButton
     static UIStarterBanner()
     {
         if (Main.dedServ) return;
-
         ShadowTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/Shadow");
     }
 
-    public UIStarterBanner(ushort pokemon) : base(TextureAssets.Npc[0],
-        "Pick this one!")
+    public UIStarterBanner(ushort pokemon) : base(TextureAssets.Npc[0], PickThisOneLocalizedText)
     {
         _pokemon = pokemon;
 
@@ -266,37 +351,10 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         var texturePath = $"Terramon/Assets/GUI/Starter/Banner{mainType}";
         if (!ModContent.HasAsset(texturePath))
             texturePath = "Terramon/Assets/GUI/Starter/BannerNormal";
-        var hoverTexturePath = $"{texturePath}Hover";
         SetImage(ModContent.Request<Texture2D>(texturePath));
-        SetHoverImage(ModContent.Request<Texture2D>(
-            hoverTexturePath));
+        SetHoverImage(ModContent.Request<Texture2D>($"{texturePath}Hover"));
 
-        OnLeftClick += (_, _) =>
-        {
-            var player = Main.LocalPlayer;
-            var modPlayer = player.Terramon();
-            var dataBuilder = PokemonData.Create(pokemon, 5).CaughtBy(player);
-            if (GameplayConfig.Instance.ShinyLockedStarters)
-                dataBuilder.ForceShiny(false);
-            var data = dataBuilder.Build();
-            modPlayer.AddPartyPokemon(data, out _);
-            modPlayer.HasChosenStarter = true;
-            StarterSelectUI.DoFadeOutAnimation();
-            var schema = data.Schema;
-            var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage").Format(
-                DatabaseV2.GetPokemonSpeciesDirect(schema),
-                schema.Types[0].GetHexColor(),
-                data.LocalizedName
-            );
-            Main.NewText(chosenMessage);
-            SoundEngine.PlaySound(in SoundID.Coins);
-            var ballItemType = ModContent.ItemType<PokeBallItem>();
-            if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
-                ballItemType = ModContent.ItemType<MasterBallItem>();
-            var giftItemSource = player.GetSource_GiftOrReward();
-            player.QuickSpawnItem(giftItemSource, ballItemType, 10);
-            player.QuickSpawnItem(giftItemSource, ModContent.ItemType<Potion>(), 3);
-        };
+        OnLeftClick += OnBannerClicked;
 
         RemoveFloatingPointsFromDrawPosition = true;
         Width.Set(114, 0f);
@@ -319,6 +377,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         var speciesSplit = species.Split(' ');
         var speciesMod = string.Join(" ", speciesSplit.Take(speciesSplit.Length - 1));
         var suffix = speciesSplit.Last();
+
         _speciesText = new BetterUIText(speciesMod, 0.87f)
         {
             RemoveFloatingPointsFromDrawPosition = true,
@@ -327,6 +386,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         };
         _speciesText.Top.Set(109, 0f);
         Append(_speciesText);
+
         _suffixText = new BetterUIText(suffix, 0.85f)
         {
             RemoveFloatingPointsFromDrawPosition = true,
@@ -336,10 +396,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         _suffixText.Top.Set(126, 0f);
         Append(_suffixText);
 
-        _shadow = new UIImage(ShadowTexture)
-        {
-            RemoveFloatingPointsFromDrawPosition = true
-        };
+        _shadow = new UIImage(ShadowTexture) { RemoveFloatingPointsFromDrawPosition = true };
         _shadow.Left.Set(38, 0f);
         _shadow.Top.Set(78, 0f);
         Append(_shadow);
@@ -354,79 +411,119 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         Append(_miniTexture);
     }
 
+    private void OnBannerClicked(UIMouseEvent evt, UIElement listeningElement)
+    {
+        var player = Main.LocalPlayer;
+        var modPlayer = player.Terramon();
+        var dataBuilder = PokemonData.Create(_pokemon, 5).CaughtBy(player);
+        if (GameplayConfig.Instance.ShinyLockedStarters)
+            dataBuilder.ForceShiny(false);
+        var data = dataBuilder.Build();
+        modPlayer.AddPartyPokemon(data, out _);
+        modPlayer.HasChosenStarter = true;
+        StarterSelectUI.DoFadeOutAnimation();
+
+        var schema = data.Schema;
+        var chosenMessage = Language.GetText("Mods.Terramon.GUI.Starter.ChosenMessage")
+            .Format(DatabaseV2.GetPokemonSpeciesDirect(schema), schema.Types[0].GetHexColor(), data.LocalizedName);
+        Main.NewText(chosenMessage);
+        SoundEngine.PlaySound(in SoundID.Coins);
+
+        var ballItemType = ModContent.ItemType<PokeBallItem>();
+        if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
+            ballItemType = ModContent.ItemType<MasterBallItem>();
+        var giftItemSource = player.GetSource_GiftOrReward();
+        player.QuickSpawnItem(giftItemSource, ballItemType, 10);
+        player.QuickSpawnItem(giftItemSource, ModContent.ItemType<Potion>(), 3);
+    }
+
     public override void Update(GameTime gameTime)
     {
         var mouseOverThis = ContainsPoint(Main.MouseScreen);
 
-        if (mouseOverThis)
-            if (!JustHovered)
-                SoundEngine.PlaySound(SoundID.Item32 with { Volume = 0.3f });
+        if (mouseOverThis && !JustHovered)
+            SoundEngine.PlaySound(SoundID.Item32 with { Volume = 0.3f });
 
         base.Update(gameTime);
 
         if (_hoverTextOverrideTimeLeft > 0)
         {
             _hoverTextOverrideTimeLeft--;
-            if (_hoverTextOverrideTimeLeft == 0) SetHoverText("Pick this one!");
+            if (_hoverTextOverrideTimeLeft == 0)
+                SetHoverText(PickThisOneLocalizedText);
         }
 
         if (mouseOverThis)
         {
-            _lastMousePosition ??= Main.MouseScreen;
-
-            var xDistance = Main.MouseScreen.X - _lastMousePosition.Value.X;
-
-            // Detect horizontal movement of the mouse over the banner
-            if (_hoverTextOverrideTimeLeft == 0 && Math.Abs(xDistance) > 8.5f)
-            {
-                if ((xDistance > 0 && _lastXDirection < 0) || (xDistance < 0 && _lastXDirection > 0)) _shakeCount++;
-
-                // Trigger the Pokémon's cry sound effect! :)
-                if (_shakeCount == 12)
-                {
-                    _shakeCount = 0;
-                    _hoverTextOverrideTimeLeft = 150;
-                    var cry = TerramonSoundID.GetCry(_pokemon);
-                    SetHoverText(Terramon.DatabaseV2.GetLocalizedPokemonName(_pokemon) + GetRandomHoverText());
-                    SoundEngine.PlaySound(in cry);
-                }
-
-                _lastXDirection = xDistance > 0 ? 1 : -1;
-            }
-
-            _lastMousePosition = Main.MouseScreen;
-
-            _jumpTime++;
-            if (_jumpTime > 28)
-            {
-                _jumpCount++;
-                if (_jumpCount > 1)
-                {
-                    _jumpCount = 0;
-                    _jumpTime = -75;
-                }
-                else
-                {
-                    _jumpTime = 0;
-                }
-            }
-
-            if (_jumpTime < 0) return;
-            var jumpHeight = GravitySim(_jumpTime / 3.5f);
-            var shadowScale = MathHelper.Lerp(0.85f, 1f, (jumpHeight - 28f) / 8f);
-            _miniTexture.Top.Set(jumpHeight + 2f, 0f);
-            _shadow.ImageScale = shadowScale;
+            HandleMouseInteraction();
+            UpdateJumpAnimation();
         }
         else
         {
-            _lastMousePosition = null;
-            _lastXDirection = 0;
-            _shakeCount = 0;
-            _jumpTime = 0;
-            _jumpCount = 0;
-            _miniTexture.Top.Set(38, 0f);
-            _shadow.ImageScale = 1f;
+            ResetAnimationState();
         }
+    }
+
+    private void HandleMouseInteraction()
+    {
+        _lastMousePosition ??= Main.MouseScreen;
+
+        var xDistance = Main.MouseScreen.X - _lastMousePosition.Value.X;
+
+        if (_hoverTextOverrideTimeLeft == 0 && Math.Abs(xDistance) > 8.5f)
+        {
+            if ((xDistance > 0 && _lastXDirection < 0) || (xDistance < 0 && _lastXDirection > 0))
+                _shakeCount++;
+
+            if (_shakeCount == 12)
+            {
+                _shakeCount = 0;
+                _hoverTextOverrideTimeLeft = 150;
+                var cry = TerramonSoundID.GetCry(_pokemon);
+                SetHoverText(GetRandomSecretHoverText());
+                SoundEngine.PlaySound(in cry);
+            }
+
+            _lastXDirection = xDistance > 0 ? 1 : -1;
+        }
+
+        _lastMousePosition = Main.MouseScreen;
+    }
+
+    private void UpdateJumpAnimation()
+    {
+        _jumpTime++;
+        if (_jumpTime > 28)
+        {
+            _jumpCount++;
+            if (_jumpCount > 1)
+            {
+                _jumpCount = 0;
+                _jumpTime = -75;
+            }
+            else
+            {
+                _jumpTime = 0;
+            }
+        }
+
+        if (_jumpTime < 0) return;
+
+        var jumpHeight = GravitySim(_jumpTime / 3.5f);
+        var shadowScale = MathHelper.Lerp(0.85f, 1f, (jumpHeight - 28f) / 8f);
+        _miniTexture.Top.Set(jumpHeight + 2f, 0f);
+        _shadow.ImageScale = shadowScale;
+    }
+
+    private void ResetAnimationState()
+    {
+        _lastMousePosition = null;
+        _lastXDirection = 0;
+        _shakeCount = 0;
+        _jumpTime = 0;
+        _jumpCount = 0;
+        _miniTexture.Top.Set(38, 0f);
+        _shadow.ImageScale = 1f;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -447,27 +544,11 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         base.Draw(spriteBatch);
     }
 
-    private static float GravitySim(float x)
-    {
-        return 0.5f * x * x - 4f * x + 36f;
-    }
+    private static float GravitySim(float x) => 0.5f * x * x - 4f * x + 36f;
 
-    private static string GetRandomHoverText()
+    private string GetRandomSecretHoverText()
     {
-        string[] starterTexts =
-        [
-            " seems ready to get started!",
-            " looks like it’s in a good mood!",
-            " is full of excitement!",
-            " seems curious about you!",
-            " looks like it’s waiting for something!",
-            " seems to have a spark of energy!",
-            " is bouncing with excitement!",
-            " looks like it’s ready to play!",
-            " is eager to show you what it can do!",
-            " looks ready to impress!"
-        ];
-
-        return starterTexts[Main.rand.Next(starterTexts.Length)];
+        return SecretHoverTextLocalizedTexts[Main.rand.Next(SecretHoverTextLocalizedTexts.Length)]
+            .WithFormatArgs(Terramon.DatabaseV2.GetLocalizedPokemonName(_pokemon)).Value;
     }
 }

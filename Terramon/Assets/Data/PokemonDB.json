@@ -3031,7 +3031,58 @@
           }
         ]
       },
-      "forms": {}
+      "forms": {
+        "MegaX": {
+          "name": "MegaX",
+          "types": [
+            13
+          ],
+          "baseExp": 0,
+          "baseStats": [
+            60,
+            135,
+            95,
+            90,
+            95,
+            110,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "height": 12,
+          "weight": 380,
+          "abilities": {},
+          "moves": []
+        },
+        "MegaY": {
+          "name": "MegaY",
+          "types": [
+            13
+          ],
+          "baseExp": 0,
+          "baseStats": [
+            60,
+            100,
+            55,
+            160,
+            80,
+            130,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "height": 10,
+          "weight": 260,
+          "abilities": {},
+          "moves": []
+        }
+      }
     },
     "27": {
       "catchRate": 255,
@@ -16040,6 +16091,2217 @@
           {
             "id": 773,
             "atLevel": 40
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "152": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 153,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Chikorita",
+        "types": [
+          12
+        ],
+        "baseExp": 64,
+        "baseStats": [
+          45,
+          49,
+          65,
+          49,
+          65,
+          45,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        "height": 9,
+        "weight": 64,
+        "abilities": {
+          "1": 65,
+          "hidden": 102
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 34,
+            "atLevel": 34
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 73,
+            "atLevel": 23
+          },
+          {
+            "id": 75,
+            "atLevel": 6
+          },
+          {
+            "id": 76,
+            "atLevel": 45
+          },
+          {
+            "id": 77,
+            "atLevel": 9
+          },
+          {
+            "id": 113,
+            "atLevel": 31
+          },
+          {
+            "id": 115,
+            "atLevel": 17
+          },
+          {
+            "id": 202,
+            "atLevel": 42
+          },
+          {
+            "id": 219,
+            "atLevel": 39
+          },
+          {
+            "id": 230,
+            "atLevel": 28
+          },
+          {
+            "id": 235,
+            "atLevel": 12
+          },
+          {
+            "id": 345,
+            "atLevel": 20
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "155": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 156,
+        "atLevel": 14
+      },
+      "baseForm": {
+        "name": "Cyndaquil",
+        "types": [
+          10
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          39,
+          52,
+          43,
+          60,
+          50,
+          65,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 5,
+        "weight": 79,
+        "abilities": {
+          "1": 66,
+          "hidden": 18
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 38,
+            "atLevel": 55
+          },
+          {
+            "id": 43,
+            "atLevel": 1
+          },
+          {
+            "id": 52,
+            "atLevel": 10
+          },
+          {
+            "id": 53,
+            "atLevel": 40
+          },
+          {
+            "id": 98,
+            "atLevel": 13
+          },
+          {
+            "id": 108,
+            "atLevel": 6
+          },
+          {
+            "id": 111,
+            "atLevel": 22
+          },
+          {
+            "id": 129,
+            "atLevel": 31
+          },
+          {
+            "id": 172,
+            "atLevel": 19
+          },
+          {
+            "id": 205,
+            "atLevel": 49
+          },
+          {
+            "id": 284,
+            "atLevel": 64
+          },
+          {
+            "id": 315,
+            "atLevel": 58
+          },
+          {
+            "id": 436,
+            "atLevel": 37
+          },
+          {
+            "id": 488,
+            "atLevel": 28
+          },
+          {
+            "id": 517,
+            "atLevel": 46
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "158": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 159,
+        "atLevel": 18
+      },
+      "baseForm": {
+        "name": "Totodile",
+        "types": [
+          11
+        ],
+        "baseExp": 63,
+        "baseStats": [
+          50,
+          65,
+          64,
+          44,
+          48,
+          43,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 6,
+        "weight": 95,
+        "abilities": {
+          "1": 67,
+          "hidden": 125
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 37,
+            "atLevel": 37
+          },
+          {
+            "id": 43,
+            "atLevel": 1
+          },
+          {
+            "id": 44,
+            "atLevel": 9
+          },
+          {
+            "id": 55,
+            "atLevel": 6
+          },
+          {
+            "id": 56,
+            "atLevel": 50
+          },
+          {
+            "id": 103,
+            "atLevel": 33
+          },
+          {
+            "id": 163,
+            "atLevel": 30
+          },
+          {
+            "id": 175,
+            "atLevel": 22
+          },
+          {
+            "id": 184,
+            "atLevel": 13
+          },
+          {
+            "id": 242,
+            "atLevel": 27
+          },
+          {
+            "id": 276,
+            "atLevel": 45
+          },
+          {
+            "id": 401,
+            "atLevel": 41
+          },
+          {
+            "id": 423,
+            "atLevel": 19
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "252": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 253,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Treecko",
+        "types": [
+          12
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          40,
+          45,
+          35,
+          65,
+          55,
+          70,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 5,
+        "weight": 50,
+        "abilities": {
+          "1": 65,
+          "hidden": 84
+        },
+        "moves": [
+          {
+            "id": 1,
+            "atLevel": 1
+          },
+          {
+            "id": 21,
+            "atLevel": 24
+          },
+          {
+            "id": 43,
+            "atLevel": 1
+          },
+          {
+            "id": 72,
+            "atLevel": 9
+          },
+          {
+            "id": 98,
+            "atLevel": 6
+          },
+          {
+            "id": 103,
+            "atLevel": 33
+          },
+          {
+            "id": 104,
+            "atLevel": 27
+          },
+          {
+            "id": 197,
+            "atLevel": 12
+          },
+          {
+            "id": 202,
+            "atLevel": 21
+          },
+          {
+            "id": 283,
+            "atLevel": 36
+          },
+          {
+            "id": 372,
+            "atLevel": 18
+          },
+          {
+            "id": 412,
+            "atLevel": 30
+          },
+          {
+            "id": 437,
+            "atLevel": 39
+          },
+          {
+            "id": 501,
+            "atLevel": 15
+          },
+          {
+            "id": 652,
+            "atLevel": 3
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "255": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 256,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Torchic",
+        "types": [
+          10
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          45,
+          60,
+          40,
+          70,
+          50,
+          45,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 25,
+        "abilities": {
+          "1": 66,
+          "hidden": 3
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 28,
+            "atLevel": 15
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 52,
+            "atLevel": 3
+          },
+          {
+            "id": 53,
+            "atLevel": 30
+          },
+          {
+            "id": 98,
+            "atLevel": 6
+          },
+          {
+            "id": 116,
+            "atLevel": 27
+          },
+          {
+            "id": 163,
+            "atLevel": 21
+          },
+          {
+            "id": 179,
+            "atLevel": 36
+          },
+          {
+            "id": 197,
+            "atLevel": 12
+          },
+          {
+            "id": 297,
+            "atLevel": 33
+          },
+          {
+            "id": 332,
+            "atLevel": 18
+          },
+          {
+            "id": 340,
+            "atLevel": 24
+          },
+          {
+            "id": 394,
+            "atLevel": 39
+          },
+          {
+            "id": 488,
+            "atLevel": 9
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "258": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 259,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Mudkip",
+        "types": [
+          11
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          50,
+          70,
+          50,
+          50,
+          50,
+          40,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 76,
+        "abilities": {
+          "1": 67,
+          "hidden": 6
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 36,
+            "atLevel": 24
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 48,
+            "atLevel": 15
+          },
+          {
+            "id": 55,
+            "atLevel": 3
+          },
+          {
+            "id": 56,
+            "atLevel": 39
+          },
+          {
+            "id": 57,
+            "atLevel": 30
+          },
+          {
+            "id": 88,
+            "atLevel": 9
+          },
+          {
+            "id": 103,
+            "atLevel": 33
+          },
+          {
+            "id": 133,
+            "atLevel": 27
+          },
+          {
+            "id": 157,
+            "atLevel": 21
+          },
+          {
+            "id": 182,
+            "atLevel": 12
+          },
+          {
+            "id": 249,
+            "atLevel": 6
+          },
+          {
+            "id": 283,
+            "atLevel": 36
+          },
+          {
+            "id": 352,
+            "atLevel": 18
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "387": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 388,
+        "atLevel": 18
+      },
+      "baseForm": {
+        "name": "Turtwig",
+        "types": [
+          12
+        ],
+        "baseExp": 64,
+        "baseStats": [
+          55,
+          68,
+          64,
+          45,
+          55,
+          31,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 102,
+        "abilities": {
+          "1": 65,
+          "hidden": 75
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 44,
+            "atLevel": 21
+          },
+          {
+            "id": 71,
+            "atLevel": 9
+          },
+          {
+            "id": 72,
+            "atLevel": 25
+          },
+          {
+            "id": 73,
+            "atLevel": 29
+          },
+          {
+            "id": 75,
+            "atLevel": 13
+          },
+          {
+            "id": 110,
+            "atLevel": 5
+          },
+          {
+            "id": 174,
+            "atLevel": 17
+          },
+          {
+            "id": 202,
+            "atLevel": 41
+          },
+          {
+            "id": 235,
+            "atLevel": 33
+          },
+          {
+            "id": 242,
+            "atLevel": 37
+          },
+          {
+            "id": 437,
+            "atLevel": 45
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "390": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 391,
+        "atLevel": 14
+      },
+      "baseForm": {
+        "name": "Chimchar",
+        "types": [
+          10
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          44,
+          58,
+          44,
+          58,
+          44,
+          61,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 5,
+        "weight": 62,
+        "abilities": {
+          "1": 66,
+          "hidden": 89
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 43,
+            "atLevel": 1
+          },
+          {
+            "id": 52,
+            "atLevel": 7
+          },
+          {
+            "id": 53,
+            "atLevel": 47
+          },
+          {
+            "id": 83,
+            "atLevel": 33
+          },
+          {
+            "id": 154,
+            "atLevel": 15
+          },
+          {
+            "id": 172,
+            "atLevel": 17
+          },
+          {
+            "id": 259,
+            "atLevel": 25
+          },
+          {
+            "id": 263,
+            "atLevel": 31
+          },
+          {
+            "id": 269,
+            "atLevel": 9
+          },
+          {
+            "id": 303,
+            "atLevel": 41
+          },
+          {
+            "id": 417,
+            "atLevel": 23
+          },
+          {
+            "id": 512,
+            "atLevel": 39
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "393": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 394,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Piplup",
+        "types": [
+          11
+        ],
+        "baseExp": 63,
+        "baseStats": [
+          53,
+          51,
+          53,
+          61,
+          56,
+          40,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 52,
+        "abilities": {
+          "1": 67,
+          "hidden": 172
+        },
+        "moves": [
+          {
+            "id": 1,
+            "atLevel": 1
+          },
+          {
+            "id": 31,
+            "atLevel": 25
+          },
+          {
+            "id": 45,
+            "atLevel": 4
+          },
+          {
+            "id": 54,
+            "atLevel": 36
+          },
+          {
+            "id": 55,
+            "atLevel": 8
+          },
+          {
+            "id": 56,
+            "atLevel": 43
+          },
+          {
+            "id": 61,
+            "atLevel": 18
+          },
+          {
+            "id": 64,
+            "atLevel": 15
+          },
+          {
+            "id": 65,
+            "atLevel": 39
+          },
+          {
+            "id": 204,
+            "atLevel": 11
+          },
+          {
+            "id": 207,
+            "atLevel": 22
+          },
+          {
+            "id": 250,
+            "atLevel": 32
+          },
+          {
+            "id": 362,
+            "atLevel": 29
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "495": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 496,
+        "atLevel": 17
+      },
+      "baseForm": {
+        "name": "Snivy",
+        "types": [
+          12
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          45,
+          45,
+          55,
+          45,
+          55,
+          63,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 6,
+        "weight": 81,
+        "abilities": {
+          "1": 65,
+          "hidden": 126
+        },
+        "moves": [
+          {
+            "id": 21,
+            "atLevel": 25
+          },
+          {
+            "id": 22,
+            "atLevel": 7
+          },
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 35,
+            "atLevel": 10
+          },
+          {
+            "id": 43,
+            "atLevel": 4
+          },
+          {
+            "id": 72,
+            "atLevel": 22
+          },
+          {
+            "id": 73,
+            "atLevel": 19
+          },
+          {
+            "id": 74,
+            "atLevel": 13
+          },
+          {
+            "id": 202,
+            "atLevel": 34
+          },
+          {
+            "id": 345,
+            "atLevel": 16
+          },
+          {
+            "id": 348,
+            "atLevel": 28
+          },
+          {
+            "id": 380,
+            "atLevel": 37
+          },
+          {
+            "id": 437,
+            "atLevel": 40
+          },
+          {
+            "id": 489,
+            "atLevel": 31
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "498": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 499,
+        "atLevel": 17
+      },
+      "baseForm": {
+        "name": "Tepig",
+        "types": [
+          10
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          65,
+          63,
+          45,
+          45,
+          45,
+          45,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 5,
+        "weight": 99,
+        "abilities": {
+          "1": 66,
+          "hidden": 47
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 36,
+            "atLevel": 25
+          },
+          {
+            "id": 39,
+            "atLevel": 3
+          },
+          {
+            "id": 46,
+            "atLevel": 39
+          },
+          {
+            "id": 52,
+            "atLevel": 7
+          },
+          {
+            "id": 53,
+            "atLevel": 33
+          },
+          {
+            "id": 111,
+            "atLevel": 13
+          },
+          {
+            "id": 123,
+            "atLevel": 19
+          },
+          {
+            "id": 203,
+            "atLevel": 9
+          },
+          {
+            "id": 205,
+            "atLevel": 21
+          },
+          {
+            "id": 372,
+            "atLevel": 31
+          },
+          {
+            "id": 394,
+            "atLevel": 43
+          },
+          {
+            "id": 457,
+            "atLevel": 37
+          },
+          {
+            "id": 488,
+            "atLevel": 15
+          },
+          {
+            "id": 535,
+            "atLevel": 27
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "501": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 502,
+        "atLevel": 17
+      },
+      "baseForm": {
+        "name": "Oshawott",
+        "types": [
+          11
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          55,
+          55,
+          45,
+          63,
+          45,
+          45,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "height": 5,
+        "weight": 59,
+        "abilities": {
+          "1": 67,
+          "hidden": 75
+        },
+        "moves": [
+          {
+            "id": 14,
+            "atLevel": 41
+          },
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 39,
+            "atLevel": 5
+          },
+          {
+            "id": 55,
+            "atLevel": 7
+          },
+          {
+            "id": 56,
+            "atLevel": 43
+          },
+          {
+            "id": 116,
+            "atLevel": 13
+          },
+          {
+            "id": 210,
+            "atLevel": 19
+          },
+          {
+            "id": 227,
+            "atLevel": 31
+          },
+          {
+            "id": 332,
+            "atLevel": 25
+          },
+          {
+            "id": 352,
+            "atLevel": 23
+          },
+          {
+            "id": 401,
+            "atLevel": 35
+          },
+          {
+            "id": 453,
+            "atLevel": 29
+          },
+          {
+            "id": 487,
+            "atLevel": 11
+          },
+          {
+            "id": 514,
+            "atLevel": 37
+          },
+          {
+            "id": 534,
+            "atLevel": 17
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "650": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 651,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Chespin",
+        "types": [
+          12
+        ],
+        "baseExp": 63,
+        "baseStats": [
+          56,
+          61,
+          65,
+          48,
+          45,
+          38,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 90,
+        "abilities": {
+          "1": 65,
+          "hidden": 171
+        },
+        "moves": [
+          {
+            "id": 22,
+            "atLevel": 1
+          },
+          {
+            "id": 34,
+            "atLevel": 42
+          },
+          {
+            "id": 36,
+            "atLevel": 27
+          },
+          {
+            "id": 42,
+            "atLevel": 18
+          },
+          {
+            "id": 44,
+            "atLevel": 11
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 73,
+            "atLevel": 15
+          },
+          {
+            "id": 205,
+            "atLevel": 8
+          },
+          {
+            "id": 220,
+            "atLevel": 45
+          },
+          {
+            "id": 341,
+            "atLevel": 35
+          },
+          {
+            "id": 402,
+            "atLevel": 32
+          },
+          {
+            "id": 452,
+            "atLevel": 48
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "653": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 654,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Fennekin",
+        "types": [
+          10
+        ],
+        "baseExp": 61,
+        "baseStats": [
+          40,
+          45,
+          40,
+          62,
+          60,
+          60,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 94,
+        "abilities": {
+          "1": 66,
+          "hidden": 170
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 39,
+            "atLevel": 1
+          },
+          {
+            "id": 52,
+            "atLevel": 5
+          },
+          {
+            "id": 53,
+            "atLevel": 35
+          },
+          {
+            "id": 60,
+            "atLevel": 17
+          },
+          {
+            "id": 83,
+            "atLevel": 20
+          },
+          {
+            "id": 94,
+            "atLevel": 41
+          },
+          {
+            "id": 113,
+            "atLevel": 25
+          },
+          {
+            "id": 126,
+            "atLevel": 48
+          },
+          {
+            "id": 241,
+            "atLevel": 43
+          },
+          {
+            "id": 261,
+            "atLevel": 38
+          },
+          {
+            "id": 336,
+            "atLevel": 11
+          },
+          {
+            "id": 473,
+            "atLevel": 31
+          },
+          {
+            "id": 488,
+            "atLevel": 14
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "656": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 657,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Froakie",
+        "types": [
+          11
+        ],
+        "baseExp": 63,
+        "baseStats": [
+          41,
+          56,
+          40,
+          62,
+          44,
+          71,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 3,
+        "weight": 70,
+        "abilities": {
+          "1": 67,
+          "hidden": 168
+        },
+        "moves": [
+          {
+            "id": 1,
+            "atLevel": 1
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 55,
+            "atLevel": 5
+          },
+          {
+            "id": 56,
+            "atLevel": 48
+          },
+          {
+            "id": 98,
+            "atLevel": 8
+          },
+          {
+            "id": 104,
+            "atLevel": 43
+          },
+          {
+            "id": 108,
+            "atLevel": 18
+          },
+          {
+            "id": 122,
+            "atLevel": 10
+          },
+          {
+            "id": 164,
+            "atLevel": 35
+          },
+          {
+            "id": 340,
+            "atLevel": 39
+          },
+          {
+            "id": 352,
+            "atLevel": 14
+          },
+          {
+            "id": 374,
+            "atLevel": 25
+          },
+          {
+            "id": 479,
+            "atLevel": 29
+          },
+          {
+            "id": 496,
+            "atLevel": 21
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "722": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 723,
+        "atLevel": 17
+      },
+      "baseForm": {
+        "name": "Rowlet",
+        "types": [
+          12,
+          3
+        ],
+        "baseExp": 64,
+        "baseStats": [
+          68,
+          55,
+          55,
+          50,
+          50,
+          42,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 3,
+        "weight": 15,
+        "abilities": {
+          "1": 65,
+          "hidden": 203
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 64,
+            "atLevel": 9
+          },
+          {
+            "id": 75,
+            "atLevel": 15
+          },
+          {
+            "id": 235,
+            "atLevel": 18
+          },
+          {
+            "id": 297,
+            "atLevel": 33
+          },
+          {
+            "id": 310,
+            "atLevel": 6
+          },
+          {
+            "id": 348,
+            "atLevel": 30
+          },
+          {
+            "id": 365,
+            "atLevel": 21
+          },
+          {
+            "id": 389,
+            "atLevel": 27
+          },
+          {
+            "id": 413,
+            "atLevel": 36
+          },
+          {
+            "id": 417,
+            "atLevel": 24
+          },
+          {
+            "id": 425,
+            "atLevel": 12
+          },
+          {
+            "id": 652,
+            "atLevel": 3
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "725": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 726,
+        "atLevel": 17
+      },
+      "baseForm": {
+        "name": "Litten",
+        "types": [
+          10
+        ],
+        "baseExp": 64,
+        "baseStats": [
+          45,
+          65,
+          40,
+          60,
+          40,
+          70,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 4,
+        "weight": 43,
+        "abilities": {
+          "1": 66,
+          "hidden": 22
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 24,
+            "atLevel": 18
+          },
+          {
+            "id": 37,
+            "atLevel": 33
+          },
+          {
+            "id": 44,
+            "atLevel": 15
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 46,
+            "atLevel": 9
+          },
+          {
+            "id": 52,
+            "atLevel": 3
+          },
+          {
+            "id": 53,
+            "atLevel": 30
+          },
+          {
+            "id": 122,
+            "atLevel": 6
+          },
+          {
+            "id": 154,
+            "atLevel": 12
+          },
+          {
+            "id": 184,
+            "atLevel": 24
+          },
+          {
+            "id": 207,
+            "atLevel": 27
+          },
+          {
+            "id": 394,
+            "atLevel": 36
+          },
+          {
+            "id": 424,
+            "atLevel": 21
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "728": {
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 729,
+        "atLevel": 17
+      },
+      "baseForm": {
+        "name": "Popplio",
+        "types": [
+          11
+        ],
+        "baseExp": 64,
+        "baseStats": [
+          50,
+          54,
+          54,
+          66,
+          56,
+          40,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 75,
+        "abilities": {
+          "1": 67,
+          "hidden": 204
+        },
+        "moves": [
+          {
+            "id": 1,
+            "atLevel": 1
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 47,
+            "atLevel": 18
+          },
+          {
+            "id": 55,
+            "atLevel": 3
+          },
+          {
+            "id": 56,
+            "atLevel": 36
+          },
+          {
+            "id": 61,
+            "atLevel": 21
+          },
+          {
+            "id": 196,
+            "atLevel": 15
+          },
+          {
+            "id": 227,
+            "atLevel": 24
+          },
+          {
+            "id": 304,
+            "atLevel": 30
+          },
+          {
+            "id": 453,
+            "atLevel": 9
+          },
+          {
+            "id": 574,
+            "atLevel": 6
+          },
+          {
+            "id": 581,
+            "atLevel": 27
+          },
+          {
+            "id": 585,
+            "atLevel": 33
+          },
+          {
+            "id": 608,
+            "atLevel": 12
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "810": {
+      "baseHappiness": 50,
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 811,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Grookey",
+        "types": [
+          12
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          50,
+          65,
+          50,
+          40,
+          40,
+          65,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 3,
+        "weight": 50,
+        "abilities": {
+          "1": 65,
+          "hidden": 229
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 21,
+            "atLevel": 24
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 75,
+            "atLevel": 12
+          },
+          {
+            "id": 103,
+            "atLevel": 17
+          },
+          {
+            "id": 253,
+            "atLevel": 28
+          },
+          {
+            "id": 269,
+            "atLevel": 8
+          },
+          {
+            "id": 282,
+            "atLevel": 20
+          },
+          {
+            "id": 283,
+            "atLevel": 36
+          },
+          {
+            "id": 452,
+            "atLevel": 32
+          },
+          {
+            "id": 767,
+            "atLevel": 6
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "813": {
+      "baseHappiness": 50,
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 814,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Scorbunny",
+        "types": [
+          10
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          50,
+          71,
+          40,
+          40,
+          40,
+          69,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 3,
+        "weight": 45,
+        "abilities": {
+          "1": 66,
+          "hidden": 236
+        },
+        "moves": [
+          {
+            "id": 24,
+            "atLevel": 12
+          },
+          {
+            "id": 29,
+            "atLevel": 24
+          },
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 38,
+            "atLevel": 36
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 52,
+            "atLevel": 6
+          },
+          {
+            "id": 68,
+            "atLevel": 28
+          },
+          {
+            "id": 97,
+            "atLevel": 20
+          },
+          {
+            "id": 98,
+            "atLevel": 8
+          },
+          {
+            "id": 340,
+            "atLevel": 32
+          },
+          {
+            "id": 488,
+            "atLevel": 17
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "816": {
+      "baseHappiness": 50,
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 817,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Sobble",
+        "types": [
+          11
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          50,
+          40,
+          40,
+          70,
+          40,
+          70,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        "height": 3,
+        "weight": 40,
+        "abilities": {
+          "1": 67,
+          "hidden": 97
+        },
+        "moves": [
+          {
+            "id": 1,
+            "atLevel": 1
+          },
+          {
+            "id": 20,
+            "atLevel": 8
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 55,
+            "atLevel": 6
+          },
+          {
+            "id": 240,
+            "atLevel": 36
+          },
+          {
+            "id": 352,
+            "atLevel": 12
+          },
+          {
+            "id": 369,
+            "atLevel": 24
+          },
+          {
+            "id": 389,
+            "atLevel": 20
+          },
+          {
+            "id": 487,
+            "atLevel": 32
+          },
+          {
+            "id": 692,
+            "atLevel": 28
+          },
+          {
+            "id": 697,
+            "atLevel": 17
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "906": {
+      "baseHappiness": 50,
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 907,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Sprigatito",
+        "types": [
+          12
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          40,
+          61,
+          54,
+          45,
+          45,
+          65,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "height": 4,
+        "weight": 41,
+        "abilities": {
+          "1": 65,
+          "hidden": 168
+        },
+        "moves": [
+          {
+            "id": 10,
+            "atLevel": 1
+          },
+          {
+            "id": 39,
+            "atLevel": 1
+          },
+          {
+            "id": 44,
+            "atLevel": 7
+          },
+          {
+            "id": 98,
+            "atLevel": 15
+          },
+          {
+            "id": 163,
+            "atLevel": 28
+          },
+          {
+            "id": 345,
+            "atLevel": 13
+          },
+          {
+            "id": 369,
+            "atLevel": 21
+          },
+          {
+            "id": 388,
+            "atLevel": 25
+          },
+          {
+            "id": 402,
+            "atLevel": 17
+          },
+          {
+            "id": 412,
+            "atLevel": 32
+          },
+          {
+            "id": 468,
+            "atLevel": 10
+          },
+          {
+            "id": 583,
+            "atLevel": 36
+          },
+          {
+            "id": 652,
+            "atLevel": 1
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "909": {
+      "baseHappiness": 50,
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 910,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Fuecoco",
+        "types": [
+          10
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          67,
+          45,
+          59,
+          63,
+          40,
+          36,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 4,
+        "weight": 98,
+        "abilities": {
+          "1": 66,
+          "hidden": 109
+        },
+        "moves": [
+          {
+            "id": 33,
+            "atLevel": 1
+          },
+          {
+            "id": 43,
+            "atLevel": 1
+          },
+          {
+            "id": 44,
+            "atLevel": 12
+          },
+          {
+            "id": 46,
+            "atLevel": 25
+          },
+          {
+            "id": 52,
+            "atLevel": 1
+          },
+          {
+            "id": 53,
+            "atLevel": 28
+          },
+          {
+            "id": 126,
+            "atLevel": 36
+          },
+          {
+            "id": 281,
+            "atLevel": 17
+          },
+          {
+            "id": 304,
+            "atLevel": 32
+          },
+          {
+            "id": 496,
+            "atLevel": 7
+          },
+          {
+            "id": 510,
+            "atLevel": 15
+          },
+          {
+            "id": 555,
+            "atLevel": 21
+          }
+        ]
+      },
+      "forms": {}
+    },
+    "912": {
+      "baseHappiness": 50,
+      "growthRate": 3,
+      "genderRate": 1,
+      "evolution": {
+        "id": 913,
+        "atLevel": 16
+      },
+      "baseForm": {
+        "name": "Quaxly",
+        "types": [
+          11
+        ],
+        "baseExp": 62,
+        "baseStats": [
+          55,
+          65,
+          45,
+          50,
+          45,
+          50,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "height": 5,
+        "weight": 61,
+        "abilities": {
+          "1": 67,
+          "hidden": 153
+        },
+        "moves": [
+          {
+            "id": 1,
+            "atLevel": 1
+          },
+          {
+            "id": 17,
+            "atLevel": 10
+          },
+          {
+            "id": 45,
+            "atLevel": 1
+          },
+          {
+            "id": 55,
+            "atLevel": 1
+          },
+          {
+            "id": 116,
+            "atLevel": 28
+          },
+          {
+            "id": 403,
+            "atLevel": 24
+          },
+          {
+            "id": 453,
+            "atLevel": 13
+          },
+          {
+            "id": 458,
+            "atLevel": 17
+          },
+          {
+            "id": 512,
+            "atLevel": 31
+          },
+          {
+            "id": 526,
+            "atLevel": 7
+          },
+          {
+            "id": 692,
+            "atLevel": 35
+          },
+          {
+            "id": 877,
+            "atLevel": 21
           }
         ]
       },

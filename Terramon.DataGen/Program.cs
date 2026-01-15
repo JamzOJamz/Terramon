@@ -26,28 +26,28 @@ internal static class Program
     private static readonly int[] ExtraPokemonIDs =
     [
         // Gen 2 starters
-        // 152, 155, 158, // Chikorita, Cyndaquil, Totodile
+        152, 155, 158, // Chikorita, Cyndaquil, Totodile
 
         // Gen 3 starters  
-        // 252, 255, 258, // Treecko, Torchic, Mudkip
+        252, 255, 258, // Treecko, Torchic, Mudkip
 
         // Gen 4 starters
-        // 387, 390, 393, // Turtwig, Chimchar, Piplup
+        387, 390, 393, // Turtwig, Chimchar, Piplup
 
         // Gen 5 starters
-        // 495, 498, 501, // Snivy, Tepig, Oshawott
+        495, 498, 501, // Snivy, Tepig, Oshawott
 
         // Gen 6 starters
-        // 650, 653, 656, // Chespin, Fennekin, Froakie
+        650, 653, 656, // Chespin, Fennekin, Froakie
 
         // Gen 7 starters
-        // 722, 725, 728, // Rowlet, Litten, Popplio
+        722, 725, 728, // Rowlet, Litten, Popplio
 
         // Gen 8 starters
-        // 810, 813, 816, // Grookey, Scorbunny, Sobble
+        810, 813, 816, // Grookey, Scorbunny, Sobble
 
         // Gen 9 starters
-        // 906, 909, 912  // Sprigatito, Fuecoco, Quaxly
+        906, 909, 912  // Sprigatito, Fuecoco, Quaxly
     ];
 
     private static readonly HttpClient HttpClient = new();
@@ -96,6 +96,22 @@ internal static class Program
                 var pokemonSchema = await FetchSpeciesData(id);
                 Console.WriteLine($"Fetched {pokemonSchema.BaseForm.Identifier} (ID {id}) successfully.\n");
                 pokemon[id] = pokemonSchema;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
+            }
+        }
+        
+        // Fetch extra Pokémon IDs
+        foreach (var id in ExtraPokemonIDs)
+        {
+            try
+            {
+                Console.WriteLine($"Fetching Extra Pokémon ID {id}...");
+                var pokemonSchema = await FetchSpeciesData(id);
+                Console.WriteLine($"Fetched {pokemonSchema.BaseForm.Identifier} (ID {id}) successfully.\n");
+                pokemon[(ushort)id] = pokemonSchema;
             }
             catch (Exception ex)
             {
@@ -155,14 +171,12 @@ internal static class Program
         {
             return await File.ReadAllTextAsync(filePath);
         }
-        else
-        {
-            var response = await HttpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            var jsonContent = await response.Content.ReadAsStringAsync();
-            await File.WriteAllTextAsync(filePath, jsonContent);
-            return jsonContent;
-        }
+
+        var response = await HttpClient.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+        var jsonContent = await response.Content.ReadAsStringAsync();
+        await File.WriteAllTextAsync(filePath, jsonContent);
+        return jsonContent;
     }
 
     private static async Task<DatabaseV2.FormSchema> FetchFormData(string url, string? pokeCacheDir = null)
@@ -186,7 +200,7 @@ internal static class Program
         var baseExperience = root.GetProperty("base_experience");
         var statsArray = root.GetProperty("stats").EnumerateArray();
         var statsBuf = new byte[12];
-        int cur = 0;
+        var cur = 0;
         foreach (var stat in statsArray)
             statsBuf[cur++] = stat.GetProperty("base_stat").GetByte();
         foreach (var stat in statsArray)
@@ -239,9 +253,9 @@ internal static class Program
         foreach (var form in CollectionsMarshal.AsSpan(forms)[1..])
         {
             // Since these are always linked to the base form, we can remove the original identifier
-            // All forms start with the Pokemon name (identifier of baseForm)
+            // All forms start with the Pokémon name (identifier of baseForm)
 
-            string newIdentifier = form.Identifier.Substring(baseForm.Identifier.Length);
+            var newIdentifier = form.Identifier[baseForm.Identifier.Length..];
 
             otherForms.Add(newIdentifier, form with { Identifier = newIdentifier } );
         }

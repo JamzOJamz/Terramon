@@ -178,6 +178,14 @@ public class NationalDexID
     public const ushort Rowlet = 722;
     public const ushort Litten = 725;
     public const ushort Popplio = 728;
+    public const ushort Grookey = 810;
+    public const ushort Scorbunny = 813;
+    public const ushort Sobble = 816;
+    public const ushort Sprigatito = 906;
+    public const ushort Fuecoco = 909;
+    public const ushort Quaxly = 912;
+    
     public static IdDictionary Search { get; } = IdDictionary.Create<NationalDexID, ushort>();
+    
     public static ushort FromSpecies(string species) => (ushort)Search.GetId(species.Replace("-", string.Empty));
 }

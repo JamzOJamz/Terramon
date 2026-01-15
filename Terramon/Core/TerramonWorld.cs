@@ -131,9 +131,6 @@ public partial class TerramonWorld : ModSystem
 
     private static void MainDoUpdate_Detour(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
     {
-        // Set GameTime and MousePosition for UILoader
-        UILoader.GameTime = gameTime;
-
         orig(self, ref gameTime);
 
         // Process queued NewText calls

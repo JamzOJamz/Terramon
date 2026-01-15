@@ -31,14 +31,14 @@ internal class UILoader : ModSystem
     {
         if (Main.dedServ)
             return;
-        
+
         On_Main.DoUpdateInWorld += static (orig, self, sw) =>
         {
             orig(self, sw);
             UpdateUI_Custom(GameTime);
         };
-        
-        On_Main.DoUpdate_WhilePaused += static (orig) =>
+
+        On_Main.DoUpdate_WhilePaused += static orig =>
         {
             orig();
             if (!Main.autoPause) return;
@@ -184,7 +184,13 @@ internal class UILoader : ModSystem
 
     public override void UpdateUI(GameTime gameTime)
     {
+        // Store the GameTime for use in the custom update method
+        GameTime = gameTime;
+
+        // Get the mouse position to use for custom UI update
         _mousePosition = Main.MouseScreen;
+
+        // Clamp mouse position to screen bounds
         if (_mousePosition.X < 0 || _mousePosition.Y < 0 || _mousePosition.X > Main.screenWidth ||
             _mousePosition.Y > Main.screenHeight)
             _mousePosition = new Vector2(-int.MaxValue, -int.MaxValue); // TODO: This is kind of hacky but works

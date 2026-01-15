@@ -118,6 +118,11 @@ Configs: {
 			Tooltip: Whether to display a message in chat when a new Pokémon has been registered in the Pokédex
 		}
 
+		LegacyStarterSelectUI: {
+			Label: (Starter Selection) Use Legacy UI
+			Tooltip: Uses the older starter selection interface from earlier versions of the mod
+		}
+
 		ReducedAudio: {
 			Label: (Party Sidebar) Reduced Audio
 			Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
@@ -208,8 +213,8 @@ Configs: {
 		}
 
 		ShinyLockedStarters: {
-			Label: Shiny-Locked Starters
-			Tooltip: Prevents starter Pokémon from being Shiny
+			Label: Shiny-Locked First Partner Pokémon
+			Tooltip: Prevents first partner (starter) Pokémon from being shiny
 		}
 
 		DebugMode: {
@@ -282,11 +287,45 @@ GUI: {
 	}
 
 	Starter: {
-		Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
-		Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+		Title: Welcome to the world of Pokémon, {0}! Thank you for installing the Terramon mod!
+		Subtitle: Now, please choose your first partner Pokémon to begin your adventure!
 		Hint: (Press Back to close)
+		ChosenMessage: You chose the {0} [c/{1}:{2}] as your first partner Pokémon!
 		ComingSoon: Coming soon...
-		ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+
+		Banner: {
+			PickThisOne: Pick this one!
+
+			SecretHoverText: {
+				ReadyToStart: "{0} seems ready to get started!"
+				GoodMood: "{0} looks like it's in a good mood!"
+				FullOfExcitement: "{0} is full of excitement!"
+				Curious: "{0} seems curious about you!"
+				Waiting: "{0} looks like it's waiting for something!"
+				SparkOfEnergy: "{0} seems to have a spark of energy!"
+				BouncingWithExcitement: "{0} is bouncing with excitement!"
+				ReadyToPlay: "{0} looks like it's ready to play!"
+				EagerToShow: "{0} is eager to show you what it can do!"
+				ReadyToImpress: "{0} looks ready to impress!"
+			}
+		}
+
+		Generations: {
+			Gen1: Generation I (Kanto)
+			Gen2: Generation II (Johto)
+			Gen3: Generation III (Hoenn)
+			Gen4: Generation IV (Sinnoh)
+			Gen5: Generation V (Unova)
+			Gen6: Generation VI (Kalos)
+			Gen7: Generation VII (Alola)
+			Gen8: Generation VIII (Galar)
+		}
+
+		Legacy: {
+			Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
+			Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+			ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		}
 	}
 
 	NPCShop: {

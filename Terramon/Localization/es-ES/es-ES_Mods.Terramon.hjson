@@ -118,6 +118,11 @@ Configs: {
 			Tooltip: Decide si un mensaje debe ser visible en el chat cuando un nuevo Pokémon ha sido registrado a la Pokédex
 		}
 
+		LegacyStarterSelectUI: {
+			// Label: (Starter Selection) Use Legacy UI
+			// Tooltip: Uses the older starter selection interface from earlier versions of the mod
+		}
+
 		ReducedAudio: {
 			Label: (Barra lateral del equipo) Audio reducido
 			Tooltip: Desactiva los tonos musicales al reorganizar Pokémon en la barra lateral
@@ -281,8 +286,42 @@ GUI: {
 		Title: Bienvenid@ al mundo de Pokémon! Gracias por instalar Terramon!
 		Subtitle: ¡Ahora, por favor elige tu Pokémon inicial para comenzar tu aventura!
 		Hint: (Presiona Atrás para cerrar)
-		ComingSoon: Muy pronto...
 		ChosenMessage: ¡Elegiste el {0} [c/{1}:{2}] como tu Pokémon inicial!
+		ComingSoon: Muy pronto...
+
+		Banner: {
+			// PickThisOne: Pick this one!
+
+			SecretHoverText: {
+				// ReadyToStart: "{0} seems ready to get started!"
+				// GoodMood: "{0} looks like it's in a good mood!"
+				// FullOfExcitement: "{0} is full of excitement!"
+				// Curious: "{0} seems curious about you!"
+				// Waiting: "{0} looks like it's waiting for something!"
+				// SparkOfEnergy: "{0} seems to have a spark of energy!"
+				// BouncingWithExcitement: "{0} is bouncing with excitement!"
+				// ReadyToPlay: "{0} looks like it's ready to play!"
+				// EagerToShow: "{0} is eager to show you what it can do!"
+				// ReadyToImpress: "{0} looks ready to impress!"
+			}
+		}
+
+		Generations: {
+			// Gen1: Generation I (Kanto)
+			// Gen2: Generation II (Johto)
+			// Gen3: Generation III (Hoenn)
+			// Gen4: Generation IV (Sinnoh)
+			// Gen5: Generation V (Unova)
+			// Gen6: Generation VI (Kalos)
+			// Gen7: Generation VII (Alola)
+			// Gen8: Generation VIII (Galar)
+		}
+
+		Legacy: {
+			// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
+			// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+			// ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		}
 	}
 
 	NPCShop: {

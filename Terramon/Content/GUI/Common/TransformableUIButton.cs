@@ -8,12 +8,9 @@ public class TransformableUIButton : UIElement
 {
     private Asset<Texture2D> _borderTexture;
     private bool _borderTextureIsOverlay = true;
-    protected bool JustHovered { get; private set; }
     private Asset<Texture2D> _texture;
-    private float _visibilityActive = 1f;
-    private float _visibilityInactive = 0.4f;
-    protected float Scale = 1f;
     protected bool RemoveFloatingPointsFromDrawPosition = true;
+    protected float Scale = 1f;
 
     protected TransformableUIButton(Asset<Texture2D> texture)
     {
@@ -21,6 +18,17 @@ public class TransformableUIButton : UIElement
         Width.Set(_texture.Width(), 0f);
         Height.Set(_texture.Height(), 0f);
     }
+
+    public float VisibilityActive { get; private set; } = 1f;
+    public float VisibilityInactive { get; private set; } = 0.4f;
+
+    protected bool JustHovered { get; private set; }
+
+    /// <summary>
+    ///     Optional visibility override. When set to a value >= 0, it will override the normal visibility logic.
+    ///     Set to -1 to disable the override and use normal visibility behavior.
+    /// </summary>
+    public float VisibilityOverride { get; set; } = -1f;
 
     public float Rotation { get; set; }
 
@@ -46,13 +54,19 @@ public class TransformableUIButton : UIElement
             dimensions.X = (int)dimensions.X;
             dimensions.Y = (int)dimensions.Y;
         }
+
         var drawPos = dimensions.Center();
-        
+
+        // Use visibility override if set, otherwise use normal visibility logic
+        var visibility = VisibilityOverride >= 0f
+            ? VisibilityOverride
+            : (IsMouseHovering ? VisibilityActive : VisibilityInactive);
+
         // TODO: Less code duplication here, I can't think of a good proper way to do this right now
         if (_borderTextureIsOverlay)
         {
             spriteBatch.Draw(_texture.Value, drawPos, null,
-                Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation,
+                Color.White * visibility, Rotation,
                 _texture.Frame().Size() / 2f, Scale, SpriteEffects.None, 0f);
             if (_borderTexture != null && ContainsPoint(Main.MouseScreen) && !IgnoresMouseInteraction)
                 spriteBatch.Draw(_borderTexture.Value, drawPos, null, Color.White, Rotation,
@@ -62,7 +76,7 @@ public class TransformableUIButton : UIElement
         {
             if (_borderTexture == null || !ContainsPoint(Main.MouseScreen) || IgnoresMouseInteraction)
                 spriteBatch.Draw(_texture.Value, drawPos, null,
-                    Color.White * (IsMouseHovering ? _visibilityActive : _visibilityInactive), Rotation,
+                    Color.White * visibility, Rotation,
                     _texture.Frame().Size() / 2f, Scale, SpriteEffects.None, 0f);
             else
                 spriteBatch.Draw(_borderTexture.Value, drawPos, null, Color.White, Rotation,
@@ -87,7 +101,7 @@ public class TransformableUIButton : UIElement
 
     public void SetVisibility(float whenActive, float whenInactive)
     {
-        _visibilityActive = MathHelper.Clamp(whenActive, 0f, 1f);
-        _visibilityInactive = MathHelper.Clamp(whenInactive, 0f, 1f);
+        VisibilityActive = MathHelper.Clamp(whenActive, 0f, 1f);
+        VisibilityInactive = MathHelper.Clamp(whenInactive, 0f, 1f);
     }
 }

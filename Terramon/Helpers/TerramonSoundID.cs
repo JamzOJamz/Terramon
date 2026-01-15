@@ -4,6 +4,7 @@ namespace Terramon.Helpers;
 
 public static class TerramonSoundID
 {
+    private const string CryPath = "Terramon/Sounds/Cries/";
     public static readonly SoundStyle PkballConsume = new("Terramon/Sounds/pkball_consume") { Volume = 0.35f };
     public static readonly SoundStyle PkballThrow = new("Terramon/Sounds/pkball_throw") { Volume = 0.8f };
     public static readonly SoundStyle PkballBounce = new("Terramon/Sounds/pkball_bounce") { Volume = 0.75f };
@@ -19,29 +20,39 @@ public static class TerramonSoundID
     public static readonly SoundStyle DexOpen = new("Terramon/Sounds/dex_open") { Volume = 0.48f };
     public static readonly SoundStyle DexClose = new("Terramon/Sounds/dex_close") { Volume = 0.48f };
     public static readonly SoundStyle DexPageUp = new("Terramon/Sounds/dex_pageup") { Volume = 0.325f };
-    public static readonly SoundStyle BattlePing = new("Terramon/Sounds/battle_tb_ping") { Volume = 0.3f, MaxInstances = 0 };
-    public static readonly SoundStyle BattlePingEmpty = new("Terramon/Sounds/battle_tb_empty") { Volume = 0.3f, MaxInstances = 0 };
+
+    public static readonly SoundStyle BattlePing = new("Terramon/Sounds/battle_tb_ping")
+        { Volume = 0.3f, MaxInstances = 0 };
+
+    public static readonly SoundStyle BattlePingEmpty = new("Terramon/Sounds/battle_tb_empty")
+        { Volume = 0.3f, MaxInstances = 0 };
+
     public static readonly SoundStyle BattleStart = new("Terramon/Sounds/battle_tb_start") { Volume = 0.3f };
     public static readonly SoundStyle BattleDecide = new("Terramon/Sounds/battle_decide") { Volume = 0.3f };
     public static readonly SoundStyle BattleCancel = new("Terramon/Sounds/battle_cancel") { Volume = 0.3f };
     public static readonly SoundStyle BattleRun = new("Terramon/Sounds/battle_run") { Volume = 0.3f };
-    public static readonly SoundStyle HitNormalDamage = new("Terramon/Sounds/hit_normal_damage") { Volume = 0.165f, PitchVariance = 0.12f };
-    public static readonly SoundStyle RealtimeEXPGain = new("Terramon/Sounds/realtime_exp_gain") { Volume = 0.5f, PitchRange = (-0.1f, 0.1f) };
 
-    private const string CryPath = "Terramon/Sounds/Cries/";
-    public static SoundStyle GetCry(ushort id, float volume = 0.15f)
-        => GetCry(Terramon.DatabaseV2.GetPokemon(id), volume);
-    public static SoundStyle GetCry(this DatabaseV2.PokemonSchema schema, float volume = 0.15f)
-        => new SoundStyle(CryPath + schema.Identifier) with { Volume = volume };
-    public static SoundStyle GetCry(this PokemonData data, float volume = 0.15f)
-        => new SoundStyle(CryPath + data.InternalName) with { Volume = volume };
+    public static readonly SoundStyle HitNormalDamage = new("Terramon/Sounds/hit_normal_damage")
+        { Volume = 0.165f, PitchVariance = 0.12f };
+
+    public static readonly SoundStyle RealtimeEXPGain = new("Terramon/Sounds/realtime_exp_gain")
+        { Volume = 0.5f, PitchRange = (-0.1f, 0.1f) };
+
+    public static SoundStyle GetCry(ushort id, float volume = 0.15f) =>
+        Terramon.DatabaseV2.GetPokemon(id).GetCry(volume);
+
+    public static SoundStyle GetCry(this DatabaseV2.PokemonSchema schema, float volume = 0.15f) =>
+        new(CryPath + schema.Identifier) { Volume = volume };
+
+    public static SoundStyle GetCry(this PokemonData data, float volume = 0.15f) =>
+        new(CryPath + data.InternalName) { Volume = volume };
 }
 
 public readonly record struct SnVariants(SoundStyle Child)
 {
-    public SnVariants(string path, int numVariants) : this(Child: new(path, numVariants)) { }
-    public SoundStyle this[int i]
+    public SnVariants(string path, int numVariants) : this(Child: new SoundStyle(path, numVariants))
     {
-        get => Child with { SelectedVariant = i };
     }
+
+    public SoundStyle this[int i] => Child with { SelectedVariant = i };
 }

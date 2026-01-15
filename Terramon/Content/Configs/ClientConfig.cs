@@ -22,6 +22,9 @@ public class ClientConfig : ModConfig
     public bool ShowPokedexRegistrationMessages;
 
     [Header("GUI")] [DefaultValue(false)]
+    public bool LegacyStarterSelectUI;
+    
+    [DefaultValue(false)]
     public bool ReducedAudio;
 
     [DefaultValue(false)] [ReloadRequired]
