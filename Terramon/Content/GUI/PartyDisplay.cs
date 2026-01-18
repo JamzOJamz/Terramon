@@ -5,7 +5,9 @@ using Terramon.Core.Battling;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
+using Terramon.ID;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -215,23 +217,30 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
 
 public sealed class PartyHeldItemSlot(PartySidebarSlot parent) : UIElement
 {
-    private static readonly Asset<Texture2D> BackTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox");
+    private static readonly Asset<Texture2D> BackTexture;
 
-    public PartySidebarSlot Slot = parent;
+    public Color Color = Color.White;
+
+    static PartyHeldItemSlot()
+    {
+        BackTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HeldItemBox");
+    }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         var dims = GetDimensions();
-        spriteBatch.Draw(BackTexture.Value, dims.Position(), Color.White);
+        spriteBatch.Draw(BackTexture.Value, dims.Position(), Color);
 
-        var item = Slot.Data?.HeldItem;
+        var item = parent.Data?.HeldItem;
         if (item is null || item.IsAir)
             return;
 
         ItemSlot.DrawItemIcon(item, ItemSlot.Context.MouseItem, spriteBatch, dims.Center(), 1f, 16f, Color.White);
     }
+
     public override void Recalculate()
     {
-        var parentDimensions = Parent.GetInnerDimensions();
+        var parentDimensions = parent.GetInnerDimensions();
         _dimensions = new CalculatedStyle
         {
             X = Left.GetValue(parentDimensions.Width) + parentDimensions.X,
@@ -244,43 +253,100 @@ public sealed class PartyHeldItemSlot(PartySidebarSlot parent) : UIElement
 
 public sealed class PartySidebarSlot : UICompositeImage
 {
+    // Textures
+    private static readonly Asset<Texture2D> ClosedTexture;
+    private static readonly Asset<Texture2D> OpenTexture;
+    private static readonly Asset<Texture2D> SpriteBoxTexture;
+    private static readonly Asset<Texture2D> MaleIconTexture;
+    private static readonly Asset<Texture2D> FemaleIconTexture;
+    
+    // Constants
+    private static readonly Color ActiveColor = new(248, 187, 228);
+
+    // UI elements
+    private readonly PartyDisplay _partyDisplay;
+    private readonly PartyHeldItemSlot _heldItemBox;
     private readonly UIText _levelText;
     private readonly UIText _nameText;
-    private readonly PartyDisplay _partyDisplay;
+    private readonly UIImage _spriteBox;
+    private readonly UIImage _pokemonSprite;
+    private readonly UIImage _genderIcon;
+    private readonly PartySidebarHPMeter _hpMeter;
+
+    // Animation/interaction state
+    private ITweener _snapTween;
     private bool _dragging;
-    private UIImage _genderIcon;
-    private readonly PartyHeldItemSlot _heldItemBox;
-    private PartySidebarHPMeter _hpMeter;
+    private bool _justEndedDragging;
+    private Vector2 _offset;
+    private bool _monitorCursor;
+    private UIMouseEvent _monitorEvent;
+
+    // Display state
     private int _index;
     private bool _isActiveSlot;
     private bool _isHovered;
-    private bool _justEndedDragging;
-    private bool _monitorCursor;
-    private UIMouseEvent _monitorEvent;
-    private Vector2 _offset;
-    private ITweener _snapTween;
-    private UIBlendedImage _spriteBox;
-    public PokemonData CloneData;
-    public PokemonData Data;
 
-    public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ModContent.Request<Texture2D>(
-        "Terramon/Assets/GUI/Party/SidebarClosed"), 126, 76)
+    // Data
+    public PokemonData Data;
+    public PokemonData CloneData;
+
+    static PartySidebarSlot()
+    {
+        ClosedTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SidebarClosed");
+        OpenTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SidebarOpen");
+        SpriteBoxTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/SpriteBox");
+        MaleIconTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/IconMale");
+        FemaleIconTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/IconFemale");
+    }
+
+    public PartySidebarSlot(PartyDisplay partyDisplay, int index) : base(ClosedTexture, 126, 76)
     {
         _partyDisplay = partyDisplay;
         Index = index;
+        
+        // Empty texture placeholder
+        var emptyTex = TextureAssets.Npc[0];
+        
         _nameText = new UIText(string.Empty, 0.67f);
-        _nameText.Left.Set(7, 0);
-        _nameText.Top.Set(57, 0);
+        _nameText.Left.Pixels = 7f;
+        _nameText.Top.Pixels = 57f;
         Append(_nameText);
+        
         _levelText = new UIText(string.Empty, 0.67f);
-        _levelText.Left.Set(7, 0);
-        _levelText.Top.Set(10, 0);
+        _levelText.Left.Pixels = 7f;
+        _levelText.Top.Pixels = 10f;
         Append(_levelText);
+        
         _heldItemBox = new PartyHeldItemSlot(this);
-        _heldItemBox.Top.Pixels = 24f;
         _heldItemBox.Left.Pixels = 10f;
+        _heldItemBox.Top.Pixels = 24f;
         _heldItemBox.Width.Pixels = _heldItemBox.Height.Pixels = 24f;
-        Append(_heldItemBox);
+        
+        _spriteBox = new UIImage(SpriteBoxTexture)
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        _spriteBox.Top.Set(8, 0f);
+        _spriteBox.Left.Set(59, 0f);
+        _pokemonSprite = new UIImage(emptyTex)
+        {
+            ImageScale = 0.7f
+        };
+        _pokemonSprite.Top.Set(-12, 0f);
+        _pokemonSprite.Left.Set(-20, 0f);
+        _spriteBox.Append(_pokemonSprite);
+        
+        _genderIcon = new UIImage(emptyTex)
+        {
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        _genderIcon.Top.Set(54, 0f);
+        _genderIcon.Left.Set(87, 0f);
+
+        _hpMeter = new PartySidebarHPMeter();
+        _hpMeter.Left.Pixels = 112f;
+        _hpMeter.Top.Pixels = 12f;
+        
         RemoveFloatingPointsFromDrawPosition = true;
     }
 
@@ -456,7 +522,7 @@ public sealed class PartySidebarSlot : UICompositeImage
             PartyDisplay.RecalculateSlot(Index);
 
         if (_monitorCursor)
-            //check if mouse has travelled minimum distance in order to enter drag
+            //check if mouse has traveled minimum distance in order to enter drag
             if (MathF.Abs(_monitorEvent.MousePosition.Y - Main.MouseScreen.Y) > 8)
             {
                 _monitorCursor = false;
@@ -514,8 +580,10 @@ public sealed class PartySidebarSlot : UICompositeImage
         }
         else if (Data != null)
         {
-            var targetColor = _isActiveSlot ? Color.Pink : Color.White;
+            var targetColor = _isActiveSlot ? ActiveColor : Color.White;
             Color = targetColor;
+            _spriteBox.Color = targetColor;
+            _heldItemBox.Color = targetColor;
             CompositeColor = Color.White;
         }
 
@@ -524,28 +592,18 @@ public sealed class PartySidebarSlot : UICompositeImage
             if (Data == null || _isHovered) return;
             _isHovered = true;
             if (!_justEndedDragging) SoundEngine.PlaySound(in SoundID.MenuTick);
-            UpdateSprite(true);
         }
         else
         {
             if (Data == null || !_isHovered) return;
             _isHovered = false;
             _justEndedDragging = false;
-            UpdateSprite();
         }
     }
 
-    private void UpdateSprite(bool selected = false)
+    private void UpdateSprite()
     {
-        var spritePath = "Assets/GUI/Party/Sidebar";
-
-        if (Data != null)
-            spritePath += "Open";
-        else
-            spritePath += "Closed";
-
-        SetImage(Terramon.Instance.Assets.Request<Texture2D>(spritePath,
-            AssetRequestMode.ImmediateLoad));
+        SetImage(Data != null ? OpenTexture : ClosedTexture);
     }
 
     public void SetData(PokemonData data)
@@ -553,91 +611,42 @@ public sealed class PartySidebarSlot : UICompositeImage
         Data = data;
         CloneData = data?.ShallowCopy();
         _isActiveSlot = TerramonPlayer.LocalPlayer.ActiveSlot == Index;
-        UpdateSprite(IsMouseHovering && !PartyDisplay.IsDraggingSlot);
-
-        RemoveUIElements();
+        UpdateSprite();
 
         if (data == null)
         {
             _nameText.SetText(string.Empty);
             _levelText.SetText(string.Empty);
+            _spriteBox.Remove();
+            _genderIcon.Remove();
+            _hpMeter.Remove();
+            _heldItemBox.Remove();
         }
         else
         {
             _nameText.SetText(data.DisplayName);
             _levelText.SetText(Language.GetText("Mods.Terramon.GUI.Party.LevelDisplay").WithFormatArgs(data.Level));
-            CreateUIElements(data);
+            Append(_heldItemBox);
+            _pokemonSprite.SetImage(data.GetMiniSprite());
+            Append(_spriteBox);
+            if (data.Gender != Gender.Unspecified)
+            {
+                _genderIcon.SetImage(data.Gender == Gender.Male ? MaleIconTexture : FemaleIconTexture);
+                Append(_genderIcon);
+            }
+            _hpMeter.SetData(data.HP, data.MaxHP, data.Ball);
+            Append(_hpMeter);
         }
 
         Recalculate();
-    }
-
-    private void RemoveUIElements()
-    {
-        _spriteBox?.Remove();
-        _genderIcon?.Remove();
-        _hpMeter?.Remove();
-        _heldItemBox.Remove();
-    }
-
-    private void CreateUIElements(PokemonData data)
-    {
-        Append(_heldItemBox);
-
-        var assetRepository = Terramon.Instance.Assets;
-
-        // Sprite box
-        _spriteBox = new UIBlendedImage(assetRepository.Request<Texture2D>("Assets/GUI/Party/SpriteBox",
-            AssetRequestMode.ImmediateLoad))
-        {
-            RemoveFloatingPointsFromDrawPosition = true
-        };
-        _spriteBox.Top.Set(8, 0f);
-        _spriteBox.Left.Set(59, 0f);
-
-        var sprite = new UIImage(data.GetMiniSprite())
-        {
-            ImageScale = 0.7f
-        };
-        sprite.Top.Set(-12, 0f);
-        sprite.Left.Set(-20, 0f);
-        _spriteBox.Append(sprite);
-        Append(_spriteBox);
-
-        // Gender icon
-        if (data.Gender != Gender.Unspecified)
-        {
-            _genderIcon = new UIImage(assetRepository.Request<Texture2D>($"Assets/GUI/Party/Icon{data.Gender}",
-                AssetRequestMode.ImmediateLoad))
-            {
-                RemoveFloatingPointsFromDrawPosition = true
-            };
-            _genderIcon.Top.Set(54, 0f);
-            _genderIcon.Left.Set(87, 0f);
-            Append(_genderIcon);
-        }
-
-        // HP meter
-        _hpMeter = new PartySidebarHPMeter
-        {
-            Left = { Pixels = 112 },
-            Top = { Pixels = 12 },
-            Percent = (float)data.HP / data.MaxHP
-        };
-        var ball = new UIImage(BallAssets.GetBallIcon(data.Ball))
-        {
-            Left = { Pixels = -2 },
-            Top = { Pixels = 38 },
-            RemoveFloatingPointsFromDrawPosition = true
-        };
-        _hpMeter.Append(ball);
-        Append(_hpMeter);
     }
 }
 
 public class PartySidebarHPMeter : UIElement
 {
+    private readonly UIImage _ball;
     private const int FrameCount = 4;
+
     private static readonly Asset<Texture2D> Texture;
 
     static PartySidebarHPMeter()
@@ -648,7 +657,25 @@ public class PartySidebarHPMeter : UIElement
     /// <summary>
     ///     HP fill percentage (0f = empty, 1f = full)
     /// </summary>
-    public float Percent { get; init; } = 1f;
+    public float Percent { get; set; } = 1f;
+
+    public PartySidebarHPMeter()
+    {
+        _ball = new UIImage(TextureAssets.Npc[0]) // Initialize with an empty texture
+        {
+            Left = { Pixels = -2 },
+            Top = { Pixels = 38 },
+            RemoveFloatingPointsFromDrawPosition = true
+        };
+        Append(_ball);
+    }
+
+    public void SetData(ushort currentHP, ushort maxHP, BallID ballID)
+    {
+        Percent = maxHP == 0 ? 0f : (float)currentHP / maxHP;
+        var ballTexture = BallAssets.GetBallIcon(ballID);
+        _ball.SetImage(ballTexture);
+    }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {

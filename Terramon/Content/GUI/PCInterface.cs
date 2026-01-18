@@ -788,12 +788,7 @@ internal sealed class PCActionButton : BetterUIText
 
 internal sealed class PCDragBar : UIImage
 {
-    private static readonly Asset<Texture2D> BoxDragBarTexture;
-
-    static PCDragBar()
-    {
-        BoxDragBarTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/BoxDragBar");
-    }
+    private static readonly Asset<Texture2D> BoxDragBarTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/BoxDragBar");
 
     public PCDragBar() : base(BoxDragBarTexture)
     {
@@ -802,7 +797,11 @@ internal sealed class PCDragBar : UIImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        if (ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
+        if (ContainsPoint(Main.MouseScreen))
+        {
+            Main.NewText("Drag to move box");
+            Main.LocalPlayer.mouseInterface = true;
+        }
 
         var color = Color;
         Color = Color.White;

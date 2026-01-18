@@ -179,8 +179,6 @@ public class StarterButton : UIHoverImage
             return;
         }
 
-        var bleh = Terramon.DatabaseV2.GetPokemonName(pokemon);
-        Logging.tML.Info(bleh);
         var cacheHoverTexture = ModContent.Request<Texture2D>(
             $"Terramon/Assets/Pokemon/{Terramon.DatabaseV2.GetPokemonName(pokemon)}_Mini_Highlighted");
         OnMouseOver += (_, _) =>

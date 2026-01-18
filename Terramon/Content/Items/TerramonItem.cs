@@ -12,8 +12,7 @@ public abstract class TerramonItem : ModItem
 
     public override void SetDefaults()
     {
-        Item.width = 40;
-        Item.height = 40;
+        Item.width = Item.height = 40;
         Item.rare = UseRarity;
         Item.maxStack = Item.CommonMaxStack;
     }
