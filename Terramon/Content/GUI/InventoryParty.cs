@@ -420,7 +420,8 @@ internal sealed class CustomPartyItemSlot : UIImage
             {
                 var holdingAllowed = heldPokemon == null || heldSource == TooltipOverlay.HeldPokemonSource.PC;
                 if (holdingAllowed &&
-                    (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift)))
+                    (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift)) &&
+                    modPlayer.Party.Count(d => d != null) > 1)
                 {
                     var box = modPlayer.GetPC().Boxes[PCInterface.DisplayedBoxIndex];
 
@@ -433,29 +434,30 @@ internal sealed class CustomPartyItemSlot : UIImage
                             break;
                         }
 
-                    if (freeSpaceIndex == -1)
+                    if (freeSpaceIndex != -1)
+                    {
+                        box[freeSpaceIndex] = Data;
+                        if (PCInterface.Active) PCInterface.PopulateCustomSlots(box);
+
+                        // Remove from party
+                        var activeMon = modPlayer.GetActivePokemon();
+                        modPlayer.Party[Index] = null;
+                        // Fix any gaps in the party array by cascading the Pokémon down
+                        for (var i = 0; i < modPlayer.Party.Length - 1; i++)
+                            if (modPlayer.Party[i] == null)
+                                for (var j = i; j < modPlayer.Party.Length - 1; j++)
+                                    modPlayer.Party[j] = modPlayer.Party[j + 1];
+                        if (modPlayer.Party[4] == modPlayer.Party[5])
+                            modPlayer.Party[5] = null;
+                        if (activeMon != null)
+                            modPlayer.ActiveSlot = Array.IndexOf(modPlayer.Party, activeMon);
+
+                        SoundEngine.PlaySound(SoundID.Grab);
+                        SetData(modPlayer.Party[Index]);
+                        _initialSlot = null;
+                        _pretendToBeEmptyState = false;
                         return;
-
-                    box[freeSpaceIndex] = Data;
-                    if (PCInterface.Active) PCInterface.PopulateCustomSlots(box);
-
-                    // Remove from party
-                    var activeMon = modPlayer.GetActivePokemon();
-                    modPlayer.Party[Index] = null;
-                    // Fix any gaps in the party array by cascading the Pokémon down
-                    for (var i = 0; i < modPlayer.Party.Length - 1; i++)
-                        if (modPlayer.Party[i] == null)
-                            for (var j = i; j < modPlayer.Party.Length - 1; j++)
-                                modPlayer.Party[j] = modPlayer.Party[j + 1];
-                    if (modPlayer.Party[4] == modPlayer.Party[5])
-                        modPlayer.Party[5] = null;
-                    if (activeMon != null)
-                        modPlayer.ActiveSlot = Array.IndexOf(modPlayer.Party, activeMon);
-
-                    SoundEngine.PlaySound(SoundID.Grab);
-                    SetData(modPlayer.Party[Index]);
-                    _pretendToBeEmptyState = false;
-                    return;
+                    }
                 }
             }
 
@@ -468,8 +470,7 @@ internal sealed class CustomPartyItemSlot : UIImage
                 else if (Data == activePokemon)
                     modPlayer.ActiveSlot = _initialSlot?.Index ?? -1;
             }
-
-            if (heldPokemon == null && TerramonPlayer.LocalPlayer.Party.Count(d => d != null) == 1)
+            else if (modPlayer.Party.Count(d => d != null) == 1)
             {
                 if (InventoryParty.InPCMode)
                     Main.NewText(Language.GetTextValue("Mods.Terramon.GUI.Inventory.CannotRemoveLastPokemon"),
@@ -607,7 +608,7 @@ internal sealed class CustomPartyItemSlot : UIImage
     /// <summary>
     ///     Handles right mouse button click immediately when the button is pressed down.
     ///     This fires on mouse down rather than on mouse up (like traditional UI events),
-    ///     to correctly emulate vanilla item slot mouse interaction behaviour.
+    ///     to correctly emulate vanilla item slot mouse interaction behavior.
     /// </summary>
     private void HandleRightClickImmediate()
     {
@@ -734,7 +735,8 @@ internal sealed class CustomPartyItemSlot : UIImage
                                                Main.keyState.IsKeyDown(Keys.RightShift)))
                         {
                             var modPlayer = player.Terramon();
-                            if (!modPlayer.IsPCBoxFull(PCInterface.DisplayedBoxIndex))
+                            if (modPlayer.Party.Count(d => d != null) > 1 &&
+                                !modPlayer.IsPCBoxFull(PCInterface.DisplayedBoxIndex))
                             {
                                 var usedPCIsWhite = false;
                                 if (TileEntity.ByID.TryGetValue(modPlayer.ActivePCTileEntityID, out var te))
