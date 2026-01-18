@@ -99,7 +99,8 @@ public class Terramon : Mod
         UILoader.GetUIState<HubUI>().ResetPokedex();
     }
 
-    public override void HandlePacket(BinaryReader reader, int whoAmI) => EasyPacketExtensions.HandlePacket(reader, whoAmI);
+    public override void HandlePacket(BinaryReader reader, int whoAmI) =>
+        EasyPacketExtensions.HandlePacket(reader, whoAmI);
 
     private uint CheckLoadCount()
     {

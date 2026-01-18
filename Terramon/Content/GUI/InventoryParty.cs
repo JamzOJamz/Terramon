@@ -4,11 +4,13 @@ using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
+using Terramon.Content.Tiles.Interactive;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Core.Systems.PokemonDirectUseSystem;
 using Terramon.Helpers;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -729,9 +731,24 @@ internal sealed class CustomPartyItemSlot : UIImage
                         var heldPokemon = TooltipOverlay.GetHeldPokemon(out var source);
                         var holdingAllowed = heldPokemon == null || source == TooltipOverlay.HeldPokemonSource.PC;
                         if (holdingAllowed && (Main.keyState.IsKeyDown(Keys.LeftShift) ||
-                                               Main.keyState.IsKeyDown(Keys.RightShift)) &&
-                            !player.Terramon().IsPCBoxFull(PCInterface.DisplayedBoxIndex))
-                            Main.cursorOverride = CursorOverrideID.InventoryToChest;
+                                               Main.keyState.IsKeyDown(Keys.RightShift)))
+                        {
+                            var modPlayer = player.Terramon();
+                            if (!modPlayer.IsPCBoxFull(PCInterface.DisplayedBoxIndex))
+                            {
+                                var usedPCIsWhite = false;
+                                if (TileEntity.ByID.TryGetValue(modPlayer.ActivePCTileEntityID, out var te))
+                                {
+                                    var tile = Framing.GetTileSafely(te.Position.X, te.Position.Y);
+                                    if (tile.HasTile && ModContent.GetModTile(tile.TileType) is PCWhite)
+                                        usedPCIsWhite = true;
+                                }
+
+                                Main.cursorOverride = usedPCIsWhite
+                                    ? TerramonCursorOverrideID.DepositPCWhite
+                                    : TerramonCursorOverrideID.DepositPCRed;
+                            }
+                        }
                     }
                 }
             }

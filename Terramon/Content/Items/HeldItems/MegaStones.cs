@@ -133,12 +133,15 @@ public sealed class MegaStone(MegaStoneID id, ushort evolves) : HeldItem
             // Main
             stream.ReadExactly(buffer);
             var main = new Color(buffer[0], buffer[1], buffer[2]);
+            
             // Streak
             stream.ReadExactly(buffer);
             var streak = new Color(buffer[0], buffer[1], buffer[2]);
+            
             // StreakA
             stream.ReadExactly(buffer);
             var streakA = new Color(buffer[0], buffer[1], buffer[2]);
+            
             // StreakB
             stream.ReadExactly(buffer);
             var streakB = new Color(buffer[0], buffer[1], buffer[2]);

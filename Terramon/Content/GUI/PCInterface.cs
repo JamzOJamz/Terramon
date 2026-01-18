@@ -5,10 +5,12 @@ using ReLogic.OS;
 using Terramon.Content.Configs;
 using Terramon.Content.GUI.Common;
 using Terramon.Content.Items;
+using Terramon.Content.Tiles.Interactive;
 using Terramon.Core.Loaders.UILoading;
 using Terramon.Core.Systems;
 using Terramon.Helpers;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameContent.UI.States;
@@ -711,10 +713,25 @@ internal sealed class CustomPCItemSlot : UIImage
                 TooltipOverlay.SetIcon(BallAssets.GetBallIcon(data.Ball));
                 if (data.IsShiny) TooltipOverlay.SetColor(ModContent.GetInstance<KeyItemRarity>().RarityColor);
 
-                // Change cursor icon if in PC mode and shift held (for quick deposit)
-                if ((Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift)) &&
-                    !player.Terramon().IsPartyFull())
-                    Main.cursorOverride = CursorOverrideID.ChestToInventory;
+                // Change cursor icon if in PC mode and shift held (for quick withdraw)
+                if (Main.keyState.IsKeyDown(Keys.LeftShift) || Main.keyState.IsKeyDown(Keys.RightShift))
+                {
+                    var modPlayer = player.Terramon();
+                    if (!modPlayer.IsPartyFull())
+                    {
+                        var usedPCIsWhite = false;
+                        if (TileEntity.ByID.TryGetValue(modPlayer.ActivePCTileEntityID, out var te))
+                        {
+                            var tile = Framing.GetTileSafely(te.Position.X, te.Position.Y);
+                            if (tile.HasTile && ModContent.GetModTile(tile.TileType) is PCWhite)
+                                usedPCIsWhite = true;
+                        }
+
+                        Main.cursorOverride = usedPCIsWhite
+                            ? TerramonCursorOverrideID.WithdrawPCWhite
+                            : TerramonCursorOverrideID.WithdrawPCRed;
+                    }
+                }
             }
 
             if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -729,9 +746,11 @@ internal sealed class PCActionButton : BetterUIText
 {
     private static readonly Color DefaultColor = new(232, 232, 249);
 
+/*
     public PCActionButton(string text) : this((object)text)
     {
     }
+*/
 
     public PCActionButton(LocalizedText text) : this((object)text)
     {

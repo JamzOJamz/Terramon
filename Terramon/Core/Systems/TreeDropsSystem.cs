@@ -20,7 +20,7 @@ public class TreeDropsGlobalTile : GlobalTile
     private static bool _vanillaTreeShakeFailed;
 
     /// <summary>
-    ///     The denominator (1/x) for the probability of apricorns falling from a tree when it is shaken.
+    ///     The denominator (1/x) for the probability of Apricorns falling from a tree when it is shaken.
     ///     Constant value of 8, meaning a 1/8 or approximately 12.5% chance.
     /// </summary>
     /*private const int
