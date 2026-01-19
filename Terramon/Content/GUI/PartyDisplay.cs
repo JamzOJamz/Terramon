@@ -385,7 +385,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         {
             // Draw again with reduced opacity to make the slot appear more opaque
             var oldColor = Color;
-            Color *= 0.4f;
+            Color *= 0.45f;
             base.DrawSelf(spriteBatch);
             Color = oldColor;
         }
@@ -634,6 +634,10 @@ public sealed class PartySidebarSlot : UICompositeImage
         else
         {
             _nameText.SetText(data.DisplayName);
+            if (_isActiveSlot)
+                _nameText.TextColor = ClientConfig.DefaultHighlightColor;
+            else
+                _nameText.TextColor = Color.White;
             _levelText.SetText(Language.GetText("Mods.Terramon.GUI.Party.LevelDisplay").WithFormatArgs(data.Level));
             Append(_heldItemBox);
             _pokemonSprite.SetImage(data.GetMiniSprite());
