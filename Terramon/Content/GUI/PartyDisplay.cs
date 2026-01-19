@@ -385,7 +385,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         {
             // Draw again with reduced opacity to make the slot appear more opaque
             var oldColor = Color;
-            Color *= 0.45f;
+            Color *= 0.5f;
             base.DrawSelf(spriteBatch);
             Color = oldColor;
         }
