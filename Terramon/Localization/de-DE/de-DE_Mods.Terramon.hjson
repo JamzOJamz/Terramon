@@ -284,6 +284,7 @@ GUI: {
 		// SaveColor: Save Color
 		// SaveColorUnsavedChanges: Save Color (*)
 		// ResetToDefaultColor: Reset to Default Color
+		// DragToMove: Click and drag to move
 	}
 
 	Starter: {

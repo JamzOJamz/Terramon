@@ -261,7 +261,7 @@ public sealed class PartySidebarSlot : UICompositeImage
     private static readonly Asset<Texture2D> FemaleIconTexture;
     
     // Constants
-    private static readonly Color ActiveColor = new(248, 187, 228);
+    private static readonly Color ActiveColor = new(253, 182, 218);
 
     // UI elements
     private readonly PartyDisplay _partyDisplay;
@@ -381,6 +381,15 @@ public sealed class PartySidebarSlot : UICompositeImage
         }
 
         base.DrawSelf(spriteBatch);
+        if (_isActiveSlot)
+        {
+            // Draw again with reduced opacity to make the slot appear more opaque
+            var oldColor = Color;
+            Color *= 0.4f;
+            base.DrawSelf(spriteBatch);
+            Color = oldColor;
+        }
+        
         if (outlined)
         {
             spriteBatch.End();

@@ -331,6 +331,7 @@ public class PCInterface : SmartUIState
         AddElement(_rightArrowButton, 367, 37, 28, 28, _container);
 
         _boxDragBar = new PCDragBar();
+        _boxDragBar.SetOriginalPosition(new Vector2(_container.Left.Pixels, _container.Top.Pixels));
         AddElement(_boxDragBar, 42, 241, 282, 10, _container);
 
         Append(_container);
@@ -444,6 +445,9 @@ public class PCInterface : SmartUIState
 
         // Clean up the rename mode UI elements
         ExitRenameMode();
+        
+        // Force end any active dragging and reset position
+        _boxDragBar?.ForceEndDrag();
 
         // Clear the PC service reference
         _pcService = null;
@@ -789,18 +793,109 @@ internal sealed class PCActionButton : BetterUIText
 internal sealed class PCDragBar : UIImage
 {
     private static readonly Asset<Texture2D> BoxDragBarTexture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/PC/BoxDragBar");
+    
+    private Vector2 _offset;
+    private bool _dragging;
+    private Vector2 _originalPosition;
+    private const float SnapDistance = 25f;
 
     public PCDragBar() : base(BoxDragBarTexture)
     {
         Color = Color.Transparent;
     }
 
+    public void SetOriginalPosition(Vector2 position)
+    {
+        _originalPosition = position;
+    }
+
+    public override void LeftMouseDown(UIMouseEvent evt)
+    {
+        base.LeftMouseDown(evt);
+        DragStart(evt);
+    }
+
+    public override void LeftMouseUp(UIMouseEvent evt)
+    {
+        base.LeftMouseUp(evt);
+        DragEnd(evt);
+    }
+
+    private void DragStart(UIMouseEvent evt)
+    {
+        _offset = new Vector2(evt.MousePosition.X - Parent.Left.Pixels, evt.MousePosition.Y - Parent.Top.Pixels);
+        _dragging = true;
+    }
+
+    private void DragEnd(UIMouseEvent evt)
+    {
+        var endMousePosition = evt.MousePosition;
+        _dragging = false;
+
+        Parent.Left.Set(endMousePosition.X - _offset.X, 0f);
+        Parent.Top.Set(endMousePosition.Y - _offset.Y, 0f);
+
+        // Check if we're close to the original position, and snap if so
+        var currentPosition = new Vector2(Parent.Left.Pixels, Parent.Top.Pixels);
+        var distance = Vector2.Distance(currentPosition, _originalPosition);
+        
+        if (distance <= SnapDistance)
+        {
+            Parent.Left.Set(_originalPosition.X, 0f);
+            Parent.Top.Set(_originalPosition.Y, 0f);
+            SoundEngine.PlaySound(in SoundID.Tink);
+        }
+
+        Parent.Recalculate();
+    }
+    
+    public void ForceEndDrag()
+    {
+        if (_dragging)
+        {
+            _dragging = false;
+            Parent.Left.Set(_originalPosition.X, 0f);
+            Parent.Top.Set(_originalPosition.Y, 0f);
+            Parent.Recalculate();
+        }
+    }
+
+    public override void Update(GameTime gameTime)
+    {
+        base.Update(gameTime);
+
+        if (ContainsPoint(Main.MouseScreen))
+            Main.LocalPlayer.mouseInterface = true;
+        
+        if (!_dragging)
+        {
+            var parentSpace = Parent.Parent.GetDimensions().ToRectangle();
+            var containerRect = Parent.GetDimensions().ToRectangle();
+        
+            if (!containerRect.Intersects(parentSpace))
+            {
+                Parent.Left.Set(_originalPosition.X, 0f);
+                Parent.Top.Set(_originalPosition.Y, 0f);
+                Parent.Recalculate();
+            }
+        }
+    }
+
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
         if (ContainsPoint(Main.MouseScreen))
         {
-            Main.NewText("Drag to move box");
+            if (!_dragging)
+                Main.instance.MouseText(Language.GetTextValue("Mods.Terramon.GUI.PC.DragToMove"));
             Main.LocalPlayer.mouseInterface = true;
+        }
+
+        // Drag position is updated in DrawSelf for smoother movement on higher FPS
+        if (_dragging)
+        {
+            Parent.Left.Set(Main.mouseX - _offset.X, 0f);
+            Parent.Top.Set(Main.mouseY - _offset.Y, 0f);
+            Parent.Recalculate();
         }
 
         var color = Color;
