@@ -66,6 +66,11 @@ public sealed class PartyDisplay : SmartUIState
         PartySlots[index].SetData(PartySlots[index].Data);
     }
 
+    public static void SimulateLeftClickOnSlot(int index)
+    {
+        PartySlots[index].LeftMouseUp(null);
+    }
+
     public static void UpdateAllSlots(PokemonData[] partyData)
     {
         for (var i = 0; i < PartySlots.Length; i++) UpdateSlot(partyData[i], i);
@@ -259,36 +264,36 @@ public sealed class PartySidebarSlot : UICompositeImage
     private static readonly Asset<Texture2D> SpriteBoxTexture;
     private static readonly Asset<Texture2D> MaleIconTexture;
     private static readonly Asset<Texture2D> FemaleIconTexture;
-    
+
     // Constants
     private static readonly Color ActiveColor = new(253, 182, 218);
+    private readonly UIImage _genderIcon;
+    private readonly PartyHeldItemSlot _heldItemBox;
+    private readonly PartySidebarHPMeter _hpMeter;
+    private readonly UIText _levelText;
+    private readonly UIText _nameText;
 
     // UI elements
     private readonly PartyDisplay _partyDisplay;
-    private readonly PartyHeldItemSlot _heldItemBox;
-    private readonly UIText _levelText;
-    private readonly UIText _nameText;
-    private readonly UIImage _spriteBox;
     private readonly UIImage _pokemonSprite;
-    private readonly UIImage _genderIcon;
-    private readonly PartySidebarHPMeter _hpMeter;
-
-    // Animation/interaction state
-    private ITweener _snapTween;
+    private readonly UIImage _spriteBox;
     private bool _dragging;
-    private bool _justEndedDragging;
-    private Vector2 _offset;
-    private bool _monitorCursor;
-    private UIMouseEvent _monitorEvent;
 
     // Display state
     private int _index;
     private bool _isActiveSlot;
     private bool _isHovered;
+    private bool _justEndedDragging;
+    private bool _monitorCursor;
+    private UIMouseEvent _monitorEvent;
+    private Vector2 _offset;
+
+    // Animation/interaction state
+    private ITweener _snapTween;
+    public PokemonData CloneData;
 
     // Data
     public PokemonData Data;
-    public PokemonData CloneData;
 
     static PartySidebarSlot()
     {
@@ -303,25 +308,25 @@ public sealed class PartySidebarSlot : UICompositeImage
     {
         _partyDisplay = partyDisplay;
         Index = index;
-        
+
         // Empty texture placeholder
         var emptyTex = TextureAssets.Npc[0];
-        
+
         _nameText = new UIText(string.Empty, 0.67f);
         _nameText.Left.Pixels = 7f;
         _nameText.Top.Pixels = 57f;
         Append(_nameText);
-        
+
         _levelText = new UIText(string.Empty, 0.67f);
         _levelText.Left.Pixels = 7f;
         _levelText.Top.Pixels = 10f;
         Append(_levelText);
-        
+
         _heldItemBox = new PartyHeldItemSlot(this);
         _heldItemBox.Left.Pixels = 10f;
         _heldItemBox.Top.Pixels = 24f;
         _heldItemBox.Width.Pixels = _heldItemBox.Height.Pixels = 24f;
-        
+
         _spriteBox = new UIImage(SpriteBoxTexture)
         {
             RemoveFloatingPointsFromDrawPosition = true
@@ -335,7 +340,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         _pokemonSprite.Top.Set(-12, 0f);
         _pokemonSprite.Left.Set(-20, 0f);
         _spriteBox.Append(_pokemonSprite);
-        
+
         _genderIcon = new UIImage(emptyTex)
         {
             RemoveFloatingPointsFromDrawPosition = true
@@ -346,7 +351,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         _hpMeter = new PartySidebarHPMeter();
         _hpMeter.Left.Pixels = 112f;
         _hpMeter.Top.Pixels = 12f;
-        
+
         RemoveFloatingPointsFromDrawPosition = true;
     }
 
@@ -364,14 +369,22 @@ public sealed class PartySidebarSlot : UICompositeImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        // TODO: Change name text color based on active slot state?
+        // if (_isActiveSlot && TerramonPlayer.LocalPlayer.NextFreePartyIndex() >= 2)
+        //     _nameText.TextColor = ClientConfig.DefaultHighlightColor;
+        // else
+        //     _nameText.TextColor = Color.White;
+
         var outlined = IsMouseHovering && Data != null;
         if (outlined)
         {
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, null, null,
                 Main.UIScaleMatrix);
+
             var outlineShader = ShaderAssets.Outline;
             var highlightColor = ClientConfig.DefaultHighlightColor;
+
             outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
             outlineShader.Shader.Parameters["uImageSize0"].SetValue(_texture.Size());
             outlineShader
@@ -381,15 +394,21 @@ public sealed class PartySidebarSlot : UICompositeImage
         }
 
         base.DrawSelf(spriteBatch);
+
+        // Draw again (for slightly more opaque look)
+        var oldColor = Color;
+        Color *= 0.2f;
+        base.DrawSelf(spriteBatch);
+        Color = oldColor;
+
+        // Draw once more for active slot (even more opaque)
         if (_isActiveSlot)
         {
-            // Draw again with reduced opacity to make the slot appear more opaque
-            var oldColor = Color;
-            Color *= 0.5f;
+            Color *= 0.4f;
             base.DrawSelf(spriteBatch);
             Color = oldColor;
         }
-        
+
         if (outlined)
         {
             spriteBatch.End();
@@ -397,20 +416,26 @@ public sealed class PartySidebarSlot : UICompositeImage
                 Main.UIScaleMatrix);
         }
 
-        if (Data != null && ContainsPoint(Main.MouseScreen)) Main.LocalPlayer.mouseInterface = true;
-        if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot) return;
+        // Handle mouse interactions
+        if (Data != null && ContainsPoint(Main.MouseScreen))
+            Main.LocalPlayer.mouseInterface = true;
+
+        if (!IsMouseHovering || Data == null || PartyDisplay.IsDraggingSlot)
+            return;
+
         if (KeybindSystem.OpenPokedexEntryKeybind.JustPressed)
         {
             HubUI.OpenToPokemon(Data.ID, Data.IsShiny);
             return;
         }
 
-        var hoverText =
-            Language.GetTextValue(_isActiveSlot
-                ? "Mods.Terramon.GUI.Party.SlotHoverActive"
-                : "Mods.Terramon.GUI.Party.SlotHover");
+        var hoverText = Language.GetTextValue(_isActiveSlot
+            ? "Mods.Terramon.GUI.Party.SlotHoverActive"
+            : "Mods.Terramon.GUI.Party.SlotHover");
+
         if (TerramonPlayer.LocalPlayer.NextFreePartyIndex() > 1)
             hoverText += Language.GetTextValue("Mods.Terramon.GUI.Party.SlotHoverExtra");
+
         Main.hoverItemName = hoverText;
     }
 
@@ -435,11 +460,12 @@ public sealed class PartySidebarSlot : UICompositeImage
     {
         base.LeftMouseUp(evt);
         _monitorCursor = false;
+        var isSimulated = evt == null;
         if (_dragging)
         {
             DragEnd();
         }
-        else if (IsMouseHovering && Data != null)
+        else if ((isSimulated || IsMouseHovering) && Data != null)
         {
             var s = _isActiveSlot
                 ? TerramonSoundID.PkballConsume
@@ -587,12 +613,8 @@ public sealed class PartySidebarSlot : UICompositeImage
 
             Top.Set(yOff, 0f);
         }
-        else if (Data != null)
+        else
         {
-            var targetColor = _isActiveSlot ? ActiveColor : Color.White;
-            Color = targetColor;
-            _spriteBox.Color = targetColor;
-            _heldItemBox.Color = targetColor;
             CompositeColor = Color.White;
         }
 
@@ -610,9 +632,14 @@ public sealed class PartySidebarSlot : UICompositeImage
         }
     }
 
-    private void UpdateSprite()
+    private void UpdateSpriteAndActiveTint()
     {
         SetImage(Data != null ? OpenTexture : ClosedTexture);
+
+        var targetColor = _isActiveSlot ? ActiveColor : Color.White;
+        Color = targetColor;
+        _spriteBox.Color = targetColor;
+        _heldItemBox.Color = targetColor;
     }
 
     public void SetData(PokemonData data)
@@ -620,7 +647,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         Data = data;
         CloneData = data?.ShallowCopy();
         _isActiveSlot = TerramonPlayer.LocalPlayer.ActiveSlot == Index;
-        UpdateSprite();
+        UpdateSpriteAndActiveTint();
 
         if (data == null)
         {
@@ -634,10 +661,6 @@ public sealed class PartySidebarSlot : UICompositeImage
         else
         {
             _nameText.SetText(data.DisplayName);
-            if (_isActiveSlot)
-                _nameText.TextColor = ClientConfig.DefaultHighlightColor;
-            else
-                _nameText.TextColor = Color.White;
             _levelText.SetText(Language.GetText("Mods.Terramon.GUI.Party.LevelDisplay").WithFormatArgs(data.Level));
             Append(_heldItemBox);
             _pokemonSprite.SetImage(data.GetMiniSprite());
@@ -647,6 +670,7 @@ public sealed class PartySidebarSlot : UICompositeImage
                 _genderIcon.SetImage(data.Gender == Gender.Male ? MaleIconTexture : FemaleIconTexture);
                 Append(_genderIcon);
             }
+
             _hpMeter.SetData(data.HP, data.MaxHP, data.Ball);
             Append(_hpMeter);
         }
@@ -657,20 +681,15 @@ public sealed class PartySidebarSlot : UICompositeImage
 
 public class PartySidebarHPMeter : UIElement
 {
-    private readonly UIImage _ball;
     private const int FrameCount = 4;
 
     private static readonly Asset<Texture2D> Texture;
+    private readonly UIImage _ball;
 
     static PartySidebarHPMeter()
     {
         Texture = ModContent.Request<Texture2D>("Terramon/Assets/GUI/Party/HPMeter");
     }
-
-    /// <summary>
-    ///     HP fill percentage (0f = empty, 1f = full)
-    /// </summary>
-    public float Percent { get; set; } = 1f;
 
     public PartySidebarHPMeter()
     {
@@ -682,6 +701,11 @@ public class PartySidebarHPMeter : UIElement
         };
         Append(_ball);
     }
+
+    /// <summary>
+    ///     HP fill percentage (0f = empty, 1f = full)
+    /// </summary>
+    public float Percent { get; set; } = 1f;
 
     public void SetData(ushort currentHP, ushort maxHP, BallID ballID)
     {

@@ -17,5 +17,5 @@ public class Potion : BasePotionItem
 
 public class PotionRarity : ModRarity
 {
-    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0xA46FD8);
+    public override Color RarityColor { get; } = ColorUtils.FromHexRGB(0x9A59DB);
 }

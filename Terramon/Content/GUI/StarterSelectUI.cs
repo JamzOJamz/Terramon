@@ -25,10 +25,12 @@ public sealed class StarterSelectUI : SmartUIState
     private const float ShowButtonShakeDuration = 0.6f;
 
     private static UIImage _backdropImage;
+    private static bool _fadeInAnimationActive;
     private static bool _fadeOutAnimationActive;
     private static BetterUIText _hintText;
     private static UIContainer _topContainer;
     private static BetterUIText _titleText;
+    private static ITweener _backdropFadeTween;
 
     // private readonly UIStarterBanner[] _banners = new UIStarterBanner[3];
 
@@ -50,11 +52,11 @@ public sealed class StarterSelectUI : SmartUIState
 
     private float _hintTextAlpha;
     private ITweener _hintTextTween;
-    private UIHoverImageButton _showButton;
+    private static UIHoverImageButton _showButton;
     private float _showButtonShakeElapsed = -1f;
     private float _showButtonShakeTimer;
     private ITweener _showButtonVisibilityTween;
-    private bool _starterPanelShowing = true;
+    private static bool _starterPanelShowing;
 
     static StarterSelectUI()
     {
@@ -74,6 +76,30 @@ public sealed class StarterSelectUI : SmartUIState
     private static void SetPlayerNameForTitle(string playerName)
     {
         _titleText.SetText(Language.GetText("Mods.Terramon.GUI.Starter.Title").Format(playerName));
+        _starterPanelShowing = false;
+        _showButton.SetIsActive(true);
+        _backdropImage.Color = Color.White * 0f;
+        UILoader.GetUIState<StarterSelectUI>().SafeUpdate(null); // Update to set positions correctly
+    }
+
+    internal static void DoFadeInAnimation()
+    {
+        if (_fadeInAnimationActive) return;
+        _fadeInAnimationActive = true;
+
+        // Kill any existing tween  and reset animation state
+        _backdropFadeTween?.Kill();
+        _fadeOutAnimationActive = false;
+
+        var startingAlpha = _backdropImage.Color.A / 255f;
+        _backdropFadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, BackdropAlpha, FadeDuration);
+        _backdropFadeTween.OnComplete = OnFadeInComplete;
+    }
+
+    private static void OnFadeInComplete()
+    {
+        _fadeInAnimationActive = false;
+        _starterPanelShowing = true;
     }
 
     internal static void DoFadeOutAnimation()
@@ -83,9 +109,13 @@ public sealed class StarterSelectUI : SmartUIState
 
         HideUIElements();
 
+        // Kill any existing tween and reset animation state
+        _backdropFadeTween?.Kill();
+        _fadeInAnimationActive = false;
+
         var startingAlpha = _backdropImage.Color.A / 255f;
-        var fadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
-        fadeTween.OnComplete = OnFadeOutComplete;
+        _backdropFadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
+        _backdropFadeTween.OnComplete = OnFadeOutComplete;
     }
 
     private static void HideUIElements()
@@ -97,7 +127,8 @@ public sealed class StarterSelectUI : SmartUIState
     private static void OnFadeOutComplete()
     {
         _fadeOutAnimationActive = false;
-        _backdropImage.Color = Color.White * BackdropAlpha;
+        _starterPanelShowing = false;
+        //_backdropImage.Color = Color.White * BackdropAlpha;
         _topContainer.Top.Set(TopContainerOffset, 0.25f);
         _hintText.Top.Set(94, 0.5f);
     }
@@ -119,19 +150,19 @@ public sealed class StarterSelectUI : SmartUIState
         _showButton.MarginBottom = ShowButtonOriginalMargin;
         _showButton.OnMouseOver += (_, _) =>
         {
-            if (_starterPanelShowing) return;
+            if (_starterPanelShowing && !_fadeOutAnimationActive) return;
             SoundEngine.PlaySound(in SoundID.MenuTick);
             _showButton.VisibilityOverride = -1f;
             _showButtonVisibilityTween?.Kill();
         };
         _showButton.OnLeftClick += (_, _) =>
         {
-            if (_starterPanelShowing) return;
+            if (_starterPanelShowing && !_fadeOutAnimationActive) return;
             _showButton.SetIsActive(false);
             SoundEngine.PlaySound(in SoundID.MenuOpen);
-            _starterPanelShowing = true;
+            DoFadeInAnimation();
         };
-        _showButton.SetIsActive(false);
+        // _showButton.SetIsActive(false);
         Append(_showButton);
 
         _topContainer = new UIContainer(new Vector2(494, 314)) { HAlign = 0.5f };
@@ -140,7 +171,7 @@ public sealed class StarterSelectUI : SmartUIState
         _backdropImage = new UIImage(ModContent.Request<Texture2D>("Terramon/Assets/GUI/Starter/BackdropBig"))
         {
             RemoveFloatingPointsFromDrawPosition = true,
-            Color = Color.White * BackdropAlpha,
+            Color = Color.White * 0f,
             ImageScale = 2.25f,
             HAlign = 0.5f
         };
@@ -220,19 +251,21 @@ public sealed class StarterSelectUI : SmartUIState
         };
         _hintText.Top.Set(95, 0.5f);
         Append(_hintText);
+
+        SafeUpdate(null); // Initial update to set positions correctly
     }
 
     public override void SafeUpdate(GameTime gameTime)
     {
-        var isVisibleCondition = !_fadeOutAnimationActive && _starterPanelShowing;
+        var isVisibleCondition = _fadeOutAnimationActive || _fadeInAnimationActive || _starterPanelShowing;
 
         if (isVisibleCondition)
         {
-            if (!Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back))
+            if (!Main.drawingPlayerChat && Main.keyState.IsKeyDown(Keys.Back) && !_fadeOutAnimationActive)
             {
                 _showButton.SetIsActive(true);
                 SoundEngine.PlaySound(in SoundID.MenuClose);
-                _starterPanelShowing = false;
+                DoFadeOutAnimation();
             }
 
             if (_hintTextTween is not { IsRunning: true })
@@ -242,9 +275,12 @@ public sealed class StarterSelectUI : SmartUIState
 
         UpdateShowButtonAnimation(gameTime);
 
-        _topContainer.Top.Set(TopContainerOffset, isVisibleCondition ? 0.25f : 4f);
-        _backdropImage.Top.Set(TopContainerOffset - 146, _starterPanelShowing ? 0.25f : 4f);
-        _hintText.Top.Set(94, isVisibleCondition ? 0.5f : 4f);
+        if (!_fadeOutAnimationActive)
+        {
+            _topContainer.Top.Set(TopContainerOffset, isVisibleCondition ? 0.25f : 4f);
+            _backdropImage.Top.Set(TopContainerOffset - 146, isVisibleCondition ? 0.25f : 4f);
+            _hintText.Top.Set(94, isVisibleCondition ? 0.5f : 4f);   
+        }
 
         Recalculate();
     }
@@ -259,7 +295,7 @@ public sealed class StarterSelectUI : SmartUIState
             return;
         }
 
-        var elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        var elapsed = gameTime == null ? 0f : (float)gameTime.ElapsedGameTime.TotalSeconds;
         _showButtonShakeTimer += elapsed;
 
         if (_showButtonShakeTimer >= ShowButtonShakeInterval && _showButtonShakeElapsed <= 0f)

@@ -94,15 +94,15 @@ public class TooltipOverlay : SmartUIState, ILoadable
             }
         };
 
-        On_Main.TryAllowingToCraftRecipe += (On_Main.orig_TryAllowingToCraftRecipe orig, Recipe recipe, bool crafting,
-            out bool allowCrafting) =>
+        On_Main.TryAllowingToCraftRecipe += (orig, recipe, crafting,
+            out allowCrafting) =>
         {
             if (_heldPokemon != null) return allowCrafting = false;
 
             return orig(recipe, crafting, out allowCrafting);
         };
 
-        On_ItemSlot.LeftClick_refItem_int += (On_ItemSlot.orig_LeftClick_refItem_int orig, ref Item inv, int context) =>
+        On_ItemSlot.LeftClick_refItem_int += (orig, ref inv, context) =>
         {
             if (_heldPokemon == null)
             {

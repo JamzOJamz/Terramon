@@ -26,7 +26,13 @@ public class Terramon : Mod
 
     static Terramon()
     {
-        if (!Main.dedServ) MenuSocialWidget.Setup();
+        if (Main.dedServ) return;
+        MenuSocialWidget.Setup();
+        On_WorldGen.playWorldCallBack += (orig, context) =>
+        {
+            RefreshPartyUI();
+            orig(context);
+        };
     }
 
     public Terramon() => Instance = this;
@@ -80,7 +86,7 @@ public class Terramon : Mod
     ///     Forces a full refresh of the party UI (<see cref="PartyDisplay" /> and <see cref="InventoryParty" />), updating all
     ///     slots.
     /// </summary>
-    public static void RefreshPartyUI()
+    private static void RefreshPartyUI()
     {
         var partyData = TerramonPlayer.LocalPlayer.Party;
         PartyDisplay.UpdateAllSlots(partyData); // Update the party sidebar display

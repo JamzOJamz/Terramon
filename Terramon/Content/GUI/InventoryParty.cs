@@ -451,8 +451,9 @@ internal sealed class CustomPartyItemSlot : UIImage
                     if (PCInterface.Active) PCInterface.PopulateCustomSlots(box);
 
                     // Remove from party and collapse
+                    var activeMon = modPlayer.GetActivePokemon();
                     modPlayer.Party[Index] = null;
-                    CollapsePartyGaps();
+                    CollapsePartyGapsAndFixActiveSlot(activeMon);
 
                     SoundEngine.PlaySound(SoundID.Grab);
                     SetData(modPlayer.Party[Index]);
@@ -546,8 +547,9 @@ internal sealed class CustomPartyItemSlot : UIImage
                     {
                         // Disposed (not swapped)
                         var useIndex = _initialSlot?.Index ?? Index;
+                        var activeMon = modPlayer.GetActivePokemon();
                         modPlayer.Party[useIndex] = null;
-                        CollapsePartyGaps();
+                        CollapsePartyGapsAndFixActiveSlot(activeMon);
 
                         if (_initialSlot != null)
                         {
@@ -592,10 +594,8 @@ internal sealed class CustomPartyItemSlot : UIImage
         return;
 
         // Helper to collapse party gaps and fix active slot
-        void CollapsePartyGaps()
+        void CollapsePartyGapsAndFixActiveSlot(PokemonData activeMon)
         {
-            var activeMon = modPlayer.GetActivePokemon();
-
             for (var i = 0; i < modPlayer.Party.Length - 1; i++)
             {
                 if (modPlayer.Party[i] == null)

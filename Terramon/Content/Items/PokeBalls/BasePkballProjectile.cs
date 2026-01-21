@@ -49,7 +49,6 @@ internal abstract class BasePkballProjectile : ModProjectile
     public override void SetStaticDefaults()
     {
         Main.projFrames[Type] = 4;
-        Projectile.tileCollide = true;
     }
 
     public override void SetDefaults()
@@ -72,8 +71,7 @@ internal abstract class BasePkballProjectile : ModProjectile
             Projectile.GetAlpha(lightColor), Projectile.rotation, origin, Projectile.scale,
             Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
 
-        if (_capture != null && Main.mouseItem.IsAir && !Main.LocalPlayer.cursorItemIconEnabled &&
-            !TooltipOverlay.IsHoldingPokemon())
+        if (_capture != null && Projectile.alpha == 0 && Main.mouseItem.IsAir && !Main.HoveringOverAnNPC && !Main.LocalPlayer.cursorItemIconEnabled && !TooltipOverlay.IsHoldingPokemon())
         {
             var originOffsetDrawPos = drawPos - origin;
             var drawRect = new Rectangle((int)originOffsetDrawPos.X + 4, (int)originOffsetDrawPos.Y + 4, 16, 16);
@@ -360,6 +358,8 @@ internal abstract class BasePkballProjectile : ModProjectile
         }
     }
 
+    public override bool? CanCutTiles() => false;
+
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
         HitPkmn(target);
@@ -402,7 +402,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         if (Projectile.owner != Main.myPlayer) return;
 
         TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
-        
+
         Projectile.Kill();
         var schema = _capture.Data.Schema;
         var ballName = GetType().Name.Split("Projectile")[0];
@@ -429,25 +429,25 @@ internal abstract class BasePkballProjectile : ModProjectile
             }
 
             var hasCustomName = box.GivenName != null;
-            var messageKey = hasCustomName 
+            var messageKey = hasCustomName
                 ? "Mods.Terramon.Misc.CatchSuccessPCCustomBoxName"
                 : "Mods.Terramon.Misc.CatchSuccessPC";
 
             var messageArgs = hasCustomName
-                ? new object[] 
-                { 
-                    schema.Types[0].GetHexColor(), 
-                    _capture.DisplayName, 
+                ? new object[]
+                {
+                    schema.Types[0].GetHexColor(),
+                    _capture.DisplayName,
                     box.GivenName,
-                    player.GetDefaultNameForPCBox(box), 
-                    player.Player.name 
+                    player.GetDefaultNameForPCBox(box),
+                    player.Player.name
                 }
-                : new object[] 
-                { 
-                    schema.Types[0].GetHexColor(), 
-                    _capture.DisplayName, 
-                    player.GetDefaultNameForPCBox(box), 
-                    player.Player.name 
+                : new object[]
+                {
+                    schema.Types[0].GetHexColor(),
+                    _capture.DisplayName,
+                    player.GetDefaultNameForPCBox(box),
+                    player.Player.name
                 };
 
             Main.NewText(Language.GetTextValue(messageKey, messageArgs));

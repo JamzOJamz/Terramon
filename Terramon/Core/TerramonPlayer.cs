@@ -25,7 +25,6 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
-using Terraria.Utilities;
 
 namespace Terramon.Core;
 
@@ -37,12 +36,11 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     private readonly PokedexService _shinyDex = new();
 
     private int _activePCTileEntityID = -1;
-    private PokemonPet _activePetProjectile;
     private int _activeSlot = -1;
+    private int _lastActiveSlot = -1;
 
     // ReSharper disable once InconsistentNaming
     internal BattleClient _battleClient;
-    private int _lastActiveSlot = -1;
     private bool _lastPlayerInventory;
 
     private bool _locallyRequestedClient;
@@ -111,8 +109,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public PokemonPet ActivePetProjectile
     {
-        get => _activeSlot >= 0 ? _activePetProjectile : null;
-        set => _activePetProjectile = value;
+        get => _activeSlot >= 0 ? field : null;
+        set;
     }
 
     public static TerramonPlayer LocalPlayer => Main.LocalPlayer.Terramon();
@@ -176,8 +174,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     public override void OnEnterWorld()
     {
-        Terramon.RefreshPartyUI();
-
         // Request a full sync of the World Dex from the server when joining a host in multiplayer
         if (Main.netMode == NetmodeID.MultiplayerClient) Mod.SendPacket(new RequestWorldDexRpc());
     }
@@ -244,43 +240,51 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
     private void ProcessActiveMonTriggers()
     {
-        var shouldPlaySound = false;
-
+        var targetSlot = -1;
+    
         if (KeybindSystem.TogglePokemonKeybind.JustPressed)
         {
-            shouldPlaySound = true;
             if (_activeSlot != -1)
+            {
                 ActiveSlot = -1;
-            else
-                ActiveSlot = _lastActiveSlot;
+                SoundEngine.PlaySound(in TerramonSoundID.PkballConsume);
+                return;
+            }
+            targetSlot = _lastActiveSlot;
         }
         else if (KeybindSystem.NextPokemonKeybind.JustPressed)
         {
-            shouldPlaySound = true;
-            if (_activeSlot != -1)
-                ActiveSlot = _activeSlot == 5 ? 0 : _activeSlot + 1;
-            else
-                ActiveSlot = _lastActiveSlot;
+            targetSlot = _activeSlot != -1 ? GetNextValidSlot(_activeSlot) : _lastActiveSlot;
         }
         else if (KeybindSystem.PrevPokemonKeybind.JustPressed)
         {
-            shouldPlaySound = true;
-            if (_activeSlot != -1)
-                ActiveSlot = _activeSlot == 0 ? 5 : _activeSlot - 1;
-            else
-                ActiveSlot = _lastActiveSlot;
+            targetSlot = _activeSlot != -1 ? GetPreviousValidSlot(_activeSlot) : _lastActiveSlot;
         }
+    
+        if (targetSlot != -1)
+            PartyDisplay.SimulateLeftClickOnSlot(targetSlot);
+    }
 
-        if (!shouldPlaySound) return;
-        if (_activeSlot != -1)
+    private int GetNextValidSlot(int currentSlot)
+    {
+        for (var i = 1; i <= 6; i++)
         {
-            SoundEngine.PlaySound(in TerramonSoundID.PkmnRecall);
-            SoundEngine.PlaySound(Party[_activeSlot].GetCry(0.2525f));
+            var nextSlot = (currentSlot + i) % 6;
+            if (Party[nextSlot] != null)
+                return nextSlot;
         }
-        else
+        return currentSlot; // No valid slots found, stay on current
+    }
+
+    private int GetPreviousValidSlot(int currentSlot)
+    {
+        for (var i = 1; i <= 6; i++)
         {
-            SoundEngine.PlaySound(in TerramonSoundID.PkballConsume);
+            var prevSlot = (currentSlot - i + 6) % 6;
+            if (Party[prevSlot] != null)
+                return prevSlot;
         }
+        return currentSlot; // No valid slots found, stay on current
     }
 
     public override void ResetEffects()
@@ -571,7 +575,8 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         }
 
         if (tag.TryGet("activeSlot", out int slot))
-            _activeSlot = slot;
+            _activeSlot = _lastActiveSlot = slot;
+        else _lastActiveSlot = 0;
 
         LoadParty(tag);
         LoadPokedex(tag);
@@ -635,7 +640,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     public string GetPackedTeam()
     {
         StringBuilder sb = new();
-        for (int i = 0; i < Party.Length; i++)
+        for (var i = 0; i < Party.Length; i++)
         {
             var p = Party[i];
             if (p == null) break;
@@ -664,14 +669,14 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         var p = Party;
         ParticipantSettings.Recalculate(p, true);
         NonParticipantSettings.Recalculate(p, false);
-        for (int i = 0; i < Party.Length; i++)
+        for (var i = 0; i < Party.Length; i++)
         {
             var poke = Party[i];
             if (poke is null)
                 continue;
-            ref ExpShareSettings settings =
+            ref var settings =
                 ref (poke.Participated ? ref ParticipantSettings : ref NonParticipantSettings);
-            float myMult = settings[i];
+            var myMult = settings[i];
             if (myMult == 0f)
                 continue;
             var expGain = poke.ExperienceFromDefeat(defeated, myMult, this);
