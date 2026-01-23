@@ -244,6 +244,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
                 Main.instance.MouseText(
                     $"{Data.DisplayName}: {Data.HP}/{Data.MaxHP}\n[c/{subColor.ToHexString()}:Following]");
                 Main.LocalPlayer.cursorItemIconEnabled = false;
+                Main.mouseText = true;
             }
         }
 

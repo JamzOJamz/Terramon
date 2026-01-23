@@ -369,11 +369,10 @@ public sealed class PartySidebarSlot : UICompositeImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        // TODO: Change name text color based on active slot state?
-        // if (_isActiveSlot && TerramonPlayer.LocalPlayer.NextFreePartyIndex() >= 2)
-        //     _nameText.TextColor = ClientConfig.DefaultHighlightColor;
-        // else
-        //     _nameText.TextColor = Color.White;
+        if (_isActiveSlot && TerramonPlayer.LocalPlayer.NextFreePartyIndex() >= 2)
+            _nameText.TextColor = Main.OurFavoriteColor;
+        else
+            _nameText.TextColor = Color.White;
 
         var outlined = IsMouseHovering && Data != null;
         if (outlined)
@@ -383,7 +382,7 @@ public sealed class PartySidebarSlot : UICompositeImage
                 Main.UIScaleMatrix);
 
             var outlineShader = ShaderAssets.Outline;
-            var highlightColor = ClientConfig.DefaultHighlightColor;
+            var highlightColor = Main.OurFavoriteColor;
 
             outlineShader.Shader.Parameters["uThickOutline"].SetValue(true);
             outlineShader.Shader.Parameters["uImageSize0"].SetValue(_texture.Size());
@@ -396,15 +395,16 @@ public sealed class PartySidebarSlot : UICompositeImage
         base.DrawSelf(spriteBatch);
 
         // Draw again (for slightly more opaque look)
-        var oldColor = Color;
+        /*var oldColor = Color;
         Color *= 0.2f;
         base.DrawSelf(spriteBatch);
-        Color = oldColor;
+        Color = oldColor;*/
 
         // Draw once more for active slot (even more opaque)
         if (_isActiveSlot)
         {
-            Color *= 0.4f;
+            var oldColor = Color;
+            Color *= 0.42f;
             base.DrawSelf(spriteBatch);
             Color = oldColor;
         }

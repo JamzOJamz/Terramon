@@ -9,7 +9,7 @@ public static class TerramonSoundID
     public static readonly SoundStyle PkballThrow = new("Terramon/Sounds/pkball_throw") { Volume = 0.8f };
     public static readonly SoundStyle PkballBounce = new("Terramon/Sounds/pkball_bounce") { Volume = 0.75f };
     public static readonly SoundStyle PkballCatchPla = new("Terramon/Sounds/pkball_catch_pla") { Volume = 0.75f };
-    public static readonly SoundStyle PkmnRecall = new("Terramon/Sounds/pkmn_recall") { Volume = 0.375f };
+    public static readonly SoundStyle PkmnRecall = new("Terramon/Sounds/pkmn_recall") { Volume = 0.35f };
     public static readonly SoundStyle ButtonSmm = new("Terramon/Sounds/button_smm") { Pitch = 0.6f, Volume = 0.2925f };
     public static readonly SoundStyle ButtonLocked = new("Terramon/Sounds/button_locked") { Volume = 0.25f };
     public static readonly SoundStyle CatchClick = new("Terramon/Sounds/ls_catch_click");
