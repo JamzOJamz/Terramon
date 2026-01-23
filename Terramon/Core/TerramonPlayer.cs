@@ -248,8 +248,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
         {
             if (_activeSlot != -1)
             {
-                ActiveSlot = -1;
-                SoundEngine.PlaySound(in TerramonSoundID.PkballConsume);
+                PartyDisplay.SimulateLeftClickOnSlot(_activeSlot);
                 return;
             }
             targetSlot = _lastActiveSlot;
