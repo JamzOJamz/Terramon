@@ -246,12 +246,7 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     
         if (KeybindSystem.TogglePokemonKeybind.JustPressed)
         {
-            if (_activeSlot != -1)
-            {
-                PartyDisplay.SimulateLeftClickOnSlot(_activeSlot);
-                return;
-            }
-            targetSlot = _lastActiveSlot;
+            targetSlot = _activeSlot != -1 ? _activeSlot : _lastActiveSlot;
         }
         else if (KeybindSystem.NextPokemonKeybind.JustPressed)
         {
