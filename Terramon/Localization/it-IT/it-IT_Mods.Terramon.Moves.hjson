@@ -1,0 +1,4479 @@
+Pound: {
+	DisplayName: Botta
+	FlavorText: Colpisce il bersaglio con la coda o le zampe anteriori.
+}
+
+KarateChop: {
+	DisplayName: Colpokarate
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+DoubleSlap: {
+	DisplayName: Doppiasberla
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+CometPunch: {
+	DisplayName: Cometapugno
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MegaPunch: {
+	DisplayName: Megapugno
+	FlavorText: Colpisce il bersaglio con un pugno poderoso.
+}
+
+PayDay: {
+	DisplayName: Giornopaga
+	FlavorText: Colpisce il bersaglio con una gran quantità di monete recuperabili dopo la lotta.
+}
+
+FirePunch: {
+	DisplayName: Fuocopugno
+	FlavorText: Colpisce il bersaglio con un pugno ardente che può scottarlo.
+}
+
+IcePunch: {
+	DisplayName: Gelopugno
+	FlavorText: Colpisce il bersaglio con un pugno di ghiaccio che può congelarlo.
+}
+
+ThunderPunch: {
+	DisplayName: Tuonopugno
+	FlavorText: Colpisce il bersaglio con un pugno elettrico che può paralizzarlo.
+}
+
+Scratch: {
+	DisplayName: Graffio
+	FlavorText: Infligge danni al bersaglio con artigli acuminati, duri e affilati.
+}
+
+ViceGrip: {
+	DisplayName: Presa
+	FlavorText: Stringe il bersaglio in una morsa.
+}
+
+Guillotine: {
+	DisplayName: Ghigliottina
+	FlavorText: Attacca il bersaglio con pericolose tenaglie. Se l'attacco va a segno, il Pokémon colpito va subito KO.
+}
+
+RazorWind: {
+	DisplayName: Ventagliente
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SwordsDance: {
+	DisplayName: Danzaspada
+	FlavorText: Danza frenetica che incrementa lo spirito combattivo. Chi la usa aumenta di molto il suo Attacco.
+}
+
+Cut: {
+	DisplayName: Taglio
+	FlavorText: Attacca il bersaglio con artigli o falci affilate.
+}
+
+Gust: {
+	DisplayName: Raffica
+	FlavorText: Infligge danni al bersaglio con una folata di vento sollevata dalle ali.
+}
+
+WingAttack: {
+	DisplayName: Attacco d'Ala
+	FlavorText: Infligge danni al bersaglio spiegando delle grandi ali possenti.
+}
+
+Whirlwind: {
+	DisplayName: Turbine
+	FlavorText: Il bersaglio lascia il campo e viene sostituito. Mette fine alle lotte contro singoli Pokémon selvatici.
+}
+
+Fly: {
+	DisplayName: Volo
+	FlavorText: Chi la usa si alza in volo per attaccare al turno seguente.
+}
+
+Bind: {
+	DisplayName: Legatutto
+	FlavorText: Il lungo corpo o i tentacoli di chi la usa legano e stritolano il bersaglio per quattro o cinque turni.
+}
+
+Slam: {
+	DisplayName: Schianto
+	FlavorText: Infligge danni al bersaglio con la coda, con una liana o con qualcosa di simile.
+}
+
+VineWhip: {
+	DisplayName: Frustata
+	FlavorText: Infligge danni al bersaglio con liane sottili simili a fruste.
+}
+
+Stomp: {
+	DisplayName: Pestone
+	FlavorText: Colpisce il bersaglio con un grosso piede e può anche farlo tentennare.
+}
+
+DoubleKick: {
+	DisplayName: Doppiocalcio
+	FlavorText: Colpisce il bersaglio due volte con una raffica di calci inferti con entrambi i piedi.
+}
+
+MegaKick: {
+	DisplayName: Megacalcio
+	FlavorText: Colpisce il bersaglio con un calcio sferrato con la forza di muscoli poderosi.
+}
+
+JumpKick: {
+	DisplayName: Calciosalto
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+RollingKick: {
+	DisplayName: Calciorullo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SandAttack: {
+	DisplayName: Turbosabbia
+	FlavorText: Getta sabbia in faccia al bersaglio e ne riduce la precisione.
+}
+
+Headbutt: {
+	DisplayName: Bottintesta
+	FlavorText: Chi la usa si lancia diritto di testa contro il bersaglio. Può anche farlo tentennare.
+}
+
+HornAttack: {
+	DisplayName: Incornata
+	FlavorText: Danneggia il bersaglio infilzandolo con un corno affilato.
+}
+
+FuryAttack: {
+	DisplayName: Furia
+	FlavorText: Infilza il bersaglio con corna affilate o con il becco da due a cinque volte di fila.
+}
+
+HornDrill: {
+	DisplayName: Perforcorno
+	FlavorText: Colpisce il bersaglio con un corno perforante come un trapano. Se il colpo va a segno, il Pokémon colpito va KO.
+}
+
+Tackle: {
+	DisplayName: Azione
+	FlavorText: Attacco fisico che colpisce il bersaglio investendolo con tutto il corpo.
+}
+
+BodySlam: {
+	DisplayName: Corposcontro
+	FlavorText: Chi la usa carica il bersaglio con tutto il corpo. Può causarne anche la paralisi.
+}
+
+Wrap: {
+	DisplayName: Avvolgibotta
+	FlavorText: Il lungo corpo o le liane di chi la usa avvolgono e stritolano il bersaglio per quattro o cinque turni.
+}
+
+TakeDown: {
+	DisplayName: Riduttore
+	FlavorText: Carica spericolata con tutto il corpo contro il bersaglio. Danneggia un po' anche chi la usa.
+}
+
+Thrash: {
+	DisplayName: Colpo
+	FlavorText: Assale e attacca il nemico per due o tre turni, ma confonde chi la usa.
+}
+
+DoubleEdge: {
+	DisplayName: Sdoppiatore
+	FlavorText: Carica spietata e pericolosa che danneggia molto anche chi la usa.
+}
+
+TailWhip: {
+	DisplayName: Colpocoda
+	FlavorText: Chi la usa agita la coda per distrarre i nemici che ha intorno, riducendone la Difesa.
+}
+
+PoisonSting: {
+	DisplayName: Velenospina
+	FlavorText: Colpisce il bersaglio con un aculeo tossico che può anche avvelenarlo.
+}
+
+Twineedle: {
+	DisplayName: Doppio Ago
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+PinMissile: {
+	DisplayName: Missilspillo
+	FlavorText: Il bersaglio viene colpito da due a cinque volte in rapida successione con delle spine.
+}
+
+Leer: {
+	DisplayName: Fulmisguardo
+	FlavorText: Terrorizza i nemici intorno con uno sguardo fulminante e intimidatorio, riducendone la Difesa.
+}
+
+Bite: {
+	DisplayName: Morso
+	FlavorText: Il bersaglio viene morso da denti affilatissimi che possono farlo tentennare.
+}
+
+Growl: {
+	DisplayName: Ruggito
+	FlavorText: Distrae i nemici intorno con un tenero ruggito e ne riduce l'Attacco.
+}
+
+Roar: {
+	DisplayName: Boato
+	FlavorText: Il bersaglio lascia il campo e viene sostituito. Mette fine alle lotte contro singoli Pokémon selvatici.
+}
+
+Sing: {
+	DisplayName: Canto
+	FlavorText: Dolce ninnananna, cantata da una voce suadente, che fa addormentare il bersaglio.
+}
+
+Supersonic: {
+	DisplayName: Supersuono
+	FlavorText: Chi la usa genera dal proprio corpo strane onde acustiche che possono confondere il bersaglio.
+}
+
+SonicBoom: {
+	DisplayName: Sonicboom
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Disable: {
+	DisplayName: Inibitore
+	FlavorText: Per quattro turni impedisce al bersaglio di riutilizzare l'ultima mossa usata.
+}
+
+Acid: {
+	DisplayName: Acido
+	FlavorText: Colpisce i nemici intorno spruzzando un acido corrosivo. Può anche ridurne la Difesa Speciale.
+}
+
+Ember: {
+	DisplayName: Braciere
+	FlavorText: Il bersaglio viene colpito da fiammelle che possono anche scottarlo.
+}
+
+Flamethrower: {
+	DisplayName: Lanciafiamme
+	FlavorText: Il bersaglio viene colpito da intense fiammate che possono anche scottarlo.
+}
+
+Mist: {
+	DisplayName: Nebbia
+	FlavorText: Chi la usa attira una nebbia che blocca la riduzione delle statistiche per sé e gli alleati per cinque turni.
+}
+
+WaterGun: {
+	DisplayName: Pistolacqua
+	FlavorText: Il bersaglio è colpito da un potente getto d'acqua.
+}
+
+HydroPump: {
+	DisplayName: Idropompa
+	FlavorText: Il bersaglio è travolto da un potente getto d'acqua spruzzato ad altissima pressione.
+}
+
+Surf: {
+	DisplayName: Surf
+	FlavorText: Un'onda enorme sommerge il campo di lotta, colpendo tutti i Pokémon intorno a chi la scatena.
+}
+
+IceBeam: {
+	DisplayName: Geloraggio
+	FlavorText: Il bersaglio è colpito da un raggio di energia gelida che può anche congelarlo.
+}
+
+Blizzard: {
+	DisplayName: Bora
+	FlavorText: Colpisce i nemici intorno con una tremenda tempesta di ghiaccio che può anche congelarli.
+}
+
+Psybeam: {
+	DisplayName: Psicoraggio
+	FlavorText: Colpisce il bersaglio con un raggio speciale. Può anche confonderlo.
+}
+
+BubbleBeam: {
+	DisplayName: Bollaraggio
+	FlavorText: Colpisce il bersaglio con una forte scarica di bolle. Può anche ridurne la Velocità.
+}
+
+AuroraBeam: {
+	DisplayName: Raggiaurora
+	FlavorText: Colpisce il bersaglio con un raggio dai colori dell'iride. Può anche ridurne l'Attacco.
+}
+
+HyperBeam: {
+	DisplayName: Iper Raggio
+	FlavorText: Colpisce il bersaglio con un potente raggio. Chi la usa salta il turno successivo per recuperare energia.
+}
+
+Peck: {
+	DisplayName: Beccata
+	FlavorText: Colpisce il bersaglio con il becco appuntito o con un corno.
+}
+
+DrillPeck: {
+	DisplayName: Perforbecco
+	FlavorText: Attacco a spirale con un becco aguzzo che fa da trapano.
+}
+
+Submission: {
+	DisplayName: Sottomissione
+	FlavorText: Chi la usa carica il bersaglio in modo spericolato, ma danneggia anche se stesso.
+}
+
+LowKick: {
+	DisplayName: Colpo Basso
+	FlavorText: Un calcio basso e potente che fa cadere il bersaglio. Danneggia maggiormente i Pokémon più pesanti.
+}
+
+Counter: {
+	DisplayName: Contrattacco
+	FlavorText: Mossa che contrasta ogni attacco fisico, arrecando il doppio del danno ricevuto.
+}
+
+SeismicToss: {
+	DisplayName: Movim. Sismico
+	FlavorText: Colpisce il bersaglio con la forza di gravità. Infligge un danno pari al livello di chi la usa.
+}
+
+Strength: {
+	DisplayName: Forza
+	FlavorText: Colpisce il bersaglio con un'enorme energia.
+}
+
+Absorb: {
+	DisplayName: Assorbimento
+	FlavorText: Mossa che assorbe PS. Chi la usa recupera una quantità di PS pari alla metà del danno inferto.
+}
+
+MegaDrain: {
+	DisplayName: Megassorbimento
+	FlavorText: Mossa che assorbe PS. Chi la usa recupera una quantità di PS pari alla metà del danno inferto.
+}
+
+LeechSeed: {
+	DisplayName: Parassiseme
+	FlavorText: Vengono piantati semi sul bersaglio. Questi sottraggono PS a ogni turno permettendo a chi la usa di curarsi.
+}
+
+Growth: {
+	DisplayName: Crescita
+	FlavorText: Provoca la crescita immediata del corpo e l'aumento dell'Attacco e dell'Attacco Speciale di chi la usa.
+}
+
+RazorLeaf: {
+	DisplayName: Foglielama
+	FlavorText: Foglie taglienti sferzano i nemici intorno. Probabile brutto colpo.
+}
+
+SolarBeam: {
+	DisplayName: Solarraggio
+	FlavorText: Chi la usa assorbe luce al primo turno per proiettare un raggio intenso al turno successivo.
+}
+
+PoisonPowder: {
+	DisplayName: Velenpolvere
+	FlavorText: Investe il bersaglio con una nuvola di polvere tossica che avvelena.
+}
+
+StunSpore: {
+	DisplayName: Paralizzante
+	FlavorText: Investe il bersaglio con una nuvola di polvere che paralizza.
+}
+
+SleepPowder: {
+	DisplayName: Sonnifero
+	FlavorText: Investe il bersaglio con una grande nuvola di polvere soporifera che lo fa addormentare.
+}
+
+PetalDance: {
+	DisplayName: Petalodanza
+	FlavorText: Attacca il nemico cospargendolo di petali per due o tre turni, ma chi la usa rimane confuso.
+}
+
+StringShot: {
+	DisplayName: Millebave
+	FlavorText: Chi la usa produce della seta che avvolge i nemici intorno e ne riduce di molto la Velocità.
+}
+
+DragonRage: {
+	DisplayName: Ira di Drago
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FireSpin: {
+	DisplayName: Turbofuoco
+	FlavorText: Intrappola il bersaglio in un turbine di fuoco che dura per quattro o cinque turni.
+}
+
+ThunderShock: {
+	DisplayName: Tuonoshock
+	FlavorText: Danneggia il bersaglio con una scarica elettrica che può anche paralizzarlo.
+}
+
+Thunderbolt: {
+	DisplayName: Fulmine
+	FlavorText: Il bersaglio viene colpito da una potente scarica elettrica che può anche paralizzarlo.
+}
+
+ThunderWave: {
+	DisplayName: Tuononda
+	FlavorText: Colpisce il bersaglio con una debole scarica elettrica che lo paralizza.
+}
+
+Thunder: {
+	DisplayName: Tuono
+	FlavorText: Il bersaglio è colpito da un fulmine molto violento che può anche paralizzarlo.
+}
+
+RockThrow: {
+	DisplayName: Sassata
+	FlavorText: Chi la usa raccoglie una pietra e la lancia contro il bersaglio.
+}
+
+Earthquake: {
+	DisplayName: Terremoto
+	FlavorText: Chi la usa provoca un potente sisma che colpisce i Pokémon che ha intorno.
+}
+
+Fissure: {
+	DisplayName: Abisso
+	FlavorText: Chi la usa crea una spaccatura nel terreno e cerca di gettarvici dentro il bersaglio. Se va a segno, il Pokémon colpito va KO.
+}
+
+Dig: {
+	DisplayName: Fossa
+	FlavorText: Chi la usa scava al primo turno e attacca al successivo.
+}
+
+Toxic: {
+	DisplayName: Tossina
+	FlavorText: Iperavvelena il bersaglio con una potente tossina. Il danno peggiora a ogni turno.
+}
+
+Confusion: {
+	DisplayName: Confusione
+	FlavorText: Colpisce il bersaglio con una leggera forza telecinetica e può anche confonderlo.
+}
+
+Psychic: {
+	DisplayName: Psichico
+	FlavorText: Il bersaglio viene colpito da una potente forza telecinetica che può anche ridurne la Difesa Speciale.
+}
+
+Hypnosis: {
+	DisplayName: Ipnosi
+	FlavorText: Chi la usa si avvale della suggestione ipnotica per far addormentare il bersaglio.
+}
+
+Meditate: {
+	DisplayName: Meditazione
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Agility: {
+	DisplayName: Agilità
+	FlavorText: Chi la usa rilassa e alleggerisce il proprio corpo per far salire di molto la Velocità.
+}
+
+QuickAttack: {
+	DisplayName: Attacco Rapido
+	FlavorText: Chi la usa colpisce a una tale velocità da rendersi quasi invisibile. Questa mossa ha priorità alta.
+}
+
+Rage: {
+	DisplayName: Ira
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Teleport: {
+	DisplayName: Teletrasporto
+	FlavorText: Chi la usa viene sostituito se ci sono altri Pokémon in squadra. Se un Pokémon selvatico usa questa mossa, fugge dalla lotta.
+}
+
+NightShade: {
+	DisplayName: Ombra Notturna
+	FlavorText: Fa apparire un orribile miraggio al bersaglio e infligge un danno pari al livello di chi la usa.
+}
+
+Mimic: {
+	DisplayName: Mimica
+	FlavorText: Chi la usa copia l'ultima mossa usata dal bersaglio e la conserva finché rimane in campo.
+}
+
+Screech: {
+	DisplayName: Stridio
+	FlavorText: Stridio assordante che riduce di molto la Difesa del bersaglio.
+}
+
+DoubleTeam: {
+	DisplayName: Doppioteam
+	FlavorText: Chi la usa si muove in fretta e crea copie illusorie di se stesso che aumentano la capacità di elusione.
+}
+
+Recover: {
+	DisplayName: Ripresa
+	FlavorText: Mossa autocurativa. Chi la usa recupera metà dei PS massimi.
+}
+
+Harden: {
+	DisplayName: Rafforzatore
+	FlavorText: Tutti i muscoli del corpo si tonificano per aumentare la Difesa.
+}
+
+Minimize: {
+	DisplayName: Minimizzato
+	FlavorText: Il corpo di chi la usa si comprime e diventa più piccolo. La sua capacità di elusione aumenta di molto.
+}
+
+Smokescreen: {
+	DisplayName: Muro di Fumo
+	FlavorText: Nuvola di fumo o inchiostro che riduce la precisione del bersaglio.
+}
+
+ConfuseRay: {
+	DisplayName: Stordiraggio
+	FlavorText: Colpisce il bersaglio con un raggio funesto che lo confonde.
+}
+
+Withdraw: {
+	DisplayName: Ritirata
+	FlavorText: Il corpo si ritira nel suo duro guscio per aumentare la Difesa.
+}
+
+DefenseCurl: {
+	DisplayName: Ricciolscudo
+	FlavorText: Chi la usa si raggomitola per nascondere i punti deboli e aumentare la propria Difesa.
+}
+
+Barrier: {
+	DisplayName: Barriera
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+LightScreen: {
+	DisplayName: Schermoluce
+	FlavorText: Innalza una barriera misteriosa che riduce i danni degli attacchi speciali per sé e gli alleati per cinque turni.
+}
+
+Haze: {
+	DisplayName: Nube
+	FlavorText: Chi la usa crea una nube nera che annulla ogni modifica alle statistiche di tutti i Pokémon in campo.
+}
+
+Reflect: {
+	DisplayName: Riflesso
+	FlavorText: Innalza una barriera misteriosa che riduce i danni degli attacchi fisici per sé e gli alleati per cinque turni.
+}
+
+FocusEnergy: {
+	DisplayName: Focalenergia
+	FlavorText: Chi la usa fa un profondo respiro e si concentra per rendere più probabili i brutti colpi.
+}
+
+Bide: {
+	DisplayName: Pazienza
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Metronome: {
+	DisplayName: Metronomo
+	FlavorText: Chi la usa fa di no con il dito e stimola il cervello a usare a caso una delle tante mosse esistenti.
+}
+
+MirrorMove: {
+	DisplayName: Speculmossa
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SelfDestruct: {
+	DisplayName: Autodistruzione
+	FlavorText: Chi la usa esplode e infligge danni ai Pokémon che ha intorno, ma poi va KO.
+}
+
+EggBomb: {
+	DisplayName: Uovobomba
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Lick: {
+	DisplayName: Leccata
+	FlavorText: Una lingua lunga infligge danni al bersaglio e può anche paralizzarlo.
+}
+
+Smog: {
+	DisplayName: Smog
+	FlavorText: Colpisce il bersaglio con una scarica di gas maleodoranti. Può anche avvelenarlo.
+}
+
+Sludge: {
+	DisplayName: Fango
+	FlavorText: Chi la usa lancia fango malsano sul bersaglio. Può anche avvelenarlo.
+}
+
+BoneClub: {
+	DisplayName: Ossoclava
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FireBlast: {
+	DisplayName: Fuocobomba
+	FlavorText: Investe il bersaglio con un'intensa fiammata che fa terra bruciata. Può anche scottarlo.
+}
+
+Waterfall: {
+	DisplayName: Cascata
+	FlavorText: Carica il bersaglio a grande velocità e può farlo tentennare.
+}
+
+Clamp: {
+	DisplayName: Tenaglia
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Swift: {
+	DisplayName: Comete
+	FlavorText: Chi la usa colpisce i nemici intorno con raggi a forma di stella. Questo attacco è infallibile.
+}
+
+SkullBash: {
+	DisplayName: Capocciata
+	FlavorText: Chi la usa ritira la testa per aumentare la Difesa e poi attacca al turno successivo.
+}
+
+SpikeCannon: {
+	DisplayName: Sparalance
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Constrict: {
+	DisplayName: Limitazione
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Amnesia: {
+	DisplayName: Amnesia
+	FlavorText: Chi la usa svuota per un po' la mente per dimenticare i problemi. La Difesa Speciale aumenta di molto.
+}
+
+Kinesis: {
+	DisplayName: Cinèsi
+	FlavorText: Chi la usa distrae il bersaglio piegando un cucchiaio e ne riduce la precisione.
+}
+
+SoftBoiled: {
+	DisplayName: Covauova
+	FlavorText: Chi la usa recupera metà dei propri PS massimi.
+}
+
+HighJumpKick: {
+	DisplayName: Calcinvolo
+	FlavorText: Chi la usa colpisce il bersaglio con una ginocchiata in volo. Se fallisce, subisce danni.
+}
+
+Glare: {
+	DisplayName: Sguardo Feroce
+	FlavorText: Chi la usa spaventa il bersaglio con uno sguardo terrificante e ne causa la paralisi.
+}
+
+DreamEater: {
+	DisplayName: Mangiasogni
+	FlavorText: Attacco che funziona solo su un bersaglio che dorme. Chi lo usa riceve metà dei PS persi dal Pokémon colpito.
+}
+
+PoisonGas: {
+	DisplayName: Velenogas
+	FlavorText: Spruzza in faccia ai nemici che ha intorno una nuvola di gas tossico che avvelena.
+}
+
+Barrage: {
+	DisplayName: Attacco Pioggia
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+LeechLife: {
+	DisplayName: Sanguisuga
+	FlavorText: Mossa succhiasangue. Chi la usa recupera una quantità di PS pari alla metà del danno inferto.
+}
+
+LovelyKiss: {
+	DisplayName: Demonbacio
+	FlavorText: Chi la usa intimidisce il bersaglio con una faccia paurosa e gli schiocca un bacio che lo fa addormentare.
+}
+
+SkyAttack: {
+	DisplayName: Aeroattacco
+	FlavorText: Attacco in due turni e probabile brutto colpo. Può anche far tentennare il bersaglio.
+}
+
+Transform: {
+	DisplayName: Trasformazione
+	FlavorText: Chi la usa si trasforma in una copia esatta del bersaglio per sfruttarne le mosse.
+}
+
+Bubble: {
+	DisplayName: Bolla
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+DizzyPunch: {
+	DisplayName: Stordipugno
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Spore: {
+	DisplayName: Spora
+	FlavorText: Nube di spore che fa sempre addormentare il bersaglio.
+}
+
+Flash: {
+	DisplayName: Flash
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Psywave: {
+	DisplayName: Psiconda
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Splash: {
+	DisplayName: Splash
+	FlavorText: Chi la usa sguazza nell'acqua, senza ottenere alcun effetto.
+}
+
+AcidArmor: {
+	DisplayName: Scudo Acido
+	FlavorText: Chi la usa altera la sua struttura cellulare passando allo stato liquido. La Difesa sale di molto.
+}
+
+Crabhammer: {
+	DisplayName: Martellata
+	FlavorText: Danneggia il bersaglio servendosi di una grande tenaglia. Probabile brutto colpo.
+}
+
+Explosion: {
+	DisplayName: Esplosione
+	FlavorText: Chi la usa esplode per infliggere danni agli altri Pokémon attorno, ma va KO.
+}
+
+FurySwipes: {
+	DisplayName: Sfuriate
+	FlavorText: Colpisce il bersaglio con artigli o falci affilate da due a cinque volte in rapida successione.
+}
+
+Bonemerang: {
+	DisplayName: Ossomerang
+	FlavorText: Chi la usa lancia l'osso che ha con sé. L'osso colpisce due volte e ritorna come un vero e proprio boomerang.
+}
+
+Rest: {
+	DisplayName: Riposo
+	FlavorText: Chi la usa recupera tutti i PS e guarisce da tutti i suoi problemi di stato, ma dorme per due turni.
+}
+
+RockSlide: {
+	DisplayName: Frana
+	FlavorText: I nemici vengono colpiti con violenza da grandi massi che possono anche farli tentennare.
+}
+
+HyperFang: {
+	DisplayName: Iperzanna
+	FlavorText: Chi la usa morde il bersaglio con i suoi incisivi affilati. Può anche farlo tentennare.
+}
+
+Sharpen: {
+	DisplayName: Affilatore
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Conversion: {
+	DisplayName: Conversione
+	FlavorText: Il tipo di chi la usa muta in quello della prima mossa nella lista delle sue mosse.
+}
+
+TriAttack: {
+	DisplayName: Tripletta
+	FlavorText: Colpisce il bersaglio con tre raggi di luce che possono paralizzarlo, scottarlo o congelarlo.
+}
+
+SuperFang: {
+	DisplayName: Superzanna
+	FlavorText: Chi la usa salta sul bersaglio azzannandolo con i suoi incisivi affilati e facendogli perdere metà dei PS.
+}
+
+Slash: {
+	DisplayName: Lacerazione
+	FlavorText: Attacca il bersaglio con artigli, falci o altro. Probabile brutto colpo.
+}
+
+Substitute: {
+	DisplayName: Sostituto
+	FlavorText: Chi la usa crea una copia di se stesso usando alcuni PS. La copia serve come esca per il nemico.
+}
+
+Struggle: {
+	DisplayName: Scontro
+	FlavorText: Mossa da usare solo in caso estremo, quando non si hanno più PP. Danneggia anche chi la usa.
+}
+
+Sketch: {
+	DisplayName: Schizzo
+	FlavorText: Permette a chi la usa di imparare l'ultima mossa usata dal bersaglio. La nuova mossa appresa sostituisce Schizzo.
+}
+
+TripleKick: {
+	DisplayName: Triplocalcio
+	FlavorText: Chi la usa sferra fino a tre calci consecutivi la cui potenza aumenta a ogni colpo.
+}
+
+Thief: {
+	DisplayName: Furto
+	FlavorText: Chi la usa attacca il bersaglio e può rubargli lo strumento, se non ne ha già uno.
+}
+
+SpiderWeb: {
+	DisplayName: Ragnatela
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MindReader: {
+	DisplayName: Leggimente
+	FlavorText: Chi la usa prevede i movimenti del bersaglio per mandare a segno l'attacco successivo.
+}
+
+Nightmare: {
+	DisplayName: Incubo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FlameWheel: {
+	DisplayName: Ruotafuoco
+	FlavorText: Chi la usa si copre di fuoco e carica il bersaglio. Può anche scottarlo.
+}
+
+Snore: {
+	DisplayName: Russare
+	FlavorText: Mossa che può essere usata solo mentre si dorme. Il chiasso assordante può anche far tentennare il bersaglio.
+}
+
+Curse: {
+	DisplayName: Maledizione
+	FlavorText: Una mossa che agisce in modo diverso se chi la usa è di tipo Spettro.
+}
+
+Flail: {
+	DisplayName: Flagello
+	FlavorText: Chi la usa si dimena per attaccare. È più efficace se i suoi PS sono bassi.
+}
+
+Conversion2: {
+	DisplayName: Conversione2
+	FlavorText: Chi la usa cambia tipo per rendersi resistente al tipo dell'ultima mossa usata dal bersaglio.
+}
+
+Aeroblast: {
+	DisplayName: Aerocolpo
+	FlavorText: Colpisce il bersaglio con un vortice d'aria per danneggiarlo. Probabile brutto colpo.
+}
+
+CottonSpore: {
+	DisplayName: Cottonspora
+	FlavorText: Rilascia spore simili al cotone che si attaccano ai nemici nei paraggi e ne riducono di molto la Velocità.
+}
+
+Reversal: {
+	DisplayName: Contropiede
+	FlavorText: Chi la usa attacca con tutte le sue forze. Più i PS sono bassi, maggiore è la potenza di questa mossa.
+}
+
+Spite: {
+	DisplayName: Dispetto
+	FlavorText: Chi la usa sfoga la propria rabbia sull'ultima mossa usata dal bersaglio e le sottrae quattro PP.
+}
+
+PowderSnow: {
+	DisplayName: Polneve
+	FlavorText: Attacca i nemici che ha intorno con una raffica di neve farinosa e può anche congelarli.
+}
+
+Protect: {
+	DisplayName: Protezione
+	FlavorText: Permette di eludere tutti gli attacchi. Se usata in successione può fallire.
+}
+
+MachPunch: {
+	DisplayName: Pugnorapido
+	FlavorText: Chi la usa tira un pugno a una velocità impressionante. Questa mossa ha priorità alta.
+}
+
+ScaryFace: {
+	DisplayName: Visotruce
+	FlavorText: Chi la usa spaventa il bersaglio con una faccia terribile e ne riduce di molto la Velocità.
+}
+
+FeintAttack: {
+	DisplayName: Finta
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SweetKiss: {
+	DisplayName: Dolcebacio
+	FlavorText: Chi la usa bacia il bersaglio con una dolcezza angelica, confondendolo.
+}
+
+BellyDrum: {
+	DisplayName: Panciamburo
+	FlavorText: Chi la usa massimizza l'Attacco in cambio di metà dei PS massimi.
+}
+
+SludgeBomb: {
+	DisplayName: Fangobomba
+	FlavorText: Chi la usa lancia fango malsano sul bersaglio. Può anche avvelenarlo.
+}
+
+MudSlap: {
+	DisplayName: Fangosberla
+	FlavorText: Chi la usa butta fango in faccia al bersaglio per arrecargli danni e ridurne la precisione.
+}
+
+Octazooka: {
+	DisplayName: Octazooka
+	FlavorText: Chi la usa spruzza inchiostro in faccia al bersaglio. Può anche ridurne la precisione.
+}
+
+Spikes: {
+	DisplayName: Punte
+	FlavorText: Chi la usa piazza sul terreno una trappola di punte che danneggia i nemici quando scendono in campo.
+}
+
+ZapCannon: {
+	DisplayName: Falcecannone
+	FlavorText: Chi la usa scaglia una sfera elettrica che infligge danni e paralizza il bersaglio.
+}
+
+Foresight: {
+	DisplayName: Preveggenza
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+DestinyBond: {
+	DisplayName: Destinobbligato
+	FlavorText: Se chi la usa va KO a causa di un attacco, chi ha sferrato il colpo da KO fa la stessa fine. Se usata in successione fallisce.
+}
+
+PerishSong: {
+	DisplayName: Ultimocanto
+	FlavorText: Qualunque Pokémon che senta questo canto va KO in tre turni, se non lo si sostituisce.
+}
+
+IcyWind: {
+	DisplayName: Ventogelato
+	FlavorText: Chi la usa attacca i nemici intorno con una folata di aria gelida e ne riduce anche la Velocità.
+}
+
+Detect: {
+	DisplayName: Individua
+	FlavorText: Permette di eludere tutti gli attacchi. Se usata in successione può fallire.
+}
+
+BoneRush: {
+	DisplayName: Ossoraffica
+	FlavorText: Chi la usa colpisce il bersaglio con un osso da due a cinque volte di fila.
+}
+
+LockOn: {
+	DisplayName: Localizza
+	FlavorText: Chi la usa punta il bersaglio con precisione. La mossa successiva andrà a segno.
+}
+
+Outrage: {
+	DisplayName: Oltraggio
+	FlavorText: Chi la usa sfoga la sua ira e attacca il nemico per due o tre turni prima di essere lasciato in preda alla confusione.
+}
+
+Sandstorm: {
+	DisplayName: Terrempesta
+	FlavorText: Causa una tempesta di sabbia per cinque turni che danneggia tutti i tipi esclusi Terra, Roccia e Acciaio. Aumenta la Dif. Speciale dei Pokémon di tipo Roccia.
+}
+
+GigaDrain: {
+	DisplayName: Gigassorbimento
+	FlavorText: Mossa che assorbe PS. Chi la usa recupera una quantità di PS pari alla metà del danno inferto.
+}
+
+Endure: {
+	DisplayName: Resistenza
+	FlavorText: Chi la usa resta con un PS anche se subisce un colpo da KO in quel turno. Usata in successione può fallire.
+}
+
+Charm: {
+	DisplayName: Fascino
+	FlavorText: Ammalia il bersaglio con lo sguardo per renderlo meno cauto. Ne riduce molto l'Attacco.
+}
+
+Rollout: {
+	DisplayName: Rotolamento
+	FlavorText: Chi la usa colpisce il bersaglio rotolando per cinque turni, con aumento progressivo della potenza ogni volta che va a segno.
+}
+
+FalseSwipe: {
+	DisplayName: Falsofinale
+	FlavorText: Chi la usa trattiene il colpo per impedire al bersaglio di andare KO, lasciandolo con almeno un PS.
+}
+
+Swagger: {
+	DisplayName: Bullo
+	FlavorText: Chi la usa provoca il bersaglio e lo confonde, facendo aumentare però di molto il suo Attacco.
+}
+
+MilkDrink: {
+	DisplayName: Buonlatte
+	FlavorText: Chi la usa recupera metà dei propri PS massimi.
+}
+
+Spark: {
+	DisplayName: Scintilla
+	FlavorText: Colpisce il bersaglio con una scarica elettrica e può anche paralizzarlo.
+}
+
+FuryCutter: {
+	DisplayName: Tagliofuria
+	FlavorText: Colpisce il bersaglio con falci o artigli. Se usata in successione aumenta di potenza ogni volta che va a segno.
+}
+
+SteelWing: {
+	DisplayName: Alacciaio
+	FlavorText: Colpisce il bersaglio con ali d'acciaio. Può anche aumentare la Difesa di chi la usa.
+}
+
+MeanLook: {
+	DisplayName: Malosguardo
+	FlavorText: Chi la usa blocca il bersaglio con uno sguardo oscuro e ammaliante, impedendogli la fuga.
+}
+
+Attract: {
+	DisplayName: Attrazione
+	FlavorText: Se il bersaglio è del sesso opposto, s'infatua e diventa riluttante ad attaccare.
+}
+
+SleepTalk: {
+	DisplayName: Sonnolalia
+	FlavorText: Chi la usa sferra a caso una delle proprie mosse mentre sta dormendo.
+}
+
+HealBell: {
+	DisplayName: Rintoccasana
+	FlavorText: Chi la usa produce uno scampanellio che cura i problemi di stato suoi e dei Pokémon alleati.
+}
+
+Return: {
+	DisplayName: Ritorno
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Present: {
+	DisplayName: Regalino
+	FlavorText: Chi la usa dà un regalo bomba al bersaglio. A volte, però, può fargli recuperare PS.
+}
+
+Frustration: {
+	DisplayName: Frustrazione
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Safeguard: {
+	DisplayName: Salvaguardia
+	FlavorText: Chi la usa crea un campo protettivo che evita problemi di stato per sé e gli alleati per cinque turni.
+}
+
+PainSplit: {
+	DisplayName: Malcomune
+	FlavorText: Chi la usa somma i propri PS a quelli di un altro Pokémon per poi dividerli in parti uguali.
+}
+
+SacredFire: {
+	DisplayName: Magifuoco
+	FlavorText: Colpisce il bersaglio con un fuoco mistico di enorme intensità che può anche causargli una scottatura.
+}
+
+Magnitude: {
+	DisplayName: Magnitudo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+DynamicPunch: {
+	DisplayName: Dinamipugno
+	FlavorText: Colpisce il bersaglio con un pugno davvero forte. Se va a segno, lo confonde.
+}
+
+Megahorn: {
+	DisplayName: Megacorno
+	FlavorText: Chi la usa utilizza il suo robusto e imponente corno per colpire il bersaglio con tutto se stesso.
+}
+
+DragonBreath: {
+	DisplayName: Dragospiro
+	FlavorText: Investe il bersaglio con una raffica potentissima che arreca danni. Può anche paralizzarlo.
+}
+
+BatonPass: {
+	DisplayName: Staffetta
+	FlavorText: Chi la usa è sostituito da un Pokémon della squadra, che eredita anche ogni modifica alle statistiche.
+}
+
+Encore: {
+	DisplayName: Ripeti
+	FlavorText: Chi la usa obbliga il bersaglio a ripetere per tre turni l'ultima mossa eseguita.
+}
+
+Pursuit: {
+	DisplayName: Inseguimento
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+RapidSpin: {
+	DisplayName: Rapigiro
+	FlavorText: Attacco rotante che elimina gli effetti di mosse come Legatutto, Avvolgibotta e Parassiseme. Aumenta anche la Velocità di chi la usa.
+}
+
+SweetScent: {
+	DisplayName: Profumino
+	FlavorText: Un dolce profumo che riduce di molto l'elusione dei nemici intorno a chi la usa.
+}
+
+IronTail: {
+	DisplayName: Codacciaio
+	FlavorText: Il bersaglio viene colpito da una robusta coda d'acciaio. Può anche ridurne la Difesa.
+}
+
+MetalClaw: {
+	DisplayName: Ferrartigli
+	FlavorText: Colpisce il bersaglio con artigli d'acciaio. Può anche aumentare l'Attacco di chi la usa.
+}
+
+VitalThrow: {
+	DisplayName: Vitaltiro
+	FlavorText: Chi la usa attacca per ultimo, ma il colpo è sempre infallibile.
+}
+
+MorningSun: {
+	DisplayName: Mattindoro
+	FlavorText: Chi la usa recupera PS. Il numero di PS recuperati dipende dalle condizioni atmosferiche.
+}
+
+Synthesis: {
+	DisplayName: Sintesi
+	FlavorText: Chi la usa recupera PS. Il numero di PS recuperati dipende dalle condizioni atmosferiche.
+}
+
+Moonlight: {
+	DisplayName: Lucelunare
+	FlavorText: Chi la usa recupera PS. Il numero di PS recuperati dipende dalle condizioni atmosferiche.
+}
+
+HiddenPower: {
+	DisplayName: Introforza
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+CrossChop: {
+	DisplayName: Incrocolpo
+	FlavorText: Investe il bersaglio con un colpo sferrato con entrambe le braccia incrociate. Probabile brutto colpo.
+}
+
+Twister: {
+	DisplayName: Tornado
+	FlavorText: Un potente tornado si abbatte sui nemici nei paraggi. Può anche farli tentennare.
+}
+
+RainDance: {
+	DisplayName: Pioggiadanza
+	FlavorText: Chi la usa provoca una forte pioggia per cinque turni, potenziando le mosse di tipo Acqua e riducendo la potenza di quelle di tipo Fuoco.
+}
+
+SunnyDay: {
+	DisplayName: Giornodisole
+	FlavorText: Chi la usa intensifica i raggi solari per cinque turni, potenziando le mosse di tipo Fuoco e riducendo la potenza di quelle di tipo Acqua.
+}
+
+Crunch: {
+	DisplayName: Sgranocchio
+	FlavorText: Il bersaglio viene morso con denti affilati. Può anche ridurne la Difesa.
+}
+
+MirrorCoat: {
+	DisplayName: Specchiovelo
+	FlavorText: Mossa che replica ogni attacco speciale, arrecando il doppio del danno ricevuto.
+}
+
+PsychUp: {
+	DisplayName: Psicamisù
+	FlavorText: Chi la usa s'ipnotizza per copiare ogni modifica alle statistiche del bersaglio.
+}
+
+ExtremeSpeed: {
+	DisplayName: Extrarapido
+	FlavorText: Chi la usa carica il bersaglio a una velocità impressionante. Questa mossa ha priorità alta.
+}
+
+AncientPower: {
+	DisplayName: Forzantica
+	FlavorText: Colpisce il bersaglio con una forza primordiale. Può aumentare tutte le statistiche.
+}
+
+ShadowBall: {
+	DisplayName: Palla Ombra
+	FlavorText: Lancia sul bersaglio una sfera nera. Può anche ridurne la Difesa Speciale.
+}
+
+FutureSight: {
+	DisplayName: Divinazione
+	FlavorText: Due turni dopo l'utilizzo di questa mossa, il bersaglio viene attaccato con energia psichica.
+}
+
+RockSmash: {
+	DisplayName: Spaccaroccia
+	FlavorText: Chi la usa colpisce il bersaglio con un pugno che può anche ridurne la Difesa.
+}
+
+Whirlpool: {
+	DisplayName: Mulinello
+	FlavorText: Intrappola il bersaglio in un turbine d'acqua per quattro o cinque turni infliggendo danni a ogni turno.
+}
+
+BeatUp: {
+	DisplayName: Picchiaduro
+	FlavorText: Chi la usa chiama in aiuto i Pokémon della squadra: più ce ne sono, maggiore è il numero di attacchi.
+}
+
+FakeOut: {
+	DisplayName: Bruciapelo
+	FlavorText: Mossa ad alta priorità che fa tentennare il bersaglio. Funziona solo appena scesi in campo.
+}
+
+Uproar: {
+	DisplayName: Baraonda
+	FlavorText: Chi la usa attacca per tre turni con un frastuono che non fa dormire nessuno.
+}
+
+Stockpile: {
+	DisplayName: Accumulo
+	FlavorText: Chi la usa accumula energia aumentando la Difesa e la Difesa Speciale. Si può utilizzare tre volte.
+}
+
+SpitUp: {
+	DisplayName: Sfoghenergia
+	FlavorText: Tutta l'energia accumulata in precedenza con Accumulo è rilasciata nell'attacco. Maggiore è l'energia, più danni si arrecano.
+}
+
+Swallow: {
+	DisplayName: Introenergia
+	FlavorText: Chi la usa assorbe l'energia raccolta con la mossa Accumulo e recupera PS. Maggiore è l'energia, più PS si recuperano.
+}
+
+HeatWave: {
+	DisplayName: Ondacalda
+	FlavorText: Chi la usa investe i nemici che ha intorno con una folata di vento caldo. Può anche scottarli.
+}
+
+Hail: {
+	DisplayName: Grandine
+	FlavorText: Chi la usa causa una grandinata che dura cinque turni. Danneggia tutti i Pokémon tranne quelli di tipo Ghiaccio.
+}
+
+Torment: {
+	DisplayName: Attaccalite
+	FlavorText: Chi la usa tormenta e fa infuriare il bersaglio, impedendogli di usare la stessa mossa due volte di seguito.
+}
+
+Flatter: {
+	DisplayName: Adulazione
+	FlavorText: Adula il bersaglio e lo confonde, ma ne aumenta l'Attacco Speciale.
+}
+
+WillOWisp: {
+	DisplayName: Fuocofatuo
+	FlavorText: Fiamme sinistre e misteriose causano una scottatura al bersaglio.
+}
+
+Memento: {
+	DisplayName: Memento
+	FlavorText: Chi la usa va KO. Tuttavia, riduce di molto l'Attacco e l'Attacco Speciale del bersaglio.
+}
+
+Facade: {
+	DisplayName: Facciata
+	FlavorText: Mossa d'attacco che raddoppia la potenza se chi la usa è scottato, avvelenato o paralizzato.
+}
+
+FocusPunch: {
+	DisplayName: Centripugno
+	FlavorText: Chi la usa prende la mira prima di sferrare un pugno. Fallirà se verrà colpito prima di eseguire la mossa.
+}
+
+SmellingSalts: {
+	DisplayName: Maniereforti
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FollowMe: {
+	DisplayName: Sonoqui
+	FlavorText: Chi la usa attira l'attenzione su di sé, costringendo i nemici a sceglierlo sempre come bersaglio.
+}
+
+NaturePower: {
+	DisplayName: Naturforza
+	FlavorText: Mossa che fa uso della forza della natura. Il suo effetto varia in base all'ambiente.
+}
+
+Charge: {
+	DisplayName: Sottocarica
+	FlavorText: Potenzia la mossa di tipo Elettro usata subito dopo. Aumenta anche la Difesa Speciale di chi la usa.
+}
+
+Taunt: {
+	DisplayName: Provocazione
+	FlavorText: Provoca il bersaglio inducendolo a usare solo mosse d'attacco per tre turni.
+}
+
+HelpingHand: {
+	DisplayName: Altruismo
+	FlavorText: Mossa che aumenta la potenza dell'attacco di un alleato.
+}
+
+Trick: {
+	DisplayName: Raggiro
+	FlavorText: Chi la usa coglie il bersaglio in contropiede e lo obbliga a cambiare il suo strumento con il proprio.
+}
+
+RolePlay: {
+	DisplayName: Giocodiruolo
+	FlavorText: Chi la usa mima in tutto il bersaglio, copiandone l'abilità.
+}
+
+Wish: {
+	DisplayName: Desiderio
+	FlavorText: Quando un Pokémon la usa, al turno successivo la metà dei suoi PS massimi viene recuperata da lui stesso o dal Pokémon che lo sostituisce.
+}
+
+Assist: {
+	DisplayName: Assistente
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Ingrain: {
+	DisplayName: Radicamento
+	FlavorText: Chi la usa mette delle radici che gli fanno recuperare PS a ogni turno. Non può essere sostituito.
+}
+
+Superpower: {
+	DisplayName: Troppoforte
+	FlavorText: Chi la usa attacca il bersaglio con grande forza, ma il suo Attacco e la sua Difesa diminuiscono.
+}
+
+MagicCoat: {
+	DisplayName: Magivelo
+	FlavorText: Una barriera rimanda al mittente l'effetto di mosse come Parassiseme e di mosse che influenzano lo stato.
+}
+
+Recycle: {
+	DisplayName: Riciclo
+	FlavorText: Chi la usa ricicla uno strumento che ha usato nella lotta e può riutilizzarlo.
+}
+
+Revenge: {
+	DisplayName: Vendetta
+	FlavorText: Mossa d'attacco che infligge un danno doppio se si è stati colpiti dal Pokémon bersaglio nello stesso turno.
+}
+
+BrickBreak: {
+	DisplayName: Breccia
+	FlavorText: Colpisce il bersaglio con una mano e rompe barriere come Riflesso e Schermoluce.
+}
+
+Yawn: {
+	DisplayName: Sbadiglio
+	FlavorText: Chi la usa fa un grande sbadiglio che addormenta il bersaglio al turno seguente.
+}
+
+KnockOff: {
+	DisplayName: Privazione
+	FlavorText: Attacco che fa cadere lo strumento del bersaglio, impedendone l'uso nella lotta. La sua potenza aumenta se il Pokémon colpito ha uno strumento.
+}
+
+Endeavor: {
+	DisplayName: Rimonta
+	FlavorText: Attacco che riduce i PS del bersaglio a una quantità pari ai PS di chi lo usa.
+}
+
+Eruption: {
+	DisplayName: Eruzione
+	FlavorText: Attacco impetuoso ed esplosivo la cui potenza è proporzionale ai PS di chi lo usa.
+}
+
+SkillSwap: {
+	DisplayName: Baratto
+	FlavorText: Chi la usa sfrutta i suoi poteri psichici per scambiare l'abilità con il bersaglio.
+}
+
+Imprison: {
+	DisplayName: Esclusiva
+	FlavorText: Chi la usa impedisce al nemico di usare mosse che conoscono entrambi.
+}
+
+Refresh: {
+	DisplayName: Rinfrescata
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Grudge: {
+	DisplayName: Rancore
+	FlavorText: Se chi la usa va KO, i PP della mossa nemica che lo ha messo fuori gioco si azzerano.
+}
+
+Snatch: {
+	DisplayName: Scippo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SecretPower: {
+	DisplayName: Forzasegreta
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Dive: {
+	DisplayName: Sub
+	FlavorText: Chi la usa si tuffa in acqua per emergere e attaccare al turno successivo.
+}
+
+ArmThrust: {
+	DisplayName: Sberletese
+	FlavorText: Raffica di ceffoni che colpisce da due a cinque volte di fila.
+}
+
+Camouflage: {
+	DisplayName: Camuffamento
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+TailGlow: {
+	DisplayName: Codadiluce
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+LusterPurge: {
+	DisplayName: Abbagliante
+	FlavorText: Chi la usa scatena un'esplosione abbagliante che può anche ridurre la Difesa Speciale del Pokémon colpito.
+}
+
+MistBall: {
+	DisplayName: Foschisfera
+	FlavorText: Una sfera di nebbia avvolge e danneggia il bersaglio. Può anche ridurne l'Attacco Speciale.
+}
+
+FeatherDance: {
+	DisplayName: Danzadipiume
+	FlavorText: Chi la usa circonda il bersaglio con un turbinio di piume riducendo di molto il suo Attacco.
+}
+
+TeeterDance: {
+	DisplayName: Strampadanza
+	FlavorText: Chi la usa esegue una danza goffa che confonde tutti i Pokémon attorno.
+}
+
+BlazeKick: {
+	DisplayName: Calciardente
+	FlavorText: Chi la usa tira un calcio. Probabile brutto colpo. Può anche scottare il bersaglio.
+}
+
+MudSport: {
+	DisplayName: Fangata
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+IceBall: {
+	DisplayName: Palla Gelo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+NeedleArm: {
+	DisplayName: Pugnospine
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SlackOff: {
+	DisplayName: Pigro
+	FlavorText: Chi la usa si rilassa recuperando metà dei propri PS massimi.
+}
+
+HyperVoice: {
+	DisplayName: Granvoce
+	FlavorText: Chi la usa lancia un urlo straziante che danneggia i nemici intorno a sé.
+}
+
+PoisonFang: {
+	DisplayName: Velenodenti
+	FlavorText: Chi la usa morde il bersaglio con denti avvelenati che possono anche iperavvelenarlo.
+}
+
+CrushClaw: {
+	DisplayName: Tritartigli
+	FlavorText: Colpisce il bersaglio con artigli robusti e affilati che possono ridurne la Difesa.
+}
+
+BlastBurn: {
+	DisplayName: Incendio
+	FlavorText: Potente esplosione che danneggia il bersaglio, ma fa saltare il turno successivo a chi la provoca.
+}
+
+HydroCannon: {
+	DisplayName: Idrocannone
+	FlavorText: Colpisce il bersaglio con un potente getto d'acqua. Chi la usa salta il turno successivo.
+}
+
+MeteorMash: {
+	DisplayName: Meteorpugno
+	FlavorText: Colpisce il bersaglio con un pugno veloce come una meteora. Può far salire l'Attacco di chi la usa.
+}
+
+Astonish: {
+	DisplayName: Sgomento
+	FlavorText: Chi la usa attacca il bersaglio emettendo un verso terrificante. Può anche farlo tentennare.
+}
+
+WeatherBall: {
+	DisplayName: Palla Clima
+	FlavorText: Mossa d'attacco il cui tipo e la cui potenza variano in base alle condizioni atmosferiche.
+}
+
+Aromatherapy: {
+	DisplayName: Aromaterapia
+	FlavorText: Chi la usa rilascia un dolce profumo che cura tutti i problemi di stato propri e degli alleati.
+}
+
+FakeTears: {
+	DisplayName: Falselacrime
+	FlavorText: Chi la usa inscena un pianto teatrale per commuovere il bersaglio. Ne riduce di molto la Difesa Speciale.
+}
+
+AirCutter: {
+	DisplayName: Aerasoio
+	FlavorText: Chi la usa provoca un vento tagliente che sferza i nemici intorno. Probabile brutto colpo.
+}
+
+Overheat: {
+	DisplayName: Vampata
+	FlavorText: Chi la usa sferra un potente attacco, ma il contraccolpo riduce di molto il suo Attacco Speciale.
+}
+
+OdorSleuth: {
+	DisplayName: Segugio
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+RockTomb: {
+	DisplayName: Rocciotomba
+	FlavorText: Colpisce il bersaglio con rocce. Inoltre, lo rallenta riducendone la Velocità.
+}
+
+SilverWind: {
+	DisplayName: Ventargenteo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MetalSound: {
+	DisplayName: Ferrostrido
+	FlavorText: Orribile stridio, simile a quello prodotto dal metallo, che riduce di molto la Difesa Speciale del bersaglio.
+}
+
+GrassWhistle: {
+	DisplayName: Meloderba
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Tickle: {
+	DisplayName: Solletico
+	FlavorText: Chi la usa solletica il bersaglio e lo fa ridere, riducendo il suo Attacco e la sua Difesa.
+}
+
+CosmicPower: {
+	DisplayName: Cosmoforza
+	FlavorText: Chi la usa assorbe una forza mistica dallo spazio che aumenta la Difesa e la Difesa Speciale.
+}
+
+WaterSpout: {
+	DisplayName: Zampillo
+	FlavorText: Lancia un getto d'acqua contro il nemico che ha davanti e quelli adiacenti. La potenza è proporzionale al numero di PS di chi la usa.
+}
+
+SignalBeam: {
+	DisplayName: Segnoraggio
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ShadowPunch: {
+	DisplayName: Pugnodombra
+	FlavorText: Il bersaglio riceve un pugno proveniente dalle tenebre. Questa mossa è infallibile.
+}
+
+Extrasensory: {
+	DisplayName: Extrasenso
+	FlavorText: Chi la usa attacca con una misteriosa forza invisibile. Può far tentennare il bersaglio.
+}
+
+SkyUppercut: {
+	DisplayName: Stramontante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SandTomb: {
+	DisplayName: Sabbiotomba
+	FlavorText: Chi la usa intrappola il bersaglio in una tempesta di sabbia per quattro o cinque turni.
+}
+
+SheerCold: {
+	DisplayName: Purogelo
+	FlavorText: Il bersaglio esaurisce i PS in un colpo solo. Se viene usata da Pokémon che non sono di tipo Ghiaccio, difficilmente va a segno.
+}
+
+MuddyWater: {
+	DisplayName: Fanghiglia
+	FlavorText: Chi la usa attacca i nemici che ha intorno con un getto di fango che può anche ridurne la precisione.
+}
+
+BulletSeed: {
+	DisplayName: Semitraglia
+	FlavorText: Chi la usa spara da due a cinque raffiche di semi contro il bersaglio in successione.
+}
+
+AerialAce: {
+	DisplayName: Aeroassalto
+	FlavorText: Chi la usa attacca il bersaglio a grande velocità. Questa mossa è infallibile.
+}
+
+IcicleSpear: {
+	DisplayName: Gelolancia
+	FlavorText: Chi la usa spara ghiaccioli affilati contro il bersaglio da due a cinque volte di fila.
+}
+
+IronDefense: {
+	DisplayName: Ferroscudo
+	FlavorText: Il corpo di chi la usa si indurisce come il ferro, facendone salire di molto la Difesa.
+}
+
+Block: {
+	DisplayName: Blocco
+	FlavorText: Chi la usa sbarra la strada al bersaglio impedendone la fuga o la sostituzione.
+}
+
+Howl: {
+	DisplayName: Gridodilotta
+	FlavorText: Chi la usa emette un forte verso per darsi coraggio e aumentare il proprio Attacco e quello degli alleati.
+}
+
+DragonClaw: {
+	DisplayName: Dragartigli
+	FlavorText: Chi la usa attacca con artigli affilati che graffiano il bersaglio rapidamente e con grande forza.
+}
+
+FrenzyPlant: {
+	DisplayName: Radicalbero
+	FlavorText: Un groviglio di radici colpisce il bersaglio. Chi la usa salta il turno successivo.
+}
+
+BulkUp: {
+	DisplayName: Granfisico
+	FlavorText: Chi la usa tende i muscoli per gonfiare il corpo, aumentando Difesa e Attacco.
+}
+
+Bounce: {
+	DisplayName: Rimbalzo
+	FlavorText: Chi la usa balza in alto e ricade sul bersaglio dopo un turno. Può anche paralizzarlo.
+}
+
+MudShot: {
+	DisplayName: Colpodifango
+	FlavorText: Chi la usa attacca lanciando fango sul bersaglio, riducendone anche la Velocità.
+}
+
+PoisonTail: {
+	DisplayName: Velenocoda
+	FlavorText: Chi la usa colpisce con la coda e può avvelenare il bersaglio. Probabile brutto colpo.
+}
+
+Covet: {
+	DisplayName: Supplica
+	FlavorText: Chi la usa attacca il bersaglio sorridendo e gli ruba lo strumento.
+}
+
+VoltTackle: {
+	DisplayName: Locomovolt
+	FlavorText: Chi la usa si carica di elettricità e poi attacca. Può paralizzare il bersaglio. Il contraccolpo causa seri danni.
+}
+
+MagicalLeaf: {
+	DisplayName: Fogliamagica
+	FlavorText: Chi la usa sparpaglia strane foglie che inseguono il bersaglio. Questa mossa è infallibile.
+}
+
+WaterSport: {
+	DisplayName: Docciascudo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+CalmMind: {
+	DisplayName: Calmamente
+	FlavorText: Chi la usa placa il proprio spirito meditando per aumentare l'Attacco Speciale e la Difesa Speciale.
+}
+
+LeafBlade: {
+	DisplayName: Fendifoglia
+	FlavorText: Colpisce il bersaglio usando una foglia affilata come una spada. Probabile brutto colpo.
+}
+
+DragonDance: {
+	DisplayName: Dragodanza
+	FlavorText: Danza mistica e vigorosa che aumenta l'Attacco e la Velocità di chi la usa.
+}
+
+RockBlast: {
+	DisplayName: Cadutamassi
+	FlavorText: Colpisce il bersaglio con dei massi pesanti lanciati in rapida successione. Il numero di massi varia da due a cinque.
+}
+
+ShockWave: {
+	DisplayName: Ondashock
+	FlavorText: Chi la usa colpisce il bersaglio con una scossa di elettricità. È impossibile eludere questa mossa.
+}
+
+WaterPulse: {
+	DisplayName: Idropulsar
+	FlavorText: Il bersaglio viene colpito da un getto d'acqua potentissimo che può anche confonderlo.
+}
+
+DoomDesire: {
+	DisplayName: Obbliderio
+	FlavorText: Intenso fascio di luce che colpisce il bersaglio dopo due turni dall'uso della mossa.
+}
+
+PsychoBoost: {
+	DisplayName: Psicoslancio
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Roost: {
+	DisplayName: Trespolo
+	FlavorText: Chi la usa sta fermo e riposa, recuperando metà dei propri PS massimi.
+}
+
+Gravity: {
+	DisplayName: Gravità
+	FlavorText: Per cinque turni rende vulnerabili alle mosse di tipo Terra i Pokémon con Levitazione o di tipo Volante. Non è possibile usare mosse che fanno volare.
+}
+
+MiracleEye: {
+	DisplayName: Miracolvista
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+WakeUpSlap: {
+	DisplayName: Svegliopacca
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+HammerArm: {
+	DisplayName: Martelpugno
+	FlavorText: Infligge danni al bersaglio colpendolo con un pugno molto potente. Riduce la Velocità di chi la usa.
+}
+
+GyroBall: {
+	DisplayName: Vortexpalla
+	FlavorText: Chi la usa si scaglia sul bersaglio facendo ruotare vorticosamente il proprio corpo. Più lento è chi la usa, maggiore è il danno.
+}
+
+HealingWish: {
+	DisplayName: Curardore
+	FlavorText: Chi la usa va KO, ma il Pokémon che lo sostituisce recupera tutti i PS e guarisce dai problemi di stato.
+}
+
+Brine: {
+	DisplayName: Acquadisale
+	FlavorText: Se i PS del bersaglio sono scesi a metà o meno, questa mossa colpirà con il doppio della potenza.
+}
+
+NaturalGift: {
+	DisplayName: Dononaturale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Feint: {
+	DisplayName: Fintoattacco
+	FlavorText: Colpisce anche un bersaglio che ha usato mosse come Protezione e Individua, annullandone gli effetti.
+}
+
+Pluck: {
+	DisplayName: Spennata
+	FlavorText: Chi la usa becca il bersaglio. Inoltre, se questi ha una bacca, gliela ruba e ne sfrutta gli effetti.
+}
+
+Tailwind: {
+	DisplayName: Ventoincoda
+	FlavorText: Chi la usa scatena un turbine che aumenta la Velocità di tutti i Pokémon della squadra per quattro turni.
+}
+
+Acupressure: {
+	DisplayName: Acupressione
+	FlavorText: Chi la usa esercita pressione su alcuni punti nevralgici e aumenta di molto una statistica a caso.
+}
+
+MetalBurst: {
+	DisplayName: Metalscoppio
+	FlavorText: Chi la usa si vendica sul nemico che l'ha appena ferito con una mossa anche più potente.
+}
+
+UTurn: {
+	DisplayName: Retromarcia
+	FlavorText: Chi usa questa mossa fa marcia indietro per farsi sostituire dopo aver sferrato l'attacco.
+}
+
+CloseCombat: {
+	DisplayName: Zuffa
+	FlavorText: Chi la usa attacca abbassando la guardia. La propria Difesa e la Difesa Speciale si riducono.
+}
+
+Payback: {
+	DisplayName: Rivincita
+	FlavorText: Chi la usa accumula forza, poi attacca. La potenza raddoppia se il Pokémon agisce dopo il bersaglio.
+}
+
+Assurance: {
+	DisplayName: Garanzia
+	FlavorText: Se il bersaglio ha già subito dei danni nello stesso turno, la potenza di questa mossa raddoppia.
+}
+
+Embargo: {
+	DisplayName: Divieto
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Fling: {
+	DisplayName: Lancio
+	FlavorText: Chi la usa lancia il suo strumento addosso al bersaglio. La forza e l'effetto dipendono dallo strumento.
+}
+
+PsychoShift: {
+	DisplayName: Psicotransfer
+	FlavorText: Con la forza psichica e la suggestione, chi la usa può trasferire i suoi problemi di stato al Pokémon colpito.
+}
+
+TrumpCard: {
+	DisplayName: Asso
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+HealBlock: {
+	DisplayName: Anticura
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+WringOut: {
+	DisplayName: Strizzata
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+PowerTrick: {
+	DisplayName: Ingannoforza
+	FlavorText: Mossa psichica che permette a chi la usa di scambiare i valori delle sue statistiche di Attacco e Difesa.
+}
+
+GastroAcid: {
+	DisplayName: Gastroacido
+	FlavorText: Chi la usa lancia acidi gastrici sul bersaglio. Il fluido annulla l'abilità del Pokémon colpito.
+}
+
+LuckyChant: {
+	DisplayName: Fortuncanto
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MeFirst: {
+	DisplayName: Precedenza
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Copycat: {
+	DisplayName: Copione
+	FlavorText: Chi la usa mima l'ultima mossa eseguita. Fallisce se non è stata ancora usata alcuna mossa.
+}
+
+PowerSwap: {
+	DisplayName: Barattoforza
+	FlavorText: Chi la usa sfrutta la sua forza psichica per scambiare le modifiche ad Attacco e Attacco Speciale con il bersaglio.
+}
+
+GuardSwap: {
+	DisplayName: Barattoscudo
+	FlavorText: Chi la usa sfrutta la sua forza psichica per scambiare le modifiche a Difesa e Difesa Speciale con il bersaglio.
+}
+
+Punishment: {
+	DisplayName: Punizione
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+LastResort: {
+	DisplayName: Ultimascelta
+	FlavorText: Per usare questa mossa, bisogna prima avvalersi in lotta di tutte le altre mosse conosciute.
+}
+
+WorrySeed: {
+	DisplayName: Affannoseme
+	FlavorText: Un seme che causa ansia viene piantato sul bersaglio. Ne muta l'abilità in Insonnia e ne previene o rimuove il sonno.
+}
+
+SuckerPunch: {
+	DisplayName: Sbigoattacco
+	FlavorText: Chi la usa attacca con alta priorità, ma fallisce se il bersaglio non sta preparando un attacco.
+}
+
+ToxicSpikes: {
+	DisplayName: Fielepunte
+	FlavorText: Chi la usa piazza una trappola di punte che avvelenano i nemici che scendono in campo.
+}
+
+HeartSwap: {
+	DisplayName: Cuorbaratto
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+AquaRing: {
+	DisplayName: Acquanello
+	FlavorText: Chi la usa si avvolge in un velo d'acqua. Recupera alcuni PS a ogni turno.
+}
+
+MagnetRise: {
+	DisplayName: Magnetascesa
+	FlavorText: Chi la usa si solleva in aria per cinque turni grazie a un campo elettromagnetico.
+}
+
+FlareBlitz: {
+	DisplayName: Fuococarica
+	FlavorText: Chi la usa si ricopre di fuoco e carica il bersaglio, ma subisce il contraccolpo. Può anche scottare il Pokémon colpito.
+}
+
+ForcePalm: {
+	DisplayName: Palmoforza
+	FlavorText: Chi la usa attacca con un'onda d'urto che può anche paralizzare il bersaglio.
+}
+
+AuraSphere: {
+	DisplayName: Forzasfera
+	FlavorText: Chi la usa rilascia una forza eterea dal profondo del corpo. La mossa è infallibile.
+}
+
+RockPolish: {
+	DisplayName: Lucidatura
+	FlavorText: Chi la usa leviga il proprio corpo per ridurne l'attrito. Aumenta di molto la Velocità.
+}
+
+PoisonJab: {
+	DisplayName: Velenpuntura
+	FlavorText: Il bersaglio è colpito da un tentacolo o da un arto intriso di una sostanza tossica che può anche avvelenarlo.
+}
+
+DarkPulse: {
+	DisplayName: Neropulsar
+	FlavorText: Chi la usa emana un'aura impregnata di oscuri pensieri. Può anche far tentennare il Pokémon colpito.
+}
+
+NightSlash: {
+	DisplayName: Nottesferza
+	FlavorText: Chi la usa colpisce il bersaglio appena si presenta l'occasione. Probabile brutto colpo.
+}
+
+AquaTail: {
+	DisplayName: Idrondata
+	FlavorText: Chi la usa attacca agitando la coda come se fosse una violenta ondata in una tempesta furiosa.
+}
+
+SeedBomb: {
+	DisplayName: Semebomba
+	FlavorText: Chi la usa emette una raffica di semi dal guscio duro che colpiscono il bersaglio dall'alto.
+}
+
+AirSlash: {
+	DisplayName: Eterelama
+	FlavorText: Chi la usa attacca con un vento tagliente che squarcia il cielo. Può anche far tentennare il Pokémon colpito.
+}
+
+XScissor: {
+	DisplayName: Forbice X
+	FlavorText: Chi la usa colpisce il bersaglio con un attacco che ricorda un colpo di forbici.
+}
+
+BugBuzz: {
+	DisplayName: Ronzio
+	FlavorText: Chi la usa crea un'onda sonora che infligge danni. Può anche ridurre la Difesa Speciale del bersaglio.
+}
+
+DragonPulse: {
+	DisplayName: Dragopulsar
+	FlavorText: Chi la usa spalanca la bocca e genera un'onda d'urto che colpisce il bersaglio.
+}
+
+DragonRush: {
+	DisplayName: Dragofuria
+	FlavorText: Chi la usa attacca con fare minaccioso e in questo modo può anche far tentennare il bersaglio.
+}
+
+PowerGem: {
+	DisplayName: Gemmoforza
+	FlavorText: Chi la usa attacca con un raggio di luce che brilla come se fosse fatto di pietre preziose.
+}
+
+DrainPunch: {
+	DisplayName: Assorbipugno
+	FlavorText: Pugno che assorbe energia. Fa recuperare una quantità di PS pari alla metà del danno inferto.
+}
+
+VacuumWave: {
+	DisplayName: Vuotonda
+	FlavorText: Chi la usa rotea i pugni per lanciare un'onda di vuoto assoluto verso il bersaglio. Questa mossa ha priorità alta.
+}
+
+FocusBlast: {
+	DisplayName: Focalcolpo
+	FlavorText: Chi la usa si concentra e rilascia la sua forza. Può ridurre la Difesa Speciale del Pokémon colpito.
+}
+
+EnergyBall: {
+	DisplayName: Energipalla
+	FlavorText: Chi la usa attinge energia dalla natura e la scaglia contro il bersaglio. Può anche ridurne la Difesa Speciale.
+}
+
+BraveBird: {
+	DisplayName: Baldeali
+	FlavorText: Chi la usa ripiega le ali e carica da bassa quota. Tuttavia, subisce considerevoli danni.
+}
+
+EarthPower: {
+	DisplayName: Geoforza
+	FlavorText: Dal terreno sotto il bersaglio si sprigiona una forza devastante. Può anche ridurne la Difesa Speciale.
+}
+
+Switcheroo: {
+	DisplayName: Rapidscambio
+	FlavorText: Chi la usa scambia lo strumento che ha con quello del bersaglio a una velocità impressionante.
+}
+
+GigaImpact: {
+	DisplayName: Gigaimpatto
+	FlavorText: Chi la usa carica il bersaglio usando tutta la sua forza, ma al turno successivo deve riposarsi.
+}
+
+NastyPlot: {
+	DisplayName: Congiura
+	FlavorText: Chi la usa stimola il cervello pensando a cose cattive. Aumenta di molto l'Attacco Speciale.
+}
+
+BulletPunch: {
+	DisplayName: Pugnoscarica
+	FlavorText: Chi la usa attacca con una scarica di pugni veloci come proiettili. Questa mossa ha priorità alta.
+}
+
+Avalanche: {
+	DisplayName: Slavina
+	FlavorText: Mossa d'attacco che infligge doppi danni se chi la usa è stato ferito dal Pokémon bersaglio nello stesso turno.
+}
+
+IceShard: {
+	DisplayName: Geloscheggia
+	FlavorText: Chi la usa crea dei pezzi di ghiaccio e li lancia. Questa mossa ha priorità alta.
+}
+
+ShadowClaw: {
+	DisplayName: Ombrartigli
+	FlavorText: Chi la usa attacca con artigli d'ombra che colpiscono con gran forza. Probabile brutto colpo.
+}
+
+ThunderFang: {
+	DisplayName: Fulmindenti
+	FlavorText: Chi la usa morde con denti elettrificati che possono anche paralizzare o far tentennare il bersaglio.
+}
+
+IceFang: {
+	DisplayName: Gelodenti
+	FlavorText: Chi la usa morde con denti ghiacciati. Può anche congelare o far tentennare il bersaglio.
+}
+
+FireFang: {
+	DisplayName: Rogodenti
+	FlavorText: Chi la usa morde con denti infuocati. Può anche scottare o far tentennare il bersaglio.
+}
+
+ShadowSneak: {
+	DisplayName: Furtivombra
+	FlavorText: Chi la usa estende la sua ombra e attacca il nemico alle spalle. Questa mossa ha priorità alta.
+}
+
+MudBomb: {
+	DisplayName: Pantanobomba
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+PsychoCut: {
+	DisplayName: Psicotaglio
+	FlavorText: Chi la usa colpisce il bersaglio con lame fatte di forza psichica. Probabile brutto colpo.
+}
+
+ZenHeadbutt: {
+	DisplayName: Cozzata Zen
+	FlavorText: Chi la usa concentra le energie psichiche nella testa e si lancia contro il bersaglio. Può anche farlo tentennare.
+}
+
+MirrorShot: {
+	DisplayName: Cristalcolpo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FlashCannon: {
+	DisplayName: Cannonflash
+	FlavorText: Chi la usa attacca raccogliendo e rilasciando energia luminosa. Può ridurre la Difesa Speciale del bersaglio.
+}
+
+RockClimb: {
+	DisplayName: Scalaroccia
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Defog: {
+	DisplayName: Scacciabruma
+	FlavorText: Chi la usa spazza via barriere come Riflesso e Schermoluce con un forte vento e riduce la capacità d'elusione del bersaglio.
+}
+
+TrickRoom: {
+	DisplayName: Distortozona
+	FlavorText: Chi la usa crea una dimensione in cui i Pokémon più lenti agiscono per primi per cinque turni.
+}
+
+DracoMeteor: {
+	DisplayName: Dragobolide
+	FlavorText: Attacca con meteore che cadono dal cielo. Il contraccolpo fa calare di molto l'Attacco Speciale di chi la usa.
+}
+
+Discharge: {
+	DisplayName: Scarica
+	FlavorText: Chi la usa colpisce i Pokémon che ha intorno con un bagliore elettrico. Può anche paralizzarli.
+}
+
+LavaPlume: {
+	DisplayName: Lavasbuffo
+	FlavorText: Chi la usa lancia fiamme scarlatte su tutti i Pokémon nelle vicinanze, danneggiandoli. Può anche scottarli.
+}
+
+LeafStorm: {
+	DisplayName: Verdebufera
+	FlavorText: Si forma una tempesta di foglie affilate. Il contraccolpo riduce di molto l'Attacco Speciale di chi la usa.
+}
+
+PowerWhip: {
+	DisplayName: Vigorcolpo
+	FlavorText: Chi la usa agita violentemente liane o tentacoli per sferzare il bersaglio.
+}
+
+RockWrecker: {
+	DisplayName: Devastomasso
+	FlavorText: Chi la usa attacca il bersaglio con un enorme masso, ma si deve riposare al turno successivo.
+}
+
+CrossPoison: {
+	DisplayName: Velenocroce
+	FlavorText: Attacco con zanne avvelenate che può anche avvelenare il Pokémon colpito. Probabile brutto colpo.
+}
+
+GunkShot: {
+	DisplayName: Sporcolancio
+	FlavorText: Chi la usa attacca il bersaglio con rifiuti sudici che possono anche avvelenarlo.
+}
+
+IronHead: {
+	DisplayName: Metaltestata
+	FlavorText: Chi la usa colpisce il bersaglio con la sua testa dura come l'acciaio. Può anche farlo tentennare.
+}
+
+MagnetBomb: {
+	DisplayName: Bombagnete
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+StoneEdge: {
+	DisplayName: Pietrataglio
+	FlavorText: Chi la usa colpisce il bersaglio dal basso con pietre affilate. Probabile brutto colpo.
+}
+
+Captivate: {
+	DisplayName: Incanto
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+StealthRock: {
+	DisplayName: Levitoroccia
+	FlavorText: Chi la usa piazza una trappola di rocce sospese che danneggia i nemici che entrano in campo.
+}
+
+GrassKnot: {
+	DisplayName: Laccioerboso
+	FlavorText: Chi la usa intrappola il bersaglio con l'erba e lo fa cadere. Danneggia maggiormente i Pokémon più pesanti.
+}
+
+Chatter: {
+	DisplayName: Schiamazzo
+	FlavorText: Chi la usa attacca creando un'onda sonora di parole a vanvera e confonde il bersaglio.
+}
+
+Judgment: {
+	DisplayName: Giudizio
+	FlavorText: Chi la usa rilascia numerosi colpi di luce. Il tipo varia a seconda della lastra che ha.
+}
+
+BugBite: {
+	DisplayName: Coleomorso
+	FlavorText: Chi la usa morde il bersaglio. Inoltre, se questi ha una bacca, gliela ruba e ne sfrutta gli effetti.
+}
+
+ChargeBeam: {
+	DisplayName: Raggioscossa
+	FlavorText: Chi la usa lancia un fascio di elettricità molto intensa. Può anche aumentare il suo Attacco Speciale.
+}
+
+WoodHammer: {
+	DisplayName: Mazzuolegno
+	FlavorText: Chi la usa si lancia con tutto il corpo contro il bersaglio, ma subisce anche considerevoli danni.
+}
+
+AquaJet: {
+	DisplayName: Acquagetto
+	FlavorText: Chi la usa colpisce a una tale velocità da rendersi quasi invisibile. Questa mossa ha priorità alta.
+}
+
+AttackOrder: {
+	DisplayName: Comandourto
+	FlavorText: Chi la usa raduna i suoi sgherri per colpire il bersaglio. Probabile brutto colpo.
+}
+
+DefendOrder: {
+	DisplayName: Comandoscudo
+	FlavorText: Chi la usa raduna i suoi sgherri per creare uno scudo, aumentando Difesa e Difesa Speciale.
+}
+
+HealOrder: {
+	DisplayName: Comandocura
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+HeadSmash: {
+	DisplayName: Zuccata
+	FlavorText: Chi la usa attacca con tutta la potenza di cui dispone, ma subisce danni considerevoli.
+}
+
+DoubleHit: {
+	DisplayName: Doppiosmash
+	FlavorText: Chi la usa colpisce il bersaglio due volte di fila con la coda, una liana o simili.
+}
+
+RoarOfTime: {
+	DisplayName: Fragortempo
+	FlavorText: Chi la usa colpisce il bersaglio con una forza capace di alterare il tempo, ma deve stare fermo al turno successivo.
+}
+
+SpacialRend: {
+	DisplayName: Fendispazio
+	FlavorText: Chi la usa lacera il bersaglio e lo spazio che lo circonda. Probabile brutto colpo.
+}
+
+LunarDance: {
+	DisplayName: Lunardanza
+	FlavorText: Chi la usa va KO. Il Pokémon che lo sostituisce guarisce dai propri problemi di stato e recupera tutti i PS e i PP.
+}
+
+CrushGrip: {
+	DisplayName: Sbriciolmano
+	FlavorText: Colpisce il bersaglio con grande forza. Più PS ha il Pokémon colpito, maggiore è la potenza della mossa.
+}
+
+MagmaStorm: {
+	DisplayName: Magmaclisma
+	FlavorText: Intrappola il bersaglio in un turbine di fuoco che dura per quattro o cinque turni.
+}
+
+DarkVoid: {
+	DisplayName: Vuototetro
+	FlavorText: Trascina i nemici intorno in un mondo di totale oscurità e li fa addormentare.
+}
+
+SeedFlare: {
+	DisplayName: Infuriaseme
+	FlavorText: Chi la usa genera un'onda d'urto dal suo corpo. Può anche ridurre di molto la Difesa Speciale del bersaglio.
+}
+
+OminousWind: {
+	DisplayName: Funestovento
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ShadowForce: {
+	DisplayName: Oscurotuffo
+	FlavorText: Chi la usa sparisce e poi colpisce il bersaglio al turno successivo. Colpisce anche un Pokémon che ha usato Protezione, Individua o simili.
+}
+
+HoneClaws: {
+	DisplayName: Unghiaguzze
+	FlavorText: Chi la usa affila i propri artigli aumentando Attacco e precisione.
+}
+
+WideGuard: {
+	DisplayName: Bodyguard
+	FlavorText: Chi la usa protegge sé e gli alleati da colpi ad ampio raggio per un turno.
+}
+
+GuardSplit: {
+	DisplayName: Paridifesa
+	FlavorText: Chi la usa sfrutta la sua forza psichica per sommare Difesa e Difesa Speciale a quelle del bersaglio e dividerle equamente.
+}
+
+PowerSplit: {
+	DisplayName: Pariattacco
+	FlavorText: Chi la usa sfrutta la sua forza psichica per sommare Attacco e Attacco Speciale a quelli del bersaglio e dividerli equamente.
+}
+
+WonderRoom: {
+	DisplayName: Mirabilzona
+	FlavorText: Chi la usa crea una dimensione in cui Difesa e Difesa Speciale di tutti i Pokémon vengono scambiate per cinque turni.
+}
+
+Psyshock: {
+	DisplayName: Psicoshock
+	FlavorText: Chi la usa attacca il bersaglio facendo materializzare misteriose onde psichiche che provocano danni fisici.
+}
+
+Venoshock: {
+	DisplayName: Velenoshock
+	FlavorText: Lancia uno speciale liquido tossico sul bersaglio. Se questi è avvelenato, il danno provocato raddoppia.
+}
+
+Autotomize: {
+	DisplayName: Sganciapesi
+	FlavorText: Chi la usa si libera di tutti i pesi in eccesso, alleggerendosi e aumentando di molto la propria Velocità.
+}
+
+RagePowder: {
+	DisplayName: Polverabbia
+	FlavorText: Chi la usa attira l'attenzione dei nemici cospargendosi di una polvere irritante e diventando bersaglio di tutti gli attacchi.
+}
+
+Telekinesis: {
+	DisplayName: Telecinesi
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MagicRoom: {
+	DisplayName: Magicozona
+	FlavorText: Chi la usa crea una dimensione in cui l'effetto degli strumenti di tutti i Pokémon è annullato per cinque turni.
+}
+
+SmackDown: {
+	DisplayName: Abbattimento
+	FlavorText: Chi la usa lancia una pietra o un proiettile. Può colpire anche un bersaglio in volo e farlo cadere.
+}
+
+StormThrow: {
+	DisplayName: Tempestretta
+	FlavorText: Chi la usa sferra un colpo micidiale al bersaglio. Brutto colpo assicurato.
+}
+
+FlameBurst: {
+	DisplayName: Pirolancio
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SludgeWave: {
+	DisplayName: Fangonda
+	FlavorText: Lancia un'onda di fango che attacca tutti i Pokémon nelle vicinanze. Può anche avvelenarli.
+}
+
+QuiverDance: {
+	DisplayName: Eledanza
+	FlavorText: Danza leggiadra ed elegante che aumenta l'Attacco Speciale, la Difesa Speciale e la Velocità di chi la usa.
+}
+
+HeavySlam: {
+	DisplayName: Pesobomba
+	FlavorText: Chi la usa si lancia contro il bersaglio con tutto il proprio peso. Più è pesante rispetto ad esso, più danni causa.
+}
+
+Synchronoise: {
+	DisplayName: Sincrumore
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ElectroBall: {
+	DisplayName: Energisfera
+	FlavorText: Chi la usa attacca con una sfera d'energia elettrica. Più è rapido rispetto al bersaglio, più danni arreca.
+}
+
+Soak: {
+	DisplayName: Inondazione
+	FlavorText: Chi la usa proietta un lungo getto d'acqua contro il bersaglio e lo rende un Pokémon di tipo Acqua.
+}
+
+FlameCharge: {
+	DisplayName: Nitrocarica
+	FlavorText: Chi la usa si copre di fuoco e attacca il bersaglio. Concentrandosi aumenta, inoltre, la propria Velocità.
+}
+
+Coil: {
+	DisplayName: Arrotola
+	FlavorText: Chi la usa si concentra aumentando Attacco, Difesa e precisione.
+}
+
+LowSweep: {
+	DisplayName: Calciobasso
+	FlavorText: Chi la usa colpisce con un attacco fulmineo la parte inferiore del corpo del bersaglio, riducendone la Velocità.
+}
+
+AcidSpray: {
+	DisplayName: Acidobomba
+	FlavorText: Chi la usa attacca il bersaglio con un acido altamente corrosivo. Il fluido riduce di molto la Difesa Speciale del bersaglio.
+}
+
+FoulPlay: {
+	DisplayName: Ripicca
+	FlavorText: Chi la usa sfrutta la forza del bersaglio. Il danno inflitto è proporzionale all'Attacco del nemico.
+}
+
+SimpleBeam: {
+	DisplayName: Ondisinvolta
+	FlavorText: Chi la usa emette un misterioso raggio psichico che trasforma l'abilità del Pokémon colpito in Disinvoltura.
+}
+
+Entrainment: {
+	DisplayName: Saltamicizia
+	FlavorText: Chi la usa saltella con un buffo ritmo, inducendo il bersaglio a imitarlo e rendendo la sua abilità identica alla propria.
+}
+
+AfterYou: {
+	DisplayName: Cortesia
+	FlavorText: Chi la usa aiuta un bersaglio più lento permettendogli di agire subito dopo.
+}
+
+Round: {
+	DisplayName: Coro
+	FlavorText: Attacca il bersaglio con una melodia. Se usata durante lo stesso turno da più Pokémon, i danni inflitti aumentano.
+}
+
+EchoedVoice: {
+	DisplayName: Echeggiavoce
+	FlavorText: Attacca il bersaglio con la propria voce echeggiante. Se usata a ripetizione da uno o più Pokémon il danno aumenta.
+}
+
+ChipAway: {
+	DisplayName: Insidia
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ClearSmog: {
+	DisplayName: Pulifumo
+	FlavorText: Attacca il bersaglio lanciandogli contro una nuvola di fumo speciale, che annulla ogni modifica alle statistiche.
+}
+
+StoredPower: {
+	DisplayName: Veicolaforza
+	FlavorText: Attacca il bersaglio con l'energia accumulata. Più sono state aumentate le statistiche, maggiore è il danno inflitto.
+}
+
+QuickGuard: {
+	DisplayName: Anticipo
+	FlavorText: Chi la usa protegge sé e gli alleati dalle mosse ad alta priorità.
+}
+
+AllySwitch: {
+	DisplayName: Cambiaposto
+	FlavorText: Chi la usa cambia di posto con un alleato in campo grazie a un misterioso potere.
+}
+
+Scald: {
+	DisplayName: Idrovampata
+	FlavorText: Chi la usa attacca il bersaglio con un getto d'acqua bollente che può anche scottarlo.
+}
+
+ShellSmash: {
+	DisplayName: Gettaguscio
+	FlavorText: Chi la usa si disfa del guscio. Difesa e Difesa Speciale calano, ma aumentano di molto Attacco, Attacco Speciale e Velocità.
+}
+
+HealPulse: {
+	DisplayName: Ondasana
+	FlavorText: Chi la usa lancia un'onda rilassante che fa recuperare al bersaglio metà dei suoi PS massimi.
+}
+
+Hex: {
+	DisplayName: Sciagura
+	FlavorText: Attacco che causa un danno enorme se il bersaglio ha problemi di stato.
+}
+
+SkyDrop: {
+	DisplayName: Cadutalibera
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ShiftGear: {
+	DisplayName: Cambiomarcia
+	FlavorText: Facendo ruotare gli ingranaggi, chi la usa aumenta non solo il proprio Attacco, ma anche di molto la propria Velocità.
+}
+
+CircleThrow: {
+	DisplayName: Ribaltiro
+	FlavorText: Il bersaglio è scaraventato via ed è costretto a lasciare il posto a un altro. Mette fine alle lotte contro singoli Pokémon selvatici.
+}
+
+Incinerate: {
+	DisplayName: Bruciatutto
+	FlavorText: Attacca i nemici che ha intorno con una fiammata. Il fuoco distruggerà le bacche o alcuni tipi di strumenti che i Pokémon hanno con sé.
+}
+
+Quash: {
+	DisplayName: Spintone
+	FlavorText: Chi la usa spinge via il bersaglio, costringendolo ad agire per ultimo.
+}
+
+Acrobatics: {
+	DisplayName: Acrobazia
+	FlavorText: Attacca rapidamente il bersaglio. Se chi la usa non ha uno strumento, infligge al nemico grossi danni.
+}
+
+ReflectType: {
+	DisplayName: Riflettipo
+	FlavorText: Chi la usa cambia il proprio tipo in quello del bersaglio.
+}
+
+Retaliate: {
+	DisplayName: Nemesi
+	FlavorText: Vendica un alleato messo KO. Se ciò è accaduto al turno precedente, il danno è maggiore.
+}
+
+FinalGambit: {
+	DisplayName: Azzardo
+	FlavorText: Chi la usa attacca con tutta la potenza di cui dispone e va KO, ma infligge al bersaglio un danno pari ai PS che ha perso.
+}
+
+Bestow: {
+	DisplayName: Cediregalo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Inferno: {
+	DisplayName: Marchiatura
+	FlavorText: Il bersaglio viene avvolto da intense fiammate che causano scottature.
+}
+
+WaterPledge: {
+	DisplayName: Acquapatto
+	FlavorText: Attacca il bersaglio con una colonna d'acqua. Se usata con Fiammapatto, gli effetti aumentano e appare un arcobaleno.
+}
+
+FirePledge: {
+	DisplayName: Fiammapatto
+	FlavorText: Attacca il bersaglio con una colonna di fuoco. Se usata con Erbapatto, gli effetti aumentano e il campo diventa un mare di fuoco.
+}
+
+GrassPledge: {
+	DisplayName: Erbapatto
+	FlavorText: Attacca il bersaglio con una colonna d'erba. Se usata con Acquapatto, gli effetti aumentano e il campo diventa una palude.
+}
+
+VoltSwitch: {
+	DisplayName: Invertivolt
+	FlavorText: Chi usa questa mossa si tira indietro per farsi sostituire dopo aver sferrato l'attacco.
+}
+
+StruggleBug: {
+	DisplayName: Entomoblocco
+	FlavorText: Colpisce i nemici intorno opponendo resistenza e riducendo il loro Attacco Speciale.
+}
+
+Bulldoze: {
+	DisplayName: Battiterra
+	FlavorText: Chi la usa calpesta il terreno e scatena un terremoto che danneggia i Pokémon nei paraggi, riducendone la Velocità.
+}
+
+FrostBreath: {
+	DisplayName: Alitogelido
+	FlavorText: Chi la usa attacca il bersaglio con un soffio d'aria gelida. Brutto colpo assicurato.
+}
+
+DragonTail: {
+	DisplayName: Codadrago
+	FlavorText: Chi la usa fa volar via il bersaglio in modo che venga sostituito. Se il bersaglio è un singolo Pokémon selvatico, la lotta finisce.
+}
+
+WorkUp: {
+	DisplayName: Cuordileone
+	FlavorText: Chi la usa si tira su di morale, aumentando il proprio Attacco e l'Attacco Speciale.
+}
+
+Electroweb: {
+	DisplayName: Elettrotela
+	FlavorText: Chi la usa attacca i nemici intorno a sé catturandoli con una ragnatela elettrica e riducendone la Velocità.
+}
+
+WildCharge: {
+	DisplayName: Sprizzalampo
+	FlavorText: Chi la usa si carica di elettricità per poi scagliarsi sul bersaglio, ma subisce dei danni per il contraccolpo.
+}
+
+DrillRun: {
+	DisplayName: Giravvita
+	FlavorText: Chi la usa si scaglia sul bersaglio ruotando su se stesso come un trapano perforante. Probabile brutto colpo.
+}
+
+DualChop: {
+	DisplayName: Doppiocolpo
+	FlavorText: Chi la usa attacca due volte il bersaglio con dei colpi estremamente forti.
+}
+
+HeartStamp: {
+	DisplayName: Cuorestampo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+HornLeech: {
+	DisplayName: Legnicorno
+	FlavorText: Chi la usa infilza il bersaglio con le corna e assorbe una quantità di PS pari a metà del danno inferto.
+}
+
+SacredSword: {
+	DisplayName: Spadasolenne
+	FlavorText: Chi la usa taglia il bersaglio con una spada magica. Il danno inflitto ignora le modifiche alle statistiche del Pokémon colpito.
+}
+
+RazorShell: {
+	DisplayName: Conchilama
+	FlavorText: Chi la usa colpisce il bersaglio con il suo guscio affilato. Il colpo può anche ridurre la Difesa del bersaglio.
+}
+
+HeatCrash: {
+	DisplayName: Marchiafuoco
+	FlavorText: Chi la usa carica con il suo corpo rovente. Più è pesante rispetto al bersaglio, più danni causa.
+}
+
+LeafTornado: {
+	DisplayName: Vorticerba
+	FlavorText: Chi la usa avvolge e attacca il bersaglio con foglie affilate che possono anche ridurne la precisione.
+}
+
+Steamroller: {
+	DisplayName: Rulloduro
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+CottonGuard: {
+	DisplayName: Cotonscudo
+	FlavorText: Chi la usa avvolge il proprio corpo con del cotone molto morbido, proteggendosi e aumentando moltissimo la propria Difesa.
+}
+
+NightDaze: {
+	DisplayName: Urtoscuro
+	FlavorText: Chi la usa attacca il bersaglio con un'onda d'urto oscura che può anche ridurne la precisione.
+}
+
+Psystrike: {
+	DisplayName: Psicobotta
+	FlavorText: Chi la usa attacca il bersaglio facendo materializzare misteriose onde psichiche che provocano danni fisici.
+}
+
+TailSlap: {
+	DisplayName: Spazzasberla
+	FlavorText: Chi la usa colpisce il bersaglio con la sua coda dura da due a cinque volte di fila.
+}
+
+Hurricane: {
+	DisplayName: Tifone
+	FlavorText: Chi la usa attacca il bersaglio avvolgendolo con un vento fortissimo. Può anche confonderlo.
+}
+
+HeadCharge: {
+	DisplayName: Ricciolata
+	FlavorText: Chi la usa carica il bersaglio con la testa in stile afro, ma subisce un po' di danni per il contraccolpo.
+}
+
+GearGrind: {
+	DisplayName: Ingracolpo
+	FlavorText: Chi la usa colpisce il bersaglio due volte di fila lanciandogli contro degli ingranaggi d'acciaio.
+}
+
+SearingShot: {
+	DisplayName: Sparafuoco
+	FlavorText: Chi la usa lancia fiamme scarlatte su tutti i Pokémon nelle vicinanze, danneggiandoli. Può anche scottarli.
+}
+
+TechnoBlast: {
+	DisplayName: Tecnobotto
+	FlavorText: Chi la usa rilascia un colpo di luce contro il bersaglio. Il tipo varia a seconda del modulo che ha.
+}
+
+RelicSong: {
+	DisplayName: Cantoantico
+	FlavorText: Chi la usa attacca i nemici intorno a sé intonando un'antica melodia che colpisce il loro spirito. Può anche farli addormentare.
+}
+
+SecretSword: {
+	DisplayName: Spadamistica
+	FlavorText: Chi la usa attacca il bersaglio tagliandolo con una spada mistica. La misteriosa energia sprigionata provoca danni fisici.
+}
+
+Glaciate: {
+	DisplayName: Gelamondo
+	FlavorText: Chi la usa attacca i nemici intorno con una folata d'aria gelida e ne riduce anche la Velocità.
+}
+
+BoltStrike: {
+	DisplayName: Lucesiluro
+	FlavorText: Colpisce il bersaglio con una possente carica elettrica e può anche paralizzarlo.
+}
+
+BlueFlare: {
+	DisplayName: Fuocoblu
+	FlavorText: Chi la usa attacca il bersaglio avvolgendolo con magnifiche e intense fiamme blu che possono anche scottarlo.
+}
+
+FieryDance: {
+	DisplayName: Voldifuoco
+	FlavorText: Chi la usa viene avvolto da fiamme che scaglia contro il bersaglio, sbattendo le ali. Può anche aumentare l'Attacco Speciale.
+}
+
+FreezeShock: {
+	DisplayName: Elettrogelo
+	FlavorText: Chi la usa lancia contro il bersaglio al turno successivo una sfera di ghiaccio ricoperta di elettricità. Può anche paralizzarlo.
+}
+
+IceBurn: {
+	DisplayName: Vampagelida
+	FlavorText: Chi la usa attacca il bersaglio al turno successivo e lo avvolge in un soffio d'aria gelida. Può anche scottarlo.
+}
+
+Snarl: {
+	DisplayName: Urlorabbia
+	FlavorText: Chi la usa si mette a urlare per un po', riducendo l'Attacco Speciale dei nemici intorno.
+}
+
+IcicleCrash: {
+	DisplayName: Scagliagelo
+	FlavorText: Chi la usa attacca violentemente il bersaglio con grosse stalattiti di ghiaccio che possono anche farlo tentennare.
+}
+
+VCreate: {
+	DisplayName: Generatore V
+	FlavorText: Chi la usa carica emettendo fiamme ardenti dalla fronte, a costo di una riduzione di Difesa, Difesa Speciale e Velocità.
+}
+
+FusionFlare: {
+	DisplayName: Incrofiamma
+	FlavorText: Chi la usa lancia una fiammata enorme. Se usata in combinazione con Incrotuono, il danno provocato dalla mossa aumenta.
+}
+
+FusionBolt: {
+	DisplayName: Incrotuono
+	FlavorText: Chi la usa lancia un fulmine enorme. Se usata in combinazione con Incrofiamma, il danno provocato dalla mossa aumenta.
+}
+
+FlyingPress: {
+	DisplayName: Schiacciatuffo
+	FlavorText: Chi la usa si tuffa sul bersaglio dall'alto. È una mossa di tipo Lotta e Volante allo stesso tempo.
+}
+
+MatBlock: {
+	DisplayName: Ribaltappeto
+	FlavorText: Chi la usa protegge se stesso e i propri alleati dai danni di mosse nemiche, adoperando un tappetino come scudo. Non è efficace contro mosse di stato.
+}
+
+Belch: {
+	DisplayName: Rutto
+	FlavorText: Chi la usa attacca il bersaglio con un rutto potente. Per utilizzare questa mossa, il Pokémon deve mangiare la bacca che possiede.
+}
+
+Rototiller: {
+	DisplayName: Aracampo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+StickyWeb: {
+	DisplayName: Rete Vischiosa
+	FlavorText: Chi la usa intreccia una rete appiccicosa attorno alla squadra avversaria, diminuendo la Velocità dei Pokémon nemici che entreranno in campo.
+}
+
+FellStinger: {
+	DisplayName: Pungiglione
+	FlavorText: L'Attacco di chi la usa aumenta moltissimo se grazie alla mossa il bersaglio va KO.
+}
+
+PhantomForce: {
+	DisplayName: Spettrotuffo
+	FlavorText: Chi la usa scompare improvvisamente per attaccare poi nel turno seguente. Questa mossa neutralizza le protezioni del bersaglio.
+}
+
+TrickOrTreat: {
+	DisplayName: Halloween
+	FlavorText: Il bersaglio viene invitato a festeggiare Halloween e aggiunge così al proprio tipo anche il tipo Spettro.
+}
+
+NobleRoar: {
+	DisplayName: Urlo
+	FlavorText: Chi la usa emette un urlo potente che intimidisce il bersaglio, riducendone l'Attacco e l'Attacco Speciale.
+}
+
+IonDeluge: {
+	DisplayName: Pioggiaplasma
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ParabolicCharge: {
+	DisplayName: Caricaparabola
+	FlavorText: Infligge danni a tutti i Pokémon vicini. Chi la usa recupera una quantità di PS pari alla metà del danno inferto.
+}
+
+ForestsCurse: {
+	DisplayName: Boscomalocchio
+	FlavorText: Chi la usa invoca la maledizione del bosco sul bersaglio, che acquisisce così anche il tipo Erba.
+}
+
+PetalBlizzard: {
+	DisplayName: Fiortempesta
+	FlavorText: Infligge danni ai Pokémon che ha intorno attaccandoli con una tempesta di fiori.
+}
+
+FreezeDry: {
+	DisplayName: Liofilizzazione
+	FlavorText: Chi la usa raffredda istantaneamente il bersaglio e può congelarlo. Risulta superefficace contro i Pokémon di tipo Acqua.
+}
+
+DisarmingVoice: {
+	DisplayName: Incantavoce
+	FlavorText: Chi la usa infligge un danno spirituale ai nemici nei paraggi con una voce suadente. L'attacco andrà immancabilmente a segno.
+}
+
+PartingShot: {
+	DisplayName: Monito
+	FlavorText: Chi la usa lancia un monito intimidatorio al bersaglio, riducendone l'Attacco e l'Attacco Speciale, e si fa sostituire da un altro Pokémon della squadra.
+}
+
+TopsyTurvy: {
+	DisplayName: Sottosopra
+	FlavorText: Inverte tutte le modifiche alle statistiche del Pokémon bersaglio.
+}
+
+DrainingKiss: {
+	DisplayName: Assorbibacio
+	FlavorText: Chi la usa assorbe energia dal bersaglio con un bacio, recuperando così PS in quantità pari a più della metà del danno inferto.
+}
+
+CraftyShield: {
+	DisplayName: Truccodifesa
+	FlavorText: Grazie a un misterioso potere, protegge chi la usa e gli alleati dalle mosse di stato. È tuttavia inefficace contro mosse che infliggono danni.
+}
+
+FlowerShield: {
+	DisplayName: Fiordifesa
+	FlavorText: Grazie a un misterioso potere, aumenta la Difesa di tutti i Pokémon di tipo Erba presenti in campo.
+}
+
+GrassyTerrain: {
+	DisplayName: Campo Erboso
+	FlavorText: Per cinque turni il terreno entra nello stato di Campo Erboso: i Pokémon a terra recuperano PS a ogni turno e la potenza delle mosse di tipo Erba aumenta.
+}
+
+MistyTerrain: {
+	DisplayName: Campo Nebbioso
+	FlavorText: Per cinque turni il terreno entra nello stato di Campo Nebbioso: i Pokémon a terra sono immuni ai problemi di stato e la potenza delle mosse Drago è dimezzata.
+}
+
+Electrify: {
+	DisplayName: Elettrocontagio
+	FlavorText: Se si contagia il bersaglio prima che usi la sua mossa, per quel turno questa sarà di tipo Elettro.
+}
+
+PlayRough: {
+	DisplayName: Carineria
+	FlavorText: Chi la usa attacca il bersaglio con delle carinerie. Può anche ridurne l'Attacco.
+}
+
+FairyWind: {
+	DisplayName: Vento di Fata
+	FlavorText: Chi la usa solleva un vento fatato che investe il bersaglio.
+}
+
+Moonblast: {
+	DisplayName: Forza Lunare
+	FlavorText: Chi la usa sfrutta il potere della luna per attaccare il bersaglio. Può anche ridurne l'Attacco Speciale.
+}
+
+Boomburst: {
+	DisplayName: Ondaboato
+	FlavorText: Colpisce i Pokémon che ha intorno con la forza di un boato distruttivo.
+}
+
+FairyLock: {
+	DisplayName: Blocco Fatato
+	FlavorText: Impone un blocco al terreno di lotta che nel turno successivo impedisce a tutti i Pokémon di fuggire.
+}
+
+KingsShield: {
+	DisplayName: Scudo Reale
+	FlavorText: Chi la usa si protegge, assumendo una posizione di difesa e riducendo l'Attacco di nemici o alleati con cui entra in contatto.
+}
+
+PlayNice: {
+	DisplayName: Simpatia
+	FlavorText: Chi la usa diventa amico del bersaglio, rabbonendolo e riducendone così l'Attacco.
+}
+
+Confide: {
+	DisplayName: Confidenza
+	FlavorText: Chi la usa svela dei segreti al bersaglio, distraendolo e riducendone l'Attacco Speciale.
+}
+
+DiamondStorm: {
+	DisplayName: Diamantempesta
+	FlavorText: Colpisce i nemici che ha intorno con una tempesta di diamanti. Può anche aumentare di molto la Difesa di chi la usa.
+}
+
+SteamEruption: {
+	DisplayName: Vaporscoppio
+	FlavorText: Travolge il bersaglio con un'ondata di vapore rovente che può anche scottarlo.
+}
+
+HyperspaceHole: {
+	DisplayName: Forodimensionale
+	FlavorText: Chi la usa sfrutta un passaggio interdimensionale per comparire a fianco del bersaglio e colpirlo, eludendo mosse come Protezione e Individua.
+}
+
+WaterShuriken: {
+	DisplayName: Acqualame
+	FlavorText: Chi la usa attacca il bersaglio con degli shuriken di muco da due a cinque volte di fila. Questa mossa ha priorità alta.
+}
+
+MysticalFire: {
+	DisplayName: Magifiamma
+	FlavorText: Colpisce il bersaglio soffiandogli contro delle fiammate incredibilmente roventi, riducendone l'Attacco Speciale.
+}
+
+SpikyShield: {
+	DisplayName: Agodifesa
+	FlavorText: Protegge dagli attacchi, riducendo inoltre i PS dei Pokémon che entrano in contatto con chi la usa.
+}
+
+AromaticMist: {
+	DisplayName: Nebularoma
+	FlavorText: Aumenta la Difesa Speciale di un alleato tramite un misterioso aroma.
+}
+
+EerieImpulse: {
+	DisplayName: Elettromistero
+	FlavorText: Il corpo di chi la usa emette onde anomale che investono il bersaglio, riducendone di molto l'Attacco Speciale.
+}
+
+VenomDrench: {
+	DisplayName: Velenotrappola
+	FlavorText: Emette un liquido particolare che riduce l'Attacco, l'Attacco Speciale e la Velocità dei nemici avvelenati intorno a chi la usa.
+}
+
+Powder: {
+	DisplayName: Pulviscoppio
+	FlavorText: Il bersaglio viene coperto da un pulviscolo che esplode danneggiandolo se questi utilizza una mossa di tipo Fuoco nello stesso turno.
+}
+
+Geomancy: {
+	DisplayName: Geocontrollo
+	FlavorText: Chi la usa assorbe energia nel primo turno per aumentare poi notevolmente l'Attacco Speciale, la Difesa Speciale e la Velocità in quello seguente.
+}
+
+MagneticFlux: {
+	DisplayName: Controllo Polare
+	FlavorText: Tramite il controllo dei campi magnetici, aumenta la Difesa e la Difesa Speciale dei Pokémon alleati dotati delle abilità Più o Meno.
+}
+
+HappyHour: {
+	DisplayName: Cuccagna
+	FlavorText: Questa mossa raddoppia la ricompensa ricevuta dopo aver vinto una lotta.
+}
+
+ElectricTerrain: {
+	DisplayName: Campo Elettrico
+	FlavorText: Per cinque turni il terreno entra nello stato di Campo Elettrico: i Pokémon a terra non si addormentano e la potenza delle mosse di tipo Elettro aumenta.
+}
+
+DazzlingGleam: {
+	DisplayName: Magibrillio
+	FlavorText: Chi la usa emette una luce potentissima che infligge danni ai nemici intorno.
+}
+
+Celebrate: {
+	DisplayName: Auguri
+	FlavorText: Il Pokémon ti fa gli auguri nel tuo giorno speciale.
+}
+
+HoldHands: {
+	DisplayName: Mano nella Mano
+	FlavorText: Il Pokémon che la usa e un alleato si prendono per mano e fanno salti di gioia.
+}
+
+BabyDollEyes: {
+	DisplayName: Occhioni Teneri
+	FlavorText: Chi la usa rivolge i propri occhioni languidi al bersaglio, riducendone l'Attacco. Questa mossa ha priorità alta.
+}
+
+Nuzzle: {
+	DisplayName: Elettrococcola
+	FlavorText: Chi la usa strofina le guance elettrizzate contro il bersaglio, paralizzandolo.
+}
+
+HoldBack: {
+	DisplayName: Riguardo
+	FlavorText: Chi la usa attacca il bersaglio, modulando il colpo in modo da lasciargli almeno un PS.
+}
+
+Infestation: {
+	DisplayName: Assillo
+	FlavorText: Chi la usa lancia un attacco che tormenta il bersaglio per quattro o cinque turni, durante i quali gli impedisce di fuggire.
+}
+
+PowerUpPunch: {
+	DisplayName: Crescipugno
+	FlavorText: Rende i pugni più duri a ogni colpo inferto. Se i pugni vanno a segno, l'Attacco di chi la usa aumenta.
+}
+
+OblivionWing: {
+	DisplayName: Ali del Fato
+	FlavorText: Chi la usa assorbe energia dal bersaglio recuperando una quantità di PS pari a più della metà del danno inferto.
+}
+
+ThousandArrows: {
+	DisplayName: Mille Frecce
+	FlavorText: Colpisce i nemici intorno scaraventando a terra quelli che si trovano in aria.
+}
+
+ThousandWaves: {
+	DisplayName: Mille Onde
+	FlavorText: Un'onda strisciante investe i nemici intorno impedendo loro di fuggire.
+}
+
+LandsWrath: {
+	DisplayName: Forza Tellurica
+	FlavorText: Chi la usa raccoglie energia tellurica e ne concentra il potere sui nemici che ha intorno, danneggiandoli.
+}
+
+LightOfRuin: {
+	DisplayName: Luce Nefasta
+	FlavorText: Concentra il potere del Fiore Eterno in un raggio di luce potentissimo con cui attacca il bersaglio. Causa danni ingenti anche a chi la usa.
+}
+
+OriginPulse: {
+	DisplayName: Primopulsar
+	FlavorText: Attacca i nemici intorno colpendoli con miriadi di raggi di luce blu.
+}
+
+PrecipiceBlades: {
+	DisplayName: Spade Telluriche
+	FlavorText: Attacca i nemici intorno trasformando la potenza della terra in lame affilate.
+}
+
+DragonAscent: {
+	DisplayName: Ascesa del Drago
+	FlavorText: Permette di proiettarsi in aria e fiondarsi sul bersaglio attaccando ad altissima velocità. Riduce la Difesa e la Difesa Speciale di chi la usa.
+}
+
+HyperspaceFury: {
+	DisplayName: Urtodimensionale
+	FlavorText: Permette di attaccare ripetutamente grazie ai molti arti, ignorando mosse come Protezione o Individua. Riduce la Difesa di chi la usa.
+}
+
+BreakneckBlitz: {
+	DisplayName: Carica Travolgente
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+AllOutPummeling: {
+	DisplayName: Iperscarica Furiosa
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SupersonicSkystrike: {
+	DisplayName: Picchiata Devastante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+AcidDownpour: {
+	DisplayName: Acidiluvio Corrosivo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+TectonicRage: {
+	DisplayName: Furore della Terra
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ContinentalCrush: {
+	DisplayName: Gigamacigno Polverizzante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SavageSpinOut: {
+	DisplayName: Bozzolo Fatale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+NeverEndingNightmare: {
+	DisplayName: Abbraccio Spettrale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+CorkscrewCrash: {
+	DisplayName: Spirale Perforante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+InfernoOverdrive: {
+	DisplayName: Fiammobomba Detonante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+HydroVortex: {
+	DisplayName: Idrovortice Abissale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+BloomDoom: {
+	DisplayName: Floriscoppio Sfolgorante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+GigavoltHavoc: {
+	DisplayName: Gigascarica Folgorante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ShatteredPsyche: {
+	DisplayName: Impatto Psicocinetico
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SubzeroSlammer: {
+	DisplayName: Criodistruzione Polare
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+DevastatingDrake: {
+	DisplayName: Dragoschianto Finale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+BlackHoleEclipse: {
+	DisplayName: Buco Nero del Non Ritorno
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+TwinkleTackle: {
+	DisplayName: Astroimpatto Fatato
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+Catastropika: {
+	DisplayName: Super Pikaboom
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ShoreUp: {
+	DisplayName: Sabbiaccumulo
+	FlavorText: Chi la usa recupera metà dei propri PS massimi. Durante le tempeste di sabbia ne recupera di più.
+}
+
+FirstImpression: {
+	DisplayName: Schermaglia
+	FlavorText: È una mossa molto potente, ma funziona solo appena scesi in campo.
+}
+
+BanefulBunker: {
+	DisplayName: Fortino
+	FlavorText: Protegge dagli attacchi e avvelena i Pokémon che lanciano un attacco diretto su chi la usa.
+}
+
+SpiritShackle: {
+	DisplayName: Cucitura d'Ombra
+	FlavorText: Chi la usa attacca il bersaglio e fissa la sua ombra a terra impedendogli di fuggire.
+}
+
+DarkestLariat: {
+	DisplayName: Braccioteso
+	FlavorText: Chi la usa attacca il bersaglio mulinando gli arti. Il danno inflitto ignora le modifiche alle statistiche del bersaglio.
+}
+
+SparklingAria: {
+	DisplayName: Canto Effimero
+	FlavorText: Chi la usa si mette a cantare emettendo tanti palloncini d'acqua. I Pokémon che subiscono danni da questa mossa guariscono dalle scottature.
+}
+
+IceHammer: {
+	DisplayName: Martelgelo
+	FlavorText: Infligge danni al bersaglio colpendolo con un pugno molto potente. Riduce la Velocità di chi la usa.
+}
+
+FloralHealing: {
+	DisplayName: Cura Floreale
+	FlavorText: Fa recuperare metà dei PS massimi al bersaglio. È più efficace quando il terreno di lotta è nello stato di Campo Erboso.
+}
+
+HighHorsepower: {
+	DisplayName: Forza Equina
+	FlavorText: Chi la usa travolge il bersaglio con un attacco possente.
+}
+
+StrengthSap: {
+	DisplayName: Assorbiforza
+	FlavorText: Fa recuperare una quantità di PS pari all'Attacco del bersaglio, che vedrà diminuire questa statistica.
+}
+
+SolarBlade: {
+	DisplayName: Lama Solare
+	FlavorText: Chi la usa assorbe la luce condensandola in una lama al primo turno per poi attaccare al turno successivo.
+}
+
+Leafage: {
+	DisplayName: Fogliame
+	FlavorText: Attacca il bersaglio con delle foglie.
+}
+
+Spotlight: {
+	DisplayName: Riflettore
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ToxicThread: {
+	DisplayName: Velenotela
+	FlavorText: Avvelena il bersaglio avvolgendolo con filamenti tossici e ne riduce la Velocità.
+}
+
+LaserFocus: {
+	DisplayName: Concentrazione
+	FlavorText: Chi la usa si concentra e nel turno successivo metterà sicuramente a segno un brutto colpo.
+}
+
+GearUp: {
+	DisplayName: Marciainpiù
+	FlavorText: Dà una marcia in più agli alleati con le abilità Meno o Più aumentandone l'Attacco e l'Attacco Speciale.
+}
+
+ThroatChop: {
+	DisplayName: Colpo Infernale
+	FlavorText: Chi viene colpito da questa mossa prova un dolore lancinante e non può più usare mosse basate sul suono per due turni.
+}
+
+PollenPuff: {
+	DisplayName: Sferapolline
+	FlavorText: Chi la usa attacca il nemico con una sfera esplosiva. Se colpisce degli alleati, fa recuperare loro dei PS.
+}
+
+AnchorShot: {
+	DisplayName: Colpo d'Ancora
+	FlavorText: Chi la usa attacca il nemico con un'ancora e lo intrappola nella catena impedendogli di fuggire.
+}
+
+PsychicTerrain: {
+	DisplayName: Campo Psichico
+	FlavorText: Per cinque turni il terreno entra nello stato di Campo Psichico: i Pokémon a terra non subiscono mosse ad alta priorità e le mosse di tipo Psico sono potenziate.
+}
+
+Lunge: {
+	DisplayName: Assalto
+	FlavorText: Chi la usa si lancia con tutte le sue forze sul bersaglio e ne riduce l'Attacco.
+}
+
+FireLash: {
+	DisplayName: Frusta di Fuoco
+	FlavorText: Colpisce il bersaglio con una frusta infuocata e ne riduce la Difesa.
+}
+
+PowerTrip: {
+	DisplayName: Tracotanza
+	FlavorText: Chi la usa attacca il bersaglio sfoggiando la propria forza. Più le sue statistiche sono state aumentate, più la mossa è potente.
+}
+
+BurnUp: {
+	DisplayName: Ultima Fiamma
+	FlavorText: Chi la usa attacca sfruttando tutta la sua potenza incendiaria per infliggere gravi danni al bersaglio, ma come conseguenza perde il tipo Fuoco.
+}
+
+SpeedSwap: {
+	DisplayName: Velociscambio
+	FlavorText: Chi la usa scambia la propria Velocità con quella del bersaglio.
+}
+
+SmartStrike: {
+	DisplayName: Sottilcorno
+	FlavorText: Chi la usa colpisce il bersaglio con un corno appuntito. Questa mossa va sempre a segno.
+}
+
+Purify: {
+	DisplayName: Purificazione
+	FlavorText: Chi la usa cura i problemi di stato del bersaglio e in cambio recupera PS.
+}
+
+RevelationDance: {
+	DisplayName: Mutadanza
+	FlavorText: Chi la usa si lancia in una danza e attacca il nemico con tutte le sue forze. Il tipo della mossa corrisponde al tipo del Pokémon che la usa.
+}
+
+CoreEnforcer: {
+	DisplayName: Nucleocastigo
+	FlavorText: Il bersaglio subisce dei danni e, se ha già agito nel turno, perde la sua abilità.
+}
+
+TropKick: {
+	DisplayName: Tropicalcio
+	FlavorText: Chi la usa colpisce il bersaglio con un potente calcio sfruttando una tecnica originaria dei paesi tropicali e ne riduce l'Attacco.
+}
+
+Instruct: {
+	DisplayName: Imposizione
+	FlavorText: Costringe il bersaglio a ripetere immediatamente l'ultima mossa che ha sferrato.
+}
+
+BeakBlast: {
+	DisplayName: Cannonbecco
+	FlavorText: Chi la usa arroventa il proprio becco e poi attacca. Se un Pokémon lo colpisce con un attacco diretto mentre sta accumulando calore, resta scottato.
+}
+
+ClangingScales: {
+	DisplayName: Clamorsquame
+	FlavorText: Chi la usa attacca il bersaglio con un suono fortissimo che genera sfregando le scaglie del corpo. Dopo aver attaccato, la sua Difesa diminuisce.
+}
+
+DragonHammer: {
+	DisplayName: Marteldrago
+	FlavorText: Chi la usa infligge danni al bersaglio usando il proprio corpo come se fosse un martello.
+}
+
+BrutalSwing: {
+	DisplayName: Vorticolpo
+	FlavorText: Chi la usa infligge danni intorno a sé facendo ruotare una parte del suo corpo.
+}
+
+AuroraVeil: {
+	DisplayName: Velaurora
+	FlavorText: Riduce i danni subiti dalle mosse fisiche e dalle mosse speciali per cinque turni. Si può usare solo quando grandina.
+}
+
+SinisterArrowRaid: {
+	DisplayName: Dardoassalto Spettrale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MaliciousMoonsault: {
+	DisplayName: Iperschianto delle Tenebre
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+OceanicOperetta: {
+	DisplayName: Sinfonia del Mare
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+GuardianOfAlola: {
+	DisplayName: Collera del Guardiano
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SoulStealing7StarStrike: {
+	DisplayName: Colpo Eptastellare Rubanima
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+StokedSparksurfer: {
+	DisplayName: Elettrosurf Folgorante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+PulverizingPancake: {
+	DisplayName: Adesso Faccio sul Serio
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ExtremeEvoboost: {
+	DisplayName: Potenziamento Eevolutivo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+GenesisSupernova: {
+	DisplayName: Supernova delle Origini
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ShellTrap: {
+	DisplayName: Gusciotrappola
+	FlavorText: Il guscio del Pokémon diventa una trappola. Se un nemico lo colpisce con una mossa fisica, innesca un'esplosione e subisce dei danni.
+}
+
+FleurCannon: {
+	DisplayName: Cannonfiore
+	FlavorText: Colpisce il bersaglio con un potente raggio, ma riduce di molto l'Attacco Speciale di chi la usa.
+}
+
+PsychicFangs: {
+	DisplayName: Psicozanna
+	FlavorText: Morde il bersaglio con delle zanne generate con l'energia psichica e rompe barriere come Riflesso e Schermoluce.
+}
+
+StompingTantrum: {
+	DisplayName: Battipiedi
+	FlavorText: Chi la usa attacca battendo i piedi per la rabbia. Se la mossa usata al turno precedente non è andata a segno, la potenza raddoppia.
+}
+
+ShadowBone: {
+	DisplayName: Ossotetro
+	FlavorText: Chi la usa colpisce il bersaglio con un osso in cui alberga uno spirito. Può anche ridurne la Difesa.
+}
+
+Accelerock: {
+	DisplayName: Rocciarapida
+	FlavorText: Chi la usa attacca il bersaglio colpendolo a tutta velocità. Questa mossa ha priorità alta.
+}
+
+Liquidation: {
+	DisplayName: Idrobreccia
+	FlavorText: Chi la usa colpisce il bersaglio con la forza dell'acqua. Può anche ridurne la Difesa.
+}
+
+PrismaticLaser: {
+	DisplayName: Prismalaser
+	FlavorText: Chi la usa proietta dei potenti raggi di luce grazie alla potenza del suo prisma, ma non può agire nel turno successivo.
+}
+
+SpectralThief: {
+	DisplayName: Ombrafurto
+	FlavorText: Chi la usa ruba gli aumenti delle statistiche del bersaglio, poi si nasconde nella sua ombra e lo attacca.
+}
+
+SunsteelStrike: {
+	DisplayName: Astrocarica
+	FlavorText: Chi la usa travolge il bersaglio con la potenza di una meteora. Questo attacco ignora l'abilità del bersaglio.
+}
+
+MoongeistBeam: {
+	DisplayName: Raggio d'Ombra
+	FlavorText: Chi la usa proietta sul bersaglio un misterioso raggio di luce. Questo attacco ignora l'abilità del bersaglio.
+}
+
+TearfulLook: {
+	DisplayName: Occhionilucidi
+	FlavorText: Chi la usa guarda il bersaglio con gli occhi pieni di lacrime e gli fa perdere lo spirito combattivo, riducendone l'Attacco e l'Attacco Speciale.
+}
+
+ZingZap: {
+	DisplayName: Elettropizzico
+	FlavorText: Chi la usa colpisce il bersaglio investendolo con una potente scarica elettrica che può anche farlo tentennare.
+}
+
+NaturesMadness: {
+	DisplayName: Ira della Natura
+	FlavorText: Scatena l'ira della natura sul bersaglio e ne dimezza i PS.
+}
+
+MultiAttack: {
+	DisplayName: Multiattacco
+	FlavorText: Chi la usa si avvolge in un potente campo energetico e colpisce il bersaglio. Il tipo della mossa varia in base alla ROM installata.
+}
+
+ZThunderbolt: {
+	DisplayName: Iperfulmine
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MindBlown: {
+	DisplayName: Sbalorditesta
+	FlavorText: Chi la usa fa esplodere la propria testa per attaccare tutti i Pokémon che ha intorno, ma subisce danni.
+}
+
+PlasmaFists: {
+	DisplayName: Pugni Plasma
+	FlavorText: Chi la usa attacca con pugni carichi di elettricità. Trasforma le mosse di tipo Normale in mosse di tipo Elettro.
+}
+
+PhotonGeyser: {
+	DisplayName: Geyser Fotonico
+	FlavorText: Attacca il bersaglio con una colonna di luce. Infligge danni in base all'Attacco o all'Attacco Speciale scegliendo il più alto tra i due.
+}
+
+LightThatBurnsTheSky: {
+	DisplayName: Fotodistruzione Apocalittica
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SearingSunrazeSmash: {
+	DisplayName: Supercollisione Solare
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+MenacingMoonrazeMaelstrom: {
+	DisplayName: Deflagrazione Lunare
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+LetsSnuggleForever: {
+	DisplayName: Dolcesacco di Botte
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SplinteredStormshards: {
+	DisplayName: Litotempesta Radiale
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ClangorousSoulblaze: {
+	DisplayName: Dracofonia Divampante
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+ZippyZap: {
+	DisplayName: Sprintaboom
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SplishySplash: {
+	DisplayName: Surfasplash
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FloatyFall: {
+	DisplayName: Piombaflap
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+PikaPapow: {
+	DisplayName: Pikasaetta
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+BouncyBubble: {
+	DisplayName: Bollaslurp
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+BuzzyBuzz: {
+	DisplayName: Elettrozap
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SizzlySlide: {
+	DisplayName: Fiammabam
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+GlitzyGlow: {
+	DisplayName: Auraswoosh
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+BaddyBad: {
+	DisplayName: Zona Buiabuia
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SappySeed: {
+	DisplayName: Bombafrush
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+FreezyFrost: {
+	DisplayName: Scricchiagelo
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+SparklySwirl: {
+	DisplayName: Sbrilluccibufera
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+VeeveeVolley: {
+	DisplayName: Eeveempatto
+	FlavorText: Questa mossa non può essere usata. È consigliabile farla dimenticare al Pokémon. Tuttavia, una volta dimenticata, non potrà più essere ricordata.
+}
+
+DoubleIronBash: {
+	DisplayName: Pugni Corazzati
+	FlavorText: Chi la usa attacca il bersaglio due volte ruotando su se stesso e colpendolo con le braccia. Può anche farlo tentennare.
+}
+
+MaxGuard: {
+	DisplayName: Dynabarriera
+	FlavorText: Permette di eludere tutti gli attacchi. Se usata in successione può fallire.
+}
+
+DynamaxCannon: {
+	DisplayName: Cannone Dynamax
+	FlavorText: Chi la usa attacca emettendo un raggio dal suo nucleo. Se l'avversario è dynamaxizzato causa il doppio dei danni.
+}
+
+SnipeShot: {
+	DisplayName: Tiromirato
+	FlavorText: Permette di attaccare un bersaglio ignorando gli effetti di mosse e abilità che attirano altre mosse.
+}
+
+JawLock: {
+	DisplayName: Morsostretto
+	FlavorText: Impedisce a chi la usa e al bersaglio di essere sostituiti finché non vanno KO. L'effetto svanisce se uno dei due lascia il campo.
+}
+
+StuffCheeks: {
+	DisplayName: Riempiguance
+	FlavorText: Se chi la usa ha con sé una bacca, la mangia e la sua Difesa aumenta di molto.
+}
+
+NoRetreat: {
+	DisplayName: Spalle al Muro
+	FlavorText: Chi la usa aumenta tutte le sue statistiche ma non può più fuggire o essere sostituito.
+}
+
+TarShot: {
+	DisplayName: Colpocatrame
+	FlavorText: Chi la usa getta catrame appiccicoso sul bersaglio abbassandone la Velocità e rendendolo vulnerabile al tipo Fuoco.
+}
+
+MagicPowder: {
+	DisplayName: Magipolvere
+	FlavorText: Chi la usa getta addosso al bersaglio una polvere magica che lo rende di tipo Psico.
+}
+
+DragonDarts: {
+	DisplayName: Dragofrecce
+	FlavorText: Chi la usa attacca due volte sparando Dreepy. Quando sono presenti due bersagli, vengono colpiti entrambi una sola volta.
+}
+
+Teatime: {
+	DisplayName: Ora del Tè
+	FlavorText: Chi la usa invita tutti i Pokémon in campo a prendere il tè. Quelli che hanno con sé una bacca la mangiano.
+}
+
+Octolock: {
+	DisplayName: Tentacolock
+	FlavorText: Chi la usa immobilizza il bersaglio impedendogli di fuggire e ne diminuisce la Difesa e la Difesa Speciale a ogni turno.
+}
+
+BoltBeak: {
+	DisplayName: Beccoshock
+	FlavorText: Chi la usa attacca il bersaglio con il becco appuntito carico d'elettricità. Se attacca per primo, la potenza della mossa raddoppia.
+}
+
+FishiousRend: {
+	DisplayName: Branchiomorso
+	FlavorText: Chi la usa morde il bersaglio con le dure branchie. Se attacca per primo, la potenza della mossa raddoppia.
+}
+
+CourtChange: {
+	DisplayName: Cambiocampo
+	FlavorText: Una forza misteriosa inverte gli effetti attivi sul campo alleato e sul campo avversario.
+}
+
+MaxFlare: {
+	DisplayName: Dynafiammata
+	FlavorText: Un attacco di tipo Fuoco che può essere eseguito dai Pokémon dynamaxizzati. Intensifica i raggi solari per cinque turni.
+}
+
+MaxFlutterby: {
+	DisplayName: Dynainsetto
+	FlavorText: Un attacco di tipo Coleottero che può essere eseguito dai Pokémon dynamaxizzati. Riduce l'Attacco Speciale dei nemici intorno.
+}
+
+MaxLightning: {
+	DisplayName: Dynasaetta
+	FlavorText: Un attacco di tipo Elettro che può essere eseguito dai Pokémon dynamaxizzati. Per cinque turni il terreno entra nello stato di Campo Elettrico.
+}
+
+MaxStrike: {
+	DisplayName: Dynattacco
+	FlavorText: Un attacco di tipo Normale che può essere eseguito dai Pokémon dynamaxizzati. Riduce la Velocità dei nemici intorno.
+}
+
+MaxKnuckle: {
+	DisplayName: Dynapugno
+	FlavorText: Un attacco di tipo Lotta che può essere eseguito dai Pokémon dynamaxizzati. Aumenta l'Attacco degli alleati.
+}
+
+MaxPhantasm: {
+	DisplayName: Dynavuoto
+	FlavorText: Un attacco di tipo Spettro che può essere eseguito dai Pokémon dynamaxizzati. Riduce la Difesa dei nemici intorno.
+}
+
+MaxHailstorm: {
+	DisplayName: Dynagelo
+	FlavorText: Un attacco di tipo Ghiaccio che può essere eseguito dai Pokémon dynamaxizzati. Causa una grandinata che dura per cinque turni.
+}
+
+MaxOoze: {
+	DisplayName: Dynacorrosione
+	FlavorText: Un attacco di tipo Veleno che può essere eseguito dai Pokémon dynamaxizzati. Aumenta l'Attacco Speciale degli alleati.
+}
+
+MaxGeyser: {
+	DisplayName: Dynaflusso
+	FlavorText: Un attacco di tipo Acqua che può essere eseguito dai Pokémon dynamaxizzati. Provoca una forte pioggia per cinque turni.
+}
+
+MaxAirstream: {
+	DisplayName: Dynajet
+	FlavorText: Un attacco di tipo Volante che può essere eseguito dai Pokémon dynamaxizzati. Aumenta la Velocità degli alleati.
+}
+
+MaxStarfall: {
+	DisplayName: Dynafata
+	FlavorText: Un attacco di tipo Folletto che può essere eseguito dai Pokémon dynamaxizzati. Per cinque turni il terreno entra nello stato di Campo Nebbioso.
+}
+
+MaxWyrmwind: {
+	DisplayName: Dynadragone
+	FlavorText: Un attacco di tipo Drago che può essere eseguito dai Pokémon dynamaxizzati. Riduce l'Attacco dei nemici intorno.
+}
+
+MaxMindstorm: {
+	DisplayName: Dynapsiche
+	FlavorText: Un attacco di tipo Psico che può essere eseguito dai Pokémon dynamaxizzati. Per cinque turni il terreno entra nello stato di Campo Psichico.
+}
+
+MaxRockfall: {
+	DisplayName: Dynamacigno
+	FlavorText: Un attacco di tipo Roccia che può essere eseguito dai Pokémon dynamaxizzati. Causa una tempesta di sabbia per cinque turni.
+}
+
+MaxQuake: {
+	DisplayName: Dynasisma
+	FlavorText: Un attacco di tipo Terra che può essere eseguito dai Pokémon dynamaxizzati. Aumenta la Difesa Speciale degli alleati.
+}
+
+MaxDarkness: {
+	DisplayName: Dynatenebre
+	FlavorText: Un attacco di tipo Buio che può essere eseguito dai Pokémon dynamaxizzati. Riduce la Difesa Speciale dei nemici intorno.
+}
+
+MaxOvergrowth: {
+	DisplayName: Dynaflora
+	FlavorText: Un attacco di tipo Erba che può essere eseguito dai Pokémon dynamaxizzati. Per cinque turni il terreno entra nello stato di Campo Erboso.
+}
+
+MaxSteelspike: {
+	DisplayName: Dynametallo
+	FlavorText: Un attacco di tipo Acciaio che può essere eseguito dai Pokémon dynamaxizzati. Aumenta la Difesa degli alleati.
+}
+
+ClangorousSoul: {
+	DisplayName: Dracofonia
+	FlavorText: Chi la usa sacrifica un po' dei suoi PS per aumentare tutte le sue statistiche.
+}
+
+BodyPress: {
+	DisplayName: Schiacciacorpo
+	FlavorText: Chi la usa schiaccia il bersaglio con il suo corpo. Più la sua Difesa è alta, maggiori sono i danni inflitti.
+}
+
+Decorate: {
+	DisplayName: Decorazione
+	FlavorText: Chi la usa agghinda il bersaglio con delle decorazioni aumentandone di molto l'Attacco e l'Attacco Speciale.
+}
+
+DrumBeating: {
+	DisplayName: Tamburattacco
+	FlavorText: Chi la usa percuote il proprio tamburo per controllarne le radici e attaccare il bersaglio, riducendone la Velocità.
+}
+
+SnapTrap: {
+	DisplayName: Tagliola
+	FlavorText: Chi la usa intrappola il bersaglio in una tagliola e lo attacca per quattro o cinque turni.
+}
+
+PyroBall: {
+	DisplayName: Palla Infuocata
+	FlavorText: Chi la usa attacca con una palla creata incendiando una piccola pietra. Può anche scottare il bersaglio.
+}
+
+BehemothBlade: {
+	DisplayName: Taglio Maestoso
+	FlavorText: Chi la usa si trasforma in un'enorme spada e attacca. Se il bersaglio è dynamaxizzato, causa il doppio dei danni.
+}
+
+BehemothBash: {
+	DisplayName: Colpo Maestoso
+	FlavorText: Chi la usa si trasforma in un enorme scudo e attacca. Se il bersaglio è dynamaxizzato, causa il doppio dei danni.
+}
+
+AuraWheel: {
+	DisplayName: Ruota d'Aura
+	FlavorText: Chi la usa emette l'energia accumulata nelle guance per attaccare e aumentare la propria Velocità. Il tipo della mossa cambia in base alla forma assunta da Morpeko.
+}
+
+BreakingSwipe: {
+	DisplayName: Vastoimpatto
+	FlavorText: Chi la usa attacca i nemici intorno con la sua robusta coda riducendone l'Attacco.
+}
+
+BranchPoke: {
+	DisplayName: Ramostoccata
+	FlavorText: Chi la usa attacca il bersaglio con un ramo incredibilmente appuntito.
+}
+
+Overdrive: {
+	DisplayName: Overdrive
+	FlavorText: Chi la usa suona la chitarra o il basso creando un'onda sonora potentissima con cui attacca il bersaglio.
+}
+
+AppleAcid: {
+	DisplayName: Acido Malico
+	FlavorText: Chi la usa attacca il bersaglio con un liquido acido ricavato da mele aspre riducendone la Difesa Speciale.
+}
+
+GravApple: {
+	DisplayName: Forza G
+	FlavorText: Chi la usa fa cadere una mela sul bersaglio da una grande altezza, infliggendogli danni e riducendone la Difesa.
+}
+
+SpiritBreak: {
+	DisplayName: Frantumanima
+	FlavorText: Chi la usa attacca il bersaglio con un tale impeto da fargli perdere la voglia di lottare e ne riduce l'Attacco Speciale.
+}
+
+StrangeSteam: {
+	DisplayName: Vapore Incantato
+	FlavorText: Chi la usa attacca il bersaglio con getti di vapore che possono anche confonderlo.
+}
+
+LifeDew: {
+	DisplayName: Goccia Vitale
+	FlavorText: Sparge tutt'intorno dell'acqua misteriosa che fa recuperare PS a sé a agli alleati in campo.
+}
+
+Obstruct: {
+	DisplayName: Sbarramento
+	FlavorText: Permette di eludere tutti gli attacchi. Se usata in successione può fallire. Se un Pokémon tocca chi la usa, la sua Difesa diminuisce di molto.
+}
+
+FalseSurrender: {
+	DisplayName: Supplicolpo
+	FlavorText: Chi la usa finge di abbassare la testa a mo' di supplica e attacca il bersaglio con i suoi capelli scarmigliati. Questa mossa va sempre a segno.
+}
+
+MeteorAssault: {
+	DisplayName: Sfolgorassalto
+	FlavorText: Chi la usa attacca il bersaglio brandendo un grosso gambo, ma perde l'equilibrio e nel turno successivo non può agire.
+}
+
+Eternabeam: {
+	DisplayName: Raggio Infinito
+	FlavorText: È l'attacco più potente di Eternatus quando assume la sua forma originale. Nel turno successivo non può agire.
+}
+
+SteelBeam: {
+	DisplayName: Raggio d'Acciaio
+	FlavorText: Chi la usa utilizza l'acciaio del proprio corpo per sparare un violento raggio, ma subisce danni.
+}
+
+ExpandingForce: {
+	DisplayName: Vastenergia
+	FlavorText: Chi la usa attacca il bersaglio con energia psichica. Se utilizzata quando è attivo un Campo Psichico, la mossa aumenta di potenza e danneggia tutti i nemici.
+}
+
+SteelRoller: {
+	DisplayName: Ferrorullo
+	FlavorText: Chi la usa attacca eliminando lo stato del terreno di lotta. La mossa fallisce se nel terreno non è attivo alcuno stato.
+}
+
+ScaleShot: {
+	DisplayName: Squamacolpo
+	FlavorText: Il Pokémon attacca lanciando delle squame da due a cinque volte di fila. Aumenta la Velocità di chi la usa, ma ne riduce la Difesa.
+}
+
+MeteorBeam: {
+	DisplayName: Raggiometeora
+	FlavorText: Chi la usa accumula l'energia dello spazio nel primo turno per aumentare l'Attacco Speciale, quindi attacca nel turno successivo.
+}
+
+ShellSideArm: {
+	DisplayName: Armaguscio
+	FlavorText: Il Pokémon esegue un attacco fisico o speciale, in base a quale causa danni maggiori. Può anche avvelenare il bersaglio.
+}
+
+MistyExplosion: {
+	DisplayName: Nebbioscoppio
+	FlavorText: Chi la usa attacca tutti i Pokémon che ha intorno, ma poi va KO. La potenza della mossa aumenta quando è attivo un Campo Nebbioso.
+}
+
+GrassyGlide: {
+	DisplayName: Erboscivolata
+	FlavorText: Chi la usa attacca il bersaglio scivolando sul terreno. Se utilizzata quando è attivo un Campo Erboso, ha priorità alta.
+}
+
+RisingVoltage: {
+	DisplayName: Elettroimpennata
+	FlavorText: Chi la usa attacca con dell'elettricità che si alza dal suolo. La potenza della mossa raddoppia quando l'avversario si trova in un Campo Elettrico.
+}
+
+TerrainPulse: {
+	DisplayName: Campopulsar
+	FlavorText: Chi la usa attacca sfruttando l'energia del terreno di lotta. Il tipo e la potenza della mossa variano a seconda dello stato del terreno stesso.
+}
+
+SkitterSmack: {
+	DisplayName: Strisciacolpo
+	FlavorText: Chi la usa attacca il bersaglio strisciandogli alle spalle e riducendo il suo Attacco Speciale.
+}
+
+BurningJealousy: {
+	DisplayName: Fiamminvidia
+	FlavorText: Chi la usa attacca con la forza dell'invidia, causando una scottatura a tutti i Pokémon le cui statistiche sono aumentate durante quel turno.
+}
+
+LashOut: {
+	DisplayName: Sfogarabbia
+	FlavorText: Chi la usa attacca il bersaglio con tutta la propria ira. Se ha subito riduzioni delle statistiche durante quel turno, la potenza della mossa raddoppia.
+}
+
+Poltergeist: {
+	DisplayName: Poltergeist
+	FlavorText: Chi la usa attacca utilizzando lo strumento del bersaglio. La mossa fallisce se quest'ultimo non ha uno strumento.
+}
+
+CorrosiveGas: {
+	DisplayName: Gas Corrosivo
+	FlavorText: Chi la usa avvolge tutti i Pokémon che ha intorno in un gas altamente acido, dissolvendo i loro strumenti.
+}
+
+Coaching: {
+	DisplayName: Coaching
+	FlavorText: Chi la usa aumenta l'Attacco e la Difesa di tutti gli alleati dando loro indicazioni precise.
+}
+
+FlipTurn: {
+	DisplayName: Virata
+	FlavorText: Chi usa questa mossa fa marcia indietro per farsi sostituire dopo aver sferrato l'attacco.
+}
+
+TripleAxel: {
+	DisplayName: Triplo Axel
+	FlavorText: Chi la usa sferra fino a tre calci consecutivi la cui potenza aumenta a ogni colpo.
+}
+
+DualWingbeat: {
+	DisplayName: Doppia Ala
+	FlavorText: Chi la usa colpisce il bersaglio due volte di fila urtandolo con le ali.
+}
+
+ScorchingSands: {
+	DisplayName: Sabbiardente
+	FlavorText: Chi la usa attacca il bersaglio scagliandogli addosso della sabbia incandescente. Può anche scottarlo.
+}
+
+JungleHealing: {
+	DisplayName: Giunglacura
+	FlavorText: Il Pokémon diventa tutt'uno con la giungla, ripristinando i PS e curando i problemi di stato per sé e per l'alleato in campo.
+}
+
+WickedBlow: {
+	DisplayName: Pugnotenebra
+	FlavorText: Il Pokémon sferra un singolo colpo potentissimo, massima espressione dello stile di tipo Buio. Brutto colpo assicurato.
+}
+
+SurgingStrikes: {
+	DisplayName: Idroraffica
+	FlavorText: Il Pokémon sferra una fluida serie di tre attacchi, massima espressione dello stile di tipo Acqua. Brutto colpo assicurato.
+}
+
+ThunderCage: {
+	DisplayName: Elettrogabbia
+	FlavorText: Il Pokémon attacca il bersaglio imprigionandolo in una gabbia di elettricità, che sprigiona corrente per quattro o cinque turni.
+}
+
+DragonEnergy: {
+	DisplayName: Dragoenergia
+	FlavorText: Il Pokémon attacca i nemici convertendo la propria forza vitale in energia. La potenza della mossa cala man mano che i PS diminuiscono.
+}
+
+FreezingGlare: {
+	DisplayName: Sguardo Gelido
+	FlavorText: Il Pokémon attacca rilasciando energia psichica dagli occhi. Può congelare il bersaglio.
+}
+
+FieryWrath: {
+	DisplayName: Furia Ardente
+	FlavorText: Il Pokémon attacca trasformando la sua rabbia in un'aura simile a fiamme. Può anche far tentennare i nemici.
+}
+
+ThunderousKick: {
+	DisplayName: Calcio Tonante
+	FlavorText: Il Pokémon sferra calci al bersaglio dopo averlo distratto con movimenti fulminei, riducendone la Difesa.
+}
+
+GlacialLance: {
+	DisplayName: Lancia Glaciale
+	FlavorText: Il Pokémon attacca i nemici scagliando una lancia di ghiaccio accompagnata da una tormenta di neve.
+}
+
+AstralBarrage: {
+	DisplayName: Schegge Astrali
+	FlavorText: Il Pokémon attacca i nemici scatenandogli contro una miriade di piccoli spettri.
+}
+
+EerieSpell: {
+	DisplayName: Inquietantesimo
+	FlavorText: Il Pokémon attacca con i suoi potenti poteri psichici. Sottrae tre PP all'ultima mossa usata dal nemico.
+}
+
+DireClaw: {
+	DisplayName: Artigli Fatali
+	// FlavorText: The user lashes out at the target with ruinous claws. This may also leave the target poisoned, paralyzed, or asleep.
+}
+
+PsyshieldBash: {
+	DisplayName: Barrierassalto
+	// FlavorText: Cloaking itself in psychic energy, the user slams into the target. This also boosts the user's Defense stat.
+}
+
+PowerShift.DisplayName: Scambioforza
+
+StoneAxe: {
+	DisplayName: Rocciascure
+	// FlavorText: The user swings its stone axes at the target. Stone splinters left behind by this attack float around the target.
+}
+
+SpringtideStorm: {
+	DisplayName: Tempesta Zefirea
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds brimming with love and hate. This may also lower their Attack stats.
+}
+
+MysticalPower: {
+	DisplayName: Forza Mistica
+	// FlavorText: The user attacks by emitting a mysterious power. This also boosts the user's Sp. Atk stat.
+}
+
+RagingFury: {
+	DisplayName: Ira Furente
+	// FlavorText: The user rampages around spewing flames for two to three turns. The user then becomes confused.
+}
+
+WaveCrash: {
+	DisplayName: Ondaschianto
+	// FlavorText: The user shrouds itself in water and slams into the target with its whole body to inflict damage. This also damages the user quite a lot.
+}
+
+Chloroblast: {
+	DisplayName: Clorofillaser
+	// FlavorText: The user launches its amassed chlorophyll to inflict damage on the target. This also damages the user.
+}
+
+MountainGale: {
+	DisplayName: Soffio d'Iceberg
+	// FlavorText: The user hurls giant chunks of ice at the target to inflict damage. This may also make the target flinch.
+}
+
+VictoryDance: {
+	DisplayName: Danzavittoria
+	// FlavorText: The user performs an intense dance to usher in victory, boosting its Attack, Defense, and Speed stats.
+}
+
+HeadlongRush: {
+	DisplayName: Scontro Frontale
+	// FlavorText: The user smashes into the target in a full-body tackle. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BarbBarrage: {
+	DisplayName: Mille Fielespine
+	// FlavorText: The user launches countless toxic barbs to inflict damage. This may also poison the target. This move's power is doubled if the target is already poisoned.
+}
+
+EsperWing: {
+	DisplayName: Ali d'Aura
+	// FlavorText: The user slashes the target with aura-enriched wings. This also boosts the user's Speed stat. This move has a heightened chance of landing a critical hit.
+}
+
+BitterMalice: {
+	DisplayName: Livore
+	// FlavorText: The user attacks the target with spine-chilling resentment. This also lowers the target's Attack stat.
+}
+
+Shelter: {
+	DisplayName: Barricata
+	// FlavorText: The user makes its skin as hard as an iron shield, sharply boosting its Defense stat.
+}
+
+TripleArrows: {
+	DisplayName: Triplodardo
+	// FlavorText: The user kicks, then fires three arrows. This move has a heightened chance of landing a critical hit and may also lower the target's Defense stat or make it flinch.
+}
+
+InfernalParade: {
+	DisplayName: Corteo Spettrale
+	// FlavorText: The user attacks with myriad fireballs. This may also leave the target with a burn. This move's power is doubled if the target has a status condition.
+}
+
+CeaselessEdge: {
+	DisplayName: Lama Milleflutti
+	// FlavorText: The user slashes its shell blade at the target. Shell splinters left behind by this attack remain scattered under the target as spikes.
+}
+
+BleakwindStorm: {
+	DisplayName: Tempesta Boreale
+	// FlavorText: The user attacks with savagely cold winds that cause both body and spirit to tremble. This may also lower the Speed stats of opposing Pokémon.
+}
+
+WildboltStorm: {
+	DisplayName: Tempesta Tonante
+	// FlavorText: The user summons a thunderous tempest and savagely attacks with lightning and wind. This may also leave opposing Pokémon with paralysis.
+}
+
+SandsearStorm: {
+	DisplayName: Tempesta Ardente
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds and searingly hot sand. This may also leave them with a burn.
+}
+
+LunarBlessing: {
+	DisplayName: Invocaluna
+	// FlavorText: The user receives a blessing from the crescent moon, restoring HP and curing status conditions for itself and its ally Pokémon currently in the battle.
+}
+
+TakeHeart: {
+	DisplayName: Baldimpulso
+	// FlavorText: The user lifts its spirits, curing its own status conditions and boosting its Sp. Atk and Sp. Def stats.
+}
+
+TeraBlast: {
+	DisplayName: Terascoppio
+	// FlavorText: If the user has Terastallized, it unleashes energy of its Tera Type. This move inflicts damage using the Attack or Sp. Atk stat—whichever is higher for the user.
+}
+
+SilkTrap: {
+	DisplayName: Telatrappola
+	// FlavorText: The user spins a silken trap, protecting itself from damage while lowering the Speed stat of any attacker that makes direct contact.
+}
+
+AxeKick: {
+	DisplayName: Calcio ad Ascia
+	// FlavorText: The user attacks by kicking up into the air and slamming its heel down upon the target. This may also confuse the target. If it misses, the user takes damage instead.
+}
+
+LastRespects: {
+	DisplayName: Omaggio ai KO
+	// FlavorText: The user attacks to avenge its allies. The more defeated allies there are in the user's party, the greater the move's power.
+}
+
+LuminaCrash: {
+	DisplayName: Fotocollisione
+	// FlavorText: The user attacks by unleashing a peculiar light that even affects the mind. This also harshly lowers the target's Sp. Def stat.
+}
+
+OrderUp: {
+	DisplayName: Alta Cucina
+	// FlavorText: The user attacks with elegant poise. If the user has a Tatsugiri in its mouth, this move boosts one of the user's stats based on the Tatsugiri's form.
+}
+
+JetPunch: {
+	DisplayName: Pugnojet
+	// FlavorText: The user summons a torrent around its fist and punches at blinding speed. This move always goes first.
+}
+
+SpicyExtract: {
+	DisplayName: Essenza Piccante
+	// FlavorText: The user emits an incredibly spicy extract, sharply boosting the target's Attack stat and harshly lowering the target's Defense stat.
+}
+
+SpinOut: {
+	DisplayName: Slittaruote
+	// FlavorText: The user spins furiously by straining its legs, inflicting damage on the target. This also harshly lowers the user's Speed stat.
+}
+
+PopulationBomb: {
+	DisplayName: Infestazione
+	// FlavorText: The user's fellows gather in droves to perform a combo attack that hits the target one to ten times in a row.
+}
+
+IceSpinner: {
+	DisplayName: Vortighiaccio
+	// FlavorText: The user covers its feet in thin ice and twirls around, slamming into the target. This move's spinning motion also destroys the terrain.
+}
+
+GlaiveRush: {
+	DisplayName: Spadoncarica
+	// FlavorText: The user throws its entire body into a reckless charge. After this move is used, attacks on the user cannot miss and will inflict double damage until the user's next turn.
+}
+
+RevivalBlessing: {
+	DisplayName: Preghiera Vitale
+	// FlavorText: The user bestows a loving blessing, reviving a party Pokémon that has fainted and restoring half that Pokémon's max HP.
+}
+
+SaltCure: {
+	DisplayName: Sotto Sale
+	// FlavorText: The user salt cures the target, inflicting damage every turn. Steel and Water types are more strongly affected by this move.
+}
+
+TripleDive: {
+	DisplayName: Triplo Tuffo
+	// FlavorText: The user performs a perfectly timed triple dive, hitting the target with splashes of water three times in a row.
+}
+
+MortalSpin: {
+	DisplayName: Glitturbine
+	// FlavorText: The user performs a spin attack that can also eliminate the effects of such moves as Bind, Wrap, and Leech Seed. This also poisons opposing Pokémon.
+}
+
+Doodle: {
+	DisplayName: Ricalco
+	// FlavorText: The user captures the very essence of the target in a sketch. This changes the Abilities of the user and its ally Pokémon to that of the target.
+}
+
+FilletAway: {
+	DisplayName: Alleggerimento
+	// FlavorText: The user sharply boosts its Attack, Sp. Atk, and Speed stats by using its own HP.
+}
+
+KowtowCleave: {
+	DisplayName: Genufendente
+	// FlavorText: The user slashes at the target after kowtowing to make the target let down its guard. This attack never misses.
+}
+
+FlowerTrick: {
+	DisplayName: Prestigiafiore
+	// FlavorText: The user throws a rigged bouquet of flowers at the target. This attack never misses and always lands a critical hit.
+}
+
+TorchSong: {
+	DisplayName: Canzone Ardente
+	// FlavorText: The user blows out raging flames as if singing a song, scorching the target. This also boosts the user's Sp. Atk stat.
+}
+
+AquaStep: {
+	DisplayName: Idroballetto
+	// FlavorText: The user toys with the target and attacks it using light and fluid dance steps. This also boosts the user's Speed stat.
+}
+
+RagingBull: {
+	DisplayName: Scatenatoro
+	// FlavorText: The user performs a tackle like a raging bull. This move's type depends on the user's form. It can also break barriers, such as Light Screen and Reflect.
+}
+
+MakeItRain: {
+	DisplayName: Corsa all'Oro
+	// FlavorText: The user attacks by throwing out a mass of coins. This also lowers the user's Sp. Atk stat. Money is earned after the battle.
+}
+
+Psyblade: {
+	DisplayName: Psicolama
+	// FlavorText: The user rends the target with an ethereal blade. This move's power is boosted by 50 percent if the user is on Electric Terrain.
+}
+
+HydroSteam: {
+	DisplayName: Idrovapore
+	// FlavorText: The user blasts the target with boiling-hot water. This move's power is not lowered in harsh sunlight but rather boosted by 50 percent.
+}
+
+Ruination: {
+	DisplayName: Catastrofe
+	// FlavorText: The user summons a ruinous disaster. This cuts the target's HP in half.
+}
+
+CollisionCourse: {
+	DisplayName: Turboschianto
+	// FlavorText: The user transforms and crashes to the ground, causing a massive prehistoric explosion. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ElectroDrift: {
+	DisplayName: Fulmiscatto
+	// FlavorText: The user races forward at ultrafast speeds, piercing its target with futuristic electricity. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ShedTail: {
+	DisplayName: Tagliacoda
+	// FlavorText: The user creates a substitute for itself using its own HP before switching places with a party Pokémon in waiting.
+}
+
+ChillyReception.DisplayName: Freddura
+
+TidyUp: {
+	DisplayName: Pulizie
+	// FlavorText: The user tidies up and removes the effects of Spikes, Stealth Rock, Sticky Web, Toxic Spikes, and Substitute. This also boosts the user's Attack and Speed stats.
+}
+
+Snowscape: {
+	DisplayName: Vista Innevata
+	// FlavorText: The user summons a snowstorm lasting five turns. This boosts the Defense stats of Ice types.
+}
+
+Pounce: {
+	DisplayName: Balzo
+	// FlavorText: The user attacks by pouncing on the target. This also lowers the target's Speed stat.
+}
+
+Trailblaze: {
+	DisplayName: Apripista
+	// FlavorText: The user attacks suddenly as if leaping out from tall grass. The user's nimble footwork boosts its Speed stat.
+}
+
+ChillingWater: {
+	DisplayName: Doccia Fredda
+	// FlavorText: The user attacks the target by showering it with water that's so cold it saps the target's power. This also lowers the target's Attack stat.
+}
+
+HyperDrill: {
+	DisplayName: Ipertrapano
+	// FlavorText: The user spins the pointed part of its body at high speed to pierce the target. This attack can hit a target using a move such as Protect or Detect.
+}
+
+TwinBeam: {
+	DisplayName: Doppioraggio
+	// FlavorText: The user shoots mystical beams from its eyes to inflict damage. The target is hit twice in a row.
+}
+
+RageFist: {
+	DisplayName: Pugno Furibondo
+	// FlavorText: The user converts its rage into energy to attack. The more times the user has been hit by attacks, the greater the move's power.
+}
+
+ArmorCannon: {
+	DisplayName: Corazza Cannone
+	// FlavorText: The user shoots its own armor out as blazing projectiles. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BitterBlade: {
+	DisplayName: Lama del Rimorso
+	// FlavorText: The user focuses its bitter feelings toward the world of the living into a slashing attack. The user's HP is restored by up to half the damage taken by the target.
+}
+
+DoubleShock: {
+	DisplayName: Doppiolampo
+	// FlavorText: The user discharges all the electricity from its body to perform a high-damage attack. After using this move, the user will no longer be Electric type.
+}
+
+GigatonHammer: {
+	DisplayName: Granmartello
+	// FlavorText: The user swings its whole body around to attack with its huge hammer. This move can't be used twice in a row.
+}
+
+Comeuppance: {
+	DisplayName: Ritorsione
+	// FlavorText: The user retaliates with much greater force against the opponent that last inflicted damage on it.
+}
+
+AquaCutter: {
+	DisplayName: Idrotaglio
+	// FlavorText: The user expels pressurized water to cut at the target like a blade. This move has a heightened chance of landing a critical hit.
+}
+
+BlazingTorque.DisplayName: Turboustione
+WickedTorque.DisplayName: Turbotenebra
+NoxiousTorque.DisplayName: Turbotossina
+CombatTorque.DisplayName: Turborissa
+MagicalTorque.DisplayName: Turboincanto
+
+BloodMoon: {
+	// DisplayName: Blood Moon
+	// FlavorText: The user unleashes the full brunt of its spirit from a full moon that shines as red as blood. This move can't be used twice in a row.
+}
+
+MatchaGotcha: {
+	// DisplayName: Matcha Gotcha
+	// FlavorText: The user fires a blast of tea that it mixed. The user's HP is restored by up to half the damage taken by the target. This may also leave the target with a burn.
+}
+
+SyrupBomb: {
+	// DisplayName: Syrup Bomb
+	// FlavorText: The user sets off an explosion of sticky candy syrup, which coats the target and causes the target's Speed stat to drop each turn for three turns.
+}
+
+IvyCudgel: {
+	// DisplayName: Ivy Cudgel
+	// FlavorText: The user strikes with an ivy-wrapped cudgel. This move's type changes depending on the mask worn by the user, and it has a heightened chance of landing a critical hit.
+}
+
+ElectroShot: {
+	DisplayName: Elettroraggio
+	// FlavorText: The user gathers electricity on the first turn, boosting its Sp. Atk stat, then fires a high-voltage shot on the next turn. The shot will be fired immediately in rain.
+}
+
+TeraStarstorm: {
+	DisplayName: Teracluster
+	// FlavorText: With the power of its crystals, the user bombards and eliminates the target. When used by Terapagos in its Stellar Form, this move damages all opposing Pokémon.
+}
+
+FickleBeam: {
+	DisplayName: Irregolaser
+	// FlavorText: The user shoots a beam of light to inflict damage. Sometimes all the user's heads shoot beams in unison, doubling the move's power.
+}
+
+BurningBulwark: {
+	DisplayName: Egida Ignea
+	// FlavorText: The user's intensely hot fur protects it from attacks and also burns any attacker that makes direct contact with it.
+}
+
+Thunderclap: {
+	DisplayName: Saetta
+	// FlavorText: This move enables the user to attack first with a jolt of electricity. This move fails if the target is not readying an attack.
+}
+
+MightyCleave: {
+	DisplayName: Taglio Poderoso
+	// FlavorText: The user wields the light that has accumulated atop its head to cleave the target. This move hits even if the target protects itself.
+}
+
+TachyonCutter: {
+	DisplayName: Tachiontaglio
+	// FlavorText: The user attacks by launching particle blades at the target twice in a row. This attack never misses.
+}
+
+HardPress: {
+	DisplayName: Pressa d'Acciaio
+	// FlavorText: The target is crushed with an arm, a claw, or the like to inflict damage. The more HP the target has left, the greater the move's power.
+}
+
+DragonCheer: {
+	DisplayName: Grido del Drago
+	// FlavorText: The user raises its allies' morale with a draconic cry so that their future attacks have a heightened chance of landing critical hits. This rouses Dragon types more.
+}
+
+AlluringVoice: {
+	DisplayName: Ammaliavoce
+	// FlavorText: The user attacks the target using its angelic voice. This also confuses the target if its stats have been boosted during the turn.
+}
+
+TemperFlare: {
+	DisplayName: Rabbia Bruciante
+	// FlavorText: Spurred by desperation, the user attacks the target. This move's power is doubled if the user's previous move failed.
+}
+
+SupercellSlam: {
+	DisplayName: Elettrotuffo
+	// FlavorText: The user electrifies its body and drops onto the target to inflict damage. If this move misses, the user takes damage instead.
+}
+
+PsychicNoise: {
+	DisplayName: Psicorumore
+	// FlavorText: The user attacks the target with unpleasant sound waves. For two turns, the target is prevented from recovering HP through moves, Abilities, or held items.
+}
+
+UpperHand: {
+	DisplayName: Colpo di Mano
+	// FlavorText: The user reacts to the target's movement and strikes with the heel of its palm, making the target flinch. This move fails if the target is not readying a priority move.
+}
+
+MalignantChain: {
+	DisplayName: Intossicatena
+	// FlavorText: The user pours toxins into the target by wrapping them in a toxic, corrosive chain. This may also leave the target badly poisoned.
+}

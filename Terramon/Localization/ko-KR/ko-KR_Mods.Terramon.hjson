@@ -3,6 +3,11 @@ Buffs: {
 		DisplayName: 파트너 포켓몬
 		Description: "{0}이(가) 당신을 따라옵니다!"
 	}
+
+	PokeBannerBuff: {
+		// DisplayName: Pokémon Banner
+		// Description: Bonuses active for nearby companions:
+	}
 }
 
 Commands: {
@@ -83,6 +88,14 @@ Commands: {
 		NopUpgrade: 업그레이드할 포켓몬을 인벤토리에서 찾을 수 없습니다
 		Success: 내 PC에서 {0} 포켓몬을 업그레이드하고 전송하는데 성공했습니다
 	}
+
+	BannerData: {
+		// Description: Change the tier of the currently held Pokémon banner
+		// Usage: /bannerset <tier>
+		// NotHoldingBanner: The currently held item is not a Pokémon banner
+		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
+		// Success: Successfully changed the banner tier for the held banner to {0}
+	}
 }
 
 Configs: {
@@ -105,6 +118,11 @@ Configs: {
 			Tooltip: 포켓몬이 포켓몬 도감에 새로 등록되었을 때 채팅에 메시지를 표시할지 여부
 		}
 
+		LegacyStarterSelectUI: {
+			// Label: (Starter Selection) Use Legacy UI
+			// Tooltip: Uses the older starter selection interface from earlier versions of the mod
+		}
+
 		ReducedAudio: {
 			Label: (파티 사운드바) 소리 감소
 			Tooltip: 사이드바에서 포켓몬을 재배치할 때 음악을 비활성화한다
@@ -113,6 +131,11 @@ Configs: {
 		ReducedMotion: {
 			Label: (인벤토리 슬롯) 움직임 제거
 			Tooltip: 인벤토리에서 파티를 보고 숨길 때 애니메이션을 비활성화한다
+		}
+
+		ShowPetNameOnHover: {
+			// Label: Show Pokémon Companion Name on Hover
+			// Tooltip: Whether to show the Pokémon companion's name when hovering over it in the world
 		}
 
 		ModIconType: {
@@ -128,6 +151,16 @@ Configs: {
 		RainbowBuffText: {
 			Label: 무지개 버프 텍스트
 			Tooltip: 파트너 포켓몬 버프 이름이 무지개색으로 순환한다
+		}
+
+		ThickHighlights: {
+			// Label: Thick Pokémon Highlight Outlines
+			// Tooltip: Whether to use thicker outlines when highlighting Pokémon you can interact or battle with
+		}
+
+		HighlightColor: {
+			// Label: Pokémon Highlight Color
+			// Tooltip: Customize the color of the outline shown when hovering over a Pokémon that you can interact or battle with
 		}
 	}
 
@@ -148,6 +181,15 @@ Configs: {
 				야생에서 포켓몬이 생성되는 속도를 조절한다
 				[c/F2A754:0으로 설정하면, 포켓몬이 전혀 생성되지 않는다]
 				'''
+		}
+
+		NonPokemonSpawnRateMultiplier: {
+			// Label: Non-Pokémon Spawn Rate Multiplier
+			/* Tooltip:
+				'''
+				Multiplies the rate at which non-Pokémon NPCs spawn, including modded ones
+				[c/F2A754:If set to 0, regular Terraria enemies and other modded NPCs will not spawn at all]
+				''' */
 		}
 
 		SpawningStage: {
@@ -187,10 +229,26 @@ Configs: {
 
 	SpawningStage: {
 		Tooltip: ""
-		Basic.Label: 미진화 포켓몬/Basic Pokémon
-		Stage1.Label: 2진화 포켓몬/Stage 1 Pokémon
-		Stage2.Label: 3진화 포켓몬/Stage 2 Pokémon
-		Legendary.Label: 전설/환상의 포켓몬
+
+		Basic: {
+			Label: 미진화 포켓몬/Basic Pokémon
+			// Tooltip: ""
+		}
+
+		Stage1: {
+			Label: 2진화 포켓몬/Stage 1 Pokémon
+			// Tooltip: ""
+		}
+
+		Stage2: {
+			Label: 3진화 포켓몬/Stage 2 Pokémon
+			// Tooltip: ""
+		}
+
+		Legendary: {
+			Label: 전설/환상의 포켓몬
+			// Tooltip: ""
+		}
 	}
 }
 
@@ -212,17 +270,63 @@ GUI: {
 			'''
 		SlotTooltipPCMode: "[c/FFFFFF:파티에 있음]"
 		SlotTooltipPCModeActive: "[c/FFFFFF:파티에 있음 (활성화)]"
+		// SlotTooltipUseItem: Left click to use {0}
+		// SlotTooltipGiveHeldItem: Right click to give {0}
+		// SlotTooltipSwapHeldItem: Right click to swap with held {0}
+		// SlotTooltipSwapHeldItemSpecify: Right click to swap {0} with held {1}
 		CannotRemoveLastPokemon: 파티에는 최소한 한마리의 포켓몬이 있어야합니다!
-		}
+		// CannotGiveItemStack: Cannot give a stack of items! Reduce stack to 1.
+	}
 
-	PC.RenameLabel: 박스 이름 바꾸기
+	PC: {
+		RenameLabel: 박스 이름 바꾸기
+		// ChangeColor: Change Color
+		// SaveColor: Save Color
+		// SaveColorUnsavedChanges: Save Color (*)
+		// ResetToDefaultColor: Reset to Default Color
+		// DragToMove: Click and drag to move
+	}
 
 	Starter: {
 		Title: 포켓몬의 세계에 오신 것을 환영합니다! 테라몬 모드를 설치해 주셔서 감사합니다!
 		Subtitle: 이제, 첫번째 포켓몬을 선택해 모험을 시작하세요!
 		Hint: (Back키로 닫기)
-		ComingSoon: 출시 예정...
 		ChosenMessage: 당신은 {0} [c/{1}:{2}] 을(를) 첫번째 포켓몬으로 선택했습니다!
+		ComingSoon: 출시 예정...
+
+		Banner: {
+			// PickThisOne: Pick this one!
+
+			SecretHoverText: {
+				// ReadyToStart: "{0} seems ready to get started!"
+				// GoodMood: "{0} looks like it's in a good mood!"
+				// FullOfExcitement: "{0} is full of excitement!"
+				// Curious: "{0} seems curious about you!"
+				// Waiting: "{0} looks like it's waiting for something!"
+				// SparkOfEnergy: "{0} seems to have a spark of energy!"
+				// BouncingWithExcitement: "{0} is bouncing with excitement!"
+				// ReadyToPlay: "{0} looks like it's ready to play!"
+				// EagerToShow: "{0} is eager to show you what it can do!"
+				// ReadyToImpress: "{0} looks ready to impress!"
+			}
+		}
+
+		Generations: {
+			// Gen1: Generation I (Kanto)
+			// Gen2: Generation II (Johto)
+			// Gen3: Generation III (Hoenn)
+			// Gen4: Generation IV (Sinnoh)
+			// Gen5: Generation V (Unova)
+			// Gen6: Generation VI (Kalos)
+			// Gen7: Generation VII (Alola)
+			// Gen8: Generation VIII (Galar)
+		}
+
+		Legacy: {
+			// Title: Welcome to the world of Pokémon! Thank you for installing the Terramon mod!
+			// Subtitle: Now, please choose your starter Pokémon to begin your adventure!
+			// ChosenMessage: You chose the {0} [c/{1}:{2}] as your starter Pokémon!
+		}
 	}
 
 	NPCShop: {
@@ -266,6 +370,15 @@ GUI: {
 		Entry: 특징
 	}
 
+	TurnBased: {
+		ButtonLabels: {
+			// Fight: Fight
+			// Bag: Bag
+			// Pokemon: Pokémon
+			// Run: Run
+		}
+	}
+
 	ControllerHints: {
 		Release: 놓아주기
 		SwitchPage: 페이지 전환
@@ -279,7 +392,11 @@ CommonTooltips: {
 		다양한 몬스터볼을 만드는 데 사용할 수 있다
 		'''
 	EvolutionaryItem: 진화 아이템
+	// HeldItem: Held item
 	KeyItem: 중요한 도구
+	// RecoveryItem: Pokémon recovery item
+	// Potion: A spray-type medicine for wounds
+	// Revive: A medicine that revives a fainted Pokémon
 	Vitamin: 비타민
 	RightClickPlace: 우클릭으로 설치 가능
 	PCItems: 포켓몬 박스 시스템에 접근한다
@@ -288,6 +405,14 @@ CommonTooltips: {
 		'장식용'
 		아이템 액자에 설치 가능
 		'''
+	// MegaStone: Mega Stone - {0}
+	/* MegaStoneTip:
+		'''
+		One of a variety of mysterious Mega Stones
+		Any {0} holding this stone will be able to Mega Evolve during battle
+		''' */
+	// TerramonFishChance: "{0}% chance to catch Pokémon or treasure"
+	// ValuableItem: Valuable item
 	Unobtainable: 얻을 수 없음
 }
 
@@ -375,6 +500,36 @@ Items: {
 	AetherBallMiniItem: {
 		DisplayName: "{$Items.AetherBallItem.DisplayName} (소형)"
 		Tooltip: ""
+	}
+
+	Potion: {
+		// DisplayName: Potion
+		// Tooltip: Restores the HP of one Pokémon by just 20 points
+	}
+
+	SuperPotion: {
+		// DisplayName: Super Potion
+		// Tooltip: Restores the HP of one Pokémon by 50 points
+	}
+
+	HyperPotion: {
+		// DisplayName: Hyper Potion
+		// Tooltip: Restores the HP of one Pokémon by 200 points
+	}
+
+	MaxPotion: {
+		// DisplayName: Max Potion
+		// Tooltip: Completely restores the HP of a single Pokémon
+	}
+
+	Revive: {
+		// DisplayName: Revive
+		// Tooltip: Restores half the Pokémon's maximum HP
+	}
+
+	MaxRevive: {
+		// DisplayName: Max Revive
+		// Tooltip: Fully restores the Pokémon's HP
 	}
 
 	RareCandy: {
@@ -569,6 +724,174 @@ Items: {
 		DisplayName: 민화의 초대
 		Tooltip: "'L. Walter'"
 	}
+
+	PokeBannerItem: {
+		// DisplayName: "{0} Banner"
+		// ShinyDisplayName: Shiny {0} Banner
+		/* Tooltip:
+			'''
+			Nearby {0} companions grow quicker and unleash stronger attacks
+			Right click while holding to cycle through visual styles
+			''' */
+	}
+
+	LuckyEgg: {
+		// DisplayName: Lucky Egg
+		// Tooltip: An egg filled with happiness that earns the holder extra Exp. Points
+	}
+
+	ExpShare: {
+		// DisplayName: Exp. Share
+		// Tooltip: Turning on this special device will allow all the Pokémon on your team to receive Exp. Points from battles
+	}
+
+	ExpCharm: {
+		// DisplayName: Exp. Charm
+		/* Tooltip:
+			'''
+			Having one of these charms increases the Exp. Points your Pokémon get
+			It's a strange, stretchy charm that encourages growth
+			''' */
+	}
+
+	Nugget: {
+		// DisplayName: Nugget
+		/* Tooltip:
+			'''
+			A nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			''' */
+	}
+
+	BigNugget: {
+		// DisplayName: Big Nugget
+		/* Tooltip:
+			'''
+			A big nugget of pure gold that gives off a lustrous gleam
+			It can be sold at a high price to shops
+			''' */
+	}
+
+	TinyMushroom: {
+		// DisplayName: Tiny Mushroom
+		/* Tooltip:
+			'''
+			A small and rare mushroom
+			It's quite popular with a certain class of collectors
+			''' */
+	}
+
+	BigMushroom: {
+		// DisplayName: Big Mushroom
+		/* Tooltip:
+			'''
+			A large and rare mushroom
+			It's extremely popular with a certain class of collectors
+			''' */
+	}
+
+	Pearl: {
+		// DisplayName: Pearl
+		/* Tooltip:
+			'''
+			A rather small pearl that has a nice silvery sheen to it
+			It can be sold at a low price to shops
+			''' */
+	}
+
+	BigPearl: {
+		// DisplayName: Big Pearl
+		/* Tooltip:
+			'''
+			A rather large pearl that has a nice silvery sheen to it
+			It can be sold at a high price to shops
+			''' */
+	}
+
+	SilverLeaf: {
+		// DisplayName: Silver Leaf
+		/* Tooltip:
+			'''
+			A mysterious silver leaf
+			No trees with this leaf have been found yet
+			''' */
+	}
+
+	GoldLeaf: {
+		// DisplayName: Gold Leaf
+		/* Tooltip:
+			'''
+			A mysterious gold leaf
+			No trees with this leaf have been found yet
+			''' */
+	}
+
+	RelicCopper: {
+		// DisplayName: Relic Copper
+		// Tooltip: A copper coin used by an ancient civilization about three thousand years ago
+	}
+
+	RelicSilver: {
+		// DisplayName: Relic Silver
+		// Tooltip: A silver coin used by an ancient civilization about three thousand years ago
+	}
+
+	RelicGold: {
+		// DisplayName: Relic Gold
+		// Tooltip: A gold coin used by an ancient civilization about three thousand years ago
+	}
+
+	RareSweetfish: {
+		// DisplayName: Rare Sweetfish
+		/* Tooltip:
+			'''
+			A fish that is packed with energy
+			If consumed, it raises a Pokémon's level by one
+			''' */
+	}
+
+	OldRod: {
+		// DisplayName: Old Rod
+		// Tooltip: An old and beat-up fishing rod
+	}
+
+	GoodRod: {
+		// DisplayName: Good Rod
+		// Tooltip: A new, good-quality fishing rod
+	}
+
+	SuperRod: {
+		// DisplayName: Super Rod
+		/* Tooltip:
+			'''
+			An awesome, high-spec fishing rod
+			Allows fishing in lava
+			''' */
+	}
+}
+
+MegaStoneNames: {
+	// Venusaur: Venusaurite
+	// CharizardX: Charizardite X
+	// CharizardY: Charizardite Y
+	// Blastoise: Blastoisinite
+	// Beedrill: Beedrillite
+	// Pidgeot: Pidgeotite
+	// RaichuX: Raichunite X
+	// RaichuY: Raichunite Y
+	// Clefable: Clefablite
+	// Alakazam: Alakazite
+	// Victreebel: Victreebelite
+	// Slowbro: Slowbronite
+	// Gengar: Gengarite
+	// Kangaskhan: Kangaskhanite
+	// Starmie: Starminite
+	// Pinsir: Pinsirite
+	// Gyarados: Gyaradosite
+	// Aerodactyl: Aerodactylite
+	// Dragonite: Dragoninite
+	// MewtwoX: Mewtwonite X
+	// MewtwoY: Mewtwonite Y
 }
 
 Keybinds: {
@@ -667,7 +990,12 @@ WorldGen.ItemsPass: 사탕 흩뿌리기
 Misc: {
 	CatchSuccess: 신난다! [c/{0}:{1}]을(를) 잡았다!
 	CatchSuccessPC: 신난다! [c/{0}:{1}]을(를) 잡고 {3}의 PC로 전송했다!
+	// CatchSuccessPCCustomBoxName: Gotcha! [c/{0}:{1}] was caught and transferred to "{2}" ({3}) in {4}'s PC!
 	CatchSuccessPCNoRoom: 신난다! [c/{0}:{1}]를 잡았지만, {2}의 PC에 자리가 없다!
+	// CatchMilestone3: You've obtained your 3rd {0}!
+	// CatchMilestone6: You've obtained your 6th {0}!
+	// CatchMilestone9: You've obtained your 9th {0}!
+	// CatchMilestone12: You've obtained your 12th {0}!
 	PokedexRegistered: "{0}의 데이터가 새로 포켓몬 도감에 등록됩니다!"
 	PCBoxDefaultName: 박스 {0}
 	RequireStarter: 먼저 첫번째 포켓몬을 고르세요!
@@ -677,6 +1005,10 @@ Misc: {
 	PokemonEvolutionReady: "{0}은(는) 진화할 준비가 되있다!"
 	RareCandyUse: "{0}은(는) 레벨 {1}이(가) 되었다!"
 	ExpCandyUse: 당신의 포켓몬은 {0} 경험치를 얻었다!
+	// PotionUse: "{0}'s HP was restored by {1} {^1:point;points}!"
+	// ReviveUse: "{0} was revived with half its HP restored!"
+	// MaxReviveUse: "{0} was revived with full HP restored!"
+	// Trainer: Trainer
 	MOTD:
 		'''
 		당신은 {0} v{1}를 설치했습니다-즐기세요! [i:{2}]
@@ -684,3 +1016,5 @@ Misc: {
 		[c/C9C9E5:모드 설정 메뉴에서 모드를 원하는 대로 사용자 지정하고 설정 메뉴에서 지정 키를 설정하세요.]
 		'''
 }
+
+// Projectiles.PokeBallBobber.DisplayName: Poke Ball Bobber

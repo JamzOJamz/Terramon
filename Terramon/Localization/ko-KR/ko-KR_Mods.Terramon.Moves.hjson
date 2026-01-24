@@ -1,0 +1,4479 @@
+Pound: {
+	DisplayName: 막치기
+	FlavorText: 긴 꼬리나 손 등을 사용하여 상대를 때려서 공격한다.
+}
+
+KarateChop: {
+	DisplayName: 태권당수
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+DoubleSlap: {
+	DisplayName: 연속뺨치기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+CometPunch: {
+	DisplayName: 연속펀치
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MegaPunch: {
+	DisplayName: 메가톤펀치
+	FlavorText: 힘을 담은 펀치로 상대를 공격한다.
+}
+
+PayDay: {
+	DisplayName: 고양이돈받기
+	FlavorText: 상대의 몸에 돈을 세게 던져서 공격한다. 배틀 후에 돈을 받을 수 있다.
+}
+
+FirePunch: {
+	DisplayName: 불꽃펀치
+	FlavorText: 불꽃을 담은 펀치로 상대를 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+IcePunch: {
+	DisplayName: 냉동펀치
+	FlavorText: 냉기를 담은 펀치로 상대를 공격한다. 얼음 상태로 만들 때가 있다.
+}
+
+ThunderPunch: {
+	DisplayName: 번개펀치
+	FlavorText: 전격을 담은 펀치로 상대를 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+Scratch: {
+	DisplayName: 할퀴기
+	FlavorText: 단단하고 뾰족한 날카로운 손톱으로 상대를 할퀴어서 공격한다.
+}
+
+ViceGrip: {
+	DisplayName: 찝기
+	FlavorText: 상대를 양쪽에서 집어서 데미지를 준다.
+}
+
+Guillotine: {
+	DisplayName: 가위자르기
+	FlavorText: 큰 집게로 상대를 베어 갈라 공격한다. 맞으면 일격에 기절한다.
+}
+
+RazorWind: {
+	DisplayName: 칼바람
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SwordsDance: {
+	DisplayName: 칼춤
+	FlavorText: 싸움의 춤을 격렬하게 춰서 기세를 높인다. 자신의 공격을 크게 올린다.
+}
+
+Cut: {
+	DisplayName: 풀베기
+	FlavorText: 낫이나 발톱 등으로 상대를 베어 공격한다.
+}
+
+Gust: {
+	DisplayName: 바람일으키기
+	FlavorText: 날개로 일으킨 격한 바람을 상대에게 부딪쳐서 공격한다.
+}
+
+WingAttack: {
+	DisplayName: 날개치기
+	FlavorText: 크게 펼친 훌륭한 날개를 상대에게 부딪쳐서 공격한다.
+}
+
+Whirlwind: {
+	DisplayName: 날려버리기
+	FlavorText: 상대를 날려버려서 교대할 포켓몬을 끌어낸다. 야생의 경우에는 배틀이 끝난다.
+}
+
+Fly: {
+	DisplayName: 공중날기
+	FlavorText: 1턴째에 하늘을 날아 2턴째에 상대를 공격한다.
+}
+
+Bind: {
+	DisplayName: 조이기
+	FlavorText: 긴 몸이나 덩굴 등을 써서 4-5턴 동안 상대를 조여 공격한다.
+}
+
+Slam: {
+	DisplayName: 힘껏치기
+	FlavorText: 긴 꼬리나 덩굴 등을 사용해 상대를 힘껏 쳐서 공격한다.
+}
+
+VineWhip: {
+	DisplayName: 덩굴채찍
+	FlavorText: 채찍처럼 휘어지는 가늘고 긴 덩굴로 상대를 힘껏 쳐서 공격한다.
+}
+
+Stomp: {
+	DisplayName: 짓밟기
+	FlavorText: 큰 발로 상대를 짓밟아서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+DoubleKick: {
+	DisplayName: 두번치기
+	FlavorText: 2개의 다리로 상대를 걷어차서 공격한다. 2회 연속으로 데미지를 준다.
+}
+
+MegaKick: {
+	DisplayName: 메가톤킥
+	FlavorText: 굉장한 힘을 담은 킥으로 상대를 걷어차서 공격한다.
+}
+
+JumpKick: {
+	DisplayName: 점프킥
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+RollingKick: {
+	DisplayName: 돌려차기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SandAttack: {
+	DisplayName: 모래뿌리기
+	FlavorText: 상대의 얼굴에 모래를 뿌려서 명중률을 떨어뜨린다.
+}
+
+Headbutt: {
+	DisplayName: 박치기
+	FlavorText: 머리를 내밀어 곧장 돌진하여 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+HornAttack: {
+	DisplayName: 뿔찌르기
+	FlavorText: 날카롭고 뾰족한 뿔로 상대를 공격한다.
+}
+
+FuryAttack: {
+	DisplayName: 마구찌르기
+	FlavorText: 뿔이나 부리로 상대를 찔러서 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+HornDrill: {
+	DisplayName: 뿔드릴
+	FlavorText: 회전하는 뿔을 상대에게 꿰찔러서 공격한다. 맞으면 일격에 기절한다.
+}
+
+Tackle: {
+	DisplayName: 몸통박치기
+	FlavorText: 상대를 향해서 몸 전체를 부딪쳐가며 공격한다.
+}
+
+BodySlam: {
+	DisplayName: 누르기
+	FlavorText: 몸 전체로 상대를 덮쳐눌러 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+Wrap: {
+	DisplayName: 김밥말이
+	FlavorText: 긴 몸이나 덩굴 등을 사용해 4-5턴 동안 상대를 휘감아 공격한다.
+}
+
+TakeDown: {
+	DisplayName: 돌진
+	FlavorText: 굉장한 기세로 상대에게 부딪쳐 공격한다. 자신도 조금 데미지를 입는다.
+}
+
+Thrash: {
+	DisplayName: 난동부리기
+	FlavorText: 2-3턴 동안 마구 난동 부려서 상대를 공격한다. 난동 부린 뒤에는 혼란에 빠진다.
+}
+
+DoubleEdge: {
+	DisplayName: 이판사판태클
+	FlavorText: 목숨을 걸고 상대에게 돌진하여 공격을 한다. 자신도 상당한 데미지를 입는다.
+}
+
+TailWhip: {
+	DisplayName: 꼬리흔들기
+	FlavorText: 꼬리를 좌우로 귀엽게 흔들어 방심을 유도한다. 상대의 방어를 떨어뜨린다.
+}
+
+PoisonSting: {
+	DisplayName: 독침
+	FlavorText: 독이 있는 침을 상대에게 꿰찔러서 공격한다. 독 상태로 만들 때가 있다.
+}
+
+Twineedle: {
+	DisplayName: 더블니들
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+PinMissile: {
+	DisplayName: 바늘미사일
+	FlavorText: 날카로운 침을 상대에게 발사해서 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+Leer: {
+	DisplayName: 째려보기
+	FlavorText: 날카로운 눈초리로 겁을 주어 상대의 방어를 떨어뜨린다.
+}
+
+Bite: {
+	DisplayName: 물기
+	FlavorText: 날카롭고 뾰족한 이빨로 물어서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+Growl: {
+	DisplayName: 울음소리
+	FlavorText: 귀여운 울음소리를 들려주고 관심을 끌어 방심한 사이에 상대의 공격을 떨어뜨린다.
+}
+
+Roar: {
+	DisplayName: 울부짖기
+	FlavorText: 상대를 도망가게 해서 교대할 포켓몬을 끌어낸다. 야생의 경우에는 배틀이 끝난다.
+}
+
+Sing: {
+	DisplayName: 노래하기
+	FlavorText: 기분 좋은 예쁜 노랫소리를 들려주고 상대를 잠듦 상태로 만든다.
+}
+
+Supersonic: {
+	DisplayName: 초음파
+	FlavorText: 특수한 음파를 몸에서 발산하여 상대를 혼란시킨다.
+}
+
+SonicBoom: {
+	DisplayName: 소닉붐
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Disable: {
+	DisplayName: 사슬묶기
+	FlavorText: 상대의 움직임을 막아 바로 전에 쓴 기술을 4턴 동안 사용할 수 없게 만든다.
+}
+
+Acid: {
+	DisplayName: 용해액
+	FlavorText: 강한 산을 상대에게 끼얹어 공격한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+Ember: {
+	DisplayName: 불꽃세례
+	FlavorText: 작은 불꽃을 상대에게 발사하여 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+Flamethrower: {
+	DisplayName: 화염방사
+	FlavorText: 세찬 불꽃을 상대에게 발사하여 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+Mist: {
+	DisplayName: 흰안개
+	FlavorText: 하얀 안개로 몸을 덮는다. 5턴 동안 상대에 의해 능력이 떨어지지 않게 된다.
+}
+
+WaterGun: {
+	DisplayName: 물대포
+	FlavorText: 물을 기세 좋게 상대에게 발사하여 공격한다.
+}
+
+HydroPump: {
+	DisplayName: 하이드로펌프
+	FlavorText: 대량의 물을 세찬 기세로 상대에게 발사하여 공격한다.
+}
+
+Surf: {
+	DisplayName: 파도타기
+	FlavorText: 큰 파도로 자신의 주위에 있는 포켓몬을 공격한다.
+}
+
+IceBeam: {
+	DisplayName: 냉동빔
+	FlavorText: 냉동빔을 상대에게 발사하여 공격한다. 얼음 상태로 만들 때가 있다.
+}
+
+Blizzard: {
+	DisplayName: 눈보라
+	FlavorText: 세찬 눈보라를 상대에게 내뿜어 공격한다. 얼음 상태로 만들 때가 있다.
+}
+
+Psybeam: {
+	DisplayName: 환상빔
+	FlavorText: 이상한 광선을 상대에게 발사하여 공격한다. 혼란시킬 때가 있다.
+}
+
+BubbleBeam: {
+	DisplayName: 거품광선
+	FlavorText: 거품을 기세 좋게 상대에게 발사하여 공격한다. 스피드를 떨어뜨릴 때가 있다.
+}
+
+AuroraBeam: {
+	DisplayName: 오로라빔
+	FlavorText: 무지개색의 빔을 상대에게 발사하여 공격한다. 공격을 떨어뜨릴 때가 있다.
+}
+
+HyperBeam: {
+	DisplayName: 파괴광선
+	FlavorText: 강한 광선을 상대에게 발사하여 공격한다. 다음 턴은 움직일 수 없다.
+}
+
+Peck: {
+	DisplayName: 쪼기
+	FlavorText: 날카롭고 뾰족한 부리나 뿔로 상대를 쪼아서 공격한다.
+}
+
+DrillPeck: {
+	DisplayName: 회전부리
+	FlavorText: 회전하면서 뾰족한 부리를 상대에게 꿰찔러 공격한다.
+}
+
+Submission: {
+	DisplayName: 지옥의바퀴
+	FlavorText: 땅에 자신과 함께 상대를 내던져 공격한다. 자신도 조금 데미지를 입는다.
+}
+
+LowKick: {
+	DisplayName: 안다리걸기
+	FlavorText: 발을 강하게 걸고 상대를 넘어뜨려 공격한다. 상대가 무거울수록 위력이 올라간다.
+}
+
+Counter: {
+	DisplayName: 카운터
+	FlavorText: 상대로부터 받은 물리공격의 데미지를 2배로 만들어 같은 상대에게 돌려준다.
+}
+
+SeismicToss: {
+	DisplayName: 지구던지기
+	FlavorText: 인력을 사용해 내던진다. 자신의 레벨과 똑같은 데미지를 상대에게 준다.
+}
+
+Strength: {
+	DisplayName: 괴력
+	FlavorText: 혼신의 힘으로 상대를 세게 때려서 공격한다.
+}
+
+Absorb: {
+	DisplayName: 흡수
+	FlavorText: 양분을 흡수하여 공격한다. 상대에게 입힌 데미지의 절반에 해당하는 HP를 회복할 수 있다.
+}
+
+MegaDrain: {
+	DisplayName: 메가드레인
+	FlavorText: 양분을 흡수하여 공격한다. 상대에게 입힌 데미지의 절반에 해당하는 HP를 회복할 수 있다.
+}
+
+LeechSeed: {
+	DisplayName: 씨뿌리기
+	FlavorText: 씨가 뿌려진 상대의 HP를 매 턴 조금씩 흡수하여 자신의 HP를 회복한다.
+}
+
+Growth: {
+	DisplayName: 성장
+	FlavorText: 몸을 일시에 크게 성장시켜 공격과 특수공격을 올린다.
+}
+
+RazorLeaf: {
+	DisplayName: 잎날가르기
+	FlavorText: 잎사귀를 날려 상대를 베어 공격한다. 급소에 맞기 쉽다.
+}
+
+SolarBeam: {
+	DisplayName: 솔라빔
+	FlavorText: 1턴째에 빛을 가득 모아 2턴째에 빛의 다발을 발사하여 공격한다.
+}
+
+PoisonPowder: {
+	DisplayName: 독가루
+	FlavorText: 독이 있는 가루를 많이 흩뿌려서 상대를 독 상태로 만든다.
+}
+
+StunSpore: {
+	DisplayName: 저리가루
+	FlavorText: 저리가루를 많이 흩뿌려서 상대를 마비 상태로 만든다.
+}
+
+SleepPowder: {
+	DisplayName: 수면가루
+	FlavorText: 잠이 오는 가루를 많이 흩뿌려서 상대를 잠듦 상태로 만든다.
+}
+
+PetalDance: {
+	DisplayName: 꽃잎댄스
+	FlavorText: 2-3턴 동안 꽃을 흩뿌려서 상대를 공격한다. 흩뿌린 뒤에는 혼란에 빠진다.
+}
+
+StringShot: {
+	DisplayName: 실뿜기
+	FlavorText: 입에서 뿜어낸 실을 휘감아서 상대의 스피드를 크게 떨어뜨린다.
+}
+
+DragonRage: {
+	DisplayName: 용의분노
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FireSpin: {
+	DisplayName: 회오리불꽃
+	FlavorText: 세차게 소용돌이치는 불꽃 속에 4-5턴 동안 상대를 가두어 공격한다.
+}
+
+ThunderShock: {
+	DisplayName: 전기쇼크
+	FlavorText: 전기 자극을 상대에게 날려서 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+Thunderbolt: {
+	DisplayName: 10만볼트
+	FlavorText: 강한 전격을 상대에게 날려서 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+ThunderWave: {
+	DisplayName: 전기자석파
+	FlavorText: 약한 전격을 날려서 상대를 마비 상태로 만든다.
+}
+
+Thunder: {
+	DisplayName: 번개
+	FlavorText: 강한 번개를 상대에게 떨어뜨려 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+RockThrow: {
+	DisplayName: 돌떨구기
+	FlavorText: 작은 바위를 들어올려 상대에게 내던져서 공격한다.
+}
+
+Earthquake: {
+	DisplayName: 지진
+	FlavorText: 지진의 충격으로 자신의 주위에 있는 포켓몬을 공격한다.
+}
+
+Fissure: {
+	DisplayName: 땅가르기
+	FlavorText: 땅이 갈라진 곳에 상대를 떨어뜨려 공격한다. 맞으면 일격에 기절한다.
+}
+
+Dig: {
+	DisplayName: 구멍파기
+	FlavorText: 1턴째에 파고들어 2턴째에 상대를 공격한다.
+}
+
+Toxic: {
+	DisplayName: 맹독
+	FlavorText: 상대를 맹독의 상태로 만든다. 턴이 진행될수록 독의 데미지가 증가한다.
+}
+
+Confusion: {
+	DisplayName: 염동력
+	FlavorText: 약한 염동력을 상대에게 보내어 공격한다. 상대를 혼란시킬 때가 있다.
+}
+
+Psychic: {
+	DisplayName: 사이코키네시스
+	FlavorText: 강한 염동력을 상대에게 보내어 공격한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+Hypnosis: {
+	DisplayName: 최면술
+	FlavorText: 졸음을 유도하는 암시를 걸어서 상대를 잠듦 상태로 만든다.
+}
+
+Meditate: {
+	DisplayName: 요가포즈
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Agility: {
+	DisplayName: 고속이동
+	FlavorText: 힘을 빼고 몸을 가볍게 해서 고속으로 움직인다. 자신의 스피드를 크게 올린다.
+}
+
+QuickAttack: {
+	DisplayName: 전광석화
+	FlavorText: 눈에 보이지 않는 굉장한 속도로 상대에게 돌진한다. 반드시 선제공격할 수 있다.
+}
+
+Rage: {
+	DisplayName: 분노
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Teleport: {
+	DisplayName: 순간이동
+	FlavorText: 교대할 포켓몬이 있을 때 사용하면 교체한다. 야생 포켓몬은 도망가 버린다.
+}
+
+NightShade: {
+	DisplayName: 나이트헤드
+	FlavorText: 무시무시한 환상을 보게 해서 자신의 레벨과 똑같은 만큼의 데미지를 상대에게 준다.
+}
+
+Mimic: {
+	DisplayName: 흉내내기
+	FlavorText: 상대가 마지막에 사용한 기술을 배틀을 하는 동안 자신의 기술로 만들 수 있다.
+}
+
+Screech: {
+	DisplayName: 싫은소리
+	FlavorText: 그만 귀를 막아버리고 싶은 싫은 소리를 내어 상대의 방어를 크게 떨어뜨린다.
+}
+
+DoubleTeam: {
+	DisplayName: 그림자분신
+	FlavorText: 재빠른 움직임으로 분신을 만들어 상대를 혼란시켜 회피율을 올린다.
+}
+
+Recover: {
+	DisplayName: HP회복
+	FlavorText: 세포를 재생시켜 자신의 최대 HP의 절반만큼 HP를 회복한다.
+}
+
+Harden: {
+	DisplayName: 단단해지기
+	FlavorText: 전신에 힘을 담아 몸을 단단하게 해서 자신의 방어를 올린다.
+}
+
+Minimize: {
+	DisplayName: 작아지기
+	FlavorText: 몸을 축소하여 작게 보임으로써 자신의 회피율을 크게 올린다.
+}
+
+Smokescreen: {
+	DisplayName: 연막
+	FlavorText: 연기나 먹물을 내뿜어 상대의 명중률을 떨어뜨린다.
+}
+
+ConfuseRay: {
+	DisplayName: 이상한빛
+	FlavorText: 이상한 빛을 상대에게 비춰 당황하게 한다. 상대를 혼란시킨다.
+}
+
+Withdraw: {
+	DisplayName: 껍질에숨기
+	FlavorText: 껍질에 숨어 몸을 보호하여 자신의 방어를 올린다.
+}
+
+DefenseCurl: {
+	DisplayName: 웅크리기
+	FlavorText: 몸을 둥글게 웅크려서 자신의 방어를 올린다.
+}
+
+Barrier: {
+	DisplayName: 배리어
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+LightScreen: {
+	DisplayName: 빛의장막
+	FlavorText: 5턴 동안 이상한 장막을 쳐서 상대로부터 받는 특수공격의 데미지를 약하게 한다.
+}
+
+Haze: {
+	DisplayName: 흑안개
+	FlavorText: 흑안개를 뿜어 배틀에 참가 중인 포켓몬 전원의 능력 변화를 원래대로 돌린다.
+}
+
+Reflect: {
+	DisplayName: 리플렉터
+	FlavorText: 5턴 동안 이상한 장막을 쳐서 상대로부터 받는 물리공격의 데미지를 약하게 한다.
+}
+
+FocusEnergy: {
+	DisplayName: 기충전
+	FlavorText: 깊게 숨을 들이마셔 기합을 넣는다. 자신의 공격이 급소에 맞기 쉬워진다.
+}
+
+Bide: {
+	DisplayName: 참기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Metronome: {
+	DisplayName: 손가락흔들기
+	FlavorText: 손가락을 흔들어 자신의 뇌를 자극해서 모든 기술 중 어느 하나를 날린다.
+}
+
+MirrorMove: {
+	DisplayName: 따라하기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SelfDestruct: {
+	DisplayName: 자폭
+	FlavorText: 폭발을 일으켜서 자신의 주위에 있는 포켓몬을 공격한다. 쓰고 나서 기절하게 된다.
+}
+
+EggBomb: {
+	DisplayName: 알폭탄
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Lick: {
+	DisplayName: 핥기
+	FlavorText: 긴 혀로 상대를 핥아서 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+Smog: {
+	DisplayName: 스모그
+	FlavorText: 더러운 가스를 상대에게 내뿜어 공격한다. 독 상태로 만들 때가 있다.
+}
+
+Sludge: {
+	DisplayName: 오물공격
+	FlavorText: 더러운 오물을 상대에게 내던져서 공격한다. 독 상태로 만들 때가 있다.
+}
+
+BoneClub: {
+	DisplayName: 뼈다귀치기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FireBlast: {
+	DisplayName: 불대문자
+	FlavorText: 큰 대자의 불꽃으로 상대를 불태운다. 화상 상태로 만들 때가 있다.
+}
+
+Waterfall: {
+	DisplayName: 폭포오르기
+	FlavorText: 굉장한 기세로 상대에게 돌진한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+Clamp: {
+	DisplayName: 껍질끼우기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Swift: {
+	DisplayName: 스피드스타
+	FlavorText: 별 모양의 빛을 발사해서 상대를 공격한다. 공격은 반드시 명중한다.
+}
+
+SkullBash: {
+	DisplayName: 로케트박치기
+	FlavorText: 1턴째에 머리를 움츠려 방어를 올린다. 2턴째에 상대를 공격한다.
+}
+
+SpikeCannon: {
+	DisplayName: 가시대포
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Constrict: {
+	DisplayName: 휘감기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Amnesia: {
+	DisplayName: 망각술
+	FlavorText: 머리를 비워서 순간적으로 무언가를 잊어버림으로써 자신의 특수방어를 크게 올린다.
+}
+
+Kinesis: {
+	DisplayName: 숟가락휘기
+	FlavorText: 숟가락을 휘어서 주의를 끌어 상대의 명중률을 낮춘다.
+}
+
+SoftBoiled: {
+	DisplayName: 알낳기
+	FlavorText: 자신의 최대 HP 절반을 회복한다.
+}
+
+HighJumpKick: {
+	DisplayName: 무릎차기
+	FlavorText: 점프해서 무릎차기로 상대를 공격한다. 빗나가면 자신이 데미지를 입는다.
+}
+
+Glare: {
+	DisplayName: 뱀눈초리
+	FlavorText: 배의 무늬로 겁을 주어 상대를 마비 상태로 만든다.
+}
+
+DreamEater: {
+	DisplayName: 꿈먹기
+	FlavorText: 잠자고 있는 상대의 꿈을 먹어 공격한다. 데미지의 절반을 HP로 회복한다.
+}
+
+PoisonGas: {
+	DisplayName: 독가스
+	FlavorText: 독가스를 상대의 얼굴에 내뿜어 독 상태로 만든다.
+}
+
+Barrage: {
+	DisplayName: 구슬던지기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+LeechLife: {
+	DisplayName: 흡혈
+	FlavorText: 피를 빨아서 상대를 공격한다. 준 데미지의 절반을 HP로 회복한다.
+}
+
+LovelyKiss: {
+	DisplayName: 악마의키스
+	FlavorText: 무서운 얼굴로 키스한다. 상대를 잠듦 상태로 만든다.
+}
+
+SkyAttack: {
+	DisplayName: 불새
+	FlavorText: 2턴째에 상대를 공격한다. 가끔 풀죽게 만든다. 급소에도 맞기 쉽다.
+}
+
+Transform: {
+	DisplayName: 변신
+	FlavorText: 상대 포켓몬으로 변신하여 상대와 완전히 똑같은 기술을 사용할 수 있다.
+}
+
+Bubble: {
+	DisplayName: 거품
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+DizzyPunch: {
+	DisplayName: 잼잼펀치
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Spore: {
+	DisplayName: 버섯포자
+	FlavorText: 최면 효과가 있는 포자를 훌훌 흩뿌려서 상대를 잠듦 상태로 만든다.
+}
+
+Flash: {
+	DisplayName: 플래시
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Psywave: {
+	DisplayName: 사이코웨이브
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Splash: {
+	DisplayName: 튀어오르기
+	FlavorText: 공격도 하지 않고 팔딱팔딱 튈 뿐 아무 일도 일어나지 않는다...
+}
+
+AcidArmor: {
+	DisplayName: 녹기
+	FlavorText: 세포의 변화로 액체가 되어 자신의 방어를 크게 올린다.
+}
+
+Crabhammer: {
+	DisplayName: 찝게햄머
+	FlavorText: 큰 집게를 상대에게 내리쳐서 공격한다. 급소에 맞기 쉽다.
+}
+
+Explosion: {
+	DisplayName: 대폭발
+	FlavorText: 큰 폭발로 자신의 주위에 있는 포켓몬을 공격한다. 쓰고 나서는 기절한다.
+}
+
+FurySwipes: {
+	DisplayName: 마구할퀴기
+	FlavorText: 손톱이나 낫 등으로 상대를 할퀴어서 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+Bonemerang: {
+	DisplayName: 뼈다귀부메랑
+	FlavorText: 손에 들고 있는 뼈를 상대에게 날려서 날아갈 때와 돌아올 때 2회 연속 데미지를 준다.
+}
+
+Rest: {
+	DisplayName: 잠자기
+	FlavorText: 2턴 동안 계속 잠잔다. 자신의 HP와 상태 이상을 모두 회복한다.
+}
+
+RockSlide: {
+	DisplayName: 스톤샤워
+	FlavorText: 큰 바위를 세차게 부딪쳐서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+HyperFang: {
+	DisplayName: 필살앞니
+	FlavorText: 날카로운 앞니로 강하게 물어서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+Sharpen: {
+	DisplayName: 각지기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Conversion: {
+	DisplayName: 텍스처
+	FlavorText: 자신의 타입을 배운 기술 중 가장 위에 있는 기술과 같은 타입으로 바꾼다.
+}
+
+TriAttack: {
+	DisplayName: 트라이어택
+	FlavorText: 3개의 광선으로 공격한다. 마비, 화상 또는 얼음 상태 중 어느 하나로 만들 때가 있다.
+}
+
+SuperFang: {
+	DisplayName: 분노의앞니
+	FlavorText: 날카로운 앞니로 강하게 물어서 공격한다. 상대의 HP는 절반이 된다.
+}
+
+Slash: {
+	DisplayName: 베어가르기
+	FlavorText: 발톱이나 낫 등으로 상대를 베어 갈라서 공격한다. 급소에 맞기 쉽다.
+}
+
+Substitute: {
+	DisplayName: 대타출동
+	FlavorText: 자신의 HP를 조금 깎아서 분신을 만든다. 분신은 자신의 대타가 된다.
+}
+
+Struggle: {
+	DisplayName: 발버둥
+	FlavorText: 자신의 PP가 떨어지면 발버둥 쳐 상대를 공격한다. 자신도 조금 데미지를 입는다.
+}
+
+Sketch: {
+	DisplayName: 스케치
+	FlavorText: 상대가 쓴 기술을 자신의 것으로 만든다. 한 번 사용하면 스케치는 사라진다.
+}
+
+TripleKick: {
+	DisplayName: 트리플킥
+	FlavorText: 3회 연속으로 킥을 날려 공격한다. 기술이 맞을 때마다 위력이 올라간다.
+}
+
+Thief: {
+	DisplayName: 도둑질
+	FlavorText: 공격과 동시에 도구를 훔친다. 자신이 도구를 지니고 있을 경우에는 훔칠 수 없다.
+}
+
+SpiderWeb: {
+	DisplayName: 거미집
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MindReader: {
+	DisplayName: 마음의눈
+	FlavorText: 상대의 움직임을 마음으로 읽고 다음 공격이 반드시 상대에게 명중되게 한다.
+}
+
+Nightmare: {
+	DisplayName: 악몽
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FlameWheel: {
+	DisplayName: 화염자동차
+	FlavorText: 불꽃을 둘러 상대에게 돌진하여 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+Snore: {
+	DisplayName: 코골기
+	FlavorText: 자신이 잠들어 있을 때 소음을 내어 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+Curse: {
+	DisplayName: 저주
+	FlavorText: 기술을 쓰는 포켓몬이 고스트타입일 때와 그 이외의 타입일 때는 효과가 다르다.
+}
+
+Flail: {
+	DisplayName: 바둥바둥
+	FlavorText: 바둥바둥 난동 부려서 공격한다. 자신의 HP가 적을수록 기술의 위력이 올라간다.
+}
+
+Conversion2: {
+	DisplayName: 텍스처2
+	FlavorText: 상대가 마지막으로 쓴 기술에 저항할 수 있도록 자신의 타입을 변화시킨다.
+}
+
+Aeroblast: {
+	DisplayName: 에어로블라스트
+	FlavorText: 공기의 소용돌이를 발사하여 공격한다. 급소에 맞기 쉽다.
+}
+
+CottonSpore: {
+	DisplayName: 목화포자
+	FlavorText: 솜처럼 폭신폭신한 포자를 착 달라붙게 해서 상대의 스피드를 크게 떨어뜨린다.
+}
+
+Reversal: {
+	DisplayName: 기사회생
+	FlavorText: 힘을 쥐어짜서 공격한다. 자신의 HP가 적을수록 기술의 위력이 올라간다.
+}
+
+Spite: {
+	DisplayName: 원한
+	FlavorText: 상대가 마지막으로 사용한 기술에 원한을 품어 그 기술의 PP를 4만큼 줄인다.
+}
+
+PowderSnow: {
+	DisplayName: 눈싸라기
+	FlavorText: 차가운 가랑눈을 상대에게 내뿜어 공격한다. 얼음 상태로 만들 때가 있다.
+}
+
+Protect: {
+	DisplayName: 방어
+	FlavorText: 상대의 공격을 전혀 받지 않는다. 연속으로 쓰면 실패하기 쉽다.
+}
+
+MachPunch: {
+	DisplayName: 마하펀치
+	FlavorText: 눈에 보이지 않는 굉장한 속도로 펀치를 날린다. 반드시 선제공격을 할 수 있다.
+}
+
+ScaryFace: {
+	DisplayName: 겁나는얼굴
+	FlavorText: 무서운 얼굴로 노려보고 겁주어 상대의 스피드를 크게 떨어뜨린다.
+}
+
+FeintAttack: {
+	DisplayName: 속여때리기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SweetKiss: {
+	DisplayName: 천사의키스
+	FlavorText: 천사처럼 귀엽게 키스하여 상대를 혼란시킨다.
+}
+
+BellyDrum: {
+	DisplayName: 배북
+	FlavorText: 자신의 HP를 최대 HP의 절반만큼 감소시켜 자신의 공격을 최대로 올린다.
+}
+
+SludgeBomb: {
+	DisplayName: 오물폭탄
+	FlavorText: 더러운 오물을 상대에게 내던져서 공격한다. 독 상태로 만들 때가 있다.
+}
+
+MudSlap: {
+	DisplayName: 진흙뿌리기
+	FlavorText: 상대의 얼굴 등에 진흙을 내던져서 공격한다. 명중률을 떨어뜨린다.
+}
+
+Octazooka: {
+	DisplayName: 대포무노포
+	FlavorText: 상대의 얼굴 등에 먹물을 내뿜어 공격한다. 명중률을 떨어뜨릴 때가 있다.
+}
+
+Spikes: {
+	DisplayName: 압정뿌리기
+	FlavorText: 상대의 발밑에 압정을 뿌린다. 교체된 상대 포켓몬에게 데미지를 준다.
+}
+
+ZapCannon: {
+	DisplayName: 전자포
+	FlavorText: 대포처럼 전기를 발사해서 공격한다. 상대를 마비 상태로 만든다.
+}
+
+Foresight: {
+	DisplayName: 꿰뚫어보기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+DestinyBond: {
+	DisplayName: 길동무
+	FlavorText: 기술을 쓴 뒤 상대의 공격으로 기절했을 때 공격 상대도 기절하게 한다. 연속으로 쓰면 실패한다.
+}
+
+PerishSong: {
+	DisplayName: 멸망의노래
+	FlavorText: 노래를 들은 포켓몬은 3턴이 지나면 기절한다. 교체되면 효과가 없어진다.
+}
+
+IcyWind: {
+	DisplayName: 얼다바람
+	FlavorText: 차가운 냉기를 상대에게 내뿜어 공격한다. 상대의 스피드를 떨어뜨린다.
+}
+
+Detect: {
+	DisplayName: 판별
+	FlavorText: 상대의 공격을 전혀 받지 않는다. 연속으로 쓰면 실패하기 쉽다.
+}
+
+BoneRush: {
+	DisplayName: 본러쉬
+	FlavorText: 단단한 뼈로 상대를 세게 때려서 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+LockOn: {
+	DisplayName: 록온
+	FlavorText: 조준을 잘 맞춰 다음 공격이 반드시 상대에게 명중하도록 한다.
+}
+
+Outrage: {
+	DisplayName: 역린
+	FlavorText: 2-3턴 동안 마구 난동 부려서 공격한다. 난동 부린 뒤에는 혼란에 빠진다.
+}
+
+Sandstorm: {
+	DisplayName: 모래바람
+	FlavorText: 5턴 동안 모래바람을 일으켜 바위 땅, 강철타입 이외의 상대에게 데미지를 준다. 바위타입의 특수방어가 올라간다.
+}
+
+GigaDrain: {
+	DisplayName: 기가드레인
+	FlavorText: 양분을 흡수하여 공격한다. 입힌 데미지의 절반에 해당하는 HP를 회복할 수 있다.
+}
+
+Endure: {
+	DisplayName: 버티기
+	FlavorText: 공격을 받아도 HP를 반드시 1만큼은 남긴다. 연속으로 쓰면 실패하기 쉽다.
+}
+
+Charm: {
+	DisplayName: 애교부리기
+	FlavorText: 귀엽게 바라보고 방심을 유도하여 상대의 공격을 크게 떨어뜨린다.
+}
+
+Rollout: {
+	DisplayName: 구르기
+	FlavorText: 5턴 동안 구르기를 반복하여 공격한다. 기술이 맞을 때마다 위력이 올라간다.
+}
+
+FalseSwipe: {
+	DisplayName: 칼등치기
+	FlavorText: 상대의 HP가 반드시 1만 남도록 조절하여 공격한다.
+}
+
+Swagger: {
+	DisplayName: 뽐내기
+	FlavorText: 상대를 화내게 해서 혼란시킨다. 분노로 상대의 공격은 크게 올라가 버린다.
+}
+
+MilkDrink: {
+	DisplayName: 우유마시기
+	FlavorText: 자신의 최대 HP 절반을 회복한다.
+}
+
+Spark: {
+	DisplayName: 스파크
+	FlavorText: 전기를 둘러 상대에게 돌진하여 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+FuryCutter: {
+	DisplayName: 연속자르기
+	FlavorText: 낫이나 발톱 등으로 상대를 베어 공격한다. 연속으로 맞히면 위력이 올라간다.
+}
+
+SteelWing: {
+	DisplayName: 강철날개
+	FlavorText: 단단한 날개를 상대에게 부딪쳐서 공격한다. 자신의 방어가 올라갈 때가 있다.
+}
+
+MeanLook: {
+	DisplayName: 검은눈빛
+	FlavorText: 빨려 들어갈 것 같은 까만 눈빛으로 가만히 응시하여 상대를 배틀에서 도망갈 수 없게 한다.
+}
+
+Attract: {
+	DisplayName: 헤롱헤롱
+	FlavorText: 수컷은 암컷을 암컷은 수컷을 유혹하여 헤롱헤롱하게 만든다. 상대가 기술을 쓰기 어려워진다.
+}
+
+SleepTalk: {
+	DisplayName: 잠꼬대
+	FlavorText: 자신이 배운 기술 중 하나를 무작위로 날린다. 자신이 잠들어 있을 때만 쓸 수 있다.
+}
+
+HealBell: {
+	DisplayName: 치료방울
+	FlavorText: 기분 좋은 방울소리를 들려주어 같은 편 전원의 상태 이상을 회복한다.
+}
+
+Return: {
+	DisplayName: 은혜갚기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Present: {
+	DisplayName: 프레젠트
+	FlavorText: 덫을 설치한 상자를 상대에게 건네어 공격한다. HP가 회복돼버릴 때도 있다.
+}
+
+Frustration: {
+	DisplayName: 화풀이
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Safeguard: {
+	DisplayName: 신비의부적
+	FlavorText: 5턴 동안 이상한 힘의 보호를 받아 상태 이상이 되지 않는다.
+}
+
+PainSplit: {
+	DisplayName: 아픔나누기
+	FlavorText: 자신의 HP와 상대의 HP를 합친 것을 자신과 상대가 사이좋게 나눈다.
+}
+
+SacredFire: {
+	DisplayName: 성스러운불꽃
+	FlavorText: 신비한 불꽃으로 상대를 태워서 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+Magnitude: {
+	DisplayName: 매그니튜드
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+DynamicPunch: {
+	DisplayName: 폭발펀치
+	FlavorText: 혼신의 힘으로 펀치를 날려서 공격한다. 상대를 반드시 혼란시킨다.
+}
+
+Megahorn: {
+	DisplayName: 메가폰
+	FlavorText: 단단하고 훌륭한 뿔로 마음껏 상대를 꿰찔러서 공격한다.
+}
+
+DragonBreath: {
+	DisplayName: 용의숨결
+	FlavorText: 굉장한 숨결을 상대에게 내뿜어 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+BatonPass: {
+	DisplayName: 바톤터치
+	FlavorText: 교대 포켓몬과 바뀐다. 능력 변화는 바뀐 포켓몬이 그대로 이어받는다.
+}
+
+Encore: {
+	DisplayName: 앵콜
+	FlavorText: 상대에게 앵콜시킨 기술을 3번 연속으로 쓰게 한다.
+}
+
+Pursuit: {
+	DisplayName: 따라가때리기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+RapidSpin: {
+	DisplayName: 고속스핀
+	FlavorText: 회전해서 상대를 공격한다. 조이기, 김밥말이, 씨뿌리기 등을 날려버린다. 자신의 스피드도 오른다.
+}
+
+SweetScent: {
+	DisplayName: 달콤한향기
+	FlavorText: 향기로 상대의 회피율을 크게 떨어뜨린다.
+}
+
+IronTail: {
+	DisplayName: 아이언테일
+	FlavorText: 단단한 꼬리로 상대를 힘껏 쳐서 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+MetalClaw: {
+	DisplayName: 메탈크로우
+	FlavorText: 강철의 발톱으로 상대를 베어 갈라 공격한다. 자신의 공격이 올라갈 때도 있다.
+}
+
+VitalThrow: {
+	DisplayName: 받아던지기
+	FlavorText: 상대보다 나중에 공격한다. 그 대신 자신의 공격은 반드시 명중한다.
+}
+
+MorningSun: {
+	DisplayName: 아침햇살
+	FlavorText: 자신의 HP를 회복한다. 날씨에 따라 회복량이 변한다.
+}
+
+Synthesis: {
+	DisplayName: 광합성
+	FlavorText: 자신의 HP를 회복한다. 날씨에 따라 회복량이 변한다.
+}
+
+Moonlight: {
+	DisplayName: 달의불빛
+	FlavorText: 자신의 HP를 회복한다. 날씨에 따라 회복량이 변한다.
+}
+
+HiddenPower: {
+	DisplayName: 잠재파워
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+CrossChop: {
+	DisplayName: 크로스촙
+	FlavorText: 양손으로 당수를 상대에게 힘껏 쳐서 공격한다. 급소에 맞기 쉽다.
+}
+
+Twister: {
+	DisplayName: 회오리
+	FlavorText: 회오리를 일으켜 상대를 끌어들여 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+RainDance: {
+	DisplayName: 비바라기
+	FlavorText: 5턴 동안 비를 내리게 해서 물타입 기술의 위력을 올린다. 불꽃타입의 위력은 떨어진다.
+}
+
+SunnyDay: {
+	DisplayName: 쾌청
+	FlavorText: 5턴 동안 햇살을 강하게 해서 불꽃타입 기술의 위력을 올린다. 물타입의 위력은 떨어진다.
+}
+
+Crunch: {
+	DisplayName: 깨물어부수기
+	FlavorText: 날카로운 이빨로 상대를 깨물어 부숴서 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+MirrorCoat: {
+	DisplayName: 미러코트
+	FlavorText: 상대에게 받은 특수공격의 데미지를 2배로 만들어 그 상대에게 돌려준다.
+}
+
+PsychUp: {
+	DisplayName: 자기암시
+	FlavorText: 자신에게 암시를 걸어서 능력 변화 상태를 상대와 똑같은 상태로 만든다.
+}
+
+ExtremeSpeed: {
+	DisplayName: 신속
+	FlavorText: 눈에 보이지 않는 굉장한 속도로 상대에게 돌진하여 공격한다. 반드시 선제공격을 할 수 있다.
+}
+
+AncientPower: {
+	DisplayName: 원시의힘
+	FlavorText: 원시의 힘으로 공격한다. 자신의 모든 능력이 오를 때가 있다.
+}
+
+ShadowBall: {
+	DisplayName: 섀도볼
+	FlavorText: 까만 그림자의 덩어리를 내던져서 공격한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+FutureSight: {
+	DisplayName: 미래예지
+	FlavorText: 기술을 사용한 2턴 뒤에 상대에게 염동력의 덩어리를 보내어 공격한다.
+}
+
+RockSmash: {
+	DisplayName: 바위깨기
+	FlavorText: 펀치로 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+Whirlpool: {
+	DisplayName: 바다회오리
+	FlavorText: 세차게 소용돌이치는 물속에 4-5턴 동안 상대를 가두어 공격한다.
+}
+
+BeatUp: {
+	DisplayName: 집단구타
+	FlavorText: 같은 편 전원이 공격한다. 동료 포켓몬이 많을수록 기술의 공격 횟수가 증가한다.
+}
+
+FakeOut: {
+	DisplayName: 속이다
+	FlavorText: 선제공격으로 상대를 풀죽게 한다. 배틀에 나가서 바로 쓰지 않으면 성공할 수 없다.
+}
+
+Uproar: {
+	DisplayName: 소란피기
+	FlavorText: 3턴 동안 소란 피워 공격한다. 그동안은 아무도 잠들지 않게 된다.
+}
+
+Stockpile: {
+	DisplayName: 비축하기
+	FlavorText: 힘을 비축해서 자신의 방어와 특수방어를 올린다. 최대 3회까지 비축할 수 있다.
+}
+
+SpitUp: {
+	DisplayName: 토해내기
+	FlavorText: 비축된 힘을 상대에게 부딪쳐서 공격한다. 비축된 만큼 위력이 올라간다.
+}
+
+Swallow: {
+	DisplayName: 꿀꺽
+	FlavorText: 비축된 힘을 꿀꺽해서 자신의 HP를 회복한다. 비축된 만큼 회복한다.
+}
+
+HeatWave: {
+	DisplayName: 열풍
+	FlavorText: 뜨거운 숨결을 상대에게 내뿜어 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+Hail: {
+	DisplayName: 싸라기눈
+	FlavorText: 5턴 동안 싸라기눈을 내리게 해서 얼음타입이 아닌 포켓몬 모두에게 데미지를 준다.
+}
+
+Torment: {
+	DisplayName: 트집
+	FlavorText: 상대에게 트집을 잡아서 똑같은 기술을 2회 연속으로 쓸 수 없게 한다.
+}
+
+Flatter: {
+	DisplayName: 부추기기
+	FlavorText: 상대를 부추겨서 혼란시킨다. 동시에 상대의 특수공격도 올라가 버린다.
+}
+
+WillOWisp: {
+	DisplayName: 도깨비불
+	FlavorText: 으스스하고 괴상한 불꽃을 쏘아 상대를 화상 상태로 만든다.
+}
+
+Memento: {
+	DisplayName: 추억의선물
+	FlavorText: 자신은 기절하게 되지만 그 대신 상대의 공격과 특수공격을 크게 떨어뜨린다.
+}
+
+Facade: {
+	DisplayName: 객기
+	FlavorText: 자신이 독, 마비, 화상 상태일 때 날리면 기술의 위력이 2배가 된다.
+}
+
+FocusPunch: {
+	DisplayName: 힘껏펀치
+	FlavorText: 정신력을 높여 펀치를 날린다. 기술을 쓰기 전에 공격을 받으면 실패한다.
+}
+
+SmellingSalts: {
+	DisplayName: 정신차리기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FollowMe: {
+	DisplayName: 날따름
+	FlavorText: 자신에게 주목시켜 상대로부터의 공격을 모두 자신에게 향하게 한다.
+}
+
+NaturePower: {
+	DisplayName: 자연의힘
+	FlavorText: 자연의 힘으로 공격한다. 사용하는 장소에 따라 나오는 기술이 변화한다.
+}
+
+Charge: {
+	DisplayName: 충전
+	FlavorText: 다음 턴에 쓸 전기타입 기술의 위력을 올린다. 자신의 특수방어도 올라간다.
+}
+
+Taunt: {
+	DisplayName: 도발
+	FlavorText: 상대를 화나게 한다. 3턴 동안 상대는 데미지를 주는 기술밖에 쓸 수 없게 된다.
+}
+
+HelpingHand: {
+	DisplayName: 도우미
+	FlavorText: 동료를 돕는다. 도움받은 포켓몬이 쓰는 기술의 위력은 여느 때보다 커진다.
+}
+
+Trick: {
+	DisplayName: 트릭
+	FlavorText: 상대의 빈틈을 노려 자신과 상대가 지닌 물건을 바꿔치기한다.
+}
+
+RolePlay: {
+	DisplayName: 역할
+	FlavorText: 상대의 역할을 하여 자신도 상대와 같은 특성으로 변화한다.
+}
+
+Wish: {
+	DisplayName: 희망사항
+	FlavorText: 다음 턴에 자신 또는 교체한 포켓몬의 HP를 최대 HP의 절반만큼 회복한다.
+}
+
+Assist: {
+	DisplayName: 조수
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Ingrain: {
+	DisplayName: 뿌리박기
+	FlavorText: 대지에 뿌리를 박아 매 턴마다 자신의 HP를 회복한다. 뿌리 박고 있으므로 교체할 수 없다.
+}
+
+Superpower: {
+	DisplayName: 엄청난힘
+	FlavorText: 엄청난 힘을 발휘하여 상대를 공격한다. 자신의 공격과 방어가 떨어진다.
+}
+
+MagicCoat: {
+	DisplayName: 매직코트
+	FlavorText: 상대가 상태 이상이 되는 기술이나 씨뿌리기 등을 썼을 때 되받아친다.
+}
+
+Recycle: {
+	DisplayName: 리사이클
+	FlavorText: 배틀 중에 사용하여 없어진 자신의 지닌 물건을 재생시켜 사용할 수 있게 한다.
+}
+
+Revenge: {
+	DisplayName: 리벤지
+	FlavorText: 상대에게 기술을 받으면 그 상대에게 주는 데미지가 2배가 된다.
+}
+
+BrickBreak: {
+	DisplayName: 깨트리다
+	FlavorText: 수도로 기세 좋게 내려쳐서 상대를 공격한다. 빛의장막이나 리플렉터 등도 파괴할 수 있다.
+}
+
+Yawn: {
+	DisplayName: 하품
+	FlavorText: 큰 하품으로 졸음을 유도한다. 다음 턴에 상대를 잠듦 상태로 만든다.
+}
+
+KnockOff: {
+	DisplayName: 탁쳐서떨구기
+	FlavorText: 상대의 지닌 물건을 탁 쳐서 떨어뜨려 배틀이 끝날 때까지 사용할 수 없게 한다. 물건을 가진 상대에게는 데미지를 더 준다.
+}
+
+Endeavor: {
+	DisplayName: 죽기살기
+	FlavorText: 상대의 HP가 자신의 HP와 같아지도록 데미지를 준다.
+}
+
+Eruption: {
+	DisplayName: 분화
+	FlavorText: 분노를 폭발시켜 상대를 공격한다. 자신의 HP가 적을수록 기술의 위력이 떨어진다.
+}
+
+SkillSwap: {
+	DisplayName: 스킬스웹
+	FlavorText: 초능력으로 자신의 특성과 상대의 특성을 바꾼다.
+}
+
+Imprison: {
+	DisplayName: 봉인
+	FlavorText: 상대가 자신과 같은 기술을 배웠다면 상대만 그 기술을 사용할 수 없게 한다.
+}
+
+Refresh: {
+	DisplayName: 리프레쉬
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Grudge: {
+	DisplayName: 원념
+	FlavorText: 상대의 기술로 기절하면 원념을 담아 그 기술의 PP를 0으로 만든다.
+}
+
+Snatch: {
+	DisplayName: 가로챔
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SecretPower: {
+	DisplayName: 비밀의힘
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Dive: {
+	DisplayName: 다이빙
+	FlavorText: 1턴째에 잠수했다가 2턴째에 떠올라 공격한다.
+}
+
+ArmThrust: {
+	DisplayName: 손바닥치기
+	FlavorText: 펼친 양손으로 상대를 번갈아 쳐서 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+Camouflage: {
+	DisplayName: 보호색
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+TailGlow: {
+	DisplayName: 반딧불
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+LusterPurge: {
+	DisplayName: 라스트버지
+	FlavorText: 눈부신 빛을 발산하여 공격한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+MistBall: {
+	DisplayName: 미스트볼
+	FlavorText: 안개의 깃털로 둘러싸 공격한다. 상대의 특수공격을 떨어뜨릴 때가 있다.
+}
+
+FeatherDance: {
+	DisplayName: 깃털댄스
+	FlavorText: 깃털을 흩뿌려 상대의 몸에 휘감는다. 상대의 공격을 크게 떨어뜨린다.
+}
+
+TeeterDance: {
+	DisplayName: 흔들흔들댄스
+	FlavorText: 흔들흔들 댄스를 춰서 주위에 있는 포켓몬을 혼란 상태로 만든다.
+}
+
+BlazeKick: {
+	DisplayName: 브레이즈킥
+	FlavorText: 공격한 상대를 화상 상태로 만들 때가 있다. 급소에도 맞기 쉽다.
+}
+
+MudSport: {
+	DisplayName: 흙놀이
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+IceBall: {
+	DisplayName: 아이스볼
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+NeedleArm: {
+	DisplayName: 바늘팔
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SlackOff: {
+	DisplayName: 태만함
+	FlavorText: 게으름 피우며 쉰다. 자신의 HP를 최대 HP의 절반만큼 회복한다.
+}
+
+HyperVoice: {
+	DisplayName: 하이퍼보이스
+	FlavorText: 시끄럽게 울리는 큰 진동을 상대에게 전달하여 공격한다.
+}
+
+PoisonFang: {
+	DisplayName: 독엄니
+	FlavorText: 독이 있는 이빨로 상대를 물어서 공격한다. 맹독을 주입할 때가 있다.
+}
+
+CrushClaw: {
+	DisplayName: 브레이크크루
+	FlavorText: 단단하고 날카로운 손톱으로 베어 갈라서 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+BlastBurn: {
+	DisplayName: 블러스트번
+	FlavorText: 폭발하는 불꽃으로 상대를 태워서 공격한다. 다음 턴은 움직일 수 없다.
+}
+
+HydroCannon: {
+	DisplayName: 하이드로캐논
+	FlavorText: 물의 대포를 상대에게 발사해서 공격한다. 다음 턴은 움직일 수 없다.
+}
+
+MeteorMash: {
+	DisplayName: 코멧펀치
+	FlavorText: 혜성과 같은 펀치를 날려서 상대를 공격한다. 자신의 공격이 올라갈 때가 있다.
+}
+
+Astonish: {
+	DisplayName: 놀래키기
+	FlavorText: 큰 소리 등으로 불시에 놀래켜서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+WeatherBall: {
+	DisplayName: 웨더볼
+	FlavorText: 사용했을 때의 날씨에 따라서 기술 타입과 위력이 바뀐다.
+}
+
+Aromatherapy: {
+	DisplayName: 아로마테라피
+	FlavorText: 기분 좋은 평온한 향기를 맡게 하여 같은 편 모두의 상태 이상을 회복한다.
+}
+
+FakeTears: {
+	DisplayName: 거짓울음
+	FlavorText: 우는 척을 하며 눈물을 흘린다. 난처하게 만들어 상대의 특수방어를 크게 떨어뜨린다.
+}
+
+AirCutter: {
+	DisplayName: 에어컷터
+	FlavorText: 날카로운 바람으로 상대를 베어 공격한다. 급소에 맞기 쉽다.
+}
+
+Overheat: {
+	DisplayName: 오버히트
+	FlavorText: 풀 파워로 상대를 공격한다. 쓰면 반동으로 자신의 특수공격이 크게 떨어진다.
+}
+
+OdorSleuth: {
+	DisplayName: 냄새구별
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+RockTomb: {
+	DisplayName: 암석봉인
+	FlavorText: 암석을 내던져서 공격한다. 상대의 움직임을 봉인함으로써 스피드를 떨어뜨린다.
+}
+
+SilverWind: {
+	DisplayName: 은빛바람
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MetalSound: {
+	DisplayName: 금속음
+	FlavorText: 금속을 긁을 때 나는 듯한 싫은 소리를 들려준다. 상대의 특수방어를 크게 떨어뜨린다.
+}
+
+GrassWhistle: {
+	DisplayName: 풀피리
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Tickle: {
+	DisplayName: 간지르기
+	FlavorText: 몸을 간질여 웃게 만들어서 상대의 공격과 방어를 떨어뜨린다.
+}
+
+CosmicPower: {
+	DisplayName: 코스믹파워
+	FlavorText: 우주로부터 신비한 힘을 손에 넣음으로써 자신의 방어와 특수방어를 올린다.
+}
+
+WaterSpout: {
+	DisplayName: 해수스파우팅
+	FlavorText: 바닷물을 내뿜어 공격한다. 자신의 HP가 적을수록 기술의 위력이 떨어진다.
+}
+
+SignalBeam: {
+	DisplayName: 시그널빔
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ShadowPunch: {
+	DisplayName: 섀도펀치
+	FlavorText: 그림자에 섞여 펀치를 날린다. 공격은 반드시 명중한다.
+}
+
+Extrasensory: {
+	DisplayName: 신통력
+	FlavorText: 보이지 않는 이상한 힘을 보내어 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+SkyUppercut: {
+	DisplayName: 스카이업퍼
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SandTomb: {
+	DisplayName: 모래지옥
+	FlavorText: 세차게 불어대는 모래바람 속에 4-5턴 동안 상대를 가두어 공격한다.
+}
+
+SheerCold: {
+	DisplayName: 절대영도
+	FlavorText: 상대를 일격에 기절시킨다. 얼음타입 이외의 포켓몬이 사용하면 잘 맞지 않는다.
+}
+
+MuddyWater: {
+	DisplayName: 탁류
+	FlavorText: 탁해진 물을 상대에게 발사하여 공격한다. 명중률을 떨어뜨릴 때가 있다.
+}
+
+BulletSeed: {
+	DisplayName: 기관총
+	FlavorText: 씨앗을 기세 좋게 상대에게 발사하여 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+AerialAce: {
+	DisplayName: 제비반환
+	FlavorText: 재빠른 움직임으로 상대를 농락해 벤다. 공격은 반드시 명중한다.
+}
+
+IcicleSpear: {
+	DisplayName: 고드름침
+	FlavorText: 날카로운 고드름을 상대에게 발사하여 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+IronDefense: {
+	DisplayName: 철벽
+	FlavorText: 피부를 쇠처럼 단단하게 만듦으로써 자신의 방어를 크게 올린다.
+}
+
+Block: {
+	DisplayName: 블록
+	FlavorText: 양팔을 벌려 막아서서 상대의 도주로를 가로막아 도망칠 수 없게 한다.
+}
+
+Howl: {
+	DisplayName: 멀리짖음
+	FlavorText: 큰 소리로 짖고 기합을 높여 자신과 같은 편의 공격을 올린다.
+}
+
+DragonClaw: {
+	DisplayName: 드래곤크루
+	FlavorText: 날카롭고 뾰족한 거대한 발톱으로 상대를 베어 갈라서 공격한다.
+}
+
+FrenzyPlant: {
+	DisplayName: 하드플랜트
+	FlavorText: 큰 나무로 상대를 힘껏 쳐서 공격한다. 다음 턴은 움직일 수 없게 된다.
+}
+
+BulkUp: {
+	DisplayName: 벌크업
+	FlavorText: 몸에 힘을 담아 근육을 두껍게 해서 자신의 공격과 방어를 올린다.
+}
+
+Bounce: {
+	DisplayName: 뛰어오르다
+	FlavorText: 하늘 높이 뛰어올라 2턴째에 상대를 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+MudShot: {
+	DisplayName: 머드숏
+	FlavorText: 진흙 덩어리를 상대에게 내던져서 공격한다. 동시에 상대의 스피드를 떨어뜨린다.
+}
+
+PoisonTail: {
+	DisplayName: 포이즌테일
+	FlavorText: 꼬리로 때린다. 독 상태로 만들 때가 있고 급소에도 맞기 쉽다.
+}
+
+Covet: {
+	DisplayName: 탐내다
+	FlavorText: 귀엽게 애교 부리며 상대에게 다가가 지니고 있는 도구를 뺏는다.
+}
+
+VoltTackle: {
+	DisplayName: 볼트태클
+	FlavorText: 전기를 한데 모아 돌진한다. 자신도 상당한 데미지를 입는다. 마비 상태로 만들 때가 있다.
+}
+
+MagicalLeaf: {
+	DisplayName: 메지컬리프
+	FlavorText: 상대를 추적하는 이상한 잎사귀를 흩뿌린다. 공격은 반드시 명중한다.
+}
+
+WaterSport: {
+	DisplayName: 물놀이
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+CalmMind: {
+	DisplayName: 명상
+	FlavorText: 조용히 정신을 통일하고 마음을 가라앉혀서 자신의 특수공격과 특수방어를 올린다.
+}
+
+LeafBlade: {
+	DisplayName: 리프블레이드
+	FlavorText: 잎사귀를 칼처럼 이용해 상대를 베어 공격한다. 급소에 맞기 쉽다.
+}
+
+DragonDance: {
+	DisplayName: 용의춤
+	FlavorText: 신비롭고 힘센 춤을 격렬하게 춘다. 자신의 공격과 스피드를 올린다.
+}
+
+RockBlast: {
+	DisplayName: 락블레스트
+	FlavorText: 단단한 암석을 상대에게 발사하여 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+ShockWave: {
+	DisplayName: 전격파
+	FlavorText: 전격을 재빠르게 상대에게 날린다. 공격은 반드시 명중한다.
+}
+
+WaterPulse: {
+	DisplayName: 물의파동
+	FlavorText: 물의 진동을 상대에게 가하여 공격한다. 상대를 혼란시킬 때가 있다.
+}
+
+DoomDesire: {
+	DisplayName: 파멸의소원
+	FlavorText: 기술을 사용한 2턴 뒤에 무수한 빛의 다발이 상대를 공격한다.
+}
+
+PsychoBoost: {
+	DisplayName: 사이코부스트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Roost: {
+	DisplayName: 날개쉬기
+	FlavorText: 땅에 내려와 몸을 쉬게 한다. 최대 HP의 절반만큼 HP를 회복한다.
+}
+
+Gravity: {
+	DisplayName: 중력
+	FlavorText: 5턴 동안 부유나 비행타입에 땅타입의 기술이 맞게 된다. 공중으로 나는 기술도 사용할 수 없다.
+}
+
+MiracleEye: {
+	DisplayName: 미라클아이
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+WakeUpSlap: {
+	DisplayName: 잠깨움뺨치기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+HammerArm: {
+	DisplayName: 암해머
+	FlavorText: 강하고 무거운 주먹을 휘둘러 데미지를 준다. 자신의 스피드가 떨어진다.
+}
+
+GyroBall: {
+	DisplayName: 자이로볼
+	FlavorText: 몸을 고속으로 회전시켜 몸통박치기한다. 상대보다 스피드가 낮을수록 위력은 올라간다.
+}
+
+HealingWish: {
+	DisplayName: 치유소원
+	FlavorText: 자신은 기절하지만 교대하여 나오는 포켓몬의 상태 이상과 HP를 회복한다.
+}
+
+Brine: {
+	DisplayName: 소금물
+	FlavorText: 상대가 HP의 절반 정도 상처를 입고 있으면 기술의 위력이 2배가 된다.
+}
+
+NaturalGift: {
+	DisplayName: 자연의은혜
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Feint: {
+	DisplayName: 페인트
+	FlavorText: 방어나 판별 등을 하고 있는 상대에게 공격할 수 있다. 방어 효과를 해제시킨다.
+}
+
+Pluck: {
+	DisplayName: 쪼아대기
+	FlavorText: 부리로 공격한다. 상대가 나무열매를 지니고 있을 때 먹어서 나무열매의 효과를 받을 수 있다.
+}
+
+Tailwind: {
+	DisplayName: 순풍
+	FlavorText: 세차게 불어대는 바람의 소용돌이를 만들어 4턴 동안 같은 편 모두의 스피드를 올린다.
+}
+
+Acupressure: {
+	DisplayName: 경혈찌르기
+	FlavorText: 경혈을 눌러 몸을 활성화시킨다. 능력 중 하나를 크게 올린다.
+}
+
+MetalBurst: {
+	DisplayName: 메탈버스트
+	FlavorText: 기술을 쓰기 전에 마지막으로 받은 기술의 데미지를 늘려서 기술을 쓴 상대에게 돌려준다.
+}
+
+UTurn: {
+	DisplayName: 유턴
+	FlavorText: 공격한 뒤 굉장한 스피드로 돌아와서 교대 포켓몬과 교체한다.
+}
+
+CloseCombat: {
+	DisplayName: 인파이트
+	FlavorText: 방어를 포기하고 상대 쪽으로 깊숙이 돌격한다. 자신의 방어와 특수방어가 떨어진다.
+}
+
+Payback: {
+	DisplayName: 보복
+	FlavorText: 모아서 공격한다. 상대보다 나중에 공격할 수 있으면 기술의 위력은 2배가 된다.
+}
+
+Assurance: {
+	DisplayName: 승부굳히기
+	FlavorText: 그 턴에 상대가 이미 데미지를 입었다면 기술의 위력은 2배가 된다.
+}
+
+Embargo: {
+	DisplayName: 금제
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Fling: {
+	DisplayName: 내던지기
+	FlavorText: 지니게 한 도구를 재빠르게 내던져서 공격한다. 도구에 따라 위력과 효과가 바뀐다.
+}
+
+PsychoShift: {
+	DisplayName: 사이코시프트
+	FlavorText: 초능력으로 암시를 걸어서 자신에게 걸려 있는 상태 이상을 상대에게 옮긴다.
+}
+
+TrumpCard: {
+	DisplayName: 마지막수단
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+HealBlock: {
+	DisplayName: 회복봉인
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+WringOut: {
+	DisplayName: 쥐어짜기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+PowerTrick: {
+	DisplayName: 파워트릭
+	FlavorText: 초능력으로 자신의 공격과 방어의 힘을 교환한다.
+}
+
+GastroAcid: {
+	DisplayName: 위액
+	FlavorText: 상대의 몸에 위액을 내뱉는다. 달라붙은 위액은 상대의 특성 효과를 지운다.
+}
+
+LuckyChant: {
+	DisplayName: 주술
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MeFirst: {
+	DisplayName: 선취
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Copycat: {
+	DisplayName: 흉내쟁이
+	FlavorText: 직전에 나온 기술을 흉내 내어 같은 기술을 쓴다. 기술이 나오지 않았으면 실패한다.
+}
+
+PowerSwap: {
+	DisplayName: 파워스웹
+	FlavorText: 초능력으로 자신과 상대의 공격과 특수공격의 능력 변화를 교체한다.
+}
+
+GuardSwap: {
+	DisplayName: 가드스웹
+	FlavorText: 초능력으로 자신과 상대의 방어와 특수방어의 능력 변화를 교체한다.
+}
+
+Punishment: {
+	DisplayName: 혼내기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+LastResort: {
+	DisplayName: 뒀다쓰기
+	FlavorText: 배틀 중에 기억하고 있는 기술을 모두 사용하면 그때부터 쓸 수 있는 필살기이다.
+}
+
+WorrySeed: {
+	DisplayName: 고민씨
+	FlavorText: 마음을 괴롭히는 씨앗을 심는다. 상대를 잠잘 수 없게 해서 특성을 불면으로 만든다.
+}
+
+SuckerPunch: {
+	DisplayName: 기습
+	FlavorText: 상대보다 먼저 공격할 수 있다. 상대가 쓴 기술이 공격기술이 아니면 실패한다.
+}
+
+ToxicSpikes: {
+	DisplayName: 독압정
+	FlavorText: 상대의 발밑에 독 압정을 뿌린다. 교체로 나온 상대 포켓몬에게 독을 퍼지게 한다.
+}
+
+HeartSwap: {
+	DisplayName: 하트스웹
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+AquaRing: {
+	DisplayName: 아쿠아링
+	FlavorText: 자신의 몸 주변을 물로 만든 베일로 덮는다. 매 턴 HP를 회복한다.
+}
+
+MagnetRise: {
+	DisplayName: 전자부유
+	FlavorText: 전기로 만든 자력의 힘으로 허공에 뜬다. 5턴 동안 부유할 수 있다.
+}
+
+FlareBlitz: {
+	DisplayName: 플레어드라이브
+	FlavorText: 불꽃을 두르고 돌진한다. 자신도 상당한 데미지를 입는다. 화상 상태로 만들 때가 있다.
+}
+
+ForcePalm: {
+	DisplayName: 발경
+	FlavorText: 상대의 몸에 충격파를 부딪쳐 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+AuraSphere: {
+	DisplayName: 파동탄
+	FlavorText: 몸속에서 파동의 힘을 끌어내 상대에게 쏜다. 공격은 반드시 명중한다.
+}
+
+RockPolish: {
+	DisplayName: 록커트
+	FlavorText: 자신의 몸을 갈아 공기의 저항을 적게 한다. 스피드를 크게 올릴 수 있다.
+}
+
+PoisonJab: {
+	DisplayName: 독찌르기
+	FlavorText: 독에 물든 촉수나 팔로 상대를 꿰찌른다. 독 상태로 만들 때가 있다.
+}
+
+DarkPulse: {
+	DisplayName: 악의파동
+	FlavorText: 몸에서 악의로 가득한 무서운 오라를 발한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+NightSlash: {
+	DisplayName: 깜짝베기
+	FlavorText: 순간적으로 틈을 노려 상대를 베어 버린다. 급소에 맞기 쉽다.
+}
+
+AquaTail: {
+	DisplayName: 아쿠아테일
+	FlavorText: 세차게 날뛰는 거친 파도와 같이 큰 꼬리를 흔들어서 상대를 공격한다.
+}
+
+SeedBomb: {
+	DisplayName: 씨폭탄
+	FlavorText: 단단한 껍질을 가지고 있는 큰 씨앗을 위에서 힘껏 내던져 상대를 공격한다.
+}
+
+AirSlash: {
+	DisplayName: 에어슬래시
+	FlavorText: 하늘까지 베어 가르는 공기의 칼날로 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+XScissor: {
+	DisplayName: 시저크로스
+	FlavorText: 낫이나 발톱을 가위처럼 교차시키면서 상대를 베어 가른다.
+}
+
+BugBuzz: {
+	DisplayName: 벌레의야단법석
+	FlavorText: 진동으로 음파를 일으켜서 공격한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+DragonPulse: {
+	DisplayName: 용의파동
+	FlavorText: 큰 입으로 충격파를 일으켜서 상대를 공격한다.
+}
+
+DragonRush: {
+	DisplayName: 드래곤다이브
+	FlavorText: 굉장한 살기로 위압하면서 몸통박치기한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+PowerGem: {
+	DisplayName: 파워젬
+	FlavorText: 보석처럼 반짝이는 빛을 발사하여 상대를 공격한다.
+}
+
+DrainPunch: {
+	DisplayName: 드레인펀치
+	FlavorText: 주먹으로 상대의 힘을 흡수한다. 입힌 데미지의 절반에 해당하는 HP를 회복할 수 있다.
+}
+
+VacuumWave: {
+	DisplayName: 진공파
+	FlavorText: 주먹을 흔들어 진공의 파도를 일으킨다. 반드시 선제공격을 할 수 있다.
+}
+
+FocusBlast: {
+	DisplayName: 기합구슬
+	FlavorText: 기합을 높여서 혼신의 힘을 방출한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+EnergyBall: {
+	DisplayName: 에너지볼
+	FlavorText: 자연으로부터 모은 생명의 힘을 발사한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+BraveBird: {
+	DisplayName: 브레이브버드
+	FlavorText: 날개를 접어 저공비행으로 돌격한다. 자신도 상당한 데미지를 입는다.
+}
+
+EarthPower: {
+	DisplayName: 대지의힘
+	FlavorText: 상대의 발밑에 대지의 힘을 방출한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+Switcheroo: {
+	DisplayName: 바꿔치기
+	FlavorText: 눈에 보이지 않는 속도로 자신과 상대가 지닌 물건을 교환한다.
+}
+
+GigaImpact: {
+	DisplayName: 기가임팩트
+	FlavorText: 가진 힘을 모두 사용해서 상대에게 돌격한다. 다음 턴은 움직일 수 없다.
+}
+
+NastyPlot: {
+	DisplayName: 나쁜음모
+	FlavorText: 나쁜 일을 생각해서 머리를 활성화시킨다. 자신의 특수공격을 크게 올린다.
+}
+
+BulletPunch: {
+	DisplayName: 불릿펀치
+	FlavorText: 탄환처럼 빠르고 단단한 펀치를 상대에게 날린다. 반드시 선제공격을 할 수 있다.
+}
+
+Avalanche: {
+	DisplayName: 눈사태
+	FlavorText: 상대로부터 기술을 받으면 그 상대에 대해서 기술의 위력이 2배가 된다.
+}
+
+IceShard: {
+	DisplayName: 얼음뭉치
+	FlavorText: 얼음덩어리를 순식간에 만들어 상대에게 빠르게 쏜다. 반드시 선제공격을 할 수 있다.
+}
+
+ShadowClaw: {
+	DisplayName: 섀도크루
+	FlavorText: 그림자로 만든 날카로운 발톱으로 상대를 베어 가른다. 급소에 맞기 쉽다.
+}
+
+ThunderFang: {
+	DisplayName: 번개엄니
+	FlavorText: 전기를 모은 이빨로 문다. 상대를 풀죽게 하거나 마비 상태로 만들 때가 있다.
+}
+
+IceFang: {
+	DisplayName: 얼음엄니
+	FlavorText: 냉기를 품은 이빨로 문다. 상대를 풀죽게 하거나 얼음 상태로 만들 때가 있다.
+}
+
+FireFang: {
+	DisplayName: 불꽃엄니
+	FlavorText: 불꽃을 두른 이빨로 문다. 상대를 풀죽게 하거나 화상 상태로 만들 때가 있다.
+}
+
+ShadowSneak: {
+	DisplayName: 야습
+	FlavorText: 그림자를 늘려 상대의 배후에서 공격한다. 반드시 선제공격할 수 있다.
+}
+
+MudBomb: {
+	DisplayName: 진흙폭탄
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+PsychoCut: {
+	DisplayName: 사이코커터
+	FlavorText: 실체화시킨 마음의 칼날로 상대를 베어 가른다. 급소에 맞기 쉽다.
+}
+
+ZenHeadbutt: {
+	DisplayName: 사념의박치기
+	FlavorText: 사념의 힘을 이마에 모아서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+MirrorShot: {
+	DisplayName: 미러숏
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FlashCannon: {
+	DisplayName: 러스터캐논
+	FlavorText: 몸의 빛을 한곳에 모아서 힘을 방출한다. 상대의 특수방어를 떨어뜨릴 때가 있다.
+}
+
+RockClimb: {
+	DisplayName: 락클라임
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Defog: {
+	DisplayName: 안개제거
+	FlavorText: 강한 바람으로 상대의 리플렉터나 빛의장막 등을 제거한다. 회피율도 떨어뜨린다.
+}
+
+TrickRoom: {
+	DisplayName: 트릭룸
+	FlavorText: 이상한 공간을 만든다. 5턴 동안 느린 포켓몬부터 행동할 수 있다.
+}
+
+DracoMeteor: {
+	DisplayName: 용성군
+	FlavorText: 천공에서 운석을 상대에게 떨어뜨린다. 사용하면 반동으로 자신의 특수공격이 크게 떨어진다.
+}
+
+Discharge: {
+	DisplayName: 방전
+	FlavorText: 눈부신 전격으로 자신의 주위에 있는 포켓몬을 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+LavaPlume: {
+	DisplayName: 분연
+	FlavorText: 새빨간 불꽃으로 자신의 주위에 있는 포켓몬을 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+LeafStorm: {
+	DisplayName: 리프스톰
+	FlavorText: 뾰족한 잎사귀로 상대에게 돌풍을 일으킨다. 사용하면 반동으로 자신의 특수공격이 크게 떨어진다.
+}
+
+PowerWhip: {
+	DisplayName: 파워휩
+	FlavorText: 덩굴이나 촉수를 세차게 흔들어 상대를 힘껏 쳐서 공격한다.
+}
+
+RockWrecker: {
+	DisplayName: 암석포
+	FlavorText: 거대한 바위를 상대에게 발사하여 공격한다. 다음 턴은 움직일 수 없게 된다.
+}
+
+CrossPoison: {
+	DisplayName: 크로스포이즌
+	FlavorText: 독 칼날로 상대를 베어 가른다. 독 상태로 만들 때가 있고 급소에도 맞기 쉽다.
+}
+
+GunkShot: {
+	DisplayName: 더스트슈트
+	FlavorText: 더러운 쓰레기를 상대에게 부딪쳐서 공격한다. 독 상태로 만들 때가 있다.
+}
+
+IronHead: {
+	DisplayName: 아이언헤드
+	FlavorText: 강철과 같은 단단한 머리로 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+MagnetBomb: {
+	DisplayName: 마그넷봄
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+StoneEdge: {
+	DisplayName: 스톤에지
+	FlavorText: 뾰족한 바위를 상대에게 꿰찔러서 공격한다. 급소에 맞기 쉽다.
+}
+
+Captivate: {
+	DisplayName: 유혹
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+StealthRock: {
+	DisplayName: 스텔스록
+	FlavorText: 상대의 주위에 무수한 바위를 띄워 교체해서 나온 상대 포켓몬에게 데미지를 준다.
+}
+
+GrassKnot: {
+	DisplayName: 풀묶기
+	FlavorText: 풀을 휘감아서 상대를 쓰러뜨린다. 상대가 무거울수록 위력이 올라간다.
+}
+
+Chatter: {
+	DisplayName: 수다
+	FlavorText: 매우 시끄럽고 수다스러운 음파로 상대를 공격한다. 상대를 혼란시킨다.
+}
+
+Judgment: {
+	DisplayName: 심판의뭉치
+	FlavorText: 무수한 광탄을 상대에게 방출한다. 자신이 가지고 있는 플레이트에 따라 타입이 바뀐다.
+}
+
+BugBite: {
+	DisplayName: 벌레먹음
+	FlavorText: 물어서 공격한다. 상대가 나무열매를 지니고 있을 때 먹어서 나무열매의 효과를 받을 수 있다.
+}
+
+ChargeBeam: {
+	DisplayName: 차지빔
+	FlavorText: 전격의 다발을 상대에게 발사한다. 전기를 모아서 자신의 특수공격을 올릴 때가 있다.
+}
+
+WoodHammer: {
+	DisplayName: 우드해머
+	FlavorText: 단단한 몸통을 상대에게 부딪쳐서 공격한다. 자신도 상당한 데미지를 입는다.
+}
+
+AquaJet: {
+	DisplayName: 아쿠아제트
+	FlavorText: 눈에 보이지 않는 굉장한 속도로 상대에게 돌진한다. 반드시 선제공격할 수 있다.
+}
+
+AttackOrder: {
+	DisplayName: 공격지령
+	FlavorText: 부하를 불러내어 상대를 향해서 공격시킨다. 급소에 맞기 쉽다.
+}
+
+DefendOrder: {
+	DisplayName: 방어지령
+	FlavorText: 부하를 불러내어 자신의 몸을 뒤덮게 한다. 방어와 특수방어를 올릴 수 있다.
+}
+
+HealOrder: {
+	DisplayName: 회복지령
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+HeadSmash: {
+	DisplayName: 양날박치기
+	FlavorText: 목숨을 걸고 혼신의 힘으로 상대에게 박치기를 한다. 자신도 굉장한 데미지를 입는다.
+}
+
+DoubleHit: {
+	DisplayName: 더블어택
+	FlavorText: 꼬리 등을 써서 상대를 때려 공격한다. 2회 연속으로 데미지를 준다.
+}
+
+RoarOfTime: {
+	DisplayName: 시간의포효
+	FlavorText: 시간이 뒤틀릴 정도의 힘을 사용해서 상대를 공격한다. 다음 턴은 움직일 수 없다.
+}
+
+SpacialRend: {
+	DisplayName: 공간절단
+	FlavorText: 주위의 공간과 더불어 상대를 찢어서 데미지를 준다. 급소에 맞기 쉽다.
+}
+
+LunarDance: {
+	DisplayName: 초승달춤
+	FlavorText: 자신은 기절하지만 교대하여 나오는 포켓몬의 모든 상태를 회복한다.
+}
+
+CrushGrip: {
+	DisplayName: 묵사발
+	FlavorText: 굉장한 힘으로 상대를 묵사발로 만든다. 상대의 HP가 남아 있을수록 위력이 올라간다.
+}
+
+MagmaStorm: {
+	DisplayName: 마그마스톰
+	FlavorText: 세차게 타오르는 불꽃 속에 4-5턴 동안 상대를 가두어 공격한다.
+}
+
+DarkVoid: {
+	DisplayName: 다크홀
+	FlavorText: 암흑의 세계로 끌고 가서 떨어뜨려 상대를 잠듦 상태로 만든다.
+}
+
+SeedFlare: {
+	DisplayName: 시드플레어
+	FlavorText: 몸속에서 충격파를 발생시킨다. 상대의 특수방어를 크게 떨어뜨릴 때가 있다.
+}
+
+OminousWind: {
+	DisplayName: 괴상한바람
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ShadowForce: {
+	DisplayName: 섀도다이브
+	FlavorText: 1턴째에 모습을 감춰 2턴째에 상대를 공격한다. 방어하고 있어도 공격은 맞는다.
+}
+
+HoneClaws: {
+	DisplayName: 손톱갈기
+	FlavorText: 손톱을 갈아 날카롭게 한다. 자신의 공격과 명중률을 올린다.
+}
+
+WideGuard: {
+	DisplayName: 와이드가드
+	FlavorText: 같은 편 전원에게 향하는 공격을 1턴 동안 막는다.
+}
+
+GuardSplit: {
+	DisplayName: 가드셰어
+	FlavorText: 초능력으로 자신과 상대의 방어와 특수방어를 더해서 반으로 나눈다.
+}
+
+PowerSplit: {
+	DisplayName: 파워셰어
+	FlavorText: 초능력으로 자신과 상대의 공격과 특수공격을 더해서 반으로 나눈다.
+}
+
+WonderRoom: {
+	DisplayName: 원더룸
+	FlavorText: 이상한 공간을 만든다. 5턴 동안 모든 포켓몬의 방어와 특수방어가 바뀐다.
+}
+
+Psyshock: {
+	DisplayName: 사이코쇼크
+	FlavorText: 이상한 염력파를 실체화하여 상대를 공격한다. 물리적인 데미지를 준다.
+}
+
+Venoshock: {
+	DisplayName: 베놈쇼크
+	FlavorText: 특수한 독액을 끼얹는다. 독 상태의 상대에게는 위력이 2배가 된다.
+}
+
+Autotomize: {
+	DisplayName: 바디퍼지
+	FlavorText: 몸의 쓸모없는 부분을 깎는다. 자신의 스피드를 크게 올리고 체중도 가벼워진다.
+}
+
+RagePowder: {
+	DisplayName: 분노가루
+	FlavorText: 안절부절못하게 하는 가루를 자신에게 뿌려서 주의를 끈다. 상대의 공격은 모두 자신에게 향한다.
+}
+
+Telekinesis: {
+	DisplayName: 텔레키네시스
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MagicRoom: {
+	DisplayName: 매직룸
+	FlavorText: 이상한 공간을 만든다. 5턴 동안 모든 포켓몬의 도구의 효과가 사라진다.
+}
+
+SmackDown: {
+	DisplayName: 떨어뜨리기
+	FlavorText: 돌이나 구슬을 던져서 날고 있는 상대를 공격한다. 맞은 상대는 땅에 떨어진다.
+}
+
+StormThrow: {
+	DisplayName: 업어후리기
+	FlavorText: 강렬한 일격을 상대에게 날린다. 공격은 반드시 급소에 맞는다.
+}
+
+FlameBurst: {
+	DisplayName: 불꽃튀기기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SludgeWave: {
+	DisplayName: 오물웨이브
+	FlavorText: 오물 파도로 자신의 주위에 있는 포켓몬을 공격한다. 독 상태로 만들 때가 있다.
+}
+
+QuiverDance: {
+	DisplayName: 나비춤
+	FlavorText: 신비롭고 아름다운 춤을 경쾌하게 춘다. 자신의 특수공격과 특수방어와 스피드를 올린다.
+}
+
+HeavySlam: {
+	DisplayName: 헤비봄버
+	FlavorText: 무거운 몸으로 상대에게 부딪쳐 공격한다. 자신이 상대보다 무거울수록 위력이 올라간다.
+}
+
+Synchronoise: {
+	DisplayName: 싱크로노이즈
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ElectroBall: {
+	DisplayName: 일렉트릭볼
+	FlavorText: 전기 덩어리를 상대에게 부딪쳐서 공격한다. 상대보다 스피드가 빠를수록 위력이 올라간다.
+}
+
+Soak: {
+	DisplayName: 물붓기
+	FlavorText: 많은 물을 끼얹어서 상대를 물타입으로 바꾼다.
+}
+
+FlameCharge: {
+	DisplayName: 니트로차지
+	FlavorText: 불꽃을 둘러 상대를 공격한다. 힘을 모아서 자신의 스피드를 올린다.
+}
+
+Coil: {
+	DisplayName: 똬리틀기
+	FlavorText: 똬리를 틀어서 집중한다. 자신의 공격과 방어와 명중률을 올린다.
+}
+
+LowSweep: {
+	DisplayName: 로킥
+	FlavorText: 재빠른 움직임으로 상대의 다리를 노려 공격한다. 상대의 스피드를 떨어뜨린다.
+}
+
+AcidSpray: {
+	DisplayName: 애시드봄
+	FlavorText: 상대를 녹이는 액체를 토해내서 공격한다. 상대의 특수방어를 크게 떨어뜨린다.
+}
+
+FoulPlay: {
+	DisplayName: 속임수
+	FlavorText: 상대의 힘을 이용한다. 싸우고 있는 상대의 공격이 높을수록 데미지가 올라간다.
+}
+
+SimpleBeam: {
+	DisplayName: 심플빔
+	FlavorText: 수수께끼의 염력파를 상대에게 보낸다. 염력파를 받은 상대는 특성이 단순으로 바뀐다.
+}
+
+Entrainment: {
+	DisplayName: 동료만들기
+	FlavorText: 이상한 리듬으로 춤춘다. 움직임을 흉내 내게 해서 자신과 상대의 특성을 똑같게 만든다.
+}
+
+AfterYou: {
+	DisplayName: 당신먼저
+	FlavorText: 상대의 행동을 도와서 자신이 행동한 뒤에 바로 움직일 수 있도록 한다.
+}
+
+Round: {
+	DisplayName: 돌림노래
+	FlavorText: 노래로 상대를 공격한다. 함께 돌림노래를 하면 계속해서 쓸 수 있고 위력도 올라간다.
+}
+
+EchoedVoice: {
+	DisplayName: 에코보이스
+	FlavorText: 울리는 목소리로 상대를 공격한다. 매 턴 누군가 이 기술을 계속해서 쓰면 위력이 올라간다.
+}
+
+ChipAway: {
+	DisplayName: 야금야금
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ClearSmog: {
+	DisplayName: 클리어스모그
+	FlavorText: 특수한 진흙 덩어리를 상대에게 내던져서 공격한다. 능력 변화를 원래대로 돌린다.
+}
+
+StoredPower: {
+	DisplayName: 어시스트파워
+	FlavorText: 축적된 파워로 상대를 공격한다. 자신의 능력이 올라가 있는 만큼 위력이 오른다.
+}
+
+QuickGuard: {
+	DisplayName: 퍼스트가드
+	FlavorText: 자신과 같은 편을 상대의 선제공격으로부터 지킨다.
+}
+
+AllySwitch: {
+	DisplayName: 사이드체인지
+	FlavorText: 이상한 힘으로 순간이동하여 자신과 같은 편의 위치를 바꾼다.
+}
+
+Scald: {
+	DisplayName: 열탕
+	FlavorText: 뜨겁게 끓어오르는 물을 상대에게 발사해서 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+ShellSmash: {
+	DisplayName: 껍질깨기
+	FlavorText: 껍질을 깨서 자신의 방어와 특수방어를 떨어뜨리지만 공격과 특수공격, 스피드를 크게 올린다.
+}
+
+HealPulse: {
+	DisplayName: 치유파동
+	FlavorText: 치유파동을 날려서 최대 HP의 절반만큼 상대의 HP를 회복한다.
+}
+
+Hex: {
+	DisplayName: 병상첨병
+	FlavorText: 엎친 데 덮친 격으로 공격한다. 상태 이상인 상대에게 큰 데미지를 준다.
+}
+
+SkyDrop: {
+	DisplayName: 프리폴
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ShiftGear: {
+	DisplayName: 기어체인지
+	FlavorText: 톱니바퀴를 돌려서 자신의 공격을 올리는 것뿐만 아니라 스피드도 크게 올린다.
+}
+
+CircleThrow: {
+	DisplayName: 배대뒤치기
+	FlavorText: 상대를 내던져서 교대할 포켓몬을 끌어낸다. 야생의 경우에는 배틀이 끝난다.
+}
+
+Incinerate: {
+	DisplayName: 불태우기
+	FlavorText: 불꽃으로 상대를 공격한다. 상대가 나무열매 등을 지니고 있을 때 불태워서 쓸 수 없게 만든다.
+}
+
+Quash: {
+	DisplayName: 순서미루기
+	FlavorText: 상대를 억눌러서 행동의 순서를 마지막으로 만든다.
+}
+
+Acrobatics: {
+	DisplayName: 애크러뱃
+	FlavorText: 경쾌하게 상대를 공격한다. 자신이 도구를 지니고 있지 않을 때 큰 데미지를 준다.
+}
+
+ReflectType: {
+	DisplayName: 미러타입
+	FlavorText: 상대의 타입을 반사해서 자신도 똑같은 타입이 된다.
+}
+
+Retaliate: {
+	DisplayName: 원수갚기
+	FlavorText: 쓰러진 같은 편의 원수를 갚는다. 앞 턴에서 같은 편이 쓰러지면 위력이 올라간다.
+}
+
+FinalGambit: {
+	DisplayName: 목숨걸기
+	FlavorText: 목숨을 걸고 상대를 공격한다. 자신은 기절하게 되지만 상대에게 HP만큼의 데미지를 준다.
+}
+
+Bestow: {
+	DisplayName: 기프트패스
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Inferno: {
+	DisplayName: 연옥
+	FlavorText: 격렬한 불꽃으로 상대를 둘러싸 공격한다. 화상 상태로 만든다.
+}
+
+WaterPledge: {
+	DisplayName: 물의맹세
+	FlavorText: 물기둥으로 공격한다. 불꽃과 조합하면 위력이 올라가고 하늘에 무지개가 걸린다.
+}
+
+FirePledge: {
+	DisplayName: 불꽃의맹세
+	FlavorText: 불꽃기둥으로 공격한다. 풀과 조합하면 위력이 올라가고 주위가 불바다가 된다.
+}
+
+GrassPledge: {
+	DisplayName: 풀의맹세
+	FlavorText: 풀기둥으로 공격한다. 물과 조합하면 위력이 올라가고 주변이 습지초원이 된다.
+}
+
+VoltSwitch: {
+	DisplayName: 볼트체인지
+	FlavorText: 공격한 뒤 굉장한 스피드로 돌아와서 교대 포켓몬과 교체한다.
+}
+
+StruggleBug: {
+	DisplayName: 벌레의저항
+	FlavorText: 저항해서 상대를 공격한다. 상대의 특수공격을 떨어뜨린다.
+}
+
+Bulldoze: {
+	DisplayName: 땅고르기
+	FlavorText: 땅을 힘껏 밟아 자신의 주위에 있는 포켓몬을 공격한다. 상대의 스피드를 떨어뜨린다.
+}
+
+FrostBreath: {
+	DisplayName: 얼음숨결
+	FlavorText: 차가운 숨결을 상대에게 내뿜어 공격한다. 반드시 급소에 맞는다.
+}
+
+DragonTail: {
+	DisplayName: 드래곤테일
+	FlavorText: 상대를 튕겨내서 교대할 포켓몬을 끌어낸다. 야생의 경우에는 배틀이 끝난다.
+}
+
+WorkUp: {
+	DisplayName: 분발
+	FlavorText: 스스로 분발해서 공격과 특수공격을 올린다.
+}
+
+Electroweb: {
+	DisplayName: 일렉트릭네트
+	FlavorText: 전기 네트로 상대를 붙잡아서 공격한다. 상대의 스피드를 떨어뜨린다.
+}
+
+WildCharge: {
+	DisplayName: 와일드볼트
+	FlavorText: 전기를 두르고 상대에게 부딪쳐 공격한다. 자신도 조금 데미지를 입는다.
+}
+
+DrillRun: {
+	DisplayName: 드릴라이너
+	FlavorText: 드릴처럼 몸을 회전시켜서 상대에게 몸통박치기한다. 급소에 맞기 쉽다.
+}
+
+DualChop: {
+	DisplayName: 더블촙
+	FlavorText: 몸의 단단한 부분으로 상대를 때려 공격한다. 2회 연속으로 데미지를 준다.
+}
+
+HeartStamp: {
+	DisplayName: 하트스탬프
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+HornLeech: {
+	DisplayName: 우드호른
+	FlavorText: 뿔을 꿰찔러서 상대의 양분을 흡수한다. 입힌 데미지의 절반에 해당하는 HP를 회복할 수 있다.
+}
+
+SacredSword: {
+	DisplayName: 성스러운칼
+	FlavorText: 긴 뿔로 베어 공격한다. 상대의 능력 변화에 관계없이 데미지를 준다.
+}
+
+RazorShell: {
+	DisplayName: 셸블레이드
+	FlavorText: 날카로운 조개껍질로 베어 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+HeatCrash: {
+	DisplayName: 히트스탬프
+	FlavorText: 불타는 몸으로 상대에게 부딪쳐서 공격한다. 자신이 상대보다 무거울수록 위력이 올라간다.
+}
+
+LeafTornado: {
+	DisplayName: 그래스믹서
+	FlavorText: 날카로운 잎사귀로 상대를 둘러싸서 공격한다. 명중률을 떨어뜨릴 때가 있다.
+}
+
+Steamroller: {
+	DisplayName: 하드롤러
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+CottonGuard: {
+	DisplayName: 코튼가드
+	FlavorText: 푹신푹신한 솜털로 자신의 몸을 둘러싸서 지킨다. 방어를 매우 크게 올린다.
+}
+
+NightDaze: {
+	DisplayName: 나이트버스트
+	FlavorText: 암흑의 충격파를 날려서 상대를 공격한다. 명중률을 떨어뜨릴 때가 있다.
+}
+
+Psystrike: {
+	DisplayName: 사이코브레이크
+	FlavorText: 이상한 염력파를 실체화하여 상대를 공격한다. 물리적인 데미지를 준다.
+}
+
+TailSlap: {
+	DisplayName: 스위프뺨치기
+	FlavorText: 단단한 꼬리로 상대를 때려서 공격한다. 2-5회 동안 연속으로 쓴다.
+}
+
+Hurricane: {
+	DisplayName: 폭풍
+	FlavorText: 강렬한 바람으로 상대를 둘러싸서 공격한다. 상대를 혼란시킬 때가 있다.
+}
+
+HeadCharge: {
+	DisplayName: 아프로브레이크
+	FlavorText: 굉장한 아프로 머리로 상대에게 돌진하여 공격한다. 자신도 조금 데미지를 입는다.
+}
+
+GearGrind: {
+	DisplayName: 기어소서
+	FlavorText: 강철의 기어를 상대에게 던져서 공격한다. 2회 연속으로 데미지를 준다.
+}
+
+SearingShot: {
+	DisplayName: 화염탄
+	FlavorText: 새빨간 불꽃으로 자신의 주위에 있는 포켓몬을 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+TechnoBlast: {
+	DisplayName: 테크노버스터
+	FlavorText: 광탄을 상대에게 방출한다. 자신이 지니고 있는 카세트에 의해 타입이 바뀐다.
+}
+
+RelicSong: {
+	DisplayName: 옛노래
+	FlavorText: 옛 노래를 상대에게 들려주고 마음에 호소하여 공격한다. 잠듦 상태로 만들 때가 있다.
+}
+
+SecretSword: {
+	DisplayName: 신비의칼
+	FlavorText: 긴 뿔로 베어 공격한다. 뿔이 머금은 이상한 힘은 물리적인 데미지를 준다.
+}
+
+Glaciate: {
+	DisplayName: 얼다세계
+	FlavorText: 차가운 냉기를 상대에게 내뿜어 공격한다. 상대의 스피드를 떨어뜨린다.
+}
+
+BoltStrike: {
+	DisplayName: 뇌격
+	FlavorText: 방대한 전기를 몸에 둘러 상대에게 돌진해서 공격한다. 마비 상태로 만들 때가 있다.
+}
+
+BlueFlare: {
+	DisplayName: 푸른불꽃
+	FlavorText: 아름다우면서도 격렬한 푸른불꽃으로 상대를 둘러싸서 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+FieryDance: {
+	DisplayName: 불꽃춤
+	FlavorText: 불꽃을 두른 날개를 쳐서 공격한다. 자신의 특수공격이 오를 때가 있다.
+}
+
+FreezeShock: {
+	DisplayName: 프리즈볼트
+	FlavorText: 전기를 두른 얼음덩어리로 2턴째에 상대를 내리친다. 마비 상태로 만들 때가 있다.
+}
+
+IceBurn: {
+	DisplayName: 콜드플레어
+	FlavorText: 모든 것을 얼려버리는 격렬한 냉기로 2턴째에 상대를 둘러싼다. 화상 상태로 만들 때가 있다.
+}
+
+Snarl: {
+	DisplayName: 바크아웃
+	FlavorText: 호되게 호통을 쳐서 상대의 특수공격을 떨어뜨린다.
+}
+
+IcicleCrash: {
+	DisplayName: 고드름떨구기
+	FlavorText: 큰 고드름을 격렬하게 부딪쳐서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+VCreate: {
+	DisplayName: V제너레이트
+	FlavorText: 작열하는 불꽃을 이마에서 발생시켜 이판사판으로 몸통박치기한다. 방어, 특수방어, 스피드가 떨어진다.
+}
+
+FusionFlare: {
+	DisplayName: 크로스플레임
+	FlavorText: 거대한 불꽃을 내리친다. 거대한 천둥의 영향을 받아 기술의 위력이 올라간다.
+}
+
+FusionBolt: {
+	DisplayName: 크로스썬더
+	FlavorText: 거대한 천둥을 내리친다. 거대한 불꽃의 영향을 받아 기술의 위력이 올라간다.
+}
+
+FlyingPress: {
+	DisplayName: 플라잉프레스
+	FlavorText: 공중에서 상대에게 다이브한다. 이 기술은 격투타입임과 동시에 비행타입이기도 하다.
+}
+
+MatBlock: {
+	DisplayName: 마룻바닥세워막기
+	FlavorText: 뒤집어 세운 마룻바닥을 방패로 하여 자신과 같은 편으로 향하는 기술 데미지를 막는다. 변화 기술은 막을 수 없다.
+}
+
+Belch: {
+	DisplayName: 트림
+	FlavorText: 상대를 향해 트림을 하여 데미지를 준다. 나무열매를 먹지 않으면 쓸 수 없다.
+}
+
+Rototiller: {
+	DisplayName: 일구기
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+StickyWeb: {
+	DisplayName: 끈적끈적네트
+	FlavorText: 상대의 주위에 끈적끈적한 네트를 둘러 펼쳐 교체되어 나온 상대의 스피드를 떨어뜨린다.
+}
+
+FellStinger: {
+	DisplayName: 마지막일침
+	FlavorText: 이 기술을 사용하여 상대를 쓰러뜨리면 공격이 매우 크게 오른다.
+}
+
+PhantomForce: {
+	DisplayName: 고스트다이브
+	FlavorText: 1턴째에 어디론가 사라져서 2턴째에 상대를 공격한다. 기술 방어를 무시하고 공격할 수 있다.
+}
+
+TrickOrTreat: {
+	DisplayName: 핼러윈
+	FlavorText: 상대를 핼러윈으로 초대한다. 상대 타입에 고스트타입이 추가된다.
+}
+
+NobleRoar: {
+	DisplayName: 부르짖기
+	FlavorText: 우렁차게 부르짖어서 상대를 위협하여 상대의 공격과 특수공격을 떨어뜨린다.
+}
+
+IonDeluge: {
+	DisplayName: 플라스마샤워
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ParabolicCharge: {
+	DisplayName: 파라볼라차지
+	FlavorText: 주위에 있는 모든 포켓몬에게 데미지를 준다. 준 데미지의 절반을 자신이 회복한다.
+}
+
+ForestsCurse: {
+	DisplayName: 숲의저주
+	FlavorText: 상대에게 숲의 저주를 건다. 저주에 걸린 상대는 타입에 풀타입이 추가된다.
+}
+
+PetalBlizzard: {
+	DisplayName: 꽃보라
+	FlavorText: 세찬 꽃보라를 일으켜서 주위에 있는 포켓몬을 공격하여 데미지를 준다.
+}
+
+FreezeDry: {
+	DisplayName: 프리즈드라이
+	FlavorText: 상대를 급격히 차갑게 하여 얼음 상태로 만들 때가 있다. 물타입 포켓몬에게도 효과가 굉장해진다.
+}
+
+DisarmingVoice: {
+	DisplayName: 차밍보이스
+	FlavorText: 매혹적인 울음소리를 내어 상대에게 정신적 데미지를 준다. 공격은 반드시 명중한다.
+}
+
+PartingShot: {
+	DisplayName: 막말내뱉기
+	FlavorText: 막말을 내뱉어 상대를 위협하여 공격과 특수공격을 떨어뜨린 후 교대 포켓몬과 교체한다.
+}
+
+TopsyTurvy: {
+	DisplayName: 뒤집어엎기
+	FlavorText: 상대에게 걸려 있는 모든 능력 변화를 뒤집어서 반대로 만든다.
+}
+
+DrainingKiss: {
+	DisplayName: 드레인키스
+	FlavorText: 키스로 상대의 HP를 흡수한다. 준 데미지의 반 이상 HP를 회복한다.
+}
+
+CraftyShield: {
+	DisplayName: 트릭가드
+	FlavorText: 이상한 힘을 사용하여 같은 편을 공격하는 변화 기술을 막는다. 데미지 기술은 받는다.
+}
+
+FlowerShield: {
+	DisplayName: 플라워가드
+	FlavorText: 이상한 힘을 사용하여 배틀에 나와 있는 모든 풀타입 포켓몬의 방어를 올린다.
+}
+
+GrassyTerrain: {
+	DisplayName: 그래스필드
+	FlavorText: 5턴 동안 그래스필드로 만든다. 땅에 있으면 매 턴 회복한다. 풀타입의 위력이 올라간다.
+}
+
+MistyTerrain: {
+	DisplayName: 미스트필드
+	FlavorText: 5턴 동안 땅에 있으면 상태 이상이 되지 않고 드래곤타입 기술의 데미지도 절반이 된다.
+}
+
+Electrify: {
+	DisplayName: 송전
+	FlavorText: 상대가 기술을 쓰기 전에 송전하면 그 턴에 상대가 사용하는 기술은 전기타입이 된다.
+}
+
+PlayRough: {
+	DisplayName: 치근거리기
+	FlavorText: 상대에게 치근거리며 공격한다. 상대의 공격을 떨어뜨릴 때가 있다.
+}
+
+FairyWind: {
+	DisplayName: 요정의바람
+	FlavorText: 요정의 바람을 일으켜 상대에게 몰아쳐서 공격한다.
+}
+
+Moonblast: {
+	DisplayName: 문포스
+	FlavorText: 달의 파워를 빌려서 상대를 공격한다. 상대의 특수공격을 떨어뜨릴 때가 있다.
+}
+
+Boomburst: {
+	DisplayName: 폭음파
+	FlavorText: 무시무시한 폭음의 파괴력으로 주위에 있는 포켓몬을 공격한다.
+}
+
+FairyLock: {
+	DisplayName: 페어리록
+	FlavorText: 록을 걸어 다음 턴의 모든 포켓몬을 도망가지 못하게 한다.
+}
+
+KingsShield: {
+	DisplayName: 킹실드
+	FlavorText: 상대의 공격을 막음과 동시에 방어 태세를 갖춘다. 접촉한 상대의 공격을 떨어뜨린다.
+}
+
+PlayNice: {
+	DisplayName: 친해지기
+	FlavorText: 상대와 친해져서 싸울 마음을 잃게 하여 상대의 공격을 떨어뜨린다.
+}
+
+Confide: {
+	DisplayName: 비밀이야기
+	FlavorText: 비밀 이야기를 해서 상대의 집중력을 잃게 하여 특수공격을 떨어뜨린다.
+}
+
+DiamondStorm: {
+	DisplayName: 다이아스톰
+	FlavorText: 다이아 폭풍을 일으켜 데미지를 준다. 자신의 방어를 크게 올릴 때가 있다.
+}
+
+SteamEruption: {
+	DisplayName: 스팀버스트
+	FlavorText: 상대에게 굉장히 뜨거운 증기를 뿜는다. 상대는 화상을 입기도 한다.
+}
+
+HyperspaceHole: {
+	DisplayName: 다른차원홀
+	FlavorText: 다른차원홀로 갑자기 상대 바로 옆에 나타나 공격한다. 방어나 판별 등도 무시할 수 있다.
+}
+
+WaterShuriken: {
+	DisplayName: 물수리검
+	FlavorText: 점액으로 만든 수리검을 2-5회 동안 연속으로 던진다. 반드시 선제공격할 수 있다.
+}
+
+MysticalFire: {
+	DisplayName: 매지컬플레임
+	FlavorText: 입에서 내뱉는 아주 뜨거운 불꽃으로 공격한다. 상대의 특수공격을 떨어뜨린다.
+}
+
+SpikyShield: {
+	DisplayName: 니들가드
+	FlavorText: 상대의 공격을 막음과 동시에 접촉한 상대의 체력을 떨어뜨린다.
+}
+
+AromaticMist: {
+	DisplayName: 아로마미스트
+	FlavorText: 신비한 아로마 향으로 같은 편의 특수방어를 올린다.
+}
+
+EerieImpulse: {
+	DisplayName: 괴전파
+	FlavorText: 몸에서 발생시킨 괴전파를 상대에게 쏘아 특수공격을 크게 떨어뜨린다.
+}
+
+VenomDrench: {
+	DisplayName: 베놈트랩
+	FlavorText: 특수한 독액을 끼얹는다. 독 상태인 상대는 공격, 특수공격, 스피드가 떨어진다.
+}
+
+Powder: {
+	DisplayName: 분진
+	FlavorText: 분진을 뒤집어쓴 상대가 불꽃 기술을 쓰면 폭발하여 데미지를 준다.
+}
+
+Geomancy: {
+	DisplayName: 지오컨트롤
+	FlavorText: 1턴째에 에너지를 흡수하여 2턴째에 특수공격, 특수방어, 스피드를 크게 올린다.
+}
+
+MagneticFlux: {
+	DisplayName: 자기장조작
+	FlavorText: 자기장 조작으로 인해 특성 플러스와 마이너스의 방어, 특수방어가 오른다.
+}
+
+HappyHour: {
+	DisplayName: 해피타임
+	FlavorText: 해피타임 기술을 쓰면 배틀 후에 받을 수 있는 돈이 배가 된다.
+}
+
+ElectricTerrain: {
+	DisplayName: 일렉트릭필드
+	FlavorText: 5턴 동안 일렉트릭필드로 만든다. 땅에 있는 포켓몬은 잠들지 않는다. 전기타입의 위력이 올라간다.
+}
+
+DazzlingGleam: {
+	DisplayName: 매지컬샤인
+	FlavorText: 강력한 빛을 내어 상대에게 데미지를 준다.
+}
+
+Celebrate: {
+	DisplayName: 축하
+	FlavorText: 포켓몬이 매우 행복한 당신을 축하해 준다.
+}
+
+HoldHands: {
+	DisplayName: 손에손잡기
+	FlavorText: 같은 편 포켓몬끼리 손에 손을 잡는다. 굉장히 행복한 기분이 들게 된다.
+}
+
+BabyDollEyes: {
+	DisplayName: 초롱초롱눈동자
+	FlavorText: 초롱초롱한 눈동자로 상대를 바라보며 공격을 떨어뜨린다. 반드시 선제공격할 수 있다.
+}
+
+Nuzzle: {
+	DisplayName: 볼부비부비
+	FlavorText: 전기가 흐르는 볼을 비벼서 공격한다. 상대를 마비 상태로 만든다.
+}
+
+HoldBack: {
+	DisplayName: 적당히손봐주기
+	FlavorText: 적당히 공격하여 상대의 HP를 반드시 1은 남긴다.
+}
+
+Infestation: {
+	DisplayName: 엉겨붙기
+	FlavorText: 4-5턴 동안 상대에게 엉겨 붙어서 공격한다. 그동안 상대는 도망갈 수 없다.
+}
+
+PowerUpPunch: {
+	DisplayName: 그로우펀치
+	FlavorText: 반복하여 때리면 점점 주먹이 단단해진다. 상대를 때리면 공격이 오른다.
+}
+
+OblivionWing: {
+	DisplayName: 데스윙
+	FlavorText: 조준한 상대로부터 HP를 흡수한다. 준 데미지의 반 이상 HP를 회복한다.
+}
+
+ThousandArrows: {
+	DisplayName: 사우전드애로
+	FlavorText: 떠 있는 포켓몬도 맞힐 수 있다. 떠 있던 상대는 맞아서 땅에 떨어진다.
+}
+
+ThousandWaves: {
+	DisplayName: 사우전드웨이브
+	FlavorText: 땅 위를 뻗어 나가는 파도로 공격한다. 파도에 휩쓸린 상대는 전투에서 도망칠 수 없게 된다.
+}
+
+LandsWrath: {
+	DisplayName: 그라운드포스
+	FlavorText: 대지의 힘을 모으고 그 힘을 상대에게 집중시켜서 데미지를 준다.
+}
+
+LightOfRuin: {
+	DisplayName: 파멸의빛
+	FlavorText: 영원의 꽃의 파워를 빌려서 강력한 광선을 쏜다. 자신도 상당한 데미지를 입는다.
+}
+
+OriginPulse: {
+	DisplayName: 근원의파동
+	FlavorText: 파랗게 빛나는 무수한 광선으로 상대를 공격한다.
+}
+
+PrecipiceBlades: {
+	DisplayName: 단애의칼
+	FlavorText: 대지의 힘을 칼날로 바꿔 상대를 공격한다.
+}
+
+DragonAscent: {
+	DisplayName: 화룡점정
+	FlavorText: 넓은 하늘에서 급속으로 강하하여 상대를 공격한다. 자신의 방어와 특수방어가 떨어진다.
+}
+
+HyperspaceFury: {
+	DisplayName: 다른차원러시
+	FlavorText: 많은 팔로 방어와 판별 등을 무시하는 연속 공격이다. 자신의 방어가 떨어진다.
+}
+
+BreakneckBlitz: {
+	DisplayName: 울트라대시어택
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+AllOutPummeling: {
+	DisplayName: 전력무쌍격렬권
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SupersonicSkystrike: {
+	DisplayName: 파이널다이브클래시
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+AcidDownpour: {
+	DisplayName: 애시드포이즌딜리트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+TectonicRage: {
+	DisplayName: 라이징랜드오버
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ContinentalCrush: {
+	DisplayName: 월즈엔드폴
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SavageSpinOut: {
+	DisplayName: 절대포식회전참
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+NeverEndingNightmare: {
+	DisplayName: 무한암야로의유인
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+CorkscrewCrash: {
+	DisplayName: 초월나선연격
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+InfernoOverdrive: {
+	DisplayName: 다이내믹풀플레임
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+HydroVortex: {
+	DisplayName: 슈퍼아쿠아토네이도
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+BloomDoom: {
+	DisplayName: 블룸샤인엑스트라
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+GigavoltHavoc: {
+	DisplayName: 스파킹기가볼트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ShatteredPsyche: {
+	DisplayName: 맥시멈사이브레이커
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SubzeroSlammer: {
+	DisplayName: 레이징지오프리즈
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+DevastatingDrake: {
+	DisplayName: 얼티메이트드래곤번
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+BlackHoleEclipse: {
+	DisplayName: 블랙홀이클립스
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+TwinkleTackle: {
+	DisplayName: 러블리스타임팩트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+Catastropika: {
+	DisplayName: 필살피카슛
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ShoreUp: {
+	DisplayName: 모래모으기
+	FlavorText: 자신의 최대 HP 절반을 회복한다. 모래바람일 때는 많이 회복한다.
+}
+
+FirstImpression: {
+	DisplayName: 만나자마자
+	FlavorText: 위력이 높은 기술이지만 배틀에 나가서 바로 쓰지 않으면 성공할 수 없다.
+}
+
+BanefulBunker: {
+	DisplayName: 토치카
+	FlavorText: 상대의 공격을 막음과 동시에 접촉한 상대에게 독을 퍼뜨린다.
+}
+
+SpiritShackle: {
+	DisplayName: 그림자꿰매기
+	FlavorText: 공격과 동시에 상대의 그림자를 꿰매 도망칠 수 없게 한다.
+}
+
+DarkestLariat: {
+	DisplayName: DD래리어트
+	FlavorText: 양팔을 돌려 상대에게 부딪친다. 상대의 능력 변화에 상관없이 데미지를 준다.
+}
+
+SparklingAria: {
+	DisplayName: 물거품아리아
+	FlavorText: 노래 부르는 것으로 많은 벌룬을 방출한다. 기술에 맞으면 화상이 낫는다.
+}
+
+IceHammer: {
+	DisplayName: 아이스해머
+	FlavorText: 강하고 무거운 주먹을 휘둘러 데미지를 준다. 자신의 스피드가 떨어진다.
+}
+
+FloralHealing: {
+	DisplayName: 플라워힐
+	FlavorText: 최대 HP의 절반만큼 상대의 HP를 회복한다. 그래스필드일 때 효과가 올라간다.
+}
+
+HighHorsepower: {
+	DisplayName: 10만마력
+	FlavorText: 온몸을 써서 상대에게 맹렬히 어택한다.
+}
+
+StrengthSap: {
+	DisplayName: 힘흡수
+	FlavorText: 상대 공격력과 동일하게 자신의 HP를 회복한다. 그리고 상대의 공격을 떨어뜨린다.
+}
+
+SolarBlade: {
+	DisplayName: 솔라블레이드
+	FlavorText: 1턴째에 빛을 가득 모아 2턴째에 그 힘을 검에 담아 공격한다.
+}
+
+Leafage: {
+	DisplayName: 나뭇잎
+	FlavorText: 잎을 상대에 맞춰 공격한다.
+}
+
+Spotlight: {
+	DisplayName: 스포트라이트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ToxicThread: {
+	DisplayName: 독실
+	FlavorText: 독이 섞인 실을 뿜어낸다. 상대를 독 상태로 만들고 스피드를 떨어뜨린다.
+}
+
+LaserFocus: {
+	DisplayName: 예민해지기
+	FlavorText: 정신을 집중해서 다음 공격을 반드시 급소에 맞춘다.
+}
+
+GearUp: {
+	DisplayName: 어시스트기어
+	FlavorText: 기어를 넣는 것으로 특성 플러스와 마이너스의 공격과 특수공격이 올라간다.
+}
+
+ThroatChop: {
+	DisplayName: 지옥찌르기
+	FlavorText: 이 기술에 맞은 상대는 지옥의 고통 때문에 2턴 동안 소리 기술을 낼 수 없다.
+}
+
+PollenPuff: {
+	DisplayName: 꽃가루경단
+	FlavorText: 상대에게는 폭발하는 경단을 사용하여 공격한다. 같은 편에게는 회복하는 경단을 준다.
+}
+
+AnchorShot: {
+	DisplayName: 앵커숏
+	FlavorText: 앵커를 상대에게 휘감아서 공격한다. 상대는 도망칠 수 없게 된다.
+}
+
+PsychicTerrain: {
+	DisplayName: 사이코필드
+	FlavorText: 5턴 동안 땅에 있으면 선제공격을 받지 않는다. 에스퍼타입의 위력이 올라간다.
+}
+
+Lunge: {
+	DisplayName: 덤벼들기
+	FlavorText: 전력으로 상대에게 덤벼들며 공격한다. 상대의 공격을 떨어뜨린다.
+}
+
+FireLash: {
+	DisplayName: 불꽃채찍
+	FlavorText: 불타는 채찍으로 상대를 친다. 공격을 받은 상대는 방어가 떨어진다.
+}
+
+PowerTrip: {
+	DisplayName: 기어오르기
+	FlavorText: 자신의 강함을 뻐기고 공격한다. 자신의 능력이 올라가 있는 만큼 위력이 오른다.
+}
+
+BurnUp: {
+	DisplayName: 불사르기
+	FlavorText: 전신의 불꽃을 모두 태워서 큰 데미지를 준다. 자신의 불꽃타입이 없어진다.
+}
+
+SpeedSwap: {
+	DisplayName: 스피드스웹
+	FlavorText: 상대의 스피드와 자신의 스피드를 교체한다.
+}
+
+SmartStrike: {
+	DisplayName: 스마트호른
+	FlavorText: 뾰족한 뿔로 상대를 꿰찔러서 공격한다. 공격은 반드시 명중한다.
+}
+
+Purify: {
+	DisplayName: 정화
+	FlavorText: 상대의 상태 이상을 회복한다. 회복하면 자신은 HP를 회복할 수 있다.
+}
+
+RevelationDance: {
+	DisplayName: 잠재댄스
+	FlavorText: 전력으로 춤추며 공격한다. 이 기술의 타입은 자신의 타입과 같아진다.
+}
+
+CoreEnforcer: {
+	DisplayName: 코어퍼니셔
+	FlavorText: 데미지를 준 상대가 이미 행동을 끝냈다면 상대의 특성을 없애버린다.
+}
+
+TropKick: {
+	DisplayName: 트로피컬킥
+	FlavorText: 남쪽 나라에서 유래된 뜨거운 킥을 상대에게 날린다. 상대의 공격을 떨어뜨린다.
+}
+
+Instruct: {
+	DisplayName: 지휘
+	FlavorText: 상대에게 지시하여 상대가 쓴 기술을 다시 한번 쓰게 할 수 있다.
+}
+
+BeakBlast: {
+	DisplayName: 부리캐논
+	FlavorText: 먼저 부리를 가열시킨 다음 공격을 날린다. 가열 중에 만지면 화상을 입는다.
+}
+
+ClangingScales: {
+	DisplayName: 스케일노이즈
+	FlavorText: 전신의 비늘을 비벼서 큰 소리를 내 공격한다. 공격 후 자신의 방어가 떨어진다.
+}
+
+DragonHammer: {
+	DisplayName: 드래곤해머
+	FlavorText: 몸을 해머처럼 써서 상대를 덮쳐 데미지를 준다.
+}
+
+BrutalSwing: {
+	DisplayName: 세차게휘두르기
+	FlavorText: 자신의 몸을 세차게 휘둘러서 상대에게 데미지를 준다.
+}
+
+AuroraVeil: {
+	DisplayName: 오로라베일
+	FlavorText: 5턴 동안 물리와 특수 기술의 데미지를 약하게 한다. 싸라기눈일 때만 쓸 수 있다.
+}
+
+SinisterArrowRaid: {
+	DisplayName: 섀도애로우즈스트라이크
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MaliciousMoonsault: {
+	DisplayName: 하이퍼다크크러셔
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+OceanicOperetta: {
+	DisplayName: 바다의심포니
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+GuardianOfAlola: {
+	DisplayName: 알로라의수호자
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SoulStealing7StarStrike: {
+	DisplayName: 칠성탈혼퇴
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+StokedSparksurfer: {
+	DisplayName: 라이트닝서프라이드
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+PulverizingPancake: {
+	DisplayName: 진심의공격
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ExtremeEvoboost: {
+	DisplayName: 나인이볼부스트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+GenesisSupernova: {
+	DisplayName: 오리진즈슈퍼노바
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ShellTrap: {
+	DisplayName: 트랩셸
+	FlavorText: 껍질의 트랩을 설치한다. 상대가 물리 기술을 쓰면 폭발해서 데미지를 준다.
+}
+
+FleurCannon: {
+	DisplayName: 플뢰르캐논
+	FlavorText: 강력한 빔을 발산한 후 자신의 특수공격이 크게 떨어진다.
+}
+
+PsychicFangs: {
+	DisplayName: 사이코팽
+	FlavorText: 사이코 파워로 물어서 상대를 공격한다. 빛의장막이나 리플렉터도 파괴할 수 있다.
+}
+
+StompingTantrum: {
+	DisplayName: 분함의발구르기
+	FlavorText: 분함을 발판 삼아 공격한다. 앞 턴에서 기술이 빗나갔다면 위력이 배가 된다.
+}
+
+ShadowBone: {
+	DisplayName: 섀도본
+	FlavorText: 영혼이 머물고 있는 뼈로 상대를 세게 때려서 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+Accelerock: {
+	DisplayName: 액셀록
+	FlavorText: 재빠른 스피드로 상대에게 부딪쳐서 공격한다. 반드시 선제공격할 수 있다.
+}
+
+Liquidation: {
+	DisplayName: 아쿠아브레이크
+	FlavorText: 물의 힘으로 상대에게 부딪쳐서 공격한다. 상대의 방어를 떨어뜨릴 때가 있다.
+}
+
+PrismaticLaser: {
+	DisplayName: 프리즘레이저
+	FlavorText: 프리즘의 힘으로 강력한 광선을 발사한다. 다음 턴은 움직일 수 없다.
+}
+
+SpectralThief: {
+	DisplayName: 섀도스틸
+	FlavorText: 상대의 그림자에 숨어들어 상대의 능력이 올라가는 것을 뺏어 공격한다.
+}
+
+SunsteelStrike: {
+	DisplayName: 메테오드라이브
+	FlavorText: 유성 같은 기세로 돌진한다. 상대의 특성을 무시하고 공격할 수 있다.
+}
+
+MoongeistBeam: {
+	DisplayName: 섀도레이
+	FlavorText: 괴상한 광선을 쏘아 공격한다. 상대의 특성을 무시하고 공격할 수 있다.
+}
+
+TearfulLook: {
+	DisplayName: 눈물그렁그렁
+	FlavorText: 눈물을 그렁그렁거려 상대의 전의를 상실하게 한다. 상대의 공격과 특수공격이 떨어진다.
+}
+
+ZingZap: {
+	DisplayName: 찌리리따끔따끔
+	FlavorText: 상대에게 부딪쳐 강력한 전기를 날려서 찌리리따끔따끔하게 만든다. 상대를 풀죽게 만들 때가 있다.
+}
+
+NaturesMadness: {
+	DisplayName: 자연의분노
+	FlavorText: 자연의 분노를 상대에게 부딪친다. 상대의 HP는 절반이 된다.
+}
+
+MultiAttack: {
+	DisplayName: 멀티어택
+	FlavorText: 높은 에너지를 둘러싸 상대에게 부딪쳐 공격한다. 메모리에 따라 타입이 바뀐다.
+}
+
+ZThunderbolt: {
+	DisplayName: 1000만볼트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MindBlown: {
+	DisplayName: 깜짝헤드
+	FlavorText: 자신의 머리를 폭발시켜 주위의 모든 것을 공격한다. 자신도 데미지를 받는다.
+}
+
+PlasmaFists: {
+	DisplayName: 플라스마피스트
+	FlavorText: 전기를 두른 주먹으로 공격한다. 노말타입 기술을 전기타입으로 바꿔버린다.
+}
+
+PhotonGeyser: {
+	DisplayName: 포톤가이저
+	FlavorText: 빛의 기둥으로 공격한다. 공격과 특수공격을 비교해서 높은 쪽으로 데미지를 준다.
+}
+
+LightThatBurnsTheSky: {
+	DisplayName: 하늘을태우는멸망의빛
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SearingSunrazeSmash: {
+	DisplayName: 선샤인스매셔
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+MenacingMoonrazeMaelstrom: {
+	DisplayName: 문라이트블래스터
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+LetsSnuggleForever: {
+	DisplayName: 투닥투닥프렌드타임
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SplinteredStormshards: {
+	DisplayName: 레이디얼에지스톰
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ClangorousSoulblaze: {
+	DisplayName: 브레이징소울비트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+ZippyZap: {
+	DisplayName: 파찌파찌액셀
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SplishySplash: {
+	DisplayName: 참방참방서핑
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FloatyFall: {
+	DisplayName: 둥실둥실폴
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+PikaPapow: {
+	DisplayName: 피카피카썬더
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+BouncyBubble: {
+	DisplayName: 생생버블
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+BuzzyBuzz: {
+	DisplayName: 찌릿찌릿일렉
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SizzlySlide: {
+	DisplayName: 이글이글번
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+GlitzyGlow: {
+	DisplayName: 콸콸오라
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+BaddyBad: {
+	DisplayName: 아그아그존
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SappySeed: {
+	DisplayName: 쑥쑥봄버
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+FreezyFrost: {
+	DisplayName: 꽁꽁프로스트
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+SparklySwirl: {
+	DisplayName: 반짝반짝스톰
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+VeeveeVolley: {
+	DisplayName: 브이브이브레이크
+	FlavorText: 사용할 수 없는 기술입니다. 다시 배우게 할 수 없지만 기술을 잊게 하는 것을 권장합니다.
+}
+
+DoubleIronBash: {
+	DisplayName: 더블펀처
+	FlavorText: 가슴의 너트를 축으로 회전시켜 2번 연속 팔로 힘껏 친다. 상대를 풀죽게 만들 때가 있다.
+}
+
+MaxGuard: {
+	DisplayName: 다이월
+	FlavorText: 상대의 공격을 전혀 받지 않는다. 연속으로 쓰면 실패하기 쉽다.
+}
+
+DynamaxCannon: {
+	DisplayName: 다이맥스포
+	FlavorText: 코어에서 빔을 발사해서 공격한다. 상대가 다이맥스 중이면 데미지가 2배가 된다.
+}
+
+SnipeShot: {
+	DisplayName: 노려맞히기
+	FlavorText: 상대의 기술을 끌어모으는 특성이나 기술의 영향을 무시하고 선택한 상대를 공격할 수 있다.
+}
+
+JawLock: {
+	DisplayName: 물고버티기
+	FlavorText: 어느 한쪽이 기절할 때까지 교체할 수 없게 된다. 한쪽의 포켓몬이 없어지면 효과가 사라진다.
+}
+
+StuffCheeks: {
+	DisplayName: 볼가득넣기
+	FlavorText: 지니고 있는 나무열매를 먹고 방어를 크게 올린다.
+}
+
+NoRetreat: {
+	DisplayName: 배수의진
+	FlavorText: 자신의 모든 능력이 올라가지만 교체하거나 도망칠 수 없게 된다.
+}
+
+TarShot: {
+	DisplayName: 타르숏
+	FlavorText: 끈적끈적한 타르를 날려서 상대의 스피드를 떨어뜨린다. 상대는 불꽃이 약점이 된다.
+}
+
+MagicPowder: {
+	DisplayName: 마법가루
+	FlavorText: 마법가루를 날려서 상대를 에스퍼타입으로 바꾼다.
+}
+
+DragonDarts: {
+	DisplayName: 드래곤애로
+	FlavorText: 드라꼰으로 2번 공격한다. 상대가 2마리일 때는 각각 1번씩 공격한다.
+}
+
+Teatime: {
+	DisplayName: 다과회
+	FlavorText: 다과회를 열어서 배틀에 나와 있는 포켓몬이 각각 지니고 있는 나무열매를 먹는다.
+}
+
+Octolock: {
+	DisplayName: 문어굳히기
+	FlavorText: 상대를 도망칠 수 없게 한다. 굳히기에 당한 상대는 매 턴 방어와 특수방어가 떨어진다.
+}
+
+BoltBeak: {
+	DisplayName: 전격부리
+	FlavorText: 전기를 두른 부리로 찌른다. 상대보다 먼저 공격하면 기술의 위력은 2배가 된다.
+}
+
+FishiousRend: {
+	DisplayName: 아가미물기
+	FlavorText: 단단한 아가미로 문다. 상대보다 먼저 공격하면 기술의 위력은 2배가 된다.
+}
+
+CourtChange: {
+	DisplayName: 코트체인지
+	FlavorText: 이상한 힘으로 서로의 필드 효과를 교체한다.
+}
+
+MaxFlare: {
+	DisplayName: 다이번
+	FlavorText: 다이맥스한 포켓몬이 날리는 불꽃타입의 공격. 5턴 동안 햇살을 강하게 만든다.
+}
+
+MaxFlutterby: {
+	DisplayName: 다이웜
+	FlavorText: 다이맥스한 포켓몬이 날리는 벌레타입의 공격. 상대의 특수공격을 떨어뜨린다.
+}
+
+MaxLightning: {
+	DisplayName: 다이썬더
+	FlavorText: 다이맥스한 포켓몬이 날리는 전기타입의 공격. 5턴 동안 일렉트릭필드로 만든다.
+}
+
+MaxStrike: {
+	DisplayName: 다이어택
+	FlavorText: 다이맥스한 포켓몬이 날리는 노말타입의 공격. 상대의 스피드를 떨어뜨린다.
+}
+
+MaxKnuckle: {
+	DisplayName: 다이너클
+	FlavorText: 다이맥스한 포켓몬이 날리는 격투타입의 공격. 같은 편의 공격을 올린다.
+}
+
+MaxPhantasm: {
+	DisplayName: 다이할로우
+	FlavorText: 다이맥스한 포켓몬이 날리는 고스트타입의 공격. 상대의 방어를 떨어뜨린다.
+}
+
+MaxHailstorm: {
+	DisplayName: 다이아이스
+	FlavorText: 다이맥스한 포켓몬이 날리는 얼음타입의 공격. 5턴 동안 싸라기눈을 내리게 한다.
+}
+
+MaxOoze: {
+	DisplayName: 다이애시드
+	FlavorText: 다이맥스한 포켓몬이 날리는 독타입의 공격. 같은 편의 특수공격을 올린다.
+}
+
+MaxGeyser: {
+	DisplayName: 다이스트림
+	FlavorText: 다이맥스한 포켓몬이 날리는 물타입의 공격. 5턴 동안 비를 내리게 한다.
+}
+
+MaxAirstream: {
+	DisplayName: 다이제트
+	FlavorText: 다이맥스한 포켓몬이 날리는 비행타입의 공격. 같은 편의 스피드를 올린다.
+}
+
+MaxStarfall: {
+	DisplayName: 다이페어리
+	FlavorText: 다이맥스한 포켓몬이 날리는 페어리타입의 공격. 5턴 동안 미스트필드로 만든다.
+}
+
+MaxWyrmwind: {
+	DisplayName: 다이드라군
+	FlavorText: 다이맥스한 포켓몬이 날리는 드래곤타입의 공격. 상대의 공격을 떨어뜨린다.
+}
+
+MaxMindstorm: {
+	DisplayName: 다이사이코
+	FlavorText: 다이맥스한 포켓몬이 날리는 에스퍼타입의 공격. 5턴 동안 사이코필드로 만든다.
+}
+
+MaxRockfall: {
+	DisplayName: 다이록
+	FlavorText: 다이맥스한 포켓몬이 날리는 바위타입의 공격. 5턴 동안 날씨를 모래바람으로 만든다.
+}
+
+MaxQuake: {
+	DisplayName: 다이어스
+	FlavorText: 다이맥스한 포켓몬이 날리는 땅타입의 공격. 같은 편의 특수방어를 올린다.
+}
+
+MaxDarkness: {
+	DisplayName: 다이아크
+	FlavorText: 다이맥스한 포켓몬이 날리는 악타입의 공격. 상대의 특수방어를 떨어뜨린다.
+}
+
+MaxOvergrowth: {
+	DisplayName: 다이그래스
+	FlavorText: 다이맥스한 포켓몬이 날리는 풀타입의 공격. 5턴 동안 그래스필드로 만든다.
+}
+
+MaxSteelspike: {
+	DisplayName: 다이스틸
+	FlavorText: 다이맥스한 포켓몬이 날리는 강철타입의 공격. 같은 편의 방어를 올린다.
+}
+
+ClangorousSoul: {
+	DisplayName: 소울비트
+	FlavorText: 자신의 HP를 조금 깎아서 모든 능력을 올린다.
+}
+
+BodyPress: {
+	DisplayName: 바디프레스
+	FlavorText: 몸을 부딪쳐서 공격한다. 방어가 높을수록 주는 데미지가 올라간다.
+}
+
+Decorate: {
+	DisplayName: 데코레이션
+	FlavorText: 데코레이션을 해서 상대의 공격과 특수공격을 크게 올린다.
+}
+
+DrumBeating: {
+	DisplayName: 드럼어택
+	FlavorText: 드럼의 뿌리를 연주로 조종해서 공격하는 것으로 상대의 스피드를 떨어뜨린다.
+}
+
+SnapTrap: {
+	DisplayName: 집게덫
+	FlavorText: 집게덫으로 붙잡은 뒤 4-5턴 동안 상대를 끼워서 공격한다.
+}
+
+PyroBall: {
+	DisplayName: 화염볼
+	FlavorText: 작은 돌을 태운 불꽃의 공으로 상대를 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+BehemothBlade: {
+	DisplayName: 거수참
+	FlavorText: 거대한 검이 되어 베어버린다. 상대가 다이맥스 중이면 데미지가 2배가 된다.
+}
+
+BehemothBash: {
+	DisplayName: 거수탄
+	FlavorText: 거대한 방패가 되어 부딪친다. 상대가 다이맥스 중이면 데미지가 2배가 된다.
+}
+
+AuraWheel: {
+	DisplayName: 오라휠
+	FlavorText: 볼주머니에 저장해둔 에너지로 공격하고 자신의 스피드를 올린다. 모르페코의 모습에 따라 타입이 바뀐다.
+}
+
+BreakingSwipe: {
+	DisplayName: 와이드브레이커
+	FlavorText: 강인한 꼬리를 세차게 휘둘러서 상대를 공격한다. 상대의 공격을 떨어뜨린다.
+}
+
+BranchPoke: {
+	DisplayName: 가지찌르기
+	FlavorText: 날카롭고 뾰족한 가지로 상대를 찔러서 공격한다.
+}
+
+Overdrive: {
+	DisplayName: 오버드라이브
+	FlavorText: 기타나 베이스를 쳐서 큰 울림과 강한 진동을 상대에게 전달하여 공격한다.
+}
+
+AppleAcid: {
+	DisplayName: 사과산
+	FlavorText: 새콤한 사과에서 만들어 낸 산성 액체로 공격한다. 상대의 특수방어를 떨어뜨린다.
+}
+
+GravApple: {
+	DisplayName: G의힘
+	FlavorText: 높은 곳에서 사과를 떨어뜨려서 데미지를 준다. 상대의 방어를 떨어뜨린다.
+}
+
+SpiritBreak: {
+	DisplayName: 소울크래시
+	FlavorText: 맞으면 기가 꺾여버릴 것 같은 기세로 공격한다. 상대의 특수공격을 떨어뜨린다.
+}
+
+StrangeSteam: {
+	DisplayName: 원더스팀
+	FlavorText: 연기를 분출해서 상대를 공격한다. 혼란시킬 때가 있다.
+}
+
+LifeDew: {
+	DisplayName: 생명의물방울
+	FlavorText: 신비한 물을 흩뿌려서 자신과 배틀에 나와 있는 같은 편의 HP를 회복한다.
+}
+
+Obstruct: {
+	DisplayName: 블로킹
+	FlavorText: 상대의 공격을 전혀 받지 않는다. 연속으로 쓰면 실패하기 쉽다. 접촉한 상대의 방어를 크게 떨어뜨린다.
+}
+
+FalseSurrender: {
+	DisplayName: 사죄의찌르기
+	FlavorText: 고개를 숙이는 척하면서 흐트러진 머리카락으로 찌른다. 공격은 반드시 명중한다.
+}
+
+MeteorAssault: {
+	DisplayName: 스타어설트
+	FlavorText: 굵은 줄기를 휘둘러서 공격한다. 단 자신도 비틀거리기 때문에 다음 턴은 움직일 수 없다.
+}
+
+Eternabeam: {
+	DisplayName: 무한다이빔
+	FlavorText: 본래의 모습이 된 무한다이노 최대의 공격. 다음 턴은 움직일 수 없다.
+}
+
+SteelBeam: {
+	DisplayName: 철제광선
+	FlavorText: 전신에서 끌어모은 강철을 빔으로 바꿔 세차게 발사한다. 자신도 데미지를 받는다.
+}
+
+ExpandingForce: {
+	DisplayName: 와이드포스
+	FlavorText: 사이코 파워로 상대를 공격한다. 사이코필드일 때는 위력이 오르며 모든 상대에게 데미지를 준다.
+}
+
+SteelRoller: {
+	DisplayName: 아이언롤러
+	FlavorText: 필드를 파괴하면서 공격한다. 필드가 어떤 상태로든 변해 있지 않은 경우 기술은 실패한다.
+}
+
+ScaleShot: {
+	DisplayName: 스케일샷
+	FlavorText: 비늘을 쏘아서 공격한다. 2-5회 동안 연속으로 쓴다. 스피드가 올라가지만 방어가 떨어진다.
+}
+
+MeteorBeam: {
+	DisplayName: 메테오빔
+	FlavorText: 1턴째에 우주의 힘을 모아서 특수공격을 올리고 2턴째에 상대를 공격한다.
+}
+
+ShellSideArm: {
+	DisplayName: 셸암즈
+	FlavorText: 물리와 특수 중 더 많은 데미지를 줄 수 있는 능력으로 공격한다. 독 상태로 만들 때가 있다.
+}
+
+MistyExplosion: {
+	DisplayName: 미스트버스트
+	FlavorText: 자신의 주위에 있는 모두를 공격하지만 사용하면 기절한다. 미스트필드일 때 위력이 올라간다.
+}
+
+GrassyGlide: {
+	DisplayName: 그래스슬라이더
+	FlavorText: 지면에 미끄러지듯 상대를 공격한다. 그래스필드일 때 반드시 선제공격할 수 있다.
+}
+
+RisingVoltage: {
+	DisplayName: 라이징볼트
+	FlavorText: 지면에서 올라오는 전격으로 공격한다. 상대가 일렉트릭필드 위에 있을 때 기술의 위력이 2배가 된다.
+}
+
+TerrainPulse: {
+	DisplayName: 대지의파동
+	FlavorText: 필드의 힘을 빌려서 공격한다. 사용했을 때의 필드 상태에 따라서 기술 타입과 위력이 바뀐다.
+}
+
+SkitterSmack: {
+	DisplayName: 엄습하는일격
+	FlavorText: 배후에서 엄습해서 공격한다. 상대의 특수공격을 떨어뜨린다.
+}
+
+BurningJealousy: {
+	DisplayName: 질투의불꽃
+	FlavorText: 질투의 에너지로 상대를 공격한다. 그 턴에 능력이 올라간 포켓몬을 화상 상태로 만든다.
+}
+
+LashOut: {
+	DisplayName: 분풀이
+	FlavorText: 상대에 대한 울분이 담긴 공격을 한다. 그 턴에 능력이 떨어져 있으면 기술의 위력이 2배가 된다.
+}
+
+Poltergeist: {
+	DisplayName: 폴터가이스트
+	FlavorText: 상대의 지닌 물건을 조종해서 공격한다. 상대가 도구를 지니고 있지 않으면 실패한다.
+}
+
+CorrosiveGas: {
+	DisplayName: 부식가스
+	FlavorText: 주위에 있는 모든 것을 강력한 산성 가스로 뒤덮어서 지니고 있는 도구를 녹여버린다.
+}
+
+Coaching: {
+	DisplayName: 코칭
+	FlavorText: 적절한 지도를 통해서 같은 편 전원의 공격과 방어를 올린다.
+}
+
+FlipTurn: {
+	DisplayName: 퀵턴
+	FlavorText: 공격한 뒤 굉장한 스피드로 돌아와서 교대 포켓몬과 교체한다.
+}
+
+TripleAxel: {
+	DisplayName: 트리플악셀
+	FlavorText: 3회 연속으로 킥을 날려 공격한다. 기술이 맞을 때마다 위력이 올라간다.
+}
+
+DualWingbeat: {
+	DisplayName: 더블윙
+	FlavorText: 날개를 상대에게 부딪쳐서 공격한다. 2회 연속으로 데미지를 준다.
+}
+
+ScorchingSands: {
+	DisplayName: 열사의대지
+	FlavorText: 뜨겁게 달궈진 모래를 상대에게 부딪쳐서 공격한다. 화상 상태로 만들 때가 있다.
+}
+
+JungleHealing: {
+	DisplayName: 정글힐
+	FlavorText: 정글과 하나가 되어 자신과 배틀에 나와 있는 같은 편의 HP와 모든 상태를 회복한다.
+}
+
+WickedBlow: {
+	DisplayName: 암흑강타
+	FlavorText: 악의 태세가 극에 달하여 강렬한 일격을 날린다. 반드시 급소에 맞는다.
+}
+
+SurgingStrikes: {
+	DisplayName: 수류연타
+	FlavorText: 물의 태세가 극에 달하여 물 흐르듯 3회의 연격을 날린다. 반드시 급소에 맞는다.
+}
+
+ThunderCage: {
+	DisplayName: 썬더프리즌
+	FlavorText: 전기가 흐르는 우리 안에 4-5턴 동안 상대를 가두어 공격한다.
+}
+
+DragonEnergy: {
+	DisplayName: 드래곤에너지
+	FlavorText: 생명력을 파워로 바꿔서 상대를 공격한다. 자신의 HP가 적을수록 기술의 위력이 떨어진다.
+}
+
+FreezingGlare: {
+	DisplayName: 얼어붙는시선
+	FlavorText: 두 눈에서 사이코 파워를 발사해서 공격한다. 얼음 상태로 만들 때가 있다.
+}
+
+FieryWrath: {
+	DisplayName: 타오르는분노
+	FlavorText: 분노를 불꽃 같은 오라로 바꿔서 공격한다. 상대를 풀죽게 만들 때가 있다.
+}
+
+ThunderousKick: {
+	DisplayName: 천둥차기
+	FlavorText: 번개 같은 움직임으로 상대를 농락하며 킥을 날린다. 상대의 방어를 떨어뜨린다.
+}
+
+GlacialLance: {
+	DisplayName: 블리자드랜스
+	FlavorText: 눈보라를 두른 얼음의 창을 상대에게 던져서 공격한다.
+}
+
+AstralBarrage: {
+	DisplayName: 아스트랄비트
+	FlavorText: 수많은 작은 영체를 상대에게 부딪쳐서 공격한다.
+}
+
+EerieSpell: {
+	DisplayName: 섬뜩한주문
+	FlavorText: 강력한 사이코 파워로 공격한다. 상대가 마지막으로 사용한 기술의 PP를 3만큼 줄인다.
+}
+
+DireClaw: {
+	// DisplayName: Dire Claw
+	// FlavorText: The user lashes out at the target with ruinous claws. This may also leave the target poisoned, paralyzed, or asleep.
+}
+
+PsyshieldBash: {
+	// DisplayName: Psyshield Bash
+	// FlavorText: Cloaking itself in psychic energy, the user slams into the target. This also boosts the user's Defense stat.
+}
+
+// PowerShift.DisplayName: Power Shift
+
+StoneAxe: {
+	// DisplayName: Stone Axe
+	// FlavorText: The user swings its stone axes at the target. Stone splinters left behind by this attack float around the target.
+}
+
+SpringtideStorm: {
+	// DisplayName: Springtide Storm
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds brimming with love and hate. This may also lower their Attack stats.
+}
+
+MysticalPower: {
+	// DisplayName: Mystical Power
+	// FlavorText: The user attacks by emitting a mysterious power. This also boosts the user's Sp. Atk stat.
+}
+
+RagingFury: {
+	// DisplayName: Raging Fury
+	// FlavorText: The user rampages around spewing flames for two to three turns. The user then becomes confused.
+}
+
+WaveCrash: {
+	// DisplayName: Wave Crash
+	// FlavorText: The user shrouds itself in water and slams into the target with its whole body to inflict damage. This also damages the user quite a lot.
+}
+
+Chloroblast: {
+	// DisplayName: Chloroblast
+	// FlavorText: The user launches its amassed chlorophyll to inflict damage on the target. This also damages the user.
+}
+
+MountainGale: {
+	// DisplayName: Mountain Gale
+	// FlavorText: The user hurls giant chunks of ice at the target to inflict damage. This may also make the target flinch.
+}
+
+VictoryDance: {
+	// DisplayName: Victory Dance
+	// FlavorText: The user performs an intense dance to usher in victory, boosting its Attack, Defense, and Speed stats.
+}
+
+HeadlongRush: {
+	// DisplayName: Headlong Rush
+	// FlavorText: The user smashes into the target in a full-body tackle. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BarbBarrage: {
+	// DisplayName: Barb Barrage
+	// FlavorText: The user launches countless toxic barbs to inflict damage. This may also poison the target. This move's power is doubled if the target is already poisoned.
+}
+
+EsperWing: {
+	// DisplayName: Esper Wing
+	// FlavorText: The user slashes the target with aura-enriched wings. This also boosts the user's Speed stat. This move has a heightened chance of landing a critical hit.
+}
+
+BitterMalice: {
+	// DisplayName: Bitter Malice
+	// FlavorText: The user attacks the target with spine-chilling resentment. This also lowers the target's Attack stat.
+}
+
+Shelter: {
+	// DisplayName: Shelter
+	// FlavorText: The user makes its skin as hard as an iron shield, sharply boosting its Defense stat.
+}
+
+TripleArrows: {
+	// DisplayName: Triple Arrows
+	// FlavorText: The user kicks, then fires three arrows. This move has a heightened chance of landing a critical hit and may also lower the target's Defense stat or make it flinch.
+}
+
+InfernalParade: {
+	// DisplayName: Infernal Parade
+	// FlavorText: The user attacks with myriad fireballs. This may also leave the target with a burn. This move's power is doubled if the target has a status condition.
+}
+
+CeaselessEdge: {
+	// DisplayName: Ceaseless Edge
+	// FlavorText: The user slashes its shell blade at the target. Shell splinters left behind by this attack remain scattered under the target as spikes.
+}
+
+BleakwindStorm: {
+	// DisplayName: Bleakwind Storm
+	// FlavorText: The user attacks with savagely cold winds that cause both body and spirit to tremble. This may also lower the Speed stats of opposing Pokémon.
+}
+
+WildboltStorm: {
+	// DisplayName: Wildbolt Storm
+	// FlavorText: The user summons a thunderous tempest and savagely attacks with lightning and wind. This may also leave opposing Pokémon with paralysis.
+}
+
+SandsearStorm: {
+	// DisplayName: Sandsear Storm
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds and searingly hot sand. This may also leave them with a burn.
+}
+
+LunarBlessing: {
+	// DisplayName: Lunar Blessing
+	// FlavorText: The user receives a blessing from the crescent moon, restoring HP and curing status conditions for itself and its ally Pokémon currently in the battle.
+}
+
+TakeHeart: {
+	// DisplayName: Take Heart
+	// FlavorText: The user lifts its spirits, curing its own status conditions and boosting its Sp. Atk and Sp. Def stats.
+}
+
+TeraBlast: {
+	// DisplayName: Tera Blast
+	// FlavorText: If the user has Terastallized, it unleashes energy of its Tera Type. This move inflicts damage using the Attack or Sp. Atk stat—whichever is higher for the user.
+}
+
+SilkTrap: {
+	// DisplayName: Silk Trap
+	// FlavorText: The user spins a silken trap, protecting itself from damage while lowering the Speed stat of any attacker that makes direct contact.
+}
+
+AxeKick: {
+	// DisplayName: Axe Kick
+	// FlavorText: The user attacks by kicking up into the air and slamming its heel down upon the target. This may also confuse the target. If it misses, the user takes damage instead.
+}
+
+LastRespects: {
+	// DisplayName: Last Respects
+	// FlavorText: The user attacks to avenge its allies. The more defeated allies there are in the user's party, the greater the move's power.
+}
+
+LuminaCrash: {
+	// DisplayName: Lumina Crash
+	// FlavorText: The user attacks by unleashing a peculiar light that even affects the mind. This also harshly lowers the target's Sp. Def stat.
+}
+
+OrderUp: {
+	// DisplayName: Order Up
+	// FlavorText: The user attacks with elegant poise. If the user has a Tatsugiri in its mouth, this move boosts one of the user's stats based on the Tatsugiri's form.
+}
+
+JetPunch: {
+	// DisplayName: Jet Punch
+	// FlavorText: The user summons a torrent around its fist and punches at blinding speed. This move always goes first.
+}
+
+SpicyExtract: {
+	// DisplayName: Spicy Extract
+	// FlavorText: The user emits an incredibly spicy extract, sharply boosting the target's Attack stat and harshly lowering the target's Defense stat.
+}
+
+SpinOut: {
+	// DisplayName: Spin Out
+	// FlavorText: The user spins furiously by straining its legs, inflicting damage on the target. This also harshly lowers the user's Speed stat.
+}
+
+PopulationBomb: {
+	// DisplayName: Population Bomb
+	// FlavorText: The user's fellows gather in droves to perform a combo attack that hits the target one to ten times in a row.
+}
+
+IceSpinner: {
+	// DisplayName: Ice Spinner
+	// FlavorText: The user covers its feet in thin ice and twirls around, slamming into the target. This move's spinning motion also destroys the terrain.
+}
+
+GlaiveRush: {
+	// DisplayName: Glaive Rush
+	// FlavorText: The user throws its entire body into a reckless charge. After this move is used, attacks on the user cannot miss and will inflict double damage until the user's next turn.
+}
+
+RevivalBlessing: {
+	// DisplayName: Revival Blessing
+	// FlavorText: The user bestows a loving blessing, reviving a party Pokémon that has fainted and restoring half that Pokémon's max HP.
+}
+
+SaltCure: {
+	// DisplayName: Salt Cure
+	// FlavorText: The user salt cures the target, inflicting damage every turn. Steel and Water types are more strongly affected by this move.
+}
+
+TripleDive: {
+	// DisplayName: Triple Dive
+	// FlavorText: The user performs a perfectly timed triple dive, hitting the target with splashes of water three times in a row.
+}
+
+MortalSpin: {
+	// DisplayName: Mortal Spin
+	// FlavorText: The user performs a spin attack that can also eliminate the effects of such moves as Bind, Wrap, and Leech Seed. This also poisons opposing Pokémon.
+}
+
+Doodle: {
+	// DisplayName: Doodle
+	// FlavorText: The user captures the very essence of the target in a sketch. This changes the Abilities of the user and its ally Pokémon to that of the target.
+}
+
+FilletAway: {
+	// DisplayName: Fillet Away
+	// FlavorText: The user sharply boosts its Attack, Sp. Atk, and Speed stats by using its own HP.
+}
+
+KowtowCleave: {
+	// DisplayName: Kowtow Cleave
+	// FlavorText: The user slashes at the target after kowtowing to make the target let down its guard. This attack never misses.
+}
+
+FlowerTrick: {
+	// DisplayName: Flower Trick
+	// FlavorText: The user throws a rigged bouquet of flowers at the target. This attack never misses and always lands a critical hit.
+}
+
+TorchSong: {
+	// DisplayName: Torch Song
+	// FlavorText: The user blows out raging flames as if singing a song, scorching the target. This also boosts the user's Sp. Atk stat.
+}
+
+AquaStep: {
+	// DisplayName: Aqua Step
+	// FlavorText: The user toys with the target and attacks it using light and fluid dance steps. This also boosts the user's Speed stat.
+}
+
+RagingBull: {
+	// DisplayName: Raging Bull
+	// FlavorText: The user performs a tackle like a raging bull. This move's type depends on the user's form. It can also break barriers, such as Light Screen and Reflect.
+}
+
+MakeItRain: {
+	// DisplayName: Make It Rain
+	// FlavorText: The user attacks by throwing out a mass of coins. This also lowers the user's Sp. Atk stat. Money is earned after the battle.
+}
+
+Psyblade: {
+	DisplayName: 사이코블레이드
+	// FlavorText: The user rends the target with an ethereal blade. This move's power is boosted by 50 percent if the user is on Electric Terrain.
+}
+
+HydroSteam: {
+	DisplayName: 하이드로스팀
+	// FlavorText: The user blasts the target with boiling-hot water. This move's power is not lowered in harsh sunlight but rather boosted by 50 percent.
+}
+
+Ruination: {
+	// DisplayName: Ruination
+	// FlavorText: The user summons a ruinous disaster. This cuts the target's HP in half.
+}
+
+CollisionCourse: {
+	// DisplayName: Collision Course
+	// FlavorText: The user transforms and crashes to the ground, causing a massive prehistoric explosion. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ElectroDrift: {
+	// DisplayName: Electro Drift
+	// FlavorText: The user races forward at ultrafast speeds, piercing its target with futuristic electricity. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ShedTail: {
+	// DisplayName: Shed Tail
+	// FlavorText: The user creates a substitute for itself using its own HP before switching places with a party Pokémon in waiting.
+}
+
+// ChillyReception.DisplayName: Chilly Reception
+
+TidyUp: {
+	// DisplayName: Tidy Up
+	// FlavorText: The user tidies up and removes the effects of Spikes, Stealth Rock, Sticky Web, Toxic Spikes, and Substitute. This also boosts the user's Attack and Speed stats.
+}
+
+Snowscape: {
+	// DisplayName: Snowscape
+	// FlavorText: The user summons a snowstorm lasting five turns. This boosts the Defense stats of Ice types.
+}
+
+Pounce: {
+	// DisplayName: Pounce
+	// FlavorText: The user attacks by pouncing on the target. This also lowers the target's Speed stat.
+}
+
+Trailblaze: {
+	// DisplayName: Trailblaze
+	// FlavorText: The user attacks suddenly as if leaping out from tall grass. The user's nimble footwork boosts its Speed stat.
+}
+
+ChillingWater: {
+	// DisplayName: Chilling Water
+	// FlavorText: The user attacks the target by showering it with water that's so cold it saps the target's power. This also lowers the target's Attack stat.
+}
+
+HyperDrill: {
+	// DisplayName: Hyper Drill
+	// FlavorText: The user spins the pointed part of its body at high speed to pierce the target. This attack can hit a target using a move such as Protect or Detect.
+}
+
+TwinBeam: {
+	// DisplayName: Twin Beam
+	// FlavorText: The user shoots mystical beams from its eyes to inflict damage. The target is hit twice in a row.
+}
+
+RageFist: {
+	// DisplayName: Rage Fist
+	// FlavorText: The user converts its rage into energy to attack. The more times the user has been hit by attacks, the greater the move's power.
+}
+
+ArmorCannon: {
+	// DisplayName: Armor Cannon
+	// FlavorText: The user shoots its own armor out as blazing projectiles. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BitterBlade: {
+	// DisplayName: Bitter Blade
+	// FlavorText: The user focuses its bitter feelings toward the world of the living into a slashing attack. The user's HP is restored by up to half the damage taken by the target.
+}
+
+DoubleShock: {
+	// DisplayName: Double Shock
+	// FlavorText: The user discharges all the electricity from its body to perform a high-damage attack. After using this move, the user will no longer be Electric type.
+}
+
+GigatonHammer: {
+	// DisplayName: Gigaton Hammer
+	// FlavorText: The user swings its whole body around to attack with its huge hammer. This move can't be used twice in a row.
+}
+
+Comeuppance: {
+	// DisplayName: Comeuppance
+	// FlavorText: The user retaliates with much greater force against the opponent that last inflicted damage on it.
+}
+
+AquaCutter: {
+	// DisplayName: Aqua Cutter
+	// FlavorText: The user expels pressurized water to cut at the target like a blade. This move has a heightened chance of landing a critical hit.
+}
+
+// BlazingTorque.DisplayName: Blazing Torque
+// WickedTorque.DisplayName: Wicked Torque
+// NoxiousTorque.DisplayName: Noxious Torque
+// CombatTorque.DisplayName: Combat Torque
+// MagicalTorque.DisplayName: Magical Torque
+
+BloodMoon: {
+	// DisplayName: Blood Moon
+	// FlavorText: The user unleashes the full brunt of its spirit from a full moon that shines as red as blood. This move can't be used twice in a row.
+}
+
+MatchaGotcha: {
+	// DisplayName: Matcha Gotcha
+	// FlavorText: The user fires a blast of tea that it mixed. The user's HP is restored by up to half the damage taken by the target. This may also leave the target with a burn.
+}
+
+SyrupBomb: {
+	// DisplayName: Syrup Bomb
+	// FlavorText: The user sets off an explosion of sticky candy syrup, which coats the target and causes the target's Speed stat to drop each turn for three turns.
+}
+
+IvyCudgel: {
+	// DisplayName: Ivy Cudgel
+	// FlavorText: The user strikes with an ivy-wrapped cudgel. This move's type changes depending on the mask worn by the user, and it has a heightened chance of landing a critical hit.
+}
+
+ElectroShot: {
+	DisplayName: 일렉트로빔
+	// FlavorText: The user gathers electricity on the first turn, boosting its Sp. Atk stat, then fires a high-voltage shot on the next turn. The shot will be fired immediately in rain.
+}
+
+TeraStarstorm: {
+	DisplayName: 테라클러스터
+	// FlavorText: With the power of its crystals, the user bombards and eliminates the target. When used by Terapagos in its Stellar Form, this move damages all opposing Pokémon.
+}
+
+FickleBeam: {
+	DisplayName: 변덕레이저
+	// FlavorText: The user shoots a beam of light to inflict damage. Sometimes all the user's heads shoot beams in unison, doubling the move's power.
+}
+
+BurningBulwark: {
+	DisplayName: 화염의수호
+	// FlavorText: The user's intensely hot fur protects it from attacks and also burns any attacker that makes direct contact with it.
+}
+
+Thunderclap: {
+	DisplayName: 질풍신뢰
+	// FlavorText: This move enables the user to attack first with a jolt of electricity. This move fails if the target is not readying an attack.
+}
+
+MightyCleave: {
+	DisplayName: 파워풀에지
+	// FlavorText: The user wields the light that has accumulated atop its head to cleave the target. This move hits even if the target protects itself.
+}
+
+TachyonCutter: {
+	DisplayName: 타키온커터
+	// FlavorText: The user attacks by launching particle blades at the target twice in a row. This attack never misses.
+}
+
+HardPress: {
+	DisplayName: 하드프레스
+	// FlavorText: The target is crushed with an arm, a claw, or the like to inflict damage. The more HP the target has left, the greater the move's power.
+}
+
+DragonCheer: {
+	DisplayName: 드래곤옐
+	// FlavorText: The user raises its allies' morale with a draconic cry so that their future attacks have a heightened chance of landing critical hits. This rouses Dragon types more.
+}
+
+AlluringVoice: {
+	DisplayName: 매혹의보이스
+	// FlavorText: The user attacks the target using its angelic voice. This also confuses the target if its stats have been boosted during the turn.
+}
+
+TemperFlare: {
+	DisplayName: 열불내기
+	// FlavorText: Spurred by desperation, the user attacks the target. This move's power is doubled if the user's previous move failed.
+}
+
+SupercellSlam: {
+	DisplayName: 썬더다이브
+	// FlavorText: The user electrifies its body and drops onto the target to inflict damage. If this move misses, the user takes damage instead.
+}
+
+PsychicNoise: {
+	DisplayName: 사이코노이즈
+	// FlavorText: The user attacks the target with unpleasant sound waves. For two turns, the target is prevented from recovering HP through moves, Abilities, or held items.
+}
+
+UpperHand: {
+	DisplayName: 기선제압
+	// FlavorText: The user reacts to the target's movement and strikes with the heel of its palm, making the target flinch. This move fails if the target is not readying a priority move.
+}
+
+MalignantChain: {
+	DisplayName: 악독사슬
+	// FlavorText: The user pours toxins into the target by wrapping them in a toxic, corrosive chain. This may also leave the target badly poisoned.
+}

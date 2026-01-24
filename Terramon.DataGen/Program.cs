@@ -3,22 +3,19 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using Hjson;
 using Terramon.Core;
 using Terramon.ID;
 
 namespace Terramon.DataGen;
 
-internal static class Program
+internal static partial class Program
 {
     /// <summary>
     ///     Maximum Pokémon ID to fetch data for (not including <see cref="ExtraPokemonIDs" />).
     /// </summary>
     private const ushort MaxPokemonIDToFetch = 151;
-
-    /// <summary>
-    ///     Whether the program is running from /bin or launched directly.
-    /// </summary>
-    private static bool _exec;
 
     /// <summary>
     ///     Extra Pokémon IDs to fetch (like starters from later generations).
@@ -47,8 +44,13 @@ internal static class Program
         810, 813, 816, // Grookey, Scorbunny, Sobble
 
         // Gen 9 starters
-        906, 909, 912  // Sprigatito, Fuecoco, Quaxly
+        906, 909, 912 // Sprigatito, Fuecoco, Quaxly
     ];
+
+    /// <summary>
+    ///     Whether the program is running from /bin or launched directly.
+    /// </summary>
+    private static bool _exec;
 
     private static readonly HttpClient HttpClient = new();
     private static readonly TextInfo InvariantTextInfo = CultureInfo.InvariantCulture.TextInfo;
@@ -56,6 +58,20 @@ internal static class Program
     private static readonly Dictionary<string, string> IdentifierMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         { "Medium", "MediumFast" },
+    };
+
+    /// <summary>
+    ///     Language mappings: PokéAPI language code -> tModLoader locale code
+    /// </summary>
+    private static readonly Dictionary<string, string> LanguageMappings = new(StringComparer.OrdinalIgnoreCase)
+    {
+        { "ko", "ko-KR" },
+        { "fr", "fr-FR" },
+        { "de", "de-DE" },
+        { "es", "es-ES" },
+        { "it", "it-IT" },
+        { "en", "en-US" },
+        { "zh-Hans", "zh-Hans" }
     };
 
     private static async Task Main()
@@ -102,7 +118,7 @@ internal static class Program
                 Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
             }
         }
-        
+
         // Fetch extra Pokémon IDs
         foreach (var id in ExtraPokemonIDs)
         {
@@ -118,7 +134,7 @@ internal static class Program
                 Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
             }
         }
-        
+
         var cacheDir = GetCacheDirectory();
         var csvPath = await MoveService.DownloadMovesCsv(cacheDir);
         var moves = MoveService.ProcessMovesCsv(csvPath);
@@ -147,9 +163,138 @@ internal static class Program
         Console.WriteLine($"Writing minified JSON to {Path.GetFullPath(outFileMinified)}...");
         await File.WriteAllTextAsync(outFileMinified, jsonMinified);
 
+        Console.WriteLine("\nGenerating move localization...");
+        await GenerateMovesLocalization(moves);
+
         var endTime = DateTime.Now;
         Console.WriteLine($"\nProcess completed at {endTime:T} (Duration: {endTime - startTime})");
     }
+
+    private static async Task GenerateMovesLocalization(Dictionary<ushort, DatabaseV2.MoveSchema> moves)
+    {
+        var moveCacheDir = GetCacheDirectory("Moves");
+
+        // Initialize all configured languages
+        var movesLocalizationHjsonDict = new Dictionary<string, JsonObject>();
+        foreach (var lang in LanguageMappings.Keys)
+        {
+            movesLocalizationHjsonDict[lang] = new JsonObject();
+        }
+
+        for (var i = 0; i < moves.Count; i++)
+        {
+            var moveID = (ushort)(i + 1);
+            var moveFile = Path.Combine(moveCacheDir, $"{moveID}.mv");
+            var moveName = ToKebabCase(Enum.GetName((MoveID)moveID)!);
+
+            switch (moveName)
+            {
+                // Special case
+                case "z-thunderbolt":
+                    moveName = "10-000-000-volt-thunderbolt";
+                    break;
+                // Another special case
+                case "smokescreen":
+                    moveName = nameof(MoveID.Smokescreen);
+                    break;
+            }
+
+            string response;
+            try
+            {
+                response = await GetCachedUrlAsync(moveFile, $"https://pokeapi.co/api/v2/move/{moveName}");
+            }
+            catch
+            {
+                response = await GetCachedUrlAsync(moveFile, $"https://pokeapi.co/api/v2/move/{moveName}--physical");
+            }
+
+            var jsonDoc = JsonDocument.Parse(response);
+            var root = jsonDoc.RootElement;
+
+            // Process display names
+            ProcessMoveNames(root, moveID, movesLocalizationHjsonDict);
+
+            // Process flavor text descriptions
+            ProcessMoveFlavorText(root, moveID, movesLocalizationHjsonDict);
+        }
+
+        // Save all localization files
+        SaveLocalizationFiles(movesLocalizationHjsonDict);
+    }
+
+    private static void ProcessMoveNames(JsonElement root, ushort moveID,
+        Dictionary<string, JsonObject> localizationDict)
+    {
+        var namesArray = root.GetProperty("names").EnumerateArray();
+
+        foreach (var nameEntry in namesArray)
+        {
+            var language = nameEntry.GetProperty("language").GetProperty("name").GetString()!;
+            if (!localizationDict.TryGetValue(language, out var jsonObject)) continue;
+
+            var moveLocalizedName = nameEntry.GetProperty("name").GetString()!.Replace("’", "'");
+
+            var moveKey = Enum.GetName((MoveID)moveID)!;
+            if (!jsonObject.ContainsKey(moveKey))
+                jsonObject[moveKey] = new JsonObject();
+            jsonObject[moveKey]["DisplayName"] = moveLocalizedName;
+        }
+    }
+
+    private static void ProcessMoveFlavorText(JsonElement root, ushort moveID,
+        Dictionary<string, JsonObject> localizationDict)
+    {
+        var flavorTextEntriesArray = root.GetProperty("flavor_text_entries").EnumerateArray().Reverse();
+        var processedLanguages = new HashSet<string>();
+
+        foreach (var flavorTextEntry in flavorTextEntriesArray)
+        {
+            var language = flavorTextEntry.GetProperty("language").GetProperty("name").GetString()!;
+            if (!localizationDict.TryGetValue(language, out var jsonObject)) continue;
+            if (processedLanguages.Contains(language)) continue;
+
+            var flavorText = flavorTextEntry.GetProperty("flavor_text").GetString()!;
+            flavorText = flavorText.Replace("\n", " ").Replace("\f", " ").Replace("’", "'");
+            if (flavorText.StartsWith("This move can't be used.")) continue;
+
+            var moveKey = Enum.GetName((MoveID)moveID)!;
+            jsonObject[moveKey]["FlavorText"] = flavorText;
+            processedLanguages.Add(language);
+        }
+    }
+
+    private static void SaveLocalizationFiles(Dictionary<string, JsonObject> localizationDict)
+    {
+        var outDir = Path.Combine(Environment.CurrentDirectory, "..");
+        if (_exec)
+            outDir = Path.Combine(outDir, "..", "..", "..");
+        outDir = Path.Combine(outDir, "Terramon", "Localization");
+
+        foreach (var (pokeApiLang, localeCode) in LanguageMappings)
+        {
+            if (!localizationDict.TryGetValue(pokeApiLang, out var jsonObject))
+                continue;
+
+            // Skip if no moves were localized for this language
+            if (jsonObject.Count == 0)
+            {
+                Console.WriteLine($"Skipping {localeCode} - no localized moves found");
+                continue;
+            }
+
+            var localeDir = Path.Combine(outDir, localeCode);
+            Directory.CreateDirectory(localeDir);
+
+            var filePath = Path.Combine(localeDir, $"{localeCode}_Mods.Terramon.Moves.hjson");
+            jsonObject.Save(filePath, Stringify.Hjson);
+
+            Console.WriteLine($"Saved {localeCode} localization with {jsonObject.Count} moves");
+        }
+    }
+
+    private static string ToKebabCase(string s) =>
+        KebabCaseRegex().Replace(s, "-$1").ToLower();
 
     private static string GetCacheDirectory(string? subdir = null)
     {
@@ -226,8 +371,8 @@ internal static class Program
 
     private static async Task<DatabaseV2.PokemonSchema> FetchSpeciesData(int id)
     {
-        if (id > 10000)
-            throw new ArgumentOutOfRangeException($"{id} isn't a valid species number.");
+        /*if (id > 10000)
+            throw new ArgumentOutOfRangeException($"{id} isn't a valid species number.");*/
 
         // --- Handle caching in accordance to PokéAPI's fair use policy ---
         var pokeCacheDir = GetCacheDirectory("Pokemon");
@@ -257,12 +402,13 @@ internal static class Program
 
             var newIdentifier = form.Identifier[baseForm.Identifier.Length..];
 
-            otherForms.Add(newIdentifier, form with { Identifier = newIdentifier } );
+            otherForms.Add(newIdentifier, form with { Identifier = newIdentifier });
         }
 
         // --- Evolution info ---
 
-        var evolutionChainJson = await GetCachedUrlAsync(evolveFile, root.GetProperty("evolution_chain").GetProperty("url").GetString()!);
+        var evolutionChainJson = await GetCachedUrlAsync(evolveFile,
+            root.GetProperty("evolution_chain").GetProperty("url").GetString()!);
 
         using var evolutionChainDoc = JsonDocument.Parse(evolutionChainJson);
         var baseEvolutionChainLink = evolutionChainDoc.RootElement.GetProperty("chain");
@@ -428,7 +574,8 @@ internal static class Program
         return null;
     }
 
-    private static async Task<List<DatabaseV2.FormSchema>> ProcessForms(int id, string pokeCacheDir, JsonElement varietiesArray)
+    private static async Task<List<DatabaseV2.FormSchema>> ProcessForms(int id, string pokeCacheDir,
+        JsonElement varietiesArray)
     {
         var forms = new List<DatabaseV2.FormSchema>();
 
@@ -436,14 +583,15 @@ internal static class Program
         {
             var pokemon = form.GetProperty("pokemon");
             // TODO: Fetch others at some point
-            if (!form.GetProperty("is_default").GetBoolean() && !pokemon.GetProperty("name").GetString()!.Contains("-mega"))
+            if (!form.GetProperty("is_default").GetBoolean() &&
+                !pokemon.GetProperty("name").GetString()!.Contains("-mega"))
                 continue;
 
-            var formUrl = 
+            var formUrl =
                 pokemon.GetProperty("url").GetString()!;
             forms.Add(await FetchFormData(formUrl));
         }
-        
+
         return forms;
     }
 
@@ -462,4 +610,7 @@ internal static class Program
 
         return IdentifierMappings.GetValueOrDefault(formatted, formatted);
     }
+
+    [GeneratedRegex("(?<!^)([A-Z]|(?<=[a-z])[0-9])")]
+    private static partial Regex KebabCaseRegex();
 }

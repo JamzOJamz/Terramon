@@ -1,0 +1,4479 @@
+Pound: {
+	DisplayName: Destructor
+	FlavorText: Golpea con las patas o la cola.
+}
+
+KarateChop: {
+	DisplayName: Golpe Kárate
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+DoubleSlap: {
+	DisplayName: Doble Bofetón
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+CometPunch: {
+	DisplayName: Puño Cometa
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MegaPunch: {
+	DisplayName: Megapuño
+	FlavorText: Un puñetazo de gran potencia.
+}
+
+PayDay: {
+	DisplayName: Día de Pago
+	FlavorText: Arroja monedas al objetivo y las recupera al final del combate.
+}
+
+FirePunch: {
+	DisplayName: Puño Fuego
+	FlavorText: Puñetazo ardiente que puede causar quemaduras.
+}
+
+IcePunch: {
+	DisplayName: Puño Hielo
+	FlavorText: Puñetazo helado que puede llegar a congelar.
+}
+
+ThunderPunch: {
+	DisplayName: Puño Trueno
+	FlavorText: Puñetazo eléctrico que puede paralizar al adversario.
+}
+
+Scratch: {
+	DisplayName: Arañazo
+	FlavorText: Araña con afiladas garras.
+}
+
+ViceGrip: {
+	DisplayName: Agarre
+	FlavorText: Atrapa y atenaza al objetivo.
+}
+
+Guillotine: {
+	DisplayName: Guillotina
+	FlavorText: Ataque cortante que debilita al oponente de un golpe si acierta.
+}
+
+RazorWind: {
+	DisplayName: Viento Cortante
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SwordsDance: {
+	DisplayName: Danza Espada
+	FlavorText: Baile frenético que aumenta mucho el Ataque.
+}
+
+Cut: {
+	DisplayName: Corte
+	FlavorText: Corta al adversario con garras, guadañas, etc.
+}
+
+Gust: {
+	DisplayName: Tornado
+	FlavorText: Crea un tornado con las alas y lo lanza contra el objetivo.
+}
+
+WingAttack: {
+	DisplayName: Ataque Ala
+	FlavorText: Golpea al objetivo con unas grandes alas.
+}
+
+Whirlwind: {
+	DisplayName: Remolino
+	FlavorText: Se lleva al objetivo, que es cambiado por otro Pokémon. Si es un Pokémon salvaje, acaba el combate.
+}
+
+Fly: {
+	DisplayName: Vuelo
+	FlavorText: El usuario vuela en el primer turno y ataca en el segundo.
+}
+
+Bind: {
+	DisplayName: Atadura
+	FlavorText: Ata y oprime de cuatro a cinco turnos.
+}
+
+Slam: {
+	DisplayName: Atizar
+	FlavorText: Golpea con la cola o con lianas, por ejemplo, para causar daño al objetivo.
+}
+
+VineWhip: {
+	DisplayName: Látigo Cepa
+	FlavorText: Azota al objetivo con ramas finas.
+}
+
+Stomp: {
+	DisplayName: Pisotón
+	FlavorText: Tremendo pisotón que puede hacer que el objetivo se amedrente.
+}
+
+DoubleKick: {
+	DisplayName: Doble Patada
+	FlavorText: Una patada doble. Golpea dos veces.
+}
+
+MegaKick: {
+	DisplayName: Megapatada
+	FlavorText: Patada de extrema fuerza.
+}
+
+JumpKick: {
+	DisplayName: Patada Salto
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+RollingKick: {
+	DisplayName: Patada Giro
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SandAttack: {
+	DisplayName: Ataque Arena
+	FlavorText: Arroja arena a la cara y baja la Precisión.
+}
+
+Headbutt: {
+	DisplayName: Golpe Cabeza
+	FlavorText: Potente cabezazo que puede amedrentar al objetivo.
+}
+
+HornAttack: {
+	DisplayName: Cornada
+	FlavorText: Ataca al objetivo con una cornada.
+}
+
+FuryAttack: {
+	DisplayName: Ataque Furia
+	FlavorText: Cornea al objetivo de dos a cinco veces.
+}
+
+HornDrill: {
+	DisplayName: Perforador
+	FlavorText: Ataque con un cuerno giratorio que fulmina de un solo golpe al objetivo si lo alcanza.
+}
+
+Tackle: {
+	DisplayName: Placaje
+	FlavorText: Embestida con todo el cuerpo.
+}
+
+BodySlam: {
+	DisplayName: Golpe Cuerpo
+	FlavorText: Salta sobre el objetivo con todo su peso y puede llegar a paralizarlo.
+}
+
+Wrap: {
+	DisplayName: Constricción
+	FlavorText: Oprime al objetivo de cuatro a cinco turnos con ramas o con su cuerpo.
+}
+
+TakeDown: {
+	DisplayName: Derribo
+	FlavorText: Carga desmedida que también hiere al agresor.
+}
+
+Thrash: {
+	DisplayName: Golpe
+	FlavorText: Ataque de dos a tres turnos que acaba confundiendo al agresor.
+}
+
+DoubleEdge: {
+	DisplayName: Doble Filo
+	FlavorText: Ataque arriesgado que también hiere al agresor.
+}
+
+TailWhip: {
+	DisplayName: Látigo
+	FlavorText: "Agita la cola para bajar la Defensa del equipo rival. "
+}
+
+PoisonSting: {
+	DisplayName: Picotazo Veneno
+	FlavorText: Lanza un aguijón tóxico que puede envenenar al  objetivo.
+}
+
+Twineedle: {
+	DisplayName: Doble Ataque
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+PinMissile: {
+	DisplayName: Pin Misil
+	FlavorText: "Lanza finas púas que hieren de dos a cinco veces. "
+}
+
+Leer: {
+	DisplayName: Malicioso
+	FlavorText: Intimida a los rivales para bajar su Defensa.
+}
+
+Bite: {
+	DisplayName: Mordisco
+	FlavorText: Un voraz bocado que puede amedrentar al objetivo.
+}
+
+Growl: {
+	DisplayName: Gruñido
+	FlavorText: Dulce gruñido que reduce el Ataque del equipo rival.
+}
+
+Roar: {
+	DisplayName: Rugido
+	FlavorText: Se lleva al objetivo, que es cambiado por otro  Pokémon. Si es un Pokémon salvaje, acaba el  combate.
+}
+
+Sing: {
+	DisplayName: Canto
+	FlavorText: Cancioncilla que hace dormir profundamente al  objetivo.
+}
+
+Supersonic: {
+	DisplayName: Supersónico
+	FlavorText: "Raras ondas sónicas que confunden al objetivo. "
+}
+
+SonicBoom: {
+	DisplayName: Bomba Sónica
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Disable: {
+	DisplayName: Anulación
+	FlavorText: Desactiva el último movimiento del objetivo durante  cuatro turnos.
+}
+
+Acid: {
+	DisplayName: Ácido
+	FlavorText: Rocía a los enemigos con un ácido corrosivo.  Puede bajar la Defensa Especial.
+}
+
+Ember: {
+	DisplayName: Ascuas
+	FlavorText: Ataca con llamas pequeñas que pueden causar  quemaduras.
+}
+
+Flamethrower: {
+	DisplayName: Lanzallamas
+	FlavorText: Ataca con una gran ráfaga de fuego que puede causar quemaduras.
+}
+
+Mist: {
+	DisplayName: Neblina
+	FlavorText: "Rodea de fina niebla al usuario y protege las  características de su equipo durante cinco turnos. "
+}
+
+WaterGun: {
+	DisplayName: Pistola Agua
+	FlavorText: Ataca disparando agua con gran potencia.
+}
+
+HydroPump: {
+	DisplayName: Hidrobomba
+	FlavorText: "Lanza una gran masa de agua a presión para atacar. "
+}
+
+Surf: {
+	DisplayName: Surf
+	FlavorText: Inunda el terreno de combate con una ola gigante.
+}
+
+IceBeam: {
+	DisplayName: Rayo Hielo
+	FlavorText: Rayo de hielo que puede llegar a congelar.
+}
+
+Blizzard: {
+	DisplayName: Ventisca
+	FlavorText: "Tormenta de hielo que puede llegar a congelar. "
+}
+
+Psybeam: {
+	DisplayName: Psicorrayo
+	FlavorText: Extraño rayo que puede causar confusión.
+}
+
+BubbleBeam: {
+	DisplayName: Rayo Burbuja
+	FlavorText: "Diluvio de burbujas que puede bajar la Velocidad. "
+}
+
+AuroraBeam: {
+	DisplayName: Rayo Aurora
+	FlavorText: Rayo multicolor que puede reducir el Ataque.
+}
+
+HyperBeam: {
+	DisplayName: Hiperrayo
+	FlavorText: Es eficaz, pero el atacante deberá descansar en el  siguiente turno.
+}
+
+Peck: {
+	DisplayName: Picotazo
+	FlavorText: "Ensarta al objetivo con un cuerno o pico punzante. "
+}
+
+DrillPeck: {
+	DisplayName: Pico Taladro
+	FlavorText: Picotazo giratorio y perforador muy potente.
+}
+
+Submission: {
+	DisplayName: Sumisión
+	FlavorText: El usuario se lanza al suelo con el oponente en brazos y también se hace un poco de daño.
+}
+
+LowKick: {
+	DisplayName: Patada Baja
+	FlavorText: Patada baja que derriba al oponente. Cuanto más pesa el objetivo, más daño le causa.
+}
+
+Counter: {
+	DisplayName: Contraataque
+	FlavorText: Devuelve un golpe físico por duplicado.
+}
+
+SeismicToss: {
+	DisplayName: Sísmico
+	FlavorText: Aprovecha la gravedad para derribar al objetivo. Le resta tantos PS como nivel tenga el usuario.
+}
+
+Strength: {
+	DisplayName: Fuerza
+	FlavorText: Propina un potente puñetazo con todas sus fuerzas.
+}
+
+Absorb: {
+	DisplayName: Absorber
+	FlavorText: Un ataque que absorbe nutrientes. Quien lo usa recupera la mitad de los PS del daño que produce.
+}
+
+MegaDrain: {
+	DisplayName: Megaagotar
+	FlavorText: Un ataque que absorbe nutrientes. Quien lo usa recupera la mitad de los PS del daño que produce.
+}
+
+LeechSeed: {
+	DisplayName: Drenadoras
+	FlavorText: Planta semillas que absorben PS del objetivo en cada turno y que le sirven para recuperarse.
+}
+
+Growth: {
+	DisplayName: Desarrollo
+	FlavorText: Hace que su cuerpo crezca a marchas forzadas con lo que aumenta su Ataque y Ataque Especial.
+}
+
+RazorLeaf: {
+	DisplayName: Hoja Afilada
+	FlavorText: Corta con hojas afiladas. Un ataque que suele ser crítico.
+}
+
+SolarBeam: {
+	DisplayName: Rayo Solar
+	FlavorText: El usuario absorbe luz en el primer turno y en el segundo lanza un potente rayo de energía.
+}
+
+PoisonPowder: {
+	DisplayName: Polvo Veneno
+	FlavorText: Polvo tóxico que envenena al objetivo.
+}
+
+StunSpore: {
+	DisplayName: Paralizador
+	FlavorText: Esparce polvo que paraliza al objetivo.
+}
+
+SleepPowder: {
+	DisplayName: Somnífero
+	FlavorText: Esparce polvo que duerme al objetivo.
+}
+
+PetalDance: {
+	DisplayName: Danza Pétalo
+	FlavorText: Lanza pétalos de dos a tres turnos y acaba  confundiendo al atacante.
+}
+
+StringShot: {
+	DisplayName: Disparo Demora
+	FlavorText: Lanza seda a los rivales y reduce mucho su Velocidad.
+}
+
+DragonRage: {
+	DisplayName: Furia Dragón
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FireSpin: {
+	DisplayName: Giro Fuego
+	FlavorText: Un aro de fuego que atrapa al objetivo de cuatro a  cinco turnos.
+}
+
+ThunderShock: {
+	DisplayName: Impactrueno
+	FlavorText: "Ataque eléctrico que puede paralizar al objetivo. "
+}
+
+Thunderbolt: {
+	DisplayName: Rayo
+	FlavorText: Potente ataque eléctrico que puede paralizar al  objetivo.
+}
+
+ThunderWave: {
+	DisplayName: Onda Trueno
+	FlavorText: Una ligera descarga que paraliza al objetivo si lo  alcanza.
+}
+
+Thunder: {
+	DisplayName: Trueno
+	FlavorText: Un poderoso rayo que daña al objetivo y puede  paralizarlo.
+}
+
+RockThrow: {
+	DisplayName: Lanzarrocas
+	FlavorText: Tira una pequeña roca al objetivo.
+}
+
+Earthquake: {
+	DisplayName: Terremoto
+	FlavorText: Un terremoto que afecta a todos los Pokémon que estén a su alrededor.
+}
+
+Fissure: {
+	DisplayName: Fisura
+	FlavorText: Abre una grieta en el suelo y mete al objetivo en ella.  Fulmina en un golpe.
+}
+
+Dig: {
+	DisplayName: Excavar
+	FlavorText: El usuario cava durante el primer turno y ataca en el segundo.
+}
+
+Toxic: {
+	DisplayName: Tóxico
+	FlavorText: Envenena gravemente al objetivo y causa un daño  mayor en cada turno.
+}
+
+Confusion: {
+	DisplayName: Confusión
+	FlavorText: Débil ataque telequinético que puede causar confusión.
+}
+
+Psychic: {
+	DisplayName: Psíquico
+	FlavorText: Fuerte ataque telequinético que puede bajar la Defensa Especial del objetivo.
+}
+
+Hypnosis: {
+	DisplayName: Hipnosis
+	FlavorText: Ataque hipnótico que hace dormir profundamente al objetivo.
+}
+
+Meditate: {
+	DisplayName: Meditación
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Agility: {
+	DisplayName: Agilidad
+	FlavorText: "Relaja el cuerpo para ganar mucha Velocidad. "
+}
+
+QuickAttack: {
+	DisplayName: Ataque Rápido
+	FlavorText: "Ataca al objetivo a gran velocidad. Este movimiento tiene prioridad alta. "
+}
+
+Rage: {
+	DisplayName: Furia
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Teleport: {
+	DisplayName: Teletransporte
+	FlavorText: Permite al usuario cambiarse por otro Pokémon del equipo, si es posible. Si un Pokémon salvaje usa este movimiento, huye del combate.
+}
+
+NightShade: {
+	DisplayName: Tinieblas
+	FlavorText: Produce un espejismo ante el objetivo, que pierde tantos PS como nivel tenga el usuario.
+}
+
+Mimic: {
+	DisplayName: Mimético
+	FlavorText: Copia el último movimiento usado por el objetivo, y  puede utilizarlo mientras esté en el combate.
+}
+
+Screech: {
+	DisplayName: Chirrido
+	FlavorText: Alarido agudo que reduce mucho la Defensa del  objetivo.
+}
+
+DoubleTeam: {
+	DisplayName: Doble Equipo
+	FlavorText: "Crea copias de sí mismo para mejorar la Evasión. "
+}
+
+Recover: {
+	DisplayName: Recuperación
+	FlavorText: Restaura hasta la mitad de los PS máximos.
+}
+
+Harden: {
+	DisplayName: Fortaleza
+	FlavorText: Tensa la musculatura del usuario para aumentar la  Defensa.
+}
+
+Minimize: {
+	DisplayName: Reducción
+	FlavorText: "El usuario mengua para aumentar mucho la Evasión. "
+}
+
+Smokescreen: {
+	DisplayName: Pantalla de Humo
+	FlavorText: Baja la Precisión del objetivo con una nube de humo  o tinta.
+}
+
+ConfuseRay: {
+	DisplayName: Rayo Confuso
+	FlavorText: Rayo siniestro que confunde al objetivo.
+}
+
+Withdraw: {
+	DisplayName: Refugio
+	FlavorText: El usuario se resguarda en su coraza, por lo que le sube la Defensa.
+}
+
+DefenseCurl: {
+	DisplayName: Rizo Defensa
+	FlavorText: Se enrosca para ocultar sus puntos débiles y aumentar la Defensa.
+}
+
+Barrier: {
+	DisplayName: Barrera
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+LightScreen: {
+	DisplayName: Pantalla de Luz
+	FlavorText: Pared de luz que reduce durante cinco turnos el daño producido por los ataques especiales.
+}
+
+Haze: {
+	DisplayName: Niebla
+	FlavorText: Neblina que elimina los cambios de características de todos los Pokémon en combate.
+}
+
+Reflect: {
+	DisplayName: Reflejo
+	FlavorText: Pared de luz que reduce durante cinco turnos el daño producido por los ataques físicos.
+}
+
+FocusEnergy: {
+	DisplayName: Foco Energía
+	FlavorText: Concentra energía para aumentar las posibilidades de asestar un golpe crítico.
+}
+
+Bide: {
+	DisplayName: Venganza
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Metronome: {
+	DisplayName: Metrónomo
+	FlavorText: Mueve un dedo y estimula su cerebro para usar al azar casi cualquier movimiento.
+}
+
+MirrorMove: {
+	DisplayName: Espejo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SelfDestruct: {
+	DisplayName: Autodestrucción
+	FlavorText: El atacante explota y hiere a todos a su alrededor.  El usuario se debilita de inmediato.
+}
+
+EggBomb: {
+	DisplayName: Bomba Huevo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Lick: {
+	DisplayName: Lengüetazo
+	FlavorText: "Una lengua ataca al objetivo. Puede causar parálisis. "
+}
+
+Smog: {
+	DisplayName: Polución
+	FlavorText: Lanza un ataque con gases tóxicos que pueden llegar a envenenar.
+}
+
+Sludge: {
+	DisplayName: Residuos
+	FlavorText: Arroja residuos al objetivo. Puede llegar a envenenar.
+}
+
+BoneClub: {
+	DisplayName: Hueso Palo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FireBlast: {
+	DisplayName: Llamarada
+	FlavorText: Llama intensa que chamusca y puede causar  quemaduras.
+}
+
+Waterfall: {
+	DisplayName: Cascada
+	FlavorText: Embiste con un gran impulso que puede llegar a amedrentar.
+}
+
+Clamp: {
+	DisplayName: Tenaza
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Swift: {
+	DisplayName: Rapidez
+	FlavorText: Lanza rayos en forma de estrella que no fallan nunca.
+}
+
+SkullBash: {
+	DisplayName: Cabezazo
+	FlavorText: El usuario se prepara y sube su Defensa en el primer turno y en el segundo arremete con un cabezazo.
+}
+
+SpikeCannon: {
+	DisplayName: Clavo Cañón
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Constrict: {
+	DisplayName: Restricción
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Amnesia: {
+	DisplayName: Amnesia
+	FlavorText: El usuario olvida sus preocupaciones y aumenta mucho la Defensa Especial.
+}
+
+Kinesis: {
+	DisplayName: Kinético
+	FlavorText: Dobla una cuchara para distraer al objetivo y bajar su nivel de Precisión.
+}
+
+SoftBoiled: {
+	DisplayName: Amortiguador
+	FlavorText: Restaura la mitad de los PS máximos del usuario.
+}
+
+HighJumpKick: {
+	DisplayName: Pat. Salto Alta
+	FlavorText: El usuario salta muy alto y da un rodillazo. Si falla, se hará daño.
+}
+
+Glare: {
+	DisplayName: Deslumbrar
+	FlavorText: Intimida y asusta al objetivo con la mirada para dejarlo paralizado.
+}
+
+DreamEater: {
+	DisplayName: Comesueños
+	FlavorText: Restaura al usuario la mitad del daño causado a un  objetivo dormido.
+}
+
+PoisonGas: {
+	DisplayName: Gas Venenoso
+	FlavorText: Lanza una nube de gas tóxico al objetivo. Produce envenenamiento.
+}
+
+Barrage: {
+	DisplayName: Bombardeo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+LeechLife: {
+	DisplayName: Chupavidas
+	FlavorText: Restaura al usuario la mitad del daño causado al  objetivo.
+}
+
+LovelyKiss: {
+	DisplayName: Beso Amoroso
+	FlavorText: Intimida al objetivo con una cara que asusta y le da un beso que lo deja dormido.
+}
+
+SkyAttack: {
+	DisplayName: Ataque Aéreo
+	FlavorText: Ataca durante dos turnos y suele asestar un golpe crítico. También puede amedrentar al objetivo.
+}
+
+Transform: {
+	DisplayName: Transformación
+	FlavorText: El usuario se transforma en una copia del objetivo, con los mismos movimientos.
+}
+
+Bubble: {
+	DisplayName: Burbuja
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+DizzyPunch: {
+	DisplayName: Puño Mareo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Spore: {
+	DisplayName: Espora
+	FlavorText: Esparce esporas que inducen al sueño.
+}
+
+Flash: {
+	DisplayName: Destello
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Psywave: {
+	DisplayName: Psicoonda
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Splash: {
+	DisplayName: Salpicadura
+	FlavorText: No tiene ningún efecto. Solo salpica.
+}
+
+AcidArmor: {
+	DisplayName: Armadura Ácida
+	FlavorText: Transforma la estructura celular para hacerse líquido y aumenta mucho la Defensa.
+}
+
+Crabhammer: {
+	DisplayName: Martillazo
+	FlavorText: Golpea con fuerza con una pinza enorme. Suele asestar un golpe crítico.
+}
+
+Explosion: {
+	DisplayName: Explosión
+	FlavorText: El atacante causa una grandísima explosión y hiere  a todos a su alrededor. El usuario se debilita de  inmediato.
+}
+
+FurySwipes: {
+	DisplayName: Golpes Furia
+	FlavorText: Araña rápidamente de dos a cinco veces.
+}
+
+Bonemerang: {
+	DisplayName: Huesomerang
+	FlavorText: Lanza un hueso a modo de bumerán que golpea dos  veces.
+}
+
+Rest: {
+	DisplayName: Descanso
+	FlavorText: Restaura todos los PS y cura todos los problemas de estado del usuario, que se duerme los dos turnos siguientes.
+}
+
+RockSlide: {
+	DisplayName: Avalancha
+	FlavorText: Lanza grandes pedruscos. Puede hacer retroceder a  los rivales.
+}
+
+HyperFang: {
+	DisplayName: Hipercolmillo
+	FlavorText: Ataca con agudos colmillos. Puede amedrentar al objetivo.
+}
+
+Sharpen: {
+	DisplayName: Afilar
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Conversion: {
+	DisplayName: Conversión
+	FlavorText: Cambia el tipo del usuario por el del primero de sus  movimientos.
+}
+
+TriAttack: {
+	DisplayName: Triataque
+	FlavorText: Ataque triple que puede paralizar, quemar o congelar al objetivo.
+}
+
+SuperFang: {
+	DisplayName: Superdiente
+	FlavorText: Finos colmillos que reducen a la mitad los PS del objetivo.
+}
+
+Slash: {
+	DisplayName: Cuchillada
+	FlavorText: Ataca con cuchillas o con pinzas. Suele asestar un golpe crítico.
+}
+
+Substitute: {
+	DisplayName: Sustituto
+	FlavorText: Utiliza parte de los PS propios para crear un sustituto que actúa como señuelo.
+}
+
+Struggle: {
+	DisplayName: Forcejeo
+	FlavorText: Solo se usa como último recurso al acabarse los PP.  Hiere un poco al agresor.
+}
+
+Sketch: {
+	DisplayName: Esquema
+	FlavorText: Aprende de forma permanente el último movimiento  utilizado por el objetivo. Es de un solo uso.
+}
+
+TripleKick: {
+	DisplayName: Triple Patada
+	FlavorText: Patea hasta tres veces seguidas y cada vez más fuerte.
+}
+
+Thief: {
+	DisplayName: Ladrón
+	FlavorText: El agresor ataca y le quita el objeto al objetivo siempre y cuando no lleve ninguno.
+}
+
+SpiderWeb: {
+	DisplayName: Telaraña
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MindReader: {
+	DisplayName: Telépata
+	FlavorText: El usuario adivina los movimientos del objetivo para  hacer que su siguiente ataque no falle.
+}
+
+Nightmare: {
+	DisplayName: Pesadilla
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FlameWheel: {
+	DisplayName: Rueda Fuego
+	FlavorText: "Ataca envuelto en fuego. Puede causar quemaduras. "
+}
+
+Snore: {
+	DisplayName: Ronquido
+	FlavorText: Fuerte ronquido que solo puede usarse dormido. Puede amedrentar al objetivo.
+}
+
+Curse: {
+	DisplayName: Maldición
+	FlavorText: Un movimiento que tiene efectos distintos si el usuario es de tipo Fantasma o no.
+}
+
+Flail: {
+	DisplayName: Azote
+	FlavorText: Ataque frenético. Cuantos menos PS tenga el usuario, más daño producirá.
+}
+
+Conversion2: {
+	DisplayName: Conversión2
+	FlavorText: "El usuario cambia de tipo para hacerse resistente al último tipo de movimiento usado por el objetivo. "
+}
+
+Aeroblast: {
+	DisplayName: Aerochorro
+	FlavorText: Lanza un chorro de aire que suele asestar un golpe crítico.
+}
+
+CottonSpore: {
+	DisplayName: Esporagodón
+	FlavorText: Adhiere esporas a los rivales para reducir mucho su  Velocidad.
+}
+
+Reversal: {
+	DisplayName: Inversión
+	FlavorText: Ataque desesperado que causa más daño cuantos menos PS tenga el usuario.
+}
+
+Spite: {
+	DisplayName: Rencor
+	FlavorText: "Da rienda suelta a su rencor para reducir cuatro PP  del último movimiento usado por el objetivo. "
+}
+
+PowderSnow: {
+	DisplayName: Nieve Polvo
+	FlavorText: Lanza nieve que puede llegar a congelar.
+}
+
+Protect: {
+	DisplayName: Protección
+	FlavorText: Frena todos los ataques, pero puede fallar si se usa  repetidamente.
+}
+
+MachPunch: {
+	DisplayName: Ultrapuño
+	FlavorText: Puñetazo de velocidad fulminante. Este movimiento tiene prioridad alta.
+}
+
+ScaryFace: {
+	DisplayName: Cara Susto
+	FlavorText: "Asusta al objetivo para reducir mucho su Velocidad. "
+}
+
+FeintAttack: {
+	DisplayName: Finta
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SweetKiss: {
+	DisplayName: Beso Dulce
+	FlavorText: "Da un beso con tal dulzura que causa confusión. "
+}
+
+BellyDrum: {
+	DisplayName: Tambor
+	FlavorText: Reduce la mitad de los PS máximos para mejorar al máximo el Ataque.
+}
+
+SludgeBomb: {
+	DisplayName: Bomba Lodo
+	FlavorText: Arroja residuos al objetivo. Puede llegar a envenenar.
+}
+
+MudSlap: {
+	DisplayName: Bofetón Lodo
+	FlavorText: Echa lodo en la cara para bajar la Precisión.
+}
+
+Octazooka: {
+	DisplayName: Pulpocañón
+	FlavorText: Dispara tinta a la cara. Puede bajar la Precisión.
+}
+
+Spikes: {
+	DisplayName: Púas
+	FlavorText: "Esparce púas alrededor del equipo rival que hieren  a los Pokémon rivales que entran en combate. "
+}
+
+ZapCannon: {
+	DisplayName: Electrocañón
+	FlavorText: Dispara una descarga eléctrica que causa daño y  parálisis.
+}
+
+Foresight: {
+	DisplayName: Profecía
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+DestinyBond: {
+	DisplayName: Mismo Destino
+	FlavorText: Si el usuario se debilita por un ataque rival antes de usar otro movimiento, el Pokémon rival se debilitará también. Puede fallar si se usa repetidamente.
+}
+
+PerishSong: {
+	DisplayName: Canto Mortal
+	FlavorText: "Si un Pokémon escucha este canto y no es cambiado por otro en tres turnos, acaba debilitándose. "
+}
+
+IcyWind: {
+	DisplayName: Viento Hielo
+	FlavorText: Ataque con aire helado que baja la Velocidad de los  rivales.
+}
+
+Detect: {
+	DisplayName: Detección
+	FlavorText: Frena todos los ataques, pero puede fallar si se usa  repetidamente.
+}
+
+BoneRush: {
+	DisplayName: Ataque Óseo
+	FlavorText: Hueso en ristre, aporrea al objetivo de dos a cinco  veces.
+}
+
+LockOn: {
+	DisplayName: Fijar Blanco
+	FlavorText: "Fija el blanco para que el siguiente ataque no falle. "
+}
+
+Outrage: {
+	DisplayName: Enfado
+	FlavorText: Ataca de dos a tres turnos y acaba confundiendo al  agresor.
+}
+
+Sandstorm: {
+	DisplayName: Tormenta Arena
+	FlavorText: Tormenta de arena que dura cinco turnos y hiere a  todos, excepto a los de tipo Roca, Tierra y Acero, y aumenta la Defensa Especial de los de tipo Roca.
+}
+
+GigaDrain: {
+	DisplayName: Gigadrenado
+	FlavorText: "Un ataque que absorbe nutrientes. Quien lo usa  recupera la mitad de los PS del daño que produce. "
+}
+
+Endure: {
+	DisplayName: Aguante
+	FlavorText: Resiste cualquier ataque y deja al menos 1 PS.  Puede fallar si se usa repetidamente.
+}
+
+Charm: {
+	DisplayName: Encanto
+	FlavorText: Engatusa al objetivo y reduce mucho su Ataque.
+}
+
+Rollout: {
+	DisplayName: Rodar
+	FlavorText: El atacante rueda contra el objetivo durante cinco  turnos, cada vez con mayor fuerza.
+}
+
+FalseSwipe: {
+	DisplayName: Falso Tortazo
+	FlavorText: Ataque moderado que no debilita al objetivo y le deja al menos 1 PS.
+}
+
+Swagger: {
+	DisplayName: Contoneo
+	FlavorText: Provoca confusión en el objetivo, pero también sube  mucho su Ataque.
+}
+
+MilkDrink: {
+	DisplayName: Batido
+	FlavorText: Restaura la mitad de los PS máximos del usuario.
+}
+
+Spark: {
+	DisplayName: Chispa
+	FlavorText: Ataque eléctrico que puede llegar a paralizar.
+}
+
+FuryCutter: {
+	DisplayName: Corte Furia
+	FlavorText: Ataque con garras o guadaña que crece en intensidad si se usa repetidas veces.
+}
+
+SteelWing: {
+	DisplayName: Ala de Acero
+	FlavorText: Alas macizas que golpean al objetivo y pueden subir  la Defensa del usuario.
+}
+
+MeanLook: {
+	DisplayName: Mal de Ojo
+	FlavorText: Mal de ojo que impide al objetivo huir del combate.
+}
+
+Attract: {
+	DisplayName: Atracción
+	FlavorText: Si el objetivo es del sexo opuesto, se enamorará y  bajará la posibilidad de que ataque.
+}
+
+SleepTalk: {
+	DisplayName: Sonámbulo
+	FlavorText: Mientras duerme, usa uno de sus movimientos elegido al azar.
+}
+
+HealBell: {
+	DisplayName: Campana Cura
+	FlavorText: Tañido que cura los problemas de estado de todos los Pokémon del equipo.
+}
+
+Return: {
+	DisplayName: Retribución
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Present: {
+	DisplayName: Presente
+	FlavorText: "Quien lo usa ataca al objetivo dándole un regalo con una bomba trampa. Sin embargo, a veces restaura sus PS. "
+}
+
+Frustration: {
+	DisplayName: Frustración
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Safeguard: {
+	DisplayName: Velo Sagrado
+	FlavorText: "Un escudo que protege de problemas de estado, como el sueño o la parálisis, durante cinco turnos. "
+}
+
+PainSplit: {
+	DisplayName: Divide Dolor
+	FlavorText: Suma los PS del usuario a los del objetivo y los reparte a partes iguales.
+}
+
+SacredFire: {
+	DisplayName: Fuego Sagrado
+	FlavorText: Fuego místico de gran intensidad que puede causar  quemaduras.
+}
+
+Magnitude: {
+	DisplayName: Magnitud
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+DynamicPunch: {
+	DisplayName: Puño Dinámico
+	FlavorText: Puñetazo con toda la fuerza concentrada. Causa  confusión si atina.
+}
+
+Megahorn: {
+	DisplayName: Megacuerno
+	FlavorText: Violenta embestida con cuernos imponentes.
+}
+
+DragonBreath: {
+	DisplayName: Dragoaliento
+	FlavorText: Poderosa ráfaga de aliento que golpea al objetivo y  puede paralizarlo.
+}
+
+BatonPass: {
+	DisplayName: Relevo
+	FlavorText: Cambia el puesto con otro miembro del equipo y le pasa los cambios de características.
+}
+
+Encore: {
+	DisplayName: Otra Vez
+	FlavorText: El objetivo repite su último movimiento durante tres  turnos.
+}
+
+Pursuit: {
+	DisplayName: Persecución
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+RapidSpin: {
+	DisplayName: Giro Rápido
+	FlavorText: Ataque giratorio que puede eliminar movimientos como Atadura, Constricción y Drenadoras. También aumenta la Velocidad del usuario.
+}
+
+SweetScent: {
+	DisplayName: Dulce Aroma
+	FlavorText: Un dulce aroma engatusa al objetivo, por lo que se reduce mucho su Evasión.
+}
+
+IronTail: {
+	DisplayName: Cola Férrea
+	FlavorText: Ataca con una cola férrea y puede bajar la Defensa  del objetivo.
+}
+
+MetalClaw: {
+	DisplayName: Garra Metal
+	FlavorText: Ataque con garras de acero que puede aumentar el  Ataque del usuario.
+}
+
+VitalThrow: {
+	DisplayName: Tiro Vital
+	FlavorText: El usuario ataca el último, pero no falla.
+}
+
+MorningSun: {
+	DisplayName: Sol Matinal
+	FlavorText: Restaura PS del usuario. La cantidad varía según  el tiempo que haga.
+}
+
+Synthesis: {
+	DisplayName: Síntesis
+	FlavorText: Restaura PS del usuario. La cantidad varía según  el tiempo que haga.
+}
+
+Moonlight: {
+	DisplayName: Luz Lunar
+	FlavorText: Restaura PS del usuario. La cantidad varía según  el tiempo que haga.
+}
+
+HiddenPower: {
+	DisplayName: Poder Oculto
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+CrossChop: {
+	DisplayName: Tajo Cruzado
+	FlavorText: "Corte doble que suele propinar un golpe crítico. "
+}
+
+Twister: {
+	DisplayName: Ciclón
+	FlavorText: Crea un violento tornado para hacer trizas al objetivo. Puede amedrentarlo.
+}
+
+RainDance: {
+	DisplayName: Danza Lluvia
+	FlavorText: Genera una fuerte lluvia que refuerza los movimientos de tipo Agua durante cinco turnos y debilita los de tipo Fuego.
+}
+
+SunnyDay: {
+	DisplayName: Día Soleado
+	FlavorText: Hace que se intensifique el efecto del sol durante cinco turnos, lo que potencia los movimientos de tipo Fuego y debilita los de tipo Agua.
+}
+
+Crunch: {
+	DisplayName: Triturar
+	FlavorText: Tritura con afilados colmillos y puede bajar la Defensa del objetivo.
+}
+
+MirrorCoat: {
+	DisplayName: Manto Espejo
+	FlavorText: Responde a un ataque especial ocasionando el doble  del daño recibido.
+}
+
+PsychUp: {
+	DisplayName: Más Psique
+	FlavorText: Quien lo usa se sume en un trance y copia cualquier cambio que haya en las características de su objetivo.
+}
+
+ExtremeSpeed: {
+	DisplayName: Veloc. Extrema
+	FlavorText: Ataque de una velocidad extrema. Este movimiento tiene prioridad alta.
+}
+
+AncientPower: {
+	DisplayName: Poder Pasado
+	FlavorText: Ataque prehistórico que puede subir todas las  características.
+}
+
+ShadowBall: {
+	DisplayName: Bola Sombra
+	FlavorText: Lanza una bola oscura que puede bajar la Defensa  Especial del objetivo.
+}
+
+FutureSight: {
+	DisplayName: Premonición
+	FlavorText: Concentra energía psíquica para golpear al objetivo dos turnos después.
+}
+
+RockSmash: {
+	DisplayName: Golpe Roca
+	FlavorText: Ataque con los puños. Puede bajar la Defensa del objetivo.
+}
+
+Whirlpool: {
+	DisplayName: Torbellino
+	FlavorText: Una tromba de agua atrapa al objetivo durante cuatro o cinco turnos.
+}
+
+BeatUp: {
+	DisplayName: Paliza
+	FlavorText: Ataque de todo el equipo Pokémon. Cuantos más haya, más veces se atacará.
+}
+
+FakeOut: {
+	DisplayName: Sorpresa
+	FlavorText: Amedrenta al objetivo con este movimiento de prioridad alta. Solo sirve en el primer turno.
+}
+
+Uproar: {
+	DisplayName: Alboroto
+	FlavorText: Ataca de forma alborotada durante tres turnos.  Mantiene despiertos a todos.
+}
+
+Stockpile: {
+	DisplayName: Reserva
+	FlavorText: Acumula energía y sube la Defensa y la Defensa  Especial. Puede utilizarse hasta tres veces.
+}
+
+SpitUp: {
+	DisplayName: Escupir
+	FlavorText: Libera de una vez la energía acumulada con Reserva. La potencia del ataque será proporcional a la cantidad de energía acumulada.
+}
+
+Swallow: {
+	DisplayName: Tragar
+	FlavorText: Absorbe la energía acumulada con Reserva para recobrar salud. Cuanta más se haya acumulado, mayor será el número de PS que se recuperen.
+}
+
+HeatWave: {
+	DisplayName: Onda Ígnea
+	FlavorText: Provoca un viento abrasador que puede quemar al  objetivo.
+}
+
+Hail: {
+	DisplayName: Granizo
+	FlavorText: Tormenta de granizo que dura cinco turnos. Hiere a todos los Pokémon excepto a los de tipo Hielo.
+}
+
+Torment: {
+	DisplayName: Tormento
+	FlavorText: "Atormenta y enfurece al objetivo, que no puede usar dos veces seguidas el mismo movimiento. "
+}
+
+Flatter: {
+	DisplayName: Camelo
+	FlavorText: Halaga al objetivo y lo confunde, pero también sube su Ataque Especial.
+}
+
+WillOWisp: {
+	DisplayName: Fuego Fatuo
+	FlavorText: "Siniestra llama morada que produce quemaduras. "
+}
+
+Memento: {
+	DisplayName: Legado
+	FlavorText: "El usuario se debilita, pero baja mucho tanto el  Ataque como el Ataque Especial del objetivo. "
+}
+
+Facade: {
+	DisplayName: Imagen
+	FlavorText: Si el usuario está quemado, paralizado o envenenado, ataca con el doble de potencia.
+}
+
+FocusPunch: {
+	DisplayName: Puño Certero
+	FlavorText: Se concentra para dar un puñetazo. Falla si se sufre un golpe antes de su uso.
+}
+
+SmellingSalts: {
+	DisplayName: Estímulo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FollowMe: {
+	DisplayName: Señuelo
+	FlavorText: Llama la atención para concentrar todos los ataques de todos los del equipo rival hacia sí mismo.
+}
+
+NaturePower: {
+	DisplayName: Adaptación
+	FlavorText: Usa el poder de la naturaleza para atacar. Su efecto varía según el entorno de combate.
+}
+
+Charge: {
+	DisplayName: Carga
+	FlavorText: Recarga energía para potenciar el siguiente movimiento de tipo Eléctrico. También sube la Defensa Especial.
+}
+
+Taunt: {
+	DisplayName: Mofa
+	FlavorText: Enfurece al objetivo para que solo use movimientos de ataque durante tres turnos.
+}
+
+HelpingHand: {
+	DisplayName: Refuerzo
+	FlavorText: El usuario ayuda a un aliado reforzando la potencia de su ataque.
+}
+
+Trick: {
+	DisplayName: Truco
+	FlavorText: Engaña al objetivo desprevenido e intercambia objetos.
+}
+
+RolePlay: {
+	DisplayName: Imitación
+	FlavorText: "Imita al objetivo por completo y copia su habilidad. "
+}
+
+Wish: {
+	DisplayName: Deseo
+	FlavorText: Restaura en el siguiente turno la mitad de los PS máximos del usuario o se los pasa al Pokémon que lo sustituye.
+}
+
+Assist: {
+	DisplayName: Ayuda
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Ingrain: {
+	DisplayName: Arraigo
+	FlavorText: Echa raíces para recuperar PS en cada turno, pero  impide el relevo.
+}
+
+Superpower: {
+	DisplayName: Fuerza Bruta
+	FlavorText: Ataque de gran potencia, pero que reduce el Ataque y la Defensa del agresor.
+}
+
+MagicCoat: {
+	DisplayName: Capa Mágica
+	FlavorText: Barrera capaz de devolver al agresor movimientos  como Drenadoras y otros que alteran el estado o  las características.
+}
+
+Recycle: {
+	DisplayName: Reciclaje
+	FlavorText: Recicla y así recupera un objeto equipado de un solo uso que ya haya sido empleado durante el combate.
+}
+
+Revenge: {
+	DisplayName: Desquite
+	FlavorText: Ataque que produce el doble de daño si el usuario resulta herido en el mismo turno.
+}
+
+BrickBreak: {
+	DisplayName: Demolición
+	FlavorText: Potente ataque que también es capaz de destruir  barreras como Pantalla de Luz y Reflejo.
+}
+
+Yawn: {
+	DisplayName: Bostezo
+	FlavorText: Gran bostezo que induce al sueño al objetivo en el siguiente turno.
+}
+
+KnockOff: {
+	DisplayName: Desarme
+	FlavorText: Impide al objetivo usar el objeto que lleva durante el combate. La potencia del movimiento se multiplica si el objetivo lleva un objeto.
+}
+
+Endeavor: {
+	DisplayName: Esfuerzo
+	FlavorText: Reduce los PS del objetivo para que igualen a los del atacante.
+}
+
+Eruption: {
+	DisplayName: Estallido
+	FlavorText: "Furia explosiva. Cuanto menor sea el número de PS del usuario, menos daño hará el ataque. "
+}
+
+SkillSwap: {
+	DisplayName: Intercambio
+	FlavorText: Usa el poder psíquico para intercambiar habilidades con el objetivo.
+}
+
+Imprison: {
+	DisplayName: Sellar
+	FlavorText: Impide a los contrincantes usar ataques conocidos por el usuario durante el combate.
+}
+
+Refresh: {
+	DisplayName: Alivio
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Grudge: {
+	DisplayName: Rabia
+	FlavorText: Si el usuario se debilita al recibir un ataque, todos los PP de este último ataque serán eliminados.
+}
+
+Snatch: {
+	DisplayName: Robo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SecretPower: {
+	DisplayName: Daño Secreto
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Dive: {
+	DisplayName: Buceo
+	FlavorText: El usuario se sumerge en el primer turno y ataca en el segundo.
+}
+
+ArmThrust: {
+	DisplayName: Empujón
+	FlavorText: Fuertes empujones que golpean de dos a cinco veces seguidas.
+}
+
+Camouflage: {
+	DisplayName: Camuflaje
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+TailGlow: {
+	DisplayName: Ráfaga
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+LusterPurge: {
+	DisplayName: Resplandor
+	FlavorText: Fogonazo de luz que puede bajar la Defensa Especial del objetivo.
+}
+
+MistBall: {
+	DisplayName: Bola Neblina
+	FlavorText: Banco de niebla que puede bajar el Ataque Especial del objetivo.
+}
+
+FeatherDance: {
+	DisplayName: Danza Pluma
+	FlavorText: Envuelve al objetivo con un manto de plumas para  reducir mucho su Ataque.
+}
+
+TeeterDance: {
+	DisplayName: Danza Caos
+	FlavorText: Danza histérica que confunde a los Pokémon que están alrededor del usuario.
+}
+
+BlazeKick: {
+	DisplayName: Patada Ígnea
+	FlavorText: Patada que suele ser un golpe crítico y puede causar quemaduras.
+}
+
+MudSport: {
+	DisplayName: Chapoteo Lodo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+IceBall: {
+	DisplayName: Bola Hielo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+NeedleArm: {
+	DisplayName: Brazo Pincho
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SlackOff: {
+	DisplayName: Relajo
+	FlavorText: El usuario se relaja y restaura la mitad de sus PS  máximos.
+}
+
+HyperVoice: {
+	DisplayName: Vozarrón
+	FlavorText: "Grito desgarrador que inflige daño al objetivo. "
+}
+
+PoisonFang: {
+	DisplayName: Colmillo Veneno
+	FlavorText: Colmillos tóxicos que pueden envenenar gravemente al objetivo.
+}
+
+CrushClaw: {
+	DisplayName: Garra Brutal
+	FlavorText: Hace trizas al objetivo con garras afiladas y puede bajar su Defensa.
+}
+
+BlastBurn: {
+	DisplayName: Anillo Ígneo
+	FlavorText: Explosión de fuego. El atacante debe descansar el  siguiente turno.
+}
+
+HydroCannon: {
+	DisplayName: Hidrocañón
+	FlavorText: Disparo de agua. El atacante debe descansar el  siguiente turno.
+}
+
+MeteorMash: {
+	DisplayName: Puño Meteoro
+	FlavorText: Puñetazo que impacta como un meteorito y puede subir el Ataque del agresor.
+}
+
+Astonish: {
+	DisplayName: Impresionar
+	FlavorText: Lanza un grito tan tremendo que impresiona y puede amedrentar al objetivo.
+}
+
+WeatherBall: {
+	DisplayName: Meteorobola
+	FlavorText: El tipo y fuerza del ataque varían según el tiempo que haga.
+}
+
+Aromatherapy: {
+	DisplayName: Aromaterapia
+	FlavorText: Cura todos los problemas de estado del equipo con un suave aroma.
+}
+
+FakeTears: {
+	DisplayName: Llanto Falso
+	FlavorText: Lágrimas de cocodrilo que bajan mucho la Defensa Especial del objetivo.
+}
+
+AirCutter: {
+	DisplayName: Aire Afilado
+	FlavorText: Viento cortante que azota. Suele ser un golpe crítico.
+}
+
+Overheat: {
+	DisplayName: Sofoco
+	FlavorText: Ataque en toda regla que baja mucho el Ataque  Especial de quien lo usa.
+}
+
+OdorSleuth: {
+	DisplayName: Rastreo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+RockTomb: {
+	DisplayName: Tumba Rocas
+	FlavorText: Tira rocas que detienen al objetivo y bajan su Velocidad.
+}
+
+SilverWind: {
+	DisplayName: Viento Plata
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MetalSound: {
+	DisplayName: Eco Metálico
+	FlavorText: Horrible chirrido metálico que baja mucho la Defensa Especial del objetivo.
+}
+
+GrassWhistle: {
+	DisplayName: Silbato
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Tickle: {
+	DisplayName: Cosquillas
+	FlavorText: Hace reír al objetivo para bajar su Ataque y Defensa.
+}
+
+CosmicPower: {
+	DisplayName: Masa Cósmica
+	FlavorText: Sube la Defensa y la Defensa Especial propias con  energía mística.
+}
+
+WaterSpout: {
+	DisplayName: Salpicar
+	FlavorText: Chorro de agua. Cuantos menos PS tenga el usuario, menos dañino será.
+}
+
+SignalBeam: {
+	DisplayName: Doble Rayo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ShadowPunch: {
+	DisplayName: Puño Sombra
+	FlavorText: "Puñetazo ineludible procedente de las sombras. "
+}
+
+Extrasensory: {
+	DisplayName: Paranormal
+	FlavorText: Emite una energía muy extraña que puede amedrentar al objetivo.
+}
+
+SkyUppercut: {
+	DisplayName: Gancho Alto
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SandTomb: {
+	DisplayName: Bucle Arena
+	FlavorText: Enreda al objetivo en un remolino de arena de cuatro a cinco turnos.
+}
+
+SheerCold: {
+	DisplayName: Frío Polar
+	FlavorText: Debilita al objetivo de un solo golpe. Si lo usa un Pokémon que no sea de tipo Hielo, es difícil que acierte.
+}
+
+MuddyWater: {
+	DisplayName: Agua Lodosa
+	FlavorText: Ataque con agua lodosa que puede bajar la Precisión del equipo rival.
+}
+
+BulletSeed: {
+	DisplayName: Semilladora
+	FlavorText: Dispara rápido de dos a cinco ráfagas de semillas de manera consecutiva.
+}
+
+AerialAce: {
+	DisplayName: Golpe Aéreo
+	FlavorText: "El usuario lanza un ataque muy rápido e ineludible. "
+}
+
+IcicleSpear: {
+	DisplayName: Carámbano
+	FlavorText: Ataca lanzando de dos a cinco ráfagas consecutivas de carámbanos.
+}
+
+IronDefense: {
+	DisplayName: Defensa Férrea
+	FlavorText: Fortalece el cuerpo como si fuera de hierro y sube  mucho la Defensa.
+}
+
+Block: {
+	DisplayName: Bloqueo
+	FlavorText: Le corta el paso al objetivo para que no pueda escapar.
+}
+
+Howl: {
+	DisplayName: Aullido
+	FlavorText: "Aullido que sube el ánimo y aumenta el Ataque del equipo. "
+}
+
+DragonClaw: {
+	DisplayName: Garra Dragón
+	FlavorText: Araña al objetivo con garras afiladas.
+}
+
+FrenzyPlant: {
+	DisplayName: Planta Feroz
+	FlavorText: Golpea con una enorme planta. Quien lo usa no puede moverse en el siguiente turno.
+}
+
+BulkUp: {
+	DisplayName: Corpulencia
+	FlavorText: Robustece el cuerpo para subir el Ataque y la Defensa.
+}
+
+Bounce: {
+	DisplayName: Bote
+	FlavorText: El usuario bota en el primer turno y golpea al objetivo en el segundo y puede llegar a paralizarlo.
+}
+
+MudShot: {
+	DisplayName: Disparo Lodo
+	FlavorText: El usuario lanza lodo al objetivo y reduce su Velocidad.
+}
+
+PoisonTail: {
+	DisplayName: Cola Veneno
+	FlavorText: Puede envenenar y dar un golpe crítico.
+}
+
+Covet: {
+	DisplayName: Antojo
+	FlavorText: Se acerca con ternura al objetivo, pero le ataca y le roba el objeto que lleve.
+}
+
+VoltTackle: {
+	DisplayName: Placaje Eléc
+	FlavorText: Quien lo usa electrifica su cuerpo para luego atacar.  Se hiere mucho a sí mismo, pero puede paralizar al  objetivo.
+}
+
+MagicalLeaf: {
+	DisplayName: Hoja Mágica
+	FlavorText: Esparce extrañas hojas que persiguen al objetivo.  No se puede esquivar.
+}
+
+WaterSport: {
+	DisplayName: Hidrochorro
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+CalmMind: {
+	DisplayName: Paz Mental
+	FlavorText: "Aumenta la concentración y calma el espíritu para  subir el Ataque Especial y la Defensa Especial. "
+}
+
+LeafBlade: {
+	DisplayName: Hoja Aguda
+	FlavorText: Acuchilla con una hoja fina. Suele dar un golpe crítico.
+}
+
+DragonDance: {
+	DisplayName: Danza Dragón
+	FlavorText: "Danza mística que sube el Ataque y la Velocidad. "
+}
+
+RockBlast: {
+	DisplayName: Pedrada
+	FlavorText: Lanza pedruscos al objetivo de dos a cinco veces  consecutivas.
+}
+
+ShockWave: {
+	DisplayName: Onda Voltio
+	FlavorText: Ataque eléctrico muy rápido e ineludible.
+}
+
+WaterPulse: {
+	DisplayName: Hidropulso
+	FlavorText: Ataca con un potente chorro de agua. Puede confundir al objetivo.
+}
+
+DoomDesire: {
+	DisplayName: Deseo Oculto
+	FlavorText: Concentra un haz de luz y ataca dos turnos después.
+}
+
+PsychoBoost: {
+	DisplayName: Psicoataque
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Roost: {
+	DisplayName: Respiro
+	FlavorText: Aterriza sobre la superficie para descansar. Recupera hasta la mitad del total de sus PS.
+}
+
+Gravity: {
+	DisplayName: Gravedad
+	FlavorText: Durante cinco turnos, se anulan los movimientos que alzan el vuelo y los Pokémon de tipo Volador o que levitan son vulnerables a movimientos de tipo Tierra.
+}
+
+MiracleEye: {
+	DisplayName: Gran Ojo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+WakeUpSlap: {
+	DisplayName: Espabila
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+HammerArm: {
+	DisplayName: Machada
+	FlavorText: Gira con fuerza el puño y da un gran golpe. No obstante, baja la Velocidad.
+}
+
+GyroBall: {
+	DisplayName: Giro Bola
+	FlavorText: "Embiste al objetivo con un potente ataque giratorio.  Cuanto más lento es el usuario, más daño causa. "
+}
+
+HealingWish: {
+	DisplayName: Deseo Cura
+	FlavorText: El Pokémon cae debilitado, pero su sustituto recupera su estado y los PS.
+}
+
+Brine: {
+	DisplayName: Salmuera
+	FlavorText: Si al objetivo le queda la mitad o menos de sus PS, el ataque será el doble de fuerte.
+}
+
+NaturalGift: {
+	DisplayName: Don Natural
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Feint: {
+	DisplayName: Amago
+	FlavorText: Permite golpear a objetivos que han utilizado movimientos como Protección o Detección y anula sus efectos.
+}
+
+Pluck: {
+	DisplayName: Picoteo
+	FlavorText: Picotea al objetivo. Si este sostiene una baya, la picotea también y obtiene sus efectos.
+}
+
+Tailwind: {
+	DisplayName: Viento Afín
+	FlavorText: Crea un fuerte remolino que aumenta la Velocidad de los Pokémon de tu equipo durante cuatro turnos.
+}
+
+Acupressure: {
+	DisplayName: Acupresión
+	FlavorText: Aplica presión en puntos clave del cuerpo para potenciar mucho una de sus características.
+}
+
+MetalBurst: {
+	DisplayName: Represión Metal
+	FlavorText: Devuelve al rival el último ataque recibido, pero con  mucha más fuerza.
+}
+
+UTurn: {
+	DisplayName: Ida y Vuelta
+	FlavorText: Tras atacar, el usuario vuelve a toda prisa para dar paso a otro Pokémon del equipo.
+}
+
+CloseCombat: {
+	DisplayName: A Bocajarro
+	FlavorText: Lucha abiertamente contra el objetivo sin protegerse. También reduce la Defensa y la Defensa Especial del usuario.
+}
+
+Payback: {
+	DisplayName: Vendetta
+	FlavorText: El usuario contraataca con el doble de fuerza si el  objetivo usa un movimiento antes.
+}
+
+Assurance: {
+	DisplayName: Buena Baza
+	FlavorText: Si el objetivo ya ha sufrido daño en ese turno, la fuerza del ataque se duplica.
+}
+
+Embargo: {
+	DisplayName: Embargo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Fling: {
+	DisplayName: Lanzamiento
+	FlavorText: El usuario lanza contra el objetivo el objeto que lleva. La fuerza del ataque y su efecto varían según el objeto.
+}
+
+PsychoShift: {
+	DisplayName: Psicocambio
+	FlavorText: Usa su poder mental para transferir al objetivo sus  problemas de estado.
+}
+
+TrumpCard: {
+	DisplayName: As Oculto
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+HealBlock: {
+	DisplayName: Anticura
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+WringOut: {
+	DisplayName: Estrujón
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+PowerTrick: {
+	DisplayName: Truco Fuerza
+	FlavorText: Usa sus poderes mentales para intercambiar sus  características de Ataque y Defensa.
+}
+
+GastroAcid: {
+	DisplayName: Bilis
+	FlavorText: El usuario arroja sus jugos biliares al objetivo, lo que anula el efecto de la habilidad en uso.
+}
+
+LuckyChant: {
+	DisplayName: Conjuro
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MeFirst: {
+	DisplayName: Yo Primero
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Copycat: {
+	DisplayName: Copión
+	FlavorText: Imita el movimiento usado justo antes. El movimiento falla si no se ha usado aún ninguno.
+}
+
+PowerSwap: {
+	DisplayName: Cambiafuerza
+	FlavorText: El usuario emplea su poder mental para intercambiar los cambios en el Ataque y Ataque Especial con el objetivo.
+}
+
+GuardSwap: {
+	DisplayName: Cambiadefensa
+	FlavorText: El usuario emplea su poder mental para intercambiar los cambios en la Defensa y Defensa Especial con el objetivo.
+}
+
+Punishment: {
+	DisplayName: Castigo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+LastResort: {
+	DisplayName: Última Baza
+	FlavorText: Este movimiento solo puede utilizarse tras haber usado al menos una vez todos los demás conocidos por el Pokémon.
+}
+
+WorrySeed: {
+	DisplayName: Abatidoras
+	FlavorText: Planta una semilla en el objetivo que le causa pesar. Sustituye la habilidad del objetivo por Insomnio y le impide dormirse.
+}
+
+SuckerPunch: {
+	DisplayName: Golpe Bajo
+	FlavorText: Permite atacar con prioridad. Falla si el objetivo no está preparando ningún ataque.
+}
+
+ToxicSpikes: {
+	DisplayName: Púas Tóxicas
+	FlavorText: Lanza una trampa de púas tóxicas a los pies del objetivo. El veneno afecta a los Pokémon oponentes que entran en combate.
+}
+
+HeartSwap: {
+	DisplayName: Cambia Almas
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+AquaRing: {
+	DisplayName: Acua Aro
+	FlavorText: Un manto de agua cubre al Pokémon que lo usa.  Recupera algunos PS en cada turno.
+}
+
+MagnetRise: {
+	DisplayName: Levitón
+	FlavorText: Levita gracias a un campo magnético generado por  electricidad durante cinco turnos.
+}
+
+FlareBlitz: {
+	DisplayName: Envite Ígneo
+	FlavorText: El Pokémon se cubre de llamas y carga contra el objetivo, aunque él también recibe daño. Puede quemar.
+}
+
+ForcePalm: {
+	DisplayName: Palmeo
+	FlavorText: Ataca al objetivo con una onda de choque y puede  llegar a paralizarlo.
+}
+
+AuraSphere: {
+	DisplayName: Esfera Aural
+	FlavorText: Libera, desde su interior, una inmensa descarga de aura. Es infalible.
+}
+
+RockPolish: {
+	DisplayName: Pulimento
+	FlavorText: Reduce la resistencia puliendo su cuerpo. Aumenta mucho la Velocidad.
+}
+
+PoisonJab: {
+	DisplayName: Puya Nociva
+	FlavorText: "Pincha al objetivo con un tentáculo o brazo envenenado. Puede llegar a envenenar al objetivo. "
+}
+
+DarkPulse: {
+	DisplayName: Pulso Umbrío
+	FlavorText: Libera una horrible aura llena de malos pensamientos que puede amedrentar al objetivo.
+}
+
+NightSlash: {
+	DisplayName: Tajo Umbrío
+	FlavorText: Ataca al objetivo a la primera oportunidad. Suele ser crítico.
+}
+
+AquaTail: {
+	DisplayName: Acua Cola
+	FlavorText: Ataca agitando la cola como si fuera una ola rabiosa en una tormenta devastadora.
+}
+
+SeedBomb: {
+	DisplayName: Bomba Germen
+	FlavorText: Lanza al objetivo una descarga de semillas explosivas desde arriba.
+}
+
+AirSlash: {
+	DisplayName: Tajo Aéreo
+	FlavorText: Ataca con un viento afilado que incluso corta el aire. También puede amedrentar al objetivo.
+}
+
+XScissor: {
+	DisplayName: Tijera X
+	FlavorText: Cruza las guadañas o las garras para atacar al objetivo como si fueran unas tijeras.
+}
+
+BugBuzz: {
+	DisplayName: Zumbido
+	FlavorText: El usuario crea una onda sónica dañina moviendo su cuerpo que también puede disminuir la Defensa Especial del objetivo.
+}
+
+DragonPulse: {
+	DisplayName: Pulso Dragón
+	FlavorText: Abre mucho la boca y libera una onda de choque que ataca al objetivo.
+}
+
+DragonRush: {
+	DisplayName: Carga Dragón
+	FlavorText: Ataca de forma brutal mientras intimida al objetivo. También puede amedrentarlo.
+}
+
+PowerGem: {
+	DisplayName: Joya de Luz
+	FlavorText: Ataca con un rayo de luz que centellea como si lo  formaran miles de joyas.
+}
+
+DrainPunch: {
+	DisplayName: Puño Drenaje
+	FlavorText: Un golpe que drena energía. El Pokémon recupera la mitad de los PS arrebatados al objetivo.
+}
+
+VacuumWave: {
+	DisplayName: Onda Vacío
+	FlavorText: Gira los puños y libera una onda de vacío contra el objetivo. Este movimiento tiene prioridad alta.
+}
+
+FocusBlast: {
+	DisplayName: Onda Certera
+	FlavorText: Agudiza la concentración mental y libera su poder.  Puede disminuir la Defensa Especial del objetivo.
+}
+
+EnergyBall: {
+	DisplayName: Energibola
+	FlavorText: Aúna fuerzas de la naturaleza y libera su ataque.  Puede disminuir la Defensa Especial del objetivo.
+}
+
+BraveBird: {
+	DisplayName: Pájaro Osado
+	FlavorText: Pliega sus alas y ataca con un vuelo rasante. El  Pokémon que lo usa también resulta seriamente  dañado.
+}
+
+EarthPower: {
+	DisplayName: Tierra Viva
+	FlavorText: La tierra a los pies del objetivo erupciona violentamente. Puede disminuir la Defensa Especial  del objetivo.
+}
+
+Switcheroo: {
+	DisplayName: Trapicheo
+	FlavorText: Intercambia con el objetivo los objetos que llevan tan rápido que es imposible verlo a simple vista.
+}
+
+GigaImpact: {
+	DisplayName: Gigaimpacto
+	FlavorText: El usuario carga contra el objetivo con toda la fuerza que tiene y descansa durante el siguiente turno.
+}
+
+NastyPlot: {
+	DisplayName: Maquinación
+	FlavorText: Estimula su cerebro pensando en cosas malas. Aumenta mucho el Ataque Especial.
+}
+
+BulletPunch: {
+	DisplayName: Puño Bala
+	FlavorText: "Ataca con fuertes puñetazos tan rápidos como proyectiles. Este movimiento tiene prioridad alta. "
+}
+
+Avalanche: {
+	DisplayName: Alud
+	FlavorText: Este ataque inflige el doble de daño a un objetivo que haya golpeado al usuario en ese mismo turno.
+}
+
+IceShard: {
+	DisplayName: Canto Helado
+	FlavorText: Crea bolas de hielo y las lanza a gran velocidad.  Este movimiento tiene prioridad alta.
+}
+
+ShadowClaw: {
+	DisplayName: Garra Umbría
+	FlavorText: Ataca con una garra afilada hecha de sombras. Suele ser crítico.
+}
+
+ThunderFang: {
+	DisplayName: Colmillo Rayo
+	FlavorText: El usuario muerde al objetivo con colmillos electrificados y puede hacer que se amedrente o se paralice.
+}
+
+IceFang: {
+	DisplayName: Colmillo Hielo
+	FlavorText: El usuario muerde al objetivo con colmillos helados y puede hacer que se amedrente o se congele.
+}
+
+FireFang: {
+	DisplayName: Colmillo Ígneo
+	FlavorText: El usuario muerde al objetivo con colmillos en llamas y puede hacer que se amedrente o sufra quemaduras.
+}
+
+ShadowSneak: {
+	DisplayName: Sombra Vil
+	FlavorText: "Extiende su sombra y ataca al objetivo por la espalda. Este movimiento tiene prioridad alta. "
+}
+
+MudBomb: {
+	DisplayName: Bomba Fango
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+PsychoCut: {
+	DisplayName: Psicocorte
+	FlavorText: Ataca al objetivo con cuchillas formadas por energía  psíquica. Suele ser crítico.
+}
+
+ZenHeadbutt: {
+	DisplayName: Cabezazo Zen
+	FlavorText: Concentra su energía psíquica en la cabeza para golpear. Puede hacer que el objetivo se amedrente.
+}
+
+MirrorShot: {
+	DisplayName: Disparo Espejo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FlashCannon: {
+	DisplayName: Foco Resplandor
+	FlavorText: El usuario concentra toda la luz del cuerpo y la libera. Puede bajar la Defensa Especial del objetivo.
+}
+
+RockClimb: {
+	DisplayName: Treparrocas
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Defog: {
+	DisplayName: Despejar
+	FlavorText: Potente viento que barre el reflejo o la pantalla de luz creada por el objetivo. También puede reducir su Evasión.
+}
+
+TrickRoom: {
+	DisplayName: Espacio Raro
+	FlavorText: Crea un espacio extraño en el que los Pokémon lentos se mueven primero durante cinco turnos.
+}
+
+DracoMeteor: {
+	DisplayName: Cometa Draco
+	FlavorText: Hace que grandes cometas caigan del cielo sobre el objetivo. Baja mucho el Ataque Especial del que lo usa.
+}
+
+Discharge: {
+	DisplayName: Chispazo
+	FlavorText: Una deslumbradora onda eléctrica afecta a los Pokémon que hay combatiendo alrededor. Puede paralizar.
+}
+
+LavaPlume: {
+	DisplayName: Humareda
+	FlavorText: Un infierno de llamas daña a los Pokémon adyacentes en combate. Puede quemar.
+}
+
+LeafStorm: {
+	DisplayName: Lluevehojas
+	FlavorText: Envuelve al objetivo con una lluvia de hojas afiladas, pero reduce mucho su Ataque Especial.
+}
+
+PowerWhip: {
+	DisplayName: Latigazo
+	FlavorText: El usuario agita violentamente sus lianas o tentáculos  para golpear al objetivo.
+}
+
+RockWrecker: {
+	DisplayName: Romperrocas
+	FlavorText: Lanza una piedra enorme contra el objetivo, pero tiene que descansar el siguiente turno.
+}
+
+CrossPoison: {
+	DisplayName: Veneno X
+	FlavorText: Tajo que puede envenenar al objetivo. Suele ser crítico.
+}
+
+GunkShot: {
+	DisplayName: Lanzamugre
+	FlavorText: Lanza contra el objetivo basura asquerosa y puede envenenarlo.
+}
+
+IronHead: {
+	DisplayName: Cabeza de Hierro
+	FlavorText: Ataca con su dura cabeza de hierro. Puede hacer que el objetivo se amedrente.
+}
+
+MagnetBomb: {
+	DisplayName: Bomba Imán
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+StoneEdge: {
+	DisplayName: Roca Afilada
+	FlavorText: Clava piedras muy afiladas al objetivo. Suele ser crítico.
+}
+
+Captivate: {
+	DisplayName: Seducción
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+StealthRock: {
+	DisplayName: Trampa Rocas
+	FlavorText: Una trampa de rocas que flota en el aire y daña a los objetivos que entran en combate.
+}
+
+GrassKnot: {
+	DisplayName: Hierba Lazo
+	FlavorText: "Enreda al objetivo con hierba y lo derriba. Cuanto más pesado es el objetivo, más daño inflige. "
+}
+
+Chatter: {
+	DisplayName: Cháchara
+	FlavorText: "Ataca con una onda de sonido muy ruidosa compuesta por palabras y confunde al objetivo. "
+}
+
+Judgment: {
+	DisplayName: Sentencia
+	FlavorText: Emite incontables haces de luz. El tipo del movimiento  varía según la tabla que lleve el usuario.
+}
+
+BugBite: {
+	DisplayName: Picadura
+	FlavorText: Pica al objetivo. Si el objetivo lleva una baya, el usuario se la come y se beneficia de su efecto.
+}
+
+ChargeBeam: {
+	DisplayName: Rayo Carga
+	FlavorText: Lanza un rayo eléctrico contra el objetivo. Puede subir el Ataque Especial de quien lo usa.
+}
+
+WoodHammer: {
+	DisplayName: Mazazo
+	FlavorText: Arremete contra el objetivo con su robusto cuerpo.  El agresor también sufre bastante daño.
+}
+
+AquaJet: {
+	DisplayName: Acua Jet
+	FlavorText: "Ataque de una rapidez espeluznante. Este movimiento tiene prioridad alta. "
+}
+
+AttackOrder: {
+	DisplayName: Al Ataque
+	FlavorText: El usuario llama a sus súbditos para que ataquen al objetivo. Suele ser crítico.
+}
+
+DefendOrder: {
+	DisplayName: A Defender
+	FlavorText: El usuario llama a sus súbditos para que formen un escudo viviente. Sube la Defensa y la Defensa Especial.
+}
+
+HealOrder: {
+	DisplayName: Auxilio
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+HeadSmash: {
+	DisplayName: Testarazo
+	FlavorText: El usuario arriesga su vida y lanza un cabezazo con toda su fuerza. El agresor resulta seriamente dañado.
+}
+
+DoubleHit: {
+	DisplayName: Doble Golpe
+	FlavorText: Golpea al objetivo dos veces seguidas con la cola u otras partes de su cuerpo.
+}
+
+RoarOfTime: {
+	DisplayName: Distorsión
+	FlavorText: Ataca al objetivo usando tal energía que el tiempo se distorsiona. El usuario descansa el siguiente turno.
+}
+
+SpacialRend: {
+	DisplayName: Corte Vacío
+	FlavorText: Desgarra al objetivo y el espacio a su alrededor.  Suele ser crítico.
+}
+
+LunarDance: {
+	DisplayName: Danza Lunar
+	FlavorText: El usuario se debilita, pero el Pokémon que lo sustituye recupera su estado, los PS y los PP.
+}
+
+CrushGrip: {
+	DisplayName: Agarrón
+	FlavorText: Estruja al objetivo con gran fuerza. Cuantos más PS le queden al objetivo, más fuerte será el ataque.
+}
+
+MagmaStorm: {
+	DisplayName: Lluvia Ígnea
+	FlavorText: El objetivo queda atrapado en una tormenta de fuego que dura de cuatro a cinco turnos.
+}
+
+DarkVoid: {
+	DisplayName: Brecha Negra
+	FlavorText: El objetivo es enviado a un mundo de tinieblas que lo hace dormir.
+}
+
+SeedFlare: {
+	DisplayName: Fogonazo
+	FlavorText: Una onda de choque se libera del cuerpo. Puede bajar mucho la Defensa Especial del objetivo.
+}
+
+OminousWind: {
+	DisplayName: Viento Aciago
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ShadowForce: {
+	DisplayName: Golpe Umbrío
+	FlavorText: En el primer turno, desaparece. En el segundo, golpea al objetivo aunque se esté protegiendo.
+}
+
+HoneClaws: {
+	DisplayName: Afilagarras
+	FlavorText: El usuario se afila las garras para aumentar su Ataque y Precisión.
+}
+
+WideGuard: {
+	DisplayName: Vastaguardia
+	FlavorText: Bloquea los ataques de objetivo múltiple lanzados  contra tu equipo durante un turno.
+}
+
+GuardSplit: {
+	DisplayName: Isoguardia
+	FlavorText: El usuario emplea sus poderes para hacer la media de su Defensa y Defensa Especial con las de su objetivo y compartirlas.
+}
+
+PowerSplit: {
+	DisplayName: Isofuerza
+	FlavorText: El usuario emplea sus poderes para hacer la media de su Ataque y Ataque Especial con los de su objetivo y compartirlos.
+}
+
+WonderRoom: {
+	DisplayName: Zona Extraña
+	FlavorText: Crea una zona misteriosa donde se intercambian la Defensa y la Defensa Especial de todos los Pokémon durante cinco turnos.
+}
+
+Psyshock: {
+	DisplayName: Psicocarga
+	FlavorText: Crea una onda psíquica que causa daño físico al  objetivo.
+}
+
+Venoshock: {
+	DisplayName: Carga Tóxica
+	FlavorText: Cubre al objetivo con un líquido venenoso. El daño será doble si este ya está envenenado.
+}
+
+Autotomize: {
+	DisplayName: Aligerar
+	FlavorText: El usuario se desprende de partes prescindibles de su cuerpo para hacerse más ligero y aumentar mucho su Velocidad.
+}
+
+RagePowder: {
+	DisplayName: Polvo Ira
+	FlavorText: Usa un polvo que irrita y centra en el usuario la  atención y los ataques de los rivales.
+}
+
+Telekinesis: {
+	DisplayName: Telequinesis
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MagicRoom: {
+	DisplayName: Zona Mágica
+	FlavorText: Crea un espacio misterioso que inutiliza todos los  objetos de los Pokémon durante cinco turnos.
+}
+
+SmackDown: {
+	DisplayName: Antiaéreo
+	FlavorText: Ataca lanzando una piedra o un proyectil. Si el objetivo está en el aire, lo estrella contra el suelo.
+}
+
+StormThrow: {
+	DisplayName: Llave Corsé
+	FlavorText: Lanza un golpe devastador. Siempre asesta un golpe crítico.
+}
+
+FlameBurst: {
+	DisplayName: Pirotecnia
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SludgeWave: {
+	DisplayName: Onda Tóxica
+	FlavorText: Una onda tóxica que daña a los Pokémon de alrededor. Puede envenenar.
+}
+
+QuiverDance: {
+	DisplayName: Danza Aleteo
+	FlavorText: Danza mística que sube el Ataque Especial, la Defensa Especial y la Velocidad.
+}
+
+HeavySlam: {
+	DisplayName: Cuerpo Pesado
+	FlavorText: El usuario golpea con todo su cuerpo. Cuanto mayor sea su peso comparado con el del objetivo, más daño causará.
+}
+
+Synchronoise: {
+	DisplayName: Sincrorruido
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ElectroBall: {
+	DisplayName: Bola Voltio
+	FlavorText: Lanza una bola eléctrica. Cuanto mayor sea la Velocidad del usuario en comparación con la del  objetivo, mayor será el daño causado.
+}
+
+Soak: {
+	DisplayName: Anegar
+	FlavorText: Potente lluvia que transforma al objetivo en un  Pokémon de tipo Agua.
+}
+
+FlameCharge: {
+	DisplayName: Nitrocarga
+	FlavorText: Llamas que golpean al objetivo y aumentan la  Velocidad del atacante.
+}
+
+Coil: {
+	DisplayName: Enrosque
+	FlavorText: El usuario se concentra, lo que le permite aumentar  su Ataque, Defensa y Precisión.
+}
+
+LowSweep: {
+	DisplayName: Puntapié
+	FlavorText: Ataque rápido dirigido a los pies del objetivo que le hace perder Velocidad.
+}
+
+AcidSpray: {
+	DisplayName: Bomba Ácida
+	FlavorText: Ataca con un líquido corrosivo que reduce mucho la Defensa Especial del objetivo.
+}
+
+FoulPlay: {
+	DisplayName: Juego Sucio
+	FlavorText: El usuario emplea la fuerza del objetivo para atacarlo. Cuanto mayor es el Ataque del objetivo, más daño provoca.
+}
+
+SimpleBeam: {
+	DisplayName: Onda Simple
+	FlavorText: Lanza una onda psíquica que hace que la habilidad del objetivo pase a ser Simple.
+}
+
+Entrainment: {
+	DisplayName: Danza Amiga
+	FlavorText: Una extraña danza que hace que el usuario y el objetivo tengan la misma habilidad.
+}
+
+AfterYou: {
+	DisplayName: Cede Paso
+	FlavorText: Si el usuario es el más rápido, permite al objetivo usar un movimiento justo tras él, adelantándose a Pokémon más rápidos.
+}
+
+Round: {
+	DisplayName: Canon
+	FlavorText: Un canto que ataca al objetivo. Cuantos más Pokémon lo usan, más aumenta de potencia.
+}
+
+EchoedVoice: {
+	DisplayName: Eco Voz
+	FlavorText: Un susurro que aumenta de potencia conforme el  usuario y otros Pokémon lo van utilizando.
+}
+
+ChipAway: {
+	DisplayName: Guardia Baja
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ClearSmog: {
+	DisplayName: Niebla Clara
+	FlavorText: Ataca al objetivo con una singular bola de lodo que elimina cualquier cambio en sus características.
+}
+
+StoredPower: {
+	DisplayName: Poder Reserva
+	FlavorText: Acumula poder para golpear. Cuanto más suban las características del usuario, mayor será el daño.
+}
+
+QuickGuard: {
+	DisplayName: Anticipo
+	FlavorText: Se protege a sí mismo y a sus aliados de movimientos con prioridad.
+}
+
+AllySwitch: {
+	DisplayName: Cambio de Banda
+	FlavorText: Extraño poder que intercambia la posición del usuario con la de un aliado sobre el terreno de combate.
+}
+
+Scald: {
+	DisplayName: Escaldar
+	FlavorText: Ataca arrojando agua hirviendo al objetivo. Puede causar quemaduras.
+}
+
+ShellSmash: {
+	DisplayName: Rompecoraza
+	FlavorText: El usuario rompe su coraza y baja su Defensa y Defensa Especial, pero aumenta mucho su Ataque,  Ataque Especial y Velocidad.
+}
+
+HealPulse: {
+	DisplayName: Pulso Cura
+	FlavorText: Una onda curativa restaura la mitad de los PS máximos del objetivo.
+}
+
+Hex: {
+	DisplayName: Infortunio
+	FlavorText: Ataque que causa un gran daño a los objetivos que sufren problemas de estado.
+}
+
+SkyDrop: {
+	DisplayName: Caída Libre
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ShiftGear: {
+	DisplayName: Cambio de Marcha
+	FlavorText: Al hacer girar los engranajes, el usuario mejora su Ataque y aumenta mucho su Velocidad.
+}
+
+CircleThrow: {
+	DisplayName: Llave Giro
+	FlavorText: Lanza por los aires al objetivo y hace que salga otro  Pokémon. Si es uno salvaje, acaba el combate.
+}
+
+Incinerate: {
+	DisplayName: Calcinación
+	FlavorText: Llamas que golpean a los objetivos adyacentes. Si estos llevan bayas o ciertos objetos, se quemarán y ya no se podrán usar.
+}
+
+Quash: {
+	DisplayName: Último Lugar
+	FlavorText: "Consigue que el objetivo sea el último en moverse. "
+}
+
+Acrobatics: {
+	DisplayName: Acróbata
+	FlavorText: Golpea ágilmente. Si el usuario no porta ningún objeto, el objetivo resulta seriamente dañado.
+}
+
+ReflectType: {
+	DisplayName: Clonatipo
+	FlavorText: Cambia el tipo del Pokémon al mismo tipo que el del objetivo.
+}
+
+Retaliate: {
+	DisplayName: Represalia
+	FlavorText: Venga a los amigos caídos. Si en el turno anterior han derrotado a alguno, la potencia del ataque aumentará.
+}
+
+FinalGambit: {
+	DisplayName: Sacrificio
+	FlavorText: El usuario se sacrifica causándole un daño al objetivo equivalente a sus propios PS perdidos.
+}
+
+Bestow: {
+	DisplayName: Ofrenda
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Inferno: {
+	DisplayName: Infierno
+	FlavorText: Ataca con una gran ráfaga de fuego que causa  quemaduras.
+}
+
+WaterPledge: {
+	DisplayName: Voto Agua
+	FlavorText: Ataca con columnas de agua. Combinado con Voto Fuego, crea un arcoíris y aumenta su potencia.
+}
+
+FirePledge: {
+	DisplayName: Voto Fuego
+	FlavorText: Ataca con columnas de fuego. Combinado con Voto Planta, crea un mar de llamas y aumenta su  potencia.
+}
+
+GrassPledge: {
+	DisplayName: Voto Planta
+	FlavorText: Ataca con columnas de hojas. Combinado con Voto Agua, crea un pantano y aumenta su potencia.
+}
+
+VoltSwitch: {
+	DisplayName: Voltiocambio
+	FlavorText: Tras atacar, el usuario vuelve a toda prisa para dar paso a otro Pokémon del equipo.
+}
+
+StruggleBug: {
+	DisplayName: Estoicismo
+	FlavorText: El usuario opone resistencia y ataca a los oponentes.  También reduce su Ataque Especial.
+}
+
+Bulldoze: {
+	DisplayName: Terratemblor
+	FlavorText: Sacudida sísmica que afecta a los demás Pokémon  adyacentes y también reduce su Velocidad.
+}
+
+FrostBreath: {
+	DisplayName: Vaho Gélido
+	FlavorText: Quien lo usa ataca lanzando un aliento gélido. Siempre asesta un golpe crítico.
+}
+
+DragonTail: {
+	DisplayName: Cola Dragón
+	FlavorText: Ataca al objetivo y lo obliga a cambiarse por otro  Pokémon. Si es uno salvaje, acaba el combate.
+}
+
+WorkUp: {
+	DisplayName: Avivar
+	FlavorText: Quien lo usa se concentra y potencia su Ataque y  su Ataque Especial.
+}
+
+Electroweb: {
+	DisplayName: Electrotela
+	FlavorText: Atrapa y ataca a los objetivos con una telaraña  eléctrica. También reduce su Velocidad.
+}
+
+WildCharge: {
+	DisplayName: Voltio Cruel
+	FlavorText: Carga eléctrica muy potente que también hiere  ligeramente a quien la usa.
+}
+
+DrillRun: {
+	DisplayName: Taladradora
+	FlavorText: El usuario golpea usando su cuerpo como un taladro.  Suele ser crítico.
+}
+
+DualChop: {
+	DisplayName: Golpe Bis
+	FlavorText: Golpea dos veces seguidas con las partes más recias de su cuerpo.
+}
+
+HeartStamp: {
+	DisplayName: Arrumaco
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+HornLeech: {
+	DisplayName: Asta Drenaje
+	FlavorText: Un golpe que drena energía. El Pokémon recupera la mitad de los PS arrebatados al objetivo.
+}
+
+SacredSword: {
+	DisplayName: Espada Santa
+	FlavorText: El usuario ataca con una espada, ignorando cualquier  cambio en las características del objetivo.
+}
+
+RazorShell: {
+	DisplayName: Concha Filo
+	FlavorText: Una afilada vieira ataca al objetivo. También puede  hacer disminuir su Defensa.
+}
+
+HeatCrash: {
+	DisplayName: Golpe Calor
+	FlavorText: El usuario ataca con su cuerpo ardiente. Cuanto mayor sea su peso comparado con el del objetivo, más daño causará.
+}
+
+LeafTornado: {
+	DisplayName: Ciclón de Hojas
+	FlavorText: Tritura con afiladas hojas y puede bajar la Precisión del objetivo.
+}
+
+Steamroller: {
+	DisplayName: Rodillo de Púas
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+CottonGuard: {
+	DisplayName: Rizo Algodón
+	FlavorText: Cubre al Pokémon con una madeja protectora. Aumenta muchísimo la Defensa.
+}
+
+NightDaze: {
+	DisplayName: Pulso Noche
+	FlavorText: Ataca al objetivo con una onda siniestra. Puede bajar su Precisión.
+}
+
+Psystrike: {
+	DisplayName: Onda Mental
+	FlavorText: Crea una onda psíquica que causa daño físico al  objetivo.
+}
+
+TailSlap: {
+	DisplayName: Plumerazo
+	FlavorText: Golpea con la cola de dos a cinco veces seguidas.
+}
+
+Hurricane: {
+	DisplayName: Vendaval
+	FlavorText: Golpea al objetivo con un fuerte torbellino que envuelve al rival y puede confundirlo.
+}
+
+HeadCharge: {
+	DisplayName: Ariete
+	FlavorText: Propina un tremendo cabezazo. También daña al  usuario un poco.
+}
+
+GearGrind: {
+	DisplayName: Rueda Doble
+	FlavorText: Rota dos engranajes de hierro sobre el objetivo. Golpea dos veces.
+}
+
+SearingShot: {
+	DisplayName: Bomba Ígnea
+	FlavorText: Un infierno de llamas daña a los Pokémon adyacentes en combate. Puede quemar.
+}
+
+TechnoBlast: {
+	DisplayName: Tecno Shock
+	FlavorText: Ataca al objetivo con un gran láser. El tipo del ataque lo determina el cartucho que porta el usuario.
+}
+
+RelicSong: {
+	DisplayName: Canto Arcaico
+	FlavorText: Ataca conmoviendo a los rivales de alrededor con un antiguo canto. Puede dormirlos.
+}
+
+SecretSword: {
+	DisplayName: Sable Místico
+	FlavorText: Ensarta al objetivo con un largo cuerno dotado de un poder místico que provoca daño físico.
+}
+
+Glaciate: {
+	DisplayName: Mundo Gélido
+	FlavorText: Ataque con aire helado que baja la Velocidad del  objetivo.
+}
+
+BoltStrike: {
+	DisplayName: Ataque Fulgor
+	FlavorText: Ataca envolviéndose de una gran carga eléctrica y  embistiendo al objetivo con ella. Puede paralizar.
+}
+
+BlueFlare: {
+	DisplayName: Llama Azul
+	FlavorText: Ataca con una bella pero potente llama azul que rodea al objetivo. Puede quemarlo.
+}
+
+FieryDance: {
+	DisplayName: Danza Llama
+	FlavorText: Envuelve en llamas y daña al objetivo. Puede aumentar el Ataque Especial de quien lo usa.
+}
+
+FreezeShock: {
+	DisplayName: Rayo Gélido
+	FlavorText: El usuario carga un bloque de hielo con electricidad en el primer turno y ataca con él en el segundo. Puede paralizar.
+}
+
+IceBurn: {
+	DisplayName: Llama Gélida
+	FlavorText: Ataca al objetivo en el segundo turno rodeándolo de un aire gélido. Puede causar quemaduras.
+}
+
+Snarl: {
+	DisplayName: Alarido
+	FlavorText: Chillido desagradable que baja el Ataque Especial del rival.
+}
+
+IcicleCrash: {
+	DisplayName: Chuzos
+	FlavorText: Lanza grandes carámbanos. Puede amedrentar al objetivo.
+}
+
+VCreate: {
+	DisplayName: V de Fuego
+	FlavorText: Golpea con una V de llamas al objetivo. Baja la  Defensa, la Defensa Especial y la Velocidad de  quien lo usa.
+}
+
+FusionFlare: {
+	DisplayName: Llama Fusión
+	FlavorText: Ataca con una llamarada gigantesca. Aumenta su  potencia si es influenciada por una gran energía eléctrica.
+}
+
+FusionBolt: {
+	DisplayName: Rayo Fusión
+	FlavorText: Ataca con una enorme descarga eléctrica. Aumenta  su potencia si es influenciada por una gigantesca  llamarada.
+}
+
+FlyingPress: {
+	DisplayName: Plancha Voladora
+	FlavorText: El Pokémon que lo usa se lanza sobre su oponente.  Este movimiento es de tipo Lucha y tipo Volador al  mismo tiempo.
+}
+
+MatBlock: {
+	DisplayName: Escudo Tatami
+	FlavorText: "El usuario usa un tatami para escudarse de los ataques enemigos. Protege también a los aliados. No funciona contra movimientos de estado. "
+}
+
+Belch: {
+	DisplayName: Eructo
+	FlavorText: El Pokémon causa daño a su oponente lanzándole  un eructo. Para poder utilizar este movimiento tiene  que llevar una baya y comérsela.
+}
+
+Rototiller: {
+	DisplayName: Fertilizante
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+StickyWeb: {
+	DisplayName: Red Viscosa
+	FlavorText: Coloca una red pegajosa alrededor del equipo rival que baja la Velocidad de cualquier adversario que entre a combatir.
+}
+
+FellStinger: {
+	DisplayName: Aguijón Letal
+	FlavorText: Si se derrota al objetivo utilizando este movimiento, aumenta muchísimo el Ataque del usuario.
+}
+
+PhantomForce: {
+	DisplayName: Golpe Fantasma
+	FlavorText: El usuario desaparece en el primer turno y ataca a su objetivo en el segundo. Permite acertar aunque el objetivo esté protegiéndose.
+}
+
+TrickOrTreat: {
+	DisplayName: Halloween
+	FlavorText: Invita al objetivo a celebrar Halloween, lo que añade  el tipo Fantasma a los tipos de este.
+}
+
+NobleRoar: {
+	DisplayName: Rugido de Guerra
+	FlavorText: Intimida a su oponente con un rugido de guerra, lo que hace que disminuyan tanto su Ataque como su Ataque Especial.
+}
+
+IonDeluge: {
+	DisplayName: Cortina Plasma
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ParabolicCharge: {
+	DisplayName: Carga Parábola
+	FlavorText: Inflige daño a todos los Pokémon a su alrededor. El usuario absorbe la mitad del daño producido para restaurar sus propios PS.
+}
+
+ForestsCurse: {
+	DisplayName: Condena Silvana
+	FlavorText: El objetivo es presa de la maldición del bosque, por lo que pasa a ser un Pokémon de tipo Planta, además de conservar sus tipos habituales.
+}
+
+PetalBlizzard: {
+	DisplayName: Tormenta Floral
+	FlavorText: El usuario desata un intenso vendaval de pétalos que daña a los Pokémon a su alrededor.
+}
+
+FreezeDry: {
+	DisplayName: Liofilización
+	FlavorText: Enfría súbitamente al objetivo e incluso puede congelarlo. Es supereficaz contra Pokémon de tipo Agua.
+}
+
+DisarmingVoice: {
+	DisplayName: Voz Cautivadora
+	FlavorText: Obnubila a los oponentes con su fascinante voz y les provoca daños emocionales. Siempre acierta al objetivo.
+}
+
+PartingShot: {
+	DisplayName: Última Palabra
+	FlavorText: El usuario se cambia por otro Pokémon de su equipo, pero antes amedrenta a su oponente y hace que disminuyan su Ataque y Ataque Especial.
+}
+
+TopsyTurvy: {
+	DisplayName: Reversión
+	FlavorText: Invierte por completo los cambios en las características del objetivo.
+}
+
+DrainingKiss: {
+	DisplayName: Beso Drenaje
+	FlavorText: El usuario absorbe PS del objetivo con un beso y restaura su propia energía en una cantidad igual o superior a la mitad del daño infligido.
+}
+
+CraftyShield: {
+	DisplayName: Truco Defensa
+	FlavorText: Usa unos misteriosos poderes para protegerse a sí  mismo y a sus aliados de movimientos de estado, pero no de otro tipo de ataques.
+}
+
+FlowerShield: {
+	DisplayName: Defensa Floral
+	FlavorText: Aumenta la Defensa de todos los Pokémon de tipo Planta que hay en el combate usando unos misteriosos poderes.
+}
+
+GrassyTerrain: {
+	DisplayName: Campo de Hierba
+	FlavorText: Durante cinco turnos, se potencian los movimientos de tipo Planta y los Pokémon que están en contacto con el suelo recuperan PS en cada turno.
+}
+
+MistyTerrain: {
+	DisplayName: Campo de Niebla
+	FlavorText: Durante cinco turnos, los Pokémon que están en el suelo no sufren problemas de estado y se reduce a la mitad el daño de los movimientos de tipo Dragón.
+}
+
+Electrify: {
+	DisplayName: Electrificación
+	FlavorText: Si el objetivo queda electrificado antes de usar un movimiento, este será de tipo Eléctrico.
+}
+
+PlayRough: {
+	DisplayName: Carantoña
+	FlavorText: El Pokémon que lo usa le hace cucamonas al objetivo y lo ataca. Puede disminuir el Ataque del objetivo.
+}
+
+FairyWind: {
+	DisplayName: Viento Feérico
+	FlavorText: El Pokémon que lo usa desata un vendaval feérico que arremete contra el objetivo.
+}
+
+Moonblast: {
+	DisplayName: Fuerza Lunar
+	FlavorText: Invoca el poder de la luna para atacar al objetivo.  Puede disminuir el Ataque Especial del objetivo.
+}
+
+Boomburst: {
+	DisplayName: Estruendo
+	FlavorText: Ataca a todos los Pokémon a su alrededor con una  potentísima onda sonora.
+}
+
+FairyLock: {
+	DisplayName: Cerrojo Feérico
+	FlavorText: Consigue que ningún Pokémon pueda huir en el  siguiente turno echando un cerrojo.
+}
+
+KingsShield: {
+	DisplayName: Escudo Real
+	FlavorText: El usuario adopta una postura defensiva y se protege de cualquier daño. Reduce el Ataque de cualquier Pokémon con el que entre en contacto.
+}
+
+PlayNice: {
+	DisplayName: Camaradería
+	FlavorText: Se hace amigo de su oponente y consigue que a este se le quiten las ganas de combatir. Además, reduce su Ataque.
+}
+
+Confide: {
+	DisplayName: Confidencia
+	FlavorText: Hace que el objetivo pierda la concentración  contándole un secreto. Disminuye el Ataque Especial del oponente.
+}
+
+DiamondStorm: {
+	DisplayName: Torm. Diamantes
+	FlavorText: Desata un devastador vendaval de diamantes para  dañar a los oponentes. Puede aumentar mucho la Defensa del usuario.
+}
+
+SteamEruption: {
+	DisplayName: Chorro de Vapor
+	FlavorText: Envuelve al Pokémon oponente con vapor extremadamente caliente que puede llegar a quemarlo.
+}
+
+HyperspaceHole: {
+	DisplayName: Paso Dimensional
+	FlavorText: El usuario aparece junto al rival usando un agujero dimensional y le asesta un golpe que movimientos como Protección o Detección no pueden evitar.
+}
+
+WaterShuriken: {
+	DisplayName: Shuriken de Agua
+	FlavorText: Golpea al oponente de dos a cinco veces con estrellas arrojadizas hechas de mucosidad. Este movimiento tiene prioridad alta.
+}
+
+MysticalFire: {
+	DisplayName: Llama Embrujada
+	FlavorText: El usuario lanza por la boca una singular llama a gran temperatura con la que ataca a su oponente y baja su Ataque Especial.
+}
+
+SpikyShield: {
+	DisplayName: Barrera Espinosa
+	FlavorText: "Protege al usuario de ataques, e inflige daño a quien se los lance si entra en contacto con él. "
+}
+
+AromaticMist: {
+	DisplayName: Niebla Aromática
+	FlavorText: "Consigue aumentar la Defensa Especial de un Pokémon de su equipo con una fragancia misteriosa. "
+}
+
+EerieImpulse: {
+	DisplayName: Onda Anómala
+	FlavorText: El usuario irradia unas raras ondas que, al alcanzar a un oponente, hacen que disminuya mucho su Ataque Especial.
+}
+
+VenomDrench: {
+	DisplayName: Trampa Venenosa
+	FlavorText: Impregna a su objetivo con un líquido venenoso que disminuye el Ataque, el Ataque Especial y la Velocidad. Solo afecta a Pokémon ya envenenados.
+}
+
+Powder: {
+	DisplayName: Polvo Explosivo
+	FlavorText: Esparce un polvo sobre el objetivo. Si este usa un movimiento de tipo Fuego en el mismo turno, el polvo explota y le inflige daño.
+}
+
+Geomancy: {
+	DisplayName: Geocontrol
+	FlavorText: Concentra energía durante el primer turno, de forma que su Velocidad, Ataque Especial y Defensa Especial aumenten mucho en el segundo.
+}
+
+MagneticFlux: {
+	DisplayName: Aura Magnética
+	FlavorText: Manipula el campo magnético y logra aumentar la Defensa y la Defensa Especial de los Pokémon aliados que cuenten con las habilidades Más y Menos.
+}
+
+HappyHour: {
+	DisplayName: Paga Extra
+	FlavorText: Al usar este movimiento se consigue duplicar la  recompensa recibida tras el combate.
+}
+
+ElectricTerrain: {
+	DisplayName: Campo Eléctrico
+	FlavorText: Durante cinco turnos, se potencian los movimientos de tipo Eléctrico y los Pokémon que están en contacto con el suelo no pueden quedarse dormidos.
+}
+
+DazzlingGleam: {
+	DisplayName: Brillo Mágico
+	FlavorText: Inflige daño a los oponentes con una potente luz.
+}
+
+Celebrate: {
+	DisplayName: Celebración
+	FlavorText: "El Pokémon te felicita en un día muy especial para ti. "
+}
+
+HoldHands: {
+	DisplayName: Manos Juntas
+	FlavorText: El Pokémon le da la mano a un aliado y ambos se  sienten muy felices.
+}
+
+BabyDollEyes: {
+	DisplayName: Ojitos Tiernos
+	FlavorText: Lanza una mirada al objetivo con ojos acaramelados, con lo que logra que su Ataque se reduzca. Este movimiento tiene prioridad alta.
+}
+
+Nuzzle: {
+	DisplayName: Moflete Estático
+	FlavorText: Quien lo usa frota sus mofletes cargados de electricidad contra el objetivo y consigue paralizarlo.
+}
+
+HoldBack: {
+	DisplayName: Clemencia
+	FlavorText: El usuario se contiene a la hora de atacar y deja al objetivo con al menos 1 PS.
+}
+
+Infestation: {
+	DisplayName: Acoso
+	FlavorText: Hostiga al objetivo durante cuatro o cinco turnos e impide que pueda huir mientras tanto.
+}
+
+PowerUpPunch: {
+	DisplayName: Puño Incremento
+	FlavorText: Cada vez que golpea a un oponente se endurecen sus puños. Si acierta al objetivo, el Ataque del usuario aumenta.
+}
+
+OblivionWing: {
+	DisplayName: Ala Mortífera
+	FlavorText: El usuario absorbe energía del objetivo y aumenta sus PS en una cantidad igual o superior a la mitad del daño infligido.
+}
+
+ThousandArrows: {
+	DisplayName: Mil Flechas
+	FlavorText: Acierta incluso a Pokémon que estén en el aire y los hace caer al suelo.
+}
+
+ThousandWaves: {
+	DisplayName: Mil Temblores
+	FlavorText: El usuario genera ondas sísmicas que se propagan por el suelo y sacuden a los oponentes. Los Pokémon alcanzados no podrán huir del combate.
+}
+
+LandsWrath: {
+	DisplayName: Fuerza Telúrica
+	FlavorText: Acumula energía de la corteza terrestre y la concentra contra los oponentes, dañándolos.
+}
+
+LightOfRuin: {
+	DisplayName: Luz Aniquiladora
+	FlavorText: El usuario emplea el poder de la Flor Eterna para lanzar un potente rayo de luz, pero sufre bastante daño al hacerlo.
+}
+
+OriginPulse: {
+	DisplayName: Pulso Primigenio
+	FlavorText: Ataca al objetivo con una infinidad de rayos de luz  azulada.
+}
+
+PrecipiceBlades: {
+	DisplayName: Filo del Abismo
+	FlavorText: Hace que el poder latente de la tierra se manifieste en forma de hojas afiladas y ataca al objetivo con ellas.
+}
+
+DragonAscent: {
+	DisplayName: Ascenso Draco
+	FlavorText: El usuario se precipita desde el cielo a una velocidad de vértigo para atacar al objetivo, pero hace que bajen la Defensa y la Defensa Especial del usuario.
+}
+
+HyperspaceFury: {
+	DisplayName: Cerco Dimensión
+	FlavorText: Ataca al objetivo con una ráfaga de golpes que pasan por alto los efectos de movimientos como Protección o Detección. Baja la Defensa del usuario.
+}
+
+BreakneckBlitz: {
+	DisplayName: Carrera Arrolladora
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+AllOutPummeling: {
+	DisplayName: Ráfaga Demoledora
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SupersonicSkystrike: {
+	DisplayName: Picado Supersónico
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+AcidDownpour: {
+	DisplayName: Diluvio Corrosivo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+TectonicRage: {
+	DisplayName: Barrena Telúrica
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ContinentalCrush: {
+	DisplayName: Aplastamiento Gigalítico
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SavageSpinOut: {
+	DisplayName: Guadaña Sedosa
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+NeverEndingNightmare: {
+	DisplayName: Presa Espectral
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+CorkscrewCrash: {
+	DisplayName: Hélice Trepanadora
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+InfernoOverdrive: {
+	DisplayName: Hecatombe Pírica
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+HydroVortex: {
+	DisplayName: Hidrovórtice Abisal
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+BloomDoom: {
+	DisplayName: Megatón Floral
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+GigavoltHavoc: {
+	DisplayName: Gigavoltio Destructor
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ShatteredPsyche: {
+	DisplayName: Disruptor Psíquico
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SubzeroSlammer: {
+	DisplayName: Crioaliento Despiadado
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+DevastatingDrake: {
+	DisplayName: Dracoaliento Devastador
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+BlackHoleEclipse: {
+	DisplayName: Agujero Negro Aniquilador
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+TwinkleTackle: {
+	DisplayName: Arrumaco Sideral
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+Catastropika: {
+	DisplayName: Pikavoltio Letal
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ShoreUp: {
+	DisplayName: Recogearena
+	FlavorText: Restaura la mitad de los PS máximos del usuario. Durante las tormentas de arena, restaura aún más PS.
+}
+
+FirstImpression: {
+	DisplayName: Escaramuza
+	FlavorText: Movimiento de gran potencia que solo puede usarse en el turno en que el usuario sale al combate.
+}
+
+BanefulBunker: {
+	DisplayName: Búnker
+	FlavorText: Protege de los ataques y, al mismo tiempo, envenena al Pokémon que use un movimiento de contacto contra el usuario.
+}
+
+SpiritShackle: {
+	DisplayName: Puntada Sombría
+	FlavorText: Ataca al oponente y, al mismo tiempo, fija su sombra al terreno para impedir su huida.
+}
+
+DarkestLariat: {
+	DisplayName: Lariat Oscuro
+	FlavorText: Gira sobre sí mismo y golpea al oponente con ambos brazos. Ignora los cambios en las características del objetivo.
+}
+
+SparklingAria: {
+	DisplayName: Aria Burbuja
+	FlavorText: Libera burbujas al cantar. Este movimiento cura las quemaduras de los Pokémon que reciban daño.
+}
+
+IceHammer: {
+	DisplayName: Martillo Hielo
+	FlavorText: Un terrible puño golpea al contrincante, pero la Velocidad del usuario se ve reducida.
+}
+
+FloralHealing: {
+	DisplayName: Cura Floral
+	FlavorText: Restaura la mitad de los PS máximos del objetivo. Es más efectivo cuando se usa en conjunción con Campo de Hierba.
+}
+
+HighHorsepower: {
+	DisplayName: Fuerza Equina
+	FlavorText: Asesta un golpe devastador usando todo su cuerpo.
+}
+
+StrengthSap: {
+	DisplayName: Absorbefuerza
+	FlavorText: Restaura una cantidad de PS equivalente al valor de Ataque del rival, que además verá reducida esta característica.
+}
+
+SolarBlade: {
+	DisplayName: Cuchilla Solar
+	FlavorText: El usuario dedica un turno a absorber energía lumínica y concentrarla en forma de cuchilla con la que ataca al rival en el siguiente turno.
+}
+
+Leafage: {
+	DisplayName: Follaje
+	FlavorText: Ataca al oponente lanzando hojas.
+}
+
+Spotlight: {
+	DisplayName: Foco
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ToxicThread: {
+	DisplayName: Hilo Venenoso
+	FlavorText: Ataca al oponente con hilillos venenosos que reducen su Velocidad y lo envenenan.
+}
+
+LaserFocus: {
+	DisplayName: Aguzar
+	FlavorText: El usuario se concentra para que el siguiente ataque propine un golpe crítico.
+}
+
+GearUp: {
+	DisplayName: Piñón Auxiliar
+	FlavorText: Cambia de marcha y logra aumentar el Ataque y el Ataque Especial de los Pokémon aliados que cuenten con las habilidades Más y Menos.
+}
+
+ThroatChop: {
+	DisplayName: Golpe Mordaza
+	FlavorText: Inflige al rival un dolor tan abrumador que le impide utilizar durante dos turnos ataques que se sirven del sonido.
+}
+
+PollenPuff: {
+	DisplayName: Bola de Polen
+	FlavorText: Ataca al oponente con una bola explosiva. Si esta alcanza a un aliado, le hará recuperar PS.
+}
+
+AnchorShot: {
+	DisplayName: Anclaje
+	FlavorText: Ataca lanzando un ancla al oponente, que queda atrapado y no puede huir.
+}
+
+PsychicTerrain: {
+	DisplayName: Campo Psíquico
+	FlavorText: Durante cinco turnos, se potencian los movimientos de tipo Psíquico y los Pokémon que están en el suelo quedan protegidos contra movimientos con prioridad.
+}
+
+Lunge: {
+	DisplayName: Plancha
+	FlavorText: Ataca al oponente abalanzándose sobre él con todas sus fuerzas y reduce su Ataque.
+}
+
+FireLash: {
+	DisplayName: Látigo Ígneo
+	FlavorText: Golpea al oponente con un látigo incandescente y reduce su Defensa.
+}
+
+PowerTrip: {
+	DisplayName: Chulería
+	FlavorText: Ataca al oponente presumiendo de su fuerza. Cuanto más hayan subido las características del usuario, mayor será el daño.
+}
+
+BurnUp: {
+	DisplayName: Llama Final
+	FlavorText: Utiliza hasta el último resquicio de llamas de su cuerpo para infligir un grave daño al oponente. Tras el ataque, el usuario deja de ser de tipo Fuego.
+}
+
+SpeedSwap: {
+	DisplayName: Cambiavelocidad
+	FlavorText: Intercambia su Velocidad por la del oponente.
+}
+
+SmartStrike: {
+	DisplayName: Cuerno Certero
+	FlavorText: El usuario ensarta al adversario con su afilada cornamenta. Este movimiento acierta siempre.
+}
+
+Purify: {
+	DisplayName: Purificación
+	FlavorText: Cura los problemas de estado del Pokémon rival y a cambio recupera PS propios.
+}
+
+RevelationDance: {
+	DisplayName: Danza Despertar
+	FlavorText: Ataque que consiste en un baile muy enérgico. El tipo de este ataque se corresponde con el del Pokémon que lo ejecuta.
+}
+
+CoreEnforcer: {
+	DisplayName: Núcleo Castigo
+	FlavorText: Inflige daño al rival, y si este ya ha hecho uso de algún movimiento, pierde su habilidad.
+}
+
+TropKick: {
+	DisplayName: Patada Tropical
+	FlavorText: Lanza una patada con la fuerza del trópico que golpea al rival y reduce su Ataque.
+}
+
+Instruct: {
+	DisplayName: Mandato
+	FlavorText: Fuerza al objetivo a repetir inmediatamente su último movimiento.
+}
+
+BeakBlast: {
+	DisplayName: Pico Cañón
+	FlavorText: Primero aumenta la temperatura de su pico y luego ejecuta un ataque. Quema al rival si este le propina un ataque físico mientras está calentando el pico.
+}
+
+ClangingScales: {
+	DisplayName: Fragor Escamas
+	FlavorText: Frota todas las escamas de su cuerpo para crear un fuerte sonido con el que ataca. Cuando el ataque termina, su Defensa se ve reducida.
+}
+
+DragonHammer: {
+	DisplayName: Martillo Dragón
+	FlavorText: Usa el cuerpo como un martillo para abalanzarse sobre su rival y causarle daño.
+}
+
+BrutalSwing: {
+	DisplayName: Giro Vil
+	FlavorText: Hace pivotar su cuerpo para causar daño a su alrededor.
+}
+
+AuroraVeil: {
+	DisplayName: Velo Aurora
+	FlavorText: Reduce el daño de los ataques físicos y especiales que ejecuta el rival durante cinco turnos. Solo puede usarse cuando está granizando.
+}
+
+SinisterArrowRaid: {
+	DisplayName: Aluvión de Flechas Sombrías
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MaliciousMoonsault: {
+	DisplayName: Hiperplancha Oscura
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+OceanicOperetta: {
+	DisplayName: Sinfonía de la Diva Marina
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+GuardianOfAlola: {
+	DisplayName: Cólera del Guardián
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SoulStealing7StarStrike: {
+	DisplayName: Constelación Robaalmas
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+StokedSparksurfer: {
+	DisplayName: Surfeo Galvánico
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+PulverizingPancake: {
+	DisplayName: Arrojo Intempestivo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ExtremeEvoboost: {
+	DisplayName: Novena Potencia
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+GenesisSupernova: {
+	DisplayName: Supernova Original
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ShellTrap: {
+	DisplayName: Coraza Trampa
+	FlavorText: El caparazón del Pokémon se convierte en una trampa. Si le alcanza un ataque físico, la trampa estalla y los oponentes sufren daño.
+}
+
+FleurCannon: {
+	DisplayName: Cañón Floral
+	FlavorText: El usuario emite un potente rayo, pero su Ataque Especial se reduce mucho.
+}
+
+PsychicFangs: {
+	DisplayName: Psicocolmillo
+	FlavorText: Ataca a sus rivales con poderes psíquicos que además destruyen barreras como Pantalla de Luz y Reflejo.
+}
+
+StompingTantrum: {
+	DisplayName: Pataleta
+	FlavorText: Usa la frustración como revulsivo para atacar. La potencia de Pataleta se duplica si el usuario ha fallado el último movimiento usado.
+}
+
+ShadowBone: {
+	DisplayName: Hueso Sombrío
+	FlavorText: Ataca al oponente golpeándole con un hueso poseído por un espíritu. Puede reducir la Defensa del objetivo.
+}
+
+Accelerock: {
+	DisplayName: Roca Veloz
+	FlavorText: El usuario se lanza contra el objetivo a gran velocidad. Este movimiento tiene prioridad alta.
+}
+
+Liquidation: {
+	DisplayName: Hidroariete
+	FlavorText: Ataca golpeando gracias a la fuerza del agua. También puede reducir la Defensa del objetivo.
+}
+
+PrismaticLaser: {
+	DisplayName: Láser Prisma
+	FlavorText: El usuario utiliza un prisma para emitir un rayo de gran potencia, pero no puede moverse en el turno siguiente.
+}
+
+SpectralThief: {
+	DisplayName: Robasombra
+	FlavorText: El usuario se esconde en la sombra del objetivo y lo ataca tras robarle las mejoras en sus características.
+}
+
+SunsteelStrike: {
+	DisplayName: Meteoimpacto
+	FlavorText: Ataca al objetivo con la potencia de un meteoro, ignorando su habilidad.
+}
+
+MoongeistBeam: {
+	DisplayName: Rayo Umbrío
+	FlavorText: Ataca con un rayo misterioso que ignora la habilidad del objetivo.
+}
+
+TearfulLook: {
+	DisplayName: Ojos Llorosos
+	FlavorText: Mira al objetivo con ojos llorosos para hacerle perder su espíritu combativo y reduce su Ataque y Ataque Especial.
+}
+
+ZingZap: {
+	DisplayName: Electropunzada
+	FlavorText: Se lanza contra el objetivo y le suelta una potente descarga eléctrica que puede hacer que se amedrente.
+}
+
+NaturesMadness: {
+	DisplayName: Furia Natural
+	FlavorText: Golpea al objetivo con la furia de la naturaleza y reduce sus PS a la mitad.
+}
+
+MultiAttack: {
+	DisplayName: Multiataque
+	FlavorText: El Pokémon se rodea de una potente energía con la que golpea al rival. El tipo del movimiento depende del disco que lleva el usuario.
+}
+
+ZThunderbolt: {
+	DisplayName: Gigarrayo Fulminante
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MindBlown: {
+	DisplayName: Cabeza Sorpresa
+	FlavorText: El usuario hace explotar su cabeza para atacar a todos los Pokémon que se hallan a su alrededor, aunque también se hiere a sí mismo.
+}
+
+PlasmaFists: {
+	DisplayName: Puños Plasma
+	FlavorText: El usuario ataca con puños cargados de electricidad. Convierte los movimientos de tipo Normal en movimientos de tipo Eléctrico.
+}
+
+PhotonGeyser: {
+	DisplayName: Géiser Fotónico
+	FlavorText: El usuario ataca con una gran columna de luz. Compara sus valores de Ataque y Ataque Especial para infligir daño con el más alto de los dos.
+}
+
+LightThatBurnsTheSky: {
+	DisplayName: Fotodestrucción Apocalíptica
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SearingSunrazeSmash: {
+	DisplayName: Embestida Solar
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+MenacingMoonrazeMaelstrom: {
+	DisplayName: Deflagración Lunar
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+LetsSnuggleForever: {
+	DisplayName: Somanta Amistosa
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SplinteredStormshards: {
+	DisplayName: Tempestad Rocosa
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ClangorousSoulblaze: {
+	DisplayName: Estruendo Implacable
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+ZippyZap: {
+	DisplayName: Pikaturbo
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SplishySplash: {
+	DisplayName: Salpikasurf
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FloatyFall: {
+	DisplayName: Pikapicado
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+PikaPapow: {
+	DisplayName: Pikatormenta
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+BouncyBubble: {
+	DisplayName: Vapodrenaje
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+BuzzyBuzz: {
+	DisplayName: Joltioparálisis
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SizzlySlide: {
+	DisplayName: Flarembestida
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+GlitzyGlow: {
+	DisplayName: Espeaura
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+BaddyBad: {
+	DisplayName: Umbreozona
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SappySeed: {
+	DisplayName: Leafitobombas
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+FreezyFrost: {
+	DisplayName: Glaceoprisma
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+SparklySwirl: {
+	DisplayName: Sylveotornado
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+VeeveeVolley: {
+	DisplayName: Eevimpacto
+	FlavorText: Este movimiento no se puede usar, por lo que sería mejor olvidarlo, aunque eso implique que no se pueda recordar posteriormente.
+}
+
+DoubleIronBash: {
+	DisplayName: Ferropuño Doble
+	FlavorText: Usando la tuerca del pecho como eje, gira sobre sí mismo y golpea con los brazos dos veces seguidas. Puede amedrentar al rival.
+}
+
+MaxGuard: {
+	DisplayName: Maxibarrera
+	FlavorText: Frena todos los ataques, pero puede fallar si se usa repetidamente.
+}
+
+DynamaxCannon: {
+	DisplayName: Cañón Dinamax
+	FlavorText: El usuario ataca emitiendo un rayo desde su núcleo. El daño infligido se duplica si el objetivo ha alcanzado el estado Dinamax.
+}
+
+SnipeShot: {
+	DisplayName: Disparo Certero
+	FlavorText: Permite atacar al objetivo seleccionado ignorando las habilidades o movimientos que permiten a un rival centrar la atención sobre sí.
+}
+
+JawLock: {
+	DisplayName: Presa Maxilar
+	FlavorText: Impide que tanto el atacante como el defensor puedan ser intercambiados hasta que uno de ellos se debilite o abandone el terreno de combate.
+}
+
+StuffCheeks: {
+	DisplayName: Atiborramiento
+	FlavorText: El usuario ingiere la baya que lleva equipada para aumentar mucho su Defensa.
+}
+
+NoRetreat: {
+	DisplayName: Bastión Final
+	FlavorText: El usuario aumenta todas sus características, pero ya no puede huir ni ser cambiado por otro.
+}
+
+TarShot: {
+	DisplayName: Alquitranazo
+	FlavorText: Cubre al objetivo de un alquitrán pegajoso que reduce su Velocidad y lo vuelve débil contra el fuego.
+}
+
+MagicPowder: {
+	DisplayName: Polvo Mágico
+	FlavorText: Cubre al objetivo con unos polvos mágicos que le hacen adquirir el tipo Psíquico.
+}
+
+DragonDarts: {
+	DisplayName: Dracoflechas
+	FlavorText: El usuario ataca propulsando a ambos Dreepy. En caso de haber dos adversarios, cada Dreepy golpea a su propio objetivo por separado.
+}
+
+Teatime: {
+	DisplayName: Hora del Té
+	FlavorText: El usuario invita a tomar el té a todos los presentes en el terreno de combate, lo que hace que ingieran las bayas que lleven equipadas.
+}
+
+Octolock: {
+	DisplayName: Octopresa
+	FlavorText: Retiene al objetivo para impedir su huida, a la vez que reduce su Defensa y Defensa Especial cada turno.
+}
+
+BoltBeak: {
+	DisplayName: Electropico
+	FlavorText: El usuario ensarta al objetivo con su pico cargado de electricidad. Si ataca en primer lugar, la potencia del movimiento se duplica.
+}
+
+FishiousRend: {
+	DisplayName: Branquibocado
+	FlavorText: El usuario agarra al objetivo con sus duras branquias. En caso de atacar antes que este último, la potencia del movimiento se duplica.
+}
+
+CourtChange: {
+	DisplayName: Cambio de Cancha
+	FlavorText: Extraño poder que intercambia los efectos en el terreno de combate de ambos bandos.
+}
+
+MaxFlare: {
+	DisplayName: Maxignición
+	FlavorText: Ataque de tipo Fuego ejecutado por un Pokémon Dinamax. Hace que se intensifique el efecto del sol durante cinco turnos.
+}
+
+MaxFlutterby: {
+	DisplayName: Maxinsecto
+	FlavorText: Ataque de tipo Bicho ejecutado por un Pokémon Dinamax. Reduce el Ataque Especial del objetivo.
+}
+
+MaxLightning: {
+	DisplayName: Maxitormenta
+	FlavorText: Ataque de tipo Eléctrico ejecutado por un Pokémon Dinamax. Crea un campo eléctrico durante cinco turnos.
+}
+
+MaxStrike: {
+	DisplayName: Maxiataque
+	FlavorText: Ataque de tipo Normal ejecutado por un Pokémon Dinamax. Reduce la Velocidad del objetivo.
+}
+
+MaxKnuckle: {
+	DisplayName: Maxipuño
+	FlavorText: Ataque de tipo Lucha ejecutado por un Pokémon Dinamax. Aumenta el Ataque de tu bando.
+}
+
+MaxPhantasm: {
+	DisplayName: Maxiespectro
+	FlavorText: Ataque de tipo Fantasma ejecutado por un Pokémon Dinamax. Reduce la Defensa de los rivales.
+}
+
+MaxHailstorm: {
+	DisplayName: Maxihelada
+	FlavorText: Ataque de tipo Hielo ejecutado por un Pokémon Dinamax. Crea una tormenta de granizo que dura cinco turnos.
+}
+
+MaxOoze: {
+	DisplayName: Maxiácido
+	FlavorText: Ataque de tipo Veneno ejecutado por un Pokémon Dinamax. Aumenta el Ataque Especial de tu bando.
+}
+
+MaxGeyser: {
+	DisplayName: Maxichorro
+	FlavorText: Ataque de tipo Agua ejecutado por un Pokémon Dinamax. Desata un aguacero que dura cinco turnos.
+}
+
+MaxAirstream: {
+	DisplayName: Maxiciclón
+	FlavorText: Ataque de tipo Volador ejecutado por un Pokémon Dinamax. Aumenta la Velocidad de tu bando.
+}
+
+MaxStarfall: {
+	DisplayName: Maxiestela
+	FlavorText: Ataque de tipo Hada ejecutado por un Pokémon Dinamax. Crea un campo de niebla durante cinco turnos.
+}
+
+MaxWyrmwind: {
+	DisplayName: Maxidraco
+	FlavorText: Ataque de tipo Dragón ejecutado por un Pokémon Dinamax. Reduce el Ataque del objetivo.
+}
+
+MaxMindstorm: {
+	DisplayName: Maxionda
+	FlavorText: Ataque de tipo Psíquico ejecutado por un Pokémon Dinamax. Crea un campo psíquico durante cinco turnos.
+}
+
+MaxRockfall: {
+	DisplayName: Maxilito
+	FlavorText: Ataque de tipo Roca ejecutado por un Pokémon Dinamax. Levanta una tormenta de arena que dura cinco turnos.
+}
+
+MaxQuake: {
+	DisplayName: Maxitemblor
+	FlavorText: Ataque de tipo Tierra ejecutado por un Pokémon Dinamax. Aumenta la Defensa Especial de tu bando.
+}
+
+MaxDarkness: {
+	DisplayName: Maxisombra
+	FlavorText: Ataque de tipo Siniestro ejecutado por un Pokémon Dinamax. Reduce la Defensa Especial del objetivo.
+}
+
+MaxOvergrowth: {
+	DisplayName: Maxiflora
+	FlavorText: Ataque de tipo Planta ejecutado por un Pokémon Dinamax. Crea un campo de hierba durante cinco turnos.
+}
+
+MaxSteelspike: {
+	DisplayName: Maximetal
+	FlavorText: Ataque de tipo Acero ejecutado por un Pokémon Dinamax. Aumenta la Defensa de tu bando.
+}
+
+ClangorousSoul: {
+	DisplayName: Estruendo Escama
+	FlavorText: Utiliza parte de los PS propios para subir sus características.
+}
+
+BodyPress: {
+	DisplayName: Plancha Corporal
+	FlavorText: El usuario usa el cuerpo para lanzar su ataque e infligir un daño directamente proporcional a su Defensa.
+}
+
+Decorate: {
+	DisplayName: Decoración
+	FlavorText: Aumenta mucho el Ataque y el Ataque Especial del objetivo al decorarlo.
+}
+
+DrumBeating: {
+	DisplayName: Batería Asalto
+	FlavorText: El usuario controla un tocón mediante la percusión y al atacar reduce la Velocidad del objetivo.
+}
+
+SnapTrap: {
+	DisplayName: Cepo
+	FlavorText: Cepo que atrapa al objetivo durante cuatro o cinco turnos y le causa daño mientras se encuentra preso.
+}
+
+PyroBall: {
+	DisplayName: Balón Ígneo
+	FlavorText: El usuario prende una pequeña piedra para crear una bola de fuego con la que ataca al rival. Puede causar quemaduras.
+}
+
+BehemothBlade: {
+	DisplayName: Tajo Supremo
+	FlavorText: El usuario se convierte en una espada gigante para rebanar al objetivo. Si este ha alcanzado el estado Dinamax, se duplica el daño infligido.
+}
+
+BehemothBash: {
+	DisplayName: Embate Supremo
+	FlavorText: El usuario se convierte en un escudo gigante para golpear al objetivo. Si este ha alcanzado el estado Dinamax, se duplica el daño infligido.
+}
+
+AuraWheel: {
+	DisplayName: Rueda Aural
+	FlavorText: La energía que acumula en las mejillas le sirve para atacar y aumentar su Velocidad. Este movimiento cambia de tipo según la forma que adopte Morpeko.
+}
+
+BreakingSwipe: {
+	DisplayName: Vasto Impacto
+	FlavorText: El usuario sacude violentamente su enorme cola para golpear a todos los rivales y reducir su Ataque a la par.
+}
+
+BranchPoke: {
+	DisplayName: Punzada Rama
+	FlavorText: Ataca pinchando al objetivo con una rama afilada.
+}
+
+Overdrive: {
+	DisplayName: Amplificador
+	FlavorText: El usuario rasguea la guitarra o el bajo para generar enormes vibraciones de intensa reverberación con las que ataca al objetivo.
+}
+
+AppleAcid: {
+	DisplayName: Ácido Málico
+	FlavorText: Ataca al objetivo con el fluido corrosivo que desprende una manzana ácida, lo que también disminuye la Defensa Especial de este.
+}
+
+GravApple: {
+	DisplayName: Fuerza G
+	FlavorText: El usuario ataca haciendo caer una manzana desde gran altura. Disminuye la Defensa del objetivo.
+}
+
+SpiritBreak: {
+	DisplayName: Choque Anímico
+	FlavorText: El usuario ataca al objetivo con tal ímpetu que acaba minando su moral y, en consecuencia, reduce su Ataque Especial.
+}
+
+StrangeSteam: {
+	DisplayName: Cautivapor
+	FlavorText: Desprende un humo con el que ataca al objetivo, que puede acabar confundido.
+}
+
+LifeDew: {
+	DisplayName: Gota Vital
+	FlavorText: Vierte un agua misteriosa y balsámica que restaura tanto sus propios PS como los de aquellos aliados presentes en el terreno de combate.
+}
+
+Obstruct: {
+	DisplayName: Obstrucción
+	FlavorText: Frena todos los ataques, pero puede fallar si se usa repetidamente. Reduce mucho la Defensa de quien ejecute un movimiento de contacto contra el usuario.
+}
+
+FalseSurrender: {
+	DisplayName: Irreverencia
+	FlavorText: El usuario finge hacer una reverencia y aprovecha la ocasión para ensartar al objetivo con su cabello alborotado. Siempre acierta.
+}
+
+MeteorAssault: {
+	DisplayName: Asalto Estelar
+	FlavorText: El usuario agita violentamente su grueso puerro para atacar, pero el mareo que le provocan las sacudidas le impide moverse en el turno siguiente.
+}
+
+Eternabeam: {
+	DisplayName: Rayo Infinito
+	FlavorText: Este es el mayor ataque de Eternatus una vez adquirida su forma original. No puede moverse en el turno siguiente.
+}
+
+SteelBeam: {
+	DisplayName: Metaláser
+	FlavorText: Utiliza el acero de su cuerpo para disparar un potente rayo. También hiere al agresor.
+}
+
+ExpandingForce: {
+	DisplayName: Vasta Fuerza
+	FlavorText: El usuario ataca al objetivo con sus poderes psíquicos. Cuando se usa en conjunción con un campo psíquico, aumenta su potencia e inflige daño a todos los rivales.
+}
+
+SteelRoller: {
+	DisplayName: Allanador Férreo
+	FlavorText: El usuario lanza su ataque y destruye el campo activo en el terreno de combate, y falla si no hay ninguno en ese momento.
+}
+
+ScaleShot: {
+	DisplayName: Ráfaga Escamas
+	FlavorText: Lanza escamas al objetivo de dos a cinco veces seguidas. Aumenta la Velocidad del usuario, pero reduce su Defensa.
+}
+
+MeteorBeam: {
+	DisplayName: Rayo Meteórico
+	FlavorText: El usuario dedica el primer turno a aumentar su Ataque Especial acumulando energía cósmica y lanza su ofensiva contra el objetivo en el segundo.
+}
+
+ShellSideArm: {
+	DisplayName: Moluscañón
+	FlavorText: El usuario lanza un ataque físico o especial en función de cuál inflija más daño. Puede envenenar al objetivo.
+}
+
+MistyExplosion: {
+	DisplayName: Bruma Explosiva
+	FlavorText: El usuario ataca a todos a su alrededor, pero se debilita de inmediato. La potencia del movimiento aumenta si el terreno está cubierto por un campo de niebla.
+}
+
+GrassyGlide: {
+	DisplayName: Fitoimpulso
+	FlavorText: Ataca al objetivo deslizándose sobre el terreno de combate. Este movimiento tiene prioridad alta cuando el terreno está cubierto por un campo de hierba.
+}
+
+RisingVoltage: {
+	DisplayName: Alto Voltaje
+	FlavorText: Ataca con una descarga eléctrica que surge del terreno de combate. La potencia del movimiento se duplica si el rival se ve afectado por un campo eléctrico.
+}
+
+TerrainPulse: {
+	DisplayName: Pulso de Campo
+	FlavorText: El usuario ataca aprovechando la energía del campo activo, que determina tanto el tipo como la potencia del movimiento.
+}
+
+SkitterSmack: {
+	DisplayName: Golpe Rastrero
+	FlavorText: Ataca al objetivo por la espalda de forma subrepticia y además reduce su Ataque Especial.
+}
+
+BurningJealousy: {
+	DisplayName: Envidia Ardiente
+	FlavorText: Ataca al objetivo con la energía generada por la envidia y causa quemaduras a los Pokémon cuyas características hayan aumentado en ese turno.
+}
+
+LashOut: {
+	DisplayName: Desahogo
+	FlavorText: Ataca al rival presa de la rabia. Si el usuario ha sufrido una reducción de características en ese turno, la potencia del movimiento se duplica.
+}
+
+Poltergeist: {
+	DisplayName: Poltergeist
+	FlavorText: El usuario ataca utilizando el objeto que lleva el rival. Si no tiene ninguno equipado, el movimiento falla.
+}
+
+CorrosiveGas: {
+	DisplayName: Gas Corrosivo
+	FlavorText: El usuario libera un gas cáustico que envuelve a todos los que se encuentren alrededor y derrite por completo los objetos que lleven equipados.
+}
+
+Coaching: {
+	DisplayName: Motivación
+	FlavorText: El usuario imparte indicaciones precisas a sus aliados, que ven aumentados su Ataque y su Defensa.
+}
+
+FlipTurn: {
+	DisplayName: Viraje
+	FlavorText: Tras atacar, el usuario da paso a toda prisa a otro Pokémon del equipo.
+}
+
+TripleAxel: {
+	DisplayName: Triple Axel
+	FlavorText: Patea hasta tres veces seguidas y cada vez más fuerte.
+}
+
+DualWingbeat: {
+	DisplayName: Ala Bis
+	FlavorText: Ataca al adversario golpeándolo dos veces con las alas.
+}
+
+ScorchingSands: {
+	DisplayName: Arenas Ardientes
+	FlavorText: Ataca al objetivo arrojándole arena a temperaturas muy elevadas. Puede causar quemaduras.
+}
+
+JungleHealing: {
+	DisplayName: Cura Selvática
+	FlavorText: Al entrar en plena armonía con la selva, el usuario cura problemas de estado y restaura PS no solo de sí mismo, sino también de los aliados presentes en el terreno.
+}
+
+WickedBlow: {
+	DisplayName: Golpe Oscuro
+	FlavorText: Golpe devastador que requiere un absoluto dominio de las artes siniestras. Siempre asesta un golpe crítico.
+}
+
+SurgingStrikes: {
+	DisplayName: Azote Torrencial
+	FlavorText: El usuario, dominador absoluto del líquido elemento, golpea hasta tres veces con movimientos fluidos. Siempre asesta un golpe crítico.
+}
+
+ThunderCage: {
+	DisplayName: Electrojaula
+	FlavorText: El objetivo queda atrapado en una jaula electrificada que permanece en el terreno de cuatro a cinco turnos.
+}
+
+DragonEnergy: {
+	DisplayName: Dracoenergía
+	FlavorText: El usuario convierte su fuerza vital en una energía con la que ataca al objetivo. Cuantos menos PS tenga el usuario, menor será la potencia del movimiento.
+}
+
+FreezingGlare: {
+	DisplayName: Mirada Heladora
+	FlavorText: A través de sus ojos emite poderes psíquicos con los que ataca al objetivo, al que puede llegar a congelar.
+}
+
+FieryWrath: {
+	DisplayName: Furia Candente
+	FlavorText: El usuario convierte su ira en un aura flamígera para lanzar su ataque. Puede amedrentar al objetivo.
+}
+
+ThunderousKick: {
+	DisplayName: Patada Relámpago
+	FlavorText: El usuario desconcierta al rival con movimientos centelleantes y le propina una patada. Baja la Defensa del objetivo.
+}
+
+GlacialLance: {
+	DisplayName: Lanza Glacial
+	FlavorText: El usuario ataca al objetivo lanzándole un carámbano de hielo envuelto en una ventisca.
+}
+
+AstralBarrage: {
+	DisplayName: Orbes Espectro
+	FlavorText: El usuario ataca al objetivo lanzándole una ingente cantidad de pequeños fantasmas.
+}
+
+EerieSpell: {
+	DisplayName: Conjuro Funesto
+	FlavorText: El usuario ataca con un poder psíquico de inmensa potencia y elimina 3 PP del último movimiento que haya usado el objetivo.
+}
+
+DireClaw: {
+	// DisplayName: Dire Claw
+	// FlavorText: The user lashes out at the target with ruinous claws. This may also leave the target poisoned, paralyzed, or asleep.
+}
+
+PsyshieldBash: {
+	// DisplayName: Psyshield Bash
+	// FlavorText: Cloaking itself in psychic energy, the user slams into the target. This also boosts the user's Defense stat.
+}
+
+// PowerShift.DisplayName: Power Shift
+
+StoneAxe: {
+	// DisplayName: Stone Axe
+	// FlavorText: The user swings its stone axes at the target. Stone splinters left behind by this attack float around the target.
+}
+
+SpringtideStorm: {
+	// DisplayName: Springtide Storm
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds brimming with love and hate. This may also lower their Attack stats.
+}
+
+MysticalPower: {
+	// DisplayName: Mystical Power
+	// FlavorText: The user attacks by emitting a mysterious power. This also boosts the user's Sp. Atk stat.
+}
+
+RagingFury: {
+	// DisplayName: Raging Fury
+	// FlavorText: The user rampages around spewing flames for two to three turns. The user then becomes confused.
+}
+
+WaveCrash: {
+	// DisplayName: Wave Crash
+	// FlavorText: The user shrouds itself in water and slams into the target with its whole body to inflict damage. This also damages the user quite a lot.
+}
+
+Chloroblast: {
+	// DisplayName: Chloroblast
+	// FlavorText: The user launches its amassed chlorophyll to inflict damage on the target. This also damages the user.
+}
+
+MountainGale: {
+	// DisplayName: Mountain Gale
+	// FlavorText: The user hurls giant chunks of ice at the target to inflict damage. This may also make the target flinch.
+}
+
+VictoryDance: {
+	// DisplayName: Victory Dance
+	// FlavorText: The user performs an intense dance to usher in victory, boosting its Attack, Defense, and Speed stats.
+}
+
+HeadlongRush: {
+	// DisplayName: Headlong Rush
+	// FlavorText: The user smashes into the target in a full-body tackle. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BarbBarrage: {
+	// DisplayName: Barb Barrage
+	// FlavorText: The user launches countless toxic barbs to inflict damage. This may also poison the target. This move's power is doubled if the target is already poisoned.
+}
+
+EsperWing: {
+	// DisplayName: Esper Wing
+	// FlavorText: The user slashes the target with aura-enriched wings. This also boosts the user's Speed stat. This move has a heightened chance of landing a critical hit.
+}
+
+BitterMalice: {
+	// DisplayName: Bitter Malice
+	// FlavorText: The user attacks the target with spine-chilling resentment. This also lowers the target's Attack stat.
+}
+
+Shelter: {
+	// DisplayName: Shelter
+	// FlavorText: The user makes its skin as hard as an iron shield, sharply boosting its Defense stat.
+}
+
+TripleArrows: {
+	// DisplayName: Triple Arrows
+	// FlavorText: The user kicks, then fires three arrows. This move has a heightened chance of landing a critical hit and may also lower the target's Defense stat or make it flinch.
+}
+
+InfernalParade: {
+	// DisplayName: Infernal Parade
+	// FlavorText: The user attacks with myriad fireballs. This may also leave the target with a burn. This move's power is doubled if the target has a status condition.
+}
+
+CeaselessEdge: {
+	// DisplayName: Ceaseless Edge
+	// FlavorText: The user slashes its shell blade at the target. Shell splinters left behind by this attack remain scattered under the target as spikes.
+}
+
+BleakwindStorm: {
+	// DisplayName: Bleakwind Storm
+	// FlavorText: The user attacks with savagely cold winds that cause both body and spirit to tremble. This may also lower the Speed stats of opposing Pokémon.
+}
+
+WildboltStorm: {
+	// DisplayName: Wildbolt Storm
+	// FlavorText: The user summons a thunderous tempest and savagely attacks with lightning and wind. This may also leave opposing Pokémon with paralysis.
+}
+
+SandsearStorm: {
+	// DisplayName: Sandsear Storm
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds and searingly hot sand. This may also leave them with a burn.
+}
+
+LunarBlessing: {
+	// DisplayName: Lunar Blessing
+	// FlavorText: The user receives a blessing from the crescent moon, restoring HP and curing status conditions for itself and its ally Pokémon currently in the battle.
+}
+
+TakeHeart: {
+	// DisplayName: Take Heart
+	// FlavorText: The user lifts its spirits, curing its own status conditions and boosting its Sp. Atk and Sp. Def stats.
+}
+
+TeraBlast: {
+	// DisplayName: Tera Blast
+	// FlavorText: If the user has Terastallized, it unleashes energy of its Tera Type. This move inflicts damage using the Attack or Sp. Atk stat—whichever is higher for the user.
+}
+
+SilkTrap: {
+	// DisplayName: Silk Trap
+	// FlavorText: The user spins a silken trap, protecting itself from damage while lowering the Speed stat of any attacker that makes direct contact.
+}
+
+AxeKick: {
+	// DisplayName: Axe Kick
+	// FlavorText: The user attacks by kicking up into the air and slamming its heel down upon the target. This may also confuse the target. If it misses, the user takes damage instead.
+}
+
+LastRespects: {
+	// DisplayName: Last Respects
+	// FlavorText: The user attacks to avenge its allies. The more defeated allies there are in the user's party, the greater the move's power.
+}
+
+LuminaCrash: {
+	// DisplayName: Lumina Crash
+	// FlavorText: The user attacks by unleashing a peculiar light that even affects the mind. This also harshly lowers the target's Sp. Def stat.
+}
+
+OrderUp: {
+	// DisplayName: Order Up
+	// FlavorText: The user attacks with elegant poise. If the user has a Tatsugiri in its mouth, this move boosts one of the user's stats based on the Tatsugiri's form.
+}
+
+JetPunch: {
+	// DisplayName: Jet Punch
+	// FlavorText: The user summons a torrent around its fist and punches at blinding speed. This move always goes first.
+}
+
+SpicyExtract: {
+	// DisplayName: Spicy Extract
+	// FlavorText: The user emits an incredibly spicy extract, sharply boosting the target's Attack stat and harshly lowering the target's Defense stat.
+}
+
+SpinOut: {
+	// DisplayName: Spin Out
+	// FlavorText: The user spins furiously by straining its legs, inflicting damage on the target. This also harshly lowers the user's Speed stat.
+}
+
+PopulationBomb: {
+	// DisplayName: Population Bomb
+	// FlavorText: The user's fellows gather in droves to perform a combo attack that hits the target one to ten times in a row.
+}
+
+IceSpinner: {
+	// DisplayName: Ice Spinner
+	// FlavorText: The user covers its feet in thin ice and twirls around, slamming into the target. This move's spinning motion also destroys the terrain.
+}
+
+GlaiveRush: {
+	// DisplayName: Glaive Rush
+	// FlavorText: The user throws its entire body into a reckless charge. After this move is used, attacks on the user cannot miss and will inflict double damage until the user's next turn.
+}
+
+RevivalBlessing: {
+	// DisplayName: Revival Blessing
+	// FlavorText: The user bestows a loving blessing, reviving a party Pokémon that has fainted and restoring half that Pokémon's max HP.
+}
+
+SaltCure: {
+	// DisplayName: Salt Cure
+	// FlavorText: The user salt cures the target, inflicting damage every turn. Steel and Water types are more strongly affected by this move.
+}
+
+TripleDive: {
+	// DisplayName: Triple Dive
+	// FlavorText: The user performs a perfectly timed triple dive, hitting the target with splashes of water three times in a row.
+}
+
+MortalSpin: {
+	// DisplayName: Mortal Spin
+	// FlavorText: The user performs a spin attack that can also eliminate the effects of such moves as Bind, Wrap, and Leech Seed. This also poisons opposing Pokémon.
+}
+
+Doodle: {
+	// DisplayName: Doodle
+	// FlavorText: The user captures the very essence of the target in a sketch. This changes the Abilities of the user and its ally Pokémon to that of the target.
+}
+
+FilletAway: {
+	// DisplayName: Fillet Away
+	// FlavorText: The user sharply boosts its Attack, Sp. Atk, and Speed stats by using its own HP.
+}
+
+KowtowCleave: {
+	// DisplayName: Kowtow Cleave
+	// FlavorText: The user slashes at the target after kowtowing to make the target let down its guard. This attack never misses.
+}
+
+FlowerTrick: {
+	// DisplayName: Flower Trick
+	// FlavorText: The user throws a rigged bouquet of flowers at the target. This attack never misses and always lands a critical hit.
+}
+
+TorchSong: {
+	// DisplayName: Torch Song
+	// FlavorText: The user blows out raging flames as if singing a song, scorching the target. This also boosts the user's Sp. Atk stat.
+}
+
+AquaStep: {
+	// DisplayName: Aqua Step
+	// FlavorText: The user toys with the target and attacks it using light and fluid dance steps. This also boosts the user's Speed stat.
+}
+
+RagingBull: {
+	// DisplayName: Raging Bull
+	// FlavorText: The user performs a tackle like a raging bull. This move's type depends on the user's form. It can also break barriers, such as Light Screen and Reflect.
+}
+
+MakeItRain: {
+	// DisplayName: Make It Rain
+	// FlavorText: The user attacks by throwing out a mass of coins. This also lowers the user's Sp. Atk stat. Money is earned after the battle.
+}
+
+Psyblade: {
+	DisplayName: Psicohojas
+	// FlavorText: The user rends the target with an ethereal blade. This move's power is boosted by 50 percent if the user is on Electric Terrain.
+}
+
+HydroSteam: {
+	DisplayName: Hidrovapor
+	// FlavorText: The user blasts the target with boiling-hot water. This move's power is not lowered in harsh sunlight but rather boosted by 50 percent.
+}
+
+Ruination: {
+	// DisplayName: Ruination
+	// FlavorText: The user summons a ruinous disaster. This cuts the target's HP in half.
+}
+
+CollisionCourse: {
+	// DisplayName: Collision Course
+	// FlavorText: The user transforms and crashes to the ground, causing a massive prehistoric explosion. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ElectroDrift: {
+	// DisplayName: Electro Drift
+	// FlavorText: The user races forward at ultrafast speeds, piercing its target with futuristic electricity. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ShedTail: {
+	// DisplayName: Shed Tail
+	// FlavorText: The user creates a substitute for itself using its own HP before switching places with a party Pokémon in waiting.
+}
+
+// ChillyReception.DisplayName: Chilly Reception
+
+TidyUp: {
+	// DisplayName: Tidy Up
+	// FlavorText: The user tidies up and removes the effects of Spikes, Stealth Rock, Sticky Web, Toxic Spikes, and Substitute. This also boosts the user's Attack and Speed stats.
+}
+
+Snowscape: {
+	// DisplayName: Snowscape
+	// FlavorText: The user summons a snowstorm lasting five turns. This boosts the Defense stats of Ice types.
+}
+
+Pounce: {
+	// DisplayName: Pounce
+	// FlavorText: The user attacks by pouncing on the target. This also lowers the target's Speed stat.
+}
+
+Trailblaze: {
+	// DisplayName: Trailblaze
+	// FlavorText: The user attacks suddenly as if leaping out from tall grass. The user's nimble footwork boosts its Speed stat.
+}
+
+ChillingWater: {
+	// DisplayName: Chilling Water
+	// FlavorText: The user attacks the target by showering it with water that's so cold it saps the target's power. This also lowers the target's Attack stat.
+}
+
+HyperDrill: {
+	// DisplayName: Hyper Drill
+	// FlavorText: The user spins the pointed part of its body at high speed to pierce the target. This attack can hit a target using a move such as Protect or Detect.
+}
+
+TwinBeam: {
+	// DisplayName: Twin Beam
+	// FlavorText: The user shoots mystical beams from its eyes to inflict damage. The target is hit twice in a row.
+}
+
+RageFist: {
+	// DisplayName: Rage Fist
+	// FlavorText: The user converts its rage into energy to attack. The more times the user has been hit by attacks, the greater the move's power.
+}
+
+ArmorCannon: {
+	// DisplayName: Armor Cannon
+	// FlavorText: The user shoots its own armor out as blazing projectiles. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BitterBlade: {
+	// DisplayName: Bitter Blade
+	// FlavorText: The user focuses its bitter feelings toward the world of the living into a slashing attack. The user's HP is restored by up to half the damage taken by the target.
+}
+
+DoubleShock: {
+	// DisplayName: Double Shock
+	// FlavorText: The user discharges all the electricity from its body to perform a high-damage attack. After using this move, the user will no longer be Electric type.
+}
+
+GigatonHammer: {
+	// DisplayName: Gigaton Hammer
+	// FlavorText: The user swings its whole body around to attack with its huge hammer. This move can't be used twice in a row.
+}
+
+Comeuppance: {
+	// DisplayName: Comeuppance
+	// FlavorText: The user retaliates with much greater force against the opponent that last inflicted damage on it.
+}
+
+AquaCutter: {
+	// DisplayName: Aqua Cutter
+	// FlavorText: The user expels pressurized water to cut at the target like a blade. This move has a heightened chance of landing a critical hit.
+}
+
+// BlazingTorque.DisplayName: Blazing Torque
+// WickedTorque.DisplayName: Wicked Torque
+// NoxiousTorque.DisplayName: Noxious Torque
+// CombatTorque.DisplayName: Combat Torque
+// MagicalTorque.DisplayName: Magical Torque
+
+BloodMoon: {
+	// DisplayName: Blood Moon
+	// FlavorText: The user unleashes the full brunt of its spirit from a full moon that shines as red as blood. This move can't be used twice in a row.
+}
+
+MatchaGotcha: {
+	// DisplayName: Matcha Gotcha
+	// FlavorText: The user fires a blast of tea that it mixed. The user's HP is restored by up to half the damage taken by the target. This may also leave the target with a burn.
+}
+
+SyrupBomb: {
+	// DisplayName: Syrup Bomb
+	// FlavorText: The user sets off an explosion of sticky candy syrup, which coats the target and causes the target's Speed stat to drop each turn for three turns.
+}
+
+IvyCudgel: {
+	// DisplayName: Ivy Cudgel
+	// FlavorText: The user strikes with an ivy-wrapped cudgel. This move's type changes depending on the mask worn by the user, and it has a heightened chance of landing a critical hit.
+}
+
+ElectroShot: {
+	DisplayName: Electrorrayo
+	// FlavorText: The user gathers electricity on the first turn, boosting its Sp. Atk stat, then fires a high-voltage shot on the next turn. The shot will be fired immediately in rain.
+}
+
+TeraStarstorm: {
+	DisplayName: Teraclúster
+	// FlavorText: With the power of its crystals, the user bombards and eliminates the target. When used by Terapagos in its Stellar Form, this move damages all opposing Pokémon.
+}
+
+FickleBeam: {
+	DisplayName: Láser Veleidoso
+	// FlavorText: The user shoots a beam of light to inflict damage. Sometimes all the user's heads shoot beams in unison, doubling the move's power.
+}
+
+BurningBulwark: {
+	DisplayName: Llama Protectora
+	// FlavorText: The user's intensely hot fur protects it from attacks and also burns any attacker that makes direct contact with it.
+}
+
+Thunderclap: {
+	DisplayName: Relámpago Súbito
+	// FlavorText: This move enables the user to attack first with a jolt of electricity. This move fails if the target is not readying an attack.
+}
+
+MightyCleave: {
+	DisplayName: Filo Potente
+	// FlavorText: The user wields the light that has accumulated atop its head to cleave the target. This move hits even if the target protects itself.
+}
+
+TachyonCutter: {
+	DisplayName: Tajo Taquión
+	// FlavorText: The user attacks by launching particle blades at the target twice in a row. This attack never misses.
+}
+
+HardPress: {
+	DisplayName: Prensa Metálica
+	// FlavorText: The target is crushed with an arm, a claw, or the like to inflict damage. The more HP the target has left, the greater the move's power.
+}
+
+DragonCheer: {
+	DisplayName: Bramido Dragón
+	// FlavorText: The user raises its allies' morale with a draconic cry so that their future attacks have a heightened chance of landing critical hits. This rouses Dragon types more.
+}
+
+AlluringVoice: {
+	DisplayName: Canto Encantador
+	// FlavorText: The user attacks the target using its angelic voice. This also confuses the target if its stats have been boosted during the turn.
+}
+
+TemperFlare: {
+	DisplayName: Cólera Ardiente
+	// FlavorText: Spurred by desperation, the user attacks the target. This move's power is doubled if the user's previous move failed.
+}
+
+SupercellSlam: {
+	DisplayName: Plancha Voltaica
+	// FlavorText: The user electrifies its body and drops onto the target to inflict damage. If this move misses, the user takes damage instead.
+}
+
+PsychicNoise: {
+	DisplayName: Psicorruido
+	// FlavorText: The user attacks the target with unpleasant sound waves. For two turns, the target is prevented from recovering HP through moves, Abilities, or held items.
+}
+
+UpperHand: {
+	DisplayName: Palma Rauda
+	// FlavorText: The user reacts to the target's movement and strikes with the heel of its palm, making the target flinch. This move fails if the target is not readying a priority move.
+}
+
+MalignantChain: {
+	DisplayName: Cadena Virulenta
+	// FlavorText: The user pours toxins into the target by wrapping them in a toxic, corrosive chain. This may also leave the target badly poisoned.
+}

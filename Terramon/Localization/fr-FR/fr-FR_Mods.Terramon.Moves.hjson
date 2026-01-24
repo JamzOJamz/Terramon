@@ -1,0 +1,4479 @@
+Pound: {
+	DisplayName: Écras'Face
+	FlavorText: Écrase l'ennemi avec les pattes avant ou la queue, par exemple.
+}
+
+KarateChop: {
+	DisplayName: Poing Karaté
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+DoubleSlap: {
+	DisplayName: Torgnoles
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+CometPunch: {
+	DisplayName: Poing Comète
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MegaPunch: {
+	DisplayName: Ultimapoing
+	FlavorText: L'ennemi reçoit un coup de poing d'une puissance incroyable.
+}
+
+PayDay: {
+	DisplayName: Jackpot
+	FlavorText: Des pièces sont lancées sur l'ennemi. Permet d'obtenir de l'argent à la fin du combat.
+}
+
+FirePunch: {
+	DisplayName: Poing Feu
+	FlavorText: Un coup de poing enflammé vient frapper l'ennemi. Peut le brûler.
+}
+
+IcePunch: {
+	DisplayName: Poing Glace
+	FlavorText: Un coup de poing glacé vient frapper l'ennemi. Peut le geler.
+}
+
+ThunderPunch: {
+	DisplayName: Poing Éclair
+	FlavorText: Un coup de poing électrique vient frapper l'ennemi. Peut le paralyser.
+}
+
+Scratch: {
+	DisplayName: Griffe
+	FlavorText: Lacère l'ennemi avec des griffes acérées pour lui infliger des dégâts.
+}
+
+ViceGrip: {
+	DisplayName: Force Poigne
+	FlavorText: L'ennemi est attrapé et compressé par les côtés.
+}
+
+Guillotine: {
+	DisplayName: Guillotine
+	FlavorText: Des pinces lacèrent violemment l'ennemi, le mettant K.O. sur le coup s'il est touché.
+}
+
+RazorWind: {
+	DisplayName: Coupe-Vent
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SwordsDance: {
+	DisplayName: Danse Lames
+	FlavorText: Une danse frénétique qui exalte l'esprit combatif. Augmente beaucoup l'Attaque du lanceur.
+}
+
+Cut: {
+	DisplayName: Coupe
+	FlavorText: Coupe l'ennemi avec des lames ou des griffes.
+}
+
+Gust: {
+	DisplayName: Tornade
+	FlavorText: Le lanceur bat des ailes pour générer une bourrasque qui blesse l'ennemi.
+}
+
+WingAttack: {
+	DisplayName: Cru-Ailes
+	FlavorText: L'ennemi est frappé par de larges ailes déployées pour infliger des dégâts.
+}
+
+Whirlwind: {
+	DisplayName: Cyclone
+	FlavorText: Éjecte le Pokémon ennemi et le remplace par un autre. Lors d'un combat contre un Pokémon sauvage seul, met fin au combat.
+}
+
+Fly: {
+	DisplayName: Vol
+	FlavorText: Le lanceur s'envole au premier tour et frappe au second.
+}
+
+Bind: {
+	DisplayName: Étreinte
+	FlavorText: Ligote l'ennemi avec les tentacules ou le corps pour l'écraser durant quatre à cinq tours.
+}
+
+Slam: {
+	DisplayName: Souplesse
+	FlavorText: Fouette l'ennemi avec la queue ou une liane, par exemple, pour infliger des dégâts.
+}
+
+VineWhip: {
+	DisplayName: Fouet Lianes
+	FlavorText: Fouette l'ennemi avec de fines lianes pour infliger des dégâts.
+}
+
+Stomp: {
+	DisplayName: Écrasement
+	FlavorText: Écrase l'ennemi avec un énorme pied. Peut aussi l'apeurer.
+}
+
+DoubleKick: {
+	DisplayName: Double Pied
+	FlavorText: Deux coups de pied qui frappent l'ennemi deux fois d'affilée.
+}
+
+MegaKick: {
+	DisplayName: Ultimawashi
+	FlavorText: Un coup de pied surpuissant qui frappe l'ennemi.
+}
+
+JumpKick: {
+	DisplayName: Pied Sauté
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+RollingKick: {
+	DisplayName: Mawashi Geri
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SandAttack: {
+	DisplayName: Jet de Sable
+	FlavorText: Lance du sable au visage de l'ennemi pour baisser sa Précision.
+}
+
+Headbutt: {
+	DisplayName: Coup d'Boule
+	FlavorText: Le lanceur donne un coup de tête. Peut apeurer l'ennemi.
+}
+
+HornAttack: {
+	DisplayName: Koud'Korne
+	FlavorText: Frappe l'ennemi d'un coup de corne pointue pour infliger des dégâts.
+}
+
+FuryAttack: {
+	DisplayName: Furie
+	FlavorText: Frappe l'ennemi deux à cinq fois d'affilée avec un bec ou une corne, par exemple.
+}
+
+HornDrill: {
+	DisplayName: Empal'Korne
+	FlavorText: Un coup de corne en vrille qui empale l'ennemi, le mettant K.O. sur le coup s'il est touché.
+}
+
+Tackle: {
+	DisplayName: Charge
+	FlavorText: Le lanceur charge l'ennemi et le percute de tout son poids.
+}
+
+BodySlam: {
+	DisplayName: Plaquage
+	FlavorText: Le lanceur se laisse tomber sur l'ennemi de tout son poids. Peut aussi le paralyser.
+}
+
+Wrap: {
+	DisplayName: Ligotage
+	FlavorText: Le lanceur ligote l'ennemi avec des lianes ou son corps pour l'écraser durant quatre à cinq tours.
+}
+
+TakeDown: {
+	DisplayName: Bélier
+	FlavorText: Une charge violente qui blesse aussi légèrement le lanceur.
+}
+
+Thrash: {
+	DisplayName: Mania
+	FlavorText: Une attaque furieuse qui dure de deux à trois tours. Le lanceur devient confus.
+}
+
+DoubleEdge: {
+	DisplayName: Damoclès
+	FlavorText: Une charge dangereuse et imprudente. Blesse aussi gravement le lanceur.
+}
+
+TailWhip: {
+	DisplayName: Mimi-Queue
+	FlavorText: Le lanceur remue son adorable queue pour tromper la vigilance de l'ennemi et baisser sa Défense.
+}
+
+PoisonSting: {
+	DisplayName: Dard-Venin
+	FlavorText: Un dard toxique qui transperce l'ennemi. Peut aussi l'empoisonner.
+}
+
+Twineedle: {
+	DisplayName: Double Dard
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+PinMissile: {
+	DisplayName: Dard-Nuée
+	FlavorText: Envoie une rafale de dards. Peut toucher de deux à cinq fois.
+}
+
+Leer: {
+	DisplayName: Groz'Yeux
+	FlavorText: Le lanceur fait les gros yeux à l'ennemi pour l'intimider et baisser sa Défense.
+}
+
+Bite: {
+	DisplayName: Morsure
+	FlavorText: L'ennemi est mordu par de tranchantes canines. Peut l'apeurer.
+}
+
+Growl: {
+	DisplayName: Rugissement
+	FlavorText: Le lanceur pousse un cri tout mimi pour tromper la vigilance de l'ennemi et baisser son Attaque.
+}
+
+Roar: {
+	DisplayName: Hurlement
+	FlavorText: Effraie le Pokémon ennemi et le remplace par un autre. Lors d'un combat contre un Pokémon sauvage seul, met fin au combat.
+}
+
+Sing: {
+	DisplayName: Berceuse
+	FlavorText: Une berceuse plonge l'ennemi dans un profond sommeil.
+}
+
+Supersonic: {
+	DisplayName: Ultrason
+	FlavorText: Le lanceur produit d'étranges ondes sonores qui rendent la cible confuse.
+}
+
+SonicBoom: {
+	DisplayName: Sonic Boom
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Disable: {
+	DisplayName: Entrave
+	FlavorText: Empêche l'ennemi d'employer à nouveau sa dernière attaque. Dure quatre tours.
+}
+
+Acid: {
+	DisplayName: Acide
+	FlavorText: Le lanceur attaque l'ennemi avec un jet d'acide corrosif. Peut aussi baisser sa Défense Spéciale.
+}
+
+Ember: {
+	DisplayName: Flammèche
+	FlavorText: L'ennemi est attaqué par une faible flamme. Peut aussi le brûler.
+}
+
+Flamethrower: {
+	DisplayName: Lance-Flammes
+	FlavorText: L'ennemi reçoit un torrent de flammes. Peut aussi le brûler.
+}
+
+Mist: {
+	DisplayName: Brume
+	FlavorText: Une brume blanche enveloppe l'équipe du lanceur et empêche la réduction des stats pour cinq tours.
+}
+
+WaterGun: {
+	DisplayName: Pistolet à O
+	FlavorText: De l'eau est projetée avec force sur l'ennemi.
+}
+
+HydroPump: {
+	DisplayName: Hydrocanon
+	FlavorText: Un puissant jet d'eau est dirigé sur l'ennemi.
+}
+
+Surf: {
+	DisplayName: Surf
+	FlavorText: Une énorme vague s'abat sur le champ de bataille et inflige des dégâts à tous les Pokémon autour du lanceur.
+}
+
+IceBeam: {
+	DisplayName: Laser Glace
+	FlavorText: Un rayon de glace frappe l'ennemi. Peut aussi le geler.
+}
+
+Blizzard: {
+	DisplayName: Blizzard
+	FlavorText: Une violente tempête de neige s'abat sur l'ennemi. Peut aussi le geler.
+}
+
+Psybeam: {
+	DisplayName: Rafale Psy
+	FlavorText: Un étrange rayon frappe l'ennemi. Peut aussi le rendre confus.
+}
+
+BubbleBeam: {
+	DisplayName: Bulles d'O
+	FlavorText: Des bulles sont envoyées avec puissance sur l'ennemi. Peut aussi baisser sa Vitesse.
+}
+
+AuroraBeam: {
+	DisplayName: Onde Boréale
+	FlavorText: Envoie un rayon arc-en-ciel sur l'ennemi. Peut aussi baisser son Attaque.
+}
+
+HyperBeam: {
+	DisplayName: Ultralaser
+	FlavorText: Projette un puissant rayon sur l'ennemi. Le lanceur doit se reposer au tour suivant.
+}
+
+Peck: {
+	DisplayName: Picpic
+	FlavorText: Frappe l'ennemi d'un bec pointu ou d'une corne pour infliger des dégâts.
+}
+
+DrillPeck: {
+	DisplayName: Bec Vrille
+	FlavorText: Une attaque utilisant le bec comme une perceuse.
+}
+
+Submission: {
+	DisplayName: Sacrifice
+	FlavorText: Le lanceur agrippe l'ennemi et l'écrase au sol. Blesse aussi légèrement le lanceur.
+}
+
+LowKick: {
+	DisplayName: Balayage
+	FlavorText: Un puissant coup de pied bas qui fauche l'ennemi. Il est plus efficace contre les ennemis lourds.
+}
+
+Counter: {
+	DisplayName: Riposte
+	FlavorText: Une riposte qui répond à toute capacité physique en infligeant le double de dégâts.
+}
+
+SeismicToss: {
+	DisplayName: Frappe Atlas
+	FlavorText: L'ennemi est projeté grâce au pouvoir de la gravité. Inflige des dégâts équivalents au niveau du lanceur.
+}
+
+Strength: {
+	DisplayName: Force
+	FlavorText: Le lanceur cogne l'ennemi de toutes ses forces.
+}
+
+Absorb: {
+	DisplayName: Vole-Vie
+	FlavorText: Une attaque qui convertit la moitié des dégâts infligés en PV pour le lanceur.
+}
+
+MegaDrain: {
+	DisplayName: Méga-Sangsue
+	FlavorText: Une attaque qui convertit la moitié des dégâts infligés en PV pour le lanceur.
+}
+
+LeechSeed: {
+	DisplayName: Vampigraine
+	FlavorText: Une graine est semée sur l'ennemi. À chaque tour, elle lui dérobe des PV que le lanceur récupère.
+}
+
+Growth: {
+	DisplayName: Croissance
+	FlavorText: Le corps du lanceur se développe. Augmente l'Attaque et l'Attaque Spéciale.
+}
+
+RazorLeaf: {
+	DisplayName: Tranch'Herbe
+	FlavorText: Des feuilles aiguisées comme des rasoirs entaillent l'ennemi. Taux de critiques élevé.
+}
+
+SolarBeam: {
+	DisplayName: Lance-Soleil
+	FlavorText: Absorbe la lumière au premier tour et envoie un rayon puissant au tour suivant.
+}
+
+PoisonPowder: {
+	DisplayName: Poudre Toxik
+	FlavorText: Une poudre toxique empoisonne l'ennemi.
+}
+
+StunSpore: {
+	DisplayName: Para-Spore
+	FlavorText: Le lanceur répand sur l'ennemi une poudre qui le paralyse.
+}
+
+SleepPowder: {
+	DisplayName: Poudre Dodo
+	FlavorText: Le lanceur répand une poudre soporifique qui endort la cible.
+}
+
+PetalDance: {
+	DisplayName: Danse Fleurs
+	FlavorText: Le lanceur attaque en projetant des pétales pendant deux à trois tours avant de céder à la confusion.
+}
+
+StringShot: {
+	DisplayName: Sécrétion
+	FlavorText: Le lanceur crache de la soie pour ligoter l'ennemi et beaucoup baisser sa Vitesse.
+}
+
+DragonRage: {
+	DisplayName: Draco-Rage
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FireSpin: {
+	DisplayName: Danse Flammes
+	FlavorText: Un tourbillon de flammes emprisonne l'ennemi pendant quatre à cinq tours.
+}
+
+ThunderShock: {
+	DisplayName: Éclair
+	FlavorText: Une décharge électrique tombe sur l'ennemi. Peut aussi le paralyser.
+}
+
+Thunderbolt: {
+	DisplayName: Tonnerre
+	FlavorText: Une grosse décharge électrique tombe sur l'ennemi. Peut aussi le paralyser.
+}
+
+ThunderWave: {
+	DisplayName: Cage Éclair
+	FlavorText: Un faible choc électrique frappe l'ennemi. Si l'attaque le touche, celui-ci est paralysé.
+}
+
+Thunder: {
+	DisplayName: Fatal-Foudre
+	FlavorText: La foudre tombe sur l'ennemi pour lui infliger des dégâts. Peut aussi le paralyser.
+}
+
+RockThrow: {
+	DisplayName: Jet-Pierres
+	FlavorText: Le lanceur lâche une pierre sur l'ennemi.
+}
+
+Earthquake: {
+	DisplayName: Séisme
+	FlavorText: Le lanceur provoque un tremblement de terre touchant tous les Pokémon autour de lui.
+}
+
+Fissure: {
+	DisplayName: Abîme
+	FlavorText: Le lanceur fait tomber l'ennemi dans une crevasse. Si cette attaque réussit, elle met K.O. sur le coup.
+}
+
+Dig: {
+	DisplayName: Tunnel
+	FlavorText: Le lanceur creuse au premier tour et frappe au second.
+}
+
+Toxic: {
+	DisplayName: Toxik
+	FlavorText: Empoisonne gravement l'ennemi. Les dégâts dus au poison augmentent à chaque tour.
+}
+
+Confusion: {
+	DisplayName: Choc Mental
+	FlavorText: Une faible vague télékinétique frappe l'ennemi. Peut aussi le plonger dans la confusion.
+}
+
+Psychic: {
+	DisplayName: Psyko
+	FlavorText: Une puissante force télékinétique frappe l'ennemi. Peut aussi faire baisser sa Défense Spéciale.
+}
+
+Hypnosis: {
+	DisplayName: Hypnose
+	FlavorText: Le lanceur hypnotise l'ennemi pour le plonger dans un profond sommeil.
+}
+
+Meditate: {
+	DisplayName: Yoga
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Agility: {
+	DisplayName: Hâte
+	FlavorText: Le lanceur se relaxe et allège son corps pour beaucoup augmenter sa Vitesse.
+}
+
+QuickAttack: {
+	DisplayName: Vive-Attaque
+	FlavorText: Le lanceur fonce sur l'ennemi si rapidement qu'on parvient à peine à le discerner. Frappe en priorité.
+}
+
+Rage: {
+	DisplayName: Frénésie
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Teleport: {
+	DisplayName: Téléport
+	FlavorText: Permet de changer de place avec un autre Pokémon de l'équipe s'il y en a. Quand cette capacité est utilisée par un Pokémon sauvage, celui-ci fuit le combat.
+}
+
+NightShade: {
+	DisplayName: Ombre Nocturne
+	FlavorText: Le lanceur invoque un mirage. Inflige des dégâts équivalents au niveau du lanceur.
+}
+
+Mimic: {
+	DisplayName: Copie
+	FlavorText: Le lanceur copie la dernière capacité utilisée par la cible et la conserve tant qu'il reste au combat.
+}
+
+Screech: {
+	DisplayName: Grincement
+	FlavorText: Le lanceur émet un son strident qui baisse beaucoup la Défense de l'ennemi.
+}
+
+DoubleTeam: {
+	DisplayName: Reflet
+	FlavorText: Le lanceur se déplace si vite qu'il crée des copies illusoires de lui-même, augmentant son Esquive.
+}
+
+Recover: {
+	DisplayName: Soin
+	FlavorText: Un soin qui permet au lanceur de récupérer jusqu'à la moitié de ses PV max.
+}
+
+Harden: {
+	DisplayName: Armure
+	FlavorText: Le lanceur contracte tous ses muscles pour augmenter sa Défense.
+}
+
+Minimize: {
+	DisplayName: Lilliput
+	FlavorText: Le lanceur comprime son corps pour se faire tout petit et beaucoup augmenter son Esquive.
+}
+
+Smokescreen: {
+	DisplayName: Brouillard
+	FlavorText: Le lanceur disperse un nuage d'encre ou de fumée. Réduit la Précision de l'ennemi.
+}
+
+ConfuseRay: {
+	DisplayName: Onde Folie
+	FlavorText: Un rayon sinistre qui plonge l'ennemi dans un état de confusion.
+}
+
+Withdraw: {
+	DisplayName: Repli
+	FlavorText: Le lanceur se recroqueville dans sa carapace, ce qui augmente sa Défense.
+}
+
+DefenseCurl: {
+	DisplayName: Boul'Armure
+	FlavorText: Le lanceur s'enroule pour cacher ses points faibles, ce qui augmente sa Défense.
+}
+
+Barrier: {
+	DisplayName: Bouclier
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+LightScreen: {
+	DisplayName: Mur Lumière
+	FlavorText: Crée un fabuleux mur de lumière qui réduit les dégâts causés par les capacités spéciales pendant cinq tours.
+}
+
+Haze: {
+	DisplayName: Buée Noire
+	FlavorText: Crée un brouillard qui annule les changements de stats de tous les Pokémon au combat.
+}
+
+Reflect: {
+	DisplayName: Protection
+	FlavorText: Crée un fabuleux mur de lumière qui réduit les dégâts causés par les capacités physiques pendant cinq tours.
+}
+
+FocusEnergy: {
+	DisplayName: Puissance
+	FlavorText: Le lanceur prend une profonde inspiration et se concentre pour augmenter son taux de critiques.
+}
+
+Bide: {
+	DisplayName: Patience
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Metronome: {
+	DisplayName: Métronome
+	FlavorText: Le lanceur agite un doigt et stimule son cerveau pour utiliser presque n'importe quelle capacité au hasard.
+}
+
+MirrorMove: {
+	DisplayName: Mimique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SelfDestruct: {
+	DisplayName: Destruction
+	FlavorText: Le lanceur explose en blessant tous les Pokémon autour de lui. Le lanceur tombe K.O.
+}
+
+EggBomb: {
+	DisplayName: Bombe Œuf
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Lick: {
+	DisplayName: Léchouille
+	FlavorText: Un grand coup de langue qui inflige des dégâts à l'ennemi. Peut aussi le paralyser.
+}
+
+Smog: {
+	DisplayName: Purédpois
+	FlavorText: Le lanceur attaque à l'aide d'une éruption de gaz répugnants. Peut aussi empoisonner l'ennemi.
+}
+
+Sludge: {
+	DisplayName: Détritus
+	FlavorText: Des détritus toxiques sont projetés sur l'ennemi. Peut aussi l'empoisonner.
+}
+
+BoneClub: {
+	DisplayName: Massd'Os
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FireBlast: {
+	DisplayName: Déflagration
+	FlavorText: Un déluge de flammes ardentes submerge l'ennemi. Peut aussi le brûler.
+}
+
+Waterfall: {
+	DisplayName: Cascade
+	FlavorText: Le lanceur charge l'ennemi à une vitesse remarquable, ce qui peut l'apeurer.
+}
+
+Clamp: {
+	DisplayName: Claquoir
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Swift: {
+	DisplayName: Météores
+	FlavorText: Le lanceur envoie des rayons d'étoiles. Touche toujours l'ennemi.
+}
+
+SkullBash: {
+	DisplayName: Coud'Krâne
+	FlavorText: Le lanceur baisse la tête pour augmenter sa Défense au premier tour et percuter l'ennemi au second.
+}
+
+SpikeCannon: {
+	DisplayName: Picanon
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Constrict: {
+	DisplayName: Constriction
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Amnesia: {
+	DisplayName: Amnésie
+	FlavorText: Le lanceur fait le vide dans son esprit pour oublier ses soucis. Augmente beaucoup sa Défense Spéciale.
+}
+
+Kinesis: {
+	DisplayName: Télékinésie
+	FlavorText: Le lanceur distrait l'ennemi en pliant une cuillère, ce qui baisse sa Précision.
+}
+
+SoftBoiled: {
+	DisplayName: E-Coque
+	FlavorText: Le lanceur récupère jusqu'à la moitié de ses PV max.
+}
+
+HighJumpKick: {
+	DisplayName: Pied Voltige
+	FlavorText: Le lanceur s'élance pour effectuer un coup de genou sauté. S'il échoue, le lanceur se blesse.
+}
+
+Glare: {
+	DisplayName: Regard Médusant
+	FlavorText: Le lanceur intimide l'ennemi grâce à son regard terrifiant pour le paralyser.
+}
+
+DreamEater: {
+	DisplayName: Dévorêve
+	FlavorText: Le lanceur mange le rêve de l'ennemi endormi et récupère en PV la moitié des dégâts infligés.
+}
+
+PoisonGas: {
+	DisplayName: Gaz Toxik
+	FlavorText: Un nuage de gaz toxique est projeté au visage de l'ennemi pour l'empoisonner.
+}
+
+Barrage: {
+	DisplayName: Pilonnage
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+LeechLife: {
+	DisplayName: Vampirisme
+	FlavorText: Une attaque qui aspire le sang de l'ennemi. La moitié des dégâts sont convertis en PV pour le lanceur.
+}
+
+LovelyKiss: {
+	DisplayName: Grobisou
+	FlavorText: Le lanceur fait un bisou à l'ennemi en prenant une mine effrayante. Endort l'ennemi.
+}
+
+SkyAttack: {
+	DisplayName: Piqué
+	FlavorText: Une attaque en deux tours au taux de critiques élevé. Peut aussi apeurer l'ennemi.
+}
+
+Transform: {
+	DisplayName: Morphing
+	FlavorText: Le lanceur devient une copie de sa cible et obtient la même palette de capacités.
+}
+
+Bubble: {
+	DisplayName: Écume
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+DizzyPunch: {
+	DisplayName: Uppercut
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Spore: {
+	DisplayName: Spore
+	FlavorText: Le lanceur répand un nuage de spores qui endort.
+}
+
+Flash: {
+	DisplayName: Flash
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Psywave: {
+	DisplayName: Vague Psy
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Splash: {
+	DisplayName: Trempette
+	FlavorText: Le lanceur barbote et éclabousse les environs. Cette capacité n'a aucun effet.
+}
+
+AcidArmor: {
+	DisplayName: Acidarmure
+	FlavorText: Le lanceur modifie sa structure moléculaire pour se liquéfier et beaucoup augmenter sa Défense.
+}
+
+Crabhammer: {
+	DisplayName: Pince-Masse
+	FlavorText: Une grande pince martèle l'ennemi. Taux de critiques élevé.
+}
+
+Explosion: {
+	DisplayName: Explosion
+	FlavorText: Le lanceur explose et inflige des dégâts à tous les Pokémon autour de lui. Met K.O. le lanceur.
+}
+
+FurySwipes: {
+	DisplayName: Combo-Griffe
+	FlavorText: L'ennemi est lacéré par des faux ou des griffes de deux à cinq fois d'affilée.
+}
+
+Bonemerang: {
+	DisplayName: Osmerang
+	FlavorText: Le lanceur projette son os comme un boomerang. Cette attaque frappe à l'aller et au retour.
+}
+
+Rest: {
+	DisplayName: Repos
+	FlavorText: Le lanceur regagne tous ses PV et soigne ses altérations de statut, puis il dort pendant deux tours.
+}
+
+RockSlide: {
+	DisplayName: Éboulement
+	FlavorText: Envoie de gros rochers sur l'ennemi pour infliger des dégâts. Peut aussi l'apeurer.
+}
+
+HyperFang: {
+	DisplayName: Croc de Mort
+	FlavorText: Le lanceur mord l'ennemi à l'aide de ses incisives aiguisées. Peut aussi l'apeurer.
+}
+
+Sharpen: {
+	DisplayName: Affûtage
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Conversion: {
+	DisplayName: Conversion
+	FlavorText: Le lanceur change de type pour prendre celui de la première capacité de sa liste.
+}
+
+TriAttack: {
+	DisplayName: Triplattaque
+	FlavorText: Le lanceur envoie trois boules d'énergie simultanément. Peut aussi paralyser, brûler ou geler l'ennemi.
+}
+
+SuperFang: {
+	DisplayName: Croc Fatal
+	FlavorText: Une vilaine morsure d'incisives qui réduit de moitié les PV de l'ennemi.
+}
+
+Slash: {
+	DisplayName: Tranche
+	FlavorText: Un coup de griffe ou autre tranche l'ennemi. Taux de critiques élevé.
+}
+
+Substitute: {
+	DisplayName: Clonage
+	FlavorText: Le lanceur crée un clone en sacrifiant quelques PV. Ce clone sert de leurre.
+}
+
+Struggle: {
+	DisplayName: Lutte
+	FlavorText: Une attaque désespérée, utilisée quand le lanceur n'a plus de PP. Le blesse aussi légèrement.
+}
+
+Sketch: {
+	DisplayName: Gribouille
+	FlavorText: Le lanceur apprend la dernière capacité utilisée par la cible. Gribouille disparaît après utilisation.
+}
+
+TripleKick: {
+	DisplayName: Triple Pied
+	FlavorText: Une salve de un à trois coups de pied dont la puissance augmente à chaque coup porté.
+}
+
+Thief: {
+	DisplayName: Larcin
+	FlavorText: Le lanceur attaque la cible et vole son objet. Le lanceur ne peut rien voler s'il tient déjà un objet.
+}
+
+SpiderWeb: {
+	DisplayName: Toile
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MindReader: {
+	DisplayName: Lire-Esprit
+	FlavorText: Le lanceur analyse les mouvements de l'ennemi pour être sûr de toucher au coup suivant.
+}
+
+Nightmare: {
+	DisplayName: Cauchemar
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FlameWheel: {
+	DisplayName: Roue de Feu
+	FlavorText: Le lanceur s'entoure de feu et charge l'ennemi. Peut aussi le brûler.
+}
+
+Snore: {
+	DisplayName: Ronflement
+	FlavorText: Une attaque qui ne fonctionne que si le lanceur est endormi. Le boucan peut aussi apeurer l'ennemi.
+}
+
+Curse: {
+	DisplayName: Malédiction
+	FlavorText: Une capacité à l'effet différent selon que le lanceur est un Pokémon Spectre ou non.
+}
+
+Flail: {
+	DisplayName: Gigotage
+	FlavorText: Le lanceur attaque en gigotant dans tous les sens. Plus ses PV sont bas, plus l'attaque est puissante.
+}
+
+Conversion2: {
+	DisplayName: Conversion 2
+	FlavorText: Le lanceur change de type pour être résistant au type de la dernière attaque lancée par sa cible.
+}
+
+Aeroblast: {
+	DisplayName: Aéroblast
+	FlavorText: Le lanceur projette une tornade sur l'ennemi pour infliger des dégâts. Taux de critiques élevé.
+}
+
+CottonSpore: {
+	DisplayName: Spore Coton
+	FlavorText: Le lanceur libère des spores cotonneuses qui collent à l'ennemi et baissent beaucoup sa Vitesse.
+}
+
+Reversal: {
+	DisplayName: Contre
+	FlavorText: Le lanceur ne retient plus ses coups. Plus ses PV sont bas, plus l'attaque est puissante.
+}
+
+Spite: {
+	DisplayName: Dépit
+	FlavorText: Le lanceur exprime son ressentiment en retirant 4 PP de la dernière capacité de l'ennemi.
+}
+
+PowderSnow: {
+	DisplayName: Poudreuse
+	FlavorText: Le lanceur projette de la neige poudreuse. Peut aussi geler l'ennemi.
+}
+
+Protect: {
+	DisplayName: Abri
+	FlavorText: Le lanceur se protège de toutes les attaques. Peut échouer si utilisée plusieurs fois de suite.
+}
+
+MachPunch: {
+	DisplayName: Mach Punch
+	FlavorText: Coup de poing fulgurant. Frappe en priorité.
+}
+
+ScaryFace: {
+	DisplayName: Grimace
+	FlavorText: Le lanceur fait une grimace qui effraie l'ennemi et réduit beaucoup sa Vitesse.
+}
+
+FeintAttack: {
+	DisplayName: Feinte
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SweetKiss: {
+	DisplayName: Doux Baiser
+	FlavorText: Le lanceur envoie un bisou si mignon et désarmant qu'il plonge l'ennemi dans la confusion.
+}
+
+BellyDrum: {
+	DisplayName: Cognobidon
+	FlavorText: Améliore l'Attaque au maximum en sacrifiant la moitié des PV max.
+}
+
+SludgeBomb: {
+	DisplayName: Bombe Beurk
+	FlavorText: Des détritus toxiques sont projetés sur l'ennemi. Peut aussi l'empoisonner.
+}
+
+MudSlap: {
+	DisplayName: Coud'Boue
+	FlavorText: Le lanceur envoie de la boue au visage de l'ennemi pour infliger des dégâts et baisser sa Précision.
+}
+
+Octazooka: {
+	DisplayName: Octazooka
+	FlavorText: Le lanceur attaque en projetant de l'encre au visage de l'ennemi. Peut aussi baisser sa Précision.
+}
+
+Spikes: {
+	DisplayName: Picots
+	FlavorText: Le lanceur disperse des piquants sur le sol pour blesser tout ennemi qui entre au combat.
+}
+
+ZapCannon: {
+	DisplayName: Élecanon
+	FlavorText: Un boulet de canon électrifié qui inflige des dégâts et paralyse l'ennemi.
+}
+
+Foresight: {
+	DisplayName: Clairvoyance
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+DestinyBond: {
+	DisplayName: Lien du Destin
+	FlavorText: Si un ennemi porte un coup fatal au lanceur après qu'il a activé cette capacité, ils sont tous les deux mis K.O. La capacité échoue si elle est immédiatement réutilisée.
+}
+
+PerishSong: {
+	DisplayName: Requiem
+	FlavorText: Tout Pokémon qui entend ce requiem est K.O. dans trois tours à moins qu'il ne soit remplacé.
+}
+
+IcyWind: {
+	DisplayName: Vent Glace
+	FlavorText: Une bourrasque de vent froid blesse l'ennemi. Réduit aussi sa Vitesse.
+}
+
+Detect: {
+	DisplayName: Détection
+	FlavorText: Le lanceur se protège de toutes les attaques. Peut échouer si utilisée plusieurs fois de suite.
+}
+
+BoneRush: {
+	DisplayName: Charge Os
+	FlavorText: Le lanceur frappe l'ennemi avec un os de deux à cinq fois d'affilée.
+}
+
+LockOn: {
+	DisplayName: Verrouillage
+	FlavorText: Verrouille l'ennemi pour ne pas le rater au tour suivant.
+}
+
+Outrage: {
+	DisplayName: Colère
+	FlavorText: Le lanceur enrage et attaque pendant deux ou trois tours avant de devenir confus.
+}
+
+Sandstorm: {
+	DisplayName: Tempête de Sable
+	FlavorText: Une tempête de sable blesse tous les Pokémon pendant cinq tours, sauf ceux de type Roche, Sol ou Acier. Augmente la Défense Spéciale des Pokémon Roche.
+}
+
+GigaDrain: {
+	DisplayName: Giga-Sangsue
+	FlavorText: Une attaque qui convertit la moitié des dégâts infligés en PV pour le lanceur.
+}
+
+Endure: {
+	DisplayName: Ténacité
+	FlavorText: Le lanceur résiste aux attaques avec 1 PV. Peut échouer si utilisée plusieurs fois de suite.
+}
+
+Charm: {
+	DisplayName: Charme
+	FlavorText: Le lanceur fait les yeux doux pour berner l'ennemi et beaucoup réduire son Attaque.
+}
+
+Rollout: {
+	DisplayName: Roulade
+	FlavorText: Un rocher roule sur l'ennemi pendant cinq tours. L'attaque gagne en puissance à chaque coup.
+}
+
+FalseSwipe: {
+	DisplayName: Faux-Chage
+	FlavorText: Le lanceur retient ses coups pour que l'ennemi garde au moins 1 PV et ne tombe pas K.O.
+}
+
+Swagger: {
+	DisplayName: Vantardise
+	FlavorText: Fait enrager la cible et la plonge dans la confusion, mais augmente beaucoup son Attaque.
+}
+
+MilkDrink: {
+	DisplayName: Lait à Boire
+	FlavorText: Le lanceur récupère jusqu'à la moitié de ses PV max.
+}
+
+Spark: {
+	DisplayName: Étincelle
+	FlavorText: Lance une charge électrique sur l'ennemi. Peut aussi le paralyser.
+}
+
+FuryCutter: {
+	DisplayName: Taillade
+	FlavorText: Un coup de faux ou de griffe dont la force augmente quand il touche plusieurs fois d'affilée.
+}
+
+SteelWing: {
+	DisplayName: Ailes d'Acier
+	FlavorText: Le lanceur frappe l'ennemi avec des ailes d'acier. Peut aussi augmenter la Défense du lanceur.
+}
+
+MeanLook: {
+	DisplayName: Regard Noir
+	FlavorText: Le lanceur pétrifie l'ennemi en lui lançant un regard noir. Il devient incapable de s'enfuir.
+}
+
+Attract: {
+	DisplayName: Attraction
+	FlavorText: Si l'ennemi est du sexe opposé, il tombe amoureux et rechigne alors à attaquer.
+}
+
+SleepTalk: {
+	DisplayName: Blabla Dodo
+	FlavorText: Le lanceur utilise une de ses capacités au hasard pendant qu'il dort.
+}
+
+HealBell: {
+	DisplayName: Glas de Soin
+	FlavorText: Carillon apaisant qui soigne les altérations de statut de tous les Pokémon de l'équipe.
+}
+
+Return: {
+	DisplayName: Retour
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Present: {
+	DisplayName: Cadeau
+	FlavorText: Le lanceur attaque en offrant un cadeau piégé à la cible. Peut cependant restaurer certains de ses PV.
+}
+
+Frustration: {
+	DisplayName: Frustration
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Safeguard: {
+	DisplayName: Rune Protect
+	FlavorText: Crée un champ protecteur qui empêche toutes les altérations de statut pendant cinq tours.
+}
+
+PainSplit: {
+	DisplayName: Balance
+	FlavorText: Le lanceur ajoute ses PV à ceux de sa cible et les répartit équitablement.
+}
+
+SacredFire: {
+	DisplayName: Feu Sacré
+	FlavorText: Le lanceur génère un feu mystique d'une intensité redoutable pour attaquer l'ennemi. Peut aussi le brûler.
+}
+
+Magnitude: {
+	DisplayName: Ampleur
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+DynamicPunch: {
+	DisplayName: Dynamo-Poing
+	FlavorText: Le lanceur rassemble ses forces et envoie un coup de poing à l'ennemi. Rend ce dernier confus.
+}
+
+Megahorn: {
+	DisplayName: Mégacorne
+	FlavorText: Le lanceur utilise ses gigantesques cornes pour charger l'ennemi.
+}
+
+DragonBreath: {
+	DisplayName: Draco-Souffle
+	FlavorText: Le lanceur souffle fort sur l'ennemi pour lui infliger des dégâts. Peut aussi le paralyser.
+}
+
+BatonPass: {
+	DisplayName: Relais
+	FlavorText: Le lanceur échange sa place et tout changement de stat avec un Pokémon de l'équipe.
+}
+
+Encore: {
+	DisplayName: Encore
+	FlavorText: Oblige l'ennemi à répéter la dernière capacité utilisée durant trois tours.
+}
+
+Pursuit: {
+	DisplayName: Poursuite
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+RapidSpin: {
+	DisplayName: Tour Rapide
+	FlavorText: Une attaque tournoyante pouvant aussi annuler, par exemple, Étreinte, Ligotage ou Vampigraine. Augmente également la Vitesse du lanceur.
+}
+
+SweetScent: {
+	DisplayName: Doux Parfum
+	FlavorText: Un doux parfum qui réduit beaucoup l'Esquive de l'ennemi.
+}
+
+IronTail: {
+	DisplayName: Queue de Fer
+	FlavorText: Attaque l'ennemi avec une queue de fer. Peut aussi baisser sa Défense.
+}
+
+MetalClaw: {
+	DisplayName: Griffe Acier
+	FlavorText: Attaque avec des griffes d'acier. Peut aussi augmenter l'Attaque du lanceur.
+}
+
+VitalThrow: {
+	DisplayName: Corps Perdu
+	FlavorText: Le lanceur porte son coup en dernier. En échange, cette capacité n'échoue jamais.
+}
+
+MorningSun: {
+	DisplayName: Aurore
+	FlavorText: Un soin qui restaure des PV au lanceur. Son efficacité varie en fonction de la météo.
+}
+
+Synthesis: {
+	DisplayName: Synthèse
+	FlavorText: Un soin qui restaure des PV au lanceur. Son efficacité varie en fonction de la météo.
+}
+
+Moonlight: {
+	DisplayName: Rayon Lune
+	FlavorText: Un soin qui restaure des PV au lanceur. Son efficacité varie en fonction de la météo.
+}
+
+HiddenPower: {
+	DisplayName: Puissance Cachée
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+CrossChop: {
+	DisplayName: Coup Croix
+	FlavorText: Le lanceur délivre un coup double en croisant les avant-bras. Taux de critiques élevé.
+}
+
+Twister: {
+	DisplayName: Ouragan
+	FlavorText: Déclenche un terrible ouragan sur l'ennemi. Peut aussi l'apeurer.
+}
+
+RainDance: {
+	DisplayName: Danse Pluie
+	FlavorText: Invoque de fortes pluies qui durent cinq tours, augmentant la puissance des capacités de type Eau et baissant celle des capacités de type Feu.
+}
+
+SunnyDay: {
+	DisplayName: Zénith
+	FlavorText: Fait briller le soleil pendant cinq tours, augmentant la puissance des capacités de type Feu et baissant celle des capacités de type Eau.
+}
+
+Crunch: {
+	DisplayName: Mâchouille
+	FlavorText: Le lanceur mord l'ennemi de ses crocs pointus. Peut aussi baisser sa Défense.
+}
+
+MirrorCoat: {
+	DisplayName: Voile Miroir
+	FlavorText: Une riposte qui contre n'importe quelle capacité spéciale en infligeant le double des dégâts subis.
+}
+
+PsychUp: {
+	DisplayName: Boost
+	FlavorText: Une autohypnose qui permet au lanceur de copier les changements de stats de la cible.
+}
+
+ExtremeSpeed: {
+	DisplayName: Vitesse Extrême
+	FlavorText: Le lanceur charge à une vitesse renversante. Frappe en priorité.
+}
+
+AncientPower: {
+	DisplayName: Pouvoir Antique
+	FlavorText: Une attaque préhistorique qui peut augmenter toutes les stats du lanceur d'un seul coup.
+}
+
+ShadowBall: {
+	DisplayName: Ball'Ombre
+	FlavorText: Projette une grande ombre sur l'ennemi. Peut aussi faire baisser sa Défense Spéciale.
+}
+
+FutureSight: {
+	DisplayName: Prescience
+	FlavorText: De l'énergie psychique vient frapper l'ennemi deux tours après l'utilisation de cette capacité.
+}
+
+RockSmash: {
+	DisplayName: Éclate-Roc
+	FlavorText: Porte un coup de poing à l'ennemi qui peut baisser sa Défense.
+}
+
+Whirlpool: {
+	DisplayName: Siphon
+	FlavorText: Piège l'ennemi dans une trombe d'eau pendant quatre à cinq tours.
+}
+
+BeatUp: {
+	DisplayName: Baston
+	FlavorText: Le lanceur appelle tous les Pokémon de son équipe à attaquer. Plus ils sont nombreux, plus il y a d'attaques.
+}
+
+FakeOut: {
+	DisplayName: Bluff
+	FlavorText: Permet de frapper en priorité et apeure l'ennemi. Ne fonctionne qu'au premier tour.
+}
+
+Uproar: {
+	DisplayName: Brouhaha
+	FlavorText: Le lanceur attaque en rugissant durant trois tours. Pendant ce temps, aucun Pokémon ne peut s'endormir.
+}
+
+Stockpile: {
+	DisplayName: Stockage
+	FlavorText: Le lanceur accumule de la puissance et augmente sa Défense et sa Défense Spéciale. Peut être utilisée trois fois.
+}
+
+SpitUp: {
+	DisplayName: Relâche
+	FlavorText: Libère dans une attaque la puissance précédemment accumulée avec Stockage.
+}
+
+Swallow: {
+	DisplayName: Avale
+	FlavorText: Le lanceur absorbe la puissance accumulée avec Stockage pour restaurer ses PV.
+}
+
+HeatWave: {
+	DisplayName: Canicule
+	FlavorText: Le lanceur provoque une vague de chaleur. Peut aussi brûler l'ennemi.
+}
+
+Hail: {
+	DisplayName: Grêle
+	FlavorText: Invoque une tempête de grêle qui dure cinq tours. Blesse tous les Pokémon, sauf ceux de type Glace.
+}
+
+Torment: {
+	DisplayName: Tourmente
+	FlavorText: Le lanceur irrite l'ennemi pour l'empêcher d'utiliser la même capacité deux fois de suite.
+}
+
+Flatter: {
+	DisplayName: Flatterie
+	FlavorText: Rend la cible confuse, mais augmente son Attaque Spéciale.
+}
+
+WillOWisp: {
+	DisplayName: Feu Follet
+	FlavorText: Lance un bouquet de flammes maléfiques à l'ennemi pour lui infliger une brûlure.
+}
+
+Memento: {
+	DisplayName: Souvenir
+	FlavorText: Le lanceur est mis K.O., mais l'Attaque et l'Attaque Spéciale de l'ennemi baissent beaucoup.
+}
+
+Facade: {
+	DisplayName: Façade
+	FlavorText: Une attaque dont la puissance double lorsque le lanceur est empoisonné, paralysé ou brûlé.
+}
+
+FocusPunch: {
+	DisplayName: Mitra-Poing
+	FlavorText: Le lanceur se concentre avant d'attaquer. Échoue s'il est touché avant d'avoir frappé.
+}
+
+SmellingSalts: {
+	DisplayName: Stimulant
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FollowMe: {
+	DisplayName: Par Ici
+	FlavorText: Attire l'attention des ennemis pour les forcer à n'attaquer que le lanceur.
+}
+
+NaturePower: {
+	DisplayName: Force Nature
+	FlavorText: Une attaque qui tire sa force de la nature. Son type varie selon le terrain.
+}
+
+Charge: {
+	DisplayName: Chargeur
+	FlavorText: Le lanceur concentre sa puissance pour sa prochaine attaque Électrik. Augmente sa Défense Spéciale.
+}
+
+Taunt: {
+	DisplayName: Provoc
+	FlavorText: Provoque l'ennemi. L'oblige à n'utiliser que des attaques pendant trois tours.
+}
+
+HelpingHand: {
+	DisplayName: Coup d'Main
+	FlavorText: Une capacité qui augmente la puissance d'attaque d'un allié.
+}
+
+Trick: {
+	DisplayName: Tour de Magie
+	FlavorText: Le lanceur prend la cible au dépourvu et l'oblige à échanger son objet contre le sien.
+}
+
+RolePlay: {
+	DisplayName: Imitation
+	FlavorText: Imite la cible et copie son talent.
+}
+
+Wish: {
+	DisplayName: Vœu
+	FlavorText: Un vœu qui permet au lanceur ou au Pokémon entrant sur le terrain au tour suivant de récupérer la moitié des PV max du lanceur.
+}
+
+Assist: {
+	DisplayName: Assistance
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Ingrain: {
+	DisplayName: Racines
+	FlavorText: Le lanceur plante ses racines et récupère des PV à chaque tour. Une fois enraciné, il ne peut plus fuir.
+}
+
+Superpower: {
+	DisplayName: Surpuissance
+	FlavorText: Une attaque puissante, mais qui baisse l'Attaque et la Défense du lanceur.
+}
+
+MagicCoat: {
+	DisplayName: Reflet Magik
+	FlavorText: Une barrière qui renvoie les capacités comme Vampigraine et celles affectant le statut et les stats.
+}
+
+Recycle: {
+	DisplayName: Recyclage
+	FlavorText: Recycle un objet tenu à usage unique déjà utilisé lors du combat pour pouvoir l'utiliser à nouveau.
+}
+
+Revenge: {
+	DisplayName: Vendetta
+	FlavorText: Une attaque deux fois plus puissante si le lanceur a été blessé par l'ennemi durant ce tour.
+}
+
+BrickBreak: {
+	DisplayName: Casse-Brique
+	FlavorText: Le lanceur attaque avec le tranchant de la main. Permet aussi de briser les barrières comme Mur Lumière et Protection.
+}
+
+Yawn: {
+	DisplayName: Bâillement
+	FlavorText: Fait bâiller l'ennemi qui s'endort au tour suivant.
+}
+
+KnockOff: {
+	DisplayName: Sabotage
+	FlavorText: Fait plus de dégâts aux cibles qui tiennent un objet. De plus, fait tomber cet objet et empêche la cible de l'utiliser jusqu'à la fin du combat.
+}
+
+Endeavor: {
+	DisplayName: Effort
+	FlavorText: Une attaque qui réduit les PV de l'ennemi au niveau des PV du lanceur.
+}
+
+Eruption: {
+	DisplayName: Éruption
+	FlavorText: Le lanceur laisse exploser sa colère. Plus ses PV sont bas, moins l'attaque est puissante.
+}
+
+SkillSwap: {
+	DisplayName: Échange
+	FlavorText: Le lanceur utilise ses pouvoirs psychiques pour échanger son talent avec la cible.
+}
+
+Imprison: {
+	DisplayName: Possessif
+	FlavorText: Si l'ennemi et le lanceur ont des capacités en commun, l'ennemi ne pourra pas les utiliser.
+}
+
+Refresh: {
+	DisplayName: Régénération
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Grudge: {
+	DisplayName: Rancune
+	FlavorText: Si le lanceur est mis K.O., sa rancune épuise les PP de la capacité utilisée par l'ennemi pour le mettre K.O.
+}
+
+Snatch: {
+	DisplayName: Saisie
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SecretPower: {
+	DisplayName: Force Cachée
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Dive: {
+	DisplayName: Plongée
+	FlavorText: Le lanceur plonge sous l'eau au premier tour et frappe au second.
+}
+
+ArmThrust: {
+	DisplayName: Cogne
+	FlavorText: Un déluge de coups adressés avec la paume qui frappe de deux à cinq fois d'affilée.
+}
+
+Camouflage: {
+	DisplayName: Camouflage
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+TailGlow: {
+	DisplayName: Lumi-Queue
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+LusterPurge: {
+	DisplayName: Lumi-Éclat
+	FlavorText: Le lanceur libère un éclair lumineux. Peut aussi baisser la Défense Spéciale de l'ennemi.
+}
+
+MistBall: {
+	DisplayName: Ball'Brume
+	FlavorText: Une bulle de brume inflige des dégâts à l'ennemi. Peut aussi réduire son Attaque Spéciale.
+}
+
+FeatherDance: {
+	DisplayName: Danse Plumes
+	FlavorText: Une montagne de plumes ensevelit l'ennemi et réduit beaucoup son Attaque.
+}
+
+TeeterDance: {
+	DisplayName: Danse Folle
+	FlavorText: Danse qui rend confus tous les Pokémon autour du lanceur.
+}
+
+BlazeKick: {
+	DisplayName: Pied Brûleur
+	FlavorText: Le lanceur envoie un coup de pied au taux de critiques élevé. Peut aussi brûler la cible.
+}
+
+MudSport: {
+	DisplayName: Lance-Boue
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+IceBall: {
+	DisplayName: Ball'Glace
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+NeedleArm: {
+	DisplayName: Poing Dard
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SlackOff: {
+	DisplayName: Paresse
+	FlavorText: Le lanceur se tourne les pouces et récupère jusqu'à la moitié de ses PV max.
+}
+
+HyperVoice: {
+	DisplayName: Mégaphone
+	FlavorText: Le lanceur pousse un cri dont l'écho terrifiant a le pouvoir d'infliger des dégâts à l'ennemi.
+}
+
+PoisonFang: {
+	DisplayName: Crochet Venin
+	FlavorText: Le lanceur mord l'ennemi de ses crocs toxiques. Peut aussi l'empoisonner gravement.
+}
+
+CrushClaw: {
+	DisplayName: Éclate Griffe
+	FlavorText: Lacère l'ennemi avec des griffes solides et aiguisées. Peut aussi baisser sa Défense.
+}
+
+BlastBurn: {
+	DisplayName: Rafale Feu
+	FlavorText: Une explosion ardente souffle l'adversaire. Le lanceur doit se reposer au tour suivant.
+}
+
+HydroCannon: {
+	DisplayName: Hydroblast
+	FlavorText: Une trombe d'eau heurte l'ennemi. Le lanceur doit se reposer au tour suivant.
+}
+
+MeteorMash: {
+	DisplayName: Poing Météore
+	FlavorText: Un coup de poing lancé à la vitesse d'un météore. Peut aussi augmenter l'Attaque du lanceur.
+}
+
+Astonish: {
+	DisplayName: Étonnement
+	FlavorText: Le lanceur attaque l'ennemi en poussant un cri terrifiant. Peut aussi l'apeurer.
+}
+
+WeatherBall: {
+	DisplayName: Ball'Météo
+	FlavorText: Une attaque dont la puissance et le type varient en fonction du temps qu'il fait.
+}
+
+Aromatherapy: {
+	DisplayName: Aromathérapie
+	FlavorText: Le lanceur libère un parfum apaisant qui guérit toutes les altérations de statut de l'équipe.
+}
+
+FakeTears: {
+	DisplayName: Croco Larme
+	FlavorText: Le lanceur fait semblant de pleurer pour troubler l'ennemi et beaucoup baisser sa Défense Spéciale.
+}
+
+AirCutter: {
+	DisplayName: Tranch'Air
+	FlavorText: Le lanceur appelle des vents tranchants qui lacèrent l'ennemi. Taux de critiques élevé.
+}
+
+Overheat: {
+	DisplayName: Surchauffe
+	FlavorText: Attaque l'ennemi à pleine puissance. Le contrecoup baisse beaucoup l'Attaque Spéciale du lanceur.
+}
+
+OdorSleuth: {
+	DisplayName: Flair
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+RockTomb: {
+	DisplayName: Tomberoche
+	FlavorText: Des rochers frappent l'ennemi. Réduit aussi sa Vitesse.
+}
+
+SilverWind: {
+	DisplayName: Vent Argenté
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MetalSound: {
+	DisplayName: Strido-Son
+	FlavorText: Un cri horrible tel un crissement métallique qui réduit beaucoup la Défense Spéciale de l'ennemi.
+}
+
+GrassWhistle: {
+	DisplayName: Siffl'Herbe
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Tickle: {
+	DisplayName: Chatouille
+	FlavorText: Le lanceur chatouille l'ennemi, ce qui baisse son Attaque et sa Défense.
+}
+
+CosmicPower: {
+	DisplayName: Force Cosmique
+	FlavorText: Le lanceur absorbe un pouvoir mystique spatial qui augmente sa Défense et sa Défense Spéciale.
+}
+
+WaterSpout: {
+	DisplayName: Giclédo
+	FlavorText: Le lanceur attaque avec un jet d'eau. Moins il a de PV et moins l'attaque est puissante.
+}
+
+SignalBeam: {
+	DisplayName: Rayon Signal
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ShadowPunch: {
+	DisplayName: Poing Ombre
+	FlavorText: Le lanceur surgit des ombres et donne un coup de poing. N'échoue jamais.
+}
+
+Extrasensory: {
+	DisplayName: Extrasenseur
+	FlavorText: Le lanceur attaque avec un pouvoir étrange et invisible. Peut aussi apeurer l'ennemi.
+}
+
+SkyUppercut: {
+	DisplayName: Stratopercut
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SandTomb: {
+	DisplayName: Tourbi-Sable
+	FlavorText: Le lanceur emprisonne l'ennemi dans une tempête de sable terrifiante qui dure de quatre à cinq tours.
+}
+
+SheerCold: {
+	DisplayName: Glaciation
+	FlavorText: Une vague de froid glacial frappe l'ennemi pour le mettre K.O. en un coup. A peu de chances de réussir si le lanceur ne possède pas le type Glace.
+}
+
+MuddyWater: {
+	DisplayName: Ocroupi
+	FlavorText: Le lanceur attaque en projetant de l'eau boueuse. Peut aussi réduire la Précision de l'ennemi.
+}
+
+BulletSeed: {
+	DisplayName: Balle Graine
+	FlavorText: Le lanceur mitraille l'ennemi avec une rafale de graines. De deux à cinq rafales sont lancées à la suite.
+}
+
+AerialAce: {
+	DisplayName: Aéropique
+	FlavorText: Le lanceur prend l'ennemi de vitesse et le lacère. N'échoue jamais.
+}
+
+IcicleSpear: {
+	DisplayName: Stalactite
+	FlavorText: Le lanceur jette des pics de glace sur l'ennemi, de deux à cinq fois de suite.
+}
+
+IronDefense: {
+	DisplayName: Mur de Fer
+	FlavorText: L'épiderme du lanceur devient dur comme du fer, ce qui augmente beaucoup sa Défense.
+}
+
+Block: {
+	DisplayName: Barrage
+	FlavorText: Le lanceur bloque la route de l'ennemi pour empêcher sa fuite.
+}
+
+Howl: {
+	DisplayName: Grondement
+	FlavorText: Le lanceur grogne pour se rassurer, ce qui augmente son Attaque et celle de ses alliés.
+}
+
+DragonClaw: {
+	DisplayName: Draco-Griffe
+	FlavorText: Le lanceur lacère l'ennemi de ses grandes griffes aiguisées.
+}
+
+FrenzyPlant: {
+	DisplayName: Végé-Attaque
+	FlavorText: Un violent coup de racines s'abat sur l'ennemi. Immobilise le lanceur au tour suivant.
+}
+
+BulkUp: {
+	DisplayName: Gonflette
+	FlavorText: Le lanceur tend ses muscles pour se gonfler, ce qui booste son Attaque et sa Défense.
+}
+
+Bounce: {
+	DisplayName: Rebond
+	FlavorText: Le lanceur bondit très haut et plonge sur l'ennemi au second tour. Peut aussi le paralyser.
+}
+
+MudShot: {
+	DisplayName: Tir de Boue
+	FlavorText: Le lanceur attaque en projetant de la boue sur l'ennemi. Réduit aussi la Vitesse de la cible.
+}
+
+PoisonTail: {
+	DisplayName: Queue-Poison
+	FlavorText: Attaque à taux de critiques élevé. Peut aussi empoisonner l'ennemi.
+}
+
+Covet: {
+	DisplayName: Implore
+	FlavorText: Le lanceur s'approche de la cible avec un air angélique afin de dérober l'objet qu'elle tient.
+}
+
+VoltTackle: {
+	DisplayName: Électacle
+	FlavorText: Le lanceur électrifie son corps avant de charger. Le choc blesse aussi gravement le lanceur et peut paralyser l'ennemi.
+}
+
+MagicalLeaf: {
+	DisplayName: Feuille Magik
+	FlavorText: Le lanceur disperse d'étranges feuilles qui poursuivent l'ennemi. N'échoue jamais.
+}
+
+WaterSport: {
+	DisplayName: Tourniquet
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+CalmMind: {
+	DisplayName: Plénitude
+	FlavorText: Le lanceur se concentre et fait le vide dans son esprit pour augmenter son Attaque Spéciale et sa Défense Spéciale.
+}
+
+LeafBlade: {
+	DisplayName: Lame Feuille
+	FlavorText: Une feuille coupante comme une lame entaille l'ennemi. Taux de critiques élevé.
+}
+
+DragonDance: {
+	DisplayName: Danse Draco
+	FlavorText: Une danse mystique dont le rythme effréné augmente l'Attaque et la Vitesse du lanceur.
+}
+
+RockBlast: {
+	DisplayName: Boule Roc
+	FlavorText: Le lanceur projette un rocher sur l'ennemi de deux à cinq fois d'affilée.
+}
+
+ShockWave: {
+	DisplayName: Onde de Choc
+	FlavorText: Le lanceur envoie un choc électrique rapide à l'ennemi. Impossible à esquiver.
+}
+
+WaterPulse: {
+	DisplayName: Vibraqua
+	FlavorText: Le lanceur envoie un puissant jet d'eau sur l'ennemi. Peut le rendre confus.
+}
+
+DoomDesire: {
+	DisplayName: Vœu Destructeur
+	FlavorText: Le lanceur génère une sphère lumineuse qu'il projette sur l'ennemi deux tours plus tard.
+}
+
+PsychoBoost: {
+	DisplayName: Psycho-Boost
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Roost: {
+	DisplayName: Atterrissage
+	FlavorText: Le lanceur atterrit et se repose. Restaure jusqu'à la moitié de ses PV max.
+}
+
+Gravity: {
+	DisplayName: Gravité
+	FlavorText: Pendant cinq tours, les Pokémon Vol ou qui ont Lévitation deviennent sensibles aux capacités Sol, et les capacités volantes deviennent inutilisables.
+}
+
+MiracleEye: {
+	DisplayName: Œil Miracle
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+WakeUpSlap: {
+	DisplayName: Réveil Forcé
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+HammerArm: {
+	DisplayName: Marto-Poing
+	FlavorText: Le lanceur donne un puissant coup de poing à l'ennemi. Réduit la Vitesse du lanceur.
+}
+
+GyroBall: {
+	DisplayName: Gyroballe
+	FlavorText: Le lanceur effectue une rotation et frappe l'ennemi. Plus la Vitesse du lanceur est basse, plus il inflige de dégâts.
+}
+
+HealingWish: {
+	DisplayName: Vœu Soin
+	FlavorText: Le lanceur tombe K.O. pour soigner les PV et le statut du Pokémon qui passe après lui.
+}
+
+Brine: {
+	DisplayName: Saumure
+	FlavorText: Cette attaque est deux fois plus puissante lorsque l'ennemi a moins de la moitié de ses PV.
+}
+
+NaturalGift: {
+	DisplayName: Don Naturel
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Feint: {
+	DisplayName: Ruse
+	FlavorText: Une attaque capable de toucher un ennemi qui utilise une capacité comme Détection ou Abri. Annule l'effet de ces capacités.
+}
+
+Pluck: {
+	DisplayName: Picore
+	FlavorText: Le lanceur picore la cible. Si cette dernière tient une Baie, le lanceur la mange et profite de ses effets.
+}
+
+Tailwind: {
+	DisplayName: Vent Arrière
+	FlavorText: Génère une rafale de vent qui augmente la Vitesse des Pokémon de l'équipe pendant quatre tours.
+}
+
+Acupressure: {
+	DisplayName: Acupression
+	FlavorText: Le lanceur utilise sa connaissance des points de pression pour beaucoup augmenter une stat.
+}
+
+MetalBurst: {
+	DisplayName: Fulmifer
+	FlavorText: Le lanceur attaque le dernier ennemi l'ayant blessé durant le même tour en frappant plus fort.
+}
+
+UTurn: {
+	DisplayName: Demi-Tour
+	FlavorText: Après son attaque, le lanceur revient à toute vitesse et change de place avec un Pokémon de l'équipe prêt au combat.
+}
+
+CloseCombat: {
+	DisplayName: Close Combat
+	FlavorText: Le lanceur combat au corps à corps sans se protéger. Baisse aussi sa Défense et sa Défense Spéciale.
+}
+
+Payback: {
+	DisplayName: Représailles
+	FlavorText: Le lanceur charge son énergie, puis attaque. La puissance est doublée si le lanceur agit après l'ennemi.
+}
+
+Assurance: {
+	DisplayName: Assurance
+	FlavorText: Cette attaque est deux fois plus efficace si l'ennemi a déjà été blessé durant ce tour.
+}
+
+Embargo: {
+	DisplayName: Embargo
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Fling: {
+	DisplayName: Dégommage
+	FlavorText: Le lanceur envoie l'objet qu'il tient sur l'ennemi. La puissance et les effets dépendent de l'objet.
+}
+
+PsychoShift: {
+	DisplayName: Échange Psy
+	FlavorText: Le lanceur transfère ses problèmes de statut à l'ennemi grâce à son pouvoir de suggestion.
+}
+
+TrumpCard: {
+	DisplayName: Atout
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+HealBlock: {
+	DisplayName: Anti-Soin
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+WringOut: {
+	DisplayName: Essorage
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+PowerTrick: {
+	DisplayName: Astuce Force
+	FlavorText: Le lanceur utilise ses pouvoirs psychiques pour échanger sa Défense et son Attaque.
+}
+
+GastroAcid: {
+	DisplayName: Suc Digestif
+	FlavorText: Le lanceur répand ses sucs digestifs sur l'ennemi. Le fluide neutralise le talent de l'ennemi.
+}
+
+LuckyChant: {
+	DisplayName: Air Veinard
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MeFirst: {
+	DisplayName: Moi d'Abord
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Copycat: {
+	DisplayName: Photocopie
+	FlavorText: Le lanceur imite la dernière capacité employée. Échoue si aucune capacité n'a été utilisée.
+}
+
+PowerSwap: {
+	DisplayName: Permuforce
+	FlavorText: Pouvoir qui échange les modifications de l'Attaque Spéciale et de l'Attaque du lanceur avec la cible.
+}
+
+GuardSwap: {
+	DisplayName: Permugarde
+	FlavorText: Pouvoir qui échange les modifications de la Défense Spéciale et de la Défense avec la cible.
+}
+
+Punishment: {
+	DisplayName: Punition
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+LastResort: {
+	DisplayName: Dernier Recours
+	FlavorText: Cette capacité ne peut être utilisée qu'après que le lanceur a utilisé toutes les autres.
+}
+
+WorrySeed: {
+	DisplayName: Soucigraine
+	FlavorText: Plante sur la cible une graine qui la rend soucieuse et remplace son talent par Insomnia, l'empêchant ainsi de dormir.
+}
+
+SuckerPunch: {
+	DisplayName: Coup Bas
+	FlavorText: Permet au lanceur de frapper en priorité. Échoue si l'ennemi ne prépare pas une attaque.
+}
+
+ToxicSpikes: {
+	DisplayName: Pics Toxik
+	FlavorText: Lance des pics autour de l'ennemi. Ils empoisonnent les ennemis qui entrent au combat.
+}
+
+HeartSwap: {
+	DisplayName: Permucœur
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+AquaRing: {
+	DisplayName: Anneau Hydro
+	FlavorText: Un voile d'eau recouvre le lanceur et régénère ses PV à chaque tour.
+}
+
+MagnetRise: {
+	DisplayName: Vol Magnétik
+	FlavorText: Le lanceur utilise l'électricité pour générer un champ magnétique et léviter durant cinq tours.
+}
+
+FlareBlitz: {
+	DisplayName: Boutefeu
+	FlavorText: Le lanceur s'embrase avant de charger l'ennemi. Le choc blesse aussi gravement le lanceur. Peut brûler l'ennemi.
+}
+
+ForcePalm: {
+	DisplayName: Forte-Paume
+	FlavorText: Une onde de choc frappe l'ennemi. Peut aussi paralyser la cible.
+}
+
+AuraSphere: {
+	DisplayName: Aurasphère
+	FlavorText: Le lanceur dégage une aura et projette de l'énergie. N'échoue jamais.
+}
+
+RockPolish: {
+	DisplayName: Poliroche
+	FlavorText: Le lanceur polit son corps pour diminuer sa résistance au vent. Augmente beaucoup la Vitesse.
+}
+
+PoisonJab: {
+	DisplayName: Direct Toxik
+	FlavorText: Attaque l'ennemi avec un tentacule, un bras, ou un autre membre plein de poison. Peut aussi l'empoisonner.
+}
+
+DarkPulse: {
+	DisplayName: Vibrobscur
+	FlavorText: Le lanceur dégage une horrible aura chargée de pensées maléfiques. Peut aussi apeurer l'ennemi.
+}
+
+NightSlash: {
+	DisplayName: Tranche-Nuit
+	FlavorText: Le lanceur lacère l'ennemi à la première occasion. Taux de critiques élevé.
+}
+
+AquaTail: {
+	DisplayName: Hydro-Queue
+	FlavorText: Le lanceur attaque en balançant sa queue comme une lame de fond en pleine tempête.
+}
+
+SeedBomb: {
+	DisplayName: Canon Graine
+	FlavorText: Le lanceur fait pleuvoir un déluge de graines explosives sur l'ennemi.
+}
+
+AirSlash: {
+	DisplayName: Lame d'Air
+	FlavorText: Le lanceur attaque avec une lame d'air qui fend tout. Peut aussi apeurer l'ennemi.
+}
+
+XScissor: {
+	DisplayName: Plaie Croix
+	FlavorText: Le lanceur taillade l'ennemi en utilisant ses faux ou ses griffes comme une paire de ciseaux.
+}
+
+BugBuzz: {
+	DisplayName: Bourdon
+	FlavorText: Le lanceur fait vibrer son corps pour lancer une vague sonique. Peut aussi baisser la Défense Spéciale de l'ennemi.
+}
+
+DragonPulse: {
+	DisplayName: Draco-Choc
+	FlavorText: Le lanceur ouvre la bouche pour envoyer une onde de choc qui frappe l'ennemi.
+}
+
+DragonRush: {
+	DisplayName: Draco-Charge
+	FlavorText: Le lanceur frappe l'ennemi en prenant un air menaçant. Peut aussi l'apeurer.
+}
+
+PowerGem: {
+	DisplayName: Rayon Gemme
+	FlavorText: Le lanceur attaque avec un rayon de lumière qui scintille comme s'il était composé de gemmes.
+}
+
+DrainPunch: {
+	DisplayName: Vampi-Poing
+	FlavorText: Un coup de poing qui draine l'énergie. Convertit la moitié des dégâts infligés en PV pour le lanceur.
+}
+
+VacuumWave: {
+	DisplayName: Onde Vide
+	FlavorText: Le lanceur agite son poing pour projeter une onde de vide. Frappe en priorité.
+}
+
+FocusBlast: {
+	DisplayName: Exploforce
+	FlavorText: Le lanceur rassemble ses forces et laisse éclater son pouvoir. Peut aussi baisser la Défense Spéciale de l'ennemi.
+}
+
+EnergyBall: {
+	DisplayName: Éco-Sphère
+	FlavorText: Utilise les pouvoirs de la nature pour attaquer l'ennemi. Peut aussi baisser sa Défense Spéciale.
+}
+
+BraveBird: {
+	DisplayName: Rapace
+	FlavorText: Le lanceur replie ses ailes et charge en rase-mottes. Blesse gravement le lanceur.
+}
+
+EarthPower: {
+	DisplayName: Telluriforce
+	FlavorText: De terribles séismes secouent l'ennemi. Peut aussi baisser sa Défense Spéciale.
+}
+
+Switcheroo: {
+	DisplayName: Passe-Passe
+	FlavorText: Le lanceur échange son objet avec celui de la cible à une vitesse que l'œil a du mal à suivre.
+}
+
+GigaImpact: {
+	DisplayName: Giga Impact
+	FlavorText: Le lanceur charge l'ennemi de toute sa puissance et doit ensuite se reposer au tour suivant.
+}
+
+NastyPlot: {
+	DisplayName: Machination
+	FlavorText: Stimule l'esprit par de mauvaises pensées. Augmente beaucoup l'Attaque Spéciale du lanceur.
+}
+
+BulletPunch: {
+	DisplayName: Pisto-Poing
+	FlavorText: Le lanceur envoie des coups de poing aussi rapides que des balles de revolver. Frappe en priorité.
+}
+
+Avalanche: {
+	DisplayName: Avalanche
+	FlavorText: Une attaque deux fois plus puissante si le lanceur a été blessé par l'ennemi durant le tour.
+}
+
+IceShard: {
+	DisplayName: Éclats Glace
+	FlavorText: Le lanceur crée des éclats de glace qu'il envoie sur l'ennemi. Frappe en priorité.
+}
+
+ShadowClaw: {
+	DisplayName: Griffe Ombre
+	FlavorText: Attaque avec une griffe puissante faite d'ombres. Taux de critiques élevé.
+}
+
+ThunderFang: {
+	DisplayName: Crocs Éclair
+	FlavorText: Le lanceur utilise une morsure électrifiée. Peut aussi paralyser ou apeurer l'ennemi.
+}
+
+IceFang: {
+	DisplayName: Crocs Givre
+	FlavorText: Le lanceur utilise une morsure glaciale. Peut aussi geler ou apeurer l'ennemi.
+}
+
+FireFang: {
+	DisplayName: Crocs Feu
+	FlavorText: Le lanceur utilise une morsure enflammée. Peut aussi brûler ou apeurer l'ennemi.
+}
+
+ShadowSneak: {
+	DisplayName: Ombre Portée
+	FlavorText: Le lanceur étend son ombre pour frapper par-derrière. Frappe en priorité.
+}
+
+MudBomb: {
+	DisplayName: Boue-Bombe
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+PsychoCut: {
+	DisplayName: Coupe Psycho
+	FlavorText: Le lanceur entaille l'ennemi grâce à des lames faites d'énergie psychique. Taux de critiques élevé.
+}
+
+ZenHeadbutt: {
+	DisplayName: Psykoud'Boul
+	FlavorText: Le lanceur concentre sa volonté et donne un coup de tête. Peut aussi apeurer l'ennemi.
+}
+
+MirrorShot: {
+	DisplayName: Miroi-Tir
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FlashCannon: {
+	DisplayName: Luminocanon
+	FlavorText: Le lanceur concentre son énergie lumineuse et la fait exploser. Peut aussi baisser la Défense Spéciale de l'ennemi.
+}
+
+RockClimb: {
+	DisplayName: Escalade
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Defog: {
+	DisplayName: Anti-Brume
+	FlavorText: Un grand coup de vent qui disperse la Protection ou le Mur Lumière de l'ennemi. Diminue aussi son Esquive.
+}
+
+TrickRoom: {
+	DisplayName: Distorsion
+	FlavorText: Le lanceur crée une zone mystérieuse où les Pokémon les plus lents frappent en priorité pendant cinq tours.
+}
+
+DracoMeteor: {
+	DisplayName: Draco-Météore
+	FlavorText: Le lanceur invoque des comètes. Le contrecoup réduit beaucoup son Attaque Spéciale.
+}
+
+Discharge: {
+	DisplayName: Coup d'Jus
+	FlavorText: Un flamboiement d'électricité frappe tous les Pokémon autour du lanceur. Peut aussi les paralyser.
+}
+
+LavaPlume: {
+	DisplayName: Ébullilave
+	FlavorText: Des boules de feu s'abattent sur tous les Pokémon autour du lanceur. Peut aussi les brûler.
+}
+
+LeafStorm: {
+	DisplayName: Tempête Verte
+	FlavorText: Invoque une tempête de feuilles acérées. Le contrecoup réduit beaucoup l'Attaque Spéciale du lanceur.
+}
+
+PowerWhip: {
+	DisplayName: Mégafouet
+	FlavorText: Le lanceur fait virevolter violemment ses lianes ou ses tentacules pour fouetter l'ennemi.
+}
+
+RockWrecker: {
+	DisplayName: Roc-Boulet
+	FlavorText: Le lanceur attaque en projetant un gros rocher sur l'ennemi. Il doit se reposer au tour suivant.
+}
+
+CrossPoison: {
+	DisplayName: Poison Croix
+	FlavorText: Un coup tranchant qui peut empoisonner l'ennemi. Taux de critiques élevé.
+}
+
+GunkShot: {
+	DisplayName: Détricanon
+	FlavorText: Le lanceur envoie des détritus sur l'ennemi. Peut aussi l'empoisonner.
+}
+
+IronHead: {
+	DisplayName: Tête de Fer
+	FlavorText: Le lanceur heurte l'ennemi avec sa tête dure comme de l'acier. Peut aussi l'apeurer.
+}
+
+MagnetBomb: {
+	DisplayName: Bombe Aimant
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+StoneEdge: {
+	DisplayName: Lame de Roc
+	FlavorText: Fait surgir des pierres aiguisées sous l'ennemi. Taux de critiques élevé.
+}
+
+Captivate: {
+	DisplayName: Séduction
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+StealthRock: {
+	DisplayName: Piège de Roc
+	FlavorText: Lance des pierres flottantes autour de l'ennemi, qui blessent tout adversaire entrant au combat.
+}
+
+GrassKnot: {
+	DisplayName: Nœud Herbe
+	FlavorText: L'ennemi est piégé dans de l'herbe qui le fait trébucher. Plus il est lourd, plus il subit de dégâts.
+}
+
+Chatter: {
+	DisplayName: Babil
+	FlavorText: Attaque avec les ondes sonores assourdissantes qu'il émet en bavardant. Rend l'ennemi confus.
+}
+
+Judgment: {
+	DisplayName: Jugement
+	FlavorText: Le lanceur libère une myriade de rayons de lumière. Le type varie selon la Plaque que tient le lanceur.
+}
+
+BugBite: {
+	DisplayName: Piqûre
+	FlavorText: Le lanceur pique l'ennemi. Si ce dernier tient une Baie, le lanceur la dévore et obtient son effet.
+}
+
+ChargeBeam: {
+	DisplayName: Rayon Chargé
+	FlavorText: Le lanceur tire un rayon chargé d'électricité. Peut aussi augmenter son Attaque Spéciale.
+}
+
+WoodHammer: {
+	DisplayName: Martobois
+	FlavorText: Le lanceur heurte l'ennemi de son corps robuste. Blesse aussi gravement le lanceur.
+}
+
+AquaJet: {
+	DisplayName: Aqua-Jet
+	FlavorText: Le lanceur fonce sur l'ennemi si rapidement qu'on parvient à peine à le discerner. Frappe en priorité.
+}
+
+AttackOrder: {
+	DisplayName: Appel Attaque
+	FlavorText: Le lanceur appelle ses sous-fifres pour frapper l'ennemi. Taux de critiques élevé.
+}
+
+DefendOrder: {
+	DisplayName: Appel Défense
+	FlavorText: Le lanceur appelle ses sous-fifres pour former un bouclier qui augmente sa Défense et sa Défense Spéciale.
+}
+
+HealOrder: {
+	DisplayName: Appel Soins
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+HeadSmash: {
+	DisplayName: Fracass'Tête
+	FlavorText: Le lanceur assène un coup de tête désespéré. Blesse aussi gravement le lanceur.
+}
+
+DoubleHit: {
+	DisplayName: Coup Double
+	FlavorText: Le lanceur frappe l'ennemi deux fois d'affilée à l'aide de sa queue, de lianes ou d'un autre membre.
+}
+
+RoarOfTime: {
+	DisplayName: Hurle-Temps
+	FlavorText: Le lanceur frappe si fort qu'il affecte le cours du temps. Il se repose au tour suivant.
+}
+
+SpacialRend: {
+	DisplayName: Spatio-Rift
+	FlavorText: Le lanceur déchire l'ennemi et l'espace autour de lui. Taux de critiques élevé.
+}
+
+LunarDance: {
+	DisplayName: Danse Lune
+	FlavorText: Le lanceur tombe K.O. pour soigner le statut et les PV du Pokémon qui prendra sa place au combat.
+}
+
+CrushGrip: {
+	DisplayName: Presse
+	FlavorText: Une force puissante écrase l'ennemi. Plus il lui reste de PV et plus l'attaque est puissante.
+}
+
+MagmaStorm: {
+	DisplayName: Vortex Magma
+	FlavorText: L'ennemi est pris dans un tourbillon de feu qui dure de quatre à cinq tours.
+}
+
+DarkVoid: {
+	DisplayName: Trou Noir
+	FlavorText: L'ennemi est plongé dans les ténèbres. Il tombe dans un profond sommeil.
+}
+
+SeedFlare: {
+	DisplayName: Fulmigraine
+	FlavorText: Le corps du lanceur émet une onde de choc. Peut aussi beaucoup baisser la Défense Spéciale de la cible.
+}
+
+OminousWind: {
+	DisplayName: Vent Mauvais
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ShadowForce: {
+	DisplayName: Revenant
+	FlavorText: Le lanceur disparaît et frappe l'ennemi au second tour. Fonctionne même si l'ennemi se protège.
+}
+
+HoneClaws: {
+	DisplayName: Aiguisage
+	FlavorText: Le lanceur s'aiguise les griffes. Augmente l'Attaque et la Précision.
+}
+
+WideGuard: {
+	DisplayName: Garde Large
+	FlavorText: Annule les attaques visant toute l'équipe pendant un tour.
+}
+
+GuardSplit: {
+	DisplayName: Partage Garde
+	FlavorText: Additionne la Défense et la Défense Spéciale du lanceur et de sa cible et les redistribue équitablement entre les deux.
+}
+
+PowerSplit: {
+	DisplayName: Partage Force
+	FlavorText: Additionne l'Attaque Spéciale et l'Attaque du lanceur et de sa cible et les redistribue équitablement entre les deux.
+}
+
+WonderRoom: {
+	DisplayName: Zone Étrange
+	FlavorText: Le lanceur crée une zone mystérieuse où la Défense et la Défense Spéciale de tous les Pokémon sont inversées pendant cinq tours.
+}
+
+Psyshock: {
+	DisplayName: Choc Psy
+	FlavorText: Le lanceur matérialise des ondes mystérieuses qu'il projette sur l'ennemi. Inflige des dégâts physiques.
+}
+
+Venoshock: {
+	DisplayName: Choc Venin
+	FlavorText: Le lanceur inocule un poison spécial à l'ennemi. L'effet est doublé si l'ennemi est déjà empoisonné.
+}
+
+Autotomize: {
+	DisplayName: Allègement
+	FlavorText: Le lanceur se débarrasse des parties inutiles de son corps. Son poids diminue et sa Vitesse augmente beaucoup.
+}
+
+RagePowder: {
+	DisplayName: Poudre Fureur
+	FlavorText: Le lanceur s'asperge d'une poudre irritante pour attirer l'attention. Il attire toutes les attaques ennemies.
+}
+
+Telekinesis: {
+	DisplayName: Lévikinésie
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MagicRoom: {
+	DisplayName: Zone Magique
+	FlavorText: Le lanceur crée une zone mystérieuse où les objets tenus par tous les Pokémon n'ont plus aucun effet pendant cinq tours.
+}
+
+SmackDown: {
+	DisplayName: Anti-Air
+	FlavorText: Le lanceur jette toutes sortes de projectiles à un ennemi. Si ce dernier vole, il tombe au sol.
+}
+
+StormThrow: {
+	DisplayName: Yama Arashi
+	FlavorText: Un coup très puissant dont l'effet est toujours critique.
+}
+
+FlameBurst: {
+	DisplayName: Rebondifeu
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SludgeWave: {
+	DisplayName: Cradovague
+	FlavorText: Une vague de détritus attaque tous les Pokémon autour du lanceur. Peut aussi empoisonner.
+}
+
+QuiverDance: {
+	DisplayName: Papillodanse
+	FlavorText: Une danse mystique dont le rythme parfait augmente l'Attaque Spéciale, la Défense Spéciale et la Vitesse du lanceur.
+}
+
+HeavySlam: {
+	DisplayName: Tacle Lourd
+	FlavorText: Le lanceur se jette sur l'ennemi de tout son poids. S'il est plus lourd que l'ennemi, l'effet augmente en conséquence.
+}
+
+Synchronoise: {
+	DisplayName: Synchropeine
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ElectroBall: {
+	DisplayName: Boule Élek
+	FlavorText: Le lanceur envoie une boule d'électricité. Si sa Vitesse est plus grande que celle de l'ennemi, les dégâts augmentent d'autant.
+}
+
+Soak: {
+	DisplayName: Détrempage
+	FlavorText: Le lanceur projette beaucoup d'eau sur sa cible, qui devient de type Eau.
+}
+
+FlameCharge: {
+	DisplayName: Nitrocharge
+	FlavorText: Le lanceur s'entoure de flammes pour attaquer l'ennemi. Il se concentre et sa Vitesse augmente.
+}
+
+Coil: {
+	DisplayName: Enroulement
+	FlavorText: Le lanceur s'enroule sur lui-même et se concentre. Son Attaque, sa Défense et sa Précision augmentent.
+}
+
+LowSweep: {
+	DisplayName: Balayette
+	FlavorText: Un coup rapide qui affecte la mobilité de l'ennemi et diminue sa Vitesse.
+}
+
+AcidSpray: {
+	DisplayName: Bombe Acide
+	FlavorText: Projette un liquide acide qui fait fondre l'ennemi. Sa Défense Spéciale diminue beaucoup.
+}
+
+FoulPlay: {
+	DisplayName: Tricherie
+	FlavorText: Le lanceur utilise la force de l'ennemi. Plus l'Attaque de l'ennemi est élevée, plus le lanceur inflige de dégâts.
+}
+
+SimpleBeam: {
+	DisplayName: Rayon Simple
+	FlavorText: Le lanceur envoie des ondes mystérieuses à l'ennemi. Son talent devient Simple.
+}
+
+Entrainment: {
+	DisplayName: Ten-Danse
+	FlavorText: Le lanceur danse sur un rythme étrange. Il force sa cible à l'imiter, ce qui lui fait adopter son talent.
+}
+
+AfterYou: {
+	DisplayName: Après Vous
+	FlavorText: S'il est le premier à agir, le lanceur permet à sa cible d'utiliser une capacité juste après lui.
+}
+
+Round: {
+	DisplayName: Chant Canon
+	FlavorText: Le lanceur attaque l'ennemi en chantant. Si plusieurs Pokémon déclenchent cette attaque à la suite, l'effet augmente.
+}
+
+EchoedVoice: {
+	DisplayName: Écho
+	FlavorText: Un cri retentissant blesse l'ennemi. Si le lanceur ou d'autres Pokémon l'utilisent à chaque tour, l'effet augmente.
+}
+
+ChipAway: {
+	DisplayName: Attrition
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ClearSmog: {
+	DisplayName: Bain de Smog
+	FlavorText: Le lanceur jette un tas de détritus spéciaux sur la cible. Les changements de stats de la cible sont annulés.
+}
+
+StoredPower: {
+	DisplayName: Force Ajoutée
+	FlavorText: Le lanceur attaque l'ennemi avec une force accumulée. Plus les stats du lanceur sont augmentées, plus le coup est efficace.
+}
+
+QuickGuard: {
+	DisplayName: Prévention
+	FlavorText: Le lanceur et son équipe sont protégés contre les attaques prioritaires.
+}
+
+AllySwitch: {
+	DisplayName: Interversion
+	FlavorText: Le lanceur se téléporte à l'aide d'un pouvoir mystérieux. Il échange sa place avec celle d'un allié sur le terrain.
+}
+
+Scald: {
+	DisplayName: Ébullition
+	FlavorText: L'ennemi est attaqué par un jet d'eau bouillante. Peut aussi le brûler.
+}
+
+ShellSmash: {
+	DisplayName: Exuviation
+	FlavorText: Le lanceur brise sa coquille. Il baisse sa Défense et sa Défense Spéciale, mais augmente beaucoup son Attaque, son Attaque Spéciale et sa Vitesse.
+}
+
+HealPulse: {
+	DisplayName: Vibra Soin
+	FlavorText: Une aura de bien-être fait récupérer la moitié de ses PV max à la cible.
+}
+
+Hex: {
+	DisplayName: Châtiment
+	FlavorText: Attaque acharnée qui cause davantage de dégâts à l'ennemi s'il a un problème de statut.
+}
+
+SkyDrop: {
+	DisplayName: Chute Libre
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ShiftGear: {
+	DisplayName: Chgt Vitesse
+	FlavorText: Le lanceur fait tourner ses engrenages. Cela augmente son Attaque et augmente beaucoup sa Vitesse.
+}
+
+CircleThrow: {
+	DisplayName: Projection
+	FlavorText: Projette le Pokémon ennemi et le remplace par un autre. Lors d'un combat contre un Pokémon sauvage seul, met fin au combat.
+}
+
+Incinerate: {
+	DisplayName: Calcination
+	FlavorText: Des flammes calcinent l'ennemi. S'il tient un objet, une Baie par exemple, celui-ci est brûlé et devient inutilisable.
+}
+
+Quash: {
+	DisplayName: À la Queue
+	FlavorText: Retient la cible de force, l'obligeant à agir en dernier.
+}
+
+Acrobatics: {
+	DisplayName: Acrobatie
+	FlavorText: Attaque agile. Si le lanceur ne tient pas d'objet, l'attaque inflige davantage de dégâts.
+}
+
+ReflectType: {
+	DisplayName: Copie-Type
+	FlavorText: Le lanceur copie le type de la cible et devient du même type.
+}
+
+Retaliate: {
+	DisplayName: Vengeance
+	FlavorText: Venge un Pokémon de l'équipe mis K.O. Si un Pokémon de l'équipe a été mis K.O. au tour d'avant, l'effet augmente.
+}
+
+FinalGambit: {
+	DisplayName: Tout ou Rien
+	FlavorText: Une attaque très risquée. Le lanceur perd tous ses PV restants et inflige autant de dégâts à l'ennemi.
+}
+
+Bestow: {
+	DisplayName: Passe-Cadeau
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Inferno: {
+	DisplayName: Feu d'Enfer
+	FlavorText: L'ennemi est entouré d'un torrent de flammes ardentes qui le brûlent.
+}
+
+WaterPledge: {
+	DisplayName: Aire d'Eau
+	FlavorText: Une masse d'eau s'abat sur l'ennemi. En l'utilisant avec Aire de Feu, l'effet augmente et un arc-en-ciel apparaît.
+}
+
+FirePledge: {
+	DisplayName: Aire de Feu
+	FlavorText: Une masse de feu s'abat sur l'ennemi. En l'utilisant avec Aire d'Herbe, l'effet augmente et une mer de feu apparaît.
+}
+
+GrassPledge: {
+	DisplayName: Aire d'Herbe
+	FlavorText: Une masse végétale s'abat sur l'ennemi. En l'utilisant avec Aire d'Eau, l'effet augmente et un marécage apparaît.
+}
+
+VoltSwitch: {
+	DisplayName: Change Éclair
+	FlavorText: Après son attaque, le lanceur revient à toute vitesse et change de place avec un Pokémon de l'équipe prêt au combat.
+}
+
+StruggleBug: {
+	DisplayName: Survinsecte
+	FlavorText: Le lanceur se débat de toutes ses forces, et baisse l'Attaque Spéciale de l'ennemi.
+}
+
+Bulldoze: {
+	DisplayName: Piétisol
+	FlavorText: Le lanceur piétine le sol et inflige des dégâts à tous les Pokémon autour de lui. Baisse aussi leur Vitesse.
+}
+
+FrostBreath: {
+	DisplayName: Souffle Glacé
+	FlavorText: Un souffle froid blesse l'ennemi. L'effet est toujours critique.
+}
+
+DragonTail: {
+	DisplayName: Draco-Queue
+	FlavorText: Un coup puissant qui blesse la cible et l'envoie au loin. Lors d'un combat contre un Pokémon sauvage seul, met fin au combat.
+}
+
+WorkUp: {
+	DisplayName: Rengorgement
+	FlavorText: Le lanceur se rengorge. Augmente l'Attaque et l'Attaque Spéciale.
+}
+
+Electroweb: {
+	DisplayName: Toile Élek
+	FlavorText: Attrape l'ennemi dans un filet électrique. Baisse aussi la Vitesse de l'ennemi.
+}
+
+WildCharge: {
+	DisplayName: Éclair Fou
+	FlavorText: Une charge électrique violente qui blesse aussi légèrement le lanceur.
+}
+
+DrillRun: {
+	DisplayName: Tunnelier
+	FlavorText: Le lanceur tourne sur lui-même comme une perceuse et se jette sur l'ennemi. Taux de critiques élevé.
+}
+
+DualChop: {
+	DisplayName: Double Baffe
+	FlavorText: Le lanceur frappe l'ennemi deux fois d'affilée avec les parties les plus robustes de son corps.
+}
+
+HeartStamp: {
+	DisplayName: Crève-Cœur
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+HornLeech: {
+	DisplayName: Encornebois
+	FlavorText: Un coup de corne qui draine l'énergie de l'ennemi. Convertit la moitié des dégâts infligés en PV pour le lanceur.
+}
+
+SacredSword: {
+	DisplayName: Lame Sainte
+	FlavorText: Un coup de corne violent qui lacère l'ennemi et lui inflige des dégâts quels que soient ses changements de stats.
+}
+
+RazorShell: {
+	DisplayName: Coqui-Lame
+	FlavorText: Un coquillage aiguisé lacère l'ennemi. Peut aussi baisser sa Défense.
+}
+
+HeatCrash: {
+	DisplayName: Tacle Feu
+	FlavorText: Le lanceur projette son corps enflammé contre l'ennemi. S'il est plus lourd que l'ennemi, l'effet augmente en conséquence.
+}
+
+LeafTornado: {
+	DisplayName: Phytomixeur
+	FlavorText: L'ennemi est pris dans un tourbillon de feuilles acérées. Peut aussi baisser sa Précision.
+}
+
+Steamroller: {
+	DisplayName: Bulldoboule
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+CottonGuard: {
+	DisplayName: Cotogarde
+	FlavorText: Le lanceur se protège en s'emmitouflant dans du coton. Sa Défense augmente énormément.
+}
+
+NightDaze: {
+	DisplayName: Explonuit
+	FlavorText: Le lanceur attaque l'ennemi avec une onde de choc ténébreuse. Peut aussi baisser sa Précision.
+}
+
+Psystrike: {
+	DisplayName: Frappe Psy
+	FlavorText: Le lanceur matérialise des ondes mystérieuses qu'il projette sur l'ennemi. Inflige des dégâts physiques.
+}
+
+TailSlap: {
+	DisplayName: Plumo-Queue
+	FlavorText: Le lanceur frappe l'ennemi de deux à cinq fois d'affilée avec sa queue robuste.
+}
+
+Hurricane: {
+	DisplayName: Vent Violent
+	FlavorText: Le lanceur déclenche une tempête de vents violents qui s'abat sur l'ennemi. Peut aussi le rendre confus.
+}
+
+HeadCharge: {
+	DisplayName: Peignée
+	FlavorText: Le lanceur donne un coup avec sa tête couronnée d'une fière crinière. Blesse aussi légèrement le lanceur.
+}
+
+GearGrind: {
+	DisplayName: Lancécrou
+	FlavorText: Le lanceur jette deux écrous d'acier qui frappent l'ennemi deux fois d'affilée.
+}
+
+SearingShot: {
+	DisplayName: Incendie
+	FlavorText: Des boules de feu s'abattent sur tous les Pokémon autour du lanceur. Peut aussi les brûler.
+}
+
+TechnoBlast: {
+	DisplayName: Techno-Buster
+	FlavorText: Le lanceur projette un rayon lumineux sur l'ennemi. Le type varie selon le Module que tient le lanceur.
+}
+
+RelicSong: {
+	DisplayName: Chant Antique
+	FlavorText: Le lanceur attaque l'ennemi en lui chantant une chanson d'un autre temps. Peut l'endormir.
+}
+
+SecretSword: {
+	DisplayName: Lame Ointe
+	FlavorText: L'ennemi est lacéré par une longue corne. Son pouvoir mystérieux inflige des dégâts physiques.
+}
+
+Glaciate: {
+	DisplayName: Ère Glaciaire
+	FlavorText: Un souffle de vent qui congèle tout sur son passage s'abat sur l'ennemi. Réduit aussi sa Vitesse.
+}
+
+BoltStrike: {
+	DisplayName: Charge Foudre
+	FlavorText: Le lanceur s'enveloppe d'une charge électrique surpuissante et se jette sur l'ennemi. Peut aussi le paralyser.
+}
+
+BlueFlare: {
+	DisplayName: Flamme Bleue
+	FlavorText: De magnifiques et redoutables flammes bleues fondent sur l'ennemi. Peut aussi le brûler.
+}
+
+FieryDance: {
+	DisplayName: Danse du Feu
+	FlavorText: Le lanceur enveloppe l'ennemi de flammes. Peut aussi augmenter l'Attaque Spéciale du lanceur.
+}
+
+FreezeShock: {
+	DisplayName: Éclair Gelé
+	FlavorText: Projette un bloc de glace électrifié sur l'ennemi au second tour. Peut aussi le paralyser.
+}
+
+IceBurn: {
+	DisplayName: Feu Glacé
+	FlavorText: Au second tour, le lanceur projette un souffle de vent glacial dévastateur sur l'ennemi. Peut aussi le brûler.
+}
+
+Snarl: {
+	DisplayName: Aboiement
+	FlavorText: Le lanceur hurle sur l'ennemi. Baisse l'Attaque Spéciale de l'ennemi.
+}
+
+IcicleCrash: {
+	DisplayName: Chute Glace
+	FlavorText: Envoie de gros blocs de glace sur l'ennemi pour lui infliger des dégâts. Peut aussi l'apeurer.
+}
+
+VCreate: {
+	DisplayName: Coup Victoire
+	FlavorText: Le lanceur projette une flamme ardente de son front et se jette sur l'ennemi. Baisse la Défense, la Défense Spéciale et la Vitesse.
+}
+
+FusionFlare: {
+	DisplayName: Flamme Croix
+	FlavorText: Projette une boule de feu gigantesque. L'effet augmente sous l'influence d'Éclair Croix.
+}
+
+FusionBolt: {
+	DisplayName: Éclair Croix
+	FlavorText: Projette un orbe électrique gigantesque. L'effet augmente sous l'influence de Flamme Croix.
+}
+
+FlyingPress: {
+	DisplayName: Flying Press
+	FlavorText: Une attaque en piqué depuis le ciel, à la fois de type Combat et de type Vol.
+}
+
+MatBlock: {
+	DisplayName: Tatamigaeshi
+	FlavorText: Retourne un tatami pour bloquer, comme avec un bouclier, les capacités visant le lanceur ou ses alliés. N'a pas d'effet sur les attaques de statut.
+}
+
+Belch: {
+	DisplayName: Éructation
+	FlavorText: Le lanceur se tourne vers l'ennemi et lui éructe dessus, infligeant des dégâts. Ne fonctionne que si le lanceur consomme la Baie qu'il tient.
+}
+
+Rototiller: {
+	DisplayName: Fertilisation
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+StickyWeb: {
+	DisplayName: Toile Gluante
+	FlavorText: Déploie une toile visqueuse autour de l'ennemi qui ralentit la Vitesse de tout adversaire entrant au combat.
+}
+
+FellStinger: {
+	DisplayName: Dard Mortel
+	FlavorText: Augmente énormément l'Attaque du lanceur si un ennemi est mis K.O. avec cette capacité.
+}
+
+PhantomForce: {
+	DisplayName: Hantise
+	FlavorText: Le lanceur disparaît au premier tour et frappe au second. Cette attaque passe outre les protections.
+}
+
+TrickOrTreat: {
+	DisplayName: Halloween
+	FlavorText: Insuffle à la cible l'esprit d'Halloween, et ajoute le type Spectre à ses types actuels.
+}
+
+NobleRoar: {
+	DisplayName: Râle Mâle
+	FlavorText: Le lanceur pousse un rugissement qui intimide l'ennemi et diminue son Attaque et son Attaque Spéciale.
+}
+
+IonDeluge: {
+	DisplayName: Déluge Plasmique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ParabolicCharge: {
+	DisplayName: Parabocharge
+	FlavorText: Inflige des dégâts à tous les Pokémon autour du lanceur. Il récupère en PV la moitié des dégâts infligés.
+}
+
+ForestsCurse: {
+	DisplayName: Maléfice Sylvain
+	FlavorText: La cible est charmée par l'esprit de la forêt. Le type Plante est ajouté à ses types actuels.
+}
+
+PetalBlizzard: {
+	DisplayName: Tempête Florale
+	FlavorText: Déclenche une violente tempête de fleurs qui inflige des dégâts à tous les Pokémon alentour.
+}
+
+FreezeDry: {
+	DisplayName: Lyophilisation
+	FlavorText: Refroidit violemment l'ennemi et peut le geler. Super efficace sur les Pokémon de type Eau.
+}
+
+DisarmingVoice: {
+	DisplayName: Voix Enjôleuse
+	FlavorText: Laisse s'échapper une voix enchanteresse qui inflige des dégâts psychiques à l'ennemi. Touche à coup sûr.
+}
+
+PartingShot: {
+	DisplayName: Dernier Mot
+	FlavorText: Menace l'ennemi dans une ultime tirade avant de changer de place avec un autre Pokémon. Réduit l'Attaque et l'Attaque Spéciale de l'ennemi.
+}
+
+TopsyTurvy: {
+	DisplayName: Renversement
+	FlavorText: Inverse tous les changements de stats de la cible.
+}
+
+DrainingKiss: {
+	DisplayName: Vampibaiser
+	FlavorText: Aspire la force vitale de l'ennemi par un baiser. Rend au lanceur un nombre de PV supérieur ou égal à la moitié des dégâts infligés.
+}
+
+CraftyShield: {
+	DisplayName: Vigilance
+	FlavorText: Utilise une force mystérieuse pour protéger l'équipe des capacités de statut. Ne protège pas des autres capacités.
+}
+
+FlowerShield: {
+	DisplayName: Garde Florale
+	FlavorText: Grâce à une force mystérieuse, la Défense de tous les Pokémon Plante au combat augmente.
+}
+
+GrassyTerrain: {
+	DisplayName: Champ Herbu
+	FlavorText: Pendant cinq tours, les Pokémon au sol récupèrent quelques PV à chaque tour et la puissance des capacités de type Plante augmente.
+}
+
+MistyTerrain: {
+	DisplayName: Champ Brumeux
+	FlavorText: Pendant cinq tours, les Pokémon au sol ne peuvent pas subir d'altération de statut et la puissance des capacités de type Dragon est divisée par deux.
+}
+
+Electrify: {
+	DisplayName: Électrisation
+	FlavorText: Si le lanceur attaque avant la cible, les capacités de celle-ci seront de type Électrik jusqu'à la fin du tour.
+}
+
+PlayRough: {
+	DisplayName: Câlinerie
+	FlavorText: Attaque l'ennemi avec un câlin. Peut diminuer son Attaque.
+}
+
+FairyWind: {
+	DisplayName: Vent Féérique
+	FlavorText: Déchaîne un vent magique qui cingle l'ennemi.
+}
+
+Moonblast: {
+	DisplayName: Pouvoir Lunaire
+	FlavorText: Attaque l'ennemi grâce au pouvoir de la lune. Peut diminuer son Attaque Spéciale.
+}
+
+Boomburst: {
+	DisplayName: Bang Sonique
+	FlavorText: Attaque les Pokémon alentour grâce à une onde sonore assourdissante qui détruit tout sur son passage.
+}
+
+FairyLock: {
+	DisplayName: Verrou Enchanté
+	FlavorText: Des chaînes entourent la zone de combat, empêchant tous les Pokémon de fuir au prochain tour.
+}
+
+KingsShield: {
+	DisplayName: Bouclier Royal
+	FlavorText: Prend une posture défensive pour bloquer les dégâts. Diminue l'Attaque de tout Pokémon qui entre en contact avec le lanceur.
+}
+
+PlayNice: {
+	DisplayName: Camaraderie
+	FlavorText: L'ennemi se lie d'amitié avec le lanceur et perd sa combativité, diminuant son Attaque.
+}
+
+Confide: {
+	DisplayName: Confidence
+	FlavorText: Dévoile des secrets à l'ennemi, qui perd alors sa concentration et voit son Attaque Spéciale diminuer.
+}
+
+DiamondStorm: {
+	DisplayName: Orage Adamantin
+	FlavorText: Provoque une tempête de diamants qui inflige des dégâts. Peut beaucoup augmenter la Défense du lanceur.
+}
+
+SteamEruption: {
+	DisplayName: Jet de Vapeur
+	FlavorText: Plonge l'ennemi dans une chaleur étouffante. Peut le brûler.
+}
+
+HyperspaceHole: {
+	DisplayName: TrouDimensionnel
+	FlavorText: Crée une faille dimensionnelle pour attaquer soudainement l'ennemi de côté. Ignore même les capacités comme Abri ou Détection.
+}
+
+WaterShuriken: {
+	DisplayName: Sheauriken
+	FlavorText: Attaque l'ennemi avec des shuriken de mucus. Frappe en priorité deux à cinq fois d'affilée en un tour.
+}
+
+MysticalFire: {
+	DisplayName: Feu Ensorcelé
+	FlavorText: Attaque avec des flammes brûlantes soufflées de la bouche du lanceur. Diminue l'Attaque Spéciale de l'ennemi.
+}
+
+SpikyShield: {
+	DisplayName: Pico-Défense
+	FlavorText: Protège des attaques, et diminue les PV de tout attaquant qui entre en contact avec le lanceur.
+}
+
+AromaticMist: {
+	DisplayName: Brume Capiteuse
+	FlavorText: Grâce à un parfum mystérieux, augmente la Défense Spéciale d'un allié.
+}
+
+EerieImpulse: {
+	DisplayName: Ondes Étranges
+	FlavorText: Le corps du lanceur produit des ondes anormales qui enveloppent l'ennemi et diminuent beaucoup son Attaque Spéciale.
+}
+
+VenomDrench: {
+	DisplayName: Piège de Venin
+	FlavorText: Sécrète un liquide empoisonné. Diminue l'Attaque, l'Attaque Spéciale et la Vitesse de l'ennemi empoisonné.
+}
+
+Powder: {
+	DisplayName: Nuée de Poudre
+	FlavorText: L'ennemi est pris dans un nuage de poudre. S'il utilise une capacité de type Feu lors du même tour, le nuage explose et lui inflige des dégâts.
+}
+
+Geomancy: {
+	DisplayName: Géo-Contrôle
+	FlavorText: Le lanceur absorbe de l'énergie au premier tour et augmente beaucoup son Attaque Spéciale, sa Défense Spéciale et sa Vitesse au second.
+}
+
+MagneticFlux: {
+	DisplayName: Magné-Contrôle
+	FlavorText: Manipule les champs magnétiques pour augmenter la Défense et la Défense Spéciale des Pokémon alliés dotés du talent Plus ou du talent Moins.
+}
+
+HappyHour: {
+	DisplayName: Étrennes
+	FlavorText: Utilisée pendant un combat, multiplie par deux l'argent gagné à la fin.
+}
+
+ElectricTerrain: {
+	DisplayName: Champ Électrifié
+	FlavorText: Pendant cinq tours, le terrain se charge d'électricité. Les Pokémon au sol ne peuvent pas s'endormir et la puissance des capacités de type Électrik augmente.
+}
+
+DazzlingGleam: {
+	DisplayName: Éclat Magique
+	FlavorText: Libère une puissante décharge lumineuse qui inflige des dégâts à l'ennemi.
+}
+
+Celebrate: {
+	DisplayName: Célébration
+	FlavorText: Le Pokémon vous souhaite plein de bonnes choses pour cet évènement spécial.
+}
+
+HoldHands: {
+	DisplayName: Mains Jointes
+	FlavorText: Le lanceur et un allié se prennent la main, ce qui les rend heureux.
+}
+
+BabyDollEyes: {
+	DisplayName: Regard Touchant
+	FlavorText: Fixe l'ennemi d'un air très attendrissant qui le touche et diminue son Attaque. Agit en priorité.
+}
+
+Nuzzle: {
+	DisplayName: Frotte-Frimousse
+	FlavorText: Le lanceur attaque en frottant ses bajoues chargées d'électricité. Paralyse l'ennemi.
+}
+
+HoldBack: {
+	DisplayName: Retenue
+	FlavorText: Le lanceur attaque avec retenue, et laisse au moins 1 PV à l'ennemi.
+}
+
+Infestation: {
+	DisplayName: Harcèlement
+	FlavorText: Cette attaque perdure pendant quatre à cinq tours. L'ennemi ne peut pas fuir au cours de cette période.
+}
+
+PowerUpPunch: {
+	DisplayName: Poing Boost
+	FlavorText: À force de frapper, les poings deviennent plus durs. Augmente l'Attaque du lanceur si l'ennemi est touché.
+}
+
+OblivionWing: {
+	DisplayName: Mort'Ailes
+	FlavorText: Vole l'énergie de la cible. Rend au lanceur un nombre de PV supérieur ou égal à la moitié des dégâts infligés.
+}
+
+ThousandArrows: {
+	DisplayName: Myria-Flèches
+	FlavorText: Touche même les Pokémon dans les airs. Dans ce cas, la cible retombe au sol.
+}
+
+ThousandWaves: {
+	DisplayName: Myria-Vagues
+	FlavorText: Attaque avec des vagues glissant au sol. L'ennemi pris dedans ne peut pas s'échapper.
+}
+
+LandsWrath: {
+	DisplayName: Force Chtonienne
+	FlavorText: Utilise la puissance du sol et la concentre sur l'ennemi pour infliger des dégâts.
+}
+
+LightOfRuin: {
+	DisplayName: Lumière du Néant
+	FlavorText: Utilise la puissance de la fleur Éternelle pour lancer un formidable rayon d'énergie. Blesse aussi gravement le lanceur.
+}
+
+OriginPulse: {
+	DisplayName: Onde Originelle
+	FlavorText: D'innombrables rayons lumineux d'un bleu étincelant s'abattent sur la cible.
+}
+
+PrecipiceBlades: {
+	DisplayName: Lame Pangéenne
+	FlavorText: Le Pokémon transforme la puissance de la terre et attaque la cible avec une lame acérée.
+}
+
+DragonAscent: {
+	DisplayName: Draco-Ascension
+	FlavorText: Le Pokémon s'abat à toute vitesse sur la cible depuis les hautes couches de l'atmosphère. Baisse la Défense et la Défense Spéciale du lanceur.
+}
+
+HyperspaceFury: {
+	DisplayName: Furie Dimension
+	FlavorText: Le Pokémon utilise sa multitude de bras pour infliger une nuée de coups qui ignorent les capacités telles qu'Abri ou Détection. Baisse la Défense du lanceur.
+}
+
+BreakneckBlitz: {
+	DisplayName: Turbo-Charge Bulldozer
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+AllOutPummeling: {
+	DisplayName: Combo Hyper-Furie
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SupersonicSkystrike: {
+	DisplayName: Piqué Supersonique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+AcidDownpour: {
+	DisplayName: Déluge Causti-Toxique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+TectonicRage: {
+	DisplayName: Éruption Géo-Sismique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ContinentalCrush: {
+	DisplayName: Apocalypse Gigalithique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SavageSpinOut: {
+	DisplayName: Cocon Fatal
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+NeverEndingNightmare: {
+	DisplayName: Appel des Ombres Éternelles
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+CorkscrewCrash: {
+	DisplayName: Vrille Maximum
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+InfernoOverdrive: {
+	DisplayName: Pyro-Explosion Cataclysmique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+HydroVortex: {
+	DisplayName: Super Tourbillon Abyssal
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+BloomDoom: {
+	DisplayName: Pétalexplosion Éblouissante
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+GigavoltHavoc: {
+	DisplayName: Fulguro-Lance Gigavolt
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ShatteredPsyche: {
+	DisplayName: Psycho-Pulvérisation EX
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SubzeroSlammer: {
+	DisplayName: Laser Cryogénique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+DevastatingDrake: {
+	DisplayName: Chaos Draconique
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+BlackHoleEclipse: {
+	DisplayName: Trou Noir des Ombres
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+TwinkleTackle: {
+	DisplayName: Impact Choupinova
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+Catastropika: {
+	DisplayName: Pikachute Foudroyante
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ShoreUp: {
+	DisplayName: Amass'Sable
+	FlavorText: Le lanceur récupère jusqu'à la moitié de ses PV max. Durant une tempête de sable, il en récupère encore plus.
+}
+
+FirstImpression: {
+	DisplayName: Escarmouche
+	FlavorText: Une capacité très puissante, mais qui ne fonctionne qu'au premier tour.
+}
+
+BanefulBunker: {
+	DisplayName: Blockhaus
+	FlavorText: Protège le lanceur contre les attaques de l'ennemi et empoisonne ce dernier s'il utilise une attaque directe sur le lanceur.
+}
+
+SpiritShackle: {
+	DisplayName: Tisse Ombre
+	FlavorText: Une attaque qui coud l'ennemi à son ombre, ce qui l'empêche de s'enfuir.
+}
+
+DarkestLariat: {
+	DisplayName: Dark Lariat
+	FlavorText: Le Pokémon étend les bras et frappe l'adversaire en tournant violemment. Inflige des dégâts et ignore les changements de stats de la cible.
+}
+
+SparklingAria: {
+	DisplayName: Aria de l'Écume
+	FlavorText: Le lanceur émet plusieurs bulles en chantant. Soigne les brûlures des Pokémon touchés par ces bulles.
+}
+
+IceHammer: {
+	DisplayName: Marteau de Glace
+	FlavorText: Le lanceur donne un puissant coup de poing à l'ennemi. Réduit la Vitesse du lanceur.
+}
+
+FloralHealing: {
+	DisplayName: Soin Floral
+	FlavorText: Rend la moitié de ses PV max à la cible. Plus efficace sur un Champ Herbu.
+}
+
+HighHorsepower: {
+	DisplayName: Cavalerie Lourde
+	FlavorText: Le lanceur attaque violemment en utilisant tout son poids.
+}
+
+StrengthSap: {
+	DisplayName: Vole-Force
+	FlavorText: Rend au lanceur une quantité de PV équivalente à la stat d'Attaque de la cible, puis baisse celle-ci.
+}
+
+SolarBlade: {
+	DisplayName: Lame Solaire
+	FlavorText: Le lanceur absorbe la lumière au premier tour et attaque au second tour en libérant cette énergie sous forme de lames.
+}
+
+Leafage: {
+	DisplayName: Feuillage
+	FlavorText: Le lanceur attaque l'ennemi avec des feuilles.
+}
+
+Spotlight: {
+	DisplayName: Projecteur
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ToxicThread: {
+	DisplayName: Fil Toxique
+	FlavorText: Tisse un fil imprégné de venin. Empoisonne la cible et baisse sa Vitesse.
+}
+
+LaserFocus: {
+	DisplayName: Affilage
+	FlavorText: Le lanceur se concentre pour être sûr de porter un coup critique au tour suivant.
+}
+
+GearUp: {
+	DisplayName: Engrenage
+	FlavorText: Change de réglage pour augmenter l'Attaque et l'Attaque Spéciale des alliés ayant les talents Plus ou Moins.
+}
+
+ThroatChop: {
+	DisplayName: Exécu-Son
+	FlavorText: Inflige une douleur tellement violente à la cible qu'elle ne peut plus émettre de sons pendant deux tours.
+}
+
+PollenPuff: {
+	DisplayName: Boule Pollen
+	FlavorText: Utilisée sur l'ennemi, envoie une boule explosive qui fait des dégâts ; sur un allié, donne du bon pollen nutritif qui fait récupérer des PV.
+}
+
+AnchorShot: {
+	DisplayName: Ancrage
+	FlavorText: Le lanceur jette son ancre sur la cible pour l'attaquer. Une fois accrochée, elle l'empêche de s'enfuir.
+}
+
+PsychicTerrain: {
+	DisplayName: Champ Psychique
+	FlavorText: Pendant cinq tours, les Pokémon au sol ne peuvent plus subir d'attaques prioritaires et la puissance des capacités de type Psy augmente.
+}
+
+Lunge: {
+	DisplayName: Furie-Bond
+	FlavorText: Le lanceur se jette sur la cible de toutes ses forces pour lui infliger des dégâts et baisser son Attaque.
+}
+
+FireLash: {
+	DisplayName: Fouet de Feu
+	FlavorText: Frappe la cible avec un fouet incandescent et baisse sa Défense.
+}
+
+PowerTrip: {
+	DisplayName: Arrogance
+	FlavorText: Ivre de puissance, le lanceur attaque de toutes ses forces. Plus ses stats ont été augmentées, plus la puissance de l'attaque est élevée.
+}
+
+BurnUp: {
+	DisplayName: Flamme Ultime
+	FlavorText: Le Pokémon se consume et les flammes de son corps infligent des dégâts élevés à la cible. Le lanceur perd le type Feu.
+}
+
+SpeedSwap: {
+	DisplayName: Permuvitesse
+	FlavorText: Intervertit la Vitesse du lanceur et celle de la cible.
+}
+
+SmartStrike: {
+	DisplayName: Estocorne
+	FlavorText: Le lanceur transperce la cible avec sa corne effilée. Touche toujours l'ennemi.
+}
+
+Purify: {
+	DisplayName: Purification
+	FlavorText: Le lanceur soigne les altérations de statut de la cible, ce qui lui permet de regagner des PV.
+}
+
+RevelationDance: {
+	DisplayName: Danse Éveil
+	FlavorText: Le lanceur attaque en dansant avec enthousiasme. Le type de la capacité est le même que celui du lanceur.
+}
+
+CoreEnforcer: {
+	DisplayName: Sanction Suprême
+	FlavorText: La cible subit des dégâts et, si elle a déjà agi à ce tour, elle perd aussi son talent.
+}
+
+TropKick: {
+	DisplayName: Botte Sucrette
+	FlavorText: Un coup de pied chaud comme les tropiques qui inflige des dégâts à la cible et baisse son Attaque.
+}
+
+Instruct: {
+	DisplayName: Sommation
+	FlavorText: Force la cible à lancer immédiatement la dernière capacité qu'elle a utilisée.
+}
+
+BeakBlast: {
+	DisplayName: Bec-Canon
+	FlavorText: Le lanceur fait chauffer son bec avant d'attaquer. S'il subit une attaque directe pendant la montée en température, l'attaquant sera brûlé.
+}
+
+ClangingScales: {
+	DisplayName: Vibrécaille
+	FlavorText: Le lanceur déclenche un vacarme en frottant ses écailles les unes contre les autres pour attaquer. Baisse la Défense du lanceur.
+}
+
+DragonHammer: {
+	DisplayName: Draco-Marteau
+	FlavorText: Le lanceur utilise son corps comme un véritable marteau pour écraser la cible.
+}
+
+BrutalSwing: {
+	DisplayName: Centrifugifle
+	FlavorText: Le lanceur pivote pour prendre de l'élan et infliger des dégâts.
+}
+
+AuroraVeil: {
+	DisplayName: Voile Aurore
+	FlavorText: Réduit les dégâts causés par les capacités physiques et spéciales durant cinq tours. Ne peut être utilisée que lorsqu'il grêle.
+}
+
+SinisterArrowRaid: {
+	DisplayName: Fureur des Plumes Spectrales
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MaliciousMoonsault: {
+	DisplayName: Dark Body Press
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+OceanicOperetta: {
+	DisplayName: Symphonie des Ondines
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+GuardianOfAlola: {
+	DisplayName: Colère du Gardien d'Alola
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SoulStealing7StarStrike: {
+	DisplayName: Fauche-Âme des Sept Étoiles
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+StokedSparksurfer: {
+	DisplayName: Électro-Surf Survolté
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+PulverizingPancake: {
+	DisplayName: Gare au Ronflex
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ExtremeEvoboost: {
+	DisplayName: Neuf pour Un
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+GenesisSupernova: {
+	DisplayName: Supernova Originelle
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ShellTrap: {
+	DisplayName: Carapiège
+	FlavorText: Pose une carapace piégée. Si l'adversaire utilise une capacité physique, la carapace explose et lui inflige des dégâts.
+}
+
+FleurCannon: {
+	DisplayName: Canon Floral
+	FlavorText: Envoie un rayon laser dévastateur. Baisse beaucoup l'Attaque Spéciale du lanceur.
+}
+
+PsychicFangs: {
+	DisplayName: Psycho-Croc
+	FlavorText: Le lanceur mord la cible avec ses pouvoirs psychiques. Brise aussi les barrières comme Mur Lumière et Protection.
+}
+
+StompingTantrum: {
+	DisplayName: Trépignement
+	FlavorText: Le lanceur attaque en utilisant sa frustration. S'il a utilisé une capacité qui a échoué au tour précédent, la puissance de Trépignement est doublée.
+}
+
+ShadowBone: {
+	DisplayName: Os Ombre
+	FlavorText: Le lanceur frappe avec un os possédé par l'âme d'un défunt. Peut aussi baisser la Défense de la cible.
+}
+
+Accelerock: {
+	DisplayName: Vif Roc
+	FlavorText: Le lanceur charge l'ennemi à toute vitesse. Frappe en priorité.
+}
+
+Liquidation: {
+	DisplayName: Aqua-Brèche
+	FlavorText: Le lanceur utilise la force de l'eau pour attaquer. Peut aussi baisser la Défense de la cible.
+}
+
+PrismaticLaser: {
+	DisplayName: Laser Prisme
+	FlavorText: Le lanceur utilise la puissance d'un prisme pour envoyer un laser destructeur, mais il doit se reposer au tour suivant.
+}
+
+SpectralThief: {
+	DisplayName: Clepto-Mânes
+	FlavorText: Le lanceur plonge dans l'ombre de la cible, vole ses augmentations de stats et l'attaque.
+}
+
+SunsteelStrike: {
+	DisplayName: Choc Météore
+	FlavorText: Le lanceur fonce sur la cible à la vitesse d'une météorite. Ignore le talent de l'ennemi.
+}
+
+MoongeistBeam: {
+	DisplayName: Rayon Spectral
+	FlavorText: Le lanceur attaque avec un rayon de lumière mystérieux. Ignore le talent de la cible.
+}
+
+TearfulLook: {
+	DisplayName: Larme à l'Œil
+	FlavorText: Le lanceur jette un regard plein de larmes à la cible. Celle-ci perd toute velléité de combat et voit son Attaque et son Attaque Spéciale baisser.
+}
+
+ZingZap: {
+	DisplayName: Électrikipik
+	FlavorText: Le lanceur fonce sur la cible et lui envoie un puissant choc électrique. Peut aussi l'effrayer.
+}
+
+NaturesMadness: {
+	DisplayName: Ire de la Nature
+	FlavorText: Le lanceur déchaîne toute la colère de la nature pour baisser les PV de la cible de moitié.
+}
+
+MultiAttack: {
+	DisplayName: Coup Varia-Type
+	FlavorText: Le Pokémon s'entoure d'une puissante énergie avant de foncer sur sa cible. Le type de la capacité dépend de la ROM installée.
+}
+
+ZThunderbolt: {
+	DisplayName: Giga-Tonnerre
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MindBlown: {
+	DisplayName: Caboche-Kaboum
+	FlavorText: Le lanceur fait exploser sa tête pour attaquer toutes les cibles autour de lui. Il subit aussi des dégâts.
+}
+
+PlasmaFists: {
+	DisplayName: Plasma Punch
+	FlavorText: Le lanceur attaque en projetant de l'électricité avec ses poings. Convertit les capacités de type Normal en type Électrik.
+}
+
+PhotonGeyser: {
+	DisplayName: Photo-Geyser
+	FlavorText: Le lanceur fait jaillir un pilier de lumière. Compare l'Attaque et l'Attaque Spéciale, et utilise celle qui infligera le plus de dégâts.
+}
+
+LightThatBurnsTheSky: {
+	DisplayName: Apocalypsis Luminis
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SearingSunrazeSmash: {
+	DisplayName: Hélio-Choc Dévastateur
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+MenacingMoonrazeMaelstrom: {
+	DisplayName: Rayons Séléno-Explosifs
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+LetsSnuggleForever: {
+	DisplayName: Patati-Patattrape
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SplinteredStormshards: {
+	DisplayName: Hurlement des Roches-Lames
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ClangorousSoulblaze: {
+	DisplayName: Dracacophonie Flamboyante
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+ZippyZap: {
+	DisplayName: Pika-Sprint
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SplishySplash: {
+	DisplayName: Pika-Splash
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FloatyFall: {
+	DisplayName: Pika-Piqué
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+PikaPapow: {
+	DisplayName: Pika-Fracas
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+BouncyBubble: {
+	DisplayName: Évo-Thalasso
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+BuzzyBuzz: {
+	DisplayName: Évo-Dynamo
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SizzlySlide: {
+	DisplayName: Évo-Flambo
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+GlitzyGlow: {
+	DisplayName: Évo-Psycho
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+BaddyBad: {
+	DisplayName: Évo-Ténébro
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SappySeed: {
+	DisplayName: Évo-Écolo
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+FreezyFrost: {
+	DisplayName: Évo-Congélo
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+SparklySwirl: {
+	DisplayName: Évo-Fabulo
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+VeeveeVolley: {
+	DisplayName: Évo-Chardasso
+	FlavorText: Cette capacité ne peut pas être utilisée. Il est recommandé de l'oublier, même s'il sera impossible de se la remémorer une fois oubliée.
+}
+
+DoubleIronBash: {
+	DisplayName: Écrous d'Poing
+	FlavorText: Le lanceur fait pivoter l'écrou de sa poitrine deux fois d'affilée pour frapper l'adversaire avec ses bras. Peut apeurer l'ennemi.
+}
+
+MaxGuard: {
+	DisplayName: Gardomax
+	FlavorText: Le lanceur se protège de toutes les attaques. Peut échouer si utilisée plusieurs fois de suite.
+}
+
+DynamaxCannon: {
+	DisplayName: Canon Dynamax
+	FlavorText: Le lanceur attaque en émettant un laser depuis son noyau. Cette capacité inflige deux fois plus de dégâts si l'adversaire est un Pokémon Dynamax.
+}
+
+SnipeShot: {
+	DisplayName: Tir de Précision
+	FlavorText: Le lanceur parvient toujours à viser la cible voulue, en ignorant l'effet des talents et des capacités capables de détourner les attaques.
+}
+
+JawLock: {
+	DisplayName: Croque Fort
+	FlavorText: Le lanceur et sa cible ne peuvent plus quitter le terrain jusqu'à ce que l'un d'entre eux tombe K.O. L'effet est annulé si l'un des deux Pokémon disparaît.
+}
+
+StuffCheeks: {
+	DisplayName: Garde-à-Joues
+	FlavorText: Le lanceur mange la Baie qu'il tient, ce qui augmente beaucoup sa Défense.
+}
+
+NoRetreat: {
+	DisplayName: Ultime Bastion
+	FlavorText: Le lanceur voit toutes ses stats augmenter, mais en contrepartie, il ne peut plus fuir ou se retirer du combat.
+}
+
+TarShot: {
+	DisplayName: Goudronnage
+	FlavorText: Le lanceur recouvre sa cible de goudron liquide pour baisser sa Vitesse et la rendre vulnérable au feu.
+}
+
+MagicPowder: {
+	DisplayName: Poudre Magique
+	FlavorText: Le lanceur recouvre sa cible d'une poudre magique qui change son type en Psy.
+}
+
+DragonDarts: {
+	DisplayName: Draco-Flèches
+	FlavorText: Le lanceur attaque en propulsant deux Fantyrm. S'il y a deux adversaires, chacun d'entre eux est frappé par un Fantyrm.
+}
+
+Teatime: {
+	DisplayName: Thérémonie
+	FlavorText: Le lanceur invite tous les Pokémon sur le terrain à prendre le goûter autour d'une tasse de thé. Ceux qui tiennent une Baie la mangent.
+}
+
+Octolock: {
+	DisplayName: Octoprise
+	FlavorText: Le lanceur empêche l'adversaire de fuir. À chaque tour qui passe, cette capacité baisse la Défense et la Défense Spéciale de la cible.
+}
+
+BoltBeak: {
+	DisplayName: Prise de Bec
+	FlavorText: Le lanceur transperce sa cible avec son bec chargé d'électricité. Si cette attaque est lancée avant que la cible n'attaque, elle infligera deux fois plus de dégâts.
+}
+
+FishiousRend: {
+	DisplayName: Branchicrok
+	FlavorText: Le lanceur mord sa cible avec ses solides branchies. Si cette capacité est lancée avant que la cible n'attaque, elle infligera deux fois plus de dégâts.
+}
+
+CourtChange: {
+	DisplayName: Change-Côté
+	FlavorText: Une force mystérieuse intervertit les effets affectant chaque côté du terrain.
+}
+
+MaxFlare: {
+	DisplayName: Pyromax
+	FlavorText: Une attaque de type Feu que seuls les Pokémon Dynamax peuvent utiliser. Fait briller le soleil pendant cinq tours.
+}
+
+MaxFlutterby: {
+	DisplayName: Insectomax
+	FlavorText: Une attaque de type Insecte que seuls les Pokémon Dynamax peuvent utiliser. Baisse l'Attaque Spéciale de la cible.
+}
+
+MaxLightning: {
+	DisplayName: Fulguromax
+	FlavorText: Une attaque de type Électrik que seuls les Pokémon Dynamax peuvent utiliser. Crée un Champ Électrifié qui dure cinq tours.
+}
+
+MaxStrike: {
+	DisplayName: Normalomax
+	FlavorText: Une attaque de type Normal que seuls les Pokémon Dynamax peuvent utiliser. Baisse la Vitesse de la cible.
+}
+
+MaxKnuckle: {
+	DisplayName: Pugilomax
+	FlavorText: Une attaque de type Combat que seuls les Pokémon Dynamax peuvent utiliser. Augmente l'Attaque des alliés.
+}
+
+MaxPhantasm: {
+	DisplayName: Spectromax
+	FlavorText: Une attaque de type Spectre que seuls les Pokémon Dynamax peuvent utiliser. Baisse la Défense de la cible.
+}
+
+MaxHailstorm: {
+	DisplayName: Cryomax
+	FlavorText: Une attaque de type Glace que seuls les Pokémon Dynamax peuvent utiliser. Invoque une tempête de grêle qui dure cinq tours.
+}
+
+MaxOoze: {
+	DisplayName: Toxinomax
+	FlavorText: Une attaque de type Poison que seuls les Pokémon Dynamax peuvent utiliser. Augmente l'Attaque Spéciale des alliés.
+}
+
+MaxGeyser: {
+	DisplayName: Hydromax
+	FlavorText: Une attaque de type Eau que seuls les Pokémon Dynamax peuvent utiliser. Invoque de fortes pluies qui durent cinq tours.
+}
+
+MaxAirstream: {
+	DisplayName: Aéromax
+	FlavorText: Une attaque de type Vol que seuls les Pokémon Dynamax peuvent utiliser. Augmente la Vitesse des alliés.
+}
+
+MaxStarfall: {
+	DisplayName: Enchantomax
+	FlavorText: Une attaque de type Fée que seuls les Pokémon Dynamax peuvent utiliser. Crée un Champ Brumeux qui dure cinq tours.
+}
+
+MaxWyrmwind: {
+	DisplayName: Dracomax
+	FlavorText: Une attaque de type Dragon que seuls les Pokémon Dynamax peuvent utiliser. Baisse l'Attaque de la cible.
+}
+
+MaxMindstorm: {
+	DisplayName: Psychomax
+	FlavorText: Une attaque de type Psy que seuls les Pokémon Dynamax peuvent utiliser. Crée un Champ Psychique qui dure cinq tours.
+}
+
+MaxRockfall: {
+	DisplayName: Lithomax
+	FlavorText: Une attaque de type Roche que seuls les Pokémon Dynamax peuvent utiliser. Invoque une tempête de sable qui dure cinq tours.
+}
+
+MaxQuake: {
+	DisplayName: Sismomax
+	FlavorText: Une attaque de type Sol que seuls les Pokémon Dynamax peuvent utiliser. Augmente la Défense Spéciale des alliés.
+}
+
+MaxDarkness: {
+	DisplayName: Sinistromax
+	FlavorText: Une attaque de type Ténèbres que seuls les Pokémon Dynamax peuvent utiliser. Baisse la Défense Spéciale de la cible.
+}
+
+MaxOvergrowth: {
+	DisplayName: Phytomax
+	FlavorText: Une attaque de type Plante que seuls les Pokémon Dynamax peuvent utiliser. Crée un Champ Herbu qui dure cinq tours.
+}
+
+MaxSteelspike: {
+	DisplayName: Métallomax
+	FlavorText: Une attaque de type Acier que seuls les Pokémon Dynamax peuvent utiliser. Augmente la Défense des alliés.
+}
+
+ClangorousSoul: {
+	DisplayName: Dracacophonie
+	FlavorText: Le lanceur sacrifie une partie de ses PV pour augmenter toutes ses stats.
+}
+
+BodyPress: {
+	DisplayName: Big Splash
+	FlavorText: Le lanceur utilise son corps pour attaquer sa cible. Plus la Défense du lanceur est élevée, plus les dégâts infligés sont importants.
+}
+
+Decorate: {
+	DisplayName: Nappage
+	FlavorText: Le lanceur augmente beaucoup l'Attaque et l'Attaque Spéciale de la cible en la nappant de glaçage.
+}
+
+DrumBeating: {
+	DisplayName: Tambour Battant
+	FlavorText: Le lanceur bat son tambour pour en diriger les racines sur la cible, l'attaquer, et baisser sa Vitesse.
+}
+
+SnapTrap: {
+	DisplayName: Troquenard
+	FlavorText: Le lanceur piège sa cible dans son Troquenard d'acier et lui inflige des dégâts pendant quatre ou cinq tours.
+}
+
+PyroBall: {
+	DisplayName: Ballon Brûlant
+	FlavorText: Le lanceur attaque avec un ballon fait à partir d'un caillou enflammé. Peut aussi brûler la cible.
+}
+
+BehemothBlade: {
+	DisplayName: Gladius Maximus
+	FlavorText: Le lanceur se transforme en une immense épée et pourfend son adversaire. Inflige le double de dégâts aux Pokémon Dynamax.
+}
+
+BehemothBash: {
+	DisplayName: Aegis Maxima
+	FlavorText: Le lanceur se transforme en un immense bouclier et charge son adversaire. Inflige le double de dégâts aux Pokémon Dynamax.
+}
+
+AuraWheel: {
+	DisplayName: Roue Libre
+	FlavorText: Morpeko libère l'énergie stockée dans ses joues pour attaquer et augmenter sa Vitesse. Le type de cette capacité change en fonction de la forme de Morpeko.
+}
+
+BreakingSwipe: {
+	DisplayName: Abattage
+	FlavorText: Le lanceur balaie violemment le camp adverse avec son immense queue. Baisse l'Attaque de la cible.
+}
+
+BranchPoke: {
+	DisplayName: Tapotige
+	FlavorText: Le lanceur attaque sa cible en la piquant avec une branche pointue.
+}
+
+Overdrive: {
+	DisplayName: Overdrive
+	FlavorText: Le lanceur gratte ses cordes de guitare ou de basse pour créer de violentes vibrations sonores qui blessent la cible.
+}
+
+AppleAcid: {
+	DisplayName: Acide Malique
+	FlavorText: Le lanceur attaque son adversaire avec un liquide corrosif créé à partir d'une pomme acide. Baisse la Défense Spéciale de la cible.
+}
+
+GravApple: {
+	DisplayName: Force G
+	FlavorText: Le lanceur attaque son adversaire avec une pomme qu'il fait tomber de très haut. Baisse la Défense de la cible.
+}
+
+SpiritBreak: {
+	DisplayName: Choc Émotionnel
+	FlavorText: Le lanceur attaque son adversaire avec une telle force que ce dernier peut s'en retrouver profondément troublé. Baisse l'Attaque Spéciale de la cible.
+}
+
+StrangeSteam: {
+	DisplayName: Vapeur Féérique
+	FlavorText: Le lanceur émet de la vapeur pour attaquer sa cible. Peut aussi la rendre confuse.
+}
+
+LifeDew: {
+	DisplayName: Fontaine de Vie
+	FlavorText: Le lanceur projette une eau mystérieuse autour du terrain pour restaurer ses PV et ceux de ses alliés au combat.
+}
+
+Obstruct: {
+	DisplayName: Blocage
+	FlavorText: Le lanceur se protège de toutes les attaques. Peut échouer si utilisée plusieurs fois de suite. Baisse beaucoup la Défense de l'assaillant s'il utilise une attaque directe.
+}
+
+FalseSurrender: {
+	DisplayName: Fourbette
+	FlavorText: Le lanceur fait semblant de se prosterner et utilise ses cheveux pour poignarder sa cible. Touche à tous les coups.
+}
+
+MeteorAssault: {
+	DisplayName: Joute Astrale
+	FlavorText: Le lanceur attaque son adversaire avec son poireau. Toutefois, cette action le fait vaciller et il doit se reposer au tour suivant.
+}
+
+Eternabeam: {
+	DisplayName: Laser Infinimax
+	FlavorText: L'attaque la plus puissante d'Éthernatos sous sa forme originelle. S'il l'utilise, il devra se reposer au tour suivant.
+}
+
+SteelBeam: {
+	DisplayName: Métalaser
+	FlavorText: Le lanceur concentre du métal issu de tout son corps en un rayon qu'il projette violemment sur sa cible. Il subit aussi des dégâts.
+}
+
+ExpandingForce: {
+	DisplayName: Vaste Pouvoir
+	FlavorText: Le lanceur attaque la cible avec ses pouvoirs psychiques. Si un Champ Psychique est actif, la puissance de cette capacité augmente et elle touche tous les ennemis.
+}
+
+SteelRoller: {
+	DisplayName: Métalliroue
+	FlavorText: Une attaque qui inflige des dégâts et fait disparaître le champ actif, mais qui échoue s'il n'y en a pas à ce moment.
+}
+
+ScaleShot: {
+	DisplayName: Rafale Écailles
+	FlavorText: Le lanceur projette des écailles sur la cible de deux à cinq fois d'affilée. Augmente la Vitesse, mais diminue la Défense.
+}
+
+MeteorBeam: {
+	DisplayName: Laser Météore
+	FlavorText: Le lanceur concentre l'énergie cosmique au premier tour, ce qui augmente son Attaque Spéciale, et frappe au second.
+}
+
+ShellSideArm: {
+	DisplayName: Kokiyarme
+	FlavorText: Une attaque physique ou spéciale, en fonction de ce qui est le plus efficace contre la cible. Peut aussi empoisonner.
+}
+
+MistyExplosion: {
+	DisplayName: Explo-Brume
+	FlavorText: Le lanceur frappe tous les Pokémon autour de lui en explosant, ce qui le met K.O. La puissance de cette attaque augmente si un Champ Brumeux est actif.
+}
+
+GrassyGlide: {
+	DisplayName: Gliss'Herbe
+	FlavorText: Le lanceur attaque l'ennemi en glissant sur le terrain. Frappe toujours en priorité si un Champ Herbu est actif.
+}
+
+RisingVoltage: {
+	DisplayName: Monte-Tension
+	FlavorText: Des éclairs surgissent du sol et frappent l'ennemi. La puissance de cette attaque est doublée si la cible est sur un Champ Électrifié.
+}
+
+TerrainPulse: {
+	DisplayName: Champlification
+	FlavorText: Une attaque qui tire sa force des champs. Son type et sa puissance varient selon le champ actif.
+}
+
+SkitterSmack: {
+	DisplayName: Ravage Rampant
+	FlavorText: Le lanceur rampe derrière l'ennemi pour l'attaquer. Baisse l'Attaque Spéciale de la cible.
+}
+
+BurningJealousy: {
+	DisplayName: Feu Envieux
+	FlavorText: Le lanceur attaque sa cible avec toute sa jalousie. Cette capacité brûle tout Pokémon dont les stats ont augmenté pendant ce tour.
+}
+
+LashOut: {
+	DisplayName: Cent Rancunes
+	FlavorText: Le lanceur frappe l'ennemi avec toute sa rancune. Si les stats du lanceur ont diminué pendant ce tour, la puissance de cette attaque est doublée.
+}
+
+Poltergeist: {
+	DisplayName: Esprit Frappeur
+	FlavorText: Le lanceur manipule l'objet tenu par l'ennemi pour l'attaquer. Échoue si la cible ne tient rien.
+}
+
+CorrosiveGas: {
+	DisplayName: Gaz Corrosif
+	FlavorText: Un gaz corrosif qui enveloppe tous les Pokémon alentour et qui dissout les objets qu'ils tiennent.
+}
+
+Coaching: {
+	DisplayName: Coaching
+	FlavorText: Le lanceur coache ses alliés, augmentant ainsi leur Attaque et leur Défense.
+}
+
+FlipTurn: {
+	DisplayName: Eau Revoir
+	FlavorText: Après son attaque, le lanceur revient à toute vitesse et change de place avec un Pokémon de l'équipe prêt au combat.
+}
+
+TripleAxel: {
+	DisplayName: Triple Axel
+	FlavorText: Une salve composée de un à trois coups de pied dont la puissance augmente à chaque coup porté.
+}
+
+DualWingbeat: {
+	DisplayName: Double Volée
+	FlavorText: Le lanceur frappe l'ennemi avec ses ailes deux fois d'affilée.
+}
+
+ScorchingSands: {
+	DisplayName: Sable Ardent
+	FlavorText: Le lanceur projette du sable chauffé à blanc sur l'ennemi. Peut aussi brûler la cible.
+}
+
+JungleHealing: {
+	DisplayName: Selve Salvatrice
+	FlavorText: Le lanceur fait appel au pouvoir de la jungle pour restaurer les PV et soigner les altérations d'état de ses alliés et de lui-même.
+}
+
+WickedBlow: {
+	DisplayName: Poing Obscur
+	FlavorText: Le lanceur assène un coup puissant à l'ennemi. Cette technique qui inflige toujours un coup critique est réservée à ceux qui maîtrisent la puissance des Ténèbres.
+}
+
+SurgingStrikes: {
+	DisplayName: Torrent de Coups
+	FlavorText: Le lanceur assène trois coups fluides à l'ennemi. Cette technique qui inflige toujours un coup critique est réservée à ceux qui maîtrisent la puissance de l'Eau.
+}
+
+ThunderCage: {
+	DisplayName: Voltageôle
+	FlavorText: Le lanceur frappe l'ennemi, et le piège dans une prison électrique qui dure de quatre à cinq tours.
+}
+
+DragonEnergy: {
+	DisplayName: Draco-Énergie
+	FlavorText: Le lanceur utilise son énergie vitale pour attaquer l'ennemi. Moins il a de PV, moins l'attaque est puissante.
+}
+
+FreezingGlare: {
+	DisplayName: Regard Glaçant
+	FlavorText: Les yeux du lanceur tirent des rayons psychiques. Peut aussi geler l'ennemi.
+}
+
+FieryWrath: {
+	DisplayName: Fureur Ardente
+	FlavorText: Le lanceur canalise sa colère et la transforme en aura brûlante, avec laquelle il attaque l'ennemi. Peut aussi l'apeurer.
+}
+
+ThunderousKick: {
+	DisplayName: Coup Fulgurant
+	FlavorText: Le lanceur assène un coup de pied à la cible à la vitesse de l'éclair. Baisse aussi la Défense de la cible.
+}
+
+GlacialLance: {
+	DisplayName: Lance de Glace
+	FlavorText: Le lanceur attaque l'ennemi avec une lance de glace entourée d'un blizzard.
+}
+
+AstralBarrage: {
+	DisplayName: Éclat Spectral
+	FlavorText: Le lanceur attaque l'ennemi avec une multitude de petits spectres.
+}
+
+EerieSpell: {
+	DisplayName: Sort Sinistre
+	FlavorText: Le lanceur attaque avec de puissants pouvoirs psychiques et retire 3 PP de la dernière capacité de l'ennemi.
+}
+
+DireClaw: {
+	DisplayName: Griffes Funestes
+	// FlavorText: The user lashes out at the target with ruinous claws. This may also leave the target poisoned, paralyzed, or asleep.
+}
+
+PsyshieldBash: {
+	DisplayName: Sprint Bouclier
+	// FlavorText: Cloaking itself in psychic energy, the user slams into the target. This also boosts the user's Defense stat.
+}
+
+PowerShift.DisplayName: Échange Force
+
+StoneAxe: {
+	DisplayName: Hache de Pierre
+	// FlavorText: The user swings its stone axes at the target. Stone splinters left behind by this attack float around the target.
+}
+
+SpringtideStorm: {
+	DisplayName: Typhon Passionné
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds brimming with love and hate. This may also lower their Attack stats.
+}
+
+MysticalPower: {
+	DisplayName: Force Mystique
+	// FlavorText: The user attacks by emitting a mysterious power. This also boosts the user's Sp. Atk stat.
+}
+
+RagingFury: {
+	DisplayName: Grand Courroux
+	// FlavorText: The user rampages around spewing flames for two to three turns. The user then becomes confused.
+}
+
+WaveCrash: {
+	DisplayName: Aquatacle
+	// FlavorText: The user shrouds itself in water and slams into the target with its whole body to inflict damage. This also damages the user quite a lot.
+}
+
+Chloroblast: {
+	DisplayName: Herblast
+	// FlavorText: The user launches its amassed chlorophyll to inflict damage on the target. This also damages the user.
+}
+
+MountainGale: {
+	DisplayName: Bise Glaciaire
+	// FlavorText: The user hurls giant chunks of ice at the target to inflict damage. This may also make the target flinch.
+}
+
+VictoryDance: {
+	DisplayName: Danse Victoire
+	// FlavorText: The user performs an intense dance to usher in victory, boosting its Attack, Defense, and Speed stats.
+}
+
+HeadlongRush: {
+	DisplayName: Assaut Frontal
+	// FlavorText: The user smashes into the target in a full-body tackle. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BarbBarrage: {
+	DisplayName: Multitoxik
+	// FlavorText: The user launches countless toxic barbs to inflict damage. This may also poison the target. This move's power is doubled if the target is already poisoned.
+}
+
+EsperWing: {
+	DisplayName: Ailes Psycho
+	// FlavorText: The user slashes the target with aura-enriched wings. This also boosts the user's Speed stat. This move has a heightened chance of landing a critical hit.
+}
+
+BitterMalice: {
+	DisplayName: Cœur de Rancœur
+	// FlavorText: The user attacks the target with spine-chilling resentment. This also lowers the target's Attack stat.
+}
+
+Shelter: {
+	DisplayName: Mur Fumigène
+	// FlavorText: The user makes its skin as hard as an iron shield, sharply boosting its Defense stat.
+}
+
+TripleArrows: {
+	DisplayName: Triple Flèche
+	// FlavorText: The user kicks, then fires three arrows. This move has a heightened chance of landing a critical hit and may also lower the target's Defense stat or make it flinch.
+}
+
+InfernalParade: {
+	DisplayName: Cortège Funèbre
+	// FlavorText: The user attacks with myriad fireballs. This may also leave the target with a burn. This move's power is doubled if the target has a status condition.
+}
+
+CeaselessEdge: {
+	DisplayName: Vagues à Lames
+	// FlavorText: The user slashes its shell blade at the target. Shell splinters left behind by this attack remain scattered under the target as spikes.
+}
+
+BleakwindStorm: {
+	DisplayName: Typhon Hivernal
+	// FlavorText: The user attacks with savagely cold winds that cause both body and spirit to tremble. This may also lower the Speed stats of opposing Pokémon.
+}
+
+WildboltStorm: {
+	DisplayName: Typhon Fulgurant
+	// FlavorText: The user summons a thunderous tempest and savagely attacks with lightning and wind. This may also leave opposing Pokémon with paralysis.
+}
+
+SandsearStorm: {
+	DisplayName: Typhon Pyrosable
+	// FlavorText: The user attacks by wrapping opposing Pokémon in fierce winds and searingly hot sand. This may also leave them with a burn.
+}
+
+LunarBlessing: {
+	DisplayName: Prière Lunaire
+	// FlavorText: The user receives a blessing from the crescent moon, restoring HP and curing status conditions for itself and its ally Pokémon currently in the battle.
+}
+
+TakeHeart: {
+	DisplayName: Extravaillance
+	// FlavorText: The user lifts its spirits, curing its own status conditions and boosting its Sp. Atk and Sp. Def stats.
+}
+
+TeraBlast: {
+	DisplayName: Téra Explosion
+	// FlavorText: If the user has Terastallized, it unleashes energy of its Tera Type. This move inflicts damage using the Attack or Sp. Atk stat—whichever is higher for the user.
+}
+
+SilkTrap: {
+	DisplayName: Piège de Fil
+	// FlavorText: The user spins a silken trap, protecting itself from damage while lowering the Speed stat of any attacker that makes direct contact.
+}
+
+AxeKick: {
+	DisplayName: Talon-Marteau
+	// FlavorText: The user attacks by kicking up into the air and slamming its heel down upon the target. This may also confuse the target. If it misses, the user takes damage instead.
+}
+
+LastRespects: {
+	DisplayName: Hommage Posthume
+	// FlavorText: The user attacks to avenge its allies. The more defeated allies there are in the user's party, the greater the move's power.
+}
+
+LuminaCrash: {
+	DisplayName: Lumino-Impact
+	// FlavorText: The user attacks by unleashing a peculiar light that even affects the mind. This also harshly lowers the target's Sp. Def stat.
+}
+
+OrderUp: {
+	DisplayName: Plat du Jour
+	// FlavorText: The user attacks with elegant poise. If the user has a Tatsugiri in its mouth, this move boosts one of the user's stats based on the Tatsugiri's form.
+}
+
+JetPunch: {
+	DisplayName: Poing Sonique
+	// FlavorText: The user summons a torrent around its fist and punches at blinding speed. This move always goes first.
+}
+
+SpicyExtract: {
+	DisplayName: Habanerage
+	// FlavorText: The user emits an incredibly spicy extract, sharply boosting the target's Attack stat and harshly lowering the target's Defense stat.
+}
+
+SpinOut: {
+	DisplayName: Dérapage
+	// FlavorText: The user spins furiously by straining its legs, inflicting damage on the target. This also harshly lowers the user's Speed stat.
+}
+
+PopulationBomb: {
+	DisplayName: Prolifération
+	// FlavorText: The user's fellows gather in droves to perform a combo attack that hits the target one to ten times in a row.
+}
+
+IceSpinner: {
+	DisplayName: Cryo-Pirouette
+	// FlavorText: The user covers its feet in thin ice and twirls around, slamming into the target. This move's spinning motion also destroys the terrain.
+}
+
+GlaiveRush: {
+	DisplayName: Charge Glaive
+	// FlavorText: The user throws its entire body into a reckless charge. After this move is used, attacks on the user cannot miss and will inflict double damage until the user's next turn.
+}
+
+RevivalBlessing: {
+	DisplayName: Second Souffle
+	// FlavorText: The user bestows a loving blessing, reviving a party Pokémon that has fainted and restoring half that Pokémon's max HP.
+}
+
+SaltCure: {
+	DisplayName: Salaison
+	// FlavorText: The user salt cures the target, inflicting damage every turn. Steel and Water types are more strongly affected by this move.
+}
+
+TripleDive: {
+	DisplayName: Triple Plongeon
+	// FlavorText: The user performs a perfectly timed triple dive, hitting the target with splashes of water three times in a row.
+}
+
+MortalSpin: {
+	DisplayName: Toupie Éclat
+	// FlavorText: The user performs a spin attack that can also eliminate the effects of such moves as Bind, Wrap, and Leech Seed. This also poisons opposing Pokémon.
+}
+
+Doodle: {
+	DisplayName: Décalquage
+	// FlavorText: The user captures the very essence of the target in a sketch. This changes the Abilities of the user and its ally Pokémon to that of the target.
+}
+
+FilletAway: {
+	DisplayName: Décharnement
+	// FlavorText: The user sharply boosts its Attack, Sp. Atk, and Speed stats by using its own HP.
+}
+
+KowtowCleave: {
+	DisplayName: Génusection
+	// FlavorText: The user slashes at the target after kowtowing to make the target let down its guard. This attack never misses.
+}
+
+FlowerTrick: {
+	DisplayName: Magie Florale
+	// FlavorText: The user throws a rigged bouquet of flowers at the target. This attack never misses and always lands a critical hit.
+}
+
+TorchSong: {
+	DisplayName: Chant Flamboyant
+	// FlavorText: The user blows out raging flames as if singing a song, scorching the target. This also boosts the user's Sp. Atk stat.
+}
+
+AquaStep: {
+	DisplayName: Danse Aquatique
+	// FlavorText: The user toys with the target and attacks it using light and fluid dance steps. This also boosts the user's Speed stat.
+}
+
+RagingBull: {
+	DisplayName: Taurogne
+	// FlavorText: The user performs a tackle like a raging bull. This move's type depends on the user's form. It can also break barriers, such as Light Screen and Reflect.
+}
+
+MakeItRain: {
+	DisplayName: Ruée d'Or
+	// FlavorText: The user attacks by throwing out a mass of coins. This also lowers the user's Sp. Atk stat. Money is earned after the battle.
+}
+
+Psyblade: {
+	DisplayName: Lame Psychique
+	// FlavorText: The user rends the target with an ethereal blade. This move's power is boosted by 50 percent if the user is on Electric Terrain.
+}
+
+HydroSteam: {
+	DisplayName: Hydrovapeur
+	// FlavorText: The user blasts the target with boiling-hot water. This move's power is not lowered in harsh sunlight but rather boosted by 50 percent.
+}
+
+Ruination: {
+	DisplayName: Cataclysme
+	// FlavorText: The user summons a ruinous disaster. This cuts the target's HP in half.
+}
+
+CollisionCourse: {
+	DisplayName: Nitro Crash
+	// FlavorText: The user transforms and crashes to the ground, causing a massive prehistoric explosion. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ElectroDrift: {
+	DisplayName: Turbo Volt
+	// FlavorText: The user races forward at ultrafast speeds, piercing its target with futuristic electricity. This move's power is boosted more than usual if it's a supereffective hit.
+}
+
+ShedTail: {
+	DisplayName: Queulonage
+	// FlavorText: The user creates a substitute for itself using its own HP before switching places with a party Pokémon in waiting.
+}
+
+ChillyReception.DisplayName: Neigeux de Mots
+
+TidyUp: {
+	DisplayName: Grand Nettoyage
+	// FlavorText: The user tidies up and removes the effects of Spikes, Stealth Rock, Sticky Web, Toxic Spikes, and Substitute. This also boosts the user's Attack and Speed stats.
+}
+
+Snowscape: {
+	DisplayName: Chute de Neige
+	// FlavorText: The user summons a snowstorm lasting five turns. This boosts the Defense stats of Ice types.
+}
+
+Pounce: {
+	DisplayName: Bond
+	// FlavorText: The user attacks by pouncing on the target. This also lowers the target's Speed stat.
+}
+
+Trailblaze: {
+	DisplayName: Désherbaffe
+	// FlavorText: The user attacks suddenly as if leaping out from tall grass. The user's nimble footwork boosts its Speed stat.
+}
+
+ChillingWater: {
+	DisplayName: Douche Froide
+	// FlavorText: The user attacks the target by showering it with water that's so cold it saps the target's power. This also lowers the target's Attack stat.
+}
+
+HyperDrill: {
+	DisplayName: Hyperceuse
+	// FlavorText: The user spins the pointed part of its body at high speed to pierce the target. This attack can hit a target using a move such as Protect or Detect.
+}
+
+TwinBeam: {
+	DisplayName: Double Laser
+	// FlavorText: The user shoots mystical beams from its eyes to inflict damage. The target is hit twice in a row.
+}
+
+RageFist: {
+	DisplayName: Poing de Colère
+	// FlavorText: The user converts its rage into energy to attack. The more times the user has been hit by attacks, the greater the move's power.
+}
+
+ArmorCannon: {
+	DisplayName: Canon Blindé
+	// FlavorText: The user shoots its own armor out as blazing projectiles. This also lowers the user's Defense and Sp. Def stats.
+}
+
+BitterBlade: {
+	DisplayName: Lame en Peine
+	// FlavorText: The user focuses its bitter feelings toward the world of the living into a slashing attack. The user's HP is restored by up to half the damage taken by the target.
+}
+
+DoubleShock: {
+	DisplayName: Double Décharge
+	// FlavorText: The user discharges all the electricity from its body to perform a high-damage attack. After using this move, the user will no longer be Electric type.
+}
+
+GigatonHammer: {
+	DisplayName: Marteau Mastoc
+	// FlavorText: The user swings its whole body around to attack with its huge hammer. This move can't be used twice in a row.
+}
+
+Comeuppance: {
+	DisplayName: Vindicte
+	// FlavorText: The user retaliates with much greater force against the opponent that last inflicted damage on it.
+}
+
+AquaCutter: {
+	DisplayName: Tranch'Aqua
+	// FlavorText: The user expels pressurized water to cut at the target like a blade. This move has a heightened chance of landing a critical hit.
+}
+
+BlazingTorque.DisplayName: Crash Brûlant
+WickedTorque.DisplayName: Crash Obscur
+NoxiousTorque.DisplayName: Crash Toxique
+CombatTorque.DisplayName: Crash Musclé
+MagicalTorque.DisplayName: Crash Magique
+
+BloodMoon: {
+	DisplayName: Lune Rouge
+	// FlavorText: The user unleashes the full brunt of its spirit from a full moon that shines as red as blood. This move can't be used twice in a row.
+}
+
+MatchaGotcha: {
+	DisplayName: Mortier Matcha
+	// FlavorText: The user fires a blast of tea that it mixed. The user's HP is restored by up to half the damage taken by the target. This may also leave the target with a burn.
+}
+
+SyrupBomb: {
+	DisplayName: Bombe au Sirop
+	// FlavorText: The user sets off an explosion of sticky candy syrup, which coats the target and causes the target's Speed stat to drop each turn for three turns.
+}
+
+IvyCudgel: {
+	DisplayName: Massue Liane
+	// FlavorText: The user strikes with an ivy-wrapped cudgel. This move's type changes depending on the mask worn by the user, and it has a heightened chance of landing a critical hit.
+}
+
+ElectroShot: {
+	DisplayName: Fulgurayon
+	// FlavorText: The user gathers electricity on the first turn, boosting its Sp. Atk stat, then fires a high-voltage shot on the next turn. The shot will be fired immediately in rain.
+}
+
+TeraStarstorm: {
+	DisplayName: Pluie Térastrale
+	// FlavorText: With the power of its crystals, the user bombards and eliminates the target. When used by Terapagos in its Stellar Form, this move damages all opposing Pokémon.
+}
+
+FickleBeam: {
+	DisplayName: Laser Hasard
+	// FlavorText: The user shoots a beam of light to inflict damage. Sometimes all the user's heads shoot beams in unison, doubling the move's power.
+}
+
+BurningBulwark: {
+	DisplayName: Rempart Brûlant
+	// FlavorText: The user's intensely hot fur protects it from attacks and also burns any attacker that makes direct contact with it.
+}
+
+Thunderclap: {
+	DisplayName: Vif Éclair
+	// FlavorText: This move enables the user to attack first with a jolt of electricity. This move fails if the target is not readying an attack.
+}
+
+MightyCleave: {
+	DisplayName: Lame Puissante
+	// FlavorText: The user wields the light that has accumulated atop its head to cleave the target. This move hits even if the target protects itself.
+}
+
+TachyonCutter: {
+	DisplayName: Lame Tachyonique
+	// FlavorText: The user attacks by launching particle blades at the target twice in a row. This attack never misses.
+}
+
+HardPress: {
+	DisplayName: Pression Extrême
+	// FlavorText: The target is crushed with an arm, a claw, or the like to inflict damage. The more HP the target has left, the greater the move's power.
+}
+
+DragonCheer: {
+	DisplayName: Cri Draconique
+	// FlavorText: The user raises its allies' morale with a draconic cry so that their future attacks have a heightened chance of landing critical hits. This rouses Dragon types more.
+}
+
+AlluringVoice: {
+	DisplayName: Voix Envoûtante
+	// FlavorText: The user attacks the target using its angelic voice. This also confuses the target if its stats have been boosted during the turn.
+}
+
+TemperFlare: {
+	DisplayName: Indignition
+	// FlavorText: Spurred by desperation, the user attacks the target. This move's power is doubled if the user's previous move failed.
+}
+
+SupercellSlam: {
+	DisplayName: Volt Assaut
+	// FlavorText: The user electrifies its body and drops onto the target to inflict damage. If this move misses, the user takes damage instead.
+}
+
+PsychicNoise: {
+	DisplayName: Dissonance Psy
+	// FlavorText: The user attacks the target with unpleasant sound waves. For two turns, the target is prevented from recovering HP through moves, Abilities, or held items.
+}
+
+UpperHand: {
+	DisplayName: Prio-Parade
+	// FlavorText: The user reacts to the target's movement and strikes with the heel of its palm, making the target flinch. This move fails if the target is not readying a priority move.
+}
+
+MalignantChain: {
+	DisplayName: Chaîne Malsaine
+	// FlavorText: The user pours toxins into the target by wrapping them in a toxic, corrosive chain. This may also leave the target badly poisoned.
+}

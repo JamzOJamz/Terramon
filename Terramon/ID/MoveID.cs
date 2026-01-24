@@ -703,7 +703,7 @@ public enum MoveID : ushort
     ZingZap,
     NaturesMadness,
     MultiAttack,
-    ZThunderbolt,  // 10,000,000 Volt Thunderbolt
+    ZThunderbolt, // 10,000,000 Volt Thunderbolt
     MindBlown,
     PlasmaFists,
     PhotonGeyser,
