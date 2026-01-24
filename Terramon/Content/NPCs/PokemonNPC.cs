@@ -1,15 +1,17 @@
+using System.Reflection;
 using Newtonsoft.Json.Linq;
 using ReLogic.Content;
-using System.Reflection;
 using Terramon.Content.Commands;
 using Terramon.Content.Configs;
 using Terramon.Content.Dusts;
+using Terramon.Content.GUI.Common;
 using Terramon.Content.GUI.TurnBased;
 using Terramon.Content.Items;
 using Terramon.Content.Items.PokeBalls;
 using Terramon.Content.Projectiles;
 using Terramon.Core.Abstractions;
 using Terramon.Core.Battling;
+using Terramon.Core.Battling.BattlePackets;
 using Terramon.Core.Battling.BattlePackets.Messages;
 using Terramon.Core.Loaders;
 using Terramon.Core.NPCComponents;
@@ -32,16 +34,25 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
     /// </summary>
     private static int? _highlightedNPCIndex;
 
-    private int _cryTimer;
-    private PokemonData _data;
+    private static readonly Vector2[] ShadowDirections =
+    [
+        -Vector2.UnitX,
+        Vector2.UnitX,
+        -Vector2.UnitY,
+        Vector2.UnitY,
+        Vector2.Normalize(new Vector2(-1, -1)),
+        Vector2.Normalize(new Vector2(1, -1)),
+        Vector2.Normalize(new Vector2(-1, 1)),
+        Vector2.Normalize(new Vector2(1, 1))
+    ];
 
+    private int _cryTimer;
     private bool _isSpawnedFromRelease;
     private Asset<Texture2D> _mainTexture;
     private int _mouseHoverTimer;
     private int _plasmaStateTime;
     private Vector2 _plasmaStateVelocity;
     private int _shinySparkleTimer;
-    private BattleClient _battleClient;
 
     static PokemonNPC()
     {
@@ -65,6 +76,31 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         };
     }
 
+    protected override bool CloneNewInstances => true;
+
+    public override string Name { get; } = schema.Identifier + "NPC";
+
+    public override LocalizedText DisplayName => DatabaseV2.GetLocalizedPokemonName(Schema);
+
+    public bool PlasmaState { get; private set; }
+
+    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
+
+    public ushort ID { get; } = id;
+
+    public DatabaseV2.PokemonSchema Schema { get; } = schema;
+
+    public PokemonData Data
+    {
+        get;
+        set
+        {
+            field = value;
+            NPC.lifeMax = field.MaxHP;
+            NPC.life = field.HP;
+        }
+    }
+
     /// <summary>
     ///     Draws the NPC's level text above its sprite.
     /// </summary>
@@ -82,112 +118,25 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         if (Math.Abs(Main.LocalPlayer.gravDir - -1f) < 0.001f)
             textYPos = Main.screenHeight - textYPos;
 
-        var textDrawPos = new Vector2(textXPos, textYPos);
+        var textDrawPos = new Vector2(textXPos, textYPos) - size;
 
         using (spriteBatch.Override(sampler: SamplerState.LinearClamp))
         {
-            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, font, text, textDrawPos - size,
-                Main.MouseTextColorReal, 0f, Vector2.Zero, new Vector2(scale));
-        }
-    }
+            var baseColor = Main.MouseTextColorReal;
+            const float rotation = 0f;
+            var origin = Vector2.Zero;
+            var baseScale = new Vector2(scale);
+            const float spread = 1.85f;
+            const float maxWidth = -1f;
 
-    protected override bool CloneNewInstances => true;
+            var snippets = ChatManager.ParseMessage(text, baseColor).ToArray();
+            ChatManager.ConvertNormalSnippets(snippets);
+            foreach (var d in BetterUIText.ShadowDirections)
+                ChatManager.DrawColorCodedString(spriteBatch, font, snippets, textDrawPos + d * spread,
+                    new Color(0, 0, 0, baseColor.A), rotation, origin, baseScale, out _, maxWidth, true);
 
-    public override string Name { get; } = schema.Identifier + "NPC";
-
-    public override LocalizedText DisplayName => DatabaseV2.GetLocalizedPokemonName(Schema);
-
-    public bool PlasmaState { get; private set; }
-
-    #region IBattleProvider
-    
-    public BattleProviderType ProviderType => BattleProviderType.PokemonNPC;
-    
-    public BattleClient BattleClient => _battleClient;
-    
-    public Entity SyncedEntity => NPC;
-    
-    public string BattleName => "Wild " + Data.DisplayName;
-    
-    public PokemonData[] GetBattleTeam() => [Data];
-    
-    public void StartBattleEffects(bool before)
-    {
-        // Turn towards the player and disable hover behaviour
-        NPC.spriteDirection = NPC.direction = BattleClient.Foe.SyncedEntity.position.X > NPC.position.X ? 1 : -1;
-        NPC.ShowNameOnHover = false;
-    }
-    
-    public void StopBattleEffects()
-    {
-        NPC.ShowNameOnHover = true;
-    }
-    
-    public void SetActiveSlot(byte newSlot)
-    {
-        if (BattleClient.LocalClient.Foe == this)
-            TestBattleUI.FoePanel.CurrentMon = Data;
-    }
-    
-    public void Reply(BattleMessage m)
-    {
-        switch (m)
-        {
-            case ChallengeQuestion:
-
-                // Accept immediately
-                m.Return(new ChallengeAnswer(yes: true));
-                break;
-            case ChallengeAnswer c: // Wild Pokemon in tall grass?
-
-                if (c.Yes)
-                {
-                    // Imbalanced operation: Will send battle pick to foe here,
-                    // and the other one's pick will be sent in SlotChoice to server
-                    m.Return(new SlotChoice(slot: 1));
-                }
-                break;
-            case SlotChoice: // Challenge to this mon
-                var pick = new SlotChoice(slot: 1)
-                {
-                    Sender = this
-                };
-                pick.Send();
-                break;
-            case TeamQuestion:
-                m.Return(new TeamAnswer(this.GetNetTeam()));
-                break;
-            default:
-                Main.NewText(m.GetType());
-                break;
-        }
-    }
-    
-    public void Witness(BattleMessage message)
-    {
-    }
-    
-    public void AutoBattleChoice()
-    {
-        _battleClient.MakeChoice(Core.Battling.BattlePackets.BattleChoice.Default);
-    }
-    
-    #endregion
-
-    public override string Texture { get; } = "Terramon/Assets/Pokemon/" + schema.Identifier;
-
-    public ushort ID { get; } = id;
-
-    public DatabaseV2.PokemonSchema Schema { get; } = schema;
-
-    public PokemonData Data
-    {
-        get => _data;
-        set
-        {
-            _data = value;
-            NPC.lifeMax = _data.MaxHP;
-            NPC.life = _data.HP;
+            _ = ChatManager.DrawColorCodedString(spriteBatch, font, snippets, textDrawPos, Color.White, rotation,
+                origin, baseScale, out _, maxWidth);
         }
     }
 
@@ -235,7 +184,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         // stopwatch.Stop();
         // Mod.Logger.Debug("Time taken to apply components: " + stopwatch.Elapsed + "ms");
 
-        _battleClient = new BattleClient(this);
+        BattleClient = new BattleClient(this);
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -544,4 +493,80 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
         NPC.ShowNameOnHover = false; // Disable showing name on hover
         NPC.netUpdate = true;
     }
+
+    #region IBattleProvider
+
+    public BattleProviderType ProviderType => BattleProviderType.PokemonNPC;
+
+    public BattleClient BattleClient { get; private set; }
+
+    public Entity SyncedEntity => NPC;
+
+    public string BattleName => "Wild " + Data.DisplayName;
+
+    public PokemonData[] GetBattleTeam() => [Data];
+
+    public void StartBattleEffects(bool before)
+    {
+        // Turn towards the player and disable hover behaviour
+        NPC.spriteDirection = NPC.direction = BattleClient.Foe.SyncedEntity.position.X > NPC.position.X ? 1 : -1;
+        NPC.ShowNameOnHover = false;
+    }
+
+    public void StopBattleEffects()
+    {
+        NPC.ShowNameOnHover = true;
+    }
+
+    public void SetActiveSlot(byte newSlot)
+    {
+        if (BattleClient.LocalClient.Foe == this)
+            TestBattleUI.FoePanel.CurrentMon = Data;
+    }
+
+    public void Reply(BattleMessage m)
+    {
+        switch (m)
+        {
+            case ChallengeQuestion:
+
+                // Accept immediately
+                m.Return(new ChallengeAnswer(yes: true));
+                break;
+            case ChallengeAnswer c: // Wild Pokémon in tall grass?
+
+                if (c.Yes)
+                {
+                    // Imbalanced operation: Will send battle pick to foe here,
+                    // and the other one's pick will be sent in SlotChoice to server
+                    m.Return(new SlotChoice(slot: 1));
+                }
+
+                break;
+            case SlotChoice: // Challenge to this mon
+                var pick = new SlotChoice(slot: 1)
+                {
+                    Sender = this
+                };
+                pick.Send();
+                break;
+            case TeamQuestion:
+                m.Return(new TeamAnswer(this.GetNetTeam()));
+                break;
+            default:
+                Main.NewText(m.GetType());
+                break;
+        }
+    }
+
+    public void Witness(BattleMessage message)
+    {
+    }
+
+    public void AutoBattleChoice()
+    {
+        BattleClient.MakeChoice(BattleChoice.Default);
+    }
+
+    #endregion
 }

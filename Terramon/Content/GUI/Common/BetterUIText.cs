@@ -7,7 +7,10 @@ namespace Terramon.Content.GUI.Common;
 
 public class BetterUIText : UIElement
 {
-    private static readonly Vector2[] ShadowDirections =
+    /// <summary>
+    ///     Provides 8 normalized directions (cardinal + diagonal) for shadow drawing.
+    /// </summary>
+    public static readonly Vector2[] ShadowDirections =
     [
         -Vector2.UnitX, // Left
         Vector2.UnitX, // Right
@@ -21,7 +24,6 @@ public class BetterUIText : UIElement
 
     private Color _color = Color.White;
     private bool _isLarge;
-    private bool _isWrapped;
     private string _lastTextReference;
     private object _text = "";
     private Vector2 _textSize = Vector2.Zero;
@@ -59,10 +61,10 @@ public class BetterUIText : UIElement
 
     public bool IsWrapped
     {
-        get => _isWrapped;
+        get;
         set
         {
-            _isWrapped = value;
+            field = value;
             if (value)
                 MinWidth.Set(0,
                     0); // TML: IsWrapped when true should prevent changing MinWidth, otherwise can't shrink in width due to CreateWrappedText+GetInnerDimensions logic. IsWrapped is false in ctor, so need to undo changes.
