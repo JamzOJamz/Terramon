@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.Localization;
 using Terraria.UI;
 
 namespace Terramon.Content.GUI.TurnBased;
@@ -251,7 +252,7 @@ public sealed class TestBattleUI : SmartUIState
             actual.BlockInteractions = false;
             actual.Color = move.Schema.Type.GetColor();
             actual.UpdateTextures("Terramon/Assets/GUI/TurnBased/MoveButton_Normal");
-            label.SetText(move.ID.ToString());
+            label.SetText(Language.GetText($"Mods.Terramon.Moves.{move.ID}.DisplayName"));
             moveRef.DataRef = data;
             moveRef.Move = cur;
 

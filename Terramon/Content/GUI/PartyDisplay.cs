@@ -369,7 +369,7 @@ public sealed class PartySidebarSlot : UICompositeImage
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
-        if (_isActiveSlot && TerramonPlayer.LocalPlayer.NextFreePartyIndex() >= 2)
+        if (ClientConfig.Instance.HighlightSelectedPokemonName && _isActiveSlot /* && TerramonPlayer.LocalPlayer.NextFreePartyIndex() >= 2*/)
             _nameText.TextColor = Main.OurFavoriteColor;
         else
             _nameText.TextColor = Color.White;

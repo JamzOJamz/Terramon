@@ -27,6 +27,9 @@ public class ClientConfig : ModConfig
     [DefaultValue(false)]
     public bool ReducedAudio;
 
+    [DefaultValue(true)]
+    public bool HighlightSelectedPokemonName;
+
     [DefaultValue(false)] [ReloadRequired]
     public bool ReducedMotion;
 

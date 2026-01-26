@@ -128,6 +128,11 @@ Configs: {
 			// Tooltip: Disables musical tones when rearranging Pokémon in the sidebar
 		}
 
+		HighlightSelectedPokemonName: {
+			// Label: (Party Sidebar) Highlight Selected Pokémon Name
+			// Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
+		}
+
 		ReducedMotion: {
 			// Label: (Inventory Slots) Reduced Motion
 			// Tooltip: Disables the sliding animation when toggling inventory party slots

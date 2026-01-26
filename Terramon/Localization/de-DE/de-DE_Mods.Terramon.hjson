@@ -128,6 +128,11 @@ Configs: {
 			Tooltip: Deaktiviert musikalische Töne beim Neuordnen von Pokémon in der Seitenleiste
 		}
 
+		HighlightSelectedPokemonName: {
+			// Label: (Party Sidebar) Highlight Selected Pokémon Name
+			// Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
+		}
+
 		ReducedMotion: {
 			Label: (Inventarslots) Reduzierte Bewegung
 			Tooltip: Deaktiviert die Gleitanimation beim Umschalten von Inventar-Team-Slots

@@ -128,6 +128,11 @@ Configs: {
 			Tooltip: 在侧边栏重新排列宝可梦时禁用音乐提示音
 		}
 
+		HighlightSelectedPokemonName: {
+			// Label: (Party Sidebar) Highlight Selected Pokémon Name
+			// Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
+		}
+
 		ReducedMotion: {
 			Label: （库存槽位）减少动画
 			Tooltip: 切换库存队伍槽位时禁用滑动动画

@@ -128,6 +128,11 @@ Configs: {
 			Tooltip: Desactiva los tonos musicales al reorganizar Pokémon en la barra lateral
 		}
 
+		HighlightSelectedPokemonName: {
+			// Label: (Party Sidebar) Highlight Selected Pokémon Name
+			// Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
+		}
+
 		ReducedMotion: {
 			Label: (Ranuras del inventario) Movimiento reducido
 			Tooltip: Desactiva la animación de deslize al activar o desactivar las ranuras de equipo en el inventario
