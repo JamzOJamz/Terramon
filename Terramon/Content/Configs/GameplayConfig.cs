@@ -18,7 +18,7 @@ public class GameplayConfig : ModConfig
     [DefaultValue(1f)] [Range(0f, 1f)]
     public float NonPokemonSpawnRateMultiplier;
     
-    [DefaultValue(SpawningStage.Stage1)]
+    [DefaultValue(SpawningStage.Stage1)] [Slider]
     public SpawningStage SpawningStage;
     
     [DefaultValue(true)]
