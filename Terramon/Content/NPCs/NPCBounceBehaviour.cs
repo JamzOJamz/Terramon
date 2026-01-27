@@ -32,6 +32,15 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
     public override void AI(NPC npc)
     {
         if (!Enabled || PlasmaState) return;
+        
+        if (InBattle)
+        {
+            if (NPC.velocity.Y > 0) NPC.velocity.Y *= FallSpeedMultiplier;
+            NPC.velocity.X *= 0.85f; // Quickly slow down
+            AIState = (float)ActionState.Idle;
+            AITimer = 0;
+            return;
+        }
 
         if (NPC.collideY) NPC.velocity.Y = 0;
         switch (AIState)
@@ -108,6 +117,13 @@ public sealed class NPCBounceBehaviour : NPCAIComponent
     public override void FindFrame(NPC npc, int frameHeight)
     {
         if (!Enabled || PlasmaState) return;
+
+        if (InBattle)
+        {
+            NPC.frameCounter = 0;
+            NPC.frame.Y = 0;
+            return;
+        }
 
         if (AnimateJumpOnly && !NPC.IsABestiaryIconDummy)
         {

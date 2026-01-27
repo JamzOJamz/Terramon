@@ -404,7 +404,7 @@ public sealed class PartySidebarSlot : UICompositeImage
         if (_isActiveSlot)
         {
             var oldColor = Color;
-            Color *= 0.42f;
+            Color *= 0.4f;
             base.DrawSelf(spriteBatch);
             Color = oldColor;
         }
