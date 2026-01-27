@@ -411,6 +411,7 @@ internal sealed class CustomPartyItemSlot : UIImage
         {
             if (heldPokemon == null) return;
 
+            var activePokemon = modPlayer.GetActivePokemon();
             SoundEngine.PlaySound(SoundID.Grab);
             TooltipOverlay.ClearHeldPokemon();
 
@@ -420,6 +421,10 @@ internal sealed class CustomPartyItemSlot : UIImage
                 if (modPlayer.Party[i] == null) emptySlot = i;
                 else break;
             }
+
+            // Preserve active slot if the held Pokémon is active
+            if (heldPokemon == activePokemon)
+                modPlayer.ActiveSlot = emptySlot;
 
             modPlayer.Party[emptySlot] = heldPokemon;
             return;
