@@ -300,7 +300,7 @@ public class DatabaseV2
         byte? EffectChance
     )
     {
-        public MoveSchema() : this(PokemonType.Normal, 0, 0, 0, MoveCategory.Dynamic, 0, 0)
+        public MoveSchema() : this(PokemonType.Normal, 0, 0, 0, MoveCategory.Physical, 0, 0)
         {
         }
     }

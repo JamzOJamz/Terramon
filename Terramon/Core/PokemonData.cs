@@ -1,4 +1,5 @@
 global using NonVolatileStatus = Showdown.NET.Definitions.StatusID;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using ReLogic.Content;
 using Showdown.NET.Definitions;
@@ -1127,10 +1128,22 @@ public struct StatStages
     }
 }
 
-public readonly struct PokemonMoves
+public readonly struct PokemonMoves : IEnumerable<MoveData>
 {
     private const ushort IDMask = 0x3FF;
     private readonly uint[] _moves = new uint[4];
+
+    public int Count
+    {
+        get
+        {
+            var count = 0;
+            for (var i = 0; i < 4; i++)
+                if ((MoveID)(_moves[i] & IDMask) != MoveID.None)
+                    count++;
+            return count;
+        }
+    }
 
     public MoveData this[int move]
     {
@@ -1162,8 +1175,7 @@ public readonly struct PokemonMoves
             var move = moves[i];
             if (move == MoveID.None)
                 continue;
-            // TODO: look for max pp for move and do stuff here to then pass into movedata ctor
-            this[i] = new MoveData(move, 0, 0);
+            this[i] = new MoveData(move, Terramon.DatabaseV2.GetMove(move).PP, 0);
         }
     }
 
@@ -1194,9 +1206,21 @@ public readonly struct PokemonMoves
     private static uint Construct(MoveID id, byte pp, byte ppUp)
     {
         ArgumentOutOfRangeException.ThrowIfGreaterThan(pp, 63);
-        ArgumentOutOfRangeException.ThrowIfGreaterThan(pp, 3);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(ppUp, 3);
         return (uint)id | ((uint)pp << 10) | ((uint)ppUp << 16);
     }
+
+    public IEnumerator<MoveData> GetEnumerator()
+    {
+        for (var i = 0; i < 4; i++)
+        {
+            var moveID = (MoveID)(_moves[i] & IDMask);
+            if (moveID != MoveID.None)
+                yield return this[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public string PackedString(bool withStruggle = true)
     {

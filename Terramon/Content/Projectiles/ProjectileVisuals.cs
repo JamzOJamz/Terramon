@@ -22,6 +22,7 @@ public class ProjectileVisuals : ProjectileComponent
     public Vector3 LightColor = Vector3.One;
     public float LightStrength = 0f;
     public Vector3 ShinyLightColor = Vector3.One;
+    public short TorchLightID = -1;
 
     public override void SetDefaults(Projectile proj)
     {
@@ -40,9 +41,17 @@ public class ProjectileVisuals : ProjectileComponent
         //var texture = TextureAssets.Projectile[proj.type].Value;
 
         if (LightStrength > 0)
+        {
+            var useColor = petProj.Data is { IsShiny: true } ? ShinyLightColor : LightColor;
+            if (TorchLightID > -1)
+            {
+                TorchID.TorchColor(TorchLightID, out var r, out var g, out var b);
+                useColor = new Vector3(r, g, b);
+            }
+
             Lighting.AddLight(proj.Center,
-                (petProj.Data is { IsShiny: true } ? ShinyLightColor : LightColor) * LightStrength *
-                (Main.raining || proj.wet ? 1 - DamperAmount : 1));
+                useColor * LightStrength * (Main.raining || proj.wet ? 1 - DamperAmount : 1));
+        }
 
         if (DustID <= -1) return;
         if (_dustTimer >= DustFrequency)

@@ -31,7 +31,7 @@ public abstract class NPCAIComponent : NPCComponent
     protected bool PlasmaState => NPC.Pokemon().PlasmaState;
 
     /// <summary>
-    ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).Battle</c>.
+    ///     Shorthand for <c>((PokemonNPC)NPC.ModNPC).BattleClient.BattleOngoing</c>.
     /// </summary>
     protected bool InBattle => NPC.Pokemon().BattleClient.BattleOngoing;
 
@@ -54,8 +54,8 @@ public abstract class NPCAIComponent : NPCComponent
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
         if (!Enabled) return;
-        
-        modifiers.FinalDamage *= float.Epsilon;
+
+        modifiers.FinalDamage *= 0f;
 
         npc.velocity.X = 0;
     }

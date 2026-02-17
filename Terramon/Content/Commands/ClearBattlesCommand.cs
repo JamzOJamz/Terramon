@@ -6,8 +6,10 @@ namespace Terramon.Content.Commands;
 
 public sealed class ClearBattlesCommand : DebugCommand
 {
-    public override string Command => "clearbattles";
     public override CommandType Type => CommandType.World;
+    
+    public override string Command => "clearbattles";
+    
     public override void Action(CommandCaller caller, string input, string[] args)
     {
         base.Action(caller, input, args);

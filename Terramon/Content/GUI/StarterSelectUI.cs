@@ -82,6 +82,18 @@ public sealed class StarterSelectUI : SmartUIState
         UILoader.GetUIState<StarterSelectUI>().SafeUpdate(null); // Update to set positions correctly
     }
 
+    /// <summary>
+    ///     This method can be called from anywhere to display the starter UI.
+    /// </summary>
+    public static void Show(bool playSound = true)
+    {
+        if (_starterPanelShowing && !_fadeOutAnimationActive) return;
+        _showButton.SetIsActive(false);
+        if (playSound)
+            SoundEngine.PlaySound(in SoundID.MenuOpen);
+        DoFadeInAnimation();
+    }
+
     internal static void DoFadeInAnimation()
     {
         if (_fadeInAnimationActive) return;
@@ -155,13 +167,7 @@ public sealed class StarterSelectUI : SmartUIState
             _showButton.VisibilityOverride = -1f;
             _showButtonVisibilityTween?.Kill();
         };
-        _showButton.OnLeftClick += (_, _) =>
-        {
-            if (_starterPanelShowing && !_fadeOutAnimationActive) return;
-            _showButton.SetIsActive(false);
-            SoundEngine.PlaySound(in SoundID.MenuOpen);
-            DoFadeInAnimation();
-        };
+        _showButton.OnLeftClick += (_, _) => Show();
         // _showButton.SetIsActive(false);
         Append(_showButton);
 

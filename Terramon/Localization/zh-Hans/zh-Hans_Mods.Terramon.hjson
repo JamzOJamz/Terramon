@@ -96,6 +96,14 @@ Commands: {
 		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
 		// Success: Successfully changed the banner tier for the held banner to {0}
 	}
+
+	Starter: {
+		// Description: Opens the starter selection menu (only usable if you haven't chosen a starter yet)
+		// Usage: /starter
+		// AlreadyChosen: You have already chosen your starter Pokémon!
+	}
+
+	// Choose.Usage: /choose
 }
 
 Configs: {
@@ -1042,4 +1050,7 @@ Misc: {
 		'''
 }
 
-// Projectiles.PokeBallBobber.DisplayName: Poke Ball Bobber
+Projectiles: {
+	// PokeBallBobber.DisplayName: Poke Ball Bobber
+	// PokemonPetGenericAttackProjectile.DisplayName: Pokemon Pet Generic Attack Projectile
+}

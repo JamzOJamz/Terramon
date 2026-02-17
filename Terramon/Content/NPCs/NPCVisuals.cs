@@ -21,6 +21,7 @@ public class NPCVisuals : NPCComponent
     public Vector3 LightColor = Vector3.One;
     public float LightStrength = 0f;
     public Vector3 ShinyLightColor = Vector3.One;
+    public short TorchLightID = -1;
 
     public override void AI(NPC npc)
     {
@@ -30,9 +31,18 @@ public class NPCVisuals : NPCComponent
         if (!Enabled || (modNPC = npc.Pokemon()).PlasmaState) return;
 
         if (LightStrength > 0)
+        {
+            var useColor = modNPC.Data is { IsShiny: true } ? ShinyLightColor : LightColor;
+            if (TorchLightID > -1)
+            {
+                TorchID.TorchColor(TorchLightID, out var r, out var g, out var b);
+                useColor = new Vector3(r, g, b);
+            }
+
             Lighting.AddLight(npc.Center,
-                (modNPC.Data is { IsShiny: true } ? ShinyLightColor : LightColor) * LightStrength *
+                useColor * LightStrength *
                 (Main.raining || npc.wet ? 1 - DamperAmount : 1));
+        }
 
         if (DustID <= -1) return;
         if (_dustTimer >= DustFrequency)

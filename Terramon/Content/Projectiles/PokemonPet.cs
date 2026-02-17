@@ -23,6 +23,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 {
     public delegate void CustomFindFrame(PokemonPet proj);
 
+    public const float DistanceFromFoe = 128f;
+
     private static readonly Asset<Texture2D> ResourceBarStartTexture;
     private static readonly Asset<Texture2D> ResourceBarMiddleTexture;
     private static readonly Asset<Texture2D> ResourceBarEndTexture;
@@ -149,7 +151,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     {
         var owningPlayer = Main.player[Projectile.owner];
         var modPlayer = owningPlayer.Terramon();
-        
+
         // Move ahead of player
         var direction = owningPlayer.direction;
         CustomSpriteDirection = direction;
@@ -168,7 +170,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         Dust.NewDust(new Vector2(mainPosition.X - 2, mainPosition.Y - 2), Projectile.width, Projectile.height, dust);
 
         ConfrontFoe(modPlayer.BattleClient);
-        
+
         Data = modPlayer.GetActivePokemon();
         modPlayer.ActivePetProjectile = this;
         _cachedID = ID;
@@ -289,7 +291,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         Main.spriteBatch.Begin(default, null, Main.DefaultSamplerState, null, Main.Rasterizer, null,
             Main.GameViewMatrix.TransformationMatrix);
 
-        // Get the main texture to determine Pokemon width (and subsequently bar width)
+        // Get the main texture to determine Pokémon width (and subsequently bar width)
         const int barMinWidth = 28;
         const int barMaxWidth = 48;
 
@@ -433,16 +435,16 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         // Attacking NPCs
         const float maxDetectRadius = 400f;
         const float maxAttackRadius = 500f;
-        
-        if (_target != null)
+
+        if (_target != null && _activeAttackTimer <= 0)
         {
             var distanceToTarget = Vector2.Distance(_target.Center, Projectile.Center);
-        
+
             // Retargets if current target is too far away or no longer valid
             if (distanceToTarget > maxAttackRadius || !IsValidTarget(_target))
                 _target = null;
         }
-        
+
         _target ??= FindClosestNPC(maxDetectRadius);
 
         if (Data != null && _target != null)
@@ -458,8 +460,58 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             }
             else if (_activeAttackTimer == 8)
             {
-                _target.SimpleStrikeNPC(1, dir, false, CalculateKnockback());
-                CreateHitEffect(_target.Center);
+                var moves = Data.Moves;
+                var nonStatusMoves = moves.Where(m => m.Schema.Category != MoveCategory.Status).ToArray();
+
+                if (nonStatusMoves.Length == 0)
+                {
+                    CombatText.NewText(Projectile.Hitbox, Color.White, "No usable moves!", dot: true);
+                }
+                else
+                {
+                    var selectedMove = nonStatusMoves[Main.rand.Next(nonStatusMoves.Length)];
+
+                    /*Main.NewText($"{Data.DisplayName} used {selectedMove.ID} (Max PP: {selectedMove.Schema.PP})!");
+                    Main.NewText(selectedMove.Schema.Category);*/
+
+                    var moveName = Language.GetTextValue($"Mods.Terramon.Moves.{selectedMove.ID}.DisplayName");
+                    CombatText.NewText(Projectile.Hitbox, Color.White, moveName, dot: true);
+
+                    const int damage = 1;
+                    var kb = CalculateKnockback();
+
+                    switch (selectedMove.Schema.Category)
+                    {
+                        case MoveCategory.Status:
+                        case MoveCategory.Dynamic:
+                            // Currently no status or dynamic moves implemented
+                            break;
+                        case MoveCategory.Physical:
+                        {
+                            _target.SimpleStrikeNPC(damage, dir, false, kb);
+                            CreateHitEffect(_target.Center);
+                            break;
+                        }
+                        case MoveCategory.Special:
+                        {
+                            var proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(),
+                                Projectile.Center,
+                                Vector2.Normalize(_target.Center - Projectile.Center) * 4f,
+                                ModContent.ProjectileType<PokemonPetGenericAttackProjectile>(),
+                                damage,
+                                kb,
+                                Projectile.owner,
+                                ID);
+                            var randomType = Data.Schema.Types[Main.rand.Next(Data.Schema.Types.Count)];
+                            var modProj = (PokemonPetGenericAttackProjectile)proj.ModProjectile;
+                            modProj.AttackType = randomType;
+                            modProj.HomingTarget = _target;
+                            break;
+                        }
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
             }
         }
 
@@ -677,8 +729,6 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         FindFrame?.Invoke(this);
     }
 
-    public const float DistanceFromFoe = 128f;
-
     public void ConfrontFoe(BattleClient battle)
     {
         if (battle is null)
@@ -690,7 +740,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         Vector2 foePos;
         int foeDir;
 
-        Entity foeEntity = battle.Foe?.SyncedEntity;
+        var foeEntity = battle.Foe?.SyncedEntity;
         if (foeEntity is null)
             return;
         if (foeEntity is Player plr)
@@ -699,25 +749,26 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             if (pet != null)
                 foeEntity = pet.Projectile;
         }
+
         foePos = foeEntity.Center;
         foeDir = foeEntity.direction;
 
-        float xTarget = foePos.X + (foeDir * DistanceFromFoe);
+        var xTarget = foePos.X + (foeDir * DistanceFromFoe);
         CustomTargetPosition = new Vector2(xTarget, foePos.Y);
     }
 
     private void ShinyEffect()
     {
         if (_mainTexture == null) return;
-        
+
         // Disable shiny effect lighting for Haunter and Gengar
         if (ID != NationalDexID.Haunter && ID != NationalDexID.Gengar)
             Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0.5f);
-        
+
         _shinySparkleTimer++;
-        
+
         if (_shinySparkleTimer < 15) return;
-        
+
         for (var i = 0; i < 2; i++)
         {
             // Spoof projectile width and height to match the texture size
@@ -741,5 +792,127 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         }
 
         _shinySparkleTimer = 0;
+    }
+}
+
+internal sealed class PokemonPetGenericAttackProjectile : ModProjectile
+{
+    public PokemonType AttackType
+    {
+        get;
+        set
+        {
+            field = value;
+            if (AttackType == PokemonType.Fire)
+            {
+                _color = ColorUtils.FromHexRGB(0xFF490F);
+            }
+            else
+            {
+                _color = AttackType.GetColor();
+            }
+            _color.A = 0; // Draw additive, so set alpha to 0
+        }
+    }
+
+    public NPC HomingTarget;
+    private Color _color;
+
+    public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DiamondBolt;
+
+    public override void SetDefaults()
+    {
+        Projectile.CloneDefaults(ProjectileID.DiamondBolt);
+        Projectile.aiStyle = 0;
+        Projectile.penetrate = 1;
+        Projectile.tileCollide = false;
+        Projectile.DamageType = DamageClass.Generic;
+    }
+
+    public override void AI()
+    {
+        Projectile.oldPosition = Projectile.position;
+        Projectile.oldVelocity = Projectile.velocity;
+
+        Projectile.position += Projectile.velocity;
+
+        var useColor = _color;
+        for (var num260 = 0; num260 < 2; num260++)
+        {
+            if (AttackType == PokemonType.Fire)
+            {
+                useColor = _color.HueShift(Main.rand.NextFloat(0.02f, 0.08f), Main.rand.NextFloat(-0.08f, -0.08f), 1f);
+                useColor.A = 0;
+            }
+            var num261 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width,
+                Projectile.height, ModContent.DustType<ColorableDust>(), Projectile.velocity.X, Projectile.velocity.Y,
+                50, useColor, 1.2f);
+            Main.dust[num261].noGravity = true;
+            var dust2 = Main.dust[num261];
+            dust2.velocity *= 0.3f;
+        }
+
+        if (Projectile.ai[1] == 0f)
+        {
+            Projectile.ai[1] = 1f;
+            SoundEngine.PlaySound(SoundID.Item8, Projectile.position);
+        }
+        
+        // Homing behaviour
+        if (HomingTarget is not { active: true }) return;
+        
+        var length = Projectile.velocity.Length();
+        var targetAngle = Projectile.AngleTo(HomingTarget.Center);
+        Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards(targetAngle, MathHelper.ToRadians(6)).ToRotationVector2() * length;
+        Projectile.rotation = Projectile.velocity.ToRotation();
+    }
+
+    public override void ModifyDamageHitbox(ref Rectangle hitbox)
+    {
+        hitbox.Inflate(4, 4);
+    }
+
+    public override void OnKill(int timeLeft)
+    {
+        SoundEngine.PlaySound(0, (int)Projectile.position.X, (int)Projectile.position.Y);
+        for (var num615 = 0; num615 < 15; num615++)
+        {
+            var num616 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width,
+                Projectile.height, ModContent.DustType<ColorableDust>(), Projectile.oldVelocity.X,
+                Projectile.oldVelocity.Y, 50, _color, 1.2f);
+            Main.dust[num616].noGravity = true;
+            var dust2 = Main.dust[num616];
+            dust2.scale *= 1.25f;
+            dust2 = Main.dust[num616];
+            dust2.velocity *= 0.5f;
+        }
+    }
+}
+
+internal sealed class ColorableDust : ModDust
+{
+    public override string Texture => "Terramon/Assets/Dusts/ColorableDust";
+
+    public override Color? GetAlpha(Dust dust, Color lightColor)
+    {
+        return dust.color;
+    }
+
+    public override bool Update(Dust dust)
+    {
+        var num4 = dust.scale * 0.6f;
+        if (num4 > 1f)
+            num4 = 1f;
+
+        const float brightnessMultiplier = 1.3f;
+
+        var color = dust.color;
+        var r = color.R / 255f * num4 * brightnessMultiplier;
+        var g = color.G / 255f * num4 * brightnessMultiplier;
+        var b = color.B / 255f * num4 * brightnessMultiplier;
+
+        Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), r, g, b);
+
+        return true;
     }
 }
