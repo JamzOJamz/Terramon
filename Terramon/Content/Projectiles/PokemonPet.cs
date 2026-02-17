@@ -281,7 +281,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     public override void PostDraw(Color lightColor)
     {
         // Marks this pet for HP bar rendering if it needs one
-        if (!Projectile.isAPreviewDummy && Data != null && Data.HP != Data.MaxHP)
+        if (!Projectile.isAPreviewDummy && !BattleClient.LocalBattleOngoing && Data != null && Data.HP != Data.MaxHP)
             PetsNeedingHPBars.Add(Projectile.whoAmI);
     }
 

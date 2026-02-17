@@ -46,7 +46,6 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
     private bool _locallyRequestedClient;
     private int _premierBonusCount;
     private bool _receivedShinyCharm;
-    public BattleInstance Battle;
 
     public Vector3 ColorPickerHSL;
     public bool ExpShareOn;
