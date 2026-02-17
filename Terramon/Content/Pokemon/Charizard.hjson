@@ -9,7 +9,7 @@
     Visuals:
     {
       TorchLightID: 0
-      LightStrength: 0.6
+      LightStrength: 1
       DamperAmount: 0.5
       DustID: 6
       DustFrequency: 45
