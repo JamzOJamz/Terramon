@@ -416,7 +416,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     public override void AI()
     {
         var owningPlayer = Main.player[Projectile.owner];
-        var activePokemon = owningPlayer.Terramon().GetActivePokemon();
+        var modPlayer = owningPlayer.Terramon();
+        var activePokemon = modPlayer.GetActivePokemon();
 
         var isShiny = Data is { IsShiny: true };
 
@@ -432,20 +433,30 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         if (!owningPlayer.dead && owningPlayer.HasBuff(ModContent.BuffType<PokemonCompanion>()) &&
             activePokemon == Data && activePokemon.ID == _cachedID) Projectile.timeLeft = 2;
 
-        // Attacking NPCs
-        const float maxDetectRadius = 400f;
-        const float maxAttackRadius = 500f;
-
-        if (_target != null && _activeAttackTimer <= 0)
+        // Attacking NPCs (disabled during battles)
+        if (!modPlayer.BattleClient.BattleOngoing)
         {
-            var distanceToTarget = Vector2.Distance(_target.Center, Projectile.Center);
+            const float maxDetectRadius = 400f;
+            const float maxAttackRadius = 500f;
 
-            // Retargets if current target is too far away or no longer valid
-            if (distanceToTarget > maxAttackRadius || !IsValidTarget(_target))
-                _target = null;
+            if (_target != null && _activeAttackTimer <= 0)
+            {
+                var distanceToTarget = Vector2.Distance(_target.Center, Projectile.Center);
+
+                // Retargets if current target is too far away or no longer valid
+                if (distanceToTarget > maxAttackRadius || !IsValidTarget(_target))
+                    _target = null;
+            }
+
+            _target ??= FindClosestNPC(maxDetectRadius);
         }
-
-        _target ??= FindClosestNPC(maxDetectRadius);
+        else
+        {
+            // Clear target and attack state when a battle starts
+            _target = null;
+            _activeAttackTimer = 0;
+            _attackCooldown = 60;
+        }
 
         if (Data != null && _target != null)
         {
@@ -795,7 +806,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     }
 }
 
-internal sealed class PokemonPetGenericAttackProjectile : ModProjectile
+public class PokemonPetGenericAttackProjectile : ModProjectile
 {
     public PokemonType AttackType
     {
@@ -886,33 +897,5 @@ internal sealed class PokemonPetGenericAttackProjectile : ModProjectile
             dust2 = Main.dust[num616];
             dust2.velocity *= 0.5f;
         }
-    }
-}
-
-internal sealed class ColorableDust : ModDust
-{
-    public override string Texture => "Terramon/Assets/Dusts/ColorableDust";
-
-    public override Color? GetAlpha(Dust dust, Color lightColor)
-    {
-        return dust.color;
-    }
-
-    public override bool Update(Dust dust)
-    {
-        var num4 = dust.scale * 0.6f;
-        if (num4 > 1f)
-            num4 = 1f;
-
-        const float brightnessMultiplier = 1.3f;
-
-        var color = dust.color;
-        var r = color.R / 255f * num4 * brightnessMultiplier;
-        var g = color.G / 255f * num4 * brightnessMultiplier;
-        var b = color.B / 255f * num4 * brightnessMultiplier;
-
-        Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), r, g, b);
-
-        return true;
     }
 }
