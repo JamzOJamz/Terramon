@@ -1047,6 +1047,6 @@ Misc: {
 }
 
 Projectiles: {
-	// PokeBallBobber.DisplayName: Poke Ball Bobber
-	// PokemonPetGenericAttackProjectile.DisplayName: Pokemon Pet Generic Attack Projectile
+	// PokeBallBobber.DisplayName: Poké Ball Bobber
+	// PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
 }
