@@ -325,6 +325,13 @@ public class TerramonPlayer : ModPlayer, IBattleProvider
 
         _premierBonusCount = 0;
     }
+    
+    public override void PostUpdateMiscEffects()
+    {
+        // Prevents NPCs from targeting the player during turn-based battles
+        if (BattleClient.BattleOngoing)
+            Player.aggro = -750;
+    }
 
     public override void PostUpdate()
     {
