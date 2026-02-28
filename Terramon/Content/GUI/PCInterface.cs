@@ -126,9 +126,7 @@ public class PCInterface : SmartUIState
         get
         {
             var player = Main.LocalPlayer;
-            var terramonPlayer = player.Terramon();
-
-            return terramonPlayer.ActivePCTileEntityID != -1
+            return player.Terramon().ActivePCTileEntityID != -1
                    && player.chest == -1
                    && !Main.recBigList;
         }

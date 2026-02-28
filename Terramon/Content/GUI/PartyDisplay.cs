@@ -21,18 +21,11 @@ public sealed class PartyDisplay : SmartUIState
     public static bool IsDraggingSlot { get; set; }
     public static PartySidebar Sidebar { get; private set; }
 
-    public override bool Visible
-    {
-        get
-        {
-            var terramonPlayer = TerramonPlayer.LocalPlayer;
-            
-            return !Main.playerInventory
-                   && !Main.LocalPlayer.dead
-                   && terramonPlayer.HasChosenStarter
-                   && !HubUI.Active;
-        }
-    }
+    public override bool Visible =>
+        !Main.playerInventory
+        && !Main.LocalPlayer.dead
+        && !Main.inFancyUI
+        && TerramonPlayer.LocalPlayer.HasChosenStarter;
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {

@@ -56,8 +56,6 @@ public class InventoryParty : SmartUIState
         get
         {
             var player = Main.LocalPlayer;
-            var terramonPlayer = player.Terramon();
-
             return Main.playerInventory
                    && Main.npcShop == 0
                    && player.chest == -1
@@ -65,7 +63,7 @@ public class InventoryParty : SmartUIState
                    && !player.tileEntityAnchor.InUse
                    && !Main.inFancyUI
                    && !Main.InReforgeMenu
-                   && terramonPlayer.HasChosenStarter;
+                   && player.Terramon().HasChosenStarter;
         }
     }
 

@@ -72,10 +72,8 @@ public sealed class StarterSelectUI : SmartUIState
         get
         {
             var player = Main.LocalPlayer;
-            var terramonPlayer = player.Terramon();
-
             return !ClientConfig.Instance.LegacyStarterSelectUI
-                   && (!terramonPlayer.HasChosenStarter || (_fadeOutAnimationActive && _backdropImage.Color.A > 0))
+                   && (!player.Terramon().HasChosenStarter || (_fadeOutAnimationActive && _backdropImage.Color.A > 0))
                    && !Main.playerInventory
                    && player.talkNPC < 0
                    && !player.dead

@@ -65,10 +65,8 @@ public class LegacyStarterSelectUI : SmartUIState
         get
         {
             var player = Main.LocalPlayer;
-            var terramonPlayer = player.Terramon();
-
             return ClientConfig.Instance.LegacyStarterSelectUI
-                   && !terramonPlayer.HasChosenStarter
+                   && !player.Terramon().HasChosenStarter
                    && !Main.playerInventory
                    && player.talkNPC < 0
                    && !player.dead
