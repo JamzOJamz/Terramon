@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using EasyPacketsLib;
 using ReLogic.Reflection;
 using Terramon.Content.NPCs;
@@ -16,6 +17,7 @@ public static class VanillaExtensions
     /// </summary>
     /// <param name="player">The player whose Terramon mod player data should be retrieved.</param>
     /// <returns>The <see cref="TerramonPlayer" /> tied to the given <see cref="Player" />.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static TerramonPlayer Terramon(this Player player) => player.GetModPlayer<TerramonPlayer>();
 
     /// <summary>
@@ -28,6 +30,7 @@ public static class VanillaExtensions
     /// <exception cref="InvalidCastException">
     ///     Thrown if the NPC's <see cref="ModNPC" /> is not a <see cref="PokemonNPC" />.
     /// </exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PokemonNPC Pokemon(this NPC npc) => (PokemonNPC)npc.ModNPC;
 
     /// <summary>

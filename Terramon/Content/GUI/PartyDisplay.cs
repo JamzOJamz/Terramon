@@ -26,6 +26,7 @@ public sealed class PartyDisplay : SmartUIState
         get
         {
             var terramonPlayer = TerramonPlayer.LocalPlayer;
+            
             return !Main.playerInventory
                    && !Main.LocalPlayer.dead
                    && terramonPlayer.HasChosenStarter

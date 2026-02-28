@@ -51,10 +51,23 @@ public class InventoryParty : SmartUIState
 
     public static bool IsCompressed { get; private set; }
 
-    public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
-                                    !Main.LocalPlayer.tileEntityAnchor.InUse &&
-                                    TerramonPlayer.LocalPlayer.HasChosenStarter;
+    public override bool Visible
+    {
+        get
+        {
+            var player = Main.LocalPlayer;
+            var terramonPlayer = player.Terramon();
+
+            return Main.playerInventory
+                   && Main.npcShop == 0
+                   && player.chest == -1
+                   && !player.dead
+                   && !player.tileEntityAnchor.InUse
+                   && !Main.inFancyUI
+                   && !Main.InReforgeMenu
+                   && terramonPlayer.HasChosenStarter;
+        }
+    }
 
     public static bool InPCMode { get; private set; }
 
@@ -282,22 +295,6 @@ public class InventoryParty : SmartUIState
         }
 
         Recalculate();
-    }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        if (Main.LocalPlayer.talkNPC != -1)
-        {
-            _openPokedexButton.SetVisibility(0, 0);
-            _openPokedexButton.IgnoresMouseInteraction = true;
-        }
-        else
-        {
-            _openPokedexButton.SetVisibility(1, 1);
-            _openPokedexButton.IgnoresMouseInteraction = false;
-        }
-
-        base.Draw(spriteBatch);
     }
 }
 

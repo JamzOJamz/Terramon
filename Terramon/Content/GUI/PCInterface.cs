@@ -121,8 +121,18 @@ public class PCInterface : SmartUIState
 
     public static bool Active => _pcService != null;
 
-    public override bool Visible => TerramonPlayer.LocalPlayer.ActivePCTileEntityID != -1 &&
-                                    Main.LocalPlayer.chest == -1 && !Main.recBigList;
+    public override bool Visible
+    {
+        get
+        {
+            var player = Main.LocalPlayer;
+            var terramonPlayer = player.Terramon();
+
+            return terramonPlayer.ActivePCTileEntityID != -1
+                   && player.chest == -1
+                   && !Main.recBigList;
+        }
+    }
 
     public static int DisplayedBoxIndex { get; private set; }
 

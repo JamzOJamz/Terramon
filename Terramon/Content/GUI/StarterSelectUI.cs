@@ -67,11 +67,21 @@ public sealed class StarterSelectUI : SmartUIState
         };
     }
 
-    public override bool Visible => !ClientConfig.Instance.LegacyStarterSelectUI &&
-                                    (!TerramonPlayer.LocalPlayer.HasChosenStarter ||
-                                     (_fadeOutAnimationActive && _backdropImage.Color.A > 0)) &&
-                                    !Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
-                                    Main.LocalPlayer.talkNPC < 0;
+    public override bool Visible
+    {
+        get
+        {
+            var player = Main.LocalPlayer;
+            var terramonPlayer = player.Terramon();
+
+            return !ClientConfig.Instance.LegacyStarterSelectUI
+                   && (!terramonPlayer.HasChosenStarter || (_fadeOutAnimationActive && _backdropImage.Color.A > 0))
+                   && !Main.playerInventory
+                   && player.talkNPC < 0
+                   && !player.dead
+                   && !Main.inFancyUI;
+        }
+    }
 
     private static void SetPlayerNameForTitle(string playerName)
     {
