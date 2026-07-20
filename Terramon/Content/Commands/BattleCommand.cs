@@ -10,6 +10,7 @@ namespace Terramon.Content.Commands;
 public class BattleCommand : DebugCommand
 {
     private static BattleInstance _currentBattle;
+
     public override CommandType Type => CommandType.Chat;
 
     public override string Command => "battle";
@@ -25,8 +26,7 @@ public class BattleCommand : DebugCommand
         base.Action(caller, input, args);
         if (!Allowed) return;
 
-        var subcommand = args[0];
-        switch (subcommand)
+        switch (args[0])
         {
             case "start":
                 StartBattle(caller);
@@ -76,7 +76,7 @@ public class BattleCommand : DebugCommand
 
         if (args.Length == 1)
         {
-            caller.Reply("""Must provide a valid MOVESPEC (move index or move name)""", ChatColorRed);
+            caller.Reply("Must provide a valid MOVESPEC (move index or move name)", ChatColorRed);
             return;
         }
 
@@ -86,7 +86,7 @@ public class BattleCommand : DebugCommand
         {
             if (n < 1 || n > 4)
             {
-                caller.Reply("""You provided a move index, but it was out of bounds""", ChatColorRed);
+                caller.Reply("You provided a move index, but it was out of bounds", ChatColorRed);
                 return;
             }
             moveSpec = n.ToString();
@@ -96,7 +96,7 @@ public class BattleCommand : DebugCommand
             string possibleName = args[1].Replace(" ", "").Trim();
             if (!Enum.TryParse<MoveID>(possibleName, true, out _))
             {
-                caller.Reply("""You provided a move name, but it wasn't recognized""", ChatColorRed);
+                caller.Reply("You provided a move name, but it wasn't recognized", ChatColorRed);
                 return;
             }
             moveSpec = possibleName;
@@ -118,7 +118,7 @@ public class BattleCommand : DebugCommand
 
         if (args.Length == 1)
         {
-            caller.Reply("""Must provide a valid SWITCHSPEC (Pokémon's party index, nickname or species)""", ChatColorRed);
+            caller.Reply("Must provide a valid SWITCHSPEC (Pokémon's party index, nickname or species)", ChatColorRed);
             return;
         }
 
@@ -128,7 +128,7 @@ public class BattleCommand : DebugCommand
         {
             if (n < 1 || n > 6)
             {
-                caller.Reply("""You provided a party index, but it was out of bounds""", ChatColorRed);
+                caller.Reply("You provided a party index, but it was out of bounds", ChatColorRed);
                 return;
             }
             switchSpec = n.ToString();
@@ -146,7 +146,7 @@ public class BattleCommand : DebugCommand
             }
             if (switchSpec is null)
             {
-                caller.Reply("""You provided a Pokémon nickname or species name, but it wasn't found in your party""", ChatColorRed);
+                caller.Reply("You provided a Pokémon nickname or species name, but it wasn't found in your party", ChatColorRed);
                 return;
             }
         }

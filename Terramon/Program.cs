@@ -9,7 +9,7 @@ using Terramon.Core.Loaders.UILoading;
 namespace Terramon;
 
 [AutoloadBossHead]
-internal class Program
+internal static class Program
 {
     public static void Main(string[] args)
     {

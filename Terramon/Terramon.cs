@@ -35,6 +35,7 @@ public class Terramon : Mod
         };
     }
 
+    // Singleton pattern is safe because tModLoader only instantiates one Mod instance per load
     public Terramon() => Instance = this;
 
     public static Terramon Instance { get; private set; }
