@@ -12,11 +12,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
+      <PackageReference Include="Krafs.Publicizer" Version="2.3.2">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
+      <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
