@@ -57,12 +57,13 @@ internal static partial class Program
 
     private static readonly Dictionary<string, string> IdentifierMappings = new(StringComparer.OrdinalIgnoreCase)
     {
-        { "Medium", "MediumFast" },
+        { "Medium", "MediumFast" }
     };
 
     /// <summary>
     ///     Language mappings: PokéAPI language code -> tModLoader locale code
     /// </summary>
+    // TODO: Fetch this from https://pokeapi.co/api/v2/language/ to build the lookup
     private static readonly Dictionary<string, string> LanguageMappings = new(StringComparer.OrdinalIgnoreCase)
     {
         { "ko", "ko-KR" },
@@ -71,7 +72,7 @@ internal static partial class Program
         { "es", "es-ES" },
         { "it", "it-IT" },
         { "en", "en-US" },
-        { "zh-Hans", "zh-Hans" }
+        { "zh-hans", "zh-Hans" }
     };
 
     private static async Task Main()
@@ -105,7 +106,6 @@ internal static partial class Program
         var pokemon = new Dictionary<ushort, DatabaseV2.PokemonSchema>();
 
         for (ushort id = 1; id <= MaxPokemonIDToFetch; id++)
-        {
             try
             {
                 Console.WriteLine($"Fetching Pokémon ID {id}...");
@@ -117,11 +117,9 @@ internal static partial class Program
             {
                 Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
             }
-        }
 
         // Fetch extra Pokémon IDs
         foreach (var id in ExtraPokemonIDs)
-        {
             try
             {
                 Console.WriteLine($"Fetching Extra Pokémon ID {id}...");
@@ -133,7 +131,6 @@ internal static partial class Program
             {
                 Console.WriteLine($"Error fetching Pokémon {id}: {ex.Message}");
             }
-        }
 
         var cacheDir = GetCacheDirectory();
         var csvPath = await MoveService.DownloadMovesCsv(cacheDir);
@@ -176,10 +173,7 @@ internal static partial class Program
 
         // Initialize all configured languages
         var movesLocalizationHjsonDict = new Dictionary<string, JsonObject>();
-        foreach (var lang in LanguageMappings.Keys)
-        {
-            movesLocalizationHjsonDict[lang] = new JsonObject();
-        }
+        foreach (var lang in LanguageMappings.Keys) movesLocalizationHjsonDict[lang] = new JsonObject();
 
         for (var i = 0; i < moves.Count; i++)
         {
@@ -293,8 +287,10 @@ internal static partial class Program
         }
     }
 
-    private static string ToKebabCase(string s) =>
-        KebabCaseRegex().Replace(s, "-$1").ToLower();
+    private static string ToKebabCase(string s)
+    {
+        return KebabCaseRegex().Replace(s, "-$1").ToLower();
+    }
 
     private static string GetCacheDirectory(string? subdir = null)
     {
@@ -312,10 +308,7 @@ internal static partial class Program
     {
         // --- Handle caching in accordance to PokéAPI's fair use policy ---
 
-        if (File.Exists(filePath))
-        {
-            return await File.ReadAllTextAsync(filePath);
-        }
+        if (File.Exists(filePath)) return await File.ReadAllTextAsync(filePath);
 
         var response = await HttpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
@@ -365,7 +358,7 @@ internal static partial class Program
             Height = height,
             Weight = weight,
             Abilities = abilities,
-            LevelUpLearnset = learnset,
+            LevelUpLearnset = learnset
         };
     }
 
@@ -451,24 +444,22 @@ internal static partial class Program
         var learnset = new List<DatabaseV2.LevelEntrySchema>();
 
         foreach (var movesEntry in movesArray.EnumerateArray())
+        foreach (var versionGroupDetails in movesEntry.GetProperty("version_group_details").EnumerateArray())
         {
-            foreach (var versionGroupDetails in movesEntry.GetProperty("version_group_details").EnumerateArray())
+            var versionName = versionGroupDetails.GetProperty("version_group").GetProperty("name").GetString();
+            var learnMethod = versionGroupDetails.GetProperty("move_learn_method").GetProperty("name").GetString();
+
+            if (versionName == versionGroupName && learnMethod == "level-up")
             {
-                var versionName = versionGroupDetails.GetProperty("version_group").GetProperty("name").GetString();
-                var learnMethod = versionGroupDetails.GetProperty("move_learn_method").GetProperty("name").GetString();
+                var move = Enum.Parse<MoveID>(
+                    FormatIdentifier(movesEntry.GetProperty("move").GetProperty("name").GetString()));
+                var levelLearned = versionGroupDetails.GetProperty("level_learned_at").GetByte();
 
-                if (versionName == versionGroupName && learnMethod == "level-up")
+                learnset.Add(new DatabaseV2.LevelEntrySchema
                 {
-                    var move = Enum.Parse<MoveID>(
-                        FormatIdentifier(movesEntry.GetProperty("move").GetProperty("name").GetString()));
-                    var levelLearned = versionGroupDetails.GetProperty("level_learned_at").GetByte();
-
-                    learnset.Add(new DatabaseV2.LevelEntrySchema
-                    {
-                        AtLevel = levelLearned,
-                        ID = (ushort)move
-                    });
-                }
+                    AtLevel = levelLearned,
+                    ID = (ushort)move
+                });
             }
         }
 
@@ -490,9 +481,7 @@ internal static partial class Program
             var slot = abilityEntry.GetProperty("slot").GetInt32();
 
             if (isHidden)
-            {
                 hidden = parsedAbility;
-            }
             else
                 switch (slot)
                 {
@@ -525,14 +514,12 @@ internal static partial class Program
 
         // Recursively processes all evolution branches in the chain
         if (chainLink.TryGetProperty("evolves_to", out var evolvesToArray))
-        {
             foreach (var evolution in evolvesToArray.EnumerateArray())
             {
                 var result = ProcessEvolutions(evolution, currentPokemonId);
                 if (result != null)
                     return result;
             }
-        }
 
         return null;
     }
@@ -549,14 +536,11 @@ internal static partial class Program
 
             // Process evolution details
             if (evolution.TryGetProperty("evolution_details", out var evolutionDetailsArray))
-            {
                 foreach (var detail in evolutionDetailsArray.EnumerateArray())
-                {
                     // Checks if this is a level-up evolution
                     if (detail.TryGetProperty("trigger", out var trigger) &&
                         trigger.TryGetProperty("name", out var triggerName) &&
                         triggerName.GetString() == "level-up")
-                    {
                         // Get the minimum level required
                         if (detail.TryGetProperty("min_level", out var minLevelElement) &&
                             minLevelElement.ValueKind != JsonValueKind.Null)
@@ -566,9 +550,6 @@ internal static partial class Program
                             // Return the first evolution found
                             return new DatabaseV2.LevelEntrySchema((ushort)toPokemonId, (byte)minLevel);
                         }
-                    }
-                }
-            }
         }
 
         return null;
