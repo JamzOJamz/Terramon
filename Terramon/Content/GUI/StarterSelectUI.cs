@@ -102,7 +102,7 @@ public sealed class StarterSelectUI : SmartUIState
         DoFadeInAnimation();
     }
 
-    internal static void DoFadeInAnimation()
+    private static void DoFadeInAnimation()
     {
         if (_fadeInAnimationActive) return;
         _fadeInAnimationActive = true;
@@ -284,7 +284,7 @@ public sealed class StarterSelectUI : SmartUIState
 
             if (_hintTextTween is not { IsRunning: true })
                 _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a,
-                    _hintTextAlpha == 1f ? 0f : 1f, 1f);
+                    _hintTextAlpha >= 1f ? 0f : 1f, 1f);
         }
 
         UpdateShowButtonAnimation(gameTime);
@@ -480,7 +480,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         SoundEngine.PlaySound(in SoundID.Coins);
 
         var ballItemType = ModContent.ItemType<PokeBallItem>();
-        if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
+        if (player.name is "Jamz" or "JamzOJamz") // Developer Easter egg
             ballItemType = ModContent.ItemType<MasterBallItem>();
         var giftItemSource = player.GetSource_GiftOrReward();
         player.QuickSpawnItem(giftItemSource, ballItemType, 10);
