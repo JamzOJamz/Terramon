@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using JetBrains.Annotations;
 using Terraria.ModLoader.Config;
 
 // ReSharper disable UnassignedField.Global
@@ -6,33 +7,32 @@ using Terraria.ModLoader.Config;
 
 namespace Terramon.Content.Configs;
 
+[UsedImplicitly]
 public class GameplayConfig : ModConfig
 {
-#pragma warning disable CA2211
-    public static GameplayConfig Instance;
-#pragma warning restore CA2211
+    public static GameplayConfig Instance => ModContent.GetInstance<GameplayConfig>();
 
     [Header("Spawning")] [DefaultValue(1f)] [Range(0f, 1f)]
     public float PokemonSpawnRateMultiplier;
-    
+
     [DefaultValue(1f)] [Range(0f, 1f)]
     public float NonPokemonSpawnRateMultiplier;
-    
+
     [DefaultValue(SpawningStage.Stage1)] [Slider]
     public SpawningStage SpawningStage;
-    
+
     [DefaultValue(true)]
     public bool EncourageDespawning;
-    
+
     [DefaultValue(4096)] [Range(1, int.MaxValue)]
     public int ShinySpawnRate;
-    
+
     [Header("Visuals")] [DefaultValue(false)]
     public bool FastAnimations;
-    
+
     [Header("Miscellaneous")] [DefaultValue(false)]
     public bool ShinyLockedStarters;
-    
+
     [Header("Advanced")] [DefaultValue(false)]
     public bool DebugMode;
 
