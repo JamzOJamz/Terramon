@@ -1,9 +1,9 @@
-using System.Reflection.Metadata;
-using Terramon.Core.Loaders.UILoading;
 using Terramon.Helpers;
 using Terraria.UI;
-
 #if DEBUG
+using System.Reflection.Metadata;
+using Terramon.Core.Loaders.UILoading;
+
 [assembly: MetadataUpdateHandler(typeof(UILoader))]
 #endif
 
