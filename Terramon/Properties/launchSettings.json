@@ -20,7 +20,7 @@
     },
     "Terraria (ProjectBootstrap)": {
       "commandName": "Project",
-      "commandLineArgs": "\"$(tMLSteamPath)\" \"$(tMLPath)\"",
+      "commandLineArgs": "\"$(tMLSteamPath)/\" \"$(tMLPath)\"",
       "environmentVariables": {
         "DYLD_LIBRARY_PATH": "$(tMLLibraryPath)/Native/OSX",
         "COMPlus_DefaultStackSize": "1000000"

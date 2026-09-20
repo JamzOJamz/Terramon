@@ -1,4 +1,4 @@
-namespace Terramon;
+namespace Terramon.Development;
 
 /*
  * This entry point is a Visual Studio workaround used by the
@@ -46,12 +46,18 @@ file static class DepsJsonResolver
     private static readonly Dictionary<string, LibPriority> AssemblyPriority =
         new(StringComparer.OrdinalIgnoreCase);
 
+    private static readonly Dictionary<string, int> RuntimeAssemblyRidRank =
+        new(StringComparer.OrdinalIgnoreCase);
+
     private static readonly Dictionary<string, string> NativeLibraryPaths =
+        new(StringComparer.OrdinalIgnoreCase);
+
+    private static readonly Dictionary<string, int> NativeLibraryRidRank =
         new(StringComparer.OrdinalIgnoreCase);
 
     private static string _librariesRoot;
     private static string _mainAssemblyPath;
-    private static readonly string CurrentRid = GetCurrentRid();
+    private static readonly string[] CurrentRidFallbackChain = GetCurrentRidFallbackChain();
 
     public static void Initialize(
         string tmlSteamRoot,
@@ -142,11 +148,16 @@ file static class DepsJsonResolver
                         continue;
 
                     var rid = entry.Value.GetProperty("rid").GetString();
+                    var ridRank = GetRidRank(rid);
 
-                    if (!RidMatches(rid))
+                    if (ridRank is null)
                         continue;
 
                     var asmName = Path.GetFileNameWithoutExtension(entry.Name);
+
+                    if (RuntimeAssemblyRidRank.TryGetValue(asmName, out var existingRidRank) &&
+                        existingRidRank <= ridRank.Value)
+                        continue;
 
                     var fullPath = libTypeStr == "package" && nugetPath != null
                         ? Path.Combine(
@@ -161,6 +172,7 @@ file static class DepsJsonResolver
 
                     AssemblyPaths[asmName] = fullPath;
                     AssemblyPriority[asmName] = LibPriority.Project;
+                    RuntimeAssemblyRidRank[asmName] = ridRank.Value;
                 }
         }
 
@@ -175,8 +187,9 @@ file static class DepsJsonResolver
         JsonProperty entry)
     {
         var rid = entry.Value.GetProperty("rid").GetString();
+        var ridRank = GetRidRank(rid);
 
-        if (!RidMatches(rid))
+        if (ridRank is null)
             return;
 
         var path = libType == "package" && nugetPath != null
@@ -193,16 +206,27 @@ file static class DepsJsonResolver
         var filename = Path.GetFileName(entry.Name);
         var libraryName = Path.GetFileNameWithoutExtension(filename);
 
+        if (NativeLibraryRidRank.TryGetValue(libraryName, out var existingRidRank) &&
+            existingRidRank <= ridRank.Value)
+            return;
+
         NativeLibraryPaths[libraryName] = path;
+        NativeLibraryRidRank[libraryName] = ridRank.Value;
 
         // NativeLibraryResolver receives "steam_api", while the actual
         // platform library is "libsteam_api.dylib" on macOS.
         if (libraryName.StartsWith("lib", StringComparison.OrdinalIgnoreCase))
+        {
             NativeLibraryPaths[libraryName[3..]] = path;
+            NativeLibraryRidRank[libraryName[3..]] = ridRank.Value;
+        }
 
         // steam_api64.dll on Windows is imported as "steam_api".
         if (libraryName.Equals("steam_api64", StringComparison.OrdinalIgnoreCase))
+        {
             NativeLibraryPaths["steam_api"] = path;
+            NativeLibraryRidRank["steam_api"] = ridRank.Value;
+        }
     }
 
     public static IntPtr ResolveNativeLibrary(
@@ -232,28 +256,54 @@ file static class DepsJsonResolver
         return IntPtr.Zero;
     }
 
-    private static bool RidMatches(string rid)
+    private static int? GetRidRank(string rid)
     {
-        if (rid.Equals(CurrentRid, StringComparison.OrdinalIgnoreCase))
-            return true;
+        for (var i = 0; i < CurrentRidFallbackChain.Length; i++)
+            if (rid.Equals(CurrentRidFallbackChain[i], StringComparison.OrdinalIgnoreCase))
+                return i;
 
-        return rid.StartsWith(
-            CurrentRid + "-",
-            StringComparison.OrdinalIgnoreCase);
+        return null;
     }
 
-    private static string GetCurrentRid()
+    private static string[] GetCurrentRidFallbackChain()
     {
         if (OperatingSystem.IsMacOS())
-            return "osx";
+        {
+            var archRid = RuntimeInformation.OSArchitecture switch
+            {
+                Architecture.Arm64 => "osx-arm64",
+                Architecture.X64 => "osx-x64",
+                _ => "osx"
+            };
+
+            return [archRid, "osx"];
+        }
 
         if (OperatingSystem.IsLinux())
-            return "linux";
+        {
+            var archRid = RuntimeInformation.OSArchitecture switch
+            {
+                Architecture.Arm64 => "linux-arm64",
+                Architecture.X64 => "linux-x64",
+                Architecture.X86 => "linux-x86",
+                _ => "linux"
+            };
+
+            return [archRid, "linux"];
+        }
 
         if (OperatingSystem.IsWindows())
-            return Environment.Is64BitProcess
-                ? "win-x64"
-                : "win-x86";
+        {
+            var archRid = RuntimeInformation.OSArchitecture switch
+            {
+                Architecture.Arm64 => "win-arm64",
+                Architecture.X64 => "win-x64",
+                Architecture.X86 => "win-x86",
+                _ => "win"
+            };
+
+            return [archRid, "win"];
+        }
 
         throw new PlatformNotSupportedException();
     }
@@ -342,7 +392,10 @@ file static class Program
 {
     public static int Main()
     {
-        Console.Error.WriteLine("This entry point is only available in DEBUG builds.");
+        Console.Error.WriteLine(
+            "The 'Terraria (ProjectBootstrap)' launch profile only works in Debug builds; " +
+            "its code is compiled out of other configurations.");
+
         return 1;
     }
 }
