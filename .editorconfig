@@ -1,4 +1,11 @@
 root = true
 
 [*]
+indent_style = space
+indent_size = 4
+
+# Line endings are managed by .gitattributes
+end_of_line = unset
+
+charset = utf-8
 insert_final_newline = true
