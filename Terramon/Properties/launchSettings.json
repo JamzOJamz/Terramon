@@ -4,16 +4,27 @@
       "commandName": "Executable",
       "executablePath": "$(DotNetName)",
       "commandLineArgs": "$(tMLPath)",
-      "workingDirectory": "$(tMLSteamPath)"
+      "workingDirectory": "$(tMLSteamPath)",
+      "environmentVariables": {
+        "DYLD_LIBRARY_PATH": "$(tMLLibraryPath)/Native/OSX"
+      }
     },
-    "TerrariaServer": {
+    "Terraria Server": {
       "commandName": "Executable",
       "executablePath": "$(DotNetName)",
       "commandLineArgs": "$(tMLServerPath)",
-      "workingDirectory": "$(tMLSteamPath)"
+      "workingDirectory": "$(tMLSteamPath)",
+      "environmentVariables": {
+        "DYLD_LIBRARY_PATH": "$(tMLLibraryPath)/Native/OSX"
+      }
     },
-    "Terramon": {
-      "commandName": "Project"
+    "Terraria (ProjectBootstrap)": {
+      "commandName": "Project",
+      "commandLineArgs": "\"$(tMLSteamPath)\" \"$(tMLPath)\"",
+      "environmentVariables": {
+        "DYLD_LIBRARY_PATH": "$(tMLLibraryPath)/Native/OSX",
+        "COMPlus_DefaultStackSize": "1000000"
+      }
     }
   }
 }

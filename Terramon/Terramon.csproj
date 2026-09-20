@@ -1,69 +1,79 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    
-    <Import Project="..\..\tModLoader.targets" />
-    
+
+    <!-- tModLoader -->
+    <Import Project="..\..\tModLoader.targets"/>
+
     <PropertyGroup>
-        <AssemblyName>Terramon</AssemblyName>
+        <!-- Terramon uses C# 14 features -->
         <LangVersion>14.0</LangVersion>
+
+        <!-- Always output an executable. Debug builds contain the launcher used
+             by the "Terraria (ProjectBootstrap)" launch profile; other
+             configurations only get a stub Main. -->
         <OutputType>Exe</OutputType>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-		<NoWarn>$(NoWarn);CS0436</NoWarn>
     </PropertyGroup>
 
+    <!-- NuGet package references -->
     <ItemGroup>
-      <PackageReference Include="Krafs.Publicizer" Version="2.3.2">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
+        <PackageReference Include="Krafs.Publicizer" Version="2.3.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
-	
-	<ItemGroup>
-		<Publicize Include="tModLoader" IncludeCompilerGeneratedMembers="false" />
-		<Publicize Include="FNA" />
-		<DoNotPublicize Include="tModLoader:Terraria.WorldBuilding.GenPass" />
-		<DoNotPublicize Include="tModLoader:Terraria.UI.UIElement" />
-		<DoNotPublicize Include="tModLoader:Terraria.GameContent.UI.Elements.UIImage.DrawSelf" />
-		<DoNotPublicize Include="tModLoader:Terraria.GameContent.UI.Elements.UIPanel.DrawSelf" />
-		<DoNotPublicize Include="tModLoader:Terraria.Main.OnResolutionChanged" />
-	    <DoNotPublicize Include="tModLoader:Terraria.ModLoader.ModType`2" />
-		<Publicize Include="tModLoader:Terraria.UI.UIElement.Parent" />
-		<Publicize Include="tModLoader:Terraria.UI.UIElement._dimensions" />
-	</ItemGroup>
-	
+
+    <!-- Sourced from <https://github.com/krafs/Publicizer/pull/128>. This is
+         used to fix an annoying warning because the publicizer we're using
+         emits a type also included by MonoMod.Utils. -->
+    <Target Name="RemoveIgnoresAccessChecksToAttributeCs" AfterTargets="PublicizeAssemblies">
+        <ItemGroup>
+            <FilesToRemove Include="@(Compile)" Condition="'%(Filename)' == 'IgnoresAccessChecksToAttribute'"/>
+        </ItemGroup>
+        <ItemGroup>
+            <Compile Remove="@(FilesToRemove)"/>
+        </ItemGroup>
+    </Target>
+
+    <!-- Project references -->
+    <ItemGroup>
+        <ProjectReference Include="..\EasyPacketsLib\EasyPacketsLib.csproj"/>
+    </ItemGroup>
+
+    <!-- Local binary references -->
     <ItemGroup>
         <Reference Include="SharpCompress">
-          <HintPath>lib\SharpCompress.dll</HintPath>
+            <HintPath>lib\SharpCompress.dll</HintPath>
         </Reference>
         <Reference Include="Showdown.NET">
             <HintPath>lib\Showdown.NET.dll</HintPath>
         </Reference>
     </ItemGroup>
 
+    <!-- Global usings -->
     <ItemGroup>
-        <Using Include="Microsoft.Xna.Framework" />
-        <Using Include="Microsoft.Xna.Framework.Graphics" />
-        <Using Include="System" />
-        <Using Include="System.Collections.Generic" />
-        <Using Include="System.IO" />
-        <Using Include="System.Linq" />
-        <Using Include="System.Net.Http" />
-        <Using Include="System.Threading" />
-        <Using Include="System.Threading.Tasks" />
-        <Using Include="Terramon.Core" />
-        <Using Include="Terraria" />
-        <Using Include="Terraria.ID" />
-        <Using Include="Terraria.ModLoader" />
-        <Using Include="Terramon.Content.Packets" />
-        <Using Include="Terramon.Helpers.VanillaExtensions" Static="True" />
+        <Using Include="Microsoft.Xna.Framework"/>
+        <Using Include="Microsoft.Xna.Framework.Graphics"/>
+        <Using Include="System"/>
+        <Using Include="System.Collections.Generic"/>
+        <Using Include="System.IO"/>
+        <Using Include="System.Linq"/>
+        <Using Include="System.Net.Http"/>
+        <Using Include="System.Threading"/>
+        <Using Include="System.Threading.Tasks"/>
+        <Using Include="Terramon.Content.Packets"/>
+        <Using Include="Terramon.Core"/>
+        <Using Include="Terraria"/>
+        <Using Include="Terraria.ID"/>
+        <Using Include="Terraria.ModLoader"/>
+        <Using Include="Terramon.Helpers.VanillaExtensions" Static="True"/>
     </ItemGroup>
 
+    <!-- Publicizer: expose internal tModLoader and FNA members for convenience -->
     <ItemGroup>
-      <ProjectReference Include="..\EasyPacketsLib\EasyPacketsLib.csproj" />
+        <Publicize Include="tModLoader;FNA" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
     </ItemGroup>
-    
+
 </Project>
