@@ -103,7 +103,10 @@ Commands: {
 		AlreadyChosen: You have already chosen your starter Pokémon!
 	}
 
-	Choose.Usage: /choose
+	Choose: {
+		Description: Alias for /starter
+		Usage: /choose
+	}
 }
 
 Configs: {
