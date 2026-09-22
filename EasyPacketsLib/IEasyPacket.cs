@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  IEasyPacket.cs
  *  DavidFDev
  */

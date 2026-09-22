@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  EasyPacketLoader.cs
  *  DavidFDev
  */
@@ -55,7 +55,7 @@ public static class EasyPacketLoader
 
         RegisteredMod = mod;
 
-        var interfaceName = typeof(IEasyPacket).FullName;
+        var interfaceName = typeof(IEasyPacket).FullName!;
 
         // Register easy packets
         foreach (var type in mod.Code.GetTypes()

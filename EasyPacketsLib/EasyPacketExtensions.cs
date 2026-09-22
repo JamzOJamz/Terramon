@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  EasyPacketExtensions.cs
  *  DavidFDev
  */
@@ -82,10 +82,8 @@ public static class EasyPacketExtensions
             modPacket.Write(packetNetId);
         }
 
-        // Write any additional flags
-        var expected = mod.Side == ModSide.Both;
-        var flags = new BitsByte { [0] = forward, [1] = expected };
-        modPacket.Write(flags);
+        // Write whether the packet is to be forwarded by the server to other clients
+        modPacket.Write(forward);
 
         // Special case if the packet is to be forwarded
         if (forward)
@@ -120,18 +118,16 @@ public static class EasyPacketExtensions
         whoAmI = Math.Clamp(whoAmI, 0, 255);
 
         var packetNetId = EasyPacketLoader.NetEasyPacketCount < 256 ? reader.ReadByte() : reader.ReadUInt16();
-        var flags = (BitsByte)reader.ReadByte();
-        var forward = flags[0];
-        var expected = flags[1];
+        var forward = reader.ReadBoolean();
 
         // Get the easy packet mod type using its net id
         var packet = EasyPacketLoader.GetPacket(packetNetId) ??
                      throw new Exception(
                          $"HandlePacket received an invalid easy mod packet with Net ID: {packetNetId}. Could not find an easy mod packet with that Net ID.");
 
-        // DEBUG: Store the type of the currently handled packet
 // #if DEBUG
-        EasyPacket.lastProcessedPacket = packet.GetType();
+        // Store the type of the currently handled packet
+        EasyPacket.LastProcessedPacket = packet.GetType();
 // #endif
 
         // Special case if the packet was forwarded
@@ -154,7 +150,7 @@ public static class EasyPacketExtensions
 
         // Let the easy packet mod type receive the packet
         EasyPacket.ReceivePacket(in packet, reader,
-            new SenderInfo(EasyPacketLoader.RegisteredMod, (byte)whoAmI, flags, toClient, ignoreClient));
+            new SenderInfo(EasyPacketLoader.RegisteredMod, (byte)whoAmI, forward, toClient, ignoreClient));
     }
 
     #endregion
