@@ -145,7 +145,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         if (IsToggled) return;
 
         _toggleTween?.Kill();
-        _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
+        _toggleTween = Tween.To(Left.Pixels, x => Left.Pixels = x, 0, 0.5f).SetEase(Ease.OutExpo);
         IsToggled = true;
     }
 
@@ -154,7 +154,7 @@ public sealed class PartySidebar(Vector2 size) : UIContainer(size)
         if (!IsToggled) return;
 
         _toggleTween?.Kill();
-        _toggleTween = Tween.To(() => Left.Pixels, x => Left.Pixels = x, ClosedOffset, 0.5f).SetEase(Ease.OutExpo);
+        _toggleTween = Tween.To(Left.Pixels, x => Left.Pixels = x, ClosedOffset, 0.5f).SetEase(Ease.OutExpo);
         IsToggled = false;
     }
 
@@ -517,7 +517,7 @@ public sealed class PartySidebarSlot : UICompositeImage
     private void SnapPosition(int index)
     {
         if (Data == null || _dragging) return;
-        _snapTween = Tween.To(() => Top.Pixels, x => Top.Pixels = x, -2 + 83 * index, 0.15f).SetEase(Ease.OutExpo);
+        _snapTween = Tween.To(Top.Pixels, x => Top.Pixels = x, -2 + 83 * index, 0.15f).SetEase(Ease.OutExpo);
     }
 
     private void DragStart(UIMouseEvent evt)

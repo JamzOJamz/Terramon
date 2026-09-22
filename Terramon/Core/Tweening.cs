@@ -1,29 +1,21 @@
-using System.Linq.Expressions;
-using System.Reflection;
-
 namespace Terramon.Core;
 
 public static class Tween
 {
+    public const float TweenStep = 1f / 60f;
     public static readonly List<ITweener> ActiveTweens = [];
-    public const double TweenStep = 1.0d / 60.0d;
+
+    public static float SimulationTime { get; private set; }
+
+    public static ITweener To<T>(T startValue, Action<T> setter, T endValue, float time) where T : struct
+    {
+        return To((startValue, setter), tuple => tuple.startValue, (tuple, v) => tuple.setter(v), endValue, time);
+    }
 
     public static ITweener To<T>(Func<T> getter, Action<T> setter, T endValue,
         float time) where T : struct
     {
         return To((getter, setter), tuple => tuple.getter(), (tuple, value) => tuple.setter(value), endValue, time);
-    }
-
-    public static ITweener To<T>(Expression<Func<T>> exp, T endValue, float time) where T : struct
-    {
-        var getter = exp.Compile();
-        Action<T> setter = ((MemberExpression)exp.Body).Member switch
-        {
-            PropertyInfo property => property.GetSetMethod().CreateDelegate<Action<T>>(getter.Target),
-            FieldInfo field => x => field.SetValue(getter.Target, x),
-            _ => throw new InvalidOperationException()
-        };
-        return To(getter, setter, endValue, time);
     }
 
     private static Tweener<TFrom, TValue> To<TValue, TFrom>(TFrom from, Func<TFrom, TValue> getter,
@@ -34,18 +26,16 @@ public static class Tween
         {
             From = from,
             Setter = setter,
-            StartTime = (float)SimulationTime,
-            EndTime = (float)SimulationTime + time,
+            StartTime = SimulationTime,
+            EndTime = SimulationTime + time,
             StartValue = getter.Invoke(from),
             EndValue = endValue
         };
         ActiveTweens.Add(tweener);
         return tweener;
     }
-    
-    public static double SimulationTime { get; private set; }
 
-    public static void DoUpdate(double elapsedSeconds)
+    public static void DoUpdate(float elapsedSeconds)
     {
         SimulationTime += elapsedSeconds;
         for (var i = 0; i < ActiveTweens.Count; i++)
@@ -53,139 +43,139 @@ public static class Tween
                 ActiveTweens.RemoveAt(i--);
     }
 
-    public static float ApplyEasing(Ease easing, float time, EaseParams p = default)
+    public static float ApplyEasing(Ease easing, float time)
     {
-        if (p == default)
-            p = EaseParams.Default;
-        return (float)ApplyEasing(easing, (double)time, p);
+        return ApplyEasing(easing, time, EaseParams.Default);
     }
 
-    public static double ApplyEasing(Ease easing, double time, EaseParams p)
+    public static float ApplyEasing(Ease easing, float time, EaseParams p)
     {
-        const double elasticConst = 2 * Math.PI / .3;
-        const double elasticConst2 = .3 / 4;
+        var backConstant = p.BackConstant == 0f ? EaseParams.Default.BackConstant : p.BackConstant;
+        return ApplyEasingCore(easing, time, backConstant);
+    }
 
-        // Use custom back constant
-        var backConst = p.BackConstant;
-        var backConst2 = backConst * 1.525;
+    private static float ApplyEasingCore(Ease easing, float time, float backConstant)
+    {
+        var backConst = backConstant;
+        var backConst2 = backConst * 1.525f;
 
-        const double bounceConst = 1 / 2.75;
+        const float elasticConst = 2f * MathF.PI / .3f;
+        const float elasticConst2 = .3f / 4f;
+        const float bounceConst = 1f / 2.75f;
 
         switch (easing)
         {
             case Ease.None:
             default:
-                break;
+                return time;
 
             case Ease.InQuad:
                 return time * time;
             case Ease.OutQuad:
-                return time * (2 - time);
+                return time * (2f - time);
             case Ease.InOutQuad:
-                if (time < .5) return time * time * 2;
-                return --time * time * -2 + 1;
+                if (time < .5f) return time * time * 2f;
+                return --time * time * -2f + 1f;
 
             case Ease.InCubic:
                 return time * time * time;
             case Ease.OutCubic:
-                return --time * time * time + 1;
+                return --time * time * time + 1f;
             case Ease.InOutCubic:
-                if (time < .5) return time * time * time * 4;
-                return --time * time * time * 4 + 1;
+                if (time < .5f) return time * time * time * 4f;
+                return --time * time * time * 4f + 1f;
 
             case Ease.InQuart:
                 return time * time * time * time;
             case Ease.OutQuart:
-                return 1 - --time * time * time * time;
+                return 1f - --time * time * time * time;
             case Ease.InOutQuart:
-                if (time < .5) return time * time * time * time * 8;
-                return --time * time * time * time * -8 + 1;
+                if (time < .5f) return time * time * time * time * 8f;
+                return --time * time * time * time * -8f + 1f;
 
             case Ease.InQuint:
                 return time * time * time * time * time;
             case Ease.OutQuint:
-                return --time * time * time * time * time + 1;
+                return --time * time * time * time * time + 1f;
             case Ease.InOutQuint:
-                if (time < .5) return time * time * time * time * time * 16;
-                return --time * time * time * time * time * 16 + 1;
+                if (time < .5f) return time * time * time * time * time * 16f;
+                return --time * time * time * time * time * 16f + 1f;
 
             case Ease.InSine:
-                return 1 - Math.Cos(time * Math.PI * .5);
+                return 1f - MathF.Cos(time * MathF.PI * .5f);
             case Ease.OutSine:
-                return Math.Sin(time * Math.PI * .5);
+                return MathF.Sin(time * MathF.PI * .5f);
             case Ease.InOutSine:
-                return .5 - .5 * Math.Cos(Math.PI * time);
+                return .5f - .5f * MathF.Cos(MathF.PI * time);
 
             case Ease.InExpo:
-                return Math.Pow(2, 10 * (time - 1));
+                return MathF.Pow(2f, 10f * (time - 1f));
             case Ease.OutExpo:
-                return -Math.Pow(2, -10 * time) + 1;
+                return -MathF.Pow(2f, -10f * time) + 1f;
             case Ease.InOutExpo:
-                if (time < .5) return .5 * Math.Pow(2, 20 * time - 10);
-                return 1 - .5 * Math.Pow(2, -20 * time + 10);
+                if (time < .5f) return .5f * MathF.Pow(2f, 20f * time - 10f);
+                return 1f - .5f * MathF.Pow(2f, -20f * time + 10f);
 
             case Ease.InCirc:
-                return 1 - Math.Sqrt(1 - time * time);
+                return 1f - MathF.Sqrt(1f - time * time);
             case Ease.OutCirc:
-                return Math.Sqrt(1 - --time * time);
+                return MathF.Sqrt(1f - --time * time);
             case Ease.InOutCirc:
-                if ((time *= 2) < 1) return .5 - .5 * Math.Sqrt(1 - time * time);
-                return .5 * Math.Sqrt(1 - (time -= 2) * time) + .5;
+                if ((time *= 2f) < 1f) return .5f - .5f * MathF.Sqrt(1f - time * time);
+                return .5f * MathF.Sqrt(1f - (time -= 2f) * time) + .5f;
 
             case Ease.InElastic:
-                return -Math.Pow(2, -10 + 10 * time) * Math.Sin((1 - elasticConst2 - time) * elasticConst);
+                return -MathF.Pow(2f, -10f + 10f * time) * MathF.Sin((1f - elasticConst2 - time) * elasticConst);
             case Ease.OutElastic:
-                return Math.Pow(2, -10 * time) * Math.Sin((time - elasticConst2) * elasticConst) + 1;
+                return MathF.Pow(2f, -10f * time) * MathF.Sin((time - elasticConst2) * elasticConst) + 1f;
             case Ease.OutElasticHalf:
-                return Math.Pow(2, -10 * time) * Math.Sin((.5 * time - elasticConst2) * elasticConst) + 1;
+                return MathF.Pow(2f, -10f * time) * MathF.Sin((.5f * time - elasticConst2) * elasticConst) + 1f;
             case Ease.OutElasticQuarter:
-                return Math.Pow(2, -10 * time) * Math.Sin((.25 * time - elasticConst2) * elasticConst) + 1;
+                return MathF.Pow(2f, -10f * time) * MathF.Sin((.25f * time - elasticConst2) * elasticConst) + 1f;
             case Ease.InOutElastic:
-                if ((time *= 2) < 1)
-                    return -.5 * Math.Pow(2, -10 + 10 * time) *
-                           Math.Sin((1 - elasticConst2 * 1.5 - time) * elasticConst / 1.5);
-                return .5 * Math.Pow(2, -10 * --time) * Math.Sin((time - elasticConst2 * 1.5) * elasticConst / 1.5) + 1;
+                if ((time *= 2f) < 1f)
+                    return -.5f * MathF.Pow(2f, -10f + 10f * time) *
+                           MathF.Sin((1f - elasticConst2 * 1.5f - time) * elasticConst / 1.5f);
+                return .5f * MathF.Pow(2f, -10f * --time) *
+                    MathF.Sin((time - elasticConst2 * 1.5f) * elasticConst / 1.5f) + 1f;
 
             case Ease.InBack:
-                return time * time * ((backConst + 1) * time - backConst);
+                return time * time * ((backConst + 1f) * time - backConst);
             case Ease.OutBack:
-                return --time * time * ((backConst + 1) * time + backConst) + 1;
+                return --time * time * ((backConst + 1f) * time + backConst) + 1f;
             case Ease.InOutBack:
-                if ((time *= 2) < 1) return .5 * time * time * ((backConst2 + 1) * time - backConst2);
-                return .5 * ((time -= 2) * time * ((backConst2 + 1) * time + backConst2) + 2);
+                if ((time *= 2f) < 1f) return .5f * time * time * ((backConst2 + 1f) * time - backConst2);
+                return .5f * ((time -= 2f) * time * ((backConst2 + 1f) * time + backConst2) + 2f);
 
             case Ease.InBounce:
-                time = 1 - time;
+                time = 1f - time;
                 return time switch
                 {
-                    < bounceConst => 1 - 7.5625 * time * time,
-                    < 2 * bounceConst => 1 - (7.5625 * (time -= 1.5 * bounceConst) * time + .75),
-                    < 2.5 * bounceConst => 1 - (7.5625 * (time -= 2.25 * bounceConst) * time + .9375),
-                    _ => 1 - (7.5625 * (time -= 2.625 * bounceConst) * time + .984375)
+                    < bounceConst => 1f - 7.5625f * time * time,
+                    < 2f * bounceConst => 1f - (7.5625f * (time -= 1.5f * bounceConst) * time + .75f),
+                    < 2.5f * bounceConst => 1f - (7.5625f * (time -= 2.25f * bounceConst) * time + .9375f),
+                    _ => 1f - (7.5625f * (time -= 2.625f * bounceConst) * time + .984375f)
                 };
             case Ease.OutBounce:
                 return time switch
                 {
-                    < bounceConst => 7.5625 * time * time,
-                    < 2 * bounceConst => 7.5625 * (time -= 1.5 * bounceConst) * time + .75,
-                    < 2.5 * bounceConst => 7.5625 * (time -= 2.25 * bounceConst) * time + .9375,
-                    _ => 7.5625 * (time -= 2.625 * bounceConst) * time + .984375
+                    < bounceConst => 7.5625f * time * time,
+                    < 2f * bounceConst => 7.5625f * (time -= 1.5f * bounceConst) * time + .75f,
+                    < 2.5f * bounceConst => 7.5625f * (time -= 2.25f * bounceConst) * time + .9375f,
+                    _ => 7.5625f * (time -= 2.625f * bounceConst) * time + .984375f
                 };
             case Ease.InOutBounce:
-                if (time < .5) return .5 - .5 * ApplyEasing(Ease.OutBounce, 1 - time * 2, p);
-                return ApplyEasing(Ease.OutBounce, (time - .5) * 2, p) * .5 + .5;
+                if (time < .5f) return .5f - .5f * ApplyEasingCore(Ease.OutBounce, 1f - time * 2f, backConstant);
+                return ApplyEasingCore(Ease.OutBounce, (time - .5f) * 2f, backConstant) * .5f + .5f;
 
             case Ease.InBackExpo:
-                var backBase = time * time * ((backConst + 1) * time - backConst);
-                var expoMultiplier = 0.1 + 0.9 * Math.Pow(2, 8 * (time - 1));
-
+                var backBase = time * time * ((backConst + 1f) * time - backConst);
+                var expoMultiplier = 0.1f + 0.9f * MathF.Pow(2f, 8f * (time - 1f));
                 return backBase * expoMultiplier;
 
             case Ease.OutPow10:
-                return --time * Math.Pow(time, 10) + 1;
+                return --time * MathF.Pow(time, 10f) + 1f;
         }
-
-        return time;
     }
 }
 
@@ -199,43 +189,43 @@ public interface ITweener
     ITweener SetEase(Ease easeType, EaseParams parameters);
 }
 
-public readonly record struct EaseParams
+public struct EaseParams
 {
-    public double BackConstant { get; private init; }
+    public float BackConstant;
 
-    public static EaseParams Default => new()
-    {
-        BackConstant = 1.70158
-    };
+    public static EaseParams Default { get; } = new() { BackConstant = 1.70158f };
 
-    public static EaseParams Back(double overshoot = 1.70158) => new()
+    public static EaseParams Back(float overshoot = 1.70158f)
     {
-        BackConstant = overshoot
-    };
+        return new EaseParams
+        {
+            BackConstant = overshoot
+        };
+    }
 }
 
 public class Tweener<TFrom, TValue> : ITweener where TValue : struct
 {
-    private Ease _ease;
-    private EaseParams _easeParams = EaseParams.Default;
-    private bool _killed;
     public float EndTime;
     public TValue EndValue;
     public TFrom From;
     public Action<TFrom, TValue> Setter;
     public float StartTime;
     public TValue StartValue;
+    private Ease _ease;
+    private EaseParams _easeParams = EaseParams.Default;
+    private bool _killed;
     public bool IsRunning => !_killed;
     public Action OnComplete { get; set; }
 
     public bool Update()
     {
         if (_killed) return false;
-        
+
         var currentTime = Tween.SimulationTime;
-        
-        const double maxTime = 216000.0;
-        double timeDiff;
+
+        const float maxTime = 216000f;
+        float timeDiff;
 
         if (EndTime >= StartTime)
             timeDiff = EndTime - StartTime;
@@ -246,14 +236,29 @@ public class Tweener<TFrom, TValue> : ITweener where TValue : struct
 
         if (currentTime < StartTime) t = (currentTime + maxTime - StartTime) / timeDiff;
 
-        t = Math.Clamp(t, 0, 1);
+        t = Math.Clamp(t, 0f, 1f);
         t = Tween.ApplyEasing(_ease, t, _easeParams);
-        
+
         switch (StartValue, EndValue)
         {
             case (float s, float e):
                 Setter.Invoke(From, (TValue)Convert.ChangeType(s + (e - s) * t, typeof(TValue)));
                 break;
+            case (double s, double e):
+                Setter.Invoke(From, (TValue)Convert.ChangeType(s + (e - s) * t, typeof(TValue)));
+                break;
+            case (int s, int e):
+                Setter.Invoke(From, (TValue)Convert.ChangeType((int)MathF.Round(s + (e - s) * t), typeof(TValue)));
+                break;
+            case (Vector2 s, Vector2 e):
+                Setter.Invoke(From, (TValue)(object)Vector2.Lerp(s, e, t));
+                break;
+            case (Color s, Color e):
+                Setter.Invoke(From, (TValue)(object)Color.Lerp(s, e, t));
+                break;
+            default:
+                throw new NotSupportedException(
+                    $"Tween<{typeof(TValue).Name}> is not supported. Add an interpolation case to {nameof(Tweener<,>)}.{nameof(Update)}.");
         }
 
         var isComplete = currentTime >= EndTime;

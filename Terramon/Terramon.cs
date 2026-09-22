@@ -5,7 +5,6 @@ using Terramon.Content.Items;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
-using Terramon.Helpers;
 using Terraria.Localization;
 
 namespace Terramon;

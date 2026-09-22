@@ -75,7 +75,7 @@ public abstract class ExpCandy : Vitamin, IPokemonDirectUse
                         new Color(50, 255, 130));
                     return amount;
                 }
-                TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
+                TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
                 var modPlayer = player.Terramon();
                 var showPokedexRegistrationMessages = clientConfig.ShowPokedexRegistrationMessages;
                 while (queuedEvolution != 0)

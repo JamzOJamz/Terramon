@@ -112,7 +112,7 @@ public sealed class StarterSelectUI : SmartUIState
         _fadeOutAnimationActive = false;
 
         var startingAlpha = _backdropImage.Color.A / 255f;
-        _backdropFadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, BackdropAlpha, FadeDuration);
+        _backdropFadeTween = Tween.To(startingAlpha, a => _backdropImage.Color = Color.White * a, BackdropAlpha, FadeDuration);
         _backdropFadeTween.OnComplete = OnFadeInComplete;
     }
 
@@ -134,7 +134,7 @@ public sealed class StarterSelectUI : SmartUIState
         _fadeInAnimationActive = false;
 
         var startingAlpha = _backdropImage.Color.A / 255f;
-        _backdropFadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
+        _backdropFadeTween = Tween.To(startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
         _backdropFadeTween.OnComplete = OnFadeOutComplete;
     }
 
@@ -283,7 +283,7 @@ public sealed class StarterSelectUI : SmartUIState
             }
 
             if (_hintTextTween is not { IsRunning: true })
-                _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a,
+                _hintTextTween = Tween.To(_hintTextAlpha, a => _hintTextAlpha = a,
                     _hintTextAlpha >= 1f ? 0f : 1f, 1f);
         }
 
@@ -321,7 +321,7 @@ public sealed class StarterSelectUI : SmartUIState
             {
                 _showButton.VisibilityOverride = _showButton.VisibilityActive;
                 _showButtonVisibilityTween = Tween.To(
-                    () => _showButton.VisibilityOverride,
+                    _showButton.VisibilityOverride,
                     v => _showButton.VisibilityOverride = v,
                     _showButton.VisibilityInactive,
                     ShowButtonShakeDuration);

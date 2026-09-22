@@ -402,7 +402,7 @@ internal abstract class BasePkballProjectile : ModProjectile
         // Don't run this code on other clients
         if (Projectile.owner != Main.myPlayer) return;
 
-        TerramonWorld.PlaySoundOverBGM(in TerramonSoundID.PkballCatchPla);
+        TerramonWorld.PlaySoundOverBGM(TerramonSoundID.PkballCatchPla);
 
         Projectile.Kill();
         var schema = _capture.Data.Schema;

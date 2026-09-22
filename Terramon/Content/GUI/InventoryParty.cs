@@ -205,9 +205,9 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.Rotation = 0;
         var endRotation = (float)Math.PI * 2f;
         if (!IsCompressed) endRotation *= -1;
-        _toggleTweens[0] = Tween.To(() => _toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x,
+        _toggleTweens[0] = Tween.To(_toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x,
             endRotation, 0.35f);
-        var toggleTween = Tween.To(() => _toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
+        var toggleTween = Tween.To(_toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
                 IsCompressed ? 404 : 118, 0.6f)
             .SetEase(Ease.OutExpo);
         toggleTween.OnComplete = () =>
@@ -217,7 +217,7 @@ public class InventoryParty : SmartUIState
             IgnoresMouseInteraction = false;
         };
         _toggleTweens[1] = toggleTween;
-        _toggleTweens[2] = Tween.To(() => startingAlpha, x =>
+        _toggleTweens[2] = Tween.To(startingAlpha, x =>
         {
             var newColor = Color.White * x;
             foreach (var slot in CustomSlots)

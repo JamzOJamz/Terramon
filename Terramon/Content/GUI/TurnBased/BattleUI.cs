@@ -55,7 +55,7 @@ public sealed class BattleUI : SmartUIState
         {
             var curMusic = Main.curMusic;
             var curMusicFade = Main.musicFade[curMusic];
-            Tween.To(() => curMusicFade, x => Main.musicFade[curMusic] = x, 0f, 0.57f);
+            Tween.To(curMusicFade, x => Main.musicFade[curMusic] = x, 0f, 0.57f);
             var bgmTrack = audioSystem.AudioTracks[ModContent.GetInstance<BattleScene>().Music];
             bgmTrack.Stop(AudioStopOptions.Immediate);
             bgmTrack.Reuse();
@@ -69,7 +69,7 @@ public sealed class BattleUI : SmartUIState
             {
                 FocusBetween.Reset();
                 Main.instance.CameraModifiers.Add(FocusBetween);
-                Tween.To(() => Main.GameZoomTarget, 5f, 1.42f)
+                Tween.To(Main.GameZoomTarget, v => Main.GameZoomTarget = v, 5f, 1.42f)
                     .SetEase(Ease.InBackExpo, EaseParams.Back(1.6f)).OnComplete = () =>
                 {
                     TestBattleUI.Open();
@@ -94,7 +94,8 @@ public sealed class BattleUI : SmartUIState
             partySidebar.SetToggleState(true);
 
         if (Math.Abs(Main.GameZoomTarget - _oldGameZoomTarget) > 0.001f)
-            Tween.To(() => Main.GameZoomTarget, _oldGameZoomTarget, 0.5f).SetEase(Ease.OutExpo);
+            Tween.To(Main.GameZoomTarget, v => Main.GameZoomTarget = v, _oldGameZoomTarget, 0.5f)
+                .SetEase(Ease.OutExpo);
     }
 
     private static Vector2? GetBetweenPosition()
@@ -116,7 +117,7 @@ public sealed class BattleUI : SmartUIState
 
         var otherCenter = other.Center;
 
-        var targetX = otherCenter.X + (other.direction * (PokemonPet.DistanceFromFoe * 0.5f));
+        var targetX = otherCenter.X + other.direction * (PokemonPet.DistanceFromFoe * 0.5f);
         var targetY = (myPet.Center.Y + otherCenter.Y) * 0.5f;
         Vector2 target = new(targetX, targetY);
 
@@ -141,13 +142,11 @@ public sealed class BattleUI : SmartUIState
             Main.GameZoomTarget = 1.5f;
 
         if (opacity > 0f)
-        {
             spriteBatch.Draw(
                 TextureAssets.MagicPixel.Value,
                 new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
                 Color.White * opacity
             );
-        }
     }
 
     private static float GetCutsceneOpacity(int ticks)

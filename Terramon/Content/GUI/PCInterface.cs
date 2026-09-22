@@ -780,13 +780,13 @@ internal sealed class PCActionButton : BetterUIText
     {
         SoundEngine.PlaySound(in SoundID.MenuTick);
         TextColor = Color.White;
-        Tween.To(() => TextScale, SetTextScale, 1f, 1f / 12f);
+        Tween.To(TextScale, SetTextScale, 1f, 1f / 12f);
     }
 
     public override void MouseOut(UIMouseEvent evt)
     {
         TextColor = DefaultColor;
-        Tween.To(() => TextScale, SetTextScale, 0.75f, 1f / 12f);
+        Tween.To(TextScale, SetTextScale, 0.75f, 1f / 12f);
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -967,7 +967,7 @@ internal sealed class PCColorPicker : UIContainer
         {
             if (IsDefaultColor) return;
             SoundEngine.PlaySound(in SoundID.MenuTick);
-            Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.89f, 1f / 12f);
+            Tween.To(_resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.89f, 1f / 12f);
             _resetToDefaultButton.TextColor = new Color(255, 214, 102);
             _resetToDefaultButton.ShadowColor = new Color(173, 48, 46);
         };
@@ -975,7 +975,7 @@ internal sealed class PCColorPicker : UIContainer
         {
             if (IsDefaultColor) return;
             SoundEngine.PlaySound(in SoundID.MenuTick);
-            Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
+            Tween.To(_resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
             _resetToDefaultButton.TextColor = new Color(247, 218, 101);
             _resetToDefaultButton.ShadowColor = Color.Black;
         };
@@ -983,7 +983,7 @@ internal sealed class PCColorPicker : UIContainer
         {
             if (IsDefaultColor) return;
             SoundEngine.PlaySound(in SoundID.MenuTick);
-            Tween.To(() => _resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
+            Tween.To(_resetToDefaultButton.TextScale, _resetToDefaultButton.SetTextScale, 0.8125f, 1f / 12f);
             TerramonPlayer.LocalPlayer.ColorPickerHSL = _defaultColorPickerHSL;
             var color = ScaledHslToRgb(_defaultColorPickerHSL.X, _defaultColorPickerHSL.Y, _defaultColorPickerHSL.Z);
             OnColorChange?.Invoke(color);
