@@ -384,7 +384,7 @@ internal static partial class Program
         var growthRate = Enum.Parse<ExperienceGroup>(
             FormatIdentifier(root.GetProperty("growth_rate").GetProperty("name").GetString()!));
         var genderRate = root.GetProperty("gender_rate").GetSByte();
-        var forms = await ProcessForms(id, pokeCacheDir, root.GetProperty("varieties"));
+        var forms = await ProcessForms(root.GetProperty("varieties"));
 
         var baseForm = forms[0];
         var otherForms = new Dictionary<string, DatabaseV2.FormSchema>(forms.Count - 1);
@@ -555,8 +555,7 @@ internal static partial class Program
         return null;
     }
 
-    private static async Task<List<DatabaseV2.FormSchema>> ProcessForms(int id, string pokeCacheDir,
-        JsonElement varietiesArray)
+    private static async Task<List<DatabaseV2.FormSchema>> ProcessForms(JsonElement varietiesArray)
     {
         var forms = new List<DatabaseV2.FormSchema>();
 
