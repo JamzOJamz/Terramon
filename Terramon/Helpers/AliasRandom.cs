@@ -4,12 +4,12 @@ using System.Text;
 namespace Terramon.Helpers;
 
 /// <summary>
-///     Vose alias implementation
+///     Implementation of the Vose alias method for weighted random selection.
 /// </summary>
-/// <param name="elementCount"></param>
 public sealed class AliasRandom
 {
     private bool _mustRecalculate;
+
     public double Reverser
     {
         get => field;
@@ -20,11 +20,13 @@ public sealed class AliasRandom
             _mustRecalculate = true;
         }
     }
+
     private readonly List<int> _distValues = [];
     private readonly List<double> _distWeights = [];
     private int _count;
     private int[] _alias;
     private double[] _prob;
+
     public void Add(int element, double weight)
     {
         _distValues.Add(element);
@@ -32,19 +34,18 @@ public sealed class AliasRandom
         _count++;
         _mustRecalculate = true;
     }
+
     public int Get()
     {
-        // DEBUG
-        _mustRecalculate = true;
         if (_mustRecalculate)
             Recalculate();
         var column = Main.rand.Next(_count);
         var coinToss = Main.rand.NextDouble() < _prob[column];
         return _distValues[coinToss ? column : _alias[column]];
     }
+
     public void Recalculate()
     {
-        // construct probability and alias tables for the distribution
         var n = _count;
         if (_prob is null || n > _prob.Length)
         {
@@ -61,24 +62,19 @@ public sealed class AliasRandom
         var sum = 0d;
         foreach (ref var s in sp)
             sum += s;
-        //var avg = sum / (uint)n;
 
         var small = new Queue<int>(n);
         var large = new Queue<int>(n);
 
         for (int i = 0; i < n; i++)
         {
-            // custom weight modifier
-            //var weight = sp[i];
-            //var magnitude = weight - avg;
-
-            var realWeight = sp[i]; // avg + (ulong)(magnitude * (Reverser + 1d));
+            var realWeight = sp[i];
             if ((_prob[i] = realWeight / sum * n) < 1d)
                 small.Enqueue(i);
             else
                 large.Enqueue(i);
         }
-        
+
         while (small.Count != 0 && large.Count != 0)
         {
             var s = small.Dequeue();
@@ -101,10 +97,11 @@ public sealed class AliasRandom
 
         _mustRecalculate = false;
     }
+
     public override string ToString() => ToString(null);
+
     public string ToString(Func<int, string> nameResolver)
     {
-        _mustRecalculate = true;
         if (_mustRecalculate)
             Recalculate();
         var sb = new StringBuilder();

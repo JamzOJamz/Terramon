@@ -85,11 +85,10 @@ public class HubUI : SmartUIState
     }
 
     public static bool WorldDexMode { get; private set; }
-
     public static bool ShinyActive { get; private set; }
     public static bool ShiftKeyIgnore { get; set; }
-
     public static bool Active { get; private set; }
+
     public override bool Visible => false; // Vanilla will update/draw this state through IngameFancyUI
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)

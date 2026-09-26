@@ -1,20 +1,20 @@
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 using Terraria.ModLoader.Config;
 
 // ReSharper disable UnassignedField.Global
 
 namespace Terramon.Content.Configs;
 
+[UsedImplicitly]
 public class ClientConfig : ModConfig
 {
-#pragma warning disable CA2211
-    public static ClientConfig Instance;
-#pragma warning restore CA2211
-    
+    public static ClientConfig Instance => ModContent.GetInstance<ClientConfig>();
+
     // TODO: Add this back once alternate mod icons are redesigned to fit the new style
     //[Header("Graphics")] public ModIconType ModIconType;
-    
+
     [Header("Miscellaneous")] [DefaultValue(true)]
     public bool FastEvolution;
 
@@ -23,7 +23,7 @@ public class ClientConfig : ModConfig
 
     [Header("GUI")] [DefaultValue(false)]
     public bool LegacyStarterSelectUI;
-    
+
     [DefaultValue(false)]
     public bool ReducedAudio;
 
@@ -39,7 +39,7 @@ public class ClientConfig : ModConfig
     [Header("Accessibility")] [DefaultValue(true)]
     [ReloadRequired]
     public bool AnimatedModIcon;
-    
+
     [DefaultValue(true)]
     public bool RainbowBuffText;
 
@@ -51,7 +51,7 @@ public class ClientConfig : ModConfig
 
     [DefaultValue(typeof(Color), "252, 252, 84, 255")]
     public Color HighlightColor;
-    
+
     public override ConfigScope Mode => ConfigScope.ClientSide;
 }
 

@@ -1,5 +1,11 @@
 using Terramon.Helpers;
 using Terraria.UI;
+#if DEBUG
+using System.Reflection.Metadata;
+using Terramon.Core.Loaders.UILoading;
+
+[assembly: MetadataUpdateHandler(typeof(UILoader))]
+#endif
 
 namespace Terramon.Core.Loaders.UILoading;
 
@@ -22,10 +28,13 @@ internal class UILoader : ModSystem
 
     public static GameTime GameTime { get; set; }
 
+#if DEBUG
     public static void UpdateApplication(IEnumerable<Type> changedTypes)
     {
+        _ = changedTypes;
         Environment.SetEnvironmentVariable("TERRAMON_UIUPDATE", "1");
     }
+#endif
 
     public override void Load()
     {
@@ -47,16 +56,13 @@ internal class UILoader : ModSystem
     }
 
     /// <summary>
-    ///     Uses reflection to scan through and find all types extending SmartUIState that arent abstract, and loads an
+    ///     Uses reflection to scan through and find all types extending SmartUIState that aren't abstract, and loads an
     ///     instance of them.
     /// </summary>
     public override void OnModLoad()
     {
         if (Main.dedServ)
             return;
-
-        // Localization should be loaded before UIStates initialization
-        LocalizationHelper.ForceLoadModHJsonLocalization(Mod);
 
         _userInterfaces = [];
         _uiStates = [];

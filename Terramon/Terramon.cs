@@ -5,6 +5,7 @@ using Terramon.Content.Items;
 using Terramon.Content.Menus;
 using Terramon.Core.Loaders;
 using Terramon.Core.Loaders.UILoading;
+using Terraria.Localization;
 
 namespace Terramon;
 
@@ -35,6 +36,7 @@ public class Terramon : Mod
         };
     }
 
+    // Singleton pattern is safe because tModLoader only instantiates one Mod instance per load
     public Terramon() => Instance = this;
 
     public static Terramon Instance { get; private set; }
@@ -176,6 +178,11 @@ public class Terramon : Mod
 
         // Don't run the rest of the method on servers
         if (Main.dedServ) return;
+
+        // Load localization early to prevent stale locale keys during UI initialization (UILoader.OnModLoad)
+        var lang = LanguageManager.Instance;
+        foreach (var (key, value) in LocalizationLoader.LoadTranslations(this, Language.ActiveCulture))
+            lang.GetText(key).SetValue(value);
 
         // Check how many times the mod has been loaded
         TimesLoaded = CheckLoadCount();

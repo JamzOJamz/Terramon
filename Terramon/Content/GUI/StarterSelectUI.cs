@@ -67,11 +67,19 @@ public sealed class StarterSelectUI : SmartUIState
         };
     }
 
-    public override bool Visible => !ClientConfig.Instance.LegacyStarterSelectUI &&
-                                    (!TerramonPlayer.LocalPlayer.HasChosenStarter ||
-                                     (_fadeOutAnimationActive && _backdropImage.Color.A > 0)) &&
-                                    !Main.playerInventory && !Main.inFancyUI && !Main.LocalPlayer.dead &&
-                                    Main.LocalPlayer.talkNPC < 0;
+    public override bool Visible
+    {
+        get
+        {
+            var player = Main.LocalPlayer;
+            return !ClientConfig.Instance.LegacyStarterSelectUI
+                   && (!player.Terramon().HasChosenStarter || (_fadeOutAnimationActive && _backdropImage.Color.A > 0))
+                   && !Main.playerInventory
+                   && player.talkNPC < 0
+                   && !player.dead
+                   && !Main.inFancyUI;
+        }
+    }
 
     private static void SetPlayerNameForTitle(string playerName)
     {
@@ -94,7 +102,7 @@ public sealed class StarterSelectUI : SmartUIState
         DoFadeInAnimation();
     }
 
-    internal static void DoFadeInAnimation()
+    private static void DoFadeInAnimation()
     {
         if (_fadeInAnimationActive) return;
         _fadeInAnimationActive = true;
@@ -104,7 +112,7 @@ public sealed class StarterSelectUI : SmartUIState
         _fadeOutAnimationActive = false;
 
         var startingAlpha = _backdropImage.Color.A / 255f;
-        _backdropFadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, BackdropAlpha, FadeDuration);
+        _backdropFadeTween = Tween.To(startingAlpha, a => _backdropImage.Color = Color.White * a, BackdropAlpha, FadeDuration);
         _backdropFadeTween.OnComplete = OnFadeInComplete;
     }
 
@@ -126,7 +134,7 @@ public sealed class StarterSelectUI : SmartUIState
         _fadeInAnimationActive = false;
 
         var startingAlpha = _backdropImage.Color.A / 255f;
-        _backdropFadeTween = Tween.To(() => startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
+        _backdropFadeTween = Tween.To(startingAlpha, a => _backdropImage.Color = Color.White * a, 0, FadeDuration);
         _backdropFadeTween.OnComplete = OnFadeOutComplete;
     }
 
@@ -275,8 +283,8 @@ public sealed class StarterSelectUI : SmartUIState
             }
 
             if (_hintTextTween is not { IsRunning: true })
-                _hintTextTween = Tween.To(() => _hintTextAlpha, a => _hintTextAlpha = a,
-                    _hintTextAlpha == 1f ? 0f : 1f, 1f);
+                _hintTextTween = Tween.To(_hintTextAlpha, a => _hintTextAlpha = a,
+                    _hintTextAlpha >= 1f ? 0f : 1f, 1f);
         }
 
         UpdateShowButtonAnimation(gameTime);
@@ -313,7 +321,7 @@ public sealed class StarterSelectUI : SmartUIState
             {
                 _showButton.VisibilityOverride = _showButton.VisibilityActive;
                 _showButtonVisibilityTween = Tween.To(
-                    () => _showButton.VisibilityOverride,
+                    _showButton.VisibilityOverride,
                     v => _showButton.VisibilityOverride = v,
                     _showButton.VisibilityInactive,
                     ShowButtonShakeDuration);
@@ -472,7 +480,7 @@ internal sealed class UIStarterBanner : UIHoverImageButton
         SoundEngine.PlaySound(in SoundID.Coins);
 
         var ballItemType = ModContent.ItemType<PokeBallItem>();
-        if (player.name is "Jamz" or "JamzOJamz") // Developer easter egg
+        if (player.name is "Jamz" or "JamzOJamz") // Developer Easter egg
             ballItemType = ModContent.ItemType<MasterBallItem>();
         var giftItemSource = player.GetSource_GiftOrReward();
         player.QuickSpawnItem(giftItemSource, ballItemType, 10);

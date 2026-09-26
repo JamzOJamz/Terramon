@@ -221,7 +221,7 @@ public abstract class BattleMessage : ILoadable
 
         public readonly void Receive(in SenderInfo sender, ref bool handled)
         {
-            EasyPacket.lastProcessedPacket = _underlying.GetType();
+            EasyPacket.LastProcessedPacket = _underlying.GetType();
 
             handled = true;
 

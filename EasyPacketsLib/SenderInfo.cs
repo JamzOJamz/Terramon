@@ -1,9 +1,8 @@
-﻿/*
+/*
  *  SenderInfo.cs
  *  DavidFDev
  */
 
-using Terraria;
 using Terraria.ModLoader;
 
 namespace EasyPacketsLib;
@@ -15,7 +14,6 @@ public readonly ref struct SenderInfo
 {
     #region Fields
 
-    private readonly BitsByte _flags;
     private readonly byte _toClient;
     private readonly byte _ignoreClient;
 
@@ -30,16 +28,21 @@ public readonly ref struct SenderInfo
     ///     If sent directly by the server, this is the index of the server (255).
     /// </summary>
     public readonly byte WhoAmI;
+    
+    /// <summary>
+    ///     Packet is, or has been, forwarded by a client.
+    /// </summary>
+    public bool Forwarded { get; }
 
     #endregion
 
     #region Constructors
 
-    internal SenderInfo(Mod mod, byte whoAmI, BitsByte flags, byte toClient, byte ignoreClient)
+    internal SenderInfo(Mod mod, byte whoAmI, bool forward, byte toClient, byte ignoreClient)
     {
         Mod = mod;
         WhoAmI = whoAmI;
-        _flags = flags;
+        Forwarded = forward;
         _toClient = toClient;
         _ignoreClient = ignoreClient;
     }
@@ -47,11 +50,6 @@ public readonly ref struct SenderInfo
     #endregion
 
     #region Properties
-
-    /// <summary>
-    ///     Packet is, or has been, forwarded by a client.
-    /// </summary>
-    public bool Forwarded => _flags[0];
 
     /// <summary>
     ///     If non-negative, this packet will only be received by the specified client.

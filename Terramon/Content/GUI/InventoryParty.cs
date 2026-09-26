@@ -51,10 +51,21 @@ public class InventoryParty : SmartUIState
 
     public static bool IsCompressed { get; private set; }
 
-    public override bool Visible => Main.playerInventory && Main.LocalPlayer.chest == -1 && Main.npcShop == 0 &&
-                                    !Main.LocalPlayer.dead && !Main.inFancyUI &&
-                                    !Main.LocalPlayer.tileEntityAnchor.InUse &&
-                                    TerramonPlayer.LocalPlayer.HasChosenStarter;
+    public override bool Visible
+    {
+        get
+        {
+            var player = Main.LocalPlayer;
+            return Main.playerInventory
+                   && Main.npcShop == 0
+                   && player.chest == -1
+                   && !player.dead
+                   && !player.tileEntityAnchor.InUse
+                   && !Main.inFancyUI
+                   && !Main.InReforgeMenu
+                   && player.Terramon().HasChosenStarter;
+        }
+    }
 
     public static bool InPCMode { get; private set; }
 
@@ -194,9 +205,9 @@ public class InventoryParty : SmartUIState
         _toggleSlotsButton.Rotation = 0;
         var endRotation = (float)Math.PI * 2f;
         if (!IsCompressed) endRotation *= -1;
-        _toggleTweens[0] = Tween.To(() => _toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x,
+        _toggleTweens[0] = Tween.To(_toggleSlotsButton.Rotation, x => _toggleSlotsButton.Rotation = x,
             endRotation, 0.35f);
-        var toggleTween = Tween.To(() => _toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
+        var toggleTween = Tween.To(_toggleSlotsButton.Left.Pixels, x => _toggleSlotsButton.Left.Pixels = x,
                 IsCompressed ? 404 : 118, 0.6f)
             .SetEase(Ease.OutExpo);
         toggleTween.OnComplete = () =>
@@ -206,7 +217,7 @@ public class InventoryParty : SmartUIState
             IgnoresMouseInteraction = false;
         };
         _toggleTweens[1] = toggleTween;
-        _toggleTweens[2] = Tween.To(() => startingAlpha, x =>
+        _toggleTweens[2] = Tween.To(startingAlpha, x =>
         {
             var newColor = Color.White * x;
             foreach (var slot in CustomSlots)
@@ -282,22 +293,6 @@ public class InventoryParty : SmartUIState
         }
 
         Recalculate();
-    }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        if (Main.LocalPlayer.talkNPC != -1)
-        {
-            _openPokedexButton.SetVisibility(0, 0);
-            _openPokedexButton.IgnoresMouseInteraction = true;
-        }
-        else
-        {
-            _openPokedexButton.SetVisibility(1, 1);
-            _openPokedexButton.IgnoresMouseInteraction = false;
-        }
-
-        base.Draw(spriteBatch);
     }
 }
 

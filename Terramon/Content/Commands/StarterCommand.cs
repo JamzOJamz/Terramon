@@ -28,7 +28,7 @@ public class StarterCommand : TerramonCommand
 /// </summary>
 public class ChooseCommand : StarterCommand
 {
-    public override string Command => "choose"; 
-    
+    public override string Command => "choose";
+
     public override string Description => Language.GetTextValue("Mods.Terramon.Commands.Choose.Description");
 }

@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  EasyPacket.cs
  *  DavidFDev
  */
@@ -17,7 +17,7 @@ namespace EasyPacketsLib.Internals;
 public static class EasyPacket
 {
 // #if DEBUG
-    public static Type lastProcessedPacket;
+    public static Type LastProcessedPacket { get; set; }
 
     static EasyPacket()
     {
@@ -29,9 +29,9 @@ public static class EasyPacket
             c.GotoNext(MoveType.AfterLabel, i => i.MatchLdcI4(52));
             c.EmitDelegate(() =>
             {
-                if (lastProcessedPacket != null)
+                if (LastProcessedPacket != null)
                     EasyPacketLoader.RegisteredMod.Logger.Error(
-                        $"Read underflow for {(lastProcessedPacket.IsValueType ? "packet" : "message")} of type {lastProcessedPacket.Name}");
+                        $"Read underflow for {(LastProcessedPacket.IsValueType ? "packet" : "message")} of type {LastProcessedPacket.Name}");
             });
         });
     }

@@ -60,9 +60,19 @@ public class LegacyStarterSelectUI : SmartUIState
     private bool _starterPanelShowing = true;
     private UIText _titleText;
 
-    public override bool Visible => ClientConfig.Instance.LegacyStarterSelectUI &&
-                                    !TerramonPlayer.LocalPlayer.HasChosenStarter && !Main.playerInventory &&
-                                    !Main.inFancyUI && !Main.LocalPlayer.dead && Main.LocalPlayer.talkNPC < 0;
+    public override bool Visible
+    {
+        get
+        {
+            var player = Main.LocalPlayer;
+            return ClientConfig.Instance.LegacyStarterSelectUI
+                   && !player.Terramon().HasChosenStarter
+                   && !Main.playerInventory
+                   && player.talkNPC < 0
+                   && !player.dead
+                   && !Main.inFancyUI;
+        }
+    }
 
     public override int InsertionIndex(List<GameInterfaceLayer> layers)
     {

@@ -159,7 +159,7 @@ internal static class ChestGen
     }*/
 }
 
-public class ChestID
+public static class ChestID
 {
     public const short Default = 0;
     public const short Gold = 1;

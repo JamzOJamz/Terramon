@@ -1,5 +1,3 @@
 ﻿namespace Terramon.Content.Items;
 
-public sealed class LuckyEgg : HeldItem
-{
-}
+public sealed class LuckyEgg : HeldItem;

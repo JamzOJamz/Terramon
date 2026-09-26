@@ -408,10 +408,10 @@ public class PokemonData
         var speciesName = nickname == Schema.Identifier ? null : Schema.Identifier;
         var heldItem = _heldItem.IsAir ? null : ItemID.Search.GetName(_heldItem.type);
         var shiny = IsShiny ? "S" : null;
-        string hiddenPowerType = null;
-        string gmax = null;
-        byte dmaxLevel = 0;
-        string teratype = null;
+        const string hiddenPowerType = null;
+        const string gmax = null;
+        const byte dmaxLevel = 0;
+        const string teratype = null;
 
         return
             $"{nickname}|" +
@@ -946,7 +946,6 @@ public struct PokemonIVs
     }
 }
 
-[SuppressMessage("ReSharper", "UnassignedField.Global")]
 public struct PokemonEVs
 {
     private const ushort MaxTotal = 510;

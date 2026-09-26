@@ -1,7 +1,6 @@
 using EasyPacketsLib;
 using ReLogic.Utilities;
 using Terramon.Content.GUI;
-using Terramon.Core.Loaders.UILoading;
 using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.ModLoader.IO;
@@ -25,7 +24,7 @@ public partial class TerramonWorld : ModSystem
     /// </summary>
     /// <param name="style">The sound style containing the parameters for the sound to be played.</param>
     /// <param name="volumeMultiplier">The multiplier for quieting the background music volume.</param>
-    public static void PlaySoundOverBGM(in SoundStyle style, float volumeMultiplier = 0.45f)
+    public static void PlaySoundOverBGM(SoundStyle style, float volumeMultiplier = 0.45f)
     {
         var slotId = SoundEngine.PlaySound(style);
         if (Main.soundVolume <= 0) return;
@@ -150,7 +149,7 @@ public partial class TerramonWorld : ModSystem
             _currentSlotId = default;
 
             // Fade back in the music volume
-            Tween.To(() => Main.musicVolume, x => { Main.musicVolume = x; }, _originalMusicVolume, 0.75f);
+            Tween.To(Main.musicVolume, x => Main.musicVolume = x, _originalMusicVolume, 0.75f);
 
             return;
         }
@@ -164,7 +163,9 @@ public partial class TerramonWorld : ModSystem
         orig(self, gameTime);
 
         // FrameSkip subtle does very weird stuff with GameTime that causes tweens to randomly go super slow if we don't do this
-        var elapsedTime = Main.FrameSkipMode == FrameSkipMode.Subtle ? Tween.TweenStep : gameTime.ElapsedGameTime.TotalSeconds;
+        var elapsedTime = Main.FrameSkipMode == FrameSkipMode.Subtle
+            ? Tween.TweenStep
+            : (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         // Update all active tweens
         Tween.DoUpdate(elapsedTime);
