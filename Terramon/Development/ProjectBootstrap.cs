@@ -13,7 +13,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Text.Json;
+using MonoMod.RuntimeDetour;
 using Steamworks;
+using Terraria.ModLoader.Core;
 
 file static class ClientBootstrapper
 {
@@ -346,6 +348,90 @@ file static class DepsJsonResolver
     }
 }
 
+/*
+ * MonoMod detours that skip/short-circuit tModLoader startup steps which
+ * only matter for a "real" launch (loadability checks, pre-JIT passes,
+ * splash screen, etc.)
+ *
+ * Adapted from LolXD's client launcher impl, shared here:
+ * https://discord.com/channels/103110554649894912/534215632795729922/1347395989559967815
+ * (tModLoader Discord)
+ */
+file static class StartupDetours
+{
+    private const BindingFlags InstanceFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+    private const BindingFlags StaticFlags = BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public;
+
+    private static readonly List<Hook> Detours = new(6);
+    private static Task _applyingTask;
+
+    public static void BeginApplyingAsync()
+    {
+        _applyingTask = Task.Run(Apply);
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+    private static void Apply()
+    {
+        // Skip the type loadability check, we know these to be fine
+        Detours.Add(new Hook(
+            ((Func<AssemblyManager.ModLoadContext, Type, bool>)AssemblyManager.IsLoadable).Method,
+            (Func<Func<AssemblyManager.ModLoadContext, Type, bool>, AssemblyManager.ModLoadContext, Type, bool>)
+            ((_, _, _) => true),
+            false));
+
+        // Skip pre-JIT, not worth waiting for while testing
+        Detours.Add(new Hook(
+            ((Action<IEnumerable<Assembly>, PreJITFilter>)AssemblyManager.JITAssemblies).Method,
+            (Action<Action<IEnumerable<Assembly>, PreJITFilter>, IEnumerable<Assembly>, PreJITFilter>)
+            ((_, _, _) => { }),
+            false));
+
+        // Also skip this extra JIT pass
+        Detours.Add(new Hook(
+            ((Action<IEnumerable<Type>>)Terraria.Program.ForceJITOnAssembly).Method,
+            (Action<Action<IEnumerable<Type>>, IEnumerable<Type>>)
+            ((_, _) => { }),
+            false));
+
+        // Don't force static initializers up front (cast picks the Assembly overload)
+        Detours.Add(new Hook(
+            ((Action<Assembly>)Terraria.Program.ForceStaticInitializers).Method,
+            (Action<Action<Assembly>, Assembly>)
+            ((_, _) => { }),
+            false));
+
+        // Make sure the detours are done before loading content
+        Detours.Add(new Hook(
+            typeof(Main).GetMethod("LoadContent",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!,
+            (Action<Action<Main>, Main>)((orig, self) =>
+            {
+                if (_applyingTask?.IsCompleted is false)
+                    _applyingTask.GetAwaiter().GetResult();
+
+                orig(self);
+            }),
+            false));
+
+        // Skip past the splash screen
+        Detours.Add(new Hook(
+            typeof(Main).GetMethod(nameof(Main.DrawSplash),
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!,
+            (Action<Action<Main, GameTime>, Main, GameTime>)((orig, self, gameTime) =>
+            {
+                for (var i = 0; i < 900 && Main.showSplash; i++)
+                {
+                    orig(self, gameTime);
+                    Main.Assets.TransferCompletedAssets();
+                }
+            }),
+            false));
+
+        Parallel.Invoke([.. Detours.Select(d => (Action)d.Apply)]);
+    }
+}
+
 file static class Program
 {
     public static void Main(string[] args)
@@ -368,6 +454,8 @@ file static class Program
             tmlMainAssemblyPath);
 
         Environment.CurrentDirectory = tmlSteamPath;
+
+        StartupDetours.BeginApplyingAsync();
 
         DoLaunch(args);
     }
