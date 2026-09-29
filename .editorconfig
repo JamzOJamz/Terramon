@@ -17,3 +17,5 @@ csharp_style_var_when_type_is_apparent = true:warning
 
 # noinspection EditorConfigKeyCorrectness
 dotnet_diagnostic.RCS1123.severity = none
+# noinspection EditorConfigKeyCorrectness
+dotnet_diagnostic.RCS1047.severity = none
