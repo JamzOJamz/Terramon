@@ -348,19 +348,22 @@ file static class DepsJsonResolver
     }
 }
 
-/*
- * MonoMod detours that skip/short-circuit tModLoader startup steps which
- * only matter for a "real" launch (loadability checks, pre-JIT passes,
- * splash screen, etc.)
- *
- * Adapted from LolXD's client launcher impl, shared here:
- * https://discord.com/channels/103110554649894912/534215632795729922/1347395989559967815
- * (tModLoader Discord)
- */
+/// <summary>
+///     MonoMod detours that skip or short-circuit tModLoader startup steps that
+///     only matter for a full launch, such as loadability checks, pre-JIT passes,
+///     and the splash screen.
+/// </summary>
+/// <remarks>
+///     Adapted from LolXD's client launcher implementation, shared in the
+///     <see href="https://discord.com/channels/103110554649894912/534215632795729922/1347395989559967815">
+///         tModLoader
+///         Discord
+///     </see>
+///     .
+/// </remarks>
 file static class StartupDetours
 {
     private const BindingFlags InstanceFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
-    private const BindingFlags StaticFlags = BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public;
 
     private static readonly List<Hook> Detours = new(6);
     private static Task _applyingTask;
@@ -403,8 +406,7 @@ file static class StartupDetours
 
         // Make sure the detours are done before loading content
         Detours.Add(new Hook(
-            typeof(Main).GetMethod("LoadContent",
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!,
+            typeof(Main).GetMethod("LoadContent", InstanceFlags)!,
             (Action<Action<Main>, Main>)((orig, self) =>
             {
                 if (_applyingTask?.IsCompleted is false)
@@ -416,8 +418,7 @@ file static class StartupDetours
 
         // Skip past the splash screen
         Detours.Add(new Hook(
-            typeof(Main).GetMethod(nameof(Main.DrawSplash),
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!,
+            typeof(Main).GetMethod(nameof(Main.DrawSplash), InstanceFlags)!,
             (Action<Action<Main, GameTime>, Main, GameTime>)((orig, self, gameTime) =>
             {
                 for (var i = 0; i < 900 && Main.showSplash; i++)
