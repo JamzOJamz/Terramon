@@ -12,9 +12,8 @@
       Conditions:
       [
         {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
+          Zone: Jungle
+          Chance: Common
         }
       ]
     }

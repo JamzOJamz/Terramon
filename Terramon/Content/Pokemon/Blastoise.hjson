@@ -16,18 +16,6 @@
       FrameTime: 9
       IsClassic: false
     }
-    SpawnController:
-    {
-      Stage: 3
-      Conditions:
-      [
-        {
-          Overworld: true
-          DayTime: true
-          Chance: 0.025
-        }
-      ]
-    }
   }
   Projectile:
   {

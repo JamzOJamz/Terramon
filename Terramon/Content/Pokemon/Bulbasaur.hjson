@@ -18,12 +18,15 @@
     SpawnController:
     {
       Stage: 1
-      Conditions:
+      Rules:
       [
         {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
+          Downed: WallofFlesh
+          Zone: {
+            Op: And
+            Args: ["Jungle", "OverworldHeight"]
+          }
+          Chance: Epic
         }
       ]
     }

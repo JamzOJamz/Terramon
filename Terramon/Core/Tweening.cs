@@ -177,6 +177,62 @@ public static class Tween
                 return --time * MathF.Pow(time, 10f) + 1f;
         }
     }
+
+    public static void KnotVector(Span<float> knots, int n)
+    {
+        knots[^4..].Fill(1f);
+
+        if (n <= 3) return;
+
+        float step = 1f / (n - 3);
+        for (int i = 4; i < n; i++)
+            knots[i] = (i - 3) * step;
+    }
+
+
+    public static Vector2 CheckBSpline(float t, params ReadOnlySpan<Vector2> controlPoints)
+    {
+        int n = controlPoints.Length;
+        Span<float> knots = stackalloc float[n + 4];
+        KnotVector(knots, n);
+
+        return CheckBSpline(controlPoints, knots, n, t);
+    }
+
+    public static Vector2 CheckBSpline(ReadOnlySpan<Vector2> controlPoints, scoped Span<float> knots, int n, float t)
+    {
+        int k = 0;
+        if (t >= 1f)
+            k = n - 1;
+        else
+        {
+            for (int i = 3; i < n; i++)
+            {
+                if (t >= knots[i] && t < knots[i + 1])
+                {
+                    k = i;
+                    break;
+                }
+            }
+        }
+
+        Span<Vector2> d = stackalloc Vector2[4];
+        for (int i = 0; i < 4; i++)
+            d[i] = controlPoints[k - 3 + i];
+
+        for (int r = 1; r < 4; r++)
+        {
+            for (int j = 3; j >= r; j--)
+            {
+                float denom = knots[k + 1 + j - r] - knots[k - 3 + j];
+                float alpha = denom == 0f ? 0f :
+                    (t - knots[k - 3 + j]) / denom;
+                d[j] = Vector2.Lerp(d[j - 1], d[j], alpha);
+            }
+        }
+
+        return d[3];
+    }
 }
 
 public interface ITweener

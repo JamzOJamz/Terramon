@@ -8,6 +8,7 @@ public static class ShaderAssets
 
     public static MiscShaderData FadeToColor { get; private set; }
     public static MiscShaderData Outline { get; private set; }
+    public static MiscShaderData StatBoost { get; private set; }
     public static Asset<Effect> Palette { get; private set; }
 
     private static AssetRepository _repo;
@@ -15,15 +16,15 @@ public static class ShaderAssets
     {
         _repo = repo;
 
-        FadeToColor = Register("FadeToColor", "FadePass");
-        Outline = Register("Outline", "ShaderPass");
+        FadeToColor = Register("FadeToColor");
+        Outline = Register("Outline");
+        StatBoost = Register("StatBoost");
         Palette = _repo.Request<Effect>(Effects + "Palette");
     }
 
-    private static MiscShaderData Register(string name, string passName = null)
+    private static MiscShaderData Register(string name)
     {
-        passName ??= name + "Pass";
-        var newShader = new MiscShaderData(_repo.Request<Effect>(Effects + name), passName);
+        var newShader = new MiscShaderData(_repo.Request<Effect>(Effects + name), "ShaderPass");
         GameShaders.Misc[nameof(Terramon) + name] = newShader;
         return newShader;
     }

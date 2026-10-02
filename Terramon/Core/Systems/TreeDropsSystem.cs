@@ -1,5 +1,8 @@
 using MonoMod.Cil;
+using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 using Terramon.Content.Items;
+using Terramon.Content.NPCs;
 using Terraria.Enums;
 using Terraria.Utilities;
 
@@ -17,6 +20,7 @@ public class TreeDropsSystem : ModSystem
 
 public class TreeDropsGlobalTile : GlobalTile
 {
+    public static List<JObject> TreeShakeRules { get; } = [];
     private static bool _vanillaTreeShakeFailed;
 
     /// <summary>
@@ -140,5 +144,18 @@ public class TreeDropsGlobalTile : GlobalTile
         var randomApricorn = ApricornItems[WorldGen.genRand.Next(ApricornItems.Length)].Type;
         Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), new Rectangle(x * 16, y * 16, 16, 16),
             randomApricorn, WorldGen.genRand.Next(1, 3));
+    }
+
+    public override void PreShakeTree(int x, int y, TreeTypes treeType)
+    {
+        foreach (var rule in CollectionsMarshal.AsSpan(TreeShakeRules))
+        {
+            var ruleMet = NPCSpawnController.EvaluateNumeric((int)treeType, rule.GetValue("FromTreeShake"), out _);
+            if (!ruleMet)
+                continue;
+            var roll = Main.rand.NextFloat() <= (float)rule.GetValue("Chance");
+            if (roll)
+                NPC.NewNPC(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, (int)rule.GetValue("Type"));
+        }
     }
 }

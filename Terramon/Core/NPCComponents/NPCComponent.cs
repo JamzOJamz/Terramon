@@ -56,7 +56,7 @@ public abstract class NPCComponent : GlobalNPC
     public override void Load()
     {
         if (!CacheInstances) return;
-        Instances = new Dictionary<int, NPCComponent>();
+        Instances = [];
     }
 
     public override void Unload()

@@ -380,6 +380,8 @@ GUI: {
 		Height: Talla
 		Weight: Peso
 		Entry: Entrada
+		// TypeDisplay: "{0} {1}"
+		// Types: Terramon Type(s)
 	}
 
 	TurnBased: {
@@ -943,6 +945,7 @@ Tiles: {
 }
 
 Types: {
+	// None: Unknown
 	Normal: Normal
 	Fire: Fuego
 	Fighting: Lucha
@@ -1052,4 +1055,9 @@ Misc: {
 Projectiles: {
 	// PokeBallBobber.DisplayName: Poké Ball Bobber
 	// PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
+}
+
+ConfigCategory: {
+	// ClientConfig.Description: ClientConfig
+	// GameplayConfig.Description: GameplayConfig
 }

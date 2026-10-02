@@ -143,9 +143,7 @@ public class BetterUIText : UIElement
         if (ShowTypingCaret && Main.GameUpdateCount % 20 < 10)
             useText += "|";
         var value = (_isLarge ? FontAssets.DeathText : FontAssets.MouseText).Value;
-        var vector = value.MeasureString(useText);
         var baseColor = ShadowColor * (_color.A / 255f);
-        var origin = new Vector2(0f, 0f) * vector;
         var baseScale = new Vector2(num);
         var snippets = ChatManager.ParseMessage(useText, _color).ToArray();
         ChatManager.ConvertNormalSnippets(snippets);
@@ -155,8 +153,8 @@ public class BetterUIText : UIElement
 
         foreach (var t in ShadowDirections)
             ChatManager.DrawColorCodedString(spriteBatch, value, snippets, position + t * ShadowSpread, baseColor, 0f,
-                origin, baseScale, out _, -1f, true);
-        ChatManager.DrawColorCodedString(spriteBatch, value, snippets, position, Color.White, 0f, origin, baseScale,
+                Vector2.Zero, baseScale, out _, -1f, true);
+        ChatManager.DrawColorCodedString(spriteBatch, value, snippets, position, Color.White, 0f, Vector2.Zero, baseScale,
             out var _, -1f);
     }
 
@@ -179,7 +177,7 @@ public class BetterUIText : UIElement
 
         // TML: Changed to use ChatManager.GetStringSize() since using DynamicSpriteFont.MeasureString() ignores chat tags,
         // giving the UI element a much larger calculated size than it should have.
-        var vector = ChatManager.GetStringSize(dynamicSpriteFont, _visibleText, new Vector2(1));
+        var vector = ChatManager.GetStringSize(dynamicSpriteFont, _visibleText, Vector2.One);
 
         var vector2 = _textSize = !IsWrapped
             ? new Vector2(vector.X, large ? 32f : 16f) * textScale

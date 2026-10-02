@@ -6,18 +6,6 @@
   NPC:
   {
     WalkingBehaviour: {}
-    SpawnController:
-    {
-      Stage: 2
-      Conditions:
-      [
-        {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
-        }
-      ]
-    }
   }
   Projectile:
   {

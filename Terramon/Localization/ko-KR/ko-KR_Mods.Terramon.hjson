@@ -96,6 +96,14 @@ Commands: {
 		// ParseErrorBannerTier: Failed to parse tier argument as BannerTier
 		// Success: Successfully changed the banner tier for the held banner to {0}
 	}
+
+	Starter: {
+		// Description: Opens the starter selection menu (only usable if you haven't chosen a starter yet)
+		// Usage: /starter
+		// AlreadyChosen: You have already chosen your starter Pokémon!
+	}
+
+	// Choose.Usage: /choose
 }
 
 Configs: {
@@ -126,6 +134,11 @@ Configs: {
 		ReducedAudio: {
 			Label: (파티 사운드바) 소리 감소
 			Tooltip: 사이드바에서 포켓몬을 재배치할 때 음악을 비활성화한다
+		}
+
+		HighlightSelectedPokemonName: {
+			// Label: (Party Sidebar) Highlight Selected Pokémon Name
+			// Tooltip: Highlights the name of the currently selected Pokémon in the party sidebar
 		}
 
 		ReducedMotion: {
@@ -368,6 +381,8 @@ GUI: {
 		Height: 키
 		Weight: 몸무게
 		Entry: 특징
+		// TypeDisplay: "{0} {1}"
+		// Types: Terramon Type(s)
 	}
 
 	TurnBased: {
@@ -911,6 +926,7 @@ Tiles: {
 }
 
 Types: {
+	// None: Unknown
 	Normal: 노말
 	Fire: 불꽃
 	Fighting: 격투
@@ -1017,4 +1033,12 @@ Misc: {
 		'''
 }
 
-// Projectiles.PokeBallBobber.DisplayName: Poke Ball Bobber
+Projectiles: {
+	// PokeBallBobber.DisplayName: Poké Ball Bobber
+	// PokemonPetGenericAttackProjectile.DisplayName: Pokémon Companion Generic Attack Projectile
+}
+
+ConfigCategory: {
+	// ClientConfig.Description: ClientConfig
+	// GameplayConfig.Description: GameplayConfig
+}

@@ -38,24 +38,24 @@ public static class PokemonTypeExtensions
     {
         return type switch
         {
-            PokemonType.Normal => "cecfce",
-            PokemonType.Fire => "ed6657",
-            PokemonType.Fighting => "ffac59",
-            PokemonType.Water => "74acf5",
-            PokemonType.Flying => "add2f5",
-            PokemonType.Grass => "82c274",
-            PokemonType.Poison => "b884dd",
-            PokemonType.Electric => "fcd659",
-            PokemonType.Ground => "b88e6f",
-            PokemonType.Psychic => "f584a8",
-            PokemonType.Rock => "cbc7ad",
-            PokemonType.Ice => "81dff7",
-            PokemonType.Bug => "b8c26a",
-            PokemonType.Dragon => "8d98ec",
-            PokemonType.Ghost => "a284a2",
-            PokemonType.Dark => "998b8c",
-            PokemonType.Steel => "98c2d1",
-            PokemonType.Fairy => "f5a2f5",
+            PokemonType.Normal => "919aa2",
+            PokemonType.Fighting => "ce416b",
+            PokemonType.Flying => "8fa9de",
+            PokemonType.Poison => "aa6bc8",
+            PokemonType.Ground => "d97845",
+            PokemonType.Rock => "c5b78c",
+            PokemonType.Bug => "91c12f",
+            PokemonType.Ghost => "91c12f",
+            PokemonType.Steel => "5a8ea2",
+            PokemonType.Fire => "ff9d55",
+            PokemonType.Water => "5090d6",
+            PokemonType.Grass => "63bc5a",
+            PokemonType.Electric => "f4d23c",
+            PokemonType.Psychic => "fa7179",
+            PokemonType.Ice => "73cec0",
+            PokemonType.Dragon => "0b6dc3",
+            PokemonType.Dark => "5a5465",
+            PokemonType.Fairy => "ec8fe6",
             _ => "ffffff"
         };
     }
@@ -67,6 +67,6 @@ public static class PokemonTypeExtensions
     /// </summary>
     public static Color GetColor(this PokemonType type)
     {
-        return ColorUtils.FromHexRGB(uint.Parse(type.GetHexColor(), NumberStyles.HexNumber));
+        return ColorUtils.FromHexRGB(uint.Parse(type.GetHexColor(), NumberStyles.AllowHexSpecifier));
     }
 }

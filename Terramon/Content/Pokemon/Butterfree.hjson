@@ -16,13 +16,23 @@
     }
     SpawnController:
     {
-      Stage: 3
-      Conditions:
+      Rules:
       [
         {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
+          Downed: WallofFlesh
+          Zone: {
+            Op: Or
+            Args: ["Forest", "Jungle"]
+          }
+          Chance: Uncommon
+        },
+        {
+          Downed: SkeletronHead
+          Zone: {
+            Op: Or
+            Args: ["Forest", "Jungle"]
+          }
+          Chance: Rare
         }
       ]
     }
