@@ -60,9 +60,6 @@
         <member name="F:Showdown.NET.Definitions.FormatID.Gen3DoublesCustomGame">
             <summary>Generation 3 custom game format (doubles).</summary>
         </member>
-        <member name="F:Showdown.NET.Definitions.FormatID.Gen7RandomBattle">
-            <summary>Generation 7 random battle format (singles).</summary>
-        </member>
         <member name="T:Showdown.NET.Definitions.PokemonID">
             <summary>
                 <para>
@@ -1014,6 +1011,16 @@
         <member name="M:Showdown.NET.Protocol.FieldEndElement.#ctor(System.String)">
             <summary>
                 Indicates that the field condition <see cref="P:Showdown.NET.Protocol.FieldEndElement.Condition" /> has ended.
+            </summary>
+        </member>
+        <member name="T:Showdown.NET.Protocol.FieldActivateElement">
+            <summary>
+                A single-event field effect <see cref="P:Showdown.NET.Protocol.FieldActivateElement.Condition" /> has triggered. (i.e. Teatime, Electrify, Perish Song, extreme weather activation)
+            </summary>
+        </member>
+        <member name="M:Showdown.NET.Protocol.FieldActivateElement.#ctor(System.String)">
+            <summary>
+                A single-event field effect <see cref="P:Showdown.NET.Protocol.FieldActivateElement.Condition" /> has triggered. (i.e. Teatime, Electrify, Perish Song, extreme weather activation)
             </summary>
         </member>
         <member name="T:Showdown.NET.Protocol.SideStartElement">
