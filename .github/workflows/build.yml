@@ -1,0 +1,67 @@
+name: Build mod
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+              with:
+                  path: ModSources/Terramon
+
+            - uses: actions/setup-dotnet@v6
+              with:
+                  dotnet-version: |
+                      8.0.x
+                      10.0.x
+
+            - name: Resolve latest stable tModLoader
+              id: tml
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  tag=$(gh release list -R tModLoader/tModLoader --exclude-pre-releases --limit 1 --json tagName -q '.[0].tagName')
+                  echo "Using tModLoader $tag"
+                  echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+            - name: Cache tModLoader
+              id: tml-cache
+              uses: actions/cache@v6
+              with:
+                  path: tml
+                  key: tml-${{ steps.tml.outputs.tag }}
+
+            - name: Download tModLoader
+              if: steps.tml-cache.outputs.cache-hit != 'true'
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  mkdir -p tml
+                  gh release download "${{ steps.tml.outputs.tag }}" -R tModLoader/tModLoader -p tModLoader.zip -D tml
+                  cd tml && unzip -q tModLoader.zip && rm tModLoader.zip
+
+            - name: Patch tMLMod.targets for Linux natives
+              run: sed -i 's|<Exec Command="dotnet |<Exec Command="LD_LIBRARY_PATH=\&quot;$(tMLLibraryPath)/Native/Linux\&quot; dotnet |' tml/tMLMod.targets
+
+            - name: Create tModLoader.targets
+              run: |
+                  cat > ModSources/tModLoader.targets <<EOF
+                  <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+                    <Import Project="$GITHUB_WORKSPACE/tml/tMLMod.targets" />
+                  </Project>
+                  EOF
+
+            - name: Build mod
+              env:
+                  ExtraBuildModFlags: -tmlsavedirectory ${{ github.workspace }}/tmlsave
+              run: dotnet build ModSources/Terramon/Terramon/Terramon.csproj -c Release --nologo
+
+            - uses: actions/upload-artifact@v7
+              with:
+                  name: Terramon-tmod
+                  path: tmlsave/Mods/*.tmod
+                  if-no-files-found: error
