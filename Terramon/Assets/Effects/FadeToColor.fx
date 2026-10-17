@@ -44,7 +44,7 @@ float4 PixelShaderFunction(float2 uv : TEXCOORD0) : COLOR0
 
 technique Technique1
 {
-    pass FadePass
+    pass ShaderPass
     {
         AlphaBlendEnable = TRUE;
         BlendOp = ADD;

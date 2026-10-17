@@ -8,13 +8,17 @@
     WalkingBehaviour: {}
     SpawnController:
     {
-      Stage: 2
-      Conditions:
+      Rules:
       [
         {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
+          Downed: WallofFlesh
+          Zone: DirtLayerHeight
+          Chance: Uncommon
+        },
+        {
+          Downed: SkeletronHead
+          Zone: DirtLayerHeight
+          Chance: Rare
         }
       ]
     }

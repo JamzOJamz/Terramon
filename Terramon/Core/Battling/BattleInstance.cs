@@ -1,4 +1,4 @@
-﻿using Showdown.NET.Definitions;
+using Showdown.NET.Definitions;
 using Showdown.NET.Protocol;
 using Showdown.NET.Simulator;
 using System.Runtime.InteropServices;
@@ -94,7 +94,7 @@ public sealed class BattleInstance
 
     public void SubmitChoice(int plr, BattleChoice choice, int operand)
     {
-        if (Stream is null || Stream.IsDisposed)
+        if (Stream?.IsDisposed is true)
             return;
 
         string main;
@@ -237,9 +237,9 @@ public sealed class BattleInstance
         }
         finally
         {
-            if (Stream != null && !Stream.IsDisposed)
+            if (Stream?.IsDisposed is true)
             {
-                Log($"Disposing battle stream", ConsoleColor.Yellow);
+                Log("Disposing battle stream", ConsoleColor.Yellow);
                 Stream.Dispose();
             }
         }
