@@ -3,20 +3,13 @@ name: Build mod
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Build dependency mod
-        uses: JamzOJamz/build-tmodloader-mod@v1
-        with:
-          project: TmonRuntimes/TmonRuntimes.csproj
-
-      - name: Build Terramon
-        uses: JamzOJamz/build-tmodloader-mod@v1
-        with:
-          project: Terramon/Terramon.csproj
-          dotnet-version: |
-            8.0.x
-            10.0.x
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7
+            - uses: JamzOJamz/build-tmodloader-mod@v1
+              with:
+                  project: Terramon/Terramon.csproj
+                  dotnet-version: |
+                      8.0.x
+                      10.0.x
