@@ -40,6 +40,7 @@
     <!-- Project references -->
     <ItemGroup>
         <ProjectReference Include="..\EasyPacketsLib\EasyPacketsLib.csproj"/>
+        <ProjectReference Include="..\TmonRuntimes\TmonRuntimes.csproj" />
     </ItemGroup>
 
     <!-- Local binary references -->

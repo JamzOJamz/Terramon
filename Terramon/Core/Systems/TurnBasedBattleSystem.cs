@@ -13,7 +13,14 @@ namespace Terramon.Core.Systems;
 
 public sealed class TurnBasedBattleSystem : ModSystem
 {
-    private static readonly string RuntimesPath = Path.Combine(Terramon.SavePath, "Runtimes");
+    /// <summary>
+    ///     The internal name of the dependency mod that contains the platform-specific ClearScript V8 archives.
+    /// </summary>
+    private const string RuntimeDependency = "TmonRuntimes";
+
+    private const string RuntimeArchiveDirectory = "Native";
+
+    private static readonly string RuntimesSavePath = Path.Combine(Terramon.SavePath, "Runtimes");
 
     private static readonly Dictionary<PlatformType, (string Name, string Extension)> Runtimes = new()
     {
@@ -27,21 +34,29 @@ public sealed class TurnBasedBattleSystem : ModSystem
     public override void OnModLoad()
     {
         Terramon.Instance.Logger.Info("Loading turn-based battle system");
-        
+
         // Ensure runtimes path exists
-        Directory.CreateDirectory(RuntimesPath);
-        
+        Directory.CreateDirectory(RuntimesSavePath);
+
         var (runtimeName, extension) = Runtimes[Platform.Current.Type];
-        var runtimeLibraryPath = Path.Combine(RuntimesPath, $"{runtimeName}{extension}");
-        
-        // Extract runtime to disk
+        var runtimeLibraryPath = Path.Combine(RuntimesSavePath, $"{runtimeName}{extension}");
+
+        // Extract runtime to disk. The archives are shipped by the TmonRuntimes
+        // dependency mod so Terramon itself doesn't carry the platform-specific binaries.
         if (!File.Exists(runtimeLibraryPath))
         {
             Terramon.Instance.Logger.Info($"Extracting {runtimeName} runtime...");
 
-            using var runtimeArchiveStream = Mod.GetFileStream($"lib/{runtimeName}.zip");
+            var runtimeProvider = ModLoader.GetMod(RuntimeDependency);
+            var runtimeArchivePath = $"{RuntimeArchiveDirectory}/{runtimeName}.zip";
+
+            if (!runtimeProvider.FileExists(runtimeArchivePath))
+                throw new FileNotFoundException(
+                    $"The {RuntimeDependency} dependency mod is missing '{runtimeArchivePath}'.");
+
+            using var runtimeArchiveStream = runtimeProvider.GetFileStream(runtimeArchivePath);
             using var zipArchive = ZipArchive.Open(runtimeArchiveStream);
-            zipArchive.ExtractToDirectory(RuntimesPath);
+            zipArchive.ExtractToDirectory(RuntimesSavePath);
         }
 
         // Load embedded Pokémon Showdown archive into memory
@@ -51,17 +66,17 @@ public sealed class TurnBasedBattleSystem : ModSystem
             originalStream.CopyTo(_showdownArchiveStream);
             _showdownArchiveStream.Position = 0;
         }
-        
+
         // ClearScript (what Showdown.NET uses to run PS) does a lot of trial and error
         Logging.IgnoreExceptionContents("Microsoft.ClearScript");
 
         // Initialize Showdown.NET runtime
-        ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesPath);
-        
+        ShowdownHost.InitFromArchive(_showdownArchiveStream, RuntimesSavePath);
+
         // Warm up battle engine to reduce lag spikes later
         WarmUpBattleEngine();
     }
-    
+
     /// <summary>
     ///     Simulates a battle start to warm up the battle engine. This helps reduce lag spikes when starting the first real battle later.
     /// </summary>
@@ -77,11 +92,11 @@ public sealed class TurnBasedBattleSystem : ModSystem
         ShowdownHost.Unload();
         _showdownArchiveStream?.Dispose();
     }
-    
+
     public override void ModifyTransformMatrix(ref SpriteViewMatrix transform)
     {
         if (Main.gameMenu || !BattleClient.LocalBattleOngoing) return;
-        
+
         // Allows GameZoomTarget to go beyond the vanilla cap of 2f (200%)
         transform.Zoom = new Vector2(Main.GameZoomTarget);
     }

@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terramon", "Terramon\Terramon.csproj", "{DFB69F24-169D-4B9B-8DAA-E4F54366E286}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D} = {C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terramon.DataGen", "Terramon.DataGen\Terramon.DataGen.csproj", "{1A8BC515-605A-4672-B327-2B555B4D3F3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPacketsLib", "EasyPacketsLib\EasyPacketsLib.csproj", "{5C1129B1-EED4-40A0-9476-5E743A34390A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TmonRuntimes", "TmonRuntimes\TmonRuntimes.csproj", "{C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,10 @@ Global
 		{5C1129B1-EED4-40A0-9476-5E743A34390A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C1129B1-EED4-40A0-9476-5E743A34390A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C1129B1-EED4-40A0-9476-5E743A34390A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7EB3367-FD18-42A4-8F02-BDC2B4AFA33D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

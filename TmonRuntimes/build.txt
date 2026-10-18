@@ -1,0 +1,5 @@
+displayName = Showdown.NET Runtimes
+author = The Terramon Team
+version = 7.5.0
+side = Both
+buildIgnore = *.csproj, *.sln, *.user, obj*, bin*, .vs*, .git*, Properties*, *.pdb, *.xml, README.md
