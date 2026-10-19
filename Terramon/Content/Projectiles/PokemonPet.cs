@@ -59,7 +59,8 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     public EffectScale? AnimScaleX;
     public EffectScale? AnimScaleY;
     public EffectDirection AnimDir;
-
+    public List<GenericAction> PreDrawAnimActions = [];
+    public List<GenericAction> PostDrawAnimActions = [];
     static PokemonPet()
     {
         // Don't run this on the server
@@ -201,19 +202,23 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
         {
             animator.pet = this;
             animator.other = animationTarget;
+            animator.animContextMax = animationMax;
+            var activeAnimation = MoveAnimations.Animations[animation];
             if (animationMax == 0 || animationProgress == animationMax)
             {
-                MoveAnimations.Animations[animation].Oneshots(false, animator);
+                activeAnimation.Oneshots(false, animator);
                 animation = animationProgress = animationMax = 0;
             }
             else
             {
                 if (animationProgress is 0)
-                    MoveAnimations.Animations[animation].Oneshots(true, animator);
+                    activeAnimation.Oneshots(true, animator);
                 else
                     prevT = (animationProgress - 1) / (float)animationMax;
                 t = animationProgress / (float)animationMax;
             }
+            activeAnimation.PlayAt(t, prevT, animator);
+            animationProgress++;
         }
 
         var projFrameCount = Main.projFrames[Type];
@@ -306,11 +311,15 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             ? GrayscaleColor(lightColor)
             : lightColor;
 
+        AnimationEffectsSystem.Handle(PreDrawAnimActions);
+
         Main.EntitySpriteDraw(_mainTexture.Value,
             drawPos,
             sourceRect, adjustedColor,
             rotation,
             origin, scale, effects);
+
+        AnimationEffectsSystem.Handle(PostDrawAnimActions);
 
         var glowCache = Data?.IsShiny ?? false
             ? PokemonEntityLoader.ShinyGlowTextureCache
@@ -325,13 +334,6 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             sourceRect, lightColor,
             rotation,
             origin, scale, effects);
-
-        if (animation != 0)
-        {
-            var activeAnimation = MoveAnimations.Animations[animation];
-            activeAnimation.PlayAt(t, prevT, animator);
-            animationProgress++;
-        }
 
         return false;
     }
@@ -451,15 +453,15 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     }
 
     public ushort animation;
-    public byte animationMax;
-    public byte animationProgress;
+    public ushort animationMax;
+    public ushort animationProgress;
     public Entity animationTarget;
 
     public void PlayAnimation(ushort move)
     {
         animation = move;
         animationProgress = 0;
-        animationMax = 120;
+        animationMax = 60;
     }
 
     public static Color GrayscaleColor(Color color)
@@ -485,7 +487,7 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
 
     public override void AI()
     {
-        var testAnimation = MoveID.RapidSpin;
+        var testAnimation = MoveID.BubbleBeam;
 
         var owningPlayer = Main.player[Projectile.owner];
         var modPlayer = owningPlayer.Terramon();
@@ -582,14 +584,14 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
                             var proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(),
                                 Projectile.Center,
                                 Vector2.Normalize(_target.Center - Projectile.Center) * 4f,
-                                ModContent.ProjectileType<PokemonPetGenericAttackProjectile>(),
+                                ModContent.ProjectileType<PokemonPetAttackProjectile>(),
                                 damage,
                                 kb,
                                 Main.myPlayer,
                                 ID,
                                 0f,
                                 _target.whoAmI);
-                            var modProj = (PokemonPetGenericAttackProjectile)proj.ModProjectile;
+                            var modProj = (PokemonPetAttackProjectile)proj.ModProjectile;
                             modProj.AttackType = selectedMove.Schema.Type;
                             */
                             PlayAnimation((ushort)testAnimation);
@@ -707,101 +709,6 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
             _regenStartTarget = Main.rand.Next(300, 600); // 5-10 seconds
     }
 
-    private static void CreateHitEffect(Vector2 hitPosition)
-    {
-        var particleCount = Main.rand.Next(12, 18);
-
-        for (var i = 0; i < particleCount; i++)
-        {
-            var angle = (float)(i * 2 * Math.PI / particleCount);
-
-            angle += Main.rand.NextFloat(-0.3f, 0.3f);
-
-            var speed = Main.rand.NextFloat(1.5f, 2.5f);
-            var velocity = new Vector2(
-                (float)Math.Cos(angle) * speed,
-                (float)Math.Sin(angle) * speed
-            );
-
-            var dustColor = Main.rand.Next(6) switch
-            {
-                0 => Color.Red,
-                1 => Color.Orange,
-                2 => Color.Yellow,
-                3 => Color.OrangeRed,
-                4 => Color.Crimson,
-                _ => Color.Gold
-            };
-
-            var spawnPos = hitPosition + new Vector2(
-                Main.rand.NextFloat(-3, 3),
-                Main.rand.NextFloat(-3, 3)
-            );
-
-            var dust = Dust.NewDustDirect(
-                spawnPos,
-                0, 0,
-                DustID.PortalBolt,
-                velocity.X,
-                velocity.Y,
-                100,
-                dustColor,
-                Main.rand.NextFloat(0.8f, 1.3f) // Varied scale for depth
-            );
-
-            dust.noGravity = true;
-            dust.fadeIn = Main.rand.NextFloat(0.2f, 0.5f);
-
-            if (i % 3 == 0)
-            {
-                dust.velocity *= 0.6f;
-                dust.scale *= 1.2f;
-            }
-        }
-
-        for (var i = 0; i < Main.rand.Next(3, 6); i++)
-        {
-            var flashDust = Dust.NewDustDirect(
-                hitPosition + new Vector2(Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2)),
-                0, 0,
-                DustID.PortalBolt,
-                Main.rand.NextFloat(-0.5f, 0.5f),
-                Main.rand.NextFloat(-0.5f, 0.5f),
-                100,
-                Color.LightYellow,
-                Main.rand.NextFloat(1.0f, 1.5f)
-            );
-
-            flashDust.noGravity = true;
-            flashDust.fadeIn = 0.1f;
-        }
-
-        for (var i = 0; i < Main.rand.Next(4, 8); i++)
-        {
-            var sparkAngle = Main.rand.NextFloat(0, (float)(2 * Math.PI));
-            var sparkSpeed = Main.rand.NextFloat(1f, 2f);
-
-            var sparkVelocity = new Vector2(
-                (float)Math.Cos(sparkAngle) * sparkSpeed,
-                (float)Math.Sin(sparkAngle) * sparkSpeed
-            );
-
-            var spark = Dust.NewDustDirect(
-                hitPosition,
-                0, 0,
-                DustID.PortalBolt,
-                sparkVelocity.X,
-                sparkVelocity.Y,
-                100,
-                Color.Orange,
-                Main.rand.NextFloat(0.4f, 0.8f)
-            );
-
-            spark.noGravity = false;
-            spark.fadeIn = Main.rand.NextFloat(0.4f, 0.8f);
-        }
-    }
-
     private float CalculateKnockback()
     {
         // Base attack of 255 = 2.5x multiplier
@@ -881,81 +788,20 @@ public sealed class PokemonPet(ushort id, DatabaseV2.PokemonSchema schema) : Mod
     }
 }
 
-public sealed class PokemonPetGenericAttackProjectile : ModProjectile
+public sealed class PokemonPetAttackProjectile : ModProjectile
 {
-    public PokemonType AttackType
-    {
-        get;
-        set
-        {
-            field = value;
-            _color = AttackType.GetColor() with { A = 0 };
-        }
-    }
-
-    private Color _color;
-
-    public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DiamondBolt;
-
+    public MoveID AssociatedMove;
+    public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.None;
     public override void SetDefaults()
     {
-        Projectile.CloneDefaults(ProjectileID.DiamondBolt);
+        Projectile.width = Projectile.height = 10;
         Projectile.aiStyle = 0;
         Projectile.penetrate = 1;
         Projectile.tileCollide = false;
         Projectile.DamageType = DamageClass.Generic;
+        Projectile.friendly = true;
     }
-
-    public override void AI()
-    {
-        Projectile.oldPosition = Projectile.position;
-        Projectile.oldVelocity = Projectile.velocity;
-
-        Projectile.position += Projectile.velocity;
-
-        for (var num260 = 0; num260 < 2; num260++)
-        {
-            var dust = Dust.NewDustDirect(Projectile.position, Projectile.width,
-                Projectile.height, ModContent.DustType<ColorableDust>(), Projectile.velocity.X, Projectile.velocity.Y,
-                50, _color, 1.2f);
-            dust.noGravity = true;
-            dust.velocity *= 0.3f;
-        }
-
-        if (Projectile.ai[1] == 0f)
-        {
-            Projectile.ai[1] = 1f;
-            SoundEngine.PlaySound(SoundID.Item8, Projectile.position);
-        }
-        
-        // Homing behaviour
-        var homingTarget = Main.npc[(int)Projectile.ai[2]];
-        if (!homingTarget.CanBeChasedBy())
-            return;
-
-        var length = Projectile.velocity.Length();
-        var targetAngle = Projectile.AngleTo(homingTarget.Center);
-        var finalAngle = Projectile.velocity.ToRotation().AngleTowards(targetAngle, MathHelper.ToRadians(6));
-        Projectile.velocity = finalAngle.ToRotationVector2() * length;
-        Projectile.rotation = finalAngle;
-    }
-
-    public override void ModifyDamageHitbox(ref Rectangle hitbox)
-    {
-        hitbox.Inflate(4, 4);
-    }
-
-    public override void OnKill(int timeLeft)
-    {
-        SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-        for (var num615 = 0; num615 < 15; num615++)
-        {
-            var dust = Dust.NewDustDirect(Projectile.position, Projectile.width,
-                Projectile.height, ModContent.DustType<ColorableDust>(), Projectile.oldVelocity.X,
-                Projectile.oldVelocity.Y, 50, _color, 1.2f);
-            dust.noGravity = true;
-            dust.scale *= 1.25f;
-            dust.velocity *= 0.5f;
-        }
-    }
+    public override void AI() => Projectile.ai[1]--;
+    public override bool? CanHitNPC(NPC target) => target.whoAmI == (int)Projectile.ai[0] && Projectile.ai[1] <= 0f;
+    public override void ModifyDamageHitbox(ref Rectangle hitbox) => hitbox.Inflate(4, 4);
 }

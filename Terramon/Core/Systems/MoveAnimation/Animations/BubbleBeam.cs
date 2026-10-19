@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.GameContent;
 
 namespace Terramon.Core.Systems.MoveAnimation.Animations;
@@ -26,19 +21,18 @@ public sealed class BubbleBeam : BaseAnimation
 
         animator.DrawTrail(TextureAssets.MagicPixel.Value, new EffectPosition { Anchor = gogogo }, new EffectPosition { Anchor = test }, new EffectScale { AbsoluteScale = 4f }, Color.LightCyan, 2, 1);
         Bubbles(animator, bub, sinFactor, prevGo, bubelGo, bubel, false);
-
-        animator.QueuePositionalAction(static p =>
+        animator.QueueContextfulAction(wCtx =>
         {
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
-                var d = Dust.NewDustPerfect(p, DustID.BubbleBlock, Main.rand.NextVector2Circular(2f, 8f));
+                var d = Dust.NewDustPerfect(wCtx.Positions[0], DustID.BubbleBlock, Main.rand.NextVector2Circular(2f, 8f));
                 d.noGravity = true;
             }
-        }, new EffectPosition { Anchor = test });
+        }, new EffectContext(positions: [new EffectPosition { Anchor = test }]));
     }
     private static void Bubbles(IAnimator animator, Texture2D tex, float sinFactor, int prevStart, int start, int count, bool leftCos)
     {
-        for (int i = prevStart; i < count; i++)
+        for (var i = prevStart; i < count; i++)
         {
             var prog = i / 16f;
             var (sin, cos) = Math.SinCos(sinFactor + i * MathHelper.PiOver2);
@@ -50,18 +44,18 @@ public sealed class BubbleBeam : BaseAnimation
             var pos = new EffectPosition { Anchor = prog, XOffsetDirectional = (float)cos * 10f * intens, YOffsetAbsolute = (float)sin * 10f * intens };
             if (i < start)
             {
-                animator.PlaySound(SoundID.Item54, pos);
-                animator.QueuePositionalAction(static p =>
+                animator.QueueSound(SoundID.Item54, pos);
+                animator.QueueContextfulAction(wCtx =>
                 {
-                    for (int j = 0; j < 8; j++)
+                    for (var i = 0; i < 8; i++)
                     {
-                        var d = Dust.NewDustPerfect(p, DustID.BubbleBlock, (MathF.Tau / 8f * j).ToRotationVector2());
+                        var d = Dust.NewDustPerfect(wCtx.Positions[0], DustID.BubbleBlock, (MathF.Tau / 8f * i).ToRotationVector2());
                         d.noGravity = true;
                     }
-                }, pos);
+                }, new EffectContext(positions: [pos]));
             }
             else
-                animator.ShowTexture(tex, pos, Color.White, default, 0, new EffectScale { AbsoluteScale = intens });
+                animator.QueueDraw(tex, Color.White, pos, new EffectScale { AbsoluteScale = intens });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using ReLogic.Content;
+using ReLogic.Content;
 using Terraria.Audio;
 
 namespace Terramon.Core.Systems.MoveAnimation;
@@ -52,16 +52,24 @@ public sealed class Guillotine : BaseAnimation
         var tex = guillotines.Value;
         var color = Color.White * (currentTime * 8f);
         var xScale = new EffectScale { AbsoluteScale = currentTime <= 0.2f ? currentTime * 5f : 1f };
-        animator.ShowTexture(tex, rightPos, color, new EffectRotation { RotationToTargetHorizontal = rAngle }, EffectDirection.ToTarget, xScale, new EffectScale { AbsoluteScale = 1f }, frame: tex.Frame(2, frameX: 1), origin: new Vector2(29f, 89f));
-        animator.ShowTexture(tex, leftPos, color, new EffectRotation { RotationToTargetHorizontal = lAngle }, EffectDirection.ToTarget, xScale, new EffectScale { AbsoluteScale = 1f }, frame: tex.Frame(2, frameX: 0), origin: new Vector2(15f, 89f));
+        var yScale = new EffectScale { AbsoluteScale = 1f };
+        animator.QueueDraw(
+            tex, color, rightPos, xScale, yScale,
+            new EffectRotation { RotationToTargetHorizontal = rAngle },
+            EffectDirection.ToTarget,
+            frame: tex.Frame(2, frameX: 1),
+            origin: new Vector2(29f, 89f));
+        animator.QueueDraw(
+            tex, color, leftPos, xScale, yScale,
+            new EffectRotation { RotationToTargetHorizontal = lAngle },
+            EffectDirection.ToTarget,
+            frame: tex.Frame(2, frameX: 0),
+            origin: new Vector2(15f, 89f));
 
     }
     public override void Oneshots(bool start, IAnimator animator)
     {
         if (start)
-            animator.QueuePositionalAction(p =>
-            {
-                SoundEngine.PlaySound(Clank, p);
-            }, new EffectPosition { Anchor = 1f }, 0.7f);
+            animator.QueueSound(Clank, new EffectPosition { Anchor = 1f }, new EffectTime { AnimRelative = 0.7f });
     }
 }

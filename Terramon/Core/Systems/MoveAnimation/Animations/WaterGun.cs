@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,14 +32,14 @@ public sealed class WaterGun : BaseAnimation
                 AbsoluteScale = absWidth
             };
             animator.DrawTrail(TextureAssets.MagicPixel.Value, new EffectPosition { XOffsetSelfRelativeDirectional = 0.5f }, new EffectPosition { Anchor = 1f }, beamWidth, Color.Blue, 7, 1);
-            animator.QueuePositionalAction((p) =>
+            animator.QueueContextfulAction(wCtx =>
             {
-                for (int i = 0; i < 2; i++)
+                for (var i = 0; i < 2; i++)
                 {
-                    var d = Dust.NewDustPerfect(p + Main.rand.NextVector2Circular(4f, 32f), DustID.Water + i, Scale: 2f);
+                    var d = Dust.NewDustPerfect(wCtx.Positions[0] + Main.rand.NextVector2Circular(4f, 32f), DustID.Water + i, Scale: 2f);
                     d.noGravity = true;
                 }
-            }, new EffectPosition { Anchor = 1f });
+            }, new EffectContext(positions: [EffectPosition.Other]));
         }
     }
 }

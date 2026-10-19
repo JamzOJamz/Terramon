@@ -1,4 +1,4 @@
-﻿using ReLogic.Content;
+using ReLogic.Content;
 using System.Diagnostics;
 using Terraria.Audio;
 
@@ -10,15 +10,15 @@ public sealed class KarateChop : BaseAnimation
     public static readonly Asset<Texture2D> karateHand = ModContent.Request<Texture2D>("Terramon/Assets/Animations/KarateHand");
     public override void PlayAt(float currentTime, float previousTime, IAnimator animator)
     {
-        for (float i = MathF.Max(0f, previousTime - 0.05f); i < currentTime; i += 0.005f)
-            animator.ShowTexture(karateHand.Value, PositionAt(i), Color.White with { A = 0 } * (i * 0.5f), RotationAt(i), EffectDirection.ToTarget, scaleY: ScaleAt(i));
-        animator.ShowTexture(karateHand.Value, PositionAt(currentTime), Color.White, RotationAt(currentTime), EffectDirection.ToTarget, scaleY: ScaleAt(currentTime));
-        // this is not a good permanent solution, since for very fast animations we are not guaranteed that the condition will actually be met
-        // might be better to play the sound asynchronously since then the time where the audio is played is under control
-        // this applies to other one-shot animation events like spawning dust or gore
-        var playSoundAt = 0.65f;
-        if (playSoundAt >= previousTime && currentTime > playSoundAt)
-            animator.PlaySound(FightHit, new EffectPosition { Anchor = 1f });
+        var t = karateHand.Value;
+        for (var i = MathF.Max(0f, previousTime - 0.05f); i < currentTime; i += 0.005f)
+            animator.QueueDraw(t, Color.White with { A = 0 } * (i * 0.5f), PositionAt(i), null, ScaleAt(i), RotationAt(i), EffectDirection.ToTarget);
+        animator.QueueDraw(t, Color.White, PositionAt(currentTime), null, ScaleAt(currentTime), RotationAt(currentTime), EffectDirection.ToTarget);
+    }
+    public override void Oneshots(bool start, IAnimator animator)
+    {
+        if (start)
+            animator.QueueSound(FightHit, EffectPosition.Other, new EffectTime { AnimRelative = 0.65f });
     }
     private static EffectPosition PositionAt(float t)
     {
@@ -53,10 +53,10 @@ public sealed class KarateChop : BaseAnimation
     {
         return t switch
         {
-            <= 0.25f => new EffectScale { SelfRelative = t * 4f },
-            <= 0.5f => new EffectScale { SelfRelative = 1f - ((t - 0.25f) * 4f), OtherRelative = (t - 0.25f) * 4f },
-            <= 0.75f => new EffectScale { OtherRelative = 1f },
-            _ => new EffectScale { OtherRelative = 1f - ((t - 0.75f) * 4f) },
+            <= 0.25f => new EffectScale { EffectSelfRelative = t * 4f },
+            <= 0.5f => new EffectScale { EffectSelfRelative = 1f - ((t - 0.25f) * 4f), EffectOtherRelative = (t - 0.25f) * 4f },
+            <= 0.75f => new EffectScale { EffectOtherRelative = 1f },
+            _ => new EffectScale { EffectOtherRelative = 1f - ((t - 0.75f) * 4f) },
         };
     }
 }
