@@ -1,0 +1,35 @@
+{
+	"Consts": {
+		"Common": 0.2,
+		"Uncommon": 0.1,
+		"Rare": 0.05,
+		"Epic": 0.025,
+		"Legendary": 0.0125
+	},
+	"Time": {
+		"Day": {
+			"Op": "Between",
+			"Args": [ "4:30 AM", "7:30 PM" ]
+		},
+		"Night": {
+			"Op": "Between",
+			"Args": [ "7:30 PM", "4:30 AM" ]
+		},
+		"Dawn": {
+			"Op": "Between",
+			"Args": [ "4:30 AM", "12:00 PM" ]
+		},
+		"Noon": {
+			"Op": "Between",
+			"Args": [ "12:00 PM", "7:30 PM" ]
+		},
+		"Dusk": {
+			"Op": "Between",
+			"Args": [ "7:30 PM", "12:00 AM" ]
+		},
+		"Midnight": {
+			"Op": "Between",
+			"Args": [ "12:00 AM", "4:30 AM" ]
+		}
+	}
+}

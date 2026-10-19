@@ -8,13 +8,18 @@
     WanderingHoverBehaviour: {}
     SpawnController:
     {
-      Stage: 1
-      Conditions:
+      Rules:
       [
         {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
+          Zone: Forest
+          Chance: Epic
+        },
+        {
+          Zone: {
+            Op: Or
+            Args: ["Hallow", "Shimmer"]
+          }
+          Chance: Uncommon
         }
       ]
     }

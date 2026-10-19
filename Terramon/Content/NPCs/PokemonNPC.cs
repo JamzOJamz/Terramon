@@ -228,6 +228,21 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
 
         var isHighlighted = NPC.whoAmI == _highlightedNPCIndex;
 
+        // perh. do shader animation here?
+        // play around:
+        /*
+        var boostImage = ModContent.Request<Texture2D>("Terramon/Assets/Animations/StatBoostOverlay", AssetRequestMode.ImmediateLoad);
+        p["uImageSize0"].SetValue(_mainTexture.Size());
+        p["uImageSize1"].SetValue(boostImage.Size());
+        p["uTime"].SetValue((float)Main.timeForVisualEffects);
+        p["uIntensity"].SetValue(50f);
+        boostShader
+            .UseColor(Color.Yellow)
+            .UseImage1(boostImage)
+            .UseOpacity(0.8f)
+            .Apply();
+        */
+
         if (!PlasmaState && BattleClient.LocalClient.Foe == null)
         {
             if (isHighlighted && NPC.DistanceSQ(Main.LocalPlayer.Center) < 300f * 300f)
@@ -241,8 +256,9 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                     ? ModContent.GetInstance<KeyItemRarity>().RarityColor
                     : ClientConfig.Instance.HighlightColor;
                 var outlineShader = ShaderAssets.Outline;
-                outlineShader.Shader.Parameters["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
-                outlineShader.Shader.Parameters["uImageSize0"].SetValue(_mainTexture.Size());
+                var p = outlineShader.Shader.Parameters;
+                p["uThickOutline"].SetValue(ClientConfig.Instance.ThickHighlights);
+                p["uImageSize0"].SetValue(_mainTexture.Size());
                 outlineShader
                     .UseColor(highlightColor.MultiplyRGB(drawColor))
                     .UseSecondaryColor(highlightColor.HueShift(0.035f, -0.08f).MultiplyRGB(drawColor))
@@ -275,7 +291,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
                 drawColor = Color.White;
                 if (ID == NationalDexID.Gastly) drawColor.A = 128;
                 spriteBatch.Draw(glowTexture.Value, drawPos, NPC.frame, drawColor, NPC.rotation,
-                    frameSize / new Vector2(2, 2), NPC.scale, effects, 0f);
+                    frameSize * 0.5f, NPC.scale, effects, 0f);
             }
         }
 
@@ -292,7 +308,7 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             .UseOpacity(_plasmaStateTime <= 20 ? _plasmaStateTime / 7.5f : NPC.Opacity)
             .Apply();
 
-        spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation, frameSize / new Vector2(2, 2),
+        spriteBatch.Draw(mainTextureValue, drawPos, NPC.frame, drawColor, NPC.rotation, frameSize * 0.5f,
             NPC.scale, effects, 0f);
 
         spriteBatch.End();
@@ -300,6 +316,11 @@ public class PokemonNPC(ushort id, DatabaseV2.PokemonSchema schema) : ModNPC, IP
             DepthStencilState.None, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         return false;
+    }
+
+    public void PlayAnimation(ushort move)
+    {
+
     }
 
     public override void SendExtraAI(BinaryWriter writer)

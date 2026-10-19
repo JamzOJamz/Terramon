@@ -6,18 +6,6 @@
   NPC:
   {
     WanderingHoverBehaviour: {}
-    SpawnController:
-    {
-      Stage: 4
-      Conditions:
-      [
-        {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
-        }
-      ]
-    }
   }
   Projectile:
   {

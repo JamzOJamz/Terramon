@@ -189,7 +189,16 @@ public struct BattlePokemon()
     public readonly string PokeName => Data.DisplayName;
     public readonly void PlayMoveAnimation(ushort move)
     {
-        _ = _gender;
+        switch (Side.Provider)
+        {
+            case TerramonPlayer p:
+                p.ActivePetProjectile?.PlayAnimation(move);
+                break;
+            case PokemonNPC n:
+                n.PlayAnimation(move);
+                break;
+            // add trainerNPC and townTrainerNPC
+        }
     }
     public void SetAsActive()
     {

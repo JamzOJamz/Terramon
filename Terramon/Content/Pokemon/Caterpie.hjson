@@ -19,13 +19,19 @@
     }
     SpawnController:
     {
-      Stage: 1
-      Conditions:
+      Rules:
       [
         {
-          Overworld: true
-          DayTime: true
-          Chance: 0.1
+          Zone: Forest
+          Chance: Common
+        },
+        {
+          Zone: Jungle
+          Chance: Uncommon
+        },
+        {
+          Chance: Uncommon
+          FromTreeShake: Forest
         }
       ]
     }
