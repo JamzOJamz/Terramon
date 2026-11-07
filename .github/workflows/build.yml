@@ -1,12 +1,19 @@
 name: Build mod
 
-on: [push, pull_request, workflow_dispatch]
+on: [push, workflow_dispatch]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v7
-            - uses: JamzOJamz/build-tmodloader-mod@v1
-              with:
-                  project: Terramon/Terramon.csproj
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: JamzOJamz/build-tmodloader-mod@v1
+        with:
+          project: Terramon/Terramon.csproj
